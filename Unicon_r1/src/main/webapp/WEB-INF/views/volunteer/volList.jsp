@@ -195,65 +195,99 @@
         <div class="tab-content">
             <!-- 모집중인 봉사활동 -->
             <div class="tab-pane fade show active" id="ongoing">
-                <div class="row g-4">
-                    <c:forEach items="${ongoingVolunteers}" var="volunteer">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="volunteer-card">
-                                <div class="status-badge">
-                                    <span class="badge bg-success">모집중</span>
-                                </div>
-                                <div class="card-info">
-                                    <h5 class="mb-3">${volunteer.voTitle}</h5>
-                                    <div class="date-info mb-2">
-                                        <p><i class="far fa-calendar-alt me-2"></i>모집기간: 
-                                        <fmt:formatDate value="${volunteer.voRecruitStart}" pattern="yyyy.MM.dd"/> - 
-                                        <fmt:formatDate value="${volunteer.voRecruitEnd}" pattern="yyyy.MM.dd"/></p>
-                                        <p><i class="far fa-clock me-2"></i>봉사기간: 
-                                        <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
-                                        <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/></p>
-                                    </div>
-                                    <button class="btn btn-primary w-100" 
-                                            onclick="location.href='/volunteer/apply/${volunteer.voId}'">
-                                        신청하기
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
+			    <div class="row g-4" id="ongoingList">
+			        <c:forEach items="${ongoingVolunteers}" var="volunteer" varStatus="status">
+			            <div class="col-lg-4 col-md-6 volunteer-item ${status.index >= 6 ? 'd-none' : ''}">
+			                <div class="volunteer-card">
+			                    <div class="status-badge">
+			                        <span class="badge bg-success">모집중</span>
+			                    </div>
+			                    <div class="card-info">
+			                        <h5 class="mb-3">${volunteer.voTitle}</h5>
+			                        <div class="date-info mb-2">
+			                            <p><i class="far fa-calendar-alt me-2"></i>모집기간: 
+			                            <fmt:formatDate value="${volunteer.voRecruitStart}" pattern="yyyy.MM.dd"/> - 
+			                            <fmt:formatDate value="${volunteer.voRecruitEnd}" pattern="yyyy.MM.dd"/></p>
+			                            <p><i class="far fa-clock me-2"></i>봉사기간: 
+			                            <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
+			                            <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/></p>
+			                        </div>
+			                        <button class="btn btn-primary w-100" onclick="location.href='/volunteer/apply/${volunteer.voId}'">
+			                            신청하기
+			                        </button>
+			                    </div>
+			                </div>
+			            </div>
+			        </c:forEach>
+			    </div>
+			    <c:if test="${fn:length(ongoingVolunteers) > 6}">
+			        <div class="text-center mt-4">
+			            <button class="btn btn-outline-primary" id="loadMoreOngoing">더보기</button>
+			        </div>
+			    </c:if>
+			</div>
 
             <!-- 마감된 봉사활동 -->
             <div class="tab-pane fade" id="closed">
-                <div class="row g-4">
-                    <c:forEach items="${closedVolunteers}" var="volunteer">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="volunteer-card">
-                                <div class="status-badge">
-                                    <span class="badge bg-secondary">마감</span>
-                                </div>
-                                <div class="card-info">
-                                    <h5 class="mb-3">${volunteer.voTitle}</h5>
-                                    <div class="date-info mb-2">
-                                        <p><i class="far fa-calendar-alt me-2"></i>모집기간: 
-                                        <fmt:formatDate value="${volunteer.voRecruitStart}" pattern="yyyy.MM.dd"/> - 
-                                        <fmt:formatDate value="${volunteer.voRecruitEnd}" pattern="yyyy.MM.dd"/></p>
-                                        <p><i class="far fa-clock me-2"></i>봉사기간: 
-                                        <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
-                                        <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/></p>
-                                    </div>
-                                    <button class="btn btn-secondary w-100" disabled>마감됨</button>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
+			    <div class="row g-4" id="closedList">
+			        <c:forEach items="${closedVolunteers}" var="volunteer" varStatus="status">
+			            <div class="col-lg-4 col-md-6 volunteer-item ${status.index >= 6 ? 'd-none' : ''}">
+			                <div class="volunteer-card">
+			                    <div class="status-badge">
+			                        <span class="badge bg-secondary">마감</span>
+			                    </div>
+			                    <div class="card-info">
+			                        <h5 class="mb-3">${volunteer.voTitle}</h5>
+			                        <div class="date-info mb-2">
+			                            <p><i class="far fa-calendar-alt me-2"></i>모집기간: 
+			                            <fmt:formatDate value="${volunteer.voRecruitStart}" pattern="yyyy.MM.dd"/> - 
+			                            <fmt:formatDate value="${volunteer.voRecruitEnd}" pattern="yyyy.MM.dd"/></p>
+			                            <p><i class="far fa-clock me-2"></i>봉사기간: 
+			                            <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
+			                            <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/></p>
+			                        </div>
+			                        <button class="btn btn-secondary w-100" disabled>마감됨</button>
+			                    </div>
+			                </div>
+			            </div>
+			        </c:forEach>
+			    </div>
+			    <c:if test="${fn:length(closedVolunteers) > 6}">
+			        <div class="text-center mt-4">
+			            <button class="btn btn-outline-primary" id="loadMoreClosed">더보기</button>
+			        </div>
+			    </c:if>
+			</div>
+
         </div>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.getElementById('loadMoreOngoing').addEventListener('click', function() {
+    const hiddenItems = document.querySelectorAll('#ongoingList .volunteer-item.d-none');
+    const itemsToShow = Array.from(hiddenItems).slice(0, 6);
+    
+    itemsToShow.forEach(item => item.classList.remove('d-none'));
+    
+    if (hiddenItems.length <= 6) {
+        this.style.display = 'none';
+    }
+});
+
+document.getElementById('loadMoreClosed').addEventListener('click', function() {
+    const hiddenItems = document.querySelectorAll('#closedList .volunteer-item.d-none');
+    const itemsToShow = Array.from(hiddenItems).slice(0, 6);
+    
+    itemsToShow.forEach(item => item.classList.remove('d-none'));
+    
+    if (hiddenItems.length <= 6) {
+        this.style.display = 'none';
+    }
+});
+</script>
 
 <%@ include file="../inc/new_footer.jsp" %>

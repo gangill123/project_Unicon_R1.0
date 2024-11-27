@@ -81,12 +81,17 @@ public class VolunteerServiceImpl implements VolunteerService {
         Map<String, Object> params = new HashMap<>();
         params.put("start", startIndex);
         params.put("size", size);
-        params.put("status", status);
         params.put("keyword", keyword);
         params.put("startDate", startDate);
         params.put("endDate", endDate);
         
-        List<VolunteerVO> volunteers = volDAO.selectVolunteerList(params);
+        List<VolunteerVO> volunteers;
+        if ("active".equals(status)) {
+            volunteers = volDAO.getOngoingVolunteers(params);
+        } else {
+            volunteers = volDAO.getClosedVolunteers(params);
+        }
+        
         int totalCount = volDAO.selectVolunteerCount(params);
         
         int totalPages = (int) Math.ceil((double) totalCount / size);
@@ -105,18 +110,12 @@ public class VolunteerServiceImpl implements VolunteerService {
     
     @Override
     public List<VolunteerVO> getOngoingVolunteers() throws Exception {
-        Map<String, Object> params = new HashMap<>();
-        params.put("status", "active");
-        params.put("start", 0);  // 페이징 시작 위치
-        params.put("size", 10);  // 페이지 크기
-        return volDAO.selectVolunteerList(params);
+        return volDAO.getOngoingVolunteers(new HashMap<>());
     }
-    
+
     @Override
     public List<VolunteerVO> getClosedVolunteers() throws Exception {
-        Map<String, Object> params = new HashMap<>();
-        params.put("status", "CLOSED");
-        return volDAO.selectVolunteerList(params);
+        return volDAO.getClosedVolunteers(new HashMap<>());
     }
     
     @Override
@@ -255,9 +254,9 @@ public class VolunteerServiceImpl implements VolunteerService {
     
     @Override
     public List<VolunteerVO> getDraftList() throws Exception {
-        Map<String, Object> params = new HashMap<>();
-        params.put("status", "draft");
-        return volDAO.selectVolunteerList(params);
+       Map<String, Object> params = new HashMap<>();
+       params.put("status", "draft");
+       return volDAO.getClosedVolunteers(params); 
     }
 
 }
