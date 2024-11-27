@@ -2,6 +2,9 @@ package com.Unicon.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -107,7 +111,8 @@ public class AdminController {
 	
 	// 소식정보 수정
 	@PostMapping(value = "/news_update/{num}")
-	public String updateNewsInfo(newsVO vo) {
+	public String updateNewsInfo(newsVO vo, @RequestParam("resion") String resion,
+			@RequestParam("currentPage") int currentPage) {
 		
 		logger.debug("updateNewsInfo(newsVO vo) 실행");
 		logger.debug(vo.toString());
@@ -137,7 +142,11 @@ public class AdminController {
 			// 그대로 저장
 			nService.updateNews(vo);
 		}
-		return "redirect:/admin/news_view/"+vo.getNews_id();
+		try {
+			return "redirect:/admin/news_view/"+vo.getNews_id()+"?resion="+URLEncoder.encode(resion, StandardCharsets.UTF_8.toString())+"&currentPage="+currentPage;
+		} catch (UnsupportedEncodingException e) {
+			return null;
+		}
 	}
 	
 	//소식 삭제
@@ -147,6 +156,36 @@ public class AdminController {
 		logger.debug("news_id : "+news_id);
 		nService.deleteNews(news_id);
 	}
+	
+	// 소식 모두(전국) 가져오기(페이징_ajax)
+	@GetMapping("/news_filter/all")
+	@ResponseBody
+	public List<newsVO> getNewsAllFilter() {
+		
+		logger.debug("다녀옴");
+		
+		// 모든정보 조회 서비스
+		List<newsVO> newsAllInfo = nService.getNewsAll();
+		
+		return newsAllInfo;
+	}
+	
+	// 소식 지역 가져오기(페이징_ajax)
+	@GetMapping("/news_filter/{resion}")
+	@ResponseBody
+	public List<newsVO> getNewsFilter(@PathVariable("resion") String news_resion) {
+		logger.debug("getNewsFilter() 실행");
+		logger.debug("news_resion : {}", news_resion);
+		List<newsVO> newsResionInfo = nService.getNewsResion(news_resion);
+		
+		return newsResionInfo;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 		

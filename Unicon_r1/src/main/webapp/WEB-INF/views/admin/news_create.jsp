@@ -152,18 +152,14 @@
                                                     <select id="applyfor" class="form-control form-select" name="news_resion"
                                                     style="padding: 6px 12px;">
                                                         <option value="" disabled selected>지역을 선택하세요</option>
-													    <!-- 특별시 -->
 													    <option value="서울특별시">서울특별시</option>
-													    <!-- 광역시 -->
 													    <option value="부산광역시">부산광역시</option>
 													    <option value="대구광역시">대구광역시</option>
 													    <option value="인천광역시">인천광역시</option>
 													    <option value="광주광역시">광주광역시</option>
 													    <option value="대전광역시">대전광역시</option>
 													    <option value="울산광역시">울산광역시</option>
-													    <!-- 특별자치시 -->
 													    <option value="세종특별자치시">세종특별자치시</option>
-													    <!-- 도 -->
 													    <option value="경기도">경기도</option>
 													    <option value="강원도">강원도</option>
 													    <option value="충청북도">충청북도</option>

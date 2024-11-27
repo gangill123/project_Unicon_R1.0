@@ -38,7 +38,10 @@
 		where news_id = #{news_id} 
 	</select>
 	
-	
+	<!-- 특정 지역 소식 조회하기 -->
+	<select id="getNewsResion" resultType="newsVO">
+		select * from _news where news_resion = #{news_resion} 
+	</select>
 	
 	
 

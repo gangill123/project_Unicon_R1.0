@@ -126,14 +126,15 @@
 						<div class="line-title" style="margin-bottom: 15px;">
 					        <div style="display: flex; justify-content:space-between;">
 						        <h5 class="mb-0" style="display: inline-block;">소식 등록내역</h5>
-						        <button type="button" class="btn btn-secondary" onclick="location.href='/admin/news_manage';"
+						        <button type="button" class="btn btn-secondary" onclick="location.href='/admin/news_manage?resion=${param.resion }&currentPage=${param.currentPage}';"
 						        ><span class="small">목록으로</span></button>
 							</div>
 					    </div>
 					    
                         <div class="col-md-11 col-lg-12">
 
-                        <form class="quform" action="/admin/news_update/${newsInfo.news_id }" method="post" enctype="multipart/form-data" onclick="">
+                        <form class="quform" action="/admin/news_update/${newsInfo.news_id }?resion=${param.resion}&currentPage=${param.currentPage}" 
+                        method="post" enctype="multipart/form-data" onclick="">
                                 <div class="quform-elements">
                                     <div class="row">
                                     
