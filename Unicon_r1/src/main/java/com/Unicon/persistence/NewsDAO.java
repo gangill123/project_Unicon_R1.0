@@ -42,6 +42,9 @@ public class NewsDAO {
 		sqlSession.delete(NAMESPACE+".deleteNews", news_id);
 	}
 	
-	
+	// 특정 지역 소식 조회
+	public List<newsVO> getNewsResion(String news_resion) {
+		return sqlSession.selectList(NAMESPACE+".getNewsResion", news_resion);
+	}
 	
 }

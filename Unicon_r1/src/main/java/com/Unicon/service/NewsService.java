@@ -44,6 +44,9 @@ public class NewsService {
 		ndao.deleteNews(news_id);
 	}
 	
-	
+	// 특정 지역 소식 조회
+	public List<newsVO> getNewsResion(String news_resion) {
+		return ndao.getNewsResion(news_resion);
+	}
 	
 }

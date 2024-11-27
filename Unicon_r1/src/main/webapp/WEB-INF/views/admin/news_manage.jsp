@@ -150,63 +150,42 @@
                                         <div class="row justify-content-center">
 
                                             <div class="col-auto my-2 my-md-0">
-                                            	<select id="applyfor" class="form-control form-select" name="news_resion">
-                                                    <option value="">정렬</option>
-                                                    <option value="Office Executive">등록순</option>
-                                                    <option value="Mutual Fund Executive">행사일순</option>
-                                                    <option value="Financial Investment">지역별</option>
+                                            	<select id="resionSelector" class="form-control form-select" name="news_resion">
+                                                    <option value="전국" ${param.resion == '전국' ? 'selected' : ''}>전국</option>
+												    <option value="서울특별시" ${param.resion == '서울특별시' ? 'selected' : ''}>서울특별시</option>
+												    <option value="부산광역시" ${param.resion == '부산광역시' ? 'selected' : ''}>부산광역시</option>
+												    <option value="대구광역시" ${param.resion == '대구광역시' ? 'selected' : ''}>대구광역시</option>
+												    <option value="인천광역시" ${param.resion == '인천광역시' ? 'selected' : ''}>인천광역시</option>
+												    <option value="광주광역시" ${param.resion == '광주광역시' ? 'selected' : ''}>광주광역시</option>
+												    <option value="대전광역시" ${param.resion == '대전광역시' ? 'selected' : ''}>대전광역시</option>
+												    <option value="울산광역시" ${param.resion == '울산광역시' ? 'selected' : ''}>울산광역시</option>
+												    <option value="세종특별자치시" ${param.resion == '세종특별자치시' ? 'selected' : ''}>세종특별자치시</option>
+												    <option value="경기도" ${param.resion == '경기도' ? 'selected' : ''}>경기도</option>
+												    <option value="강원도" ${param.resion == '강원도' ? 'selected' : ''}>강원도</option>
+												    <option value="충청북도" ${param.resion == '충청북도' ? 'selected' : ''}>충청북도</option>
+												    <option value="충청남도" ${param.resion == '충청남도' ? 'selected' : ''}>충청남도</option>
+												    <option value="전라북도" ${param.resion == '전라북도' ? 'selected' : ''}>전라북도</option>
+												    <option value="전라남도" ${param.resion == '전라남도' ? 'selected' : ''}>전라남도</option>
+												    <option value="경상북도" ${param.resion == '경상북도' ? 'selected' : ''}>경상북도</option>
+												    <option value="경상남도" ${param.resion == '경상남도' ? 'selected' : ''}>경상남도</option>
+												    <option value="제주특별자치도" ${param.resion == '제주특별자치도' ? 'selected' : ''}>제주특별자치도</option>
                                                  </select>
                                             </div>
-                                            <div class="col-auto my-2 my-md-0">
-                                            	<select id="applyfor" class="form-control form-select" name="news_resion">
-                                                    <option value="">정렬</option>
-                                                    <option value="Office Executive">등록순</option>
-                                                    <option value="Mutual Fund Executive">행사일순</option>
-                                                    <option value="Financial Investment">지역별</option>
-                                                 </select>
-                                            </div>
-                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row product-grid">
-							<c:forEach var="list" items="${newsAllInfo }">
-	                            <div class="col-xl-3 col-sm-6">
-	                                <div class="product-details">
-	                                    <div class="product-img">
-	                                        <img src="${list.news_src }" alt="..." class="image rounded-3" style="height: 300px;">
-	                                        <div class="product-cart">
-	                                            <a href="/admin/news_view/${list.news_id }" style="width: 50px; height: 50px;">
-	                                            <i class="fa-regular fa-pen-to-square"></i></a>
-	                                            <a class="deleteNews" data-id=${list.news_id } style="width: 50px; height: 50px;">
-	                                            <i class="fa-solid fa-trash-can"></i></a>
-	                                        </div>
-	                                    </div>
-	                                    <div class="product-info" style="padding: 0;">
-	                                        <a href="/admin/news_view/${list.news_id }">${list.news_subject }</a>
-	                                    </div>
-	                                </div>
-	                            </div>
-							</c:forEach>
-							<div class="row mt-1-9 mt-lg-6">
+                        <div class="row product-grid" id="data-grid"></div>
+                    <!-- end right panel section -->
+					<div class="row mt-1-9 mt-lg-6">
 	                     <div class="col-12">
 	                         <div class="pagination text-small text-uppercase text-extra-dark-gray">
-	                             <ul>
-	                                 <li><a href="#!"><i class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i> Prev</a></li>
-	                                 <li class="active"><a href="#!">1</a></li>
-	                                 <li><a href="#!">2</a></li>
-	                                 <li><a href="#!">3</a></li>
-	                                 <li><a href="#!">Next <i class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i></a></li>
-	                             </ul>
+	                             <ul id="pagination"></ul>
 	                         </div>
 	                     </div>
                  		</div>
-                   		</div>
-                    <!-- end right panel section -->
-
                 </div>
             </div>
             </div>
@@ -219,54 +198,45 @@
 <script>
 $(document).ready(function () {
 	
-	$('.deleteNews').on('click', function(){
-		Swal.fire({
-			  title: '소식을 삭제하시겠습니까?',
-			  text: "삭제 후에는 소식정보를 복구할 수 없습니다.",
-			  icon: 'warning',
-			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  cancelButtonColor: '#d33',
-			  confirmButtonText: '수정',
-			  cancelButtonText: '취소',
-			  customClass: {
-			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
-			  }
-			}).then((result) => {
-				if (result.isConfirmed) {
-					$.ajax({
-						url: '/admin/news_delete/'+$(this).data('id'),
-						type: 'DELETE',
-						success: function(){
-							Swal.fire({
-				  	  			  title: '삭제가 완료되었습니다!',
-				  	  			  text: "신규등록을 통해 재등록이 가능합니다.",
-				  	  			  icon: 'success',
-				  	  			  customClass: {
-				  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
-				 			 	  }
-				  				}).then(function() {
-		                            window.location.href = "/admin/news_manage";  // 페이지 이동
-		                        });
-						},
-						error: function(){
-							Swal.fire({
-			  	  			  title: '에러!',
-			  	  			  icon: 'error',
-			  	  			  customClass: {
-			  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
-			 			 	  }
-			  				});
-						}
-					});
-				}
-			});
-		console.log($(this).data('id'));
-		
-		
-		
-		
+	let resion = $('#resionSelector').val();
+	let currentPage = 1;
+	
+	if(!'${param.currentPage}' == ''){
+		currentPage = parseInt('${param.currentPage}', 10);
+		console.log(currentPage);
+	}
+	
+	//페이징 처리 호출
+	newsPaging(resion, currentPage);
+	
+	$('#resionSelector').on('change', function(){
+		resion = $(this).val();
+		currentPage = 1;
+		newsPaging(resion, currentPage);
 	});
+	
+	//F5 클릭 시 최초 페이지로 이동
+	$(document).on('keydown', function (e) {
+        // F5 키(새로고침) 감지
+        if (e.which === 116) {
+            e.preventDefault(); // 기본 새로고침 방지
+
+            // 특정 로직 처리
+            if (window.location.pathname === '/admin/news_manage') {
+                console.log('F5 detected on the specific page.');
+                // 원하는 작업 실행
+                location.href="/admin/news_manage";
+            } else {
+                console.log('F5 detected on a different page.');
+            }
+        }
+    });
+	
+	
+	
+	
+	
+	
 	
 	
 });//readay
