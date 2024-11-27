@@ -11,7 +11,7 @@ public class MainController {
 	@GetMapping("")
 	public String mainTest() {
 		
-		return "/main/new_template";
+		return "/main/new_main";
 	}
 	
 	//템플릿 테스트

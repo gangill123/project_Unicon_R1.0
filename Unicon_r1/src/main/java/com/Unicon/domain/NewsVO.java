@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
-public class newsVO {
+public class NewsVO {
 	private int news_id;
 	private String news_subject;
 	private String news_content;

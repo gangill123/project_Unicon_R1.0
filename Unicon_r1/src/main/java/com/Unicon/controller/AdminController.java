@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.Unicon.domain.newsVO;
+import com.Unicon.domain.NewsVO;
 import com.Unicon.service.NewsService;
 
 @Controller
@@ -50,7 +50,7 @@ public class AdminController {
 	public String adminNews(Model model) {
 		
 		// 모든정보 조회 서비스
-		List<newsVO> newsAllInfo = nService.getNewsAll();
+		List<NewsVO> newsAllInfo = nService.getNewsAll();
 		
 		model.addAttribute("newsAllInfo", newsAllInfo);
 		
@@ -65,7 +65,7 @@ public class AdminController {
 	
 	//소식등록처리
 	@PostMapping("/news_create")
-	public String adminNewsCreatePOST(newsVO vo) {
+	public String adminNewsCreatePOST(NewsVO vo) {
 		
 		logger.debug(vo.toString());
 		
@@ -103,7 +103,7 @@ public class AdminController {
 	public String getNewsInfo(@PathVariable("num") int num, Model model) {
 		
 		// 특정 소식정보 가져오기
-		newsVO newsInfo  =	nService.getNews(num);
+		NewsVO newsInfo  =	nService.getNews(num);
 		model.addAttribute("newsInfo", newsInfo);
 		
 		return "admin/news_view";
@@ -111,7 +111,7 @@ public class AdminController {
 	
 	// 소식정보 수정
 	@PostMapping(value = "/news_update/{num}")
-	public String updateNewsInfo(newsVO vo, @RequestParam("resion") String resion,
+	public String updateNewsInfo(NewsVO vo, @RequestParam("resion") String resion,
 			@RequestParam("currentPage") int currentPage) {
 		
 		logger.debug("updateNewsInfo(newsVO vo) 실행");
@@ -160,12 +160,12 @@ public class AdminController {
 	// 소식 모두(전국) 가져오기(페이징_ajax)
 	@GetMapping("/news_filter/all")
 	@ResponseBody
-	public List<newsVO> getNewsAllFilter() {
+	public List<NewsVO> getNewsAllFilter() {
 		
 		logger.debug("다녀옴");
 		
 		// 모든정보 조회 서비스
-		List<newsVO> newsAllInfo = nService.getNewsAll();
+		List<NewsVO> newsAllInfo = nService.getNewsAll();
 		
 		return newsAllInfo;
 	}
@@ -173,14 +173,22 @@ public class AdminController {
 	// 소식 지역 가져오기(페이징_ajax)
 	@GetMapping("/news_filter/{resion}")
 	@ResponseBody
-	public List<newsVO> getNewsFilter(@PathVariable("resion") String news_resion) {
+	public List<NewsVO> getNewsFilter(@PathVariable("resion") String news_resion) {
 		logger.debug("getNewsFilter() 실행");
 		logger.debug("news_resion : {}", news_resion);
-		List<newsVO> newsResionInfo = nService.getNewsResion(news_resion);
+		List<NewsVO> newsResionInfo = nService.getNewsResion(news_resion);
 		
 		return newsResionInfo;
 	}
 	
+	
+	// 슬라이드 등록 페이지 이동
+	@GetMapping("/slide_create")
+	public String slideCreate() {
+		logger.debug("slideCreate() 실행");
+		
+		return "/admin/slide_create";
+	}
 	
 	
 	

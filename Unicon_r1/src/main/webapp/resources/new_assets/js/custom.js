@@ -177,6 +177,51 @@
 					}
 				});
 		});
-		
-		/////페이징 처리 및 삭제처리/////
 	}
+	/////페이징 처리 및 삭제처리/////
+	
+	
+	////슬라이드 미리보기////
+	function createImagePreview(e, previewSelector) {
+	    const imgTag = 
+	    	`<div class="container-fluid p-0">
+			    <div class="row slider-fade-shop">
+			        <div class="owl-carousel owl-theme w-100">
+			            <div class="text-start item bg-img cover-background" data-overlay-dark="0" data-background="${e.target.result}">
+			                <div class="caption">
+			                    <div class="container">
+			                        <div class="overflow-hidden w-md-85 w-lg-75">
+			                            <h1 class="main-font">상단문구</h1>
+			                            <div class="subheading">하단<strong>강조</strong>하단</div>
+			                            <a href="#!" class="butn primary">
+			                                <span class="alt-font">버튼</span>
+			                            </a>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+	    	
+	    	
+	    	<img 
+	            src="${e.target.result}" 
+	            alt="Uploaded Image" 
+	            style="max-width: 100%; max-height: 100%; object-fit: cover;" 
+	        />`;
+	    
+	    // 해당 셀렉터에 HTML 삽입
+	    $(previewSelector).html(imgTag);
+	}
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	

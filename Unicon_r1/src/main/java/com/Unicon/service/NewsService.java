@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.Unicon.domain.newsVO;
+import com.Unicon.domain.NewsVO;
 import com.Unicon.persistence.NewsDAO;
 
 @Service("newsService")
@@ -20,22 +20,22 @@ public class NewsService {
 	
 	
 	// 소식 생성
-	public void newsCreate(newsVO vo) {
+	public void newsCreate(NewsVO vo) {
 		ndao.newsCreate(vo);
 	}
 	
 	// 모든 소식 조회
-	public List<newsVO> getNewsAll() {
+	public List<NewsVO> getNewsAll() {
 		return ndao.getNewsAll();
 	}
 	
 	// 특정 소식 조회
-	public newsVO getNews(int news_id) {
+	public NewsVO getNews(int news_id) {
 		return ndao.getNews(news_id);
 	}
 	
 	// 소식정보 수정
-	public void updateNews(newsVO vo) {
+	public void updateNews(NewsVO vo) {
 		ndao.updateNews(vo);
 	}
 	
@@ -45,7 +45,7 @@ public class NewsService {
 	}
 	
 	// 특정 지역 소식 조회
-	public List<newsVO> getNewsResion(String news_resion) {
+	public List<NewsVO> getNewsResion(String news_resion) {
 		return ndao.getNewsResion(news_resion);
 	}
 	

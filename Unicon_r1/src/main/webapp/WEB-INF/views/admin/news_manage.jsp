@@ -36,15 +36,14 @@
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> Electrical</button>
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> 슬라이드 관리</button>
                                             </h5>
                                         </div>
                                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
                                             <div class="card-body">
                                                 <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">Flash Lights</a></li>
-                                                    <li><a href="#!">Tool Organisers</a></li>
-                                                    <li><a href="#!">Safety Cables</a></li>
+                                                    <li><a href="/admin/slide_create">슬라이드 등록</a></li>
+                                                    <li><a href="#!">슬라이드 등록내역</a></li>
                                                 </ul>
                                             </div>
                                         </div>

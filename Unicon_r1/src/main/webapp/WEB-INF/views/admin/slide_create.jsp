@@ -12,7 +12,7 @@
 	<section style="padding-top: 50px;">
             <div class="container">
 	            <div class="line-title">
-			        <h4 class="mb-0">소식 관리</h4>
+			        <h4 class="mb-0">슬라이드 관리</h4>
 			    </div>
                 <div class="row">
 
@@ -27,10 +27,10 @@
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">슬라이드 관리</button>
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">슬라이드 관리</button>
                                             </h5>
                                         </div>
-                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
                                             <div class="card-body">
                                                 <ul class="mb-0 list-unstyled">
                                                     <li><a href="/admin/slide_create">슬라이드 등록</a></li>
@@ -42,12 +42,12 @@
                                     <div class="card">
                                         <div class="card-header" id="headingTwo">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                                <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                   소식 관리
                                 </button>
                                             </h5>
                                         </div>
-                                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordion">
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
                                             <div class="card-body">
                                                 <ul class="mb-0 list-unstyled">
                                                     <li><a href="/admin/news_create">소식 등록</a></li>
@@ -123,144 +123,146 @@
                     <!-- start right panel section -->
                     <div class="col-lg-9 ps-lg-1-9">
 						<div class="line-title">
-					        <h5 class="mb-0">소식 등록</h5>
+					        <h5 class="mb-0">슬라이드 등록</h5>
 					    </div>
                         <div class="col-md-11 col-lg-12">
-
-                        <form class="quform" action="/admin/news_create" method="post" enctype="multipart/form-data" onclick="">
+                        
+                        <form class="quform" action="/admin/slide_create" method="post" enctype="multipart/form-data" onclick="">
                                 <div class="quform-elements">
                                     <div class="row">
                                     
-                                        <!-- Begin Select element -->
-                                        <div class="col-md-12">
-                                            <div class="quform-element form-group">
-                                            	<label for="name">소식명<span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="name" class="form-control" type="text" name="news_subject" placeholder="First Name">
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <!-- End Select element -->
-
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="applyfor">지역 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <select id="applyfor" class="form-control form-select" name="news_resion"
-                                                    style="padding: 6px 12px;">
-                                                        <option value="" disabled selected>지역을 선택하세요</option>
-													    <option value="서울특별시">서울특별시</option>
-													    <option value="부산광역시">부산광역시</option>
-													    <option value="대구광역시">대구광역시</option>
-													    <option value="인천광역시">인천광역시</option>
-													    <option value="광주광역시">광주광역시</option>
-													    <option value="대전광역시">대전광역시</option>
-													    <option value="울산광역시">울산광역시</option>
-													    <option value="세종특별자치시">세종특별자치시</option>
-													    <option value="경기도">경기도</option>
-													    <option value="강원도">강원도</option>
-													    <option value="충청북도">충청북도</option>
-													    <option value="충청남도">충청남도</option>
-													    <option value="전라북도">전라북도</option>
-													    <option value="전라남도">전라남도</option>
-													    <option value="경상북도">경상북도</option>
-													    <option value="경상남도">경상남도</option>
-													    <option value="제주특별자치도">제주특별자치도</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="last_name">장소 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="last_name" class="form-control" type="text" name="news_place" placeholder="Last Name">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-                                        
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="last_name">주관기관 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="last_name" class="form-control" type="text" name="news_ins" placeholder="Last Name">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="last_name">참여대상 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="last_name" class="form-control" type="text" name="news_att" placeholder="Last Name">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-                                        
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="email">행사일자 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="email" class="form-control" type="date" name="news_date" placeholder="name@example.com">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="linkedin">행사시간</label>
-                                                <div class="quform-input">
-                                                    <input id="linkedin" class="form-control" type="time" name="news_time" placeholder="Linkedin">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-
-                                        <!-- Begin Textarea element -->
-                                        <div class="col-md-12">
-                                            <div class="quform-element form-group">
-                                                <label for="message">내용 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <textarea id="message" class="form-control" name="news_content" rows="4" placeholder="How'd you hear about Crizal?"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Textarea element -->
-                                        
-                                        <!-- Begin Upload element -->
+                                    <!-- Begin Upload element -->
                                         <div class="col-md-12">
                                         <div class="col-md-6">
                                             <div class="quform-element form-group">
                                                 <div class="quform-input">
-                                                    <label for="resume">소식 이미지 <span class="quform-required">*</span></label>
+                                                    <label for="resume">슬라이드 이미지 <span class="quform-required">*</span></label>
                                                     <div class="custom-file">
                                                         <input class="custom-file-input" type="file" id="resume" name="news_file" required>
                                                         <label class="custom-file-label" data-browse="Browse">파일선택</label>
                                                     </div>
-                                                    <p class="quform-description">이미지파일만 업로드 가능. 최대크기 10MB.</p>
+                                                    <p class="quform-description">이미지파일만 업로드 가능. 권장사이즈 1920x700</p>
                                                 </div>
                                             </div>
                                         </div>
                                         </div>
                                        <!-- End Upload element -->
-                                        
-                                        <div class="col-md-3">
+                                    
+                                    	<div class="col-md-12">
+	                                      <div class="quform-element form-group">
+	                                          <div id="slide_preview"></div>
+	                                      </div>
+	                                  </div>
+                                    
+                                        <!-- Begin Select element -->
+                                        <div class="col-md-6">
                                             <div class="quform-element form-group">
-                                                <div id="news_preview"></div>
+                                            	<label for="name">슬라이드 제목<span class="quform-required">*</span></label>
+                                                <div class="quform-input">
+                                                    <input id="name" class="form-control" type="text" name="ms_name" placeholder="슬라이드 제목을 작성하세요">
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- End Select element -->
+
+										<!-- Begin Text input element -->
+                                        <div class="col-md-3">
+                                            <div class="quform-element form-group">
+                                                <label for="textSelector">문구 적용유무<span class="quform-required">*</span></label>
+                                                <div class="quform-input">
+                                                    <select id="textSelector" class="form-control form-select" 
+                                                    style="padding: 6px 12px;">
+                                                        <option value="적용안함" selected>적용안함</option>
+													    <option value="적용">적용</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-3">
+                                            <div class="quform-element form-group">
+                                                <label for="btnSelector">버튼 적용유무<span class="quform-required">*</span></label>
+                                                <div class="quform-input">
+                                                    <select id="btnSelector" class="form-control form-select" name="news_resion"
+                                                    style="padding: 6px 12px;">
+                                                        <option value="적용안함" selected>적용안함</option>
+													    <option value="적용">적용</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_tText">상단문구 <span class="quform-required">*</span></label>
+                                                <div>
+                                                    <input id="ms_tText" class="form-control slide-text" type="text" name="news_place" placeholder="최대 10글자" disabled>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- End Text input element -->
+
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_bText1">하단문구(좌측) <span class="quform-required">*</span></label>
+                                                <div class="quform-input">
+                                                    <input id="ms_bText1" class="form-control slide-text" type="text" name="ms_bText1" placeholder="최대 5글자" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_sText">강조문구 <span class="quform-required">*</span></label>
+                                                <div class="quform-input">
+                                                    <input id="ms_sText" class="form-control slide-text" type="text" name="ms_sText" placeholder="최대 5글자" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_bText1">하단문구(우측)<span class="quform-required">*</span></label>
+                                                <div class="quform-input">
+                                                    <input id="ms_bText1" class="form-control slide-text" type="text" name="ms_bText1" placeholder="최대 5글자" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_btnText">버튼명</label>
+                                                <div class="quform-input">
+                                                    <input id="ms_btnText" class="form-control slide-btn" type="text" name="ms_btnText" placeholder="최대 5글자" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_btnUrl">버튼URL</label>
+                                                <div class="quform-input">
+                                                    <input id="ms_btnUrl" class="form-control slide-btn" type="text" name="ms_btnUrl" placeholder="ex)/admin/slide_manage" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
 
                                         <!-- Begin Submit button -->
                                         <div class="col-md-12">
@@ -272,12 +274,9 @@
                                         <!-- End Submit button -->
 
                                     </div>
-
                                 </div>
                             </form>
-
                     </div>
-
                 </div>
             </div>
             </div>
@@ -295,24 +294,43 @@ $(document).ready(function () {
         $(this).next('.custom-file-label').text(fileName || 'Choose file');
         
         const file = event.target.files[0]; // 업로드한 파일 가져오기
-	    const $preview = $('#news_preview'); // 미리보기 영역 선택
+	    const $preview = $('#slide_preview'); // 미리보기 영역 선택
 	    if (file) {
 	    	const reader = new FileReader();
 	        reader.onload = function(e) {
-	          const imgTag = 
-	            "<img src='" + e.target.result + "' alt='Uploaded Image' " +
-	            "style='max-width: 100%; max-height: 100%; object-fit: cover;' />";
-	          $preview.html(imgTag);
+	        	createImagePreview(e, $preview);
 	        };
 	        reader.readAsDataURL(file); // 파일을 Data URL로 읽기
+	        
 	    } else {
 	    	$preview.empty();
 	    }
-        
-        
-        
-        
     });
+    
+    
+    // 적용유무에 따라서 input 활성화
+    // 문구
+    $('#textSelector').on('change', function(){
+		if($(this).val() === '적용'){
+			console.log($(this).val());
+			$('.slide-text').prop('disabled', false); // disabled 속성 해제
+		} else {
+			$('.slide-text').prop('disabled', true); // disabled 속성 해제
+		}
+	});
+    
+    // 버튼
+    $('#btnSelector').on('change', function(){
+		if($(this).val() === '적용'){
+			console.log($(this).val());
+			$('.slide-btn').prop('disabled', false); // disabled 속성 해제
+		} else {
+			$('.slide-btn').prop('disabled', true); // disabled 속성 해제
+		}
+	});
+    
+    
+    
     
     
     
