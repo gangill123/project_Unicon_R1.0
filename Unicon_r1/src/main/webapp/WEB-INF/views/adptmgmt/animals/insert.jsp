@@ -22,6 +22,7 @@
 <!-- End layout styles -->
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/admin/images/favicon.png" />
 <style type="text/css">
+
 	.upload-container {
 		position: relative;
 		aspect-ratio: 1 / 1;
@@ -127,7 +128,7 @@
 	
 	.custom-a-fieldset {
 		border: 2px solid #ccc;
-		padding: 2.5rem;
+		padding: 1rem;
 		border-radius: 1rem;
 	}
 	
@@ -153,6 +154,77 @@
 		border-radius: 0.5rem;
 	}
 
+.aAct-tooltip, .aSocial-tooltip {
+position: relative;
+display: inline-block;
+}
+
+.aAct-tooltip-icon, .aSocial-tooltip-icon {
+font-size: 1rem;
+cursor: pointer;
+margin: 0.4rem;
+color: black;
+}
+
+.aAct-tooltip-text, .aSocial-tooltip-text {
+visibility: hidden;
+width: 20rem;
+background-color: black;
+color: #fff;
+text-align: center;
+border-radius: 0.5rem;
+padding: 1rem;
+position: absolute;
+z-index: 1;
+bottom: 125%;
+left: 50%;
+margin: 0 -9rem;
+opacity: 0;
+transition: opacity 0.3s;
+}
+
+.aAct-tooltip:hover .aAct-tooltip-text {
+visibility: visible;
+opacity: 1;
+}
+
+.aSocial-tooltip:hover .aSocial-tooltip-text {
+visibility: visible;
+opacity: 1;
+}
+
+.radio-group {
+display: flex;
+}
+
+.radio-box {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 50px; 
+height: 50px;
+background-color: #f0f0f0;
+border: 1px solid #ccc;
+margin-right: 0;
+cursor: pointer;
+transition: background-color 0.3s, border-color 0.3s;
+}
+
+.radio-box input {
+position: absolute;
+opacity: 0.5;
+cursor: pointer;
+}
+
+.radio-box:hover {
+background-color: #d0d0d0;
+}
+
+.radio-box input:checked + label {
+    background-color: #007bff !important;
+    color: #007bff;
+    border-color: #007bff;
+}
 	
 </style>
 </head>
@@ -411,17 +483,49 @@
 												</fieldset>
 												
 												<fieldset class="custom-a-fieldset col-12 col-xl-12 mb-5">
-												<legend class="custom-a-sub-legend">활동성 및 사회성</legend>
+												<legend class="custom-a-sub-legend">성격</legend>
 													<div class="row">
 														<div class="col-12 col-xl-6 col-lg-8 col-md-5 mb-3">
-															<label for="aAct" class="text-dark custom-label">활동성</label>
-															<input type="range" id="aAct" name="animal_act" min="1" max="5"
-																step="1" class="form-control"/>
+															<div class="row">
+																<label for="aAct" class="text-dark custom-label">활동성</label>
+																<div class="aAct-tooltip">
+																	<i class="fas fa-question-circle aAct-tooltip-icon"></i>
+																	<span class="aAct-tooltip-text">여기에 설명이나 힌트를 입력하세요.</span>
+																</div>
+															</div>
+															<input type="range" id="aAct" name="animal_act" min="0" max="5"
+																step="1" value="0" class="form-control"/>
 														</div>
 														<div class="col-12 col-xl-6 col-lg-8 col-md-5 mb-3">
-															<label for="aSocial" class="text-dark custom-label">사회성</label>
-															<input type="range" id="aSocial" name="animal_social" min="1" max="5"
-																step="1" class="form-control"/>
+															<div class="row">
+																<label for="aSocial" class="text-dark custom-label">사회성</label>
+																<div class="aSocial-tooltip">
+																	<i class="fas fa-question-circle aSocial-tooltip-icon"></i>
+																	<span class="aSocial-tooltip-text">여기에 설명이나 힌트를 입력하세요.</span>
+																</div>
+															</div>
+<div class="radio-group">
+<label class="radio-box">
+<input type="radio" name="rating" value="1">
+1
+</label>
+<label class="radio-box">
+<input type="radio" name="rating" value="2">
+2
+</label>
+<label class="radio-box">
+<input type="radio" name="rating" value="3">
+3
+</label>
+<label class="radio-box">
+<input type="radio" name="rating" value="4">
+4
+</label>
+<label class="radio-box">
+<input type="radio" name="rating" value="5">
+5
+</label>
+</div>
 														</div>
 													</div>
 												</fieldset>
