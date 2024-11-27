@@ -60,7 +60,7 @@ public class VolunteerController {
     
     @GetMapping("")
     public String userList(Model model) throws Exception {
-    	VolunteerVO volunteerInfo = volService.getVolunteerInfo();
+        VolunteerVO volunteerInfo = volService.getVolunteerInfo();
         List<VolunteerVO> ongoingVolunteers = volService.getOngoingVolunteers();
         List<VolunteerVO> closedVolunteers = volService.getClosedVolunteers();
         

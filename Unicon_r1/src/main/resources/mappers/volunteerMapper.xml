@@ -70,7 +70,8 @@
     </select>
 
     <!-- 봉사활동 목록 조회 -->
-    <select id="selectVolunteerList" parameterType="map" resultType="VolunteerVO">
+    <!-- 진행중인 봉사활동 -->
+	<select id="getOngoingVolunteers" parameterType="map" resultType="VolunteerVO">
 	    select 
 	        v.*,
 	        (select count(*) from _volunteer_apply 
@@ -78,11 +79,8 @@
 	    from _volunteer v
 	    where v.status = 'active'
 	    <if test="keyword != null and keyword != ''">
-	        and (
-	            v.voTitle like concat('%', #{keyword}, '%')
-	        or 
-	        	v.voLocation like concat('%', #{keyword}, '%')
-	        )
+	        and (v.voTitle like concat('%', #{keyword}, '%') 
+	        or v.voLocation like concat('%', #{keyword}, '%'))
 	    </if>
 	    <if test="startDate != null">
 	        and v.voRecruitEnd >= #{startDate}
@@ -95,7 +93,31 @@
 	        limit #{start}, #{size}
 	    </if>
 	</select>
-
+	
+	<!-- 마감된 봉사활동 -->
+	<select id="getClosedVolunteers" parameterType="map" resultType="VolunteerVO">
+	    select 
+	        v.*,
+	        (select count(*) from _volunteer_apply 
+	         where volunteerId = v.voId and status != 'CANCELED') as applicationCount
+	    from _volunteer v
+	    where v.status = 'draft'
+	    <if test="keyword != null and keyword != ''">
+	        and (v.voTitle like concat('%', #{keyword}, '%') 
+	        or v.voLocation like concat('%', #{keyword}, '%'))
+	    </if>
+	    <if test="startDate != null">
+	        and v.voRecruitEnd >= #{startDate}
+	    </if>
+	    <if test="endDate != null">
+	        and v.voRecruitStart &lt;= #{endDate}
+	    </if>
+	    order by v.voRegDate desc
+	    <if test="start != null and size != null">
+	        limit #{start}, #{size}
+	    </if>
+	</select>
+	
     <!-- 봉사활동 신청 등록 -->
     <insert id="insertVolunteerApply" parameterType="VolunteerApplyVO">
         insert into _volunteer_apply (
