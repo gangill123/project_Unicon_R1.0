@@ -136,7 +136,13 @@
 		    var isLoading = false;
 		    console.log("Initial total notices:", '${fn:length(notices)}');
 		    var totalNotices = parseInt('${fn:length(notices)}'); // JSP 변수를 JavaScript 변수로 변환
-
+			
+		 	// 페이지 로드 시 체크
+		    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+		        // 새로고침으로 페이지가 로드된 경우
+		        window.location.href = '/notice';
+		    }
+		    
 		    // 초기에 더 불러올 데이터가 없으면 버튼 숨기기
 		    if (totalNotices > 0) {  // 공지사항이 있으면 버튼 표시
 		        $('#loadMoreBtn').show();
