@@ -4,10 +4,16 @@ import org.slf4j.Logger;
 
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.Unicon.domain.InquiryVO;
+import com.Unicon.service.InquiryService;
 
 
 @Controller
@@ -15,7 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class InquiryController {
 
 	private static final Logger logger = LoggerFactory.getLogger(InquiryController.class);
-
+	
+	@Autowired
+	private InquiryService inquiryService;
+	
+	
     @GetMapping("/inquiry")
     public String main() {
     	logger.debug("inquiry 메인 페이지 실행");
@@ -69,6 +79,18 @@ public class InquiryController {
         return "inquiry/etc";  
     }
     
+    // 게시글 상세 페이지
+    @GetMapping("/board/{bno}")
+    public String getBoardDetail(@PathVariable int bno, Model model) {
+        // bno에 해당하는 게시글 상세 정보를 가져옴
+        InquiryVO boardDetail = inquiryService.getBoardDetail(bno);
+        
+        // 모델에 데이터 전달
+        model.addAttribute("boardDetail", boardDetail);
+        
+        // 상세 페이지로 이동
+        return "inquiry/boardDetail"; // boardDetail.jsp로 이동
+    }
     
     
     

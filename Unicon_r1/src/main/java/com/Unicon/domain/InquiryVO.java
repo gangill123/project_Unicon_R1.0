@@ -2,7 +2,9 @@ package com.Unicon.domain;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -18,8 +20,8 @@ public class InquiryVO {
 	String title; // 제목
 	String content;// 내용
 	String istatus; // 카테고리 분류
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-	Date created_at; // 작성일
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+	private Date created_at; // 작성일
 	String image_id; // 이미지
 	String attachment; // 첨부파일주소
 
@@ -32,11 +34,17 @@ public class InquiryVO {
 	Timestamp answerdate; // 답변일
 
 	String email;
-	int phone;
+	String phone;
 	String MultipartFile;
+	private String filePath; // 파일 저장 경로
 
 	private String recaptcha; // reCAPTCHA 토큰
-
+	
+	
+	
+	
+	
+	
 	public String getRecaptcha() {
 		return recaptcha;
 	}
@@ -44,5 +52,6 @@ public class InquiryVO {
 	public void setRecaptcha(String recaptcha) {
 		this.recaptcha = recaptcha;
 	}
+	
 	
 }

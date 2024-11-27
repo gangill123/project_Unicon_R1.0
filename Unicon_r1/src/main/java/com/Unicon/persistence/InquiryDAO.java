@@ -2,6 +2,7 @@ package com.Unicon.persistence;
 
 import java.util.List;
 
+import com.Unicon.domain.InquiryFileVO;
 import com.Unicon.domain.InquiryVO;
 
 public interface InquiryDAO {
@@ -13,4 +14,8 @@ public interface InquiryDAO {
 	public int getTotalCount();
 
 	void insertInquiry(InquiryVO inquiry);
+
+	void insertFile(InquiryFileVO inquiryFileVO);
+
+	InquiryVO getBoardDetail(int bno);
 }

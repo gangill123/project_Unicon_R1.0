@@ -28,10 +28,26 @@
 	</select>
 
 	<!-- 문의 데이터 삽입 -->
-	<insert id="insertInquiry" parameterType="InquiryVO">
-		INSERT INTO _inquiry (member_id, member_name, title, content, created_at, istatus, email, phone) 
-		VALUES (#{member_id}, #{member_name}, #{title}, #{content}, now(), #{istatus}, #{email}, #{phone})
+	<insert id="insertInquiry" useGeneratedKeys="true"
+		keyProperty="bno">
+		INSERT INTO _inquiry (member_id, member_name, title, content, created_at,
+		istatus, email, phone)
+		VALUES (#{member_id}, #{member_name}, #{title}, #{content}, now(),
+		#{istatus}, #{email}, #{phone})
 	</insert>
 
+	<!-- 파일 정보를 데이터베이스에 삽입하는 SQL -->
+	<insert id="insertFile"
+		parameterType="com.Unicon.domain.InquiryFileVO">
+		INSERT INTO _inquiry_file (bno, originalName, storedName, filePath,
+		fileType, uploadDate, thumbnailPath)
+		VALUES (#{bno}, #{originalName}, #{storedName}, #{filePath}, #{fileType},
+		#{uploadDate}, #{thumbnailPath})
+	</insert>
+	
+	 <!-- 게시글 상세 조회 쿼리 -->
+    <select id="getBoardDetail" parameterType="int" resultType="InquiryVO">
+        SELECT * FROM _inquiry WHERE bno = #{bno}
+    </select>
 
 </mapper>

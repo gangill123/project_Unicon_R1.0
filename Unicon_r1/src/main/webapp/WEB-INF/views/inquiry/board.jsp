@@ -57,9 +57,10 @@ td, th {
 
 /* 제목 스타일 */
 .title {
-	width: 60%;
-	text-align: center;
-	font-weight: bold;
+    width: 60%;
+    text-align: left;
+    font-weight: bold;
+ 
 }
 
 /* 글쓴이와 작성일 */
@@ -74,6 +75,10 @@ td, th {
 .status {
 	font-weight: bold;
 	color: #2ecc71; /* 진행중 상태는 초록색 */
+}
+th.istatus {
+	font-weight: bold;
+	text-align: center;	
 }
 
 /* 검색창 스타일 */
@@ -112,12 +117,35 @@ h2 {
     background-color: #27ae60; /* 호버 시 색상 변경 */
 }
 
-/* 상태 열 스타일 */
+/* 상태 열 스타일 - 가로 정렬 */
 .status {
-    text-align: center;
     font-weight: bold;
     color: #333;
+    writing-mode: horizontal-tb; /* 텍스트를 가로 방향으로 설정 */
+    text-align: left; /* 기본 정렬 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
+
+/* th 요소는 제외하고, td 요소의 istatus에만 스타일 적용 */
+td.istatus {
+    font-weight: bold;
+    color: #333;
+    writing-mode: horizontal-tb;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e6f7ff;
+    padding: 5px 20px;
+    border-radius: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center; /* 아이콘과 텍스트를 수평 정렬 */
+    gap: 8px; /* 아이콘과 텍스트 간 간격 */
+    transition: all 0.3s ease;
+   
+	line-height: 30px; /* 텍스트가 수직으로 중앙에 오게 설정 */
+}
+
+
 
 /* 진행 중 상태 */
 .status-ongoing {
@@ -177,7 +205,7 @@ h2 {
             <div class="col-md-12">
                 <ul class="ps-0">
                     <li><a href="inquiry"><i class="ti-home"></i></a></li>
-                    <li class="active"><a href="board">문의게시판</a></li>
+                    <li class="active"><a href="board">Unicon Q&A 문의게시판</a></li>
                 </ul>
             </div>
         </div>
@@ -187,9 +215,11 @@ h2 {
 <br>
 <br>
 
+
+
 <div class="container">
 	<div class="section-heading">
-		<h3>문의 게시판</h3>
+		<h3>Unicon Q&A 문의게시판</h3>
 	</div>
 	<div class="row position-relative">
 		<div class="col-12">
@@ -198,7 +228,8 @@ h2 {
 					<thead>
 						<tr>
 							<th class="no">No</th>
-							<th class="title">제목</th>
+							<th class="istatus">카테고리</th>
+							<th class="title"><a href="/inquiry/board/{bno}">제목</a></th>
 							<th class="member">작성자</th>
 							<th class="date">작성일</th>
 							<th class="status">상태</th>
@@ -250,9 +281,10 @@ $(document).ready(function () {
                     tbody +=
                         '<tr>' +
                         '<td class="no">' + inquiry.bno + '</td>' +
-                        '<td class="title">' + inquiry.title + '</td>' +
+                        '<td class="istatus">' + inquiry.istatus + '</td>' +
+                        '<td class="title"><a href="/inquiry/board/' + inquiry.bno + '">' + inquiry.title + '</a></td>' + // 게시글 제목에 링크 추가
                         '<td class="member">' + inquiry.member_name + '</td>' +
-                        '<td class="date">' + inquiry.created_at + '</td>' +
+                        '<td class="date">' + inquiry.created_at + '</td>' +                       
                         '<td class="status ' + statusClass + '">' + statusText + '</td>' +
                         '</tr>';
                 });

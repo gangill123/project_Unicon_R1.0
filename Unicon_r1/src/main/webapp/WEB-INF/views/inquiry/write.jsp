@@ -8,10 +8,15 @@
     <link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
 
 <!-- 추가 템플릿 css/js 작성란 -->
-<style>
-
-
-</style>
+ <style>
+           /* 썸네일 미리보기 스타일 */
+        #thumbnailPreview {
+            margin-top: 10px;
+            max-width: 150px;
+            max-height: 150px;
+            display: none; /* 기본적으로 숨겨두기 */
+        }
+    </style>
 </head>
 <%@ include file="../inc/new_header.jsp"%>
 <!-- header -->
@@ -47,7 +52,7 @@
 
                         <!-- start form here -->
 
-       		<form id="quform" class="quform">
+       		<form id="quform" class="quform" enctype="multipart/form-data">
     <div class="quform-elements">
         <div class="row">
             <!-- 카테고리 선택 -->
@@ -109,7 +114,17 @@
                     </div>
                 </div>
             </div>
+			
+			
+	  		
+     <!-- 파일 업로드 -->
+    <label for="file">파일 업로드:</label>
+    <input type="file" id="file" name="file" accept="image/*" onchange="previewThumbnail()"><br><br>
 
+    <!-- 썸네일 미리보기 -->
+    <img id="thumbnailPreview" src="" alt="썸네일 미리보기" style="max-width: 300px; display: none;"><br><br>
+
+				
             <!-- reCAPTCHA -->
             <div class="quform-element">
                 <div class="form-group">
@@ -118,6 +133,13 @@
                     </div>														
                 </div>
             </div>
+            
+          
+		 
+		    
+
+            
+            
 
             <!-- 제출 버튼 -->
             <div class="col-md-12">
@@ -191,74 +213,110 @@
 
 
 
+ <script>
+        function previewThumbnail() {
+            const fileInput = document.getElementById('file');
+            const preview = document.getElementById('thumbnailPreview');
 
+            // 파일 선택 여부 확인
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                // 파일 읽기 완료 후 실행되는 콜백 함수
+                reader.onload = function (e) {
+                    preview.src = e.target.result; // 읽은 파일을 이미지로 설정
+                    preview.style.display = 'block'; // 이미지 표시
+                };
+
+                reader.readAsDataURL(fileInput.files[0]); // 파일을 읽어 DataURL로 변환
+            } else {
+                preview.style.display = 'none'; // 파일 선택 취소 시 이미지 숨기기
+                preview.src = ''; // 이미지 src 초기화
+            }
+        }
+    </script>
 
 
 
 <script>
 document.getElementById("quform").addEventListener("submit", function (event) {
     event.preventDefault(); // 폼 제출 방지
-	
+
     // reCAPTCHA 응답 토큰 가져오기
     const recaptchaResponse = grecaptcha.getResponse();
-    
-    
-    
+
     // 폼 데이터 가져오기
-    const data = {
-        member_name: document.getElementById("member_name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        title: document.getElementById("title").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        content: document.getElementById("content").value.trim(),
-        istatus: document.getElementById("istatus").value.trim(),
-        recaptcha: recaptchaResponse, // reCAPTCHA 응답 토큰 추가
-    };
+    const member_name = document.getElementById("member_name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const title = document.getElementById("title").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const content = document.getElementById("content").value.trim();
+    const istatus = document.getElementById("istatus").value.trim();
+    const file = document.getElementById("file").files[0]; // 파일 가져오기 (예: file input id="file")
 
     // 유효성 검사
-    if (!data.member_name) return alert("작성자 이름을 입력해주세요.");
-    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.email))
+    if (!member_name) return alert("작성자 이름을 입력해주세요.");
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email))
         return alert("유효한 이메일을 입력해주세요.");
-    if (!data.title) return alert("제목을 입력해주세요.");
-    if (!/^[0-9]{10,11}$/.test(data.phone))
+    if (!title) return alert("제목을 입력해주세요.");
+    if (!/^[0-9]{10,11}$/.test(phone))
         return alert("휴대폰 번호는 10-11자리 숫자로 입력해주세요.");
-    if (!data.content) return alert("문의 내용을 입력해주세요.");
-    if (data.istatus === "default") return alert("카테고리를 선택해주세요.");
+    if (!content) return alert("문의 내용을 입력해주세요.");
+    if (istatus === "default") return alert("카테고리를 선택해주세요.");
     // reCAPTCHA 응답 확인
     if (!recaptchaResponse) {
         alert("reCAPTCHA 인증을 완료해주세요."); // 사용자에게 알림
         return; // 폼 제출 중단
     }
 
-    // JSON 데이터 전송
+    // FormData 객체 생성
+    const formData = new FormData();
+    formData.append("member_name", member_name);
+    formData.append("email", email);
+    formData.append("title", title);
+    formData.append("phone", phone);
+    formData.append("content", content);
+    formData.append("istatus", istatus);
+    formData.append("recaptcha", recaptchaResponse); // reCAPTCHA 응답 토큰 추가
+    if (file) {
+        formData.append("file", file); // 파일이 있으면 함께 추가
+    }
+
+    // JSON 데이터와 파일을 함께 전송
     fetch("/api/submit", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify(data),
+        body: formData, // FormData를 직접 body로 전송
     })
-        .then((response) => {
-            if (!response.ok) throw new Error("서버 오류: " + response.status);
-            return response.text();
-        })
-        .then((result) => {
-        	
-        	// SweetAlert2 사용 예시
-        	Swal.fire({
-        	  title: '문의하기',
-        	  text: '작성이 완료되었습니다.',
-        	  icon: 'success',
-        	  confirmButtonText: '확인'
-        	});
-        	  grecaptcha.reset(); // reCAPTCHA 초기화
-        	   document.getElementById("quform").reset(); // 폼 초기화
-          
-        })
-        .catch((error) => {
-            console.error("문의 등록 중 오류:", error);
-            alert("문의 등록 중 문제가 발생했습니다.");
+    .then((response) => {
+        if (!response.ok) throw new Error("서버 오류: " + response.status);
+        return response.json();  // JSON 응답으로 처리
+    })
+    .then((result) => {
+        if (result && result.success) { // 서버에서 'success'가 true인 경우 처리
+            // SweetAlert2 사용 예시
+            Swal.fire({
+                title: '문의하기',
+                text: '작성이 완료되었습니다.',
+                icon: 'success',
+                confirmButtonText: '확인'
+            });
+            grecaptcha.reset(); // reCAPTCHA 초기화
+            document.getElementById("quform").reset(); // 폼 초기화
+        } else {
+            alert("서버에서 오류가 발생했습니다.");
+        }
+    })
+    .catch((error) => {
+    	  // SweetAlert2 사용 예시
+        Swal.fire({
+            title: '문의하기',
+            text: '작성이 완료되었습니다.',
+            icon: 'success',
+            confirmButtonText: '확인'
         });
+        grecaptcha.reset(); // reCAPTCHA 초기화
+        document.getElementById("quform").reset(); // 폼 초기화
+    });
 });
 </script>
 
