@@ -85,6 +85,17 @@ public class InquiryController {
         // bno에 해당하는 게시글 상세 정보를 가져옴
         InquiryVO boardDetail = inquiryService.getBoardDetail(bno);
         
+        
+        // 파일 경로를 웹 서버 경로로 변경
+        if (boardDetail != null && boardDetail.getInquiryFile() != null) {
+            String filePath = boardDetail.getInquiryFile().getThumbnailPath();
+            if (filePath != null) {
+                // "C:/uploads/thumbnails/"에서 시작되는 경로에서 중복을 제거하고 "/uploads/thumbnails/"로 설정
+                String webFilePath = filePath.replace("C:/uploads/thumbnails/", "/uploads/thumbnails/");
+                boardDetail.getInquiryFile().setThumbnailPath(webFilePath);
+            }
+        }
+        
         // 모델에 데이터 전달
         model.addAttribute("boardDetail", boardDetail);
         
