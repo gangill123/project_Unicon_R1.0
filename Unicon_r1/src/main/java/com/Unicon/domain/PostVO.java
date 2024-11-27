@@ -3,6 +3,8 @@ package com.Unicon.domain;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -18,6 +20,9 @@ public class PostVO {
 	private String pet_etc_breed;		// 기타동물품종
 	private String post_pet_place;		// 실종/발견 장소
 	private String post_pet_date;		// 실종/발견 일자
+	
+	private MultipartFile post_file;	// 이미지 저장
+	
 	private List<ImageVO> post_images;	// 게시물 이미지
 	
 	private JypMemberVO jypMember;		// 임시 멤버 테이블

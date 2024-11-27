@@ -117,11 +117,13 @@
 <!-- post_id, 이미지 구조 변경 필요 -->
 <insert id="postInsert">
 	insert into _post (post_id, member_id, post_title, post_content, post_date, post_type, pet_code, pet_etc, breed, post_pet_place, post_pet_date) 
-	values (#{post_id}, #{member_id}, #{post_title}, #{post_content}, now(), #{post_type}, #{pet_code}, #{pet_etc_breed}, #{post_pet_place}, #{post_pet_date}) 
+	values (concat(#{member_id}, (select count(*) from _post where member_id = #{member_id})), #{member_id}, #{post_title}, #{post_content}, now(), #{post_type}, #{pet_code}, #{pet_etc_breed}, #{post_pet_place}, #{post_pet_date}) 
 </insert>
 <insert id="postImageInsert">
-	insert into _image 
-	 values (#{image_id}, #{image_type}, #{image_sequence}, #{image_src}) 
+	insert into _image (image_id, image_type, image_sequence, image_src) values 
+	<foreach collection="list" item="image" separator=",">
+		(#{image.image_id}, #{image.image_type}, #{image.image_sequence}, #{image.image_src}) 
+	</foreach> 
 </insert>
 
 
