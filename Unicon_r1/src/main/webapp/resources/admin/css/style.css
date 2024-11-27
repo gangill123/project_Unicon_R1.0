@@ -3541,7 +3541,7 @@ pre {
   .tt-hint:disabled, .form-control[readonly], .select2-container--default .select2-selection--single[readonly], .select2-container--default .select2-selection--single .select2-search__field[readonly], .typeahead[readonly],
   .tt-query[readonly],
   .tt-hint[readonly] {
-    background-color: #e9ecef;
+    background-color: #fff;
     opacity: 1; }
 
 input[type="date"].form-control, .select2-container--default input.select2-selection--single[type="date"], .select2-container--default .select2-selection--single input.select2-search__field[type="date"], input.typeahead[type="date"],

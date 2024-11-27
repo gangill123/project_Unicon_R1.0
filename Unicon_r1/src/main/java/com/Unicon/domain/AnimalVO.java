@@ -12,10 +12,10 @@ public class AnimalVO {
 	private String category_etc_value;
 	private String animal_name;
 	private String animal_color;
-	private String animal_gender;
-	private String animal_neuter;
+	private int animal_gender; // 1: 남아, 2: 여아
+	private int animal_neuter; // 1: 유, 2: 무
 	private String animal_age;
-	private String animal_weight;
+	private int animal_weight; // 1: 소형(~5), 2: 중형(5~25), 3: 대형(25~)
 	private String member_id;
 	private Timestamp animal_regdate;
 	private Timestamp animal_upddate;
