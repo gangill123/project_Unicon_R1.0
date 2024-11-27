@@ -14,12 +14,12 @@
 	</select>
 	
 	<!-- 모든 소식 조회하기 -->
-	<select id="getNewsAll" resultType="newsVO">
+	<select id="getNewsAll" resultType="NewsVO">
 		select * from _news 
 	</select>
 	
 	<!-- 특정 소식 조회하기 -->
-	<select id="getNews" resultType="newsVO">
+	<select id="getNews" resultType="NewsVO">
 		select * from _news where news_id = #{news_id} 
 	</select>
 	
@@ -39,7 +39,7 @@
 	</select>
 	
 	<!-- 특정 지역 소식 조회하기 -->
-	<select id="getNewsResion" resultType="newsVO">
+	<select id="getNewsResion" resultType="NewsVO">
 		select * from _news where news_resion = #{news_resion} 
 	</select>
 	
