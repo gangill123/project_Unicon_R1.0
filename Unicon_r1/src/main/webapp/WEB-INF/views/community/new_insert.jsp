@@ -111,13 +111,18 @@
                                 </div>
                                 <!-- End Select element -->
                                 
+                                <!-- 숨겨서 들고갈 값 -->
+		                    	<!-- pet_code -->
+		                    	<input id="pet_code" name="pet_code" type="hidden">
+		                    	<!-- 숨겨서 들고갈 값 -->
+                                
                                 <!-- Begin Select element -->
                                 <div class="col-md-3">
                                     <div class="quform-element form-group">
-                                        <label for="applyfor">기타 동물 품종 <span class="quform-required">*</span></label>
+                                        <label for="pet_etc_breed">기타 동물 품종 <span class="quform-required">*</span></label>
                                         <div class="quform-input">
 	                                        <div class="quform-input">
-	                                            <input id="name" class="form-control" type="text" name="name" placeholder="개와 고양이를 제외한 동물은 품종을 적어주세요" />
+	                                            <input id="pet_etc_breed" class="form-control" type="text" name="pet_etc_breed" placeholder="개와 고양이를 제외한 동물은 품종을 적어주세요" />
 	                                        </div>
                                         </div>
                                     </div>
@@ -142,7 +147,7 @@
                                     <div class="quform-element form-group">
                                         <label for="location">거주 지역 (변경을 원하시면 마이페이지로)</label>
                                         <div class="quform-input">
-                                            <input id="location" class="form-control" type="text" name="location" placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요." readonly="readonly" />
+                                            <input id="location" class="form-control" type="text" name="location" placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요." disabled="disabled" />
                                         </div>
                                     </div>
                                 </div>
@@ -193,7 +198,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-1" name="resume" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-1" name="image-input-1" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="repImage1">대표 이미지 <span class="quform-required">*</span></label>
 								                    </div>
 								                </div>
@@ -213,7 +218,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-2" name="resume" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-2" name="image-input-2" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="Image2">이미지</label>
 								                    </div>
 								                </div>
@@ -233,7 +238,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-3" name="resume" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-3" name="image-input-3" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="Image3">이미지</label>
 								                    </div>
 								                </div>
@@ -253,7 +258,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-4" name="resume" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-4" name="image-input-4" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="Image4">이미지</label>
 								                    </div>
 								                </div>
@@ -275,7 +280,7 @@
                                 <!-- Begin Submit button -->
                                 <div class="col-md-6 offset-md-3 mt-4">
                                     <div class="quform-submit-inner text-center">
-                                        <button class="butn w-100" type="submit"><span>글 등록하기</span></button>
+                                        <button id="btnCreate" class="butn w-100" type="button"><span>글 등록하기</span></button>
                                     </div>
                                     <div class="quform-loading-wrap"><span class="quform-loading"></span></div>
                                 </div>
@@ -322,31 +327,47 @@ $(function() {
 	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
 	
     // 이미지 미리보기
-    function setupImagePreview(inputId, previewId) {
-        $('#' + inputId).change(function(e) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                $('#' + previewId).attr('src', e.target.result).show();
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // 미리보기 이미지 클릭 시 파일 선택
-        $('#' + previewId).parent().click(function() {
-            $('#' + inputId).click();
-        });
-    }
-
-    setupImagePreview('image-input-1', 'image-preview-1');
-    setupImagePreview('image-input-2', 'image-preview-2');
-    setupImagePreview('image-input-3', 'image-preview-3');
-    setupImagePreview('image-input-4', 'image-preview-4');
- 	// 이미지 미리보기
+	function setupImagePreview(inputId, previewId) {
+	    $('#' + inputId).change(function(e) {
+	        const file = e.target.files[0];
+	        const reader = new FileReader();
+	
+	        // 파일이 선택되었을 때
+	        if (file) {
+	            // MIME 타입 확인
+	            const fileType = file.type;
+	            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
+	
+	            if (validImageTypes.includes(fileType)) {
+	                reader.onload = function(e) {
+	                    $('#' + previewId).attr('src', e.target.result).show();
+	                }
+	                reader.readAsDataURL(file);
+	            } else {
+	                // 유효하지 않은 파일 형식일 경우 오류 메시지 표시
+	                alert(' 이미지 파일만 선택할 수 있습니다. (JPEG, PNG, GIF, JPG 형식) ');
+	                // 파일 입력 초기화
+	                $('#' + inputId).val('');
+	                // 미리보기 이미지 숨기기
+	                $('#' + previewId).hide();
+	            }
+	        } else {
+	            // 파일이 선택되지 않았을 경우 미리보기 이미지 숨기기
+	            $('#' + previewId).hide();
+	        }
+	    });
+	
+	    // 미리보기 이미지 클릭 시 파일 선택
+	    $('#' + previewId).parent().click(function() {
+	        $('#' + inputId).click();
+	    });
+	    
+	} // setupImagePreview()
+	setupImagePreview('image-input-1', 'image-preview-1');
+	setupImagePreview('image-input-2', 'image-preview-2');
+	setupImagePreview('image-input-3', 'image-preview-3');
+	setupImagePreview('image-input-4', 'image-preview-4');
+	// 이미지 미리보기 설정
     
  	// 동물 종류 리스트
  	$('#petType').on('click', function() {
@@ -433,10 +454,7 @@ $(function() {
 		});
 	});
 	
-	$(document).on('click', '.dropdown-item', function() {
-		$('#searchInput').val($(this).text());
-		$('#dropdownList').removeClass('show');
-	});
+	
 	
 	$(document).click(function(event) {
 		if (!$(event.target).closest('.dropdown').length) {
@@ -444,6 +462,48 @@ $(function() {
 		}
 	});
  	// 동물 품종 리스트
+ 	
+ 	// 글 등록 수행
+ 	// 드롭다운 클릭
+ 	$(document).on('click', '.dropdown-item', function() {
+	    var selectedValue = $(this).data("value");
+	    var selectedText = $(this).text(); // 선택된 품종의 이름 가져오기
+	    console.log("선택된 값: " + selectedValue);
+	    // 선택된 값을 임시의 히든 input에 설정 (숫자 값으로 설정)
+	    $("#pet_code").val(selectedValue);
+	    // 선택된 품종의 이름을 input에 보여주기
+	    $("#searchInput").val(selectedText);
+	});
+ 	
+ 	$("#btnCreate").click(function(){
+ 		// 기본 폼 제출 방지
+ 		event.preventDefault();
+		
+ 		var post = {
+ 			"member_id":$("#member_id").val(),
+ 			"post_title":$("#post_title").val(),
+ 			"post_content":$("#post_content").val(),
+ 			"post_type":$("#post_type").val(),
+ 			"pet_code":$("#pet_code").val(),
+ 			"pet_etc_breed":$("#pet_etc_breed").val() || null,
+ 			"post_pet_place":$("#post_pet_place").val() || null,
+ 			"post_pet_date":$("#post_pet_date").val() || null,
+ 			"post_file":$("#image-input-1").val()
+ 		}; // var post = {}
+ 		
+ 		console.log(post);
+ 		
+ 		$.ajax({
+ 			url : "${contextPath}/community",
+			type : "POST",
+			data : JSON.stringify(post),
+			contentType : "application/json",
+			success : function(data){
+				alert(" 게시물 등록 성공! ");
+			}
+ 		}); // $.ajax
+ 	});
+ 	// 글 등록 수행
     
     
 }); // 돔레디

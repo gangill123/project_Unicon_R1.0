@@ -25,10 +25,16 @@ public class CommunityDAO {
 	public void postInsert(PostVO postVO) {
 		logger.info(" DAO - postInsert() 실행 ");
 		
+		// 게시물 정보 등록
 		sqlSession.insert(NAMESPACE+"postInsert", postVO);
-		for(ImageVO imageVO : postVO.getPost_images()) {
-			sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
-		}
+		
+//		for(ImageVO imageVO : postVO.getPost_images()) {
+//			sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
+//		}
+		
+		// 이미지 정보 등록 (반복은 매퍼에서 처리)
+		sqlSession.insert(NAMESPACE+"postImageInsert", postVO.getPost_images());
+		
 	} // postInsert()
 	
 }
