@@ -100,41 +100,41 @@ public class InquiryRestController {
 
             // 파일 처리 (파일이 있는 경우)
             if (file != null && !file.isEmpty()) {
-            	String originalName = file.getOriginalFilename();
-            	String fileType = file.getContentType();
+                String originalName = file.getOriginalFilename();
+                String fileType = file.getContentType();
 
-            	// 절대 경로 또는 프로젝트 기준 상대 경로 설정
-            	String uploadDir = System.getProperty("user.dir") + "/uploads/";
-            	String storedName = UUID.randomUUID().toString() + "_" + originalName;
-            	String filePath = uploadDir + storedName;
+                // 파일 업로드 디렉토리 설정 (웹 애플리케이션 내 상대 경로)
+                String uploadDir = "/resources/uploads/";  // 프로젝트의 웹 애플리케이션 내 상대 경로
+                String storedName = UUID.randomUUID().toString() + "_" + originalName;
+                String filePath = uploadDir + storedName;
 
-            	// 파일 저장 디렉토리 확인 및 생성
-            	File uploadFolder = new File(uploadDir);
-            	if (!uploadFolder.exists()) {
-            	    uploadFolder.mkdirs();
-            	}
+                // 파일 저장 디렉토리 확인 및 생성
+                File uploadFolder = new File(uploadDir);
+                if (!uploadFolder.exists()) {
+                    uploadFolder.mkdirs(); // 디렉토리가 없으면 생성
+                }
 
-            	// 파일 저장
-            	File destinationFile = new File(filePath);
-            	file.transferTo(destinationFile);
+                // 파일 저장
+                File destinationFile = new File(filePath);
+                file.transferTo(destinationFile);
 
-            	// 썸네일 생성 (이미지 파일만 처리)
-            	String thumbnailPath = null;
-            	if (fileType.startsWith("image/")) {
-            	    String thumbnailDir = uploadDir + "thumbnails/";
-            	    File thumbnailFolder = new File(thumbnailDir);
-            	    if (!thumbnailFolder.exists()) {
-            	        thumbnailFolder.mkdirs();
-            	    }
+                // 썸네일 생성 (이미지 파일만 처리)
+                String thumbnailPath = null;
+                if (fileType.startsWith("image/")) {
+                    String thumbnailDir = uploadDir + "thumbnails/";
+                    File thumbnailFolder = new File(thumbnailDir);
+                    if (!thumbnailFolder.exists()) {
+                        thumbnailFolder.mkdirs(); // 썸네일 디렉토리가 없으면 생성
+                    }
 
-            	    String thumbnailName = "thumb_" + storedName;
-            	    thumbnailPath = thumbnailDir + thumbnailName;
+                    String thumbnailName = "thumb_" + storedName;
+                    thumbnailPath = thumbnailDir + thumbnailName;
 
-            	    Thumbnails.of(destinationFile)
-            	              .size(150, 150)
-            	              .toFile(new File(thumbnailPath));
-            	}
-
+                    // 썸네일 생성
+                    Thumbnails.of(destinationFile)
+                              .size(150, 150)
+                              .toFile(new File(thumbnailPath));
+                }
             	
 
                 // InquiryFileVO 객체 생성 후 파일 정보 저장

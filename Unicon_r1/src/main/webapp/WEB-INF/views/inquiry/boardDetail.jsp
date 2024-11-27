@@ -33,6 +33,9 @@
 </section>
 
 
+  
+
+
 <section class="blogs">
             <div class="container">
                 <div class="row">
@@ -48,34 +51,48 @@
                                 <div class="content">
                                     <div class="blog-list-simple-text">
                                         <div class="post-title">
-                                            <h5>게시글 제목</h5>
+                                            <h5>${boardDetail.title}</h5>
                                         </div>
                                         <ul class="meta ps-0">
                                             <li>
                                                 <a href="#!">
-                                                    <i aria-hidden="true" class="fa fa-user"></i> 작성자 ${inquiryVO.member_name}
+                                                    <i aria-hidden="true" class="fa fa-comments"></i> NO : ${boardDetail.bno}
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#!">
-                                                    <i aria-hidden="true" class="fa fa-folder-open"></i> 카테고리 ${inquiryVO.istatus}
+                                                    <i aria-hidden="true" class="fa fa-user"></i> 작성자: ${boardDetail.member_name}
                                                 </a>
                                             </li>
                                             <li>
                                                 <a href="#!">
-                                                    <i aria-hidden="true" class="fas fa-calendar-alt"></i>작성일 ${inquiryVO.created_at}
+                                                    <i aria-hidden="true" class="fa fa-folder-open"></i>카테고리: ${boardDetail.istatus}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#!">
+                                                    <i aria-hidden="true" class="fas fa-calendar-alt"></i>작성일: ${boardDetail.created_at}
+                                                </a>
+                                            </li>
+                                              <li>
+                                                <a href="#!">
+                                                    <i aria-hidden="true" class="fas fa-calendar-alt"></i>이메일: ${boardDetail.email}
+                                                </a>
+                                            </li>
+                                             <li>
+                                                <a href="#!">
+                                                    <i aria-hidden="true" class="fas fa-calendar-alt"></i>휴대폰 번호: ${boardDetail.phone}
                                                 </a>
                                             </li>
                                           
-                                            <li>
-                                                <a href="#!">
-                                                    <i aria-hidden="true" class="fa fa-comments"></i>답변수  ${inquiryVO.dcontentCount}
-                                                </a>
-                                            </li>
+                                            
+                                           
                                         </ul>
                                     </div>
                                     <div class="post-cont">
-                                         	작성 내용 
+                                         	${boardDetail.content}
+                     						<!-- boardDetail.jsp -->
+											<img src="${boardDetail.inquiryFile.thumbnailPath}" alt="Thumbnail" />
                                     </div>
                                     <div class="share-post">
                                         <span>Share Post</span>

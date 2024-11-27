@@ -22,8 +22,6 @@ public class InquiryVO {
 	String istatus; // 카테고리 분류
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date created_at; // 작성일
-	String image_id; // 이미지
-	String attachment; // 첨부파일주소
 
 	int dno; // 댓글 번호
 	String dcontent; // 댓글내용
@@ -35,14 +33,22 @@ public class InquiryVO {
 
 	String email;
 	String phone;
-	String MultipartFile;
-	private String filePath; // 파일 저장 경로
 
 	private String recaptcha; // reCAPTCHA 토큰
 	
 	
 	
-	
+	 // InquiryFileVO 타입의 필드 추가
+    private InquiryFileVO inquiryFile; // 이 필드를 추가합니다.
+
+    // getter와 setter 추가
+    public InquiryFileVO getInquiryFile() {
+        return inquiryFile;
+    }
+
+    public void setInquiryFile(InquiryFileVO inquiryFile) {
+        this.inquiryFile = inquiryFile;
+    }
 	
 	
 	public String getRecaptcha() {
