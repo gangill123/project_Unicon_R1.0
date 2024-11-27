@@ -51,10 +51,39 @@
 	}
 	
 	.info-grid {
-	    display: grid;
-	    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-	    gap: 1.5rem;
+	    display: flex;
+	    flex-direction: column;
+	    gap: 2rem;
 	}
+	
+	.info-grid .row:first-child {
+	    margin-bottom: 0;
+	}
+	
+	.info-grid .row {
+	    display: flex;
+	    margin: 0;
+	}
+	
+	.info-grid .col-md-4 {
+	    flex: 1;
+	    padding: 0 1rem;
+	}
+	
+	@media (max-width: 768px) {
+    .info-grid .row {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .info-grid .col-md-4 {
+        width: 100%;
+    }
+    
+    .info-grid {
+        gap: 1.5rem;
+    }
+}
 	
 	.info-item {
 	    display: flex;
