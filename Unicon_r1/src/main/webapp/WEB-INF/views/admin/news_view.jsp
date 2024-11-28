@@ -220,22 +220,22 @@
                                         <!-- Begin Text input element -->
                                         <div class="col-md-6">
                                             <div class="quform-element form-group">
-                                                <label for="email">행사일자 <span class="quform-required">*</span></label>
+                                                <label for="news_startdate">행사일자 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
-                                                    <input id="email" class="form-control" type="date" 
-                                                    name="news_date" value=${newsInfo.news_date }>
+                                                    <input id="news_startdate" class="form-control" type="date" 
+                                                    name="news_startdate" value=${newsInfo.news_startdate }>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- End Text input element -->
-
+                                        
                                         <!-- Begin Text input element -->
                                         <div class="col-md-6">
                                             <div class="quform-element form-group">
-                                                <label for="linkedin">행사시간</label>
+                                                <label for="news_enddate">행사일자 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
-                                                    <input id="linkedin" class="form-control" type="time" 
-                                                    name="news_time" value=${newsInfo.news_time }>
+                                                    <input id="email" class="form-control" type="date" 
+                                                    name="news_enddate" value=${newsInfo.news_enddate }>
                                                 </div>
                                             </div>
                                         </div>

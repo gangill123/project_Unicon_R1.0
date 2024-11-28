@@ -15,7 +15,7 @@
 	
 	<!-- 슬라이드 모든 정보 가져오기 -->
 	<select id="getSildeAll" resultType="MainSlideVO">
-		select * from _main_slide 
+		select * from _main_slide order by ms_enddate desc 
 	</select>
 	
 	<!-- 슬라이드 특정 정보 가져오기 -->
@@ -36,6 +36,12 @@
 	<delete id="deleteSilde">
 		delete from _main_slide where ms_id = #{ms_id} 
 	</delete>
+	
+	<!-- 슬라이드 가져오기(메인용) -->
+	<select id="getSlideForMain" resultType="MainSlideVO">
+		select * from _main_slide where ms_startdate &lt; now() and ms_enddate &gt; now() 
+	</select>
+	
 
 </mapper>
 
