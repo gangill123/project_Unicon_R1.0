@@ -1,11 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../inc/new_topHeader.jsp"%>
-<!-- topHeader / jquery 추가 -->
-
-<!-- 추가 템플릿 css/js 작성란 -->
-
-<style>
-/* 메인 타이틀 스타일 */
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>유니콘</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/resources/admin/vendors/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/resources/admin/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    
+    <style>
+    
+    /* 메인 타이틀 스타일 */
 .main-title {
     font-size: 2rem;
     font-weight: bold;
@@ -120,7 +132,7 @@ h2 {
 /* 상태 열 스타일 - 가로 정렬 */
 .status {
     font-weight: bold;
-    color: #333;
+    color: green;
     writing-mode: horizontal-tb; /* 텍스트를 가로 방향으로 설정 */
     text-align: left; /* 기본 정렬 */
     white-space: nowrap; /* 텍스트 줄바꿈 방지 */
@@ -131,43 +143,32 @@ td.istatus {
     font-weight: bold;
     color: #333;
     writing-mode: horizontal-tb;
-    text-align: center;
-    white-space: nowrap;
+    text-align: center; 
     background-color: #e6f7ff;
     padding: 5px 20px;
-    border-radius: 1px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 1px;    
     display: inline-flex;
     align-items: center; /* 아이콘과 텍스트를 수평 정렬 */
-    gap: 8px; /* 아이콘과 텍스트 간 간격 */
-    transition: all 0.3s ease;
-   
 	line-height: 30px; /* 텍스트가 수직으로 중앙에 오게 설정 */
 }
 
 
 
-/* 진행 중 상태 */
-.status-ongoing {
-    color: #2ecc71; /* 초록색 */
-}
-
-/* 답변 완료 상태 */
-.status-completed {
-    color: #3498db; /* 파란색 */
-}
-
-/* 페이징 스타일 */
 .pagination {
-    display: flex;
-    justify-content: center;
+    display: flex; /* 가로 정렬 */
+    justify-content: center; /* 가운데 정렬 */
     margin-top: 20px;
-    list-style: none;
     padding: 0;
 }
 
+.pagination ul {
+    display: flex; /* 가로 정렬 */
+    padding: 0; /* 기본 ul 스타일 제거 */
+    list-style: none; /* 기본 리스트 스타일 제거 */
+}
+
 .pagination li {
-    margin: 0 5px;
+    margin: 0 5px; /* 버튼 간격 */
 }
 
 .pagination li a {
@@ -178,7 +179,7 @@ td.istatus {
     color: #333;
     border-radius: 4px;
     transition: background-color 0.3s ease;
-    font-size: 14px; /* 화살표 버튼 크기와 텍스트 크기 조정 */
+    font-size: 14px; /* 텍스트 크기 */
 }
 
 .pagination li a:hover,
@@ -186,72 +187,59 @@ td.istatus {
     background-color: #2ecc71;
     color: white;
 }
-
-
-
-</style>
-</head>
-<%@ include file="../inc/new_header.jsp"%>
-<!-- header -->
-
-<!--====================================작성부=====================================-->
-<section class="page-title-section bg-primary">
-    <div class="container">
-		
-        <div class="row">
-            <div class="col-md-12">
-                <h1>unicon 고객센터</h1>
-            </div>
-            <div class="col-md-12">
-                <ul class="ps-0">
-                    <li><a href="inquiry"><i class="ti-home"></i></a></li>
-                    <li class="active"><a href="board">Unicon Q&A 문의게시판</a></li>
-                </ul>
-            </div>
-        </div>
-	
-    </div>
-</section>
-<br>
-<br>
-
-
-
-
-
-<div class="container">
-	<div class="section-heading">
-		<h3>Unicon Q&A 문의게시판</h3>
-	</div>
-	<div class="row position-relative">
-		<div class="col-12">
-			<div class="table-responsive">
-				<table class="table" id="inquiryTable">
-					<thead>
-						<tr>
-							<th class="no">No</th>
+    
+    
+    </style>
+    
+    
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="/resources/admin/css/style.css">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="/resources/admin/images/favicon.png" />
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:navbar.jsp -->
+      <%@ include file="/WEB-INF/views/inc/admin_navbar_adpt.jsp"%>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:sidebar.jsp -->
+        <%@ include file="/WEB-INF/views/inc/admin_sidebar_adpt.jsp"%>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+          
+          
+          <div class="card">
+			<div class="card-body">
+                    <h4 class="card-title">Unicon Q&A 문의게시판</h4>
+                    <p class="card-description"> <code>문의 게시판 관리자 페이지</code>
+                    </p>
+                    <table class="table table-striped" id="inquiryTable">
+                      <thead>
+                        <tr>
+                          <th class="no">No</th>
 							<th class="istatus">카테고리</th>
-							<th class="title"><a href="/inquiry/board/{bno}">제목</a></th>
+							<th class="title">제목</th>
 							<th class="member">작성자</th>
 							<th class="date">작성일</th>
 							<th class="status">상태</th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- 데이터를 Ajax로 채움 -->
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-</div>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       
+                      </tbody>
+                    </table>
+            </div>
+         </div>   
+          
 
-<!-- 글쓰기 버튼 -->
-<div class="write-btn-container">
-    <button class="write-btn" onclick="location.href='/inquiry/write'">문의하기</button>
-</div>
+
 <!-- 페이지네이션 -->
-<div class="pagination text-small text-uppercase text-extra-dark-gray">
+<div class="pagination">
 	<ul class="ps-0 mb-0" id="pagination"></ul>
 </div>
 
@@ -284,7 +272,7 @@ $(document).ready(function () {
                         '<tr>' +
                         '<td class="no">' + inquiry.bno + '</td>' +
                         '<td class="istatus">' + inquiry.istatus + '</td>' +
-                        '<td class="title"><a href="/inquiry/board/' + inquiry.bno + '">' + inquiry.title + '</a></td>' + // 게시글 제목에 링크 추가
+                        '<td class="title"><a href="/inquiry/manage/' + inquiry.bno + '">' + inquiry.title + '</a></td>' + // 게시글 제목에 링크 추가
                         '<td class="member">' + inquiry.member_name + '</td>' +
                         '<td class="date">' + inquiry.created_at + '</td>' +                       
                         '<td class="status ' + statusClass + '">' + statusText + '</td>' +
@@ -343,9 +331,53 @@ $(document).ready(function () {
 });
 
 </script>
-
-
-<!--====================================작성부=====================================-->
-
-<%@ include file="../inc/new_footer.jsp"%>
-<!-- footer -->
+          
+          
+          
+       
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:footer.jsp -->
+          <%@ include file="/WEB-INF/views/inc/admin_footer_adpt.jsp"%>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="/resources/admin/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="/resources/admin/js/off-canvas.js"></script>
+    <script src="/resources/admin/js/hoverable-collapse.js"></script>
+    <script src="/resources/admin/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <!-- End custom js for this page -->
+  </body>
+</html>

@@ -7,33 +7,33 @@
 <mapper namespace="com.unicon.mapper.InquiryMapper">
 
 
-<resultMap id="BoardDetailResultMap" type="com.Unicon.domain.InquiryVO">
-    <!-- InquiryVO 매핑 -->
-    <id column="bno" property="bno"/>
-    <result column="member_id" property="member_id"/>
-    <result column="member_name" property="member_name"/>
-    <result column="title" property="title"/>
-    <result column="content" property="content"/>
-    <result column="istatus" property="istatus"/>
-    <result column="created_at" property="created_at"/>
-    <result column="status" property="status"/>
-    <result column="acontent" property="acontent"/>
-    <result column="answerdate" property="answerdate"/>
-    <result column="email" property="email"/>
-    <result column="phone" property="phone"/>
-    
-    <!-- InquiryFileVO 매핑 -->
-    <association property="inquiryFile" javaType="com.Unicon.domain.InquiryFileVO">
-        <id column="fileId" property="fileId"/>
-        <result column="fileBno" property="bno"/>
-        <result column="originalName" property="originalName"/>
-        <result column="storedName" property="storedName"/>
-        <result column="filePath" property="filePath"/>
-        <result column="fileType" property="fileType"/>
-        <result column="uploadDate" property="uploadDate"/>
-        <result column="thumbnailPath" property="thumbnailPath"/>
-    </association>
-</resultMap>
+	<resultMap id="BoardDetailResultMap"
+		type="com.Unicon.domain.InquiryVO">
+		<!-- InquiryVO 매핑 -->
+		<id column="bno" property="bno" />
+		<result column="member_id" property="member_id" />
+		<result column="member_name" property="member_name" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="istatus" property="istatus" />
+		<result column="created_at" property="created_at" />
+		<result column="status" property="status" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+
+		<!-- InquiryFileVO 매핑 -->
+		<association property="inquiryFile"
+			javaType="com.Unicon.domain.InquiryFileVO">
+			<id column="fileId" property="fileId" />
+			<result column="fileBno" property="bno" />
+			<result column="originalName" property="originalName" />
+			<result column="storedName" property="storedName" />
+			<result column="filePath" property="filePath" />
+			<result column="fileType" property="fileType" />
+			<result column="uploadDate" property="uploadDate" />
+			<result column="thumbnailPath" property="thumbnailPath" />
+		</association>
+	</resultMap>
 
 
 
@@ -51,7 +51,8 @@
 		FROM _inquiry
 		ORDER BY bno DESC
 		LIMIT #{limit}
-		OFFSET #{offset}
+		OFFSET
+		#{offset}
 	</select>
 
 	<select id="getTotalCount" resultType="int">
@@ -83,46 +84,52 @@
 		#{uploadDate}, #{thumbnailPath})
 	</insert>
 
-	<!-- 게시글 상세 조회 쿼리 --> 
-<!-- 	<select id="getBoardDetail" parameterType="int" -->
-<!-- 		resultType="InquiryVO"> -->
-<!-- 		SELECT * FROM _inquiry WHERE bno = #{bno} -->
-<!-- 	</select> -->
 
 	<select id="getBoardDetail" parameterType="int"
 		resultMap="BoardDetailResultMap">
 		SELECT
-	    i.bno,
-	    i.member_id,
-	    i.member_name,
-	    i.title,
-	    i.content,
-	    i.istatus,
-	    i.created_at,
-	    i.dno,
-	    i.dcontent,
-	    i.dcreated_at,
-	    i.status,
-	    i.acontent,
-	    i.answerdate,
-	    i.email,
-	    i.phone,        
-	    f.fileId,
-	    COALESCE(f.bno, i.bno) AS fileBno,
-	    f.originalName,
-	    f.storedName,
-	    f.filePath,
-	    f.fileType,
-	    f.uploadDate,
-	    f.thumbnailPath
-	FROM
-	    _inquiry i
-	LEFT JOIN
-	    _inquiry_file f
-	ON
-	    i.bno = f.bno
-	WHERE
-	    i.bno = #{bno}
+		i.bno,
+		i.member_id,
+		i.member_name,
+		i.title,
+		i.content,
+		i.istatus,
+		i.created_at,
+		i.status,
+		i.email,
+		i.phone,
+		f.fileId,
+		COALESCE(f.bno, i.bno) AS fileBno,
+		f.originalName,
+		f.storedName,
+		f.filePath,
+		f.fileType,
+		f.uploadDate,
+		f.thumbnailPath
+		FROM
+		_inquiry i
+		LEFT JOIN
+		_inquiry_file f
+		ON
+		i.bno = f.bno
+		WHERE
+		i.bno = #{bno}
 	</select>
+
+	<!-- 답변 매퍼 -->
+	
+	 <!-- 답변 추가 쿼리 -->
+    <insert id="insertAnswer">
+        INSERT INTO _inquiry_answer (bno, dname, dcontent, created_at)
+        VALUES (#{bno}, #{dname}, #{dcontent}, CURRENT_TIMESTAMP)
+    </insert>
+
+    <!-- 게시글 번호에 해당하는 답변 조회 -->
+    <select id="getAnswersByBno" resultType="com.Unicon.domain.InquiryAnswerVO">
+        SELECT * FROM _inquiry_answer
+        WHERE bno = #{bno}
+        ORDER BY created_at DESC
+    </select>
+
 
 </mapper>
