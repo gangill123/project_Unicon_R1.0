@@ -22,5 +22,12 @@ public class VolunteerApplyVO {
     private Date voUpdateDate;          // 수정일시
 
     private VolunteerVO volunteerInfo;  // 봉사활동 정보
-
+    
+    private String voTitle;
+    private Date voStartDate;          
+    private Date voEndDate;
+    private String voManager;           
+    private String voContact; 
+    private String voLocation;
+    private String voContent;
 }
