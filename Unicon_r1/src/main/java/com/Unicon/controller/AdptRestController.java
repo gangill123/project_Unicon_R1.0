@@ -11,6 +11,8 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,21 +28,18 @@ import com.Unicon.domain.AnimalVaccineVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.service.AdptService;
 
-import lombok.extern.log4j.Log4j;
-
 
 @RestController
-@Log4j
 @RequestMapping("/adptmgmt/**")
 public class AdptRestController {
 	
 	@Inject
 	private AdptService aService;
-
+	private static final Logger logger = LoggerFactory.getLogger(AdptRestController.class);
 	
 	@PostMapping(value = "/animals")
 	public ResponseEntity<String> registerAnimal(AnimalVO avo, HttpServletRequest req) {
-		log.info("( •̀ ω •́ )✧ registerAnimal(AnimalVO avo, HttpServletRequest req) 실행");
+		logger.info("( •̀ ω •́ )✧ registerAnimal(AnimalVO avo, HttpServletRequest req) 실행");
 		
 		try {
 			
@@ -60,9 +59,17 @@ public class AdptRestController {
 			return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
 			
 		} catch (Exception e) {
-			log.error("( •̀ ω •́ )✧ 오류 발생: " + e.getMessage());
+			logger.error("( •̀ ω •́ )✧ 오류 발생: " + e.getMessage());
 			return new ResponseEntity<String>("( •̀ ω •́ )✧ 오류가 발생했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	
+	@GetMapping(value = "/animals/autoname")
+	public ResponseEntity<String> animalAutoName() {
+		logger.info("( •̀ ω •́ )✧ animalAutoName() 실행");
+		
+		return new ResponseEntity<String>("",HttpStatus.OK);
 	}
 
 	
@@ -70,7 +77,7 @@ public class AdptRestController {
 	
 		/*=============== 동물id 생성 ===============*/
 		public String genAnimalId() {
-			log.info("( •̀ ω •́ )✧ genAnimalId() 실행");
+			logger.info("( •̀ ω •́ )✧ genAnimalId() 실행");
 			String aNamePre = "ANIM";
 			char[] aNameCharacters =
 					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
@@ -91,7 +98,7 @@ public class AdptRestController {
 		
 		/*=============== 이미지 저장 및 리스트 생성 ===============*/
 		public List<ImageVO> saveImage(AnimalVO avo, HttpServletRequest req) {
-			log.info("( •̀ ω •́ )✧ saveImage(AnimalVO avo, HttpServletRequest req) 실행");
+			logger.info("( •̀ ω •́ )✧ saveImage(AnimalVO avo, HttpServletRequest req) 실행");
 			String saveDir = req.getRealPath("/uploads/");
 			List<MultipartFile> uploadImages = avo.getUpload_images();
 			List<ImageVO> animalImages = new ArrayList<ImageVO>();
@@ -101,7 +108,7 @@ public class AdptRestController {
 				MultipartFile aImage = uploadImages.get(i);
 				
 				if(aImage == null || aImage.isEmpty()) {
-					log.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 인덱스 : "+i);
+					logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 인덱스 : {}",i);
 					continue;
 				}
 				
@@ -124,7 +131,7 @@ public class AdptRestController {
 					ivo.setImage_type("apdt");
 					animalImages.add(i, ivo);
 				} else {
-					log.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
+					logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
 				}
 				
 				try {
@@ -137,6 +144,15 @@ public class AdptRestController {
 			return animalImages;
 		}
 		/*=============== 이미지 저장 및 리스트 생성 ===============*/
+		
+		
+		/*=============== 자동이름짓기 ===============*/
+		public String genAutoName() {
+			
+			return null;
+		}
+		/*=============== 자동이름짓기 ===============*/
+		
 		
 	/*=============== 메서드 ===============*/
 	
