@@ -434,5 +434,76 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
          if (optionCount === 2) {
          } 
      });
+     
+     
+     
+     
+     
+     
+     /*=============== 이미지 미리보기 ===============*/
+		$('.image-input').on('change', function(e) {
+			const file = e.target.files[0];
+			const reader = new FileReader();
+			
+			const inputId = e.target.id;
+			const previewId = '#image-preview' + inputId.charAt(inputId.length - 1);
+			const plusIconId = '#plusIcon' + inputId.charAt(inputId.length - 1);
+			
+			const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
+			
+			if (file) {
+				if(fileTypeFilter.exec(file.name)) {
+					reader.onload = function(e) {
+						$(previewId).attr('src', e.target.result).show();
+						$(plusIconId).hide();
+					}
+					reader.readAsDataURL(file);
+				} else {
+					$(this).val('');
+				}
+			} else {
+				$(previewId).hide();
+				$(plusIconId).show();
+			}
+		});
+		/*=============== 이미지 미리보기 ===============*/
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
 
     });
