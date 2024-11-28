@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="../inc/new_topHeader.jsp" %>
 
 <!-- CSS 파일 -->
@@ -10,16 +11,16 @@
 
 <style>
     .application-card {
-        border: 1px solid #dee2e6;
-        border-radius: 8px;
-        transition: transform 0.2s;
-        margin-bottom: 1.5rem;
-        background-color: #fff;
+        height: 100%;  /* 높이 일정하게 */
+	    border: 1px solid #dee2e6;
+	    border-radius: 8px;
+	    transition: transform 0.2s;
+	    background-color: #fff;
     }
     
     .application-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+   		box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     
     .card-header {
@@ -56,9 +57,10 @@
     
     .info-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        margin-bottom: 1rem;
+	    grid-template-columns: repeat(2, 1fr);
+	    gap: 0.5rem;
+	    margin-bottom: 1rem;
+	    font-size: 0.9rem;
     }
     
     .info-item {
@@ -66,6 +68,15 @@
         align-items: start;
         gap: 0.5rem;
     }
+    
+    .info-item div {
+	    word-break: break-word; /* 긴 텍스트 줄바꿈 */
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    display: -webkit-box;
+	    -webkit-line-clamp: 2; /* 2줄까지만 표시 */
+	    -webkit-box-orient: vertical;
+	}
     
     .info-icon {
         color: #0d6efd;
@@ -97,6 +108,23 @@
         cursor: not-allowed;
     }
     
+    .btn-detail {
+	    background-color: #0d6efd;
+	    color: white;
+	    border: none;
+	    padding: 0.5rem 1rem;
+	    border-radius: 4px;
+	    transition: background-color 0.2s;
+	}
+	
+	.btn-detail:hover {
+	    background-color: #0b5ed7;
+	}
+	
+	.gap-2 {
+	    gap: 0.5rem;
+	}
+    
     .modal-content {
 	    border-radius: 8px;
 	}
@@ -124,9 +152,15 @@
     
     @media (max-width: 768px) {
         .info-grid {
-            grid-template-columns: 1fr;
-        }
-    }
+        grid-template-columns: 1fr;  
+	    }
+	    .col-lg-4 {
+	        width: 100%;  
+	    }
+	    .card-body {
+	        padding: 1rem;  
+	    }
+	}
 </style>
 
 <%@ include file="../inc/new_header.jsp" %>
@@ -138,24 +172,25 @@
         </div>
 
         <div class="application-list">
-            <c:forEach items="${applications}" var="application">
-                <div class="application-card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <%-- <h5 class="mb-0">${application.voTitle}</h5> --%>
-                        <h5 class="mb-0">신청일자 ${application.voRegDate}</h5>
-                        
-                        <span class="status-badge 
-                            ${application.status eq 'PENDING' ? 'status-pending' : 
-                              application.status eq 'APPROVED' ? 'status-approved' : 
-                              application.status eq 'REJECTED' ? 'status-rejected' : 
-                              'status-rejected'}">
-                            ${application.status eq 'PENDING' ? '신청대기' : 
-                              application.status eq 'APPROVED' ? '신청완료' : 
-                              application.status eq 'REJECTED' ? '신청거절' : 
-                              '취소완료'}
-                        </span>
-                    </div>
-                    <div class="card-body">
+	    <div class="row g-4" id="applicationList">
+	        <c:forEach items="${applications}" var="application" varStatus="status">
+	            <div class="col-lg-4 col-md-6 application-item ${status.index >= 9 ? 'd-none' : ''}">
+	                <div class="application-card">
+	                    <div class="card-header d-flex justify-content-between align-items-center">
+	                        <h5 class="mb-0 fs-6">신청일자 ${application.voRegDate}</h5>
+	                        
+	                        <span class="status-badge 
+	                            ${application.status eq 'PENDING' ? 'status-pending' : 
+	                              application.status eq 'APPROVED' ? 'status-approved' : 
+	                              application.status eq 'REJECTED' ? 'status-rejected' : 
+	                              'status-rejected'}">
+	                            ${application.status eq 'PENDING' ? '신청대기' : 
+	                              application.status eq 'APPROVED' ? '신청완료' : 
+	                              application.status eq 'REJECTED' ? '신청거절' : 
+	                              '취소완료'}
+	                        </span>
+	                    </div>
+	                    <div class="card-body">
                         <div class="info-grid">
                             <div class="info-item">
                                 <i class="fas fa-user info-icon"></i>
@@ -202,33 +237,38 @@
                             </div>
                         </div>
                         
-                        <c:if test="${not empty application.rejectReason}">
-                            <div class="alert alert-danger mt-3">
-                                <strong>거절사유:</strong> ${application.rejectReason}
-                            </div>
-                        </c:if>
-
-	                    <c:if test="${application.status eq 'PENDING'}">
-	                        <div class="d-flex justify-content-end mt-3">
-	                            <button class="cancel-btn" 
-	                                onclick="cancelApplication(${application.voId})"
-	                                ${application.status ne 'PENDING' ? 'disabled' : ''}>
-	                                신청취소
-	                            </button>
-                            </div>
-                        </c:if>
+                        <c:if test="${application.status eq 'PENDING'}">
+						    <div class="d-flex justify-content-end gap-2 mt-3">
+						        <button class="btn-detail flex-grow-1" onclick="showDetail(${application.voId})">
+						            상세보기
+						        </button>
+						        <button class="cancel-btn flex-grow-1" 
+						            onclick="cancelApplication(${application.voId})"
+						            ${application.status ne 'PENDING' ? 'disabled' : ''}>
+						            신청취소
+						        </button>
+						    </div>
+						</c:if>
+						<c:if test="${application.status ne 'PENDING'}">
+						    <div class="d-flex justify-content-end mt-3">
+						        <button class="btn-detail flex-grow-1" onclick="showDetail(${application.voId})">
+								    상세보기
+								</button>
+						    </div>
+						</c:if>
                     </div>
                 </div>
-            </c:forEach>
-            
-            <c:if test="${empty applications}">
-                <div class="text-center py-5">
-                    <i class="fas fa-clipboard fa-3x mb-3 text-muted"></i>
-                    <p class="text-muted">신청한 봉사활동이 없습니다.</p>
-                </div>
-            </c:if>
-        </div>
+            </div>
+        </c:forEach>
     </div>
+    
+	    <c:if test="${fn:length(applications) > 9}">
+	        <div class="text-center mt-4">
+	            <button class="btn btn-outline-primary" id="loadMore">더보기</button>
+	        </div>
+	    </c:if>
+		</div>
+	</div>
 </div>
 
 <!-- 취소 모달창 -->
@@ -268,10 +308,89 @@
     </div>
 </div>
 
+<!-- 상세보기 모달창 -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailModalLabel">봉사활동 상세정보</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-4">
+                    <h6 class="mb-3">봉사활동 정보</h6>
+                    <div class="col-md-6 mb-2">
+                        <strong>봉사활동명</strong>
+                        <p id="detail-voTitle"></p>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <strong>봉사기간</strong>
+                        <p id="detail-voPeriod"></p>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <strong>장소</strong>
+                        <p id="detail-voLocation"></p>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <strong>활동내용</strong>
+                        <p id="detail-voContent"></p>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <strong>담당자</strong>
+                        <p id="detail-voManager"></p>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <strong>연락처</strong>
+                        <p id="detail-voContact"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <h6 class="mb-3">신청자 정보</h6>
+                    <div class="col-md-6 mb-2">
+                        <strong>이름</strong>
+                        <p id="detail-voApplicant"></p>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <strong>생년월일</strong>
+                        <p id="detail-voBirth"></p>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <strong>연락처</strong>
+                        <p id="detail-voTel"></p>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <strong>이메일</strong>
+                        <p id="detail-voEmail"></p>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <strong>반려동물 경험</strong>
+                        <p id="detail-voExperience"></p>
+                    </div>
+                    <div class="col-12">
+                        <strong>신청사유</strong>
+                        <p id="detail-voReason"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+document.getElementById('loadMore')?.addEventListener('click', function() {
+    const hiddenItems = document.querySelectorAll('#applicationList .application-item.d-none');
+    const itemsToShow = Array.from(hiddenItems).slice(0, 9);
+    
+    itemsToShow.forEach(item => item.classList.remove('d-none'));
+    
+    if (hiddenItems.length <= 9) {
+        this.style.display = 'none';
+    }
+});
+
 let cancelVoId = null;
 
 function cancelApplication(voId) {
@@ -314,6 +433,55 @@ function submitCancel() {
         }
     });
 }
+
+//applications 데이터를 JavaScript 배열로 변환
+const applications = [
+    <c:forEach items="${applications}" var="app" varStatus="status">
+        {
+            voId: ${app.voId},
+            voTitle: '${app.voTitle}',
+            voStartDate: '<fmt:formatDate value="${app.voStartDate}" pattern="yyyy.MM.dd"/>',
+            voEndDate: '<fmt:formatDate value="${app.voEndDate}" pattern="yyyy.MM.dd"/>',
+            voLocation: '${app.voLocation}',
+            voContent: '${app.voContent}',
+            voManager: '${app.voManager}',
+            voContact: '${app.voContact}',
+            voApplicant: '${app.voApplicant}',
+            voBirth: '<fmt:formatDate value="${app.voBirth}" pattern="yyyy.MM.dd"/>',
+            voTel: '${app.voTel}',
+            voEmail: '${app.voEmail}',
+            voExperience: '${app.voExperience}',
+            voReason: '${app.voReason}'
+        }<c:if test="${!status.last}">,</c:if>
+    </c:forEach>
+];
+
+function showDetail(voId) {
+    // 해당 application 데이터 찾기
+    const application = applications.find(app => app.voId === voId);
+    if (!application) return;
+    
+    // 모달에 데이터 채우기
+    document.getElementById('detail-voTitle').textContent = application.voTitle;
+    document.getElementById('detail-voPeriod').textContent = `${application.voStartDate} - ${application.voEndDate}`;
+    document.getElementById('detail-voLocation').textContent = application.voLocation;
+    document.getElementById('detail-voContent').textContent = application.voContent;
+    document.getElementById('detail-voManager').textContent = application.voManager;
+    document.getElementById('detail-voContact').textContent = application.voContact;
+    
+    // 신청자 정보
+    document.getElementById('detail-voApplicant').textContent = application.voApplicant;
+    document.getElementById('detail-voBirth').textContent = application.voBirth;
+    document.getElementById('detail-voTel').textContent = application.voTel;
+    document.getElementById('detail-voEmail').textContent = application.voEmail;
+    document.getElementById('detail-voExperience').textContent = application.voExperience === 'Y' ? '있음' : '없음';
+    document.getElementById('detail-voReason').textContent = application.voReason;
+    
+    // 모달 표시
+    const detailModal = new bootstrap.Modal(document.getElementById('detailModal'));
+    detailModal.show();
+}
+
 </script>
 
 <%@ include file="../inc/new_footer.jsp" %>
