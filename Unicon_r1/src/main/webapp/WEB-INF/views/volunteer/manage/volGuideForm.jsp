@@ -30,50 +30,61 @@
         <%@ include file="/WEB-INF/views/inc/admin_sidebar.jsp" %>
 
         <div class="main-panel">
-            <div class="content-wrapper">
-                <div class="page-header">
-                    <h3 class="page-title">봉사활동 안내문 수정</h3>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <form id="guideForm" class="forms-sample">
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">봉사장소</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="voLocation" value="${guide.voLocation}" required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">모집대상</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" name="voTarget" rows="3" required>${guide.voTarget}</textarea>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">활동내용</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" name="voContent" rows="3" required>${guide.voContent}</textarea>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">담당자</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="voManager" value="${guide.voManager}" required>
-                                </div>
-                                <label class="col-sm-2 col-form-label">연락처</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="voContact" value="${guide.voContact}" required>
-                                </div>
-                            </div>
-                            <div class="mt-4 text-center">
-                                <button type="submit" class="btn btn-primary px-5">저장</button>
-                                <button type="button" class="btn btn-light px-5" onclick="history.back()">취소</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <%@ include file="/WEB-INF/views/inc/admin_footer_adpt.jsp"%>
+           <div class="content-wrapper">
+               <div class="page-header">
+                   <h3 class="page-title">봉사활동 안내문 수정</h3>
+               </div>
+               <div class="card">
+			    <div class="card-body">
+			        <div class="row justify-content-center">
+			            <div class="col-md-8 offset-md-2">
+			                <form id="guideForm" class="forms-sample">
+			                    <div class="form-group row">
+			                        <label class="col-sm-2 col-form-label">봉사장소</label>
+			                        <div class="col-sm-7">
+			                            <input type="text" class="form-control" name="voLocation" value="${guide.voLocation}" required>
+			                        </div>
+			                    </div>
+			                    <div class="form-group row">
+			                        <label class="col-sm-2 col-form-label">모집대상</label>
+			                        <div class="col-sm-7">
+			                            <input type="text" class="form-control" name="voTarget" value="${guide.voTarget}" required>
+			                        </div>
+			                    </div>
+			                    <div class="form-group row">
+			                        <label class="col-sm-2 col-form-label">활동내용</label>
+			                        <div class="col-sm-7">
+			                            <textarea class="form-control" name="voContent" rows="3" required>${guide.voContent}</textarea>
+			                        </div>
+			                    </div>
+			                    <div class="form-group row">
+			                        <label class="col-sm-2 col-form-label">모집인원</label>
+			                        <div class="col-sm-7">
+			                            <input type="number" class="form-control" name="voCapacity" value="${guide.voCapacity}"required>
+			                        </div>
+			                    </div>
+			                    <div class="form-group row">
+			                        <label class="col-sm-2 col-form-label">담당자</label>
+			                        <div class="col-sm-7">
+			                            <input type="text" class="form-control" name="voManager" value="${guide.voManager}" required>
+			                        </div>
+			                    </div>
+			                    <div class="form-group row">    
+			                        <label class="col-sm-2 col-form-label">연락처</label>
+			                        <div class="col-sm-7">
+			                            <input type="text" class="form-control" name="voContact" value="${guide.voContact}" required>
+			                        </div>
+			                    </div>
+			                </form>
+			            </div>
+			        </div>
+			        <div class="mt-4 text-center">
+			            <button type="submit" class="btn btn-primary px-5" form="guideForm">저장</button>
+			            <button type="button" class="btn btn-light px-5" onclick="history.back()">취소</button>
+			        </div>
+			    </div>
+			</div>
+            <%@ include file="/WEB-INF/views/inc/admin_footer_adpt.jsp"%>
             </div>
         </div>
     </div>
@@ -107,8 +118,9 @@
            
            var formData = {
                voLocation: $('input[name="voLocation"]').val(),
-               voTarget: $('textarea[name="voTarget"]').val(),
+               voTarget: $('input[name="voTarget"]').val(),
                voContent: $('textarea[name="voContent"]').val(),
+               voCapacity: $('input[name="voCapacity"]').val(),
                voManager: $('input[name="voManager"]').val(),
                voContact: $('input[name="voContact"]').val()
            };

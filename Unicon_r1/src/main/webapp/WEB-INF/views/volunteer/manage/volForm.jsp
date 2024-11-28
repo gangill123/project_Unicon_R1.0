@@ -37,81 +37,88 @@
 	
 	            <div class="card">
 	                <div class="card-body">
-	                    <form id="postForm" class="forms-sample">
-	                        <div class="form-group row">
-	                            <label class="col-sm-2 col-form-label">봉사활동명</label>
-	                            <div class="col-sm-10">
-	                                <input type="text" class="form-control" name="voTitle" required>
-	                            </div>
-	                        </div>
-	                        <div class="form-group row">
-							    <label class="col-sm-2 col-form-label">봉사장소</label>
-							    <div class="col-sm-10">
-							        <input type="text" class="form-control" name="voLocation" required>
-							    </div>
-							</div>
-							<div class="form-group row">
-							    <label class="col-sm-2 col-form-label">모집대상</label>
-							    <div class="col-sm-10">
-							        <input type="text" class="form-control" name="voTarget" required>
-							    </div>
-							</div>
-							<div class="form-group row">
-							    <label class="col-sm-2 col-form-label">활동내용</label>
-							    <div class="col-sm-10">
-							        <textarea class="form-control" name="voContent" rows="4" required></textarea>
-							    </div>
-							</div>
-	                        <div class="form-group row">
-	                            <label class="col-sm-2 col-form-label">모집인원</label>
-	                            <div class="col-sm-4">
-	                                <input type="number" class="form-control" name="voCapacity" required>
-	                            </div>
-	                        </div>
-	                        <div class="form-group row">
-							    <label class="col-sm-2 col-form-label">담당자</label>
-							    <div class="col-sm-10">
-							        <input type="text" class="form-control" name="voManager" required>
-							    </div>
-							</div>
-							<div class="form-group row">
-							    <label class="col-sm-2 col-form-label">연락처</label>
-							    <div class="col-sm-10">
-							        <input type="text" class="form-control" name="voContact" required>
-							    </div>
-							</div>
-	                        <div class="form-group row">
-	                            <label class="col-sm-2 col-form-label">모집기간</label>
-	                            <div class="col-sm-10">
-	                                <div class="input-group">
-	                                    <input type="date" class="form-control" name="voRecruitStart" required>
-	                                    <span class="input-group-text">~</span>
-	                                    <input type="date" class="form-control" name="voRecruitEnd" required>
-	                                </div>
-	                            </div>
-	                        </div>
-	                        <div class="form-group row">
-	                            <label class="col-sm-2 col-form-label">봉사기간</label>
-	                            <div class="col-sm-10">
-	                                <div class="input-group">
-	                                    <input type="date" class="form-control" name="voStartDate" required>
-	                                    <span class="input-group-text">~</span>
-	                                    <input type="date" class="form-control" name="voEndDate" required>
-	                                </div>
-	                            </div>
-	                        </div>
-	                        <div class="mt-4 text-center">
-	                            <button type="submit" class="btn btn-primary px-5">등록</button>
-	                            <button type="button" class="btn btn-light px-5" onclick="history.back()">취소</button>
-	                        </div>
-	                    </form>
-	                </div>
-	            </div>
+	                    <div class="row justify-content-center">
+			            	<div class="col-md-8 offset-md-2">
+		                    <form id="postForm" class="forms-sample">
+		                        <div class="form-group row">
+		                            <label class="col-sm-2 col-form-label">봉사활동명</label>
+		                            <div class="col-sm-7">
+		                                <input type="text" class="form-control" name="voTitle" required>
+		                            </div>
+		                        </div>
+		                        <div class="form-group row">
+								    <label class="col-sm-2 col-form-label">봉사장소</label>
+								    <div class="col-sm-7">
+								        <input type="text" class="form-control" name="voLocation" required>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-2 col-form-label">모집대상</label>
+								    <div class="col-sm-7">
+								        <input type="text" class="form-control" name="voTarget" required>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-2 col-form-label">활동내용</label>
+								    <div class="col-sm-7">
+								        <textarea class="form-control" name="voContent" rows="4" required></textarea>
+								    </div>
+								</div>
+		                        <div class="form-group row">
+		                            <label class="col-sm-2 col-form-label">모집인원</label>
+		                            <div class="col-sm-7">
+		                                <input type="number" class="form-control" name="voCapacity" required>
+		                            </div>
+		                        </div>
+		                        <div class="form-group row">
+								    <label class="col-sm-2 col-form-label">담당자</label>
+								    <div class="col-sm-7">
+								        <input type="text" class="form-control" name="voManager" required>
+								    </div>
+								</div>
+								<div class="form-group row">
+								    <label class="col-sm-2 col-form-label">연락처</label>
+								    <div class="col-sm-7">
+								        <input type="text" class="form-control" name="voContact" required>
+								    </div>
+								</div>
+		                        <div class="form-group row">
+		                            <label class="col-sm-2 col-form-label">모집기간</label>
+		                            <div class="col-sm-7">
+		                                <div class="input-group">
+		                                    <input type="date" class="form-control" name="voRecruitStart" required>
+		                                    <span class="input-group-text">~</span>
+		                                    <input type="date" class="form-control" name="voRecruitEnd" required>
+		                                </div>
+		                            </div>
+		                        </div>
+		                        <div class="form-group row">
+		                            <label class="col-sm-2 col-form-label">봉사기간</label>
+		                            <div class="col-sm-7">
+		                                <div class="input-group">
+		                                    <input type="date" class="form-control" name="voStartDate" required>
+		                                    <span class="input-group-text">~</span>
+		                                    <input type="date" class="form-control" name="voEndDate" required>
+		                                </div>
+		                            </div>
+		                        </div>
+	                        </form>
+	                    </div>
+        			</div>
+			         <div class="row">
+			            <div class="col-12 text-center mt-4">
+			                <button type="submit" class="btn btn-primary px-5" form="postForm">등록</button>
+			                <button type="button" class="btn btn-light px-5" onclick="history.back()">취소</button>
+			            </div>
+			    	</div>
+				</div>
+			</div>
 	            <%@ include file="/WEB-INF/views/inc/admin_footer_adpt.jsp"%>
 	        </div>
 	    </div>
 	</div>
 </div>
+
 
 
 	<!-- Scripts -->

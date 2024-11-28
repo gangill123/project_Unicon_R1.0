@@ -23,6 +23,7 @@
 	        voLocation = #{voLocation},
 	        voTarget = #{voTarget},
 	        voContent = #{voContent},
+	        voCapacity = #{voCapacity},
 	        voManager = #{voManager},
 	        voContact = #{voContact}
 	    where guideId = 1
