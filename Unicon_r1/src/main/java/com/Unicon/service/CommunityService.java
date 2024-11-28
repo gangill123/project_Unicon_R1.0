@@ -31,11 +31,9 @@ public class CommunityService {
 	
 	// 게시물 등록
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
-	public void postInsert(PostVO postVO, ImageVO imageVO) {
+	public void postInsert(PostVO postVO) {
 		logger.info(" Service - postInsert() 실행");
 		communityDAO.postInsert(postVO);
-		
-		communityDAO.imageInsert(imageVO);
 	} // postInsert()
 	
 }

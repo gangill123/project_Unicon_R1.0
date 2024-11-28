@@ -1,5 +1,8 @@
 package com.Unicon.persistence;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -33,18 +36,27 @@ public class CommunityDAO {
 		
 		sqlSession.insert(NAMESPACE+"postInsert", postVO);
 		
+		Map<String, Object> imageParams = new HashMap<>();
+		imageParams.put("post_id", postVO.getPost_id());
+		imageParams.put("images", postVO.getPost_images());
+		sqlSession.insert(NAMESPACE+"insertPostImages", imageParams);
+		
 	} // postInsert()
 	
-	// 이미지 정보 등록(반복은 매퍼에서 처리)
-	public void imageInsert(ImageVO imageVO) {
-		logger.info(" DAO - imageInsert() 실행 ");
-		
-		sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
-		
-//		for(ImageVO imageVO : postVO.getPost_images()) {
+	
+	
+	
+	
+//	// 이미지 정보 등록(반복은 매퍼에서 처리)
+//	public void imageInsert(ImageVO imageVO) {
+//		logger.info(" DAO - imageInsert() 실행 ");
+//		
 //		sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
+//		
+////		for(ImageVO imageVO : postVO.getPost_images()) {
+////		sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
+////	}
+//		
 //	}
-		
-	}
 	
 }

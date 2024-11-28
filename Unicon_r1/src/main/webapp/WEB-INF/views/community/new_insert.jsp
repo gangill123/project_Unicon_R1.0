@@ -54,7 +54,7 @@
                        <p class="mb-0">입양 후기 / 반려 이야기 / 실종 / 임시 보호 에 대한 커뮤니티 게시글을 작성해주세요.</p>
                     </div>
 
-                    <form class="quform" action="${contextPath }/community/insert" method="post" enctype="multipart/form-data" onclick="">
+                    <form id="formPost" class="quform" action="${contextPath }/community/insert" method="post" enctype="multipart/form-data" onclick="">
                     	
                     	<!-- 숨겨서 들고갈 값(세션) -->
                     	<!-- member_id -->
@@ -198,7 +198,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-1" name="image_file1" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-1" name="upload_images[0]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="repImage1">대표 이미지 <span class="quform-required">*</span></label>
 								                    </div>
 								                </div>
@@ -218,7 +218,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-2" name="image_file2" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-2" name="upload_images[1]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="Image2">이미지</label>
 								                    </div>
 								                </div>
@@ -238,7 +238,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-3" name="image_file3" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-3" name="upload_images[2]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="Image3">이미지</label>
 								                    </div>
 								                </div>
@@ -258,7 +258,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-4" name="image_file4" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-4" name="upload_images[3]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="Image4">이미지</label>
 								                    </div>
 								                </div>
@@ -462,6 +462,16 @@ $(function() {
 		}
 	});
  	// 동물 품종 리스트
+ 	
+ 	
+ 	// 엔터키 제출 방지
+	$('#formPost').on('keydown', function(event) {
+		if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
+			event.preventDefault();
+		}
+	});
+	// 엔터키 제출 방지
+ 	
  	
  	// 글 등록 수행
  	// 드롭다운 클릭

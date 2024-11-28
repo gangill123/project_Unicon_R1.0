@@ -122,8 +122,19 @@
 <!-- post_id, 이미지 구조 변경 필요 -->
 <insert id="postInsert">
 	insert into _post (post_id, member_id, post_title, post_content, post_date, post_type, pet_code, pet_etc_breed, post_pet_place, post_pet_date) 
-	values (#{member_id}, #{member_id}, #{post_title}, #{post_content}, now(), #{post_type}, #{pet_code}, #{pet_etc_breed}, #{post_pet_place}, #{post_pet_date}) 
+	values (#{post_id}, #{member_id}, #{post_title}, #{post_content}, now(), #{post_type}, #{pet_code}, #{pet_etc_breed}, #{post_pet_place}, #{post_pet_date}) 
 </insert>
+
+
+<insert id="insertPostImages" parameterType="map">
+	insert into _image (image_id, image_type, image_sequence, image_src) 
+	 values 
+	  <foreach collection="images" item="i" separator=","> 
+	   (#{post_id}, #{i.image_type}, #{i.image_sequence}, #{i.image_src}) 
+	  </foreach> 
+</insert>
+
+
 <!-- <insert id="postImageInsert"> -->
 <!-- 	insert into _image (image_id, image_type, image_sequence, image_src) values  -->
 <!-- 	<foreach collection="list" item="image" separator=","> -->
@@ -131,11 +142,11 @@
 <!-- 	</foreach>  -->
 <!-- </insert> -->
 
-<insert id="postImageInsert">
-	insert into _image (image_id, image_type, image_sequence, image_src) 
-	values (#{member_id}, #{post_type}, 1, #{image_src}) 
+<!-- <insert id="postImageInsert"> -->
+<!-- 	insert into _image (image_id, image_type, image_sequence, image_src)  -->
+<!-- 	values (#{member_id}, #{post_type}, 1, #{image_src})  -->
 	
-</insert>
+<!-- </insert> -->
 
 
 
