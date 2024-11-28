@@ -151,7 +151,11 @@
             a.*,
             v.voTitle,
             v.voStartDate,
-            v.voEndDate
+            v.voEndDate,
+            v.voManager,
+            v.voContact,
+            v.voLocation,
+            v.voContent
         from _volunteer_apply a
         join _volunteer v ON a.volunteerId = v.voId
         where 1=1
