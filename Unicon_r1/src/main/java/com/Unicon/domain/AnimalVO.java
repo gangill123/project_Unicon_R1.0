@@ -3,6 +3,8 @@ package com.Unicon.domain;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -15,16 +17,17 @@ public class AnimalVO {
 	private int animal_gender; // 1: 남아, 2: 여아
 	private int animal_neuter; // 1: 유, 2: 무
 	private String animal_age;
-	private int animal_weight; // 1: 소형(~5), 2: 중형(5~25), 3: 대형(25~)
+	private int animal_weight; // 1: 소형(~5kg), 2: 중형(5~25kg), 3: 대형(25kg~)
 	private String member_id;
 	private Timestamp animal_regdate;
 	private Timestamp animal_upddate;
+	private String animal_status; // 1: 대기중, 2: 모집중, 3: 상담중, 4: 입양완료, 5: 종료
 	private String animal_regnum;
-	private int animal_act;
-	private int animal_social;
+	private int animal_act; // 0~5, 0: 미입력
+	private int animal_social; // 0~5, 0: 미입력
 	private String animal_etc;
-	private String animal_status;
 	private List<ImageVO> animal_images;
+	private List<MultipartFile> upload_images;
 	private List<AnimalHealthVO> animal_healths;
 	private List<AnimalVaccineVO> animal_vaccines;
 	

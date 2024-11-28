@@ -22,7 +22,19 @@
 <!-- End layout styles -->
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/admin/images/favicon.png" />
 <style type="text/css">
-
+	
+	/*=============== 테두리 css ===============*/
+	select.form-control {
+		border-radius: 0.5rem;
+		cursor: pointer;
+	}
+	
+	input.form-control, textarea.form-control {
+		border-radius: 0.5rem;
+	}
+	/*=============== 테두리 css ===============*/
+	
+	/*=============== 이미지 css ===============*/
 	.upload-container {
 		position: relative;
 		aspect-ratio: 1 / 1;
@@ -56,24 +68,30 @@
 		object-fit: fill;
 		display: none;
 	}
+	/*=============== 이미지 css ===============*/
 	
-	.form-group input {
-		display: flex;
-		flex: 1;
-	}
-	
-	input::placeholder {
-		color: #ccc !important;
-	}
-	
+	/*=============== 텍스트 css ===============*/
 	.custom-label {
 		font-size: 1.2rem !important;
 	}
 	
 	.custom-text {
-		font-size: 1.2rem;
+		font-size: 1.2rem !important;
 	}
+
+	@media (max-width: 600px) {
+		.custom-text {
+			font-size: 0.95rem !important;
+		}
+	}
+		
+	input::placeholder, textarea::placeholder {
+		color: #ccc !important;
+	}
+	/*=============== 텍스트 css ===============*/
 	
+	
+	/*=============== 구분선 css ===============*/
 	.custom-borderbm {
 		border: 0.2rem;
 		border-style: dashed;
@@ -81,7 +99,10 @@
 		width: 95%;
 		margin: auto;
 	}
+	/*=============== 구분선 css ===============*/
 	
+	
+	/*=============== 드롭다운 css ===============*/
 	#petTypeDetail {
 		padding: 0.8rem;
 		cursor: pointer; 
@@ -125,7 +146,10 @@
 		color: #181824;
 		font-size: 0.8rem;
 	}
+	/*=============== 드롭다운 css ===============*/
 	
+	
+	/*=============== 필드셋 css ===============*/
 	.custom-a-fieldset {
 		border: 2px solid #ccc;
 		padding: 1rem;
@@ -144,87 +168,132 @@
 		color: #001737;
 		padding: 0 0.5rem;
 	}
+	/*=============== 필드셋 css ===============*/
 	
-	select.form-control {
+	
+	/*=============== 도움말 css ===============*/
+	.aAct-tooltip, .aSocial-tooltip {
+		position: relative;
+		display: inline-block;
+	}
+	
+	.aAct-tooltip-icon, .aSocial-tooltip-icon {
+		font-size: 1.1rem;
+		cursor: pointer;
+		color: black;
+	}
+	
+	.aAct-tooltip-text, .aSocial-tooltip-text {
+		visibility: hidden;
+		width: 25rem;
+		background-color: black;
+		color: #fff;
+		text-align: left;
 		border-radius: 0.5rem;
+		padding: 1rem;
+		position: absolute;
+		z-index: 1;
+		bottom: 125%;
+		left: 50%;
+		margin: 0 -9rem;
+		opacity: 0;
+		transition: opacity 0.3s;
+		font-size: 1.1rem;
+	}
+	
+	.aSocial-tooltip-text i {
+		font-size: 1.2rem;
+	}
+	
+	.aAct-tooltip:hover .aAct-tooltip-text, .aSocial-tooltip:hover .aSocial-tooltip-text {
+		visibility: visible;
+		opacity: 1;
+	}
+	/*=============== 도움말 css ===============*/
+	
+	
+	/*=============== 체크박스 css ===============*/
+	.aAct-checkbox-group, .aSocial-checkbox-group {
+		display: flex;
+	}
+	
+	.aAct-checkbox-box, .aSocial-checkbox-box {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 10rem; 
+		height: 3rem;
+		background-color: #fdfdfd;
+		border: 1px solid #ccc;
+		margin-right: 0;
+		cursor: pointer;
+		transition: background-color 0.3s, border-color 0.3s;
+		color: #bbb;
+	}
+	
+	.aAct-checkbox-box-first, .aSocial-checkbox-box-first {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 10rem; 
+		height: 3rem;
+		background-color: #fdfdfd;
+		border: 1px solid #ccc;
+		margin-right: 0;
+		cursor: pointer;
+		transition: background-color 0.3s, border-color 0.3s;
+		border-radius: 0.7rem 0 0 0.7rem;
+		color: #bbb;
+	}
+	
+	.aAct-checkbox-box-end, .aSocial-checkbox-box-end {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 10rem; 
+		height: 3rem;
+		background-color: #fdfdfd;
+		border: 1px solid #ccc;
+		margin-right: 0;
+		cursor: pointer;
+		transition: background-color 0.3s, border-color 0.3s;
+		border-radius: 0 0.7rem 0.7rem 0;
+		color: #bbb;
+	}
+	
+	
+	.aAct-checkbox-box i, .aSocial-checkbox-box i {
+		font-size: 1.2rem;
+	}
+	
+	.aAct-checkbox-box-first i, .aSocial-checkbox-box-first i {
+		font-size: 1.2rem;
+	}
+	
+	.aAct-checkbox-box-end i, .aSocial-checkbox-box-end i {
+		font-size: 1.2rem;
+	}
+	
+	.aAct-checkbox-box input, .aAct-checkbox-box-first input, .aAct-checkbox-box-end input,
+	.aSocial-checkbox-box input, .aSocial-checkbox-box-first input, .aSocial-checkbox-box-end input {
+		position: absolute;
+		opacity: 0;
 		cursor: pointer;
 	}
 	
-	input.form-control {
-		border-radius: 0.5rem;
+	.aAct-checkbox-box:hover, .aAct-checkbox-box-first:hover, .aAct-checkbox-box-end:hover,
+	.aSocial-checkbox-box:hover, .aSocial-checkbox-box-first:hover, .aSocial-checkbox-box-end:hover {
+		background-color: #d0d0d0;
 	}
-
-.aAct-tooltip, .aSocial-tooltip {
-position: relative;
-display: inline-block;
-}
-
-.aAct-tooltip-icon, .aSocial-tooltip-icon {
-font-size: 1rem;
-cursor: pointer;
-margin: 0.4rem;
-color: black;
-}
-
-.aAct-tooltip-text, .aSocial-tooltip-text {
-visibility: hidden;
-width: 20rem;
-background-color: black;
-color: #fff;
-text-align: center;
-border-radius: 0.5rem;
-padding: 1rem;
-position: absolute;
-z-index: 1;
-bottom: 125%;
-left: 50%;
-margin: 0 -9rem;
-opacity: 0;
-transition: opacity 0.3s;
-}
-
-.aAct-tooltip:hover .aAct-tooltip-text {
-visibility: visible;
-opacity: 1;
-}
-
-.aSocial-tooltip:hover .aSocial-tooltip-text {
-visibility: visible;
-opacity: 1;
-}
-
-.radio-group {
-display: flex;
-}
-
-.radio-box {
-display: flex;
-align-items: center;
-justify-content: center;
-width: 50px; 
-height: 50px;
-background-color: #f0f0f0;
-border: 1px solid #ccc;
-margin-right: 0;
-cursor: pointer;
-transition: background-color 0.3s, border-color 0.3s;
-}
-
-.radio-box input {
-position: absolute;
-opacity: 0.5;
-cursor: pointer;
-}
-
-.radio-box:hover {
-background-color: #d0d0d0;
-}
-
-.radio-box input:checked + label {
-    background-color: #007bff !important;
-    color: #007bff;
-    border-color: #007bff;
-}
+	
+	.aAct-checkbox-box:has(input[type="checkbox"]:checked), .aAct-checkbox-box-first:has(input[type="checkbox"]:checked), 
+	.aAct-checkbox-box-end:has(input[type="checkbox"]:checked),
+	.aSocial-checkbox-box:has(input[type="checkbox"]:checked), .aSocial-checkbox-box-first:has(input[type="checkbox"]:checked),
+	.aSocial-checkbox-box-end:has(input[type="checkbox"]:checked) {
+		background-color: #007bff;
+		color: white;
+	}
+	/*=============== 체크박스 css ===============*/
 	
 </style>
 </head>
@@ -246,11 +315,12 @@ background-color: #d0d0d0;
 										<h4 class="card-title">입양 동물 관리</h4>
 										<p class="card-description"> 입양 동물 등록 </p>
 										
-										<form id="formAdptAnimal" action="" method="post">
+										<form id="formAdptAnimal" action="" method="post" enctype="multipart/form-data">
 										
 											<fieldset class="custom-a-fieldset mb-3">
 												<legend class="custom-a-legend">필수 정보</legend>
-												<div class="form-group row">
+												
+												<div class="form-group row d-flex justify-content-center">
 													<div class="col-12 col-xl-2 col-md-5 mb-3">
 														<label for="petType" class="text-dark custom-label">동물 종류</label>
 														<select class="form-control custom-text" id="petType" required>
@@ -268,12 +338,11 @@ background-color: #d0d0d0;
 													<div class="col-12 col-xl-4 col-md-7 mb-3">
 														<label for="petTypeEtc" class="text-dark custom-label">기타 종류<span class="small">(선택)</span></label>
 														<input type="text" id="petTypeEtc" name="category_etc_value" class="form-control custom-text" 
-															maxlength="30" readonly/>
+															maxlength="30" placeholder="세부 종류 '기타 --'인 경우 작성가능" readonly/>
 													</div>
-													<div class="col-12 col-md-3 mb-3"></div>
 												</div>
 											
-												<div class="form-group row">
+												<div class="form-group row d-flex justify-content-center">
 													<div class="col-12 col-xl-3 col-md-6 mb-3">
 														<label for="aName" class="text-dark custom-label">동물 이름</label>
 														<input type="text" id="aName" name="animal_name" class="form-control custom-text"
@@ -284,7 +353,7 @@ background-color: #d0d0d0;
 														<input type="text" id="aColor" name="animal_color" class="form-control custom-text"
 															placeholder="최대 10자" maxlength="10" required/>
 													</div>
-													<div class="col-12 col-xl-2 col-md-2 mb-3">
+													<div class="col-12 col-xl-2 col-lg-3 col-md-2 mb-3">
 														<label for="aGender" class="text-dark custom-label">성별</label>
 														<select id="aGender" name="animal_gender" 
 															class="form-control custom-text" required>
@@ -293,7 +362,7 @@ background-color: #d0d0d0;
 															<option value="2">여아</option>
 														</select>
 													</div>
-													<div class="col-12 col-xl-2 col-md-2 mb-3">
+													<div class="col-12 col-xl-2 col-lg-3 col-md-2 mb-3">
 													<label for="aNeuter" class="text-dark custom-label">중성화</label>
 														<select id="aNeuter" name="animal_neuter" 
 															class="form-control custom-text" required>
@@ -304,13 +373,13 @@ background-color: #d0d0d0;
 													</div>
 												</div>
 												
-												<div class="form-group row mb-5">
+												<div class="form-group row d-flex justify-content-center mb-5">
 													<div class="col-12 col-xl-3 col-md-6 mb-3">
 														<label for="aAge" class="text-dark custom-label">동물 나이</label>
 														<input type="text" id="aAge" name="animal_age" class="form-control custom-text"
 															placeholder="최대 10자" maxlength="10" required/>
 													</div>
-													<div class="col-12 col-xl-2 col-md-2 mb-3">
+													<div class="col-12 col-xl-2 col-lg-3 col-md-2 mb-3">
 														<label for="aWeight" class="text-dark custom-label">크기</label>
 														<select id="aWeight" name="animal_weight" 
 															class="form-control custom-text" required>
@@ -327,46 +396,46 @@ background-color: #d0d0d0;
 													</div>
 												</div>
 												
-												<div class="form-group row">
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mr-3 mb-2">
+												<div class="form-group row d-flex justify-content-center">
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
 														<label class="text-dark custom-label">대표 이미지</label>
 													    <div class="upload-container">
 															<label for="image-input1" class="upload-button">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input1" required/>
+																	accept="image/*" id="image-input1" name="upload_images[0]" required/>
 																<i id="plusIcon1" class="mdi mdi-plus"></i>
 																<img id="image-preview1" alt="이미지 미리보기" />
 															</label>
 														</div>
 													</div>
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mr-3 mb-2">
-														<label class="text-dark custom-label">이미지</label>
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
 													    <div class="upload-container">
 															<label for="image-input2" class="upload-button">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input2" />
+																	accept="image/*" id="image-input2" name="upload_images[1]"/>
 																<i id="plusIcon2" class="mdi mdi-plus"></i>
 																<img id="image-preview2" alt="이미지 미리보기" />
 															</label>
 														</div>
 													</div>
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mr-3 mb-2">
-														<label class="text-dark custom-label">이미지</label>
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
 													    <div class="upload-container">
 															<label for="image-input3" class="upload-button">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input3" />
+																	accept="image/*" id="image-input3" name="upload_images[2]"/>
 																<i id="plusIcon3" class="mdi mdi-plus"></i>
 																<img id="image-preview3" alt="이미지 미리보기" />
 															</label>
 														</div>
 													</div>
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mr-3 mb-2">
-														<label class="text-dark custom-label">이미지</label>
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
 													    <div class="upload-container">
 															<label for="image-input4" class="upload-button">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input4" />
+																	accept="image/*" id="image-input4" name="upload_images[3]"/>
 																<i id="plusIcon4" class="mdi mdi-plus"></i>
 																<img id="image-preview4" alt="이미지 미리보기" />
 															</label>
@@ -380,18 +449,23 @@ background-color: #d0d0d0;
 											<fieldset class="custom-a-fieldset mb-3">
 											<legend class="custom-a-legend">선택 정보</legend>
 											
-												<div class="form-group row">
-													<div class="col-12 col-xl-4 col-md-6 mb-3">
+												<div class="form-group row d-flex justify-content-center">
+													<div class="col-12 col-xl-6 col-md-6 mb-3">
 														<label for="aRegNum" class="text-dark custom-label">동물 등록 번호</label>
 														<input type="text" id="aRegNum" name="animal_regnum" class="form-control custom-text" 
 															maxlength="15" placeholder="최대 15자"/>
+													</div>
+													<div class="col-12 col-xl-6 col-lg-8 col-md-6">
+														<label class="text-dark custom-label">비고/기타사항</label>
+														<textarea rows="5" name="animal_etc" class="form-control custom-text" 
+															placeholder="최대 200자" maxlength="200"></textarea>
 													</div>
 												</div>
 												
 												<fieldset class="custom-a-fieldset col-12 col-xl-12 mb-5">
 												<legend class="custom-a-sub-legend">건강검진 정보</legend>
-													<div class="row">
-														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mr-3 mb-3">
+													<div class="form-group row d-flex justify-content-center">
+														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mb-3">
 															<label for="aHealth0" class="text-dark custom-label">사상충</label>
 															<select id="aHealth0" name="animal_healths[0].health_check" 
 																class="form-control custom-text">
@@ -401,7 +475,7 @@ background-color: #d0d0d0;
 															</select>
 															<input type="hidden" name="animal_healths[0].health" value="사상충">
 														</div>
-														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mr-3 mb-3">
+														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mb-3">
 															<label for="aHealth1" class="text-dark custom-label">원충</label>
 															<select id="aHealth1" name="animal_healths[1].health_check" 
 																class="form-control custom-text">
@@ -411,7 +485,7 @@ background-color: #d0d0d0;
 															</select>
 															<input type="hidden" name="animal_healths[1].health" value="원충">
 														</div>
-														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mr-3 mb-3">
+														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mb-3">
 															<label for="aHealth2" class="text-dark custom-label">코로나</label>
 															<select id="aHealth2" name="animal_healths[2].health_check" 
 																class="form-control custom-text">
@@ -421,7 +495,7 @@ background-color: #d0d0d0;
 															</select>
 															<input type="hidden" name="animal_healths[2].health" value="코로나">
 														</div>
-														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mr-3 mb-3">
+														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mb-3">
 															<label for="aHealth3" class="text-dark custom-label">파보</label>
 															<select id="aHealth3" name="animal_healths[3].health_check" 
 																class="form-control custom-text">
@@ -431,7 +505,7 @@ background-color: #d0d0d0;
 															</select>
 															<input type="hidden" name="animal_healths[3].health" value="파보">
 														</div>
-														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mr-3 mb-3">
+														<div class="col-12 col-xl-2 col-lg-8 col-md-5 mb-3">
 															<label for="aHealth4" class="text-dark custom-label">홍역</label>
 															<select id="aHealth4" name="animal_healths[4].health_check" 
 																class="form-control custom-text">
@@ -446,7 +520,7 @@ background-color: #d0d0d0;
 												
 												<fieldset class="custom-a-fieldset col-12 col-xl-12 mb-5">
 												<legend class="custom-a-sub-legend">예방접종 정보</legend>
-													<div id="aVaccineDiv" class="row">
+													<div id="aVaccineDiv" class="form-group row d-flex justify-content-center">
 														<div class="col-12 col-xl-3 col-lg-8 col-md-5 mb-3">
 															<label for="#" class="text-dark custom-label">--</label>
 															<select id="#" name="#" 
@@ -484,54 +558,99 @@ background-color: #d0d0d0;
 												
 												<fieldset class="custom-a-fieldset col-12 col-xl-12 mb-5">
 												<legend class="custom-a-sub-legend">성격</legend>
-													<div class="row">
-														<div class="col-12 col-xl-6 col-lg-8 col-md-5 mb-3">
-															<div class="row">
-																<label for="aAct" class="text-dark custom-label">활동성</label>
-																<div class="aAct-tooltip">
-																	<i class="fas fa-question-circle aAct-tooltip-icon"></i>
-																	<span class="aAct-tooltip-text">여기에 설명이나 힌트를 입력하세요.</span>
-																</div>
+												
+													<div class="form-group row d-flex justify-content-center align-items-center">
+														<div class="col-12 col-xl-3 col-lg-8 col-md-6">
+															<label for="aAct" class="text-dark custom-label">활동성</label>
+															<div class="aAct-tooltip">
+																<i class="fas fa-question-circle aAct-tooltip-icon"></i>
+																<span class="aAct-tooltip-text">
+																	<i class="fa-solid fa-0"></i> - 미입력<br/>
+																	<br/>
+																	<i class="fa-solid fa-1"></i> - 거의 움직이지 않고 놀이에 관심이 없고 자거나 쉬는 시간을 가짐<br/>
+																	<br/>
+																	<i class="fa-solid fa-2"></i> - 가끔 움직이며 장난감을 가지고 놀지만 오래 지속되지 않음<br/>
+																	<br/>
+																	<i class="fa-solid fa-3"></i> - 주기적으로 장난감을 가지고 놀거나 돌아다니면서 환경에 호기심을 가짐<br/>
+																	<br/>
+																	<i class="fa-solid fa-4"></i> - 자주 뛰어다니고 활발하게 다양한 놀이를 즐기며 장난감에 적극적임<br/>
+																	<br/>
+																	<i class="fa-solid fa-5"></i> - 매우 활동적이고 놀이를 매우 좋아하며 새로운 환경을 적극적으로 탐색함<br/>
+																</span>
 															</div>
-															<input type="range" id="aAct" name="animal_act" min="0" max="5"
-																step="1" value="0" class="form-control"/>
+															<div class="aAct-checkbox-group">
+																<label class="aAct-checkbox-box-first">
+																<input type="checkbox" name="animal_act" value="1"/>
+																	<i class="fa-solid fa-1"></i>
+																</label>
+																<label class="aAct-checkbox-box">
+																<input type="checkbox" name="animal_act" value="2"/>
+																	<i class="fa-solid fa-2"></i>
+																</label>
+																<label class="aAct-checkbox-box">
+																<input type="checkbox" name="animal_act" value="3"/>
+																	<i class="fa-solid fa-3"></i>
+																</label>
+																<label class="aAct-checkbox-box">
+																<input type="checkbox" name="animal_act" value="4"/>
+																	<i class="fa-solid fa-4"></i>
+																</label>
+																<label class="aAct-checkbox-box-end">
+																<input type="checkbox" name="animal_act" value="5"/>
+																	<i class="fa-solid fa-5"></i>
+																</label>
+															</div>
 														</div>
-														<div class="col-12 col-xl-6 col-lg-8 col-md-5 mb-3">
-															<div class="row">
-																<label for="aSocial" class="text-dark custom-label">사회성</label>
-																<div class="aSocial-tooltip">
-																	<i class="fas fa-question-circle aSocial-tooltip-icon"></i>
-																	<span class="aSocial-tooltip-text">여기에 설명이나 힌트를 입력하세요.</span>
-																</div>
+														
+														<div class="col-12 col-xl-2 col-lg-8 col-md-7"></div>
+														
+														<div class="col-12 col-xl-3 col-lg-8 col-md-6">
+															<label for="aSocial" class="text-dark custom-label">사회성</label>
+															<div class="aSocial-tooltip">
+																<i class="fas fa-question-circle aSocial-tooltip-icon"></i>
+																<span class="aSocial-tooltip-text">
+																	<i class="fa-solid fa-0"></i> - 미입력<br/>
+																	<br/>
+																	<i class="fa-solid fa-1"></i> - 사람과 다른 동물에 관심이 없고 상호작용 하지 않으려 함<br/>
+																	<br/>
+																	<i class="fa-solid fa-2"></i> - 가끔 다가와 상호작용하지만 주로 혼자 지내며 행동을 잘 배우지 않음<br/>
+																	<br/>
+																	<i class="fa-solid fa-3"></i> - 정기적으로 사람 및 다른 동물과의 놀이를 즐기고 일부 행동을 배우는 경향이 있음<br/>
+																	<br/>
+																	<i class="fa-solid fa-4"></i> - 사람 및 다양한 동물과 자주 상호작용하며 다른 동물의 행동을 잘 관찰하고 학습함<br/>
+																	<br/>
+																	<i class="fa-solid fa-5"></i> - 모든 동물과 적극적으로 상호작용하고 사람과의 유대감이 높으며 뛰어난 사회적 학습력을 가짐<br/>
+																</span>
 															</div>
-<div class="radio-group">
-<label class="radio-box">
-<input type="radio" name="rating" value="1">
-1
-</label>
-<label class="radio-box">
-<input type="radio" name="rating" value="2">
-2
-</label>
-<label class="radio-box">
-<input type="radio" name="rating" value="3">
-3
-</label>
-<label class="radio-box">
-<input type="radio" name="rating" value="4">
-4
-</label>
-<label class="radio-box">
-<input type="radio" name="rating" value="5">
-5
-</label>
-</div>
+															<div class="aSocial-checkbox-group">
+																<label class="aSocial-checkbox-box-first">
+																<input type="checkbox" name="animal_social" value="1"/>
+																	<i class="fa-solid fa-1"></i>
+																</label>
+																<label class="aSocial-checkbox-box">
+																<input type="checkbox" name="animal_social" value="2"/>
+																	<i class="fa-solid fa-2"></i>
+																</label>
+																<label class="aSocial-checkbox-box">
+																<input type="checkbox" name="animal_social" value="3"/>
+																	<i class="fa-solid fa-3"></i>
+																</label>
+																<label class="aSocial-checkbox-box">
+																<input type="checkbox" name="animal_social" value="4"/>
+																	<i class="fa-solid fa-4"></i>
+																</label>
+																<label class="aSocial-checkbox-box-end">
+																<input type="checkbox" name="animal_social" value="5"/>
+																	<i class="fa-solid fa-5"></i>
+																</label>
+															</div>
 														</div>
 													</div>
 												</fieldset>
-												
-												<button type="submit" class="btn btn-primary mr-2">Submit</button>
-												<button class="btn btn-light">Cancel</button>
+												<div class="form-group row d-flex justify-content-center align-items-center">
+													<button type="submit" class="btn btn-lg btn-rounded btn-primary custom-text mr-2">등록하기</button>
+													<button type="reset" class="btn btn-lg btn-rounded btn-light custom-text">초기화</button>
+												</div>
 											</fieldset>
 										</form>
 									</div>
@@ -594,29 +713,6 @@ background-color: #d0d0d0;
 					}
 				});
 				/*=============== 엔터키 제출 방지 ===============*/
-				
-				
-				/*=============== 이미지 미리보기 ===============*/
-				$('.image-input').on('change', function(e) {
-					const file = e.target.files[0];
-					const reader = new FileReader();
-					
-					const inputId = e.target.id;
-					const previewId = '#image-preview' + inputId.charAt(inputId.length - 1);
-					const plusIconId = '#plusIcon' + inputId.charAt(inputId.length - 1);
-				
-					if (file) {
-						reader.onload = function(e) {
-							$(previewId).attr('src', e.target.result).show();
-							$(plusIconId).hide();
-						}
-						reader.readAsDataURL(file);
-					} else {
-						$(previewId).hide();
-						$(plusIconId).show();
-					}
-				});
-				/*=============== 이미지 미리보기 ===============*/
 				
 				
 				/*=============== 동물 종류 리스트 가져오기 ===============*/
@@ -799,6 +895,53 @@ background-color: #d0d0d0;
 					
 				});
 				/*=============== 검색 드롭다운 ===============*/
+				
+				
+				/*=============== 이미지 미리보기 ===============*/
+				$('.image-input').on('change', function(e) {
+					const file = e.target.files[0];
+					const reader = new FileReader();
+					
+					const inputId = e.target.id;
+					const previewId = '#image-preview' + inputId.charAt(inputId.length - 1);
+					const plusIconId = '#plusIcon' + inputId.charAt(inputId.length - 1);
+					
+					const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
+					
+					if (file) {
+						if(fileTypeFilter.exec(file.name)) {
+							reader.onload = function(e) {
+								$(previewId).attr('src', e.target.result).show();
+								$(plusIconId).hide();
+							}
+							reader.readAsDataURL(file);
+						} else {
+							$(this).val('');
+						}
+					} else {
+						$(previewId).hide();
+						$(plusIconId).show();
+					}
+				});
+				/*=============== 이미지 미리보기 ===============*/
+				
+				
+				/*=============== 체크박스 제어 ===============*/
+				$('input:checkbox[name="animal_act"], input:checkbox[name="animal_social"]').on('change', function(){
+					
+					if($(this).prop('name') == 'animal_act'){
+						if($(this).is(':checked')) {
+							$('input:checkbox[name="animal_act"]').not($(this)).prop('checked',false);
+						}
+					} else {
+						if($(this).is(':checked')) {
+							$('input:checkbox[name="animal_social"]').not($(this)).prop('checked',false);
+						}
+					}
+					
+				});
+				/*=============== 체크박스 제어 ===============*/
+
 				
 				
 			});//DOM

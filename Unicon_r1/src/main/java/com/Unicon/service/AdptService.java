@@ -23,8 +23,9 @@ public class AdptService {
 	private AdptDAO aDAO;
 	
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
-	public void animalInsert(AnimalVO animalVO) {
+	public void animalInsert(AnimalVO avo) {
 		log.info("( •̀ ω •́ )✧ adptInsert() 실행");
+		aDAO.animalInsert(avo);
 	}
 
 }
