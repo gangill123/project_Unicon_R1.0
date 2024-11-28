@@ -346,6 +346,93 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
         $('#price, #discount').on('input', function() {
             calculateDiscountPrice();
         });
-       
+        
+        $(".i-tooltip").click(function(event) {
+            event.stopPropagation(); // 클릭 이벤트 전파 방지
+            $("#tooltip-info").toggle(); // 툴팁 보이기/숨기기
+        });
+
+        $(document).click(function() {
+            $("#tooltip-info").hide(); // 전체 문서 클릭 시 툴팁 숨기기
+        });
+        
+        let optionCount = 1; // 옵션 카운터 초기화
+
+     // 옵션 추가
+     $(document).on("click", ".option-add", function () {
+         if (optionCount < 3) {
+             optionCount++; // 옵션 카운터 증가
+             const newOption =
+                 '<div class="display-f" style="align-items: unset; margin: 0 0 1rem 0;">' +
+                     '<div class="store-input-container start" style="flex-direction: column; gap: 1rem;">' +
+                         '<label style="display: none;" for="option-name-' + optionCount + '">옵션명</label>' +
+                         '<div id="option-name-wrapper" class="option-wrapper">' +
+                             '<input style="width: 15rem;" id="option-name-' + optionCount + '" class="option-input" type="text" placeholder="예시:컬러" name="option-productNames">' +
+                         '</div>' +
+                     '</div>' +
+                     '<div class="store-input-container start" style="flex-direction: column; gap: 1rem;">' +
+                         '<label style="display: none;" for="option-value-' + optionCount + '">옵션값</label>' +
+                         '<div id="option-value-wrapper" class="option-wrapper">' +
+                             '<input style="width: 15rem;" id="option-value-' + optionCount + '" class="option-input" type="text" placeholder="예시:컬러" name="option-productValues">' +
+                         '</div>' +
+                     '</div>' +
+                     '<div class="store-input-container start">' +
+                         '<div>' +
+                             '<button style="position: relative;top: -8px;" class="option-remove"><i class="mdi mdi-minus-box"></i></button>' +
+                             '<button style="position: relative;top: -8px;" class="option-add"><i class="mdi mdi-plus-box"></i></button>' +
+                         '</div>' +
+                     '</div>' +
+                 '</div>';
+             
+             $("#options-container").append(newOption);
+         }
+     });
+
+     // 옵션 삭제
+     $(document).on("click", ".option-remove", function () {
+         const closestOption = $(this).closest(".display-f");
+         closestOption.remove(); // 해당 옵션 삭제
+         optionCount--; // 옵션 카운터 감소
+         updateOptionIds(); // ID 업데이트 함수 호출
+
+         // 버튼 보이기
+         if (optionCount === 1) {
+             $(".option-add").first().show(); // 1번 버튼 다시 보이기
+         } else if (optionCount === 2) {
+             $(".option-add").last().show(); // 2번 버튼 다시 보이기
+         }
+     });
+
+     // ID 업데이트 함수
+     function updateOptionIds() {
+         $(".display-f").each(function (index) {
+             const newIndex = index + 1; // 1부터 시작하는 인덱스
+             $(this)
+                 .find('input[id^="option-name-"]')
+                 .attr("id", "option-name-" + newIndex);
+             $(this)
+                 .find('input[id^="option-value-"]')
+                 .attr("id", "option-value-" + newIndex);
+             $(this)
+                 .find('label[for^="option-name-"]')
+                 .attr("for", "option-name-" + newIndex);
+             $(this)
+                 .find('label[for^="option-value-"]')
+                 .attr("for", "option-value-" + newIndex);
+         });
+     }
+     // 2번 버튼의 + 클릭 시 3번 버튼의 - 버튼만 보이게 하기
+     $(document).on("click", ".option-add", function () {
+         if (optionCount === 2) {
+        	 $(".option-add").first().hide(); // 1번 버튼 숨기기
+             $(this).hide(); // 2번 버튼 숨기기
+         }	else if (optionCount === 3) {
+             $(".option-add").last().prev().hide(); // 2번 버튼 숨기기
+         }
+         
+         // 1번 버튼 숨기기
+         if (optionCount === 2) {
+         } 
+     });
 
     });
