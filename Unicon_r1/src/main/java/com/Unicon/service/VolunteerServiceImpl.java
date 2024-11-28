@@ -211,7 +211,7 @@ public class VolunteerServiceImpl implements VolunteerService {
     
     @Override
     @Transactional
-    public void cancelApplication(Long voId, String reason) throws Exception {
+    public void cancelApplication(Long voId, String reason, String reasonDetail) throws Exception {
         try {
             VolunteerApplyVO application = volDAO.selectVolunteerApply(voId);
             if (!"PENDING".equals(application.getStatus())) {
@@ -222,6 +222,7 @@ public class VolunteerServiceImpl implements VolunteerService {
             params.put("voId", voId);
             params.put("status", "CANCELED");
             params.put("cancelReason", reason);
+            params.put("cancelReasonDetail", reasonDetail);
             volDAO.updateVolunteerApplyStatus(params);
         } catch (Exception e) {
             logger.error("봉사활동 신청 취소 실패", e);

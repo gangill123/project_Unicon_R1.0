@@ -97,6 +97,31 @@
         cursor: not-allowed;
     }
     
+    .modal-content {
+	    border-radius: 8px;
+	}
+	
+	.modal-header {
+	    background-color: #f8f9fa;
+	    border-radius: 8px 8px 0 0;
+	}
+	
+	.form-select:focus,
+	.form-control:focus {
+	    border-color: #0d6efd;
+	    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+	}
+	
+	.btn-danger {
+	    background-color: #dc3545;
+	    border-color: #dc3545;
+	}
+	
+	.btn-danger:hover {
+	    background-color: #bb2d3b;
+	    border-color: #b02a37;
+	}
+    
     @media (max-width: 768px) {
         .info-grid {
             grid-template-columns: 1fr;
@@ -122,10 +147,12 @@
                         <span class="status-badge 
                             ${application.status eq 'PENDING' ? 'status-pending' : 
                               application.status eq 'APPROVED' ? 'status-approved' : 
+                              application.status eq 'REJECTED' ? 'status-rejected' : 
                               'status-rejected'}">
                             ${application.status eq 'PENDING' ? '신청대기' : 
                               application.status eq 'APPROVED' ? '신청완료' : 
-                              '신청거절'}
+                              application.status eq 'REJECTED' ? '신청거절' : 
+                              '취소완료'}
                         </span>
                     </div>
                     <div class="card-body">
@@ -181,12 +208,14 @@
                             </div>
                         </c:if>
 
-                        <c:if test="${application.status eq 'PENDING'}">
-                            <button class="cancel-btn" 
-                                    onclick="cancelApplication(${application.voId})"
-                                    ${application.status ne 'PENDING' ? 'disabled' : ''}>
-                                신청취소
-                            </button>
+	                    <c:if test="${application.status eq 'PENDING'}">
+	                        <div class="d-flex justify-content-end mt-3">
+	                            <button class="cancel-btn" 
+	                                onclick="cancelApplication(${application.voId})"
+	                                ${application.status ne 'PENDING' ? 'disabled' : ''}>
+	                                신청취소
+	                            </button>
+                            </div>
                         </c:if>
                     </div>
                 </div>
@@ -202,27 +231,88 @@
     </div>
 </div>
 
+<!-- 취소 모달창 -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cancelModalLabel">봉사활동 신청 취소</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="cancelForm">
+                    <input type="hidden" id="cancelVoId" name="voId">
+                    <div class="mb-3">
+                        <label for="cancelReason" class="form-label">취소사유</label>
+                        <select class="form-select" id="cancelReason" name="cancelReason" required>
+                            <option value="">선택해주세요</option>
+                            <option value="단순변심">단순변심</option>
+                            <option value="일정변경">일정변경</option>
+                            <option value="개인정보 변경">개인정보 변경</option>
+                            <option value="건강상의 이유">건강상의 이유</option>
+                            <option value="기타">기타</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cancelReasonDetail" class="form-label">취소사유 상세</label>
+                        	<textarea class="form-control" id="cancelReasonDetail" name="cancelReasonDetail" rows="3" 
+        						placeholder="취소사유에 대해 자세히 설명해주세요." required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-danger" onclick="submitCancel()">취소하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+let cancelVoId = null;
+
 function cancelApplication(voId) {
-    if (confirm('봉사활동 신청을 취소하시겠습니까?')) {
-        $.ajax({
-            url: '/volunteer/cancel/' + voId,
-            type: 'POST',
-            data: {
-                reason: '신청자 취소'
-            },
-            success: function(response) {
-                alert('신청이 취소되었습니다.');
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                alert('신청 취소 중 오류가 발생했습니다.');
-            }
-        });
+    cancelVoId = voId;
+    // 모달 폼 초기화
+    document.getElementById('cancelForm').reset();
+    document.getElementById('cancelVoId').value = voId;
+    
+    // 모달 표시
+    const cancelModal = new bootstrap.Modal(document.getElementById('cancelModal'));
+    cancelModal.show();
+}
+
+function submitCancel() {
+    const reason = document.getElementById('cancelReason').value;
+    const reasonDetail = document.getElementById('cancelReasonDetail').value;  // ID 수정
+    
+    if (!reason) {
+        alert('취소사유를 선택해주세요.');
+        return;
     }
+    if (!reasonDetail) {
+        alert('취소사유 상세내용을 입력해주세요.');
+        return;
+    }
+    
+    $.ajax({
+        url: '/volunteer/cancel/' + cancelVoId,
+        type: 'POST',
+        data: {
+            reason: reason,             
+            reasonDetail: reasonDetail
+        },
+        success: function(response) {
+            alert('신청이 취소되었습니다.');
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            alert('신청 취소 중 오류가 발생했습니다.');
+        }
+    });
 }
 </script>
 

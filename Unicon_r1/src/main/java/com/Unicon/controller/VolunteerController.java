@@ -36,6 +36,7 @@ public class VolunteerController {
     
     // ======= 사용자 뷰 매핑 =======
     // http://localhost:8088/volunteer
+    // http://localhost:8088/volunteer/mylist
     
     @GetMapping("/manage/volForm")
     public String volunteerForm(
@@ -97,6 +98,22 @@ public class VolunteerController {
         List<VolunteerApplyVO> applications = volService.getMyApplications(userId);
         model.addAttribute("applications", applications);
         return "volunteer/volMyList";
+    }
+    
+    @PostMapping("/cancel/{voId}")
+    @ResponseBody
+    public ResponseEntity<String> cancelApplication(
+            @PathVariable Long voId,
+            @RequestParam String reason,
+            @RequestParam String reasonDetail) {
+        try {
+            volService.cancelApplication(voId, reason, reasonDetail);
+            return ResponseEntity.ok("신청이 취소되었습니다.");
+        } catch (Exception e) {
+            logger.error("봉사활동 신청 취소 실패", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                               .body("신청 취소 중 오류가 발생했습니다.");
+        }
     }
     
     // ======= 관리자 뷰 매핑 =======
