@@ -10,123 +10,173 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <style>
-    .application-card {
-        height: 100%;  /* 높이 일정하게 */
+	/* 카드 스타일 */
+	.application-card {
+	    height: 100%;
 	    border: 1px solid #dee2e6;
 	    border-radius: 8px;
 	    transition: transform 0.2s;
 	    background-color: #fff;
-    }
-    
-    .application-card:hover {
-        transform: translateY(-5px);
-   		box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    
-    .card-header {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #dee2e6;
-        padding: 1rem;
-        border-radius: 8px 8px 0 0;
-    }
-    
-    .card-body {
-        padding: 1.5rem;
-    }
-    
-    .status-badge {
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-    }
-    
-    .status-pending {
-        background-color: #ffd700;
-        color: #000;
-    }
-    
-    .status-approved {
-        background-color: #28a745;
-        color: #fff;
-    }
-    
-    .status-rejected {
-        background-color: #dc3545;
-        color: #fff;
-    }
-    
-    .info-grid {
-        display: grid;
-	    grid-template-columns: repeat(2, 1fr);
-	    gap: 0.5rem;
-	    margin-bottom: 1rem;
+	}
+	
+	.application-card:hover {
+	    transform: translateY(-5px);
+	    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+	}
+	
+	.card-header {
+	    background-color: #f8f9fa;
+	    border-bottom: 1px solid #dee2e6;
+	    padding: 1rem;
+	    border-radius: 8px 8px 0 0;
+	}
+	
+	.card-body {
+	    padding: 1.5rem;
+	}
+	
+	/* 상태 배지 */
+	.status-badge {
 	    font-size: 0.9rem;
-    }
-    
-    .info-item {
-        display: flex;
-        align-items: start;
-        gap: 0.5rem;
-    }
-    
-    .info-item div {
-	    word-break: break-word; /* 긴 텍스트 줄바꿈 */
+	    padding: 0.5rem 1rem;
+	    border-radius: 20px;
+	}
+	
+	.status-pending { background-color: #ffd700; color: #000; }
+	.status-approved { background-color: #28a745; color: #fff; }
+	.status-rejected { background-color: #dc3545; color: #fff; }
+	
+	/* 그리드 레이아웃 */
+	.info-grid, .detail-grid {
+	    display: grid;
+	    grid-template-columns: repeat(2, 1fr);
+	    gap: 1rem;
+	    margin-bottom: 1rem;
+	}
+	
+	/* 공통 아이템 스타일 */
+	.info-item, .detail-item {
+	    display: flex;
+	    align-items: start;
+	    gap: 0.5rem;
+	    background-color: #f8f9fa;
+	    padding: 1rem;
+	    border-radius: 8px;
+	    transition: transform 0.2s;
+	}
+	
+	.detail-item {
+	    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+	}
+	
+	.detail-item:hover {
+	    transform: translateY(-2px);
+	}
+	
+	.detail-item.full-width {
+	    grid-column: 1 / -1;
+	}
+	
+	/* 텍스트 스타일 */
+	.info-item div {
+	    word-break: break-word;
 	    overflow: hidden;
 	    text-overflow: ellipsis;
 	    display: -webkit-box;
-	    -webkit-line-clamp: 2; /* 2줄까지만 표시 */
+	    -webkit-line-clamp: 2;
 	    -webkit-box-orient: vertical;
 	}
-    
-    .info-icon {
-        color: #0d6efd;
-        font-size: 1.2rem;
-        width: 24px;
-    }
-    
-    .page-title {
-        margin-bottom: 2rem;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid #dee2e6;
-    }
-    
-    .cancel-btn {
-        background-color: #6c757d;
-        color: white;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-    
-    .cancel-btn:hover {
-        background-color: #5a6268;
-    }
-    
-    .cancel-btn:disabled {
-        background-color: #dee2e6;
-        cursor: not-allowed;
-    }
-    
-    .btn-detail {
-	    background-color: #0d6efd;
-	    color: white;
+	
+	.detail-item strong {
+	    display: block;
+	    color: #495057;
+	    font-size: 0.9rem;
+	    margin-bottom: 0.5rem;
+	}
+	
+	.detail-item p {
+	    color: #212529;
+	    margin: 0;
+	    font-size: 1rem;
+	    line-height: 1.5;
+	}
+	
+	/* 아이콘 스타일 */
+	.info-icon, .detail-icon {
+	    color: #0d6efd;
+	    font-size: 1.2rem;
+	    width: 24px;
+	}
+	
+	/* 버튼 스타일 */
+	.btn-detail, .cancel-btn {
 	    border: none;
 	    padding: 0.5rem 1rem;
 	    border-radius: 4px;
 	    transition: background-color 0.2s;
+	    color: white;
+	}
+	
+	.btn-detail {
+	    background-color: #0d6efd;
 	}
 	
 	.btn-detail:hover {
 	    background-color: #0b5ed7;
 	}
 	
-	.gap-2 {
-	    gap: 0.5rem;
+	.cancel-btn {
+	    background-color: #6c757d;
 	}
-    
-    .modal-content {
+	
+	.cancel-btn:hover {
+	    background-color: #5a6268;
+	}
+	
+	.cancel-btn:disabled {
+	    background-color: #dee2e6;
+	    cursor: not-allowed;
+	}
+	
+	.btn-danger {
+	    background-color: #dc3545;
+	    border-color: #dc3545;
+	}
+	
+	.btn-danger:hover {
+	    background-color: #bb2d3b;
+	    border-color: #b02a37;
+	}
+	
+	/* 아코디언 스타일 */
+	.accordion-button {
+	    background-color: #f8f9fa;
+	    border: none;
+	    box-shadow: none !important;
+	    padding: 1.25rem;
+	}
+	
+	.accordion-button:not(.collapsed) {
+	    background-color: #e7f1ff;
+	    color: #0d6efd;
+	}
+	
+	.accordion-item {
+	    border: 1px solid rgba(0,0,0,.125);
+	    margin-bottom: 0.5rem;
+	    border-radius: 8px !important;
+	    overflow: hidden;
+	}
+	
+	.accordion-body {
+	    background-color: #fff;
+	    padding: 1.5rem;
+	}
+	
+	/* 모달 스타일 */
+	.modal-content {
 	    border-radius: 8px;
+	    overflow: hidden;
 	}
 	
 	.modal-header {
@@ -140,26 +190,22 @@
 	    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
 	}
 	
-	.btn-danger {
-	    background-color: #dc3545;
-	    border-color: #dc3545;
+	/* 여백 및 기타 */
+	.gap-2 { gap: 0.5rem; }
+	.page-title {
+	    margin-bottom: 2rem;
+	    padding-bottom: 1rem;
+	    border-bottom: 2px solid #dee2e6;
 	}
 	
-	.btn-danger:hover {
-	    background-color: #bb2d3b;
-	    border-color: #b02a37;
-	}
-    
-    @media (max-width: 768px) {
-        .info-grid {
-        grid-template-columns: 1fr;  
+	/* 반응형 */
+	@media (max-width: 768px) {
+	    .info-grid,
+	    .detail-grid {
+	        grid-template-columns: 1fr;
 	    }
-	    .col-lg-4 {
-	        width: 100%;  
-	    }
-	    .card-body {
-	        padding: 1rem;  
-	    }
+	    .col-lg-4 { width: 100%; }
+	    .card-body { padding: 1rem; }
 	}
 </style>
 
@@ -312,63 +358,92 @@
 <div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header border-0">
                 <h5 class="modal-title" id="detailModalLabel">봉사활동 상세정보</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row mb-4">
-                    <h6 class="mb-3">봉사활동 정보</h6>
-                    <div class="col-md-6 mb-2">
-                        <strong>봉사활동명</strong>
-                        <p id="detail-voTitle"></p>
+                <div class="accordion" id="detailAccordion">
+                    <!-- 봉사활동 정보 아코디언 아이템 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="activityInfo">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseActivity" aria-expanded="true" aria-controls="collapseActivity">
+                                <i class="fas fa-info-circle detail-icon me-2"></i> 봉사활동 정보
+                            </button>
+                        </h2>
+                        <div id="collapseActivity" class="accordion-collapse collapse show" aria-labelledby="activityInfo" data-bs-parent="#detailAccordion">
+                            <div class="accordion-body">
+                                <div class="detail-grid">
+                                    <div class="detail-item">
+                                        <strong>봉사활동명</strong>
+                                        <p id="detail-voTitle"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>활동내용</strong>
+                                        <p id="detail-voContent"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>장소</strong>
+                                        <p id="detail-voLocation"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>봉사기간</strong>
+                                        <p id="detail-voPeriod"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>담당자</strong>
+                                        <p id="detail-voManager"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>연락처</strong>
+                                        <p id="detail-voContact"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>봉사기간</strong>
-                        <p id="detail-voPeriod"></p>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>장소</strong>
-                        <p id="detail-voLocation"></p>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>활동내용</strong>
-                        <p id="detail-voContent"></p>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>담당자</strong>
-                        <p id="detail-voManager"></p>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>연락처</strong>
-                        <p id="detail-voContact"></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <h6 class="mb-3">신청자 정보</h6>
-                    <div class="col-md-6 mb-2">
-                        <strong>이름</strong>
-                        <p id="detail-voApplicant"></p>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>생년월일</strong>
-                        <p id="detail-voBirth"></p>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>연락처</strong>
-                        <p id="detail-voTel"></p>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>이메일</strong>
-                        <p id="detail-voEmail"></p>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <strong>반려동물 경험</strong>
-                        <p id="detail-voExperience"></p>
-                    </div>
-                    <div class="col-12">
-                        <strong>신청사유</strong>
-                        <p id="detail-voReason"></p>
+
+                    <!-- 신청자 정보 아코디언 아이템 -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="applicantInfo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseApplicant" aria-expanded="false" aria-controls="collapseApplicant">
+                                <i class="fas fa-user detail-icon me-2"></i> 신청자 정보
+                            </button>
+                        </h2>
+                        <div id="collapseApplicant" class="accordion-collapse collapse" aria-labelledby="applicantInfo" data-bs-parent="#detailAccordion">
+                            <div class="accordion-body">
+                                <div class="detail-grid">
+                                    <div class="detail-item">
+                                        <strong>이름</strong>
+                                        <p id="detail-voApplicant"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>생년월일</strong>
+                                        <p id="detail-voBirth"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>연락처</strong>
+                                        <p id="detail-voTel"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>이메일</strong>
+                                        <p id="detail-voEmail"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>반려동물 경험</strong>
+                                        <p id="detail-voExperience"></p>
+                                    </div>
+                                    <div class="detail-item">
+                                        <strong>정보수신 동의</strong>
+                                        <p id="detail-voAgree"></p>
+                                    </div>
+                                    <div class="detail-item full-width">
+                                        <strong>신청사유</strong>
+                                        <p id="detail-voReason"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -406,7 +481,7 @@ function cancelApplication(voId) {
 
 function submitCancel() {
     const reason = document.getElementById('cancelReason').value;
-    const reasonDetail = document.getElementById('cancelReasonDetail').value;  // ID 수정
+    const reasonDetail = document.getElementById('cancelReasonDetail').value;
     
     if (!reason) {
         alert('취소사유를 선택해주세요.');
@@ -451,6 +526,7 @@ const applications = [
             voTel: '${app.voTel}',
             voEmail: '${app.voEmail}',
             voExperience: '${app.voExperience}',
+            voAgree: '${app.voAgree}',
             voReason: '${app.voReason}'
         }<c:if test="${!status.last}">,</c:if>
     </c:forEach>
@@ -463,7 +539,7 @@ function showDetail(voId) {
     
     // 모달에 데이터 채우기
     document.getElementById('detail-voTitle').textContent = application.voTitle;
-    document.getElementById('detail-voPeriod').textContent = `${application.voStartDate} - ${application.voEndDate}`;
+    document.getElementById('detail-voPeriod').textContent = application.voStartDate + ' - ' + application.voEndDate;
     document.getElementById('detail-voLocation').textContent = application.voLocation;
     document.getElementById('detail-voContent').textContent = application.voContent;
     document.getElementById('detail-voManager').textContent = application.voManager;
@@ -475,6 +551,7 @@ function showDetail(voId) {
     document.getElementById('detail-voTel').textContent = application.voTel;
     document.getElementById('detail-voEmail').textContent = application.voEmail;
     document.getElementById('detail-voExperience').textContent = application.voExperience === 'Y' ? '있음' : '없음';
+    document.getElementById('detail-voAgree').textContent = application.voAgree === 'Y' ? '동의' : '거부';
     document.getElementById('detail-voReason').textContent = application.voReason;
     
     // 모달 표시
