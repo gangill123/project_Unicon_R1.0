@@ -1,12 +1,13 @@
 package com.Unicon.persistence;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.Unicon.domain.AnimalHealthVO;
@@ -18,17 +19,16 @@ import lombok.extern.log4j.Log4j2;
 
 
 @Repository("AdptDAO")
-@Log4j2
 public class AdptDAO {
 	
 	@Inject
 	private SqlSession sqlSession; 
-	
+	private static final Logger logger = LoggerFactory.getLogger(AdptDAO.class);
+
 	private static final String NAMESPACE = "com.Unicon.mapper.adptMapper.";
 	
-	
 	public void animalInsert(AnimalVO avo) {
-		log.info("( •̀ ω •́ )✧ animalInsert() 실행");
+		logger.info("( •̀ ω •́ )✧ animalInsert() 실행");
 		
 		sqlSession.insert(NAMESPACE+"insertAnimal", avo);
 		
