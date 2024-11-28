@@ -132,18 +132,32 @@
 
     <!-- 봉사활동 신청 상태 변경 -->
     <update id="updateVolunteerApplyStatus">
-        update _volunteer_apply
-        set 
-            status = #{status},
-            <if test="rejectReason != null">
-                rejectReason = #{rejectReason},
-            </if>
-            <if test="cancelReason != null">
-                cancelReason = #{cancelReason},
-            </if>
-            voUpdateDate = CURRENT_TIMESTAMP
-        where voId = #{voId}
-    </update>
+	    update _volunteer_apply
+	    set 
+	        status = #{status}
+	        <if test="cancelReason != null">
+	            , cancelReason = #{cancelReason}       
+	            , cancelReasonDetail = #{cancelReasonDetail} 
+	        </if>
+	        , voUpdateDate = CURRENT_TIMESTAMP
+	    where voId = #{voId}
+	</update>
+    
+    <!-- 봉사활동 신청 단일 조회 -->
+	<select id="selectVolunteerApply" resultType="VolunteerApplyVO">
+	    select 
+	        a.*,
+	        v.voTitle,
+	        v.voStartDate,
+	        v.voEndDate,
+	        v.voManager,
+	        v.voContact,
+	        v.voLocation,
+	        v.voContent
+	    from _volunteer_apply a
+	    join _volunteer v ON a.volunteerId = v.voId 
+	    where a.voId = #{voId}
+	</select>
 
     <!-- 봉사활동 신청 목록 조회 -->
     <select id="selectVolunteerApplyList" parameterType="map" resultType="VolunteerApplyVO">
