@@ -32,46 +32,46 @@ public class CommunityRestController {
 	private static final Logger logger = LoggerFactory.getLogger(CommunityRestController.class);
 	
 	
-	// 커뮤니티 글 등록
-	@RequestMapping(value = "",method = RequestMethod.POST)
-	public ResponseEntity<String> insertPost(@RequestBody PostVO postVO, ImageVO imageVO, @Autowired ServletContext servletContext){
-		
-		logger.info(" 커뮤니티REST컨트롤러 - insertPost() 실행 ");
-		logger.info("postVO : {}",postVO);
-		
-		MultipartFile file = postVO.getPost_file();
-		String uploadDir = servletContext.getRealPath("/uploads/");
-		
-		try {
-			// 경로 없을때 directory 생성
-			File dir = new File(uploadDir);
-			if (!dir.exists()) {
-	            dir.mkdirs();
-	        }
-			
-			String uniqueFileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-			File uploadFile = new File(uploadDir + uniqueFileName);
-			
-			String image_src = "/uploads/" + uniqueFileName;
-			imageVO.setImage_src(image_src);
-			// 파일 저장
-			file.transferTo(uploadFile);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		ResponseEntity<String> respEntity = null;
-		try {
-			logger.info(" 커뮤니티Service postInsert() 호출 ");
-			communityService.postInsert(postVO);
-			respEntity = new ResponseEntity<String>("ADD_Success",HttpStatus.OK);
-		} catch (Exception e) {
-			respEntity = new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
-		}
-		
-		return respEntity;
-		
-	} // insertPost()
+//	// 커뮤니티 글 등록
+//	@RequestMapping(value = "",method = RequestMethod.POST)
+//	public ResponseEntity<String> insertPost(@RequestBody PostVO postVO, ImageVO imageVO, @Autowired ServletContext servletContext){
+//		
+//		logger.info(" 커뮤니티REST컨트롤러 - insertPost() 실행 ");
+//		logger.info("postVO : {}",postVO);
+//		
+//		MultipartFile file = postVO.getPost_file();
+//		String uploadDir = servletContext.getRealPath("/uploads/");
+//		
+//		try {
+//			// 경로 없을때 directory 생성
+//			File dir = new File(uploadDir);
+//			if (!dir.exists()) {
+//	            dir.mkdirs();
+//	        }
+//			
+//			String uniqueFileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+//			File uploadFile = new File(uploadDir + uniqueFileName);
+//			
+//			String image_src = "/uploads/" + uniqueFileName;
+//			imageVO.setImage_src(image_src);
+//			// 파일 저장
+//			file.transferTo(uploadFile);
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		ResponseEntity<String> respEntity = null;
+//		try {
+//			logger.info(" 커뮤니티Service postInsert() 호출 ");
+//			communityService.postInsert(postVO);
+//			respEntity = new ResponseEntity<String>("ADD_Success",HttpStatus.OK);
+//		} catch (Exception e) {
+//			respEntity = new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
+//		}
+//		
+//		return respEntity;
+//		
+//	} // insertPost()
 	
 	
 	

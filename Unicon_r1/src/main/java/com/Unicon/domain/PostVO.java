@@ -21,10 +21,14 @@ public class PostVO {
 	private String post_pet_place;		// 실종/발견 장소
 	private String post_pet_date;		// 실종/발견 일자
 	
-	private MultipartFile post_file;	// 이미지 저장
+	private MultipartFile image_file1;	// 이미지 파일1
+	private MultipartFile image_file2;	// 이미지 파일2
+	private MultipartFile image_file3;	// 이미지 파일3
+	private MultipartFile image_file4;	// 이미지 파일4
 	
-	private List<ImageVO> post_images;	// 게시물 이미지
 	
-	private JypMemberVO jypMember;		// 임시 멤버 테이블
+//	private List<ImageVO> post_images;	// 게시물 이미지
+	
+//	private JypMemberVO jypMember;		// 임시 멤버 테이블
 	
 }
