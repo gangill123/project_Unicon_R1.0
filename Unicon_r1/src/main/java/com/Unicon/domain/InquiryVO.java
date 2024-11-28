@@ -22,35 +22,24 @@ public class InquiryVO {
 	String istatus; // 카테고리 분류
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date created_at; // 작성일
-
-	int dno; // 댓글 번호
-	String dcontent; // 댓글내용
-	Timestamp dcreated_at; // 댓글일
-
 	int status; // 상태 (1: 진행 중, 2: 답변완료)
-	String acontent; // 답변내용
-	Timestamp answerdate; // 답변일
-
 	String email;
 	String phone;
 
 	private String recaptcha; // reCAPTCHA 토큰
-	
-	
-	
-	 // InquiryFileVO 타입의 필드 추가
-    private InquiryFileVO inquiryFile; // 이 필드를 추가합니다.
 
-    // getter와 setter 추가
-    public InquiryFileVO getInquiryFile() {
-        return inquiryFile;
-    }
+	// InquiryFileVO 타입의 필드 추가
+	private InquiryFileVO inquiryFile; // 필드를 추가
 
-    public void setInquiryFile(InquiryFileVO inquiryFile) {
-        this.inquiryFile = inquiryFile;
-    }
-	
-	
+	// getter와 setter 추가
+	public InquiryFileVO getInquiryFile() {
+		return inquiryFile;
+	}
+
+	public void setInquiryFile(InquiryFileVO inquiryFile) {
+		this.inquiryFile = inquiryFile;
+	}
+
 	public String getRecaptcha() {
 		return recaptcha;
 	}
@@ -58,6 +47,5 @@ public class InquiryVO {
 	public void setRecaptcha(String recaptcha) {
 		this.recaptcha = recaptcha;
 	}
-	
-	
+
 }

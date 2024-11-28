@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Unicon.domain.InquiryAnswerVO;
 import com.Unicon.domain.InquiryFileVO;
 import com.Unicon.domain.InquiryVO;
 import com.Unicon.service.InquiryService;
@@ -159,6 +160,27 @@ public class InquiryRestController {
         }
     }
     
+
+    
+    // 답변 추가 API
+    @PostMapping("/addAnswer")
+    public ResponseEntity<?> addAnswer(@RequestParam("bno") int bno, 
+                                       @RequestParam("dname") String dname, 
+                                       @RequestParam("dcontent") String dcontent) {
+        InquiryAnswerVO answer = new InquiryAnswerVO();
+        answer.setBno(bno);
+        answer.setDname(dname);
+        answer.setDcontent(dcontent);
+        
+        // 답변 추가 서비스 호출
+        inquiryService.addAnswer(answer);
+        
+        // 추가된 답변 정보를 반환 (예: bno에 해당하는 답변 목록)
+        List<InquiryAnswerVO> answers = inquiryService.getAnswersByBno(bno);
+
+        // 성공적인 응답 (HTTP 200 OK)과 함께 답변 목록 반환
+        return ResponseEntity.ok(answers);
+    }
    
 	
 } // InquiryController

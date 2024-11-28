@@ -1,5 +1,7 @@
 package com.Unicon.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 
 
@@ -9,9 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Unicon.domain.InquiryAnswerVO;
 import com.Unicon.domain.InquiryVO;
 import com.Unicon.service.InquiryService;
 
@@ -84,6 +89,40 @@ public class InquiryController {
     public String getBoardDetail(@PathVariable int bno, Model model) {
         // bno에 해당하는 게시글 상세 정보를 가져옴
         InquiryVO boardDetail = inquiryService.getBoardDetail(bno);
+        List<InquiryAnswerVO> answers = inquiryService.getAnswersByBno(bno);
+        
+        // 파일 경로를 웹 서버 경로로 변경
+        if (boardDetail != null && boardDetail.getInquiryFile() != null) {
+            String filePath = boardDetail.getInquiryFile().getThumbnailPath();
+            if (filePath != null) {
+                // "C:/uploads/thumbnails/"에서 시작되는 경로에서 중복을 제거하고 "/uploads/thumbnails/"로 설정
+                String webFilePath = filePath.replace("C:/uploads/thumbnails/", "/uploads/thumbnails/");
+                boardDetail.getInquiryFile().setThumbnailPath(webFilePath);
+            }
+        }
+        
+        // 모델에 데이터 전달
+        model.addAttribute("boardDetail", boardDetail);
+        model.addAttribute("answers", answers);
+        // 상세 페이지로 이동
+        return "inquiry/boardDetail"; // boardDetail.jsp로 이동
+    }
+    
+// ---------------------------- 관리자 페이지 -------------------------------
+    
+    
+    @GetMapping("/manage")
+    public String InquiryManage() {
+    	logger.debug("inquiry 관리자 페이지 실행");
+        return "inquiry/manage/main";  
+    }
+    
+    // 게시글 상세 페이지
+    @GetMapping("/manage/{bno}")
+    public String getManageDetail(@PathVariable int bno, Model model) {
+        // bno에 해당하는 게시글 상세 정보를 가져옴
+        InquiryVO boardDetail = inquiryService.getBoardDetail(bno);
+        List<InquiryAnswerVO> answers = inquiryService.getAnswersByBno(bno);
         
         
         // 파일 경로를 웹 서버 경로로 변경
@@ -98,10 +137,13 @@ public class InquiryController {
         
         // 모델에 데이터 전달
         model.addAttribute("boardDetail", boardDetail);
+        model.addAttribute("answers", answers);
         
         // 상세 페이지로 이동
-        return "inquiry/boardDetail"; // boardDetail.jsp로 이동
+        return "inquiry/manage/manageDetail"; // manageDetail.jsp로 이동
     }
+    
+    
     
     
     

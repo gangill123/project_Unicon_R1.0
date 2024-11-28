@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Unicon.domain.InquiryAnswerVO;
 import com.Unicon.domain.InquiryFileVO;
 import com.Unicon.domain.InquiryVO;
 import com.Unicon.persistence.InquiryDAO;
@@ -61,5 +62,16 @@ public class InquiryServiceImpl implements InquiryService {
 	public InquiryVO getBoardDetail(int bno) {
 		return inquiryDAO.getBoardDetail(bno); // DAO에서 게시글 정보 가져오기
 	}
-
+	
+	  // 답변 추가
+	@Override
+    public void addAnswer(InquiryAnswerVO answer) {
+        inquiryDAO.insertAnswer(answer);
+    }
+	@Override
+    // 게시글 번호에 해당하는 답변 조회
+    public List<InquiryAnswerVO> getAnswersByBno(int bno) {
+        return inquiryDAO.getAnswersByBno(bno);
+    }
+	
 }
