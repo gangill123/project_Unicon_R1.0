@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.Unicon.mapper.AdptMapper">
+<mapper namespace="com.Unicon.mapper.adptMapper">
  
 <resultMap type="com.Unicon.domain.AnimalVO" id="AnimalResultMap">
 	<id property="animal_id" column="animal_id"/>
@@ -54,8 +54,8 @@
 </resultMap>
 
 <resultMap type="com.Unicon.domain.AnimalInterestVO" id="InterestResultMap">
-	<result property="animal_id" column="animal_id"/>
-	<result property="member_id" column="member_id"/>
+	<id property="animal_id" column="animal_id"/>
+	<id property="member_id" column="member_id"/>
 	<result property="interest_regdate" column="interest_regdate"/>
 	<result property="adpt_interest_sum" column="adpt_interest_sum"/>
 </resultMap>
@@ -77,18 +77,48 @@
 </resultMap>
 
 <resultMap type="com.Unicon.domain.AnimalHealthVO" id="HealthResultMap">
-	<result property="animal_id" column="animal_id"/>
-	<result property="health" column="health"/>
+	<id property="animal_id" column="animal_id"/>
+	<id property="health" column="health"/>
 	<result property="health_check" column="health_check"/>
 </resultMap>
 
 <resultMap type="com.Unicon.domain.AnimalVaccineVO" id="VaccineResultMap">
-	<result property="animal_id" column="animal_id"/>
-	<result property="vaccine" column="vaccine"/>
+	<id property="animal_id" column="animal_id"/>
+	<id property="vaccine" column="vaccine"/>
 	<result property="vaccine_check" column="vaccine_check"/>
 </resultMap>
 
 
+<insert id="insertAnimal" parameterType="com.Unicon.domain.AnimalVO">
+	insert into _animal (animal_id, category_code, category_etc_value, animal_name, animal_color, animal_gender, animal_neuter, animal_age, 
+	 animal_weight, member_id, animal_regnum, animal_act, animal_social, animal_etc) 
+	  values (#{animal_id}, #{category_code}, #{category_etc_value}, #{animal_name}, #{animal_color}, #{animal_gender}, #{animal_neuter}, 
+	   #{animal_age}, #{animal_weight}, #{member_id}, #{animal_regnum}, #{animal_act}, #{animal_social}, #{animal_etc})
+</insert>
+
+<insert id="insertAnimalImages" parameterType="map">
+	insert into _image (image_id, image_type, image_sequence, image_src) 
+	 values 
+	  <foreach collection="images" item="i" separator=","> 
+	   (#{animal_id}, #{i.image_type}, #{i.image_sequence}, #{i.image_src}) 
+	  </foreach> 
+</insert>
+
+<insert id="insertAnimalHealths" parameterType="map">
+	insert into _animal_health (animal_id, health, health_check) 
+	 values 
+	  <foreach collection="healths" item="h" separator=","> 
+	   (#{animal_id}, #{h.health}, #{h.health_check}) 
+	  </foreach> 
+</insert>
+
+<insert id="insertAnimalVaccines" parameterType="map">
+	insert into _animal_vaccine (animal_id, vaccine, vaccine_check) 
+	 values 
+	  <foreach collection="vaccines" item="v" separator=","> 
+	   (#{animal_id}, #{v.vaccine}, #{v.vaccine_check}) 
+	  </foreach> 
+</insert>
 
 
 
