@@ -61,23 +61,28 @@
             <!-- 봉사활동 요약 정보 -->
             <div class="volunteer-summary">
                 <div class="row">
+                    <h5>${volunteer.voTitle}</h5>
+                   	<div class="col-md-6">
+                        <p><i class="fas fa-tasks info-icon me-2"></i>활동내용: ${volunteer.voContent}</p>
+                    </div> 
                     <div class="col-md-6">
-                        <h5>${volunteer.title}</h5>
-                        <p class="text-muted">
-                            <i class="far fa-calendar-alt me-2"></i>
-                            봉사기간: <fmt:formatDate value="${volunteer.activityStart}" pattern="yyyy.MM.dd"/> - 
-                            <fmt:formatDate value="${volunteer.activityEnd}" pattern="yyyy.MM.dd"/>
-                        </p>
+                        <p><i class="fas fa-map-marker-alt me-2"></i>봉사장소: ${volunteer.voLocation}</p>
                     </div>
                     <div class="col-md-6">
-                        <p><i class="fas fa-map-marker-alt me-2"></i>${volunteer.location}</p>
-                        <p><i class="fas fa-users me-2"></i>모집인원: ${volunteer.capacity}명</p>
+                        <p class="text-muted">
+                            <i class="far fa-calendar-alt me-2"></i>
+                            봉사기간: <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
+                            <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/>
+                        </p>
+                    </div>
+                    <div class="col-md-6">    
+                        <p><i class="fas fa-users me-2"></i>모집인원: ${volunteer.voCapacity}명</p>
                     </div>
                 </div>
             </div>
 
             <form id="applicationForm" action="/volunteer/apply" method="post">
-                <input type="hidden" name="volunteerId" value="${volunteer.id}">
+                <input type="hidden" name="volunteerId" value="${volunteer.voId}">
                 
                 <!-- 신청자 정보 -->
                 <div class="form-section">
@@ -106,11 +111,11 @@
                 <div class="form-section">
                     <h5>반려동물 경험</h5>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="voExperience" value="yes" required>
+                        <input class="form-check-input" type="radio" name="voExperience" value="Y" required>
                         <label class="form-check-label">있음</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="voExperience" value="no">
+                        <input class="form-check-input" type="radio" name="voExperience" value="N">
                         <label class="form-check-label">없음</label>
                     </div>
                 </div>
