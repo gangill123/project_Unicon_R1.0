@@ -229,6 +229,7 @@
 				                    	<div class="store-input-container">
 				                    		<input placeholder="숫자만 입력하세요." class="input-stock"name="stock">
 				                    		<span style="padding: 4px 10px; line-height: 24px; color: #4d5159; background-color: #f8f9fd; border: 1px solid #dbdde2; border-radius: 0; border-left: none;">개</span>
+				                    		<span class="input-message">옵션 재고수량을 사용하면, 옵션의 재고수량으로 적용되어 자동으로 입력됩니다.</span>
 					                    </div>
 				                    </div>
 				                  </div>
@@ -238,6 +239,133 @@
                           </div>
                         </div>
                         <!-- 재고수량 끝 -->
+                        
+                        <!-- 옵션 시작 -->
+                        <div class="card">
+                          <div class="card-body" style="padding: 1.5rem 2.5rem;" >
+                            <div class="row">
+                              <div class="col-12 grid-margin stretch-card">
+				                <div style="width:100%;">
+				                  <div style="padding : padding: 1.0rem 2.0rem;">
+				                  	<div style="display: flex; justify-content: space-between;">
+				                  		<div style="display: flex;align-items: center;">
+						                    <h4 class="card-title" style="margin-bottom: 0">옵션 </h4>
+				                  		</div>
+					                    <button onclick="closeBox('option')"><i class="mdi mdi-chevron-right"></i></button>
+				                  	</div>
+				                    <div class="dropdown-divider"></div>
+				                    <div class="closeBox-option">
+				                    	<div style="display: flex; align-items: center;">
+										    <label >선택형</label>
+										    <div>
+										        <div class="store-input-container">
+										            <button id="option-set-on" class="btn-setting-on setting-active">설정함</button>
+										            <button id="option-set-off" class="btn-setting-off setting-inactive">설정안함</button>
+										        </div>
+										    </div>
+										</div>
+				                    	<div class="option-box">
+				                    		<div class="display-f">
+				                    			<div style="width: 180px; font-size: 14px; color: rgb(0, 0, 0); margin-bottom: 0rem !important;">
+												    옵션 구성타입
+												    <i class="icon-must" aria-label="필수항목"></i>
+												    <i class="mdi mdi-information-outline i-tooltip" style="cursor: pointer;"></i>
+												    <div class="c-tooltip" id="tooltip-info">
+												    	<div style="margin-bottom: 0.6rem;">
+													        <p class="tooltiptext"><i class="icon-must" aria-label="필수항목"></i> 단독형이란?</p>
+													        <span>
+															        옵션별로 추가 옵션가와 재고수량이 동일한 경우를 말합니다. 옵션가/재고수량을 별도로 설정할 수 없습니다.
+													        </span>
+												    	</div>
+												    	<div>
+													        <p class="tooltiptext"><i class="icon-must" aria-label="필수항목"></i> 조합형이란?</p>
+													        <span>
+															        옵션별로 옵션가가 다르거나 재고수량이 다른 경우를 말합니다. 단, 옵션 중에 정상 판매중이고, 옵션가가 0원으로 설정이 반드시 하나 이상 존재해야 합니다.
+													        </span>
+												    	</div>
+												    </div>
+												</div>
+											    <div class="display-f" style="margin: 0">
+											        <div class="store-input-container">
+											            <input type="radio" id="single" name="optionType" value="단독형" checked>
+											            <label for="single">단독형</label>
+											        </div>
+											        <div class="store-input-container">
+											            <input type="radio" id="combo" name="optionType" value="조합형">
+											            <label for="combo">조합형</label>
+											        </div>
+											    </div>
+											</div>
+											<div class="dropdown-divider"></div>
+				                    		<div class="display-f">
+											    <label>옵션명 개수</label>
+											    <div>
+											        <div class="store-input-container">
+											        	<select>
+											        		<option selected="selected" value="1">1개</option>
+											        		<option value="2">2개</option>
+											        	</select>
+											        </div>
+											    </div>
+				                    		</div>
+				                    		<div class="dropdown-divider"></div>
+				                    		<div class="display-f"  style="align-items: unset;">
+											    <label>옵션입력</label>
+											    <div>
+											    <div id="options-container">
+											      <div class="display-f" style="align-items: unset; margin: 0 0 1.7rem 0">
+											        <div class="store-input-container start" style="flex-direction: column; gap: 1rem">
+											          <label for="option-name-1">옵션명</label>
+											          <div id="option-name-wrapper" class="option-wrapper">
+											            <input
+											              style="width: 15rem"
+											              id="option-name-1"
+											              class="option-input"
+											              type="text"
+											              placeholder="예시:컬러"
+											              name="option-productNames"
+											            />
+											          </div>
+											        </div>
+											        <div
+											          class="store-input-container start"
+											          style="flex-direction: column; gap: 1rem"
+											        >
+											          <label for="option-value-1">옵션값</label>
+											          <div id="option-value-wrapper" class="option-wrapper">
+											            <input
+											              style="width: 15rem"
+											              id="option-value-1"
+											              class="option-input"
+											              type="text"
+											              placeholder="예시:컬러"
+											              name="option-productNames"
+											            />
+											          </div>
+											        </div>
+											        <div class="store-input-container start">
+											          <div>
+											            <button style="position: relative; top: 1.8rem" class="option-add">
+											              <i class="mdi mdi-plus-box"></i>
+											            </button>
+											          </div>
+											        </div>
+											      </div>
+											    </div>
+												<button class="option-list-apply">옵션 목록 적용</button>
+												</div>
+				                    		</div>
+				                    	<div class="dropdown-divider"></div>
+										</div>
+				                      <div class="dropdown-divider"></div>
+				                    </div>
+				                  </div>
+				                </div>
+				              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- 옵션 끝 -->
                       </div>
                     </div>
                   </div>
