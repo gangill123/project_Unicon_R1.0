@@ -1,19 +1,19 @@
 'use strict';
-jQuery(function($) {
-	$('form.quform').Quform();
-
-	// Tooltips
-	if(window.tippy) {
-		$('.quform-tooltip').each(function () {
-			tippy(this, {
-				theme: 'quform'
-			});
-		});
-	}
-
-	// Changes subject to a text field when 'Other' is chosen
-	$('#subject').replaceSelectWithTextInput({ onValue: 'Other' });
-});
+//jQuery(function($) {
+//	$('form.quform').Quform();
+//
+//	// Tooltips
+//	if(window.tippy) {
+//		$('.quform-tooltip').each(function () {
+//			tippy(this, {
+//				theme: 'quform'
+//			});
+//		});
+//	}
+//
+//	// Changes subject to a text field when 'Other' is chosen
+//	$('#subject').replaceSelectWithTextInput({ onValue: 'Other' });
+//});
 
 (function ($) {
 	$(window).on('load', function () {

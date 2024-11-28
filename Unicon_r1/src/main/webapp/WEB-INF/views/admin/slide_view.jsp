@@ -8,11 +8,11 @@
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
-	
+	<%-- ${slideInfo } --%>
 	<section style="padding-top: 50px;">
             <div class="container">
 	            <div class="line-title">
-			        <h4 class="mb-0">소식 관리</h4>
+			        <h4 class="mb-0">슬라이드 관리</h4>
 			    </div>
                 <div class="row">
 
@@ -27,10 +27,10 @@
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">슬라이드 관리</button>
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">슬라이드 관리</button>
                                             </h5>
                                         </div>
-                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
                                             <div class="card-body">
                                                 <ul class="mb-0 list-unstyled">
                                                     <li><a href="/admin/slide_create">슬라이드 등록</a></li>
@@ -42,12 +42,12 @@
                                     <div class="card">
                                         <div class="card-header" id="headingTwo">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                                <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                   소식 관리
                                 </button>
                                             </h5>
                                         </div>
-                                        <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordion">
+                                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
                                             <div class="card-body">
                                                 <ul class="mb-0 list-unstyled">
                                                     <li><a href="/admin/news_create">소식 등록</a></li>
@@ -124,166 +124,199 @@
                     <div class="col-lg-9 ps-lg-1-9">
 						<div class="line-title" style="margin-bottom: 15px;">
 							<div style="display: flex; justify-content:space-between;">
-						        <h5 class="mb-0" style="display: inline-block;">소식 등록</h5>
-						        <button type="button" class="btn btn-secondary" onclick="location.href='/admin/news_manage';"
+						        <h5 class="mb-0" style="display: inline-block;">슬라이드 수정</h5>
+						        <button type="button" class="btn btn-secondary" onclick="location.href='/admin/slide_manage?currentPage=${param.currentPage}';"
 						        ><span class="small">목록으로</span></button>
 							</div>
 					    </div>
 					    
-					    
                         <div class="col-md-11 col-lg-12">
-
-                        <form class="quform" action="/admin/news_create" method="post" enctype="multipart/form-data" onclick="">
+                        
+                        <form class="quform" action="/admin/slide_update?currentPage=${param.currentPage}" method="post" enctype="multipart/form-data">
                                 <div class="quform-elements">
                                     <div class="row">
                                     
-                                        <!-- Begin Select element -->
-                                        <div class="col-md-12">
-                                            <div class="quform-element form-group">
-                                            	<label for="name">소식명<span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="name" class="form-control" type="text" name="news_subject" placeholder="First Name">
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <!-- End Select element -->
-
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="applyfor">지역 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <select id="applyfor" class="form-control form-select" name="news_resion"
-                                                    style="padding: 6px 12px;">
-                                                        <option value="" disabled selected>지역을 선택하세요</option>
-													    <option value="서울특별시">서울특별시</option>
-													    <option value="부산광역시">부산광역시</option>
-													    <option value="대구광역시">대구광역시</option>
-													    <option value="인천광역시">인천광역시</option>
-													    <option value="광주광역시">광주광역시</option>
-													    <option value="대전광역시">대전광역시</option>
-													    <option value="울산광역시">울산광역시</option>
-													    <option value="세종특별자치시">세종특별자치시</option>
-													    <option value="경기도">경기도</option>
-													    <option value="강원도">강원도</option>
-													    <option value="충청북도">충청북도</option>
-													    <option value="충청남도">충청남도</option>
-													    <option value="전라북도">전라북도</option>
-													    <option value="전라남도">전라남도</option>
-													    <option value="경상북도">경상북도</option>
-													    <option value="경상남도">경상남도</option>
-													    <option value="제주특별자치도">제주특별자치도</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="last_name">장소 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="last_name" class="form-control" type="text" name="news_place" placeholder="Last Name">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-                                        
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="last_name">주관기관 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="last_name" class="form-control" type="text" name="news_ins" placeholder="Last Name">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="last_name">참여대상 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="last_name" class="form-control" type="text" name="news_att" placeholder="Last Name">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-                                        
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="email">행사일자 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <input id="email" class="form-control" type="date" name="news_date" placeholder="name@example.com">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-
-                                        <!-- Begin Text input element -->
-                                        <div class="col-md-6">
-                                            <div class="quform-element form-group">
-                                                <label for="linkedin">행사시간</label>
-                                                <div class="quform-input">
-                                                    <input id="linkedin" class="form-control" type="time" name="news_time" placeholder="Linkedin">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Text input element -->
-
-                                        <!-- Begin Textarea element -->
-                                        <div class="col-md-12">
-                                            <div class="quform-element form-group">
-                                                <label for="message">내용 <span class="quform-required">*</span></label>
-                                                <div class="quform-input">
-                                                    <textarea id="message" class="form-control" name="news_content" rows="4" placeholder="How'd you hear about Crizal?"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Textarea element -->
-                                        
-                                        <!-- Begin Upload element -->
+                                    <!-- Begin Upload element -->
                                         <div class="col-md-12">
                                         <div class="col-md-6">
                                             <div class="quform-element form-group">
                                                 <div class="quform-input">
-                                                    <label for="resume">소식 이미지 <span class="quform-required">*</span></label>
+                                                    <label for="ms_file">슬라이드 이미지 <span class="quform-required">*</span></label>
                                                     <div class="custom-file">
-                                                        <input class="custom-file-input" type="file" id="resume" name="news_file" required>
+                                                        <input class="custom-file-input" type="file" id="ms_file" name="ms_file">
                                                         <label class="custom-file-label" data-browse="Browse">파일선택</label>
                                                     </div>
-                                                    <p class="quform-description">이미지파일만 업로드 가능. 최대크기 10MB.</p>
+                                                    <p class="quform-description">이미지파일만 업로드 가능. 권장사이즈 1920x700</p>
                                                 </div>
                                             </div>
                                         </div>
                                         </div>
                                        <!-- End Upload element -->
-                                        
-                                        <div class="col-md-3">
+                                    
+                                    	<div class="col-md-12">
+	                                      <div class="quform-element form-group">
+	                                          <div id="slide_preview">
+	                                          
+			               <div class="row slider-fade-shop" style="margin-left: 0; margin-right: 0;">
+		                    <div class="text-start item bg-img cover-background" id="silde_bg" data-src="${slideInfo.ms_src}"
+		                   		 style="background-image: url('${slideInfo.ms_src}'); height: 350px;">
+		                        <div class="caption">
+					                    <div class="container">
+					                        <div id="slide_textField" class="overflow-hidden w-md-85 w-lg-75">
+					                            <h1 class="main-font">${slideInfo.ms_tText}</h1>
+					                            <div class="subheading" style="font-size: 30px; display:flex; justify-content: flex-start;">
+					                            <div id="left_btm">${slideInfo.ms_bText1}</div><strong>${slideInfo.ms_sText}</strong><div id="right_btm">${slideInfo.ms_bText2}</div></div>
+										    	<a href="${slideInfo.ms_btnUrl}" class="butn primary">
+										    		<span class="alt-font">${slideInfo.ms_btnText}</span>
+										    	</a>
+									    	</div>
+					                    </div>
+					                </div>
+		                    	</div>
+			                 </div>                         
+	                                          
+	                                          </div>
+	                                      </div>
+	                                  </div>
+                                    
+                                        <!-- Begin Select element -->
+                                        <div class="col-md-8">
                                             <div class="quform-element form-group">
-                                                <div id="news_preview"></div>
+                                            	<label for="ms_name">슬라이드 제목<span class="quform-required">*</span></label>
+                                                <div class="quform-input">
+                                                    <input id="ms_name" class="form-control" type="text" name="ms_name" 
+                                                    placeholder="슬라이드 제목을 작성하세요" value=${slideInfo.ms_name }>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!-- End Select element -->
+
+										<!-- Begin Text input element -->
+                                        <div class="col-md-4">
+                                            <div class="quform-element form-group">
+                                                <label for="textSelector">문구 및 버튼 적용유무</label>
+                                                <div class="quform-input">
+                                                    <select id="textSelector" class="form-control form-select" 
+                                                    style="padding: 6px 12px;">
+													    <option value="적용" selected>적용</option>
+                                                        <option value="적용안함">적용안함</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_tText">상단문구</label>
+                                                <div>
+                                                    <input id="ms_tText" class="form-control slide-text" type="text" name="ms_tText" 
+                                                    placeholder="최대 10글자" value= ${slideInfo.ms_tText }>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- End Text input element -->
+
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_bText1">하단문구(좌측)</label>
+                                                <div class="quform-input">
+                                                    <input id="ms_bText1" class="form-control slide-text" type="text" 
+                                                    name="ms_bText1" placeholder="최대 5글자" value= ${slideInfo.ms_bText1 }>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_sText">강조문구</label>
+                                                <div class="quform-input">
+                                                    <input id="ms_sText" class="form-control slide-text" type="text" 
+                                                    name="ms_sText" placeholder="최대 5글자" value= ${slideInfo.ms_sText }>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_bText2">하단문구(우측)</label>
+                                                <div class="quform-input">
+                                                    <input id="ms_bText2" class="form-control slide-text" type="text" 
+                                                    name="ms_bText2" placeholder="최대 5글자" value= ${slideInfo.ms_bText2 }>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_btnText">버튼명</label>
+                                                <div class="quform-input">
+                                                    <input id="ms_btnText" class="form-control slide-text" type="text" 
+                                                    name="ms_btnText" placeholder="최대 5글자" value= ${slideInfo.ms_btnText }>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_btnUrl">버튼URL</label>
+                                                <div class="quform-input">
+                                                    <input id="ms_btnUrl" class="form-control slide-text" type="text" 
+                                                    name="ms_btnUrl" placeholder="ex)/admin/slide_manage" value= ${slideInfo.ms_btnUrl }>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_startdate">개시 시작일<span class="quform-required">*</span></label>
+                                                <div class="quform-input">
+                                                    <input id="ms_startdate" class="form-control" type="date" 
+                                                    name="ms_startdate" required value= ${slideInfo.ms_startdate }>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
+                                        <!-- Begin Text input element -->
+                                        <div class="col-md-6">
+                                            <div class="quform-element form-group">
+                                                <label for="ms_enddate">개시 종료일<span class="quform-required">*</span></label>
+                                                <div class="quform-input">
+                                                    <input id="ms_enddate" class="form-control" type="date" 
+                                                    name="ms_enddate" required value= ${slideInfo.ms_enddate }>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Text input element -->
+                                        
 
                                         <!-- Begin Submit button -->
                                         <div class="col-md-12">
                                             <div class="text-center">
-                                                <button class="butn w-100" type="submit"><span>등록하기</span></button>
+                                                <button class="butn w-100" type="submit"><span>수정하기</span></button>
                                             </div>
-                                            <div class="quform-loading-wrap"><span class="quform-loading"></span></div>
                                         </div>
                                         <!-- End Submit button -->
-
+                                        <input name="ms_src" type="hidden">
+                                        <input name="ms_id" type="hidden" value=${slideInfo.ms_id }>
                                     </div>
-
                                 </div>
                             </form>
-
                     </div>
-
                 </div>
             </div>
             </div>
@@ -293,6 +326,77 @@
 
 <script>
 $(document).ready(function () {
+	
+	
+	console.log($('#silde_bg').data('src'));
+	
+	// 상단문구 tText가 없을 시 select = 미적용 & 문구 모두 닫기
+	if('${slideInfo.ms_tText}' == ''){
+		$('#textSelector').val('적용안함');
+		$('.slide-text').prop('disabled', true); // disabled 속성 해제
+		$('#slide_textField').hide();
+	}
+	
+	
+	//수정하기 버튼 클릭 시 submit하기(썸네일 없을 시 swal)
+    $('.quform').on('submit', function(event){
+    	event.preventDefault();
+    	// 기존사진x, 신규사진x
+    	if (!$('#silde_bg').data('src')) {
+    		//swal("Error!", "교육 썸네일을 등록해주세요!", "error");
+    		Swal.fire({
+    			  title: '정보없음!!',
+    			  text: "이미지파일을 확인하시기 바랍니다.",
+    			  icon: 'warning',
+    			  customClass: {
+    			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+    			  }
+   			});
+    	} else {
+    		// 기존사진o
+    	   if($('.custom-file-input').val()==''){
+    		   $('input[name="ms_src"]').val($('#silde_bg').data('src'));
+    		   updateSubmit();
+    	   } else{
+    		   // 신규사진o
+    		   updateSubmit();
+    	   }
+    	}
+    	
+    	function updateSubmit(){
+    		Swal.fire({
+  			  title: '정보를 수정하시겠습니까?',
+  			  text: "수정 전 정보를 다시 한번 확인하시기 바랍니다.",
+  			  icon: 'warning',
+  			  showCancelButton: true,
+  			  confirmButtonColor: '#3085d6',
+  			  cancelButtonColor: '#d33',
+  			  confirmButtonText: '수정',
+  			  cancelButtonText: '취소',
+  			  customClass: {
+  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+ 			  }
+  			}).then((result) => {
+  				if (result.isConfirmed) {
+	  				Swal.fire({
+	  	  			  title: '수정이 완료되었습니다!',
+	  	  			  text: "수정하기를 통하여 재수정 가능합니다.",
+	  	  			  icon: 'success',
+	  	  			  customClass: {
+	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+	 			 	  }
+	  				}).then(function(){
+	  					$('.quform').off('submit').submit();
+	  				});
+  				}
+  			});
+    	}
+	}); //$('.quform')
+	
+	
+	
+	
+	
     // 파일 선택 이벤트 처리
     $('.custom-file-input').on('change', function (event) {
         // 선택된 파일 이름 가져오기
@@ -301,28 +405,53 @@ $(document).ready(function () {
         $(this).next('.custom-file-label').text(fileName || 'Choose file');
         
         const file = event.target.files[0]; // 업로드한 파일 가져오기
-	    const $preview = $('#news_preview'); // 미리보기 영역 선택
+	    const $preview = $('#slide_preview'); // 미리보기 영역 선택
 	    if (file) {
 	    	const reader = new FileReader();
 	        reader.onload = function(e) {
-	          const imgTag = 
-	            "<img src='" + e.target.result + "' alt='Uploaded Image' " +
-	            "style='max-width: 100%; max-height: 100%; object-fit: cover;' />";
-	          $preview.html(imgTag);
+	        	createImagePreview(e, $preview);
 	        };
 	        reader.readAsDataURL(file); // 파일을 Data URL로 읽기
 	    } else {
 	    	$preview.empty();
 	    }
-        
-        
-        
-        
+	    
+	   $('#textSelector').val('적용');
+	   $('.slide-text').val('');
+	   $('.slide-text').prop('disabled', false); // disabled 속성 해제
+	    
     });
     
     
+    // 적용유무에 따라서 input 활성화
+    $('#textSelector').on('change', function(){
+		if($(this).val() === '적용'){
+			console.log($(this).val());
+			$('.slide-text').prop('disabled', false); // disabled 속성 해제
+			$('#slide_textField').show();
+		} else {
+			$('.slide-text').prop('disabled', true); // disabled 속성 적용
+			$('.slide-text').val(''); // input값 초기화
+			$('#slide_textField').hide();
+		}
+	});
     
-    
+    // 문구내용 작성에 따른 슬라이드 반응
+    $('#ms_tText').on('input', function(){
+    	$('.main-font').text($(this).val());
+    });
+    $('#ms_bText1').on('input', function(){
+    	$('#left_btm').text($(this).val());
+    });
+    $('#ms_sText').on('input', function(){
+    	$('.subheading strong').text($(this).val());
+    });
+    $('#ms_bText2').on('input', function(){
+    	$('#right_btm').text($(this).val());
+    });
+    $('#ms_btnText').on('input', function(){
+    	$('.alt-font').text($(this).val());
+    });
     
     
 }); //jquery
