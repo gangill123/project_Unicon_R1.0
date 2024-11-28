@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Unicon.domain.MainSlideVO;
 import com.Unicon.domain.NewsVO;
+import com.Unicon.service.MainSlideService;
 import com.Unicon.service.NewsService;
 
 @Controller
@@ -36,14 +38,11 @@ public class AdminController {
 	private ServletContext servletContext;
 	@Autowired
 	private NewsService nService;
+	@Autowired
+	private MainSlideService msService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
-	//관리자페이지 이동(슬라이드 설정 보여주기)
-	@GetMapping("")
-	public String adminSlide() {
-		return "admin/slide";
-	}
 	
 	//관리자페이지 - 소식관리페이지 이동
 	@GetMapping("/news_manage")
@@ -190,11 +189,116 @@ public class AdminController {
 		return "/admin/slide_create";
 	}
 	
+	// 슬라이드 생성하기
+	@PostMapping("/slide_create")
+	public String createSlide(MainSlideVO vo) {
+		logger.debug("createSlide() 실행");
+		logger.debug(vo.toString());
+		
+		
+		MultipartFile file = vo.getMs_file();
+		String uploadDir = servletContext.getRealPath("/uploads/");
+		logger.debug(uploadDir);
+		
+		try {
+            // 경로가 없으면 디렉터리 생성
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            String uniqueFileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            File uploadFile = new File(uploadDir + uniqueFileName);
+
+            String ms_src = "/uploads/" + uniqueFileName;
+            vo.setMs_src(ms_src);
+            // 파일 저장
+            file.transferTo(uploadFile);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
+		// 서비스 호출
+		msService.createSlide(vo);	
+		
+		return "/admin/slide_create";
+	}
+	
+	// 슬라이드 등록내역 페이지 이동
+	@GetMapping("slide_manage")
+	public String adminSlide(Model model) {
+		logger.debug("adminSlide() 호출");
+		
+		// 슬라이드 정보 가져오기
+		List<MainSlideVO> sildeAllInfo = msService.getSildeAll();
+		model.addAttribute("sildeAllInfo", sildeAllInfo);
+		
+		return "/admin/slide_manage";
+	}
+	
+	// 슬라이드 모든 정보 가져오기(+페이징, ajax)
+	@GetMapping("slide_filter/all")
+	@ResponseBody
+	public List<MainSlideVO> getSildeAllFilter() {
+		
+		// 슬라이드 정보 가져오기
+		List<MainSlideVO> sildeAllInfo = msService.getSildeAll();
+		
+		return sildeAllInfo;
+	}
+
+	// 슬라이드 조회
+	@GetMapping(value = "/slide_view/{num}")
+	public String getSlideInfo(@PathVariable("num") int ms_id, Model model) {
+		
+		// 특정 슬라이드 정보 가져오기
+		MainSlideVO slideInfo = msService.getSilde(ms_id);
+		model.addAttribute("slideInfo", slideInfo);
+		
+		return "admin/slide_view";
+	}
+	
+	// 슬라이드 수정
+	@PostMapping("/slide_update")
+	public String updateSlide(MainSlideVO vo, @RequestParam("currentPage") int currentPage) {
+		
+		logger.debug("updateSlide() 실행");
+		logger.debug(vo.toString());
+		
+		if(vo.getMs_src().equals("")) {
+			
+			// 새로운 src 만들어서 저장
+			MultipartFile file = vo.getMs_file();
+			String uploadDir = servletContext.getRealPath("/uploads/");
+			try {
+	            File dir = new File(uploadDir);
+	            if (!dir.exists()) {
+	                dir.mkdirs();
+	            }
+	            String uniqueFileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+	            File uploadFile = new File(uploadDir + uniqueFileName);
+	            String ms_src = "/uploads/" + uniqueFileName;
+	            vo.setMs_src(ms_src);
+	            // 파일 저장
+	            file.transferTo(uploadFile);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		} 
+		
+		// 서비스 호출
+		msService.updateSilde(vo);
+		return "redirect:/admin/slide_view/"+vo.getMs_id()+"?currentPage="+currentPage;
+	}
 	
 	
-	
-	
-	
+	//슬라이드 삭제
+	@DeleteMapping("/slide_delete/{num}")
+	@ResponseBody
+	public void deleteSlide(@PathVariable("num") int ms_id) {
+		msService.deleteSilde(ms_id);
+	}
 	
 		
-}
+}//controller

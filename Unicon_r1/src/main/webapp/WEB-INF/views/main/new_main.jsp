@@ -13,7 +13,7 @@
             <div class="row slider-fade-shop">
                 <div class="owl-carousel owl-theme w-100">
                     <div class="text-start item bg-img cover-background" data-overlay-dark="0" data-background="${pageContext.request.contextPath }/resources/new_assets/img/slider01.jpg">
-                        <div class="caption">
+                        <div class="caption" >
                             <div class="container">
                                 <div class="overflow-hidden w-md-85 w-lg-75">
                                     <h1 class="main-font">가나다라마 바사아자</h1>
