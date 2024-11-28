@@ -1,22 +1,29 @@
 package com.Unicon.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.PostVO;
 import com.Unicon.service.CommunityService;
@@ -72,6 +79,106 @@ public class CommunityRestController {
 //		return respEntity;
 //		
 //	} // insertPost()
+	
+	@PostMapping(value = "/insert")
+	public ResponseEntity<String> registerPost(PostVO postVO, HttpServletRequest req){
+		logger.info(" registerPost(PostVO postVO, HttpServletRequest req) 실행 ");
+		
+		try {
+			
+			if(postVO == null) {
+				return new ResponseEntity<String>("Post데이터가 필요합니다.", HttpStatus.BAD_REQUEST);
+			}
+			
+			postVO.setPost_id(getPostId());
+			
+			List<ImageVO> images = saveImage(postVO, req);
+			if(images == null || images.isEmpty()) {
+				return new ResponseEntity<String>("이미지를 저장하는 데 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			postVO.setPost_images(images);
+			
+			communityService.postInsert(postVO);
+			return new ResponseEntity<String>("게시물이 등록되었습니다", HttpStatus.OK);
+			
+		}catch (Exception e) {
+			logger.info(" 오류 발생 : {}",e.getMessage());
+			return new ResponseEntity<String>(" 오류 발생 : "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	// /////////////////////////////메서드/////////////////////////////
+	
+	// 동물id 생성
+	public String getPostId() {
+		logger.info(" getPostId 실행 ");
+		String pNamePre = "POST";
+		char[] pNameCharacters =
+				"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+		int pNamelength = 6;
+		StringBuilder asb = new StringBuilder();
+		Random pNameRandom = new Random();
+		
+		asb.append(pNamePre).append("-");
+		for (int i = 0; i < pNamelength; i++) {
+			int index = pNameRandom.nextInt(pNameCharacters.length);
+			asb.append(pNameCharacters[index]);
+		}
+		
+		return asb.toString();
+	}
+	// 동물id 생성
+	
+	// 이미지 저장 및 리스트 생성
+	public List<ImageVO> saveImage(PostVO postVO, HttpServletRequest req) {
+		logger.info("saveImage(PostVO postVO, HttpServletRequest req) 실행  ");
+		String saveDir = req.getRealPath("/uploads/");
+		List<MultipartFile> uploadImages = postVO.getUpload_images();
+		List<ImageVO> postImages = new ArrayList<ImageVO>();
+		
+		for (int i = 0; i < uploadImages.size(); i++) {
+			StringBuilder asb = new StringBuilder();
+			MultipartFile pImage = uploadImages.get(i);
+			
+			if(pImage == null || pImage.isEmpty()) {
+				logger.info(" 업로드할 이미지가 없습니다 인덱스 : "+i);
+				continue;
+			}
+			
+			File destinationImage 
+				= new File(asb.append(saveDir)
+						.append(UUID.randomUUID().toString())
+						.append("_")
+						.append(pImage.getOriginalFilename())
+						.toString());
+			
+			
+			int index = destinationImage.getPath().indexOf("\\uploads\\");
+
+			if (index != -1) {
+				String modifiedPath = destinationImage.getPath().substring(index);
+				ImageVO ivo = new ImageVO();
+				ivo.setImage_id(postVO.getPost_id());
+				ivo.setImage_sequence(i);
+				ivo.setImage_src(modifiedPath);
+				ivo.setImage_type(postVO.getPost_type());
+				postImages.add(i, ivo);
+			} else {
+				logger.info("경로에 '\\uploads\\'가 없습니다.");
+			}
+			
+			try {
+				pImage.transferTo(destinationImage);
+			} catch (IOException e) {
+				e.printStackTrace(); 
+			} 
+		}
+		
+		return postImages;
+	}
+	// 이미지 저장 및 리스트 생성
+	
+	// /////////////////////////////메서드/////////////////////////////
 	
 	
 	
