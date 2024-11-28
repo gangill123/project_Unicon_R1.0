@@ -366,6 +366,80 @@
                           </div>
                         </div>
                         <!-- 옵션 끝 -->
+                        
+                        <!-- 이미지 시작 -->
+                        <div class="card">
+                          <div class="card-body" style="padding: 1.5rem 2.5rem;" >
+                            <div class="row">
+                              <div class="col-12 grid-margin stretch-card">
+				                <div style="width:100%;">
+				                  <div style="padding : padding: 1.0rem 2.0rem;">
+				                  	<div style="display: flex; justify-content: space-between;">
+				                  		<div style="display: flex;align-items: center;">
+						                    <h4 class="card-title" style="margin-bottom: 0">옵션 </h4>
+				                  		</div>
+					                    <button onclick="closeBox('option')"><i class="mdi mdi-chevron-right"></i></button>
+				                  	</div>
+				                    <div class="dropdown-divider"></div>
+				                    <div class="closeBox-option">
+				                    	<form id="formAdptAnimal" action="" method="post" enctype="multipart/form-data">
+				                    	<div class="form-group row d-flex justify-content-center">
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<label class="text-dark custom-label">대표 이미지</label>
+													    <div class="upload-container">
+															<label for="image-input1" class="upload-button">
+															<!-- name="upload_images[0]"  -->
+																<input type="file" class="file-upload-default image-input" 
+																	accept="image/*" id="image-input1" name="upload_images[0]" required/>
+																<i id="plusIcon1" class="mdi mdi-plus"></i>
+																<img id="image-preview1" alt="이미지 미리보기" />
+															</label>
+														</div>
+													</div>
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
+													    <div class="upload-container">
+															<label for="image-input2" class="upload-button">
+																<input type="file" class="file-upload-default image-input" 
+																	accept="image/*" id="image-input2" name="upload_images[1]"/>
+																<i id="plusIcon2" class="mdi mdi-plus"></i>
+																<img id="image-preview2" alt="이미지 미리보기" />
+															</label>
+														</div>
+													</div>
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
+													    <div class="upload-container">
+															<label for="image-input3" class="upload-button">
+																<input type="file" class="file-upload-default image-input" 
+																	accept="image/*" id="image-input3" name="upload_images[2]"/>
+																<i id="plusIcon3" class="mdi mdi-plus"></i>
+																<img id="image-preview3" alt="이미지 미리보기" />
+															</label>
+														</div>
+													</div>
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
+													    <div class="upload-container">
+															<label for="image-input4" class="upload-button">
+																<input type="file" class="file-upload-default image-input" 
+																	accept="image/*" id="image-input4" name="upload_images[3]"/>
+																<i id="plusIcon4" class="mdi mdi-plus"></i>
+																<img id="image-preview4" alt="이미지 미리보기" />
+															</label>
+														</div>
+													</div>
+												</div>
+												<button type="submit" class="btn btn-lg btn-rounded btn-primary custom-text mr-2">등록하기</button>
+												</form>
+				                    </div>
+				                  </div>
+				                </div>
+				              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- 이미지 끝 -->
                       </div>
                     </div>
                   </div>
