@@ -54,7 +54,7 @@
                        <p class="mb-0">입양 후기 / 반려 이야기 / 실종 / 임시 보호 에 대한 커뮤니티 게시글을 작성해주세요.</p>
                     </div>
 
-                    <form class="quform" action="" method="post" enctype="multipart/form-data" onclick="">
+                    <form class="quform" action="${contextPath }/community/insert" method="post" enctype="multipart/form-data" onclick="">
                     	
                     	<!-- 숨겨서 들고갈 값(세션) -->
                     	<!-- member_id -->
@@ -87,7 +87,7 @@
                                     <div class="quform-element form-group">
                                         <label for="petType">동물 종류 <span class="quform-required">*</span></label>
                                         <div class="quform-input">
-                                            <select id="petType" class="form-control form-select" name="petType">
+                                            <select id="petType" class="form-control form-select">
                                                 <option>동물 종류 선택</option>
                                             </select>
                                         </div>
@@ -147,7 +147,7 @@
                                     <div class="quform-element form-group">
                                         <label for="location">거주 지역 (변경을 원하시면 마이페이지로)</label>
                                         <div class="quform-input">
-                                            <input id="location" class="form-control" type="text" name="location" placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요." disabled="disabled" />
+                                            <input id="location" class="form-control" type="text" placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요." disabled="disabled" />
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-1" name="image-input-1" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-1" name="image_file1" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="repImage1">대표 이미지 <span class="quform-required">*</span></label>
 								                    </div>
 								                </div>
@@ -218,7 +218,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-2" name="image-input-2" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-2" name="image_file2" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="Image2">이미지</label>
 								                    </div>
 								                </div>
@@ -238,7 +238,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-3" name="image-input-3" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-3" name="image_file3" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="Image3">이미지</label>
 								                    </div>
 								                </div>
@@ -258,7 +258,7 @@
 								                <!-- Begin Upload element -->
 								                <div class="quform-input">
 								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-4" name="image-input-4" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+								                        <input class="custom-file-input" type="file" id="image-input-4" name="image_file4" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
 								                        <label for="Image4">이미지</label>
 								                    </div>
 								                </div>
@@ -280,7 +280,7 @@
                                 <!-- Begin Submit button -->
                                 <div class="col-md-6 offset-md-3 mt-4">
                                     <div class="quform-submit-inner text-center">
-                                        <button id="btnCreate" class="butn w-100" type="button"><span>글 등록하기</span></button>
+                                        <button id="btnCreate" class="butn w-100" type="submit"><span>글 등록하기</span></button>
                                     </div>
                                     <div class="quform-loading-wrap"><span class="quform-loading"></span></div>
                                 </div>
@@ -475,34 +475,34 @@ $(function() {
 	    $("#searchInput").val(selectedText);
 	});
  	
- 	$("#btnCreate").click(function(){
- 		// 기본 폼 제출 방지
- 		event.preventDefault();
+//  	$("#btnCreate").click(function(){
+//  		// 기본 폼 제출 방지
+//  		event.preventDefault();
 		
- 		var post = {
- 			"member_id":$("#member_id").val(),
- 			"post_title":$("#post_title").val(),
- 			"post_content":$("#post_content").val(),
- 			"post_type":$("#post_type").val(),
- 			"pet_code":$("#pet_code").val(),
- 			"pet_etc_breed":$("#pet_etc_breed").val() || null,
- 			"post_pet_place":$("#post_pet_place").val() || null,
- 			"post_pet_date":$("#post_pet_date").val() || null,
- 			"post_file":$("#image-input-1").val()
- 		}; // var post = {}
+//  		var post = {
+//  			"member_id":$("#member_id").val(),
+//  			"post_title":$("#post_title").val(),
+//  			"post_content":$("#post_content").val(),
+//  			"post_type":$("#post_type").val(),
+//  			"pet_code":$("#pet_code").val(),
+//  			"pet_etc_breed":$("#pet_etc_breed").val() || null,
+//  			"post_pet_place":$("#post_pet_place").val() || null,
+//  			"post_pet_date":$("#post_pet_date").val() || null,
+//  			"post_file":$("#image-input-1").val()
+//  		}; // var post = {}
  		
- 		console.log(post);
+//  		console.log(post);
  		
- 		$.ajax({
- 			url : "${contextPath}/community",
-			type : "POST",
-			data : JSON.stringify(post),
-			contentType : "application/json",
-			success : function(data){
-				alert(" 게시물 등록 성공! ");
-			}
- 		}); // $.ajax
- 	});
+//  		$.ajax({
+//  			url : "${contextPath}/community",
+// 			type : "POST",
+// 			data : JSON.stringify(post),
+// 			contentType : "application/json",
+// 			success : function(data){
+// 				alert(" 게시물 등록 성공! ");
+// 			}
+//  		}); // $.ajax
+//  	});
  	// 글 등록 수행
     
     
