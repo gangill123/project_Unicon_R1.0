@@ -42,6 +42,10 @@ public class MainSlideDAO {
 		sqlSession.delete(NAMESPACE+".deleteSilde", ms_id);
 	}
 	
+	// 메인화면용 슬라이드 가져오기(개시시작일 ~ 개시종료일)
+	public List<MainSlideVO> getSlideForMain(){
+		return sqlSession.selectList(NAMESPACE+".getSlideForMain");
+	}
 	
 	
 }

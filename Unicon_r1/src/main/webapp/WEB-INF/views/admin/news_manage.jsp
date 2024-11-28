@@ -43,7 +43,7 @@
                                             <div class="card-body">
                                                 <ul class="mb-0 list-unstyled">
                                                     <li><a href="/admin/slide_create">슬라이드 등록</a></li>
-                                                    <li><a href="#!">슬라이드 등록내역</a></li>
+                                                    <li><a href="/admin/slide_manage">슬라이드 등록내역</a></li>
                                                 </ul>
                                             </div>
                                         </div>

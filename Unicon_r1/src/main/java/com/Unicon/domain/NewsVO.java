@@ -10,8 +10,8 @@ public class NewsVO {
 	private String news_subject;
 	private String news_content;
 	private String news_place;
-	private String news_date;
-	private String news_time;
+	private String news_startdate;
+	private String news_enddate;
 	private String news_resion;
 	private String news_src;
 	private MultipartFile news_file;

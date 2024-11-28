@@ -63,7 +63,7 @@
 
                                     <div class="navbar-header navbar-header-custom">
                                         <!-- start logo -->
-                                        <a href="index.html" class="navbar-brand logodefault"><img id="logo" src="${pageContext.request.contextPath }/resources/new_assets/img/logos/logo.png" alt="logo"></a>
+                                        <a href="/main" class="navbar-brand logodefault"><img id="logo" src="${pageContext.request.contextPath }/resources/new_assets/img/logos/logo.png" alt="logo"></a>
                                         <!-- end logo -->
                                     </div>
 
@@ -71,48 +71,7 @@
 
                                     <!-- menu area -->
                                     <ul class="navbar-nav ms-5" id="nav" style="display: none;">
-                                        <li><a href="#!">Home</a>
-                                            <ul>
-                                                <li><a href="#!">Default Homes</a>
-                                                    <ul>
-                                                        <li><a href="home-1.html">Home 01</a></li>
-                                                        <li><a href="home-2.html">Home 02</a></li>
-                                                        <li><a href="home-3.html">Home 03</a></li>
-                                                        <li><a href="home-4.html">Home 04</a></li>
-                                                        <li><a href="home-5.html">Home 05</a></li>
-                                                        <li><a href="home-6.html">Home 06</a></li>
-                                                        <li><a href="home-7.html">Home 07</a></li>
-                                                        <li><a href="home-8.html">Home 08</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">Creative Homes</a>
-                                                    <ul>
-                                                        <li><a href="home-9.html">Home 09</a></li>
-                                                        <li><a href="home-10.html">Home 10</a></li>
-                                                        <li><a href="home-11.html">Home 11</a></li>
-                                                        <li><a href="home-12.html">Home 12</a></li>
-                                                        <li><a href="home-13.html">Home 13</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">Classic Homes</a>
-                                                    <ul>
-                                                        <li><a href="home-startup.html">Home 14 - Startup</a></li>
-                                                        <li><a href="home-marketing-agency.html">Home 15 - Marketing</a></li>
-                                                        <li><a href="home-business.html">Home 16 - Business</a></li>
-                                                        <li><a href="home-finance.html">Home 17 - Finance</a></li>
-                                                        <li><a href="home-corporate.html">Home 18 - Corporate</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">One Page Demos</a>
-                                                    <ul>
-                                                        <li><a href="one-page/agency/index.html" target="_blank">Agency</a></li>
-                                                        <li><a href="one-page/business/index.html" target="_blank">Business</a></li>
-                                                        <li><a href="one-page/consulting/index.html" target="_blank">Consulting</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="home-14.html">Home Shop</a></li>
-                                                <li><a href="admin-template/index.html" target="_blank">Admin Dashboard</a></li>
-                                            </ul>
+                                        <li><a href="/main">홈</a>
                                         </li>
                                         <li><a href="#!">Pages</a>
                                             <ul>
@@ -396,7 +355,13 @@
                                                 </ul>
                                             </li>
                                             <li class="search"><a href="#!"><i class="fas fa-search"></i></a></li>
-                                            <li class="d-none d-xl-inline-block"><a href="contact.html" class="butn-style2 text-white small"><span>글쓰기</span></a></li>
+                                            <li><a href="#!">
+			                                	<img src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg"
+			                                	 class="rounded-circle" style="width: 50px; height: 50px;">
+			                            	</a></li>
+                                            
+                                            <li class="d-none d-xl-inline-block" style="margin-left: 10px;">
+                                            <a href="contact.html" class="butn-style2 text-white small"><span>글쓰기</span></a></li>
                                         </ul>
                                     </div>
                                     <!-- end attribute navigation -->
