@@ -13,6 +13,7 @@ public interface VolunteerDAO {
     void updateVolunteerStatus(Map<String, Object> params) throws Exception;
     public void updateRecruitStatus(Map<String, Object> params) throws Exception;
     VolunteerVO selectVolunteer(Long voId) throws Exception;
+    List<VolunteerVO> getAllVolunteers(Map<String, Object> params) throws Exception;
     List<VolunteerVO> getOngoingVolunteers(Map<String, Object> params) throws Exception;
     List<VolunteerVO> getClosedVolunteers(Map<String, Object> params) throws Exception;
     int selectVolunteerCount(Map<String, Object> params) throws Exception;

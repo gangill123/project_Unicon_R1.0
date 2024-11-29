@@ -17,6 +17,7 @@ public interface VolunteerService {
     List<VolunteerVO> getOngoingVolunteers() throws Exception;
     List<VolunteerVO> getClosedVolunteers() throws Exception;
     void closeRecruitment(Long voId) throws Exception;
+    void openRecruitment(Long voId) throws Exception;
     void updateGuide(VolunteerVO guide) throws Exception;
     VolunteerVO getVolunteerInfo() throws Exception;
     

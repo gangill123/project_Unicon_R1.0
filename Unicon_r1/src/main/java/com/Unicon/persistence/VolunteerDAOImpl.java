@@ -49,6 +49,11 @@ public class VolunteerDAOImpl implements VolunteerDAO {
     }
     
     @Override
+    public List<VolunteerVO> getAllVolunteers(Map<String, Object> params) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".getAllVolunteers", params);
+    }
+    
+    @Override
     public List<VolunteerVO> getOngoingVolunteers(Map<String, Object> params) throws Exception {
         return sqlSession.selectList(NAMESPACE + ".getOngoingVolunteers", params);
     }

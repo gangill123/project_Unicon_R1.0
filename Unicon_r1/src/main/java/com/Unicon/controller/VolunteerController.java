@@ -197,6 +197,19 @@ public class VolunteerController {
         }
     }
     
+    @PostMapping("/manage/open/{voId}")
+    @ResponseBody
+    public ResponseEntity<String> openRecruitment(@PathVariable Long voId) {
+        try {
+            volService.openRecruitment(voId);
+            return ResponseEntity.ok("모집이 시작되었습니다.");
+        } catch (Exception e) {
+            logger.error("봉사활동 모집 실패", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                               .body("모집 처리 중 오류가 발생했습니다.");
+        }
+    }
+    
     @PostMapping("/manage/approve/{applicationId}")
     @ResponseBody
     public ResponseEntity<String> approveApplication(@PathVariable Long applicationId) {

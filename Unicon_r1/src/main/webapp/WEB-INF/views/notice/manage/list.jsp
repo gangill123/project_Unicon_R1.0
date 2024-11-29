@@ -16,9 +16,11 @@
    	<link rel="shortcut icon" href="/resources/admin/images/favicon.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <style>
- 	/* 레이아웃 */
+
+<style>
+/* 레이아웃 */
 body .container-scroller .page-body-wrapper {
+   
    /* 사이드바 */
    .sidebar { 
        width: 250px !important; 
@@ -42,7 +44,7 @@ body .container-scroller .page-body-wrapper {
        width: 100% !important;
        padding: 0 !important;
        min-width: 0 !important; 
-        flex: 1 1 auto !important; 
+       flex: 1 1 auto !important; 
    }
 
    /* 헤더 영역 */
@@ -134,6 +136,14 @@ body .container-scroller .page-body-wrapper {
    }
 }
 
+/* 검색 영역의 각 요소 높이 통일 */
+	#searchForm .form-select,
+	#searchForm .form-control,
+	#searchForm .btn,
+	#searchForm .input-group {
+	    height: 38px !important;
+	}
+	
 /* 모바일 반응형 */
 @media (max-width: 768px) {
    body .container-scroller .page-body-wrapper {
@@ -209,7 +219,7 @@ body .container-scroller .page-body-wrapper {
        }
    }
 }
-    </style>
+</style>
 </head>
 <body>
 <div class="container-scroller">
@@ -220,7 +230,7 @@ body .container-scroller .page-body-wrapper {
 		    <div class="main-content">
 		        <div class="content-header d-flex justify-content-between align-items-center mb-4">
 				    <h4 class="mb-0">공지사항 관리</h4>
-				    <div class="d-flex flex-column gap-2"> 
+				    <div class="d-flex gap-2"> 
 				        <button class="btn btn-primary" onclick="location.href='/notice/manage/form'">
 				            <i class="fas fa-plus"></i> 공지사항 등록
 				        </button>
@@ -233,10 +243,6 @@ body .container-scroller .page-body-wrapper {
 		        <!-- 검색 영역 -->
 		        <form id="searchForm" class="search-bar">
 		            <div class="row g-3">
-		                <div class="col-md-3">
-		                    <input type="text" name="keyword" class="form-control" 
-		                           placeholder="제목 또는 내용 검색" value="${param.keyword}">
-		                </div>
 		                <div class="col-md-2">
 		                    <select name="category" class="form-select">
 		                        <option value="">전체 카테고리</option>
@@ -244,6 +250,10 @@ body .container-scroller .page-body-wrapper {
 		                        <option value="이벤트" ${param.category == '이벤트' ? 'selected' : ''}>이벤트</option>
 		                        <option value="센터소식" ${param.category == '센터소식' ? 'selected' : ''}>센터소식</option>
 		                    </select>
+		                </div>
+		                <div class="col-md-3">
+		                    <input type="text" name="keyword" class="form-control" 
+		                           placeholder="제목 또는 내용 검색" value="${param.keyword}">
 		                </div>
 		                <div class="col-md-4">
 		                    <div class="input-group">
