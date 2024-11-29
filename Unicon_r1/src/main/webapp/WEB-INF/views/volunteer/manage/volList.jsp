@@ -68,22 +68,59 @@
             min-width: unset;
         }
         
-        /* 테이블 셀 패딩 줄이기 */
-        .table td, .table th {
-            padding: 0.5rem;
-        }
-        
         /* 상태 뱃지 크기 조정 */
         .badge {
             font-size: 0.7rem;
             padding: 0.3rem 0.5rem;
         }
-        
-        /* 버튼 그룹 조정 */
-        .btn-group .btn {
-            padding: 0.2rem 0.5rem;
-            font-size: 0.75rem;
-        }
+        .container-fluid {
+	        padding: 0.5rem;
+	    }
+	    
+	    .content-wrapper {
+	        padding: 0.5rem;
+	    }
+	    
+	    .card {
+	        margin: 0.5rem 0;
+	    }
+	    
+	    .card-body {
+	        padding: 0.75rem;
+	    }
+	    
+	    .table td, .table th {
+	        padding: 0.5rem 0.25rem;
+	        font-size: 0.875rem;
+	    }
+	    
+	    /* 검색 폼 조정 */
+	    .row.g-3 {
+	        margin: 0;
+	    }
+	    
+	    .col-md-2, .col-md-4 {
+	        padding: 0 0.25rem;
+	    }
+	    
+	    /* 버튼 크기 조정 */
+	    .btn-group .btn {
+	        padding: 0.25rem 0.5rem;
+	    }
+	    
+	    /* 페이지네이션 조정 */
+	    .pagination {
+	        margin: 0;
+	    }
+	    
+	    .page-link {
+	        padding: 0.25rem 0.5rem;
+	    }
+	    
+	    /* 테이블 스크롤 방지 */
+	    .table-responsive {
+	        margin: 0 -0.75rem;
+    	}
     }
 }
 </style>
