@@ -62,8 +62,8 @@ public class VolunteerController {
     @GetMapping("")
     public String userList(Model model) throws Exception {
         VolunteerVO volunteerInfo = volService.getVolunteerInfo();
-        List<VolunteerVO> ongoingVolunteers = volService.getOngoingVolunteers();
-        List<VolunteerVO> closedVolunteers = volService.getClosedVolunteers();
+        List<VolunteerVO> ongoingVolunteers = volService.getOngoingVolunteers();  // recruitStatus = OPEN
+        List<VolunteerVO> closedVolunteers = volService.getClosedVolunteers();    // recruitStatus = CLOSE
         
         model.addAttribute("volunteerInfo", volunteerInfo);
         model.addAttribute("ongoingVolunteers", ongoingVolunteers);
@@ -123,13 +123,13 @@ public class VolunteerController {
     public String adminList(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String recruitStatus,  // status -> recruitStatus로 변경
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String startDate,
             @RequestParam(required = false) String endDate,
             Model model) throws Exception {
             
-        Map<String, Object> result = volService.getVolunteerList(page, size, status, keyword, startDate, endDate);
+    	Map<String, Object> result = volService.getVolunteerList(page, size, recruitStatus, keyword, startDate, endDate);
         
         model.addAttribute("volunteers", result.get("volunteers"));
         model.addAttribute("totalCount", result.get("totalCount"));

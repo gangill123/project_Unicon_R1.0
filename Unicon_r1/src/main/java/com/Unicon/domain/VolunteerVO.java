@@ -22,6 +22,8 @@ public class VolunteerVO {
     private Date voRegDate;             // 등록일시
     private Date voUpdateDate;          // 수정일시
     private String status;              // 상태(active/DELETED/draft)
+    private String recruitStatus;       // 상태(OPEN/CLOSE)
+    
     private int guideId;
     
     private int applicationCount;       // 신청자 수

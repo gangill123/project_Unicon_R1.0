@@ -286,12 +286,13 @@
     }
     .option-list-apply {
     	width: 15rem;
-	    border: 1px solid #dbdde2;
-	    background-color: #dbdde2;
+	    border: 1px solid #2ecc71;
+	    background-color: #2ecc71;
 	    padding: 0.4em;
-	    cursor: no-drop !important;
 	    color: #ffffff;
 	    font-size : 13px;
+    }
+    .disabled {
     }
     .option-add, .option-remove {
     	border: none;

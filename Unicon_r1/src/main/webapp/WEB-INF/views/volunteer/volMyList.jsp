@@ -150,10 +150,25 @@
 	
 	/* 아코디언 스타일 */
 	.accordion-button {
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	    width: 100%;
 	    background-color: #f8f9fa;
 	    border: none;
 	    box-shadow: none !important;
 	    padding: 1.25rem;
+	}
+	
+	/* 기존 화살표 제거 */
+	.accordion-button::after {
+	    display: none;
+	}
+	
+	/* 선택 상태 텍스트 스타일 */
+	.selection-text {
+	    font-size: 0.9rem;
+	    color: #0d6efd;
 	}
 	
 	.accordion-button:not(.collapsed) {
@@ -368,8 +383,11 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="activityInfo">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseActivity" aria-expanded="true" aria-controls="collapseActivity">
-                                <i class="fas fa-info-circle detail-icon me-2"></i> 봉사활동 정보
-                            </button>
+							    <span class="button-text">
+							        <i class="fas fa-info-circle detail-icon me-2"></i> 봉사활동 정보
+							    </span>
+							    <span class="selection-text">선택됨</span>
+							</button>
                         </h2>
                         <div id="collapseActivity" class="accordion-collapse collapse show" aria-labelledby="activityInfo" data-bs-parent="#detailAccordion">
                             <div class="accordion-body">
@@ -407,8 +425,11 @@
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="applicantInfo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseApplicant" aria-expanded="false" aria-controls="collapseApplicant">
-                                <i class="fas fa-user detail-icon me-2"></i> 신청자 정보
-                            </button>
+							    <span class="button-text">
+							        <i class="fas fa-user detail-icon me-2"></i> 신청자 정보
+							    </span>
+							    <span class="selection-text">선택하기</span>
+							</button>
                         </h2>
                         <div id="collapseApplicant" class="accordion-collapse collapse" aria-labelledby="applicantInfo" data-bs-parent="#detailAccordion">
                             <div class="accordion-body">
@@ -455,6 +476,44 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const detailModal = document.getElementById('detailModal');
+    
+    detailModal.addEventListener('show.bs.modal', function() {
+        // 봉사활동 정보 아코디언
+        const activityCollapse = document.getElementById('collapseActivity');
+        const activityButton = document.querySelector('[data-bs-target="#collapseActivity"]');
+        const activitySelectionText = activityButton.querySelector('.selection-text');
+        
+        // 신청자 정보 아코디언
+        const applicantCollapse = document.getElementById('collapseApplicant');
+        const applicantButton = document.querySelector('[data-bs-target="#collapseApplicant"]');
+        const applicantSelectionText = applicantButton.querySelector('.selection-text');
+        
+        // 봉사활동 정보 이벤트
+        activityCollapse.addEventListener('show.bs.collapse', function() {
+            activitySelectionText.textContent = '선택됨';
+        });
+        
+        activityCollapse.addEventListener('hide.bs.collapse', function() {
+            activitySelectionText.textContent = '선택하기';
+        });
+        
+        // 신청자 정보 이벤트
+        applicantCollapse.addEventListener('show.bs.collapse', function() {
+            applicantSelectionText.textContent = '선택됨';
+        });
+        
+        applicantCollapse.addEventListener('hide.bs.collapse', function() {
+            applicantSelectionText.textContent = '선택하기';
+        });
+        
+        // 초기 상태 설정
+        activitySelectionText.textContent = activityCollapse.classList.contains('show') ? '선택됨' : '선택하기';
+        applicantSelectionText.textContent = applicantCollapse.classList.contains('show') ? '선택됨' : '선택하기';
+    });
+});
+
 document.getElementById('loadMore')?.addEventListener('click', function() {
     const hiddenItems = document.querySelectorAll('#applicationList .application-item.d-none');
     const itemsToShow = Array.from(hiddenItems).slice(0, 9);
