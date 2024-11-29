@@ -84,10 +84,9 @@ public class VolunteerServiceImpl implements VolunteerService {
         params.put("keyword", keyword);
         params.put("startDate", startDate);
         params.put("endDate", endDate);
-        params.put("recruitStatus", recruitStatus); // OPEN 또는 CLOSE
+        params.put("recruitStatus", recruitStatus);
 
-        // 삭제되지 않은(status='active') 봉사활동만 조회
-        List<VolunteerVO> volunteers = volDAO.getOngoingVolunteers(params);
+        List<VolunteerVO> volunteers = volDAO.getAllVolunteers(params);
         
         int totalCount = volDAO.selectVolunteerCount(params);
         
@@ -126,6 +125,19 @@ public class VolunteerServiceImpl implements VolunteerService {
         } catch (Exception e) {
             logger.error("봉사활동 마감 처리 실패", e);
             throw new RuntimeException("봉사활동 마감에 실패했습니다.", e);
+        }
+    }
+    
+    @Transactional
+    public void openRecruitment(Long voId) throws Exception {
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("voId", voId);
+            params.put("recruitStatus", "OPEN");  
+            volDAO.updateRecruitStatus(params);
+        } catch (Exception e) {
+            logger.error("봉사활동 모집 처리 실패", e);
+            throw new RuntimeException("봉사활동 모집 처리에 실패했습니다.", e);
         }
     }
     
