@@ -200,6 +200,17 @@ body .container-scroller .page-body-wrapper {
                width: 100% !important;
            }
        }
+       
+       .search-bar .col-md-2:last-child {
+	        width: 100% !important;
+	        display: flex !important;
+	        gap: 10px !important;
+	    }
+	
+	    .search-bar .col-md-2:last-child .btn {
+	        flex: 1 !important;
+	        width: 50% !important;
+	    }
 
        .table {
            th:not(:nth-child(1)):not(:nth-child(4)):not(:nth-child(8)),
@@ -251,7 +262,7 @@ body .container-scroller .page-body-wrapper {
 		                        <option value="센터소식" ${param.category == '센터소식' ? 'selected' : ''}>센터소식</option>
 		                    </select>
 		                </div>
-		                <div class="col-md-3">
+		                <div class="col-md-4">
 		                    <input type="text" name="keyword" class="form-control" 
 		                           placeholder="제목 또는 내용 검색" value="${param.keyword}">
 		                </div>
@@ -262,7 +273,7 @@ body .container-scroller .page-body-wrapper {
 		                        <input type="date" name="endDate" class="form-control" value="${param.endDate}">
 		                    </div>
 		                </div>
-		                <div class="col-md-3">
+		                <div class="col-md-2">
 		                    <button type="submit" class="btn btn-primary" id="searchBtn">
 		                        <i class="fas fa-search"></i> 검색
 		                    </button>
