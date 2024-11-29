@@ -60,7 +60,7 @@
 						<div class="product-img">
 							<div class="label-offer bg-${today > endDate ? 'red' : 'primary'}">
 							${today > endDate ? '개시마감' : '개시중'}</div>
-							<img src="${item.news_src }" alt="..." class="image rounded-3" style="height: 300px;">
+							<img src="${item.news_src }" alt="..." class="image rounded-3">
 							<div class="product-cart">
 								<a href="/admin/news_view/${item.news_id }?resion=${resion}&currentPage=${currentPage}" style="width: 50px; height: 50px;">
 									<i class="fa-regular fa-pen-to-square"></i></a>
@@ -244,7 +244,7 @@
 						<div class="product-img">
 						<div class="label-offer bg-${today > endDate ? 'red' : 'primary'}">
 						${today > endDate ? '개시종료' : '개시중'}</div>
-						<img src="${item.ms_src }" alt="..." class="image rounded-3" style="height: 200px;">
+						<img src="${item.ms_src }" alt="..." class="image rounded-3">
 						<div class="product-cart">
 						<a href="/admin/slide_view/${item.ms_id }?currentPage=${currentPage}" style="width: 50px; height: 50px;">
 						<i class="fa-regular fa-pen-to-square"></i></a>
@@ -400,7 +400,35 @@
 	}
 	
 	
-	
+	////마이페이지에서 선택에 따른 div변경
+	function myPageForPropile(productDiv){
+		let MyUniDiv;
+		
+		console.log("123");
+		if(productDiv === 'myUni'){
+			
+			MyUniDiv = `
+				<div class="col-lg-12" style="text-align: end; margin-top: 0;">
+				<button type="button" class="btn btn-secondary btn-sm">유니콘 등록</button>
+				</div>
+				<div class="col-sm-6 col-md-4 col-lg-3">
+				<div class="product-details">
+				<div class="product-img">
+				<img src="/resources/new_assets/img/shop/product-01.jpg" alt="...">
+				</div>
+				<div class="product-info">
+				<a href="#!">Sneakers Shoe</a>
+				<p class="price text-center m-0">
+				</p>
+				</div>
+				</div>
+				</div>
+				`
+		}
+		
+		 // 해당 div에 삽입
+	    $('.product-grid').append(MyUniDiv);
+	}
 	
 
 	
