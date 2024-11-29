@@ -39,8 +39,12 @@
 
 <!--====================================작성부=====================================-->
 
-<section class="bg-light">
+<section class="bg-light" style="padding: 60px;">
     <div class="container">
+    
+    	<div class="line-title">
+	        <h4 class="mb-0">커뮤니티 등록</h4>
+	    </div>
 
         <div class="row justify-content-center">
 
@@ -119,10 +123,10 @@
                                 <!-- Begin Select element -->
                                 <div class="col-md-3">
                                     <div class="quform-element form-group">
-                                        <label for="pet_etc_breed">기타 동물 품종 <span class="quform-required">*</span></label>
+                                        <label for="pet_etc_breed">기타 동물 품종</label>
                                         <div class="quform-input">
 	                                        <div class="quform-input">
-	                                            <input id="pet_etc_breed" class="form-control" type="text" name="pet_etc_breed" placeholder="개와 고양이를 제외한 동물은 품종을 적어주세요" />
+	                                            <input id="pet_etc_breed" class="form-control" type="text" name="pet_etc_breed" placeholder="품종이 기타인 경우" readonly />
 	                                        </div>
                                         </div>
                                     </div>
@@ -156,7 +160,7 @@
                                 <!-- Begin Text input element -->
                                 <div class="col-md-6" id="missing-info" style="display: none;">
                                     <div class="quform-element form-group">
-                                        <label for="post_pet_place">실종(발견) 장소 <span class="quform-required">*</span></label>
+                                        <label for="post_pet_place">실종(발견) 장소</label>
                                         <div class="quform-input">
                                             <input id="post_pet_place" class="form-control" type="text" name="post_pet_place" placeholder="입력" />
                                         </div>
@@ -167,7 +171,7 @@
                                 <!-- Begin Text input element -->
                                 <div class="col-md-6" id="date-info" style="display: none;">
                                     <div class="quform-element form-group">
-                                        <label for="post_pet_date">실종(발견) 일자 <span class="quform-required">*</span></label>
+                                        <label for="post_pet_date">실종(발견) 일자</label>
                                         <div class="quform-input">
                                             <input id="post_pet_date" class="form-control" type="text" name="post_pet_date" placeholder="입력" />
                                         </div>
@@ -286,18 +290,18 @@
                                 </div>
                                 <!-- End Submit button -->
 
-                            </div>
+                            </div> <!-- <div class="row"> -->
 							
-                        </div>
+                        </div> <!-- <div class="quform-elements"> -->
                     </form>
 
-                </div>
+                </div> <!-- <div class="border bg-white p-1-9 p-lg-2-3 p-xl-6 rounded"> -->
 
             </div>
             <!-- end form section -->
 
-        </div>
-    </div>
+        </div> <!-- <div class="row justify-content-center"> -->
+    </div> <!-- <div class="container"> -->
 </section>
 
 <script>
@@ -454,12 +458,16 @@ $(function() {
 		});
 	});
 	
-	
-	
+// 	$(document).click(function(event) {
+// 		if (!$(event.target).closest('.dropdown').length) {
+// 			$('#dropdownList').removeClass('show');
+// 		}
+// 	});
+ 	// 동물 품종 클릭 이벤트 수정
 	$(document).click(function(event) {
-		if (!$(event.target).closest('.dropdown').length) {
-			$('#dropdownList').removeClass('show');
-		}
+	    if (!$(event.target).closest('.dropdown').length && !$(event.target).is('#searchInput')) {
+	        $('#dropdownList').removeClass('show');
+	    }
 	});
  	// 동물 품종 리스트
  	
@@ -472,48 +480,57 @@ $(function() {
 	});
 	// 엔터키 제출 방지
  	
+	// 공백 값이 아닌 null d 
+	
+ 	// 공백 값이 아닌 null d 
  	
- 	// 글 등록 수행
  	// 드롭다운 클릭
  	$(document).on('click', '.dropdown-item', function() {
+ 		// 선택된 품종의 값 가져오기
 	    var selectedValue = $(this).data("value");
-	    var selectedText = $(this).text(); // 선택된 품종의 이름 가져오기
+	 	// 선택된 품종의 이름 가져오기
+	    var selectedText = $(this).text();
 	    console.log("선택된 값: " + selectedValue);
 	    // 선택된 값을 임시의 히든 input에 설정 (숫자 값으로 설정)
 	    $("#pet_code").val(selectedValue);
 	    // 선택된 품종의 이름을 input에 보여주기
 	    $("#searchInput").val(selectedText);
+	    
+	    // 종류가 기타인 경우에만 input 활성화
+	    switch($(this).data('value')) {
+			case 1002: case 2002: case 3000:
+				$('#pet_etc_breed').removeAttr('readonly');
+				break;
+			default: {
+				$('#pet_etc_breed').val('');
+				$('#pet_etc_breed').attr('readonly', true);
+			}
+		}
+	 	// 종류가 기타인 경우에만 input 활성화
+	    
 	});
- 	
-//  	$("#btnCreate").click(function(){
-//  		// 기본 폼 제출 방지
-//  		event.preventDefault();
-		
-//  		var post = {
-//  			"member_id":$("#member_id").val(),
-//  			"post_title":$("#post_title").val(),
-//  			"post_content":$("#post_content").val(),
-//  			"post_type":$("#post_type").val(),
-//  			"pet_code":$("#pet_code").val(),
-//  			"pet_etc_breed":$("#pet_etc_breed").val() || null,
-//  			"post_pet_place":$("#post_pet_place").val() || null,
-//  			"post_pet_date":$("#post_pet_date").val() || null,
-//  			"post_file":$("#image-input-1").val()
-//  		}; // var post = {}
- 		
-//  		console.log(post);
- 		
-//  		$.ajax({
-//  			url : "${contextPath}/community",
-// 			type : "POST",
-// 			data : JSON.stringify(post),
-// 			contentType : "application/json",
-// 			success : function(data){
-// 				alert(" 게시물 등록 성공! ");
-// 			}
-//  		}); // $.ajax
-//  	});
- 	// 글 등록 수행
+	// 드롭다운 클릭
+	
+// 	// 페이지 이동
+//     $('#formPost').on('submit', function(event) {
+//         event.preventDefault(); // 기본 폼 제출 방지
+
+//         // AJAX 요청
+//         $.ajax({
+//             type: "POST",
+//             url: "/community/insert",
+//             data: $(this).serialize(), // URL 인코딩된 데이터 전송
+//             success: function(response) {
+//                 alert(response); // 성공 메시지 표시
+//                 window.location.href = "/community/main"; // 페이지 이동
+//             },
+//             error: function(xhr) {
+//                 alert(xhr.responseText); // 실패 메시지 표시
+//                 console.log(xhr);
+//             }
+//         });
+//     });
+// 	// 페이지 이동
     
     
 }); // 돔레디

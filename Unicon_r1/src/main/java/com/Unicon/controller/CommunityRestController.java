@@ -109,7 +109,7 @@ public class CommunityRestController {
 	
 	// /////////////////////////////메서드/////////////////////////////
 	
-	// 동물id 생성
+	// 게시물id 생성
 	public String getPostId() {
 		logger.info(" getPostId 실행 ");
 		String pNamePre = "POST";
@@ -127,7 +127,7 @@ public class CommunityRestController {
 		
 		return asb.toString();
 	}
-	// 동물id 생성
+	// 게시물id 생성
 	
 	// 이미지 저장 및 리스트 생성
 	public List<ImageVO> saveImage(PostVO postVO, HttpServletRequest req) {
