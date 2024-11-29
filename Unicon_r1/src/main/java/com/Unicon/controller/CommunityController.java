@@ -84,6 +84,9 @@ public class CommunityController {
 	
 	
 	
+	
+	
+	
 //	// 게시물 등록 및 이미지 파일 등록
 //	@PostMapping(value = "insert")
 //	public String communityInsert(PostVO postVO) {
