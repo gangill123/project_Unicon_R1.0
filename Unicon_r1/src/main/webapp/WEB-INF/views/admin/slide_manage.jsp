@@ -11,6 +11,19 @@
     transition: opacity 0.3s ease; /* 부드러운 애니메이션 효과 */
 }
 
+.product-img {
+    width: 100%;
+    aspect-ratio: 1920 / 700; /* 원하는 가로:세로 비율 설정 */
+    overflow: hidden;    /* 이미지가 컨테이너를 벗어나지 않도록 */
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+    border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
+}
+
 </style>
 
 </head>

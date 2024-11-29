@@ -11,6 +11,19 @@
     transition: opacity 0.3s ease; /* 부드러운 애니메이션 효과 */
 }
 
+.product-img {
+    width: 100%;
+    aspect-ratio: 3 / 4; /* 원하는 가로:세로 비율 설정 */
+    overflow: hidden;    /* 이미지가 컨테이너를 벗어나지 않도록 */
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+    border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
+}
+
 </style>
 
 </head>
@@ -27,11 +40,8 @@
 
                     <!-- start product grid left panel -->
                     <div class="col-lg-3">
-
                         <div class="side-bar">
-
                             <div class="widget">
-
                                 <div id="accordion" class="accordion-style2">
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
@@ -144,10 +154,8 @@
                         <div class="row">
                             <div class="col-12">
                             <div class="row g-0 align-items-center bg-light rounded p-3">
-
                                     <div class="col-12 col-md-auto">
                                         <div class="row justify-content-center">
-
                                             <div class="col-auto my-2 my-md-0">
                                             	<select id="resionSelector" class="form-control form-select" name="news_resion">
                                                     <option value="전국" ${param.resion == '전국' ? 'selected' : ''}>전국</option>

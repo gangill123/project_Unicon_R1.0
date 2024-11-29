@@ -1,0 +1,176 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
+
+<!-- 추가 템플릿 css/js 작성란 -->
+
+<style>
+.product-details:hover {
+    opacity: 0.7; /* 투명도 설정 */
+    transition: opacity 0.3s ease; /* 부드러운 애니메이션 효과 */
+}
+
+.product-img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 원하는 가로:세로 비율 설정 */
+    overflow: hidden;    /* 이미지가 컨테이너를 벗어나지 않도록 */
+}
+
+.product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+    border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
+}
+.filtering span{
+	margin-right: 50px;
+}
+</style>
+
+</head>
+<%@ include file="../inc/new_header.jsp" %> <!-- header -->
+
+<!--====================================작성부=====================================-->
+	
+	
+	<section  style="padding-top: 50px;">
+            <div class="container">
+            	<div class="line-title">
+			        <h4 class="mb-0">마이페이지</h4>
+			    </div>
+                <div class="row">
+
+                    <!-- start left side section -->
+                    <div class="col-lg-3 order-2 order-lg-1">
+                        <div class="pe-lg-1-9 pe-xl-2-3">
+                        <!-- start services -->
+                        <div class="services-single-left-box">
+                            <div class="services-single-menu mb-1-9">
+                                <ul class="m-0 list-unstyled">
+                                    <li class="active"><a href="#!">프로필 관리</a></li>
+                                    <li><a href="#!">커뮤니티 관리</a></li>
+                                    <li><a href="#!">주문 관리</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- end services -->
+                        
+                    </div>
+                    </div>
+                    <!-- end left side section -->
+
+                    <!-- start right side section -->
+                    <div class="col-lg-9 order-1 order-lg-2 mb-1-9 mb-lg-0">
+                        <div class="services-single-right">
+                        <h4>프로필 관리</h4>
+                        <div class="common-block" style="padding: 30px;">
+                        
+                        <div class="row text-center" style="border-bottom: 1px solid #eee; padding-bottom: 20px;">
+                            <div class="col-lg-3 mb-3 mb-lg-0">
+                                <img class="rounded-circle" style="margin-bottom: 15px;"
+                                src="${pageContext.request.contextPath }/resources/new_assets/img/testmonials/t-4.jpg">
+                            </div>
+                            
+                            <div class="col-lg-9 text-lg-start">
+                            	<div class="col-lg-10">
+                                <h4 style="margin-bottom: 0;">가나다라마바사</h4>
+                                <span>특별회원</span>
+                                
+                                <div class="row" style="text-align: center; margin-top: 20px;">
+	                                <div class="col">
+	                                	<a href="#!"><div>
+		                                	<h5 style="margin-bottom: 0;">1</h5>
+		                                	<span>My유니콘</span>
+	                                	</div></a>
+	                            	</div>
+	                                <div class="col">
+	                                	<div>
+		                                	<h5 style="margin-bottom: 0;">1</h5>
+		                                	<span>My이웃</span>
+	                                	</div>
+	                            	</div>
+	                                <div class="col">
+	                                	<div>
+		                                	<h5 style="margin-bottom: 0;">1</h5>
+		                                	<span>게시물</span>
+	                                	</div>
+	                            	</div>
+                                </div>
+                                </div>
+                                
+                            <div class="col-lg-12" style="text-align: end; margin-top: 25px;">
+                            	<button type="button" class="btn btn-secondary btn-sm">내 정보 수정</button>
+                            </div>
+                            </div>
+                        </div>
+                        
+                  <div class="row" style="margin-top: 30px;">
+                    <!-- Start links -->
+                    <div class="filtering col-sm-12 text-center">
+                        <span id="myUni" class="active">나의 유니콘</span>
+                        <span id="inUni" >관심 유니콘</span>
+                        <span id="inItem" >관심 상품</span>
+                    </div>
+                    <!-- End links -->
+                </div>
+                        
+                 <div class="row product-grid" style="min-height: 333.5px;">
+                 	<div class="col-lg-12" style="text-align: end; margin-top: 0;">
+                     	<button type="button" class="btn btn-secondary btn-sm">유니콘 등록</button>
+                     </div>
+                    <div class="col-sm-6 col-md-4 col-lg-3">
+                        <div class="product-details">
+                            <div class="product-img">
+                                <img src="${pageContext.request.contextPath }/resources/new_assets/img/shop/product-01.jpg" alt="...">
+                            </div>
+                            <div class="product-info">
+                                <a href="#!">Sneakers Shoe</a>
+                                <p class="price text-center m-0">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        
+                        
+                        
+                        
+                        
+                        </div> <!-- common -->
+                        </div>
+                    </div>
+                    <!-- end right side section -->
+
+                </div>
+            </div>
+        </section>
+	
+	
+	
+	
+	
+
+<!--====================================작성부=====================================-->
+
+<script>
+$(document).ready(function () {
+	
+	$('.filtering span').on('click', function(){
+		let id = $(this).attr('id');
+		console.log(id);
+		$('.product-grid').empty();
+		myPageForPropile(id);
+	});
+	
+	
+	
+	
+	
+});//readay
+
+</script>
+
+
+
+<%@ include file="../inc/new_footer.jsp" %> <!-- footer -->
