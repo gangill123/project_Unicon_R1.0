@@ -304,6 +304,7 @@
 											        	<select>
 											        		<option selected="selected" value="1">1개</option>
 											        		<option value="2">2개</option>
+											        		<option value="3">3개</option>
 											        	</select>
 											        </div>
 											    </div>
@@ -313,7 +314,7 @@
 											    <label>옵션입력</label>
 											    <div>
 											    <div id="options-container">
-											      <div class="display-f" style="align-items: unset; margin: 0 0 1.7rem 0">
+											      <div class="display-f" id="option-count" style="align-items: unset; margin: 0 0 1.7rem 0">
 											        <div class="store-input-container start" style="flex-direction: column; gap: 1rem">
 											          <label for="option-name-1">옵션명</label>
 											          <div id="option-name-wrapper" class="option-wrapper">
@@ -352,7 +353,7 @@
 											        </div>
 											      </div>
 											    </div>
-												<button class="option-list-apply">옵션 목록 적용</button>
+												<button class="option-list-apply" disabled>옵션 목록 적용</button>
 												</div>
 				                    		</div>
 				                    	<div class="dropdown-divider"></div>
