@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,71 @@
 
 <style>
 
+/* 모달 배경 */
+.modal {
+    display: none;  /* 기본적으로 숨김 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경 반투명 */
+}
 
+/* 모달 내용 */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 닫기 버튼 */
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+}
+
+/* 텍스트 영역 스타일 */
+textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+/* 수정 완료 버튼 스타일 */
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
 </style>
 
 
@@ -52,47 +117,70 @@
     <div class="row">    
         <!-- Blog Left -->
         <div class="col-lg-9 mb-4">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <!-- Post Content -->
-                    <h5 class="card-title text-primary">${boardDetail.title}</h5>
-                   <ul class="list-inline mb-4" style="color: green;">
-                        <li class="list-inline-item"><i class="fa fa-comments"></i> NO: ${boardDetail.bno}</li>
-                        <li class="list-inline-item"><i class="fa fa-user"></i> 작성자: ${boardDetail.member_name}</li>
-                        <li class="list-inline-item"><i class="fa fa-folder-open"></i> 카테고리: ${boardDetail.istatus}</li>
-                        <li class="list-inline-item"><i class="fas fa-calendar-alt"></i> 작성일: ${boardDetail.created_at}</li>
-                        <li class="list-inline-item"><i class="fas fa-envelope"></i> 이메일: ${boardDetail.email}</li>
-                        <li class="list-inline-item"><i class="fas fa-phone"></i> 휴대폰 번호: ${boardDetail.phone}</li>
-                    </ul>
-                     <p class="text-dark">${boardDetail.content}</p>
-                    <img src="${boardDetail.inquiryFile.thumbnailPath}" alt="Thumbnail" class="img-fluid rounded shadow-sm mb-4">
-                    <hr>
-
-                    <!-- Comment Section -->
-                    <h6 class="text-dark">문의 답변</h6>
-                    <div class="bg-secondary text-white p-3 rounded">
-                       <c:forEach var="answer" items="${answers}">
-						    <div class="bg-secondary text-white p-3 rounded mb-3">
-						        <h6>${answer.dname}</h6>
-						        <p>${answer.dcontent}</p>
-						        <p><small>${answer.createdAt}</small></p> <!-- 답변 작성일 -->
-						    </div>
+			<div class="card border-0 shadow-sm">
+				<div class="card-body">
+					<!-- Post Content -->
+					<h5 class="card-title text-primary">${boardDetail.title}</h5>
+					<ul class="list-inline mb-4" style="color: green;">
+						<li class="list-inline-item"><i class="fa fa-comments"></i> NO: ${boardDetail.bno}</li>
+						<li class="list-inline-item"><i class="fa fa-user"></i> 작성자: ${boardDetail.member_name}</li>
+						<li class="list-inline-item"><i class="fa fa-folder-open"></i> 카테고리: ${boardDetail.istatus}</li>
+						<li class="list-inline-item"><i class="fas fa-calendar-alt"></i> 작성일: ${boardDetail.created_at}</li>
+						<li class="list-inline-item"><i class="fas fa-envelope"></i> 이메일: ${boardDetail.email}</li>
+						<li class="list-inline-item"><i class="fas fa-phone"></i> 휴대폰 번호: ${boardDetail.phone}</li>
+					</ul>
+					<p class="text-dark">${boardDetail.content}</p>
+					<img src="${boardDetail.inquiryFile.thumbnailPath}" alt="Thumbnail" class="img-fluid rounded shadow-sm mb-4">
+					<hr>
+	
+					<!-- Comment Section -->
+	
+					<h6 class="text-dark">문의 답변</h6>
+					<div class="bg-secondary text-white p-3 rounded">
+						<c:forEach var="answer" items="${answers}">
+							<div class="bg-secondary text-white p-3 rounded mb-3">										
+								<h6><img src="${pageContext.request.contextPath}/resources/assets/images/U문의.jpg" 
+										alt="U" class="rounded-circle me-2" style="width: 30px; height: 30px;"> ${answer.dname}</h6>
+								<p>${answer.dcontent}</p>
+								<p>
+								<small>${answer.created_at}</small>
+								</p>
+	
+								<!-- 수정할 답변을 입력받는 모달 -->
+								<div id="updateModal" class="modal">
+									<div class="modal-content">
+										<span class="close-btn" onclick="closeModal()">&times;</span>
+										<h2>답변 수정</h2>
+										<textarea id="update-dcontent" placeholder="수정할 답변 내용을 입력하세요" rows="5"></textarea>
+										<button class="btn btn-primary" onclick="saveAnswer()">수정 완료</button>
+									</div>
+								</div>
+	
+								<!-- 수정 버튼 -->
+								<button onclick="openUpdateModal(${answer.dno})" class="btn btn-warning btn-sm">수정</button>
+	
+								<!-- 삭제 버튼 -->
+								<button type="button" class="btn btn-danger btn-sm" onclick="deleteAnswer(${answer.dno})">삭제</button>
+							</div>
 						</c:forEach>
 					</div>
-                </div>
-            </div>
+				
+				</div>
+			</div>
 
-            <!-- 관리자 전용 문의 답변 -->
+
+
+									<!-- 관리자 전용 문의 답변 -->
 <div class="card border-0 shadow-sm mt-4">
     <div class="card-body">
         <h6 class="text-primary">관리자 전용 문의 답변</h6>
         <form id="answerForm">
             <div class="row g-3">
                 <div class="col-md-6">
-                    <input type="text" id="dname" class="form-control" name="dname" placeholder="관리자">
-                </div>
+                    <input type="text" id="dname" class="form-control" name="dname" placeholder="관리자" value="관리자" readonly="readonly" style="width: 90px; display: inline-block;">
+                </div>        
                 <div class="col-12">
-                    <textarea id="dcontent" class="form-control" name="dcontent" rows="3" placeholder="답변을 입력해주세요."></textarea>
+                    <textarea id="dcontent" class="form-control" name="dcontent" rows="4" placeholder="답변을 입력해주세요."></textarea>
                 </div>
                 <div class="col-12 text-end">
                     <button type="button" class="btn btn-primary" onclick="submitAnswer()">답변하기</button>
@@ -139,11 +227,105 @@
 </div>
 
 
+<!-- 삭제 버튼  -->
+<script>
+function deleteAnswer(dno) {
+    // 삭제 확인 메시지 표시
+    if (confirm("정말 삭제하시겠습니까?")) {
+        // AJAX 요청으로 삭제 처리 (RequestBody 사용)
+        fetch('/api/manageDelete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ dno: dno })  // dno를 요청 본문에 포함
+        })
+        .then(response => response.json())
+        .then(data => {
+        	 console.log(data.message);
+             Swal.fire({
+                 icon: 'success',
+                 title: '답변이 삭제되었습니다!',
+                 text: data.message,
+                 confirmButtonText: '확인'
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     // 삭제 후 페이지 새로 고침
+                     location.reload();  // 페이지 새로 고침
+                 }
+             });
+       
+        })
+        .catch(error => {
+            console.error('삭제 오류:', error);
+            alert("답변 삭제 중 오류가 발생했습니다.");
+        });
+    }
+}
+</script>
+
+
+
+
+<!-- 답글 수정 버튼 -->
+<script>
+//모달 열기
+function openUpdateModal(dno) {
+    const modal = document.getElementById("updateModal");
+    modal.style.display = "block";  // 모달 열기
+
+    // 수정 완료 버튼에 dno 값도 함께 전달하여 호출
+    document.querySelector(".btn-primary").onclick = function() {
+        saveAnswer(dno);
+    };
+}
+
+// 모달 닫기
+function closeModal() {
+    const modal = document.getElementById("updateModal");
+    modal.style.display = "none";  // 모달 닫기
+}
+
+// 답변 수정 완료
+function saveAnswer(dno) {
+    const dcontent = document.getElementById("update-dcontent").value;
+    if (dcontent) {
+        // PUT 요청 시 데이터는 body에 포함
+        fetch('/api/manageEdit', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ dno: dno, dcontent: dcontent })  // dno와 dcontent를 JSON 형태로 전달
+        })
+        .then(response => response.json())  // 서버 응답 처리
+        .then(data => {
+            // 성공 메시지 출력 (SweetAlert2 사용)
+            Swal.fire({
+                icon: 'success',
+                title: '성공',
+                text: data.message,  // 서버에서 받은 메시지 출력
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                closeModal();  // 모달 닫기
+                location.reload();  // 페이지 새로 고침
+            });
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+        alert("답변 내용을 입력하세요.");
+    }
+}
+</script>
+
+
 <script>
 function submitAnswer() {
     const bno = ${boardDetail.bno};  // JSP에서 bno 값을 사용
     const dname = document.getElementById("dname").value;
     const dcontent = document.getElementById("dcontent").value;
+    console.log("입력된 dcontent 값:", dcontent); // dcontent 값 확인
 
     const formData = new FormData();
     formData.append('bno', bno);
@@ -158,32 +340,21 @@ function submitAnswer() {
     .then(data => {
     	console.log('답변이 추가되었습니다.', data);
 
-        // SweetAlert2로 성공 메시지 표시
-        Swal.fire({
-            icon: 'success',
-            title: '답변이 추가되었습니다!',
-            text: '답변이 성공적으로 등록되었습니다.',
-            confirmButtonText: '확인'
-        });
+    	Swal.fire({
+    	    icon: 'success',
+    	    title: '답변이 추가되었습니다!',
+    	    text: '답변이 성공적으로 등록되었습니다.',
+    	    confirmButtonText: '확인'
+    	}).then((result) => {
+    	    if (result.isConfirmed) {
+    	        // 확인 버튼을 클릭하면 폼 초기화 후 페이지 새로 고침
+    	        document.getElementById("dname").value = '';
+    	        document.getElementById("dcontent").value = '';
 
-        // 폼 초기화
-        document.getElementById("dname").value = '';
-        document.getElementById("dcontent").value = '';
-
-        // 답변 목록을 갱신하거나 UI에 반영
-        const answerList = data;  // 서버에서 반환된 답변 목록
-        const answerContainer = document.getElementById("answer-list"); // 답변을 표시할 컨테이너
-
-        // 기존 답변 목록 지우기
-        answerContainer.innerHTML = '';
-
-        // 새로운 답변 목록을 추가
-        answerList.forEach(answer => {
-            const answerDiv = document.createElement('div');
-            answerDiv.classList.add('bg-light', 'p-3', 'rounded', 'mb-2');
-            answerDiv.innerHTML = `<strong>${answer.dname}</strong>: ${answer.dcontent}`;
-            answerContainer.appendChild(answerDiv);
-        });
+    	        // 페이지 새로 고침
+    	        location.reload();
+    	    }
+    	});
     })
     .catch(error => {
         console.error('Error:', error);

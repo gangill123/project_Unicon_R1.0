@@ -62,16 +62,50 @@ public class InquiryServiceImpl implements InquiryService {
 	public InquiryVO getBoardDetail(int bno) {
 		return inquiryDAO.getBoardDetail(bno); // DAO에서 게시글 정보 가져오기
 	}
-	
-	  // 답변 추가
+
+	// 답변 등록
 	@Override
-    public void addAnswer(InquiryAnswerVO answer) {
-        inquiryDAO.insertAnswer(answer);
-    }
+	public void addAnswer(InquiryAnswerVO answer) {
+
+		// 답변 등록
+		inquiryDAO.insertAnswer(answer);
+		// 문의 상태를 2로 변경 (답변이 추가되었으므로)
+		int bno = answer.getBno(); // InquiryAnswerVO에서 bno를 추출
+		inquiryDAO.updateInquiryStatus(bno);
+	}
+
 	@Override
-    // 게시글 번호에 해당하는 답변 조회
-    public List<InquiryAnswerVO> getAnswersByBno(int bno) {
-        return inquiryDAO.getAnswersByBno(bno);
-    }
+	// 게시글 번호에 해당하는 답변 조회
+	public List<InquiryAnswerVO> getAnswersByBno(int bno) {
+		return inquiryDAO.getAnswersByBno(bno);
+	}
+
+	// 답변 수정
+	@Override
+	public void updateAnswer(int dno, String dcontent) {
+		inquiryDAO.updateAnswer(dno, dcontent);
+	}
+
+	// 답변 삭제
+	@Override
+	public void deleteAnswer(int dno) {
+		inquiryDAO.deleteAnswer(dno);
+	}
+
+	// 답변 조회 (수정 폼용)
+	@Override
+	public InquiryAnswerVO getAnswerByDno(int dno) {
+		return inquiryDAO.getAnswerByDno(dno);
+	}
+	// 비밀번호 확인 (비교용)
+	@Override
+	public boolean validatePassword(int bno, String password) {
+		 InquiryVO inquiry = inquiryDAO.getInquiryByBno(bno);
+		 return inquiry != null && inquiry.getPost_password().equals(password);
+	}
 	
+	public void increaseViewCount(int bno) {
+	    inquiryDAO.updateViewCount(bno);
+	}
+
 }

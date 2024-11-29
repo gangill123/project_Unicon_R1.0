@@ -31,6 +31,7 @@ th, td {
 
 th {
 	background-color: #f4f4f4;
+	text-align: left;
 	color: #333;
 }
 
@@ -62,6 +63,12 @@ td, th {
     font-weight: bold;
  
 }
+th.title {
+    width: 60%;
+    text-align: center;
+    font-weight: bold;
+ 
+}
 
 /* 글쓴이와 작성일 */
 .member, .date {
@@ -76,7 +83,12 @@ td, th {
 	font-weight: bold;
 	color: #2ecc71; /* 진행중 상태는 초록색 */
 }
+
 th.istatus {
+	font-weight: bold;
+	text-align: center;	
+}
+th.view_count {
 	font-weight: bold;
 	text-align: center;	
 }
@@ -108,6 +120,7 @@ h2 {
     font-weight: bold;
     padding: 10px 20px; /* 버튼 여백 */
     border: none; /* 테두리 제거 */
+    
     border-radius: 5px; /* 둥근 모서리 */
     cursor: pointer; /* 마우스 커서 변경 */
     transition: background-color 0.3s ease; /* 호버 효과 추가 */
@@ -122,8 +135,16 @@ h2 {
     font-weight: bold;
     color: #333;
     writing-mode: horizontal-tb; /* 텍스트를 가로 방향으로 설정 */
-    text-align: left; /* 기본 정렬 */
+    text-align: center; /* 기본 정렬 */
     white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+.view_count{
+	font-weight: bold;
+    color: #333;
+    writing-mode: horizontal-tb; /* 텍스트를 가로 방향으로 설정 */
+    text-align: center; /* 기본 정렬 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+
 }
 
 /* th 요소는 제외하고, td 요소의 istatus에만 스타일 적용 */
@@ -231,9 +252,13 @@ td.istatus {
 						<tr>
 							<th class="no">No</th>
 							<th class="istatus">카테고리</th>
-							<th class="title"><a href="/inquiry/board/{bno}">제목</a></th>
+							<th class="title"
+							    class="open-password-modal" data-bno="${inquiry.bno}" data-has-password="${inquiry.post_password ? 'true' : 'false'}">
+							        제목
+							</th>
 							<th class="member">작성자</th>
 							<th class="date">작성일</th>
+							<th class="view_count">조회수</th>
 							<th class="status">상태</th>
 						</tr>
 					</thead>
@@ -254,6 +279,35 @@ td.istatus {
 <div class="pagination text-small text-uppercase text-extra-dark-gray">
 	<ul class="ps-0 mb-0" id="pagination"></ul>
 </div>
+
+<!-- 비밀번호 확인 모달 -->
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwordModalLabel">비밀번호 확인</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="passwordForm">
+                    <div class="mb-3">
+                        <label for="postPassword" class="form-label">게시글 비밀번호</label>
+                        <input type="password" class="form-control" id="postPassword" name="postPassword" required>
+                    </div>
+                    <input type="hidden" id="postBno" name="postBno">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="submit" class="btn btn-primary" id="submitPassword">확인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 
 <br>
@@ -279,14 +333,23 @@ $(document).ready(function () {
                 data.forEach(function (inquiry) {
                     let statusText = inquiry.status === 1 ? "진행 중" : "답변 완료";
                     let statusClass = inquiry.status === 1 ? "status-ongoing" : "status-completed";
-
+					
+                    // 자물쇠 아이콘 추가 여부
+                    const lockIcon = inquiry.post_password ? 
+                        '<i class="fa fa-lock text-danger me-2" title="비밀번호 보호 게시글"></i>' : '';
+ 
+                    
                     tbody +=
                         '<tr>' +
                         '<td class="no">' + inquiry.bno + '</td>' +
                         '<td class="istatus">' + inquiry.istatus + '</td>' +
-                        '<td class="title"><a href="/inquiry/board/' + inquiry.bno + '">' + inquiry.title + '</a></td>' + // 게시글 제목에 링크 추가
+                        '<td class="title">' +
+                        lockIcon + // 자물쇠 아이콘
+                        '<a href="/inquiry/board/' + inquiry.bno + '">' + inquiry.title + '</a>' +
+                        '</td>' +
                         '<td class="member">' + inquiry.member_name + '</td>' +
                         '<td class="date">' + inquiry.created_at + '</td>' +                       
+                        '<td class="view_count">' + inquiry.view_count + '</td>' +   
                         '<td class="status ' + statusClass + '">' + statusText + '</td>' +
                         '</tr>';
                 });
@@ -343,7 +406,47 @@ $(document).ready(function () {
 });
 
 </script>
+<script>
 
+$(document).on("click", ".title a", function (e) {
+    e.preventDefault();
+
+    const postBno = $(this).closest("tr").find(".no").text();
+    const requiresPassword = $(this).siblings("i.fa-lock").length > 0;
+
+    if (requiresPassword) {
+        // 비밀번호 입력 모달 표시
+        $("#postBno").val(postBno);
+        $("#passwordModal").modal("show");
+    } else {
+        // 비밀번호가 없으면 바로 이동
+        window.location.href = $(this).attr("href");
+    }
+});
+
+$("#submitPassword").on("click", function () {
+    const postPassword = $("#postPassword").val();
+    const postBno = $("#postBno").val();
+
+    $.ajax({
+        url: "/api/validate-password",
+        method: "POST",
+        data: { bno: postBno, password: postPassword },
+        success: function (response) {
+            if (response.valid) {
+                // 비밀번호가 올바른 경우 게시글 페이지로 이동
+                window.location.href = "/inquiry/board/" + postBno;
+            } else {
+                alert("비밀번호가 틀렸습니다.");
+            }
+        },
+        error: function (error) {
+            console.error("비밀번호 확인 실패:", error);
+        }
+    });
+});
+
+</script>
 
 <!--====================================작성부=====================================-->
 

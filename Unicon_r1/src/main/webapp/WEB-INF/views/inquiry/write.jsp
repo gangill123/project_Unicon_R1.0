@@ -54,71 +54,93 @@
 
        		<form id="quform" class="quform" enctype="multipart/form-data">
     <div class="quform-elements">
-        <div class="row">
-            <!-- 카테고리 선택 -->
-            <div class="col-md-6">
-                <div class="quform-element form-group">
-                    <div class="quform-input">
-                        <select id="istatus" class="form-control" name="istatus">
-                            <option value="default" disabled selected>카테고리를 선택해주세요.</option>
-                            <option value="입양 문의">입양 문의</option>
-                            <option value="쇼핑몰 문의">쇼핑몰 문의</option>
-                            <option value="커뮤니티 문의">커뮤니티 문의</option>
-                            <option value="기타 문의">기타 문의</option>
-                        </select>
-                    </div>
-                </div>
+      <div class="row">
+    <!-- 카테고리 선택 -->
+    <div class="col-md-6">
+        <div class="quform-element form-group">
+            <div class="quform-input">
+                <select id="istatus" class="form-control" name="istatus">
+                    <option value="default" disabled selected>카테고리를 선택해주세요.</option>
+                    <option value="입양 문의">입양 문의</option>
+                    <option value="쇼핑몰 문의">쇼핑몰 문의</option>
+                    <option value="커뮤니티 문의">커뮤니티 문의</option>
+                    <option value="기타 문의">기타 문의</option>
+                </select>
             </div>
-            
-            <!-- 이메일 -->
-            <div class="col-md-6">
-                <div class="quform-element form-group">
-                    <div class="quform-input">
-                        <input id="email" class="form-control" type="text" name="email" placeholder="이메일을 기입해주세요.">
-                    </div>
-                </div>
-            </div>
+        </div>
+    </div>
 
-            <!-- 제목 -->
-            <div class="col-md-6">
-                <div class="quform-element form-group">
-                    <div class="quform-input">
-                        <input id="title" class="form-control" type="text" name="title" placeholder="제목을 입력해주세요.">
-                    </div>
-                </div>
+    <!-- 작성자 -->
+    <div class="col-md-6">
+        <div class="quform-element form-group">
+            <div class="quform-input">
+                <input id="member_name" class="form-control" type="text" name="member_name" placeholder="작성자 이름을 입력해주세요.">
             </div>
+        </div>
+    </div>
 
-            <!-- 전화번호 -->
-            <div class="col-md-6">
-                <div class="quform-element form-group">
-                    <div class="quform-input">
-                        <input id="phone" class="form-control" type="text" name="phone" placeholder="휴대폰 번호를 입력해주세요.">
-                    </div>
-                </div>
+    <!-- 전화번호 -->
+    <div class="col-md-6">
+        <div class="quform-element form-group">
+            <div class="quform-input">
+                <input id="phone" class="form-control" type="text" name="phone" placeholder="휴대폰 번호를 입력해주세요.">
             </div>
+        </div>
+    </div>
 
-            <!-- 문의 내용 -->
-            <div class="col-md-12">
-                <div class="quform-element form-group">
-                    <div class="quform-input">
-                        <textarea id="content" class="form-control" name="content" rows="3" placeholder="문의 내용을 입력해주세요."></textarea>
-                    </div>
-                </div>
+    <!-- 이메일 -->
+    <div class="col-md-6">
+        <div class="quform-element form-group">
+            <div class="quform-input">
+                <input id="email" class="form-control" type="text" name="email" placeholder="이메일을 기입해주세요.">
             </div>
+        </div>
+    </div>
 
-            <!-- 작성자 -->
-            <div class="col-md-6">
-                <div class="quform-element form-group">
-                    <div class="quform-input">
-                        <input id="member_name" class="form-control" type="text" name="member_name" placeholder="작성자 이름을 입력해주세요.">
-                    </div>
-                </div>
+    <!-- 제목 -->
+    <div class=".col-md-11">
+        <div class="quform-element form-group">
+            <div class="quform-input">
+                <input id="title" class="form-control" type="text" name="title" placeholder="제목을 입력해주세요.">
             </div>
-			
+        </div>
+    </div>
+
+ 
+	
+    <!-- 문의 내용 -->
+    <div class="col-md-12">
+        <div class="quform-element form-group">
+            <div class="quform-input">
+                <textarea id="content" class="form-control" name="content" rows="3" placeholder="문의 내용을 입력해주세요."></textarea>
+            </div>
+        </div>
+    </div>
+	
+	
+	
+   <!-- 게시글 비밀번호 -->
+    <div class="col-md-6">
+        <div class="quform-element form-group">
+            <div class="quform-input">
+                <input id="post_password" class="form-control" type="password" name="post_password" placeholder="게시글 비밀번호를 입력해주세요.">
+            </div>
+        </div>
+    </div>	
+    
+		<!-- 비밀글 체크박스 -->
+	<div class="col-md-6">
+	    <div class="form-check">
+	        <input type="checkbox" class="form-check-input" id="isPrivate" name="isPrivate">
+	        <label class="form-check-label" for="isPrivate">비밀글로 설정</label>
+	    </div>
+	</div>
+	
+	
 			
 	  		
      <!-- 파일 업로드 -->
-    <label for="file">파일 업로드:</label>
+    <label for="file"></label>
     <input type="file" id="file" name="file" accept="image/*" onchange="previewThumbnail()"><br><br>
 
     <!-- 썸네일 미리보기 -->
@@ -134,12 +156,7 @@
                 </div>
             </div>
             
-          
-		 
-		    
-
-            
-            
+    
 
             <!-- 제출 버튼 -->
             <div class="col-md-12">
@@ -151,6 +168,9 @@
     </div>
 </form>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+
+
 
                         <!-- end form here -->
 
@@ -208,8 +228,29 @@
             </div>
         </section>
 
+<!--비밀번호 체크박스   -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const isPrivateCheckbox = document.getElementById('isPrivate');
+        const passwordField = document.getElementById('passwordField');
 
-
+        // 체크박스 상태에 따라 비밀번호 입력란 표시/숨기기
+        isPrivateCheckbox.addEventListener('change', function() {
+            if (isPrivateCheckbox.checked) {
+                passwordField.style.display = 'block'; // 비밀번호 입력란 표시
+            } else {
+                passwordField.style.display = 'none';  // 비밀번호 입력란 숨기기
+            }
+        });
+    });
+</script>
+<!-- 비밀번호 유효성 검사 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('quform'); // 폼 ID로 변경
+        form.addEventListener('submit', function(event) {
+           
+</script>
 
 
 
@@ -251,9 +292,10 @@ document.getElementById("quform").addEventListener("submit", function (event) {
     const title = document.getElementById("title").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const content = document.getElementById("content").value.trim();
-    const istatus = document.getElementById("istatus").value.trim();
+    const istatus = document.getElementById("istatus").value.trim();  
+    const post_password = document.getElementById("post_password").value.trim();  
     const file = document.getElementById("file").files[0]; // 파일 가져오기 (예: file input id="file")
-
+	
     // 유효성 검사
     if (!member_name) return alert("작성자 이름을 입력해주세요.");
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email))
@@ -268,6 +310,17 @@ document.getElementById("quform").addEventListener("submit", function (event) {
         alert("reCAPTCHA 인증을 완료해주세요."); // 사용자에게 알림
         return; // 폼 제출 중단
     }
+    const isPrivateCheckbox = document.getElementById('isPrivate');
+    const postPassword = document.getElementById('post_password').value;
+
+    // 비밀글 체크박스가 선택되었고, 비밀번호가 비어있다면 유효성 검사 실패
+    if (isPrivateCheckbox.checked && !postPassword) {
+        event.preventDefault();  // 폼 제출 방지
+        alert('비밀번호를 입력해주세요.');  // 경고 메시지
+        return false;
+    }
+
+ 
 
     // FormData 객체 생성
     const formData = new FormData();
@@ -277,6 +330,7 @@ document.getElementById("quform").addEventListener("submit", function (event) {
     formData.append("phone", phone);
     formData.append("content", content);
     formData.append("istatus", istatus);
+    formData.append("post_password", post_password);
     formData.append("recaptcha", recaptchaResponse); // reCAPTCHA 응답 토큰 추가
     if (file) {
         formData.append("file", file); // 파일이 있으면 함께 추가

@@ -25,6 +25,8 @@ public class InquiryVO {
 	int status; // 상태 (1: 진행 중, 2: 답변완료)
 	String email;
 	String phone;
+	String post_password;
+	int view_count;
 
 	private String recaptcha; // reCAPTCHA 토큰
 

@@ -1,11 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- 추가 템플릿 css/js 작성란 -->
 <style>
 
+/* 답변 영역 배경색 및 스타일 */
+.comment-box {
+    border: 1px solid #e0e0e0;  /* 얇은 회색 테두리 */
+    background-color: #f9f9f9;  /* 밝은 회색 배경 */
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;  /* 둥근 모서리 */
+}
 
+.reply {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;  /* 답변의 배경색 */
+    border-radius: 8px;
+    border: 1px solid #ddd;  /* 답변의 테두리 */
+}
+
+.reply h6 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;  /* 작성자의 이름 색상 */
+    margin-bottom: 5px;
+}
+
+.reply p {
+    font-size: 14px;
+    color: #555;  /* 답변 내용 색상 */
+    line-height: 1.6;
+}
+
+.reply small {
+    font-size: 12px;
+    color: #888;  /* 날짜 색상 */
+}
 
 </style>
 
@@ -53,10 +87,11 @@
                                         <div class="post-title">
                                             <h5>${boardDetail.title}</h5>
                                         </div>
+                                     
                                         <ul class="meta ps-0">
                                             <li>
                                                 <a href="#!">
-                                                    <i aria-hidden="true" class="fa fa-comments"></i> NO : ${boardDetail.bno}
+                                                    <i aria-hidden="true" class="fa-sharp fa-solid fa-hashtag"></i> NO : ${boardDetail.bno}
                                                 </a>
                                             </li>
                                             <li>
@@ -68,27 +103,25 @@
                                                 <a href="#!">
                                                     <i aria-hidden="true" class="fa fa-folder-open"></i>카테고리: ${boardDetail.istatus}
                                                 </a>
+                                            </li>                                
+                                              <li>
+                                                <a href="#!" id="masked-email">
+												    <i aria-hidden="true" class="far fa-envelope"></i> 이메일: <span id="email-placeholder">${boardDetail.email}</span>
+												</a>
+                                            </li>
+                                             <li>
+                                               <a href="#!" id="masked-phone">
+												    <i aria-hidden="true" class="fas fa-phone"></i> 전화번호: <span id="phone-placeholder">${boardDetail.phone}</span>
+											   </a>
                                             </li>
                                             <li>
                                                 <a href="#!">
-                                                    <i aria-hidden="true" class="fas fa-calendar-alt"></i>작성일: ${boardDetail.created_at}
+                                                    <i aria-hidden="true" class="fas fa-calendar-alt"></i> 작성일: ${boardDetail.created_at}
                                                 </a>
-                                            </li>
-                                              <li>
-                                                <a href="#!">
-                                                    <i aria-hidden="true" class="fas fa-calendar-alt"></i>이메일: ${boardDetail.email}
-                                                </a>
-                                            </li>
-                                             <li>
-                                                <a href="#!">
-                                                    <i aria-hidden="true" class="fas fa-calendar-alt"></i>휴대폰 번호: ${boardDetail.phone}
-                                                </a>
-                                            </li>
-                                          
-                                            
-                                           
+                                            </li>                                             
                                         </ul>
                                     </div>
+                                       <hr>
                                     <div class="post-cont">
                                          	${boardDetail.content}
                      						<!-- boardDetail.jsp -->
@@ -108,70 +141,35 @@
                             <!--  start post-->
 
                             <!--  start comment-->
-                            <div class="comments-area">
-                                <div class="line-title">
-                                    <h3>문의 답변</h3>
-                                </div>
+                           <div class="comments-area">
+    <div class="line-title">
+        <h3>문의 답변</h3>
+    </div>
 
-                                <div class="comment-box">
-                                   
-                                    <div class="comment-info">
-                                        <h6>관리자</h6>
-                                       		<p>관리자 관리자 답변 예정입니다. 관리자 관리자 답변 예정입니다.관리자 관리자 답변 예정입니다.관리자 관리자 답변 예정입니다.관리자 관리자 답변 예정입니다.관리자 관리자 답변 예정입니다.</p>
-                                        <div class="reply">
-                                            <a href="#!">
-                                                <i class="fa fa-reply" aria-hidden="true"></i> Reply
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                              
-                            </div>
+    <div class="comment-box">
+        <div class="comment-info">
+            <div class="reply">
+                <c:forEach var="answer" items="${answers}">
+                    <div class="answer-item">
+                        <!-- 작성자 이름과 이미지 -->
+                        <h6>
+                            <img src="${pageContext.request.contextPath}/resources/assets/images/U문의.jpg" 
+                                 alt="U" class="rounded-circle me-2" style="width: 30px; height: 30px;">
+                            ${answer.dname}
+                        </h6>
+                        <!-- 답변 내용 -->
+                        <p>${answer.dcontent}</p>
+                        <!-- 답변 작성 날짜 -->
+                         <p style="text-align: right;"><small>${answer.created_at}</small></p>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+</div>
                             <!-- end comment-->
 
-                            <!--  start form-->
-                            <div class="comment-form">
-
-                                <div class="line-title">
-                                    <h3>관리자 전용 문의 답변</h3>
-                                </div>
-
-                                <form method="post">
-
-                                    <div class="row">
-
-                                        <div class="col-sm-6">
-
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="name" placeholder="Your name here">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-sm-6">
-
-                                            <div class="form-group">
-                                                <input type="email" class="form-control" name="email" placeholder="Your email here">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="col-sm-12">
-
-                                            <div class="form-group">
-                                                <textarea id="message" class="form-control" name="message" rows="3" placeholder="Tell us a few words"></textarea>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-
-                                    <button type="button" class="butn primary"><span>Send Message</span></button>
-
-                                </form>
-
-                            </div>
-                            <!--  end form-->
+                           
                         </div>
                     </div>
                     <!--  end blog left-->
@@ -262,6 +260,52 @@
                 </div>
             </div>
         </section>
+        
+        
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 이메일을 받아와서 마스킹 처리
+        const emailElement = document.getElementById("email-placeholder");
+        const email = emailElement.textContent.trim();
+        
+        // 이메일 중간 부분 마스킹
+        const maskedEmail = maskEmail(email);
+        emailElement.textContent = maskedEmail;
+    });
+
+    // 이메일 마스킹 함수
+    function maskEmail(email) {
+        const atIndex = email.indexOf('@');
+        if (atIndex > 1) {
+            const masked = email.substring(0, 2) + "****" + email.substring(atIndex);
+            return masked;
+        }
+        return email;
+    }
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 휴대폰 번호를 받아와서 마스킹 처리
+        const phoneElement = document.getElementById("phone-placeholder");
+        const phone = phoneElement.textContent.trim();
+        
+        // 휴대폰 번호 마스킹
+        const maskedPhone = maskPhoneNumber(phone);
+        phoneElement.textContent = maskedPhone;
+    });
+
+    // 휴대폰 번호 마스킹 함수
+    function maskPhoneNumber(phone) {
+        // 번호가 최소 길이(10자 이상)가 되어야 마스킹 처리
+        if (phone.length >= 10) {
+            const masked = phone.substring(0, 3) + "*****" + phone.substring(8);
+            return masked;
+        }
+        return phone; // 번호가 짧을 경우 그대로 반환
+    }
+</script>
 
 
 

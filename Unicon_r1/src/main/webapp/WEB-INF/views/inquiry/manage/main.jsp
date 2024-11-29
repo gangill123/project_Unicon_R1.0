@@ -17,7 +17,18 @@
     
     <style>
     
-    /* 메인 타이틀 스타일 */
+/* 진행 중 상태 */
+.status-ongoing {
+    color: #2ecc71; /* 초록색 */
+}
+
+/* 답변 완료 상태 */
+.status-completed {
+    color: #3498db; /* 파란색 */
+}    
+    
+    
+/* 메인 타이틀 스타일 */
 .main-title {
     font-size: 2rem;
     font-weight: bold;
@@ -129,14 +140,7 @@ h2 {
     background-color: #27ae60; /* 호버 시 색상 변경 */
 }
 
-/* 상태 열 스타일 - 가로 정렬 */
-.status {
-    font-weight: bold;
-    color: green;
-    writing-mode: horizontal-tb; /* 텍스트를 가로 방향으로 설정 */
-    text-align: left; /* 기본 정렬 */
-    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-}
+
 
 /* th 요소는 제외하고, td 요소의 istatus에만 스타일 적용 */
 td.istatus {
@@ -226,6 +230,7 @@ td.istatus {
 							<th class="title">제목</th>
 							<th class="member">작성자</th>
 							<th class="date">작성일</th>
+							<th class="view_count">조회수</th>
 							<th class="status">상태</th>
                         </tr>
                       </thead>
@@ -275,6 +280,7 @@ $(document).ready(function () {
                         '<td class="title"><a href="/inquiry/manage/' + inquiry.bno + '">' + inquiry.title + '</a></td>' + // 게시글 제목에 링크 추가
                         '<td class="member">' + inquiry.member_name + '</td>' +
                         '<td class="date">' + inquiry.created_at + '</td>' +                       
+                        '<td class="view_count">' + inquiry.view_count + '</td>' +   
                         '<td class="status ' + statusClass + '">' + statusText + '</td>' +
                         '</tr>';
                 });

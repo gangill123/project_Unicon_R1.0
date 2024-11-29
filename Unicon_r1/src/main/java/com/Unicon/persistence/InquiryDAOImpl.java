@@ -61,15 +61,46 @@ public class InquiryDAOImpl implements InquiryDAO {
     // 답변 메서드 ////////////////////////////////
     
     // 답변 추가
+    @Override
     public void insertAnswer(InquiryAnswerVO answer) {
         sqlSession.insert(NAMESPACE +".insertAnswer", answer);
     }
 
     // 게시글 번호에 해당하는 답변 조회
+    @Override
     public List<InquiryAnswerVO> getAnswersByBno(int bno) {
         return sqlSession.selectList(NAMESPACE+".getAnswersByBno", bno);
+    }   
+    @Override
+    public void updateAnswer(int dno, String dcontent) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("dno", dno);
+        params.put("dcontent", dcontent);
+        
+        sqlSession.update(NAMESPACE + ".updateAnswer", params);
+    }   
+    @Override
+    public void deleteAnswer(int dno) {
+        sqlSession.delete(NAMESPACE + ".deleteAnswer", dno);
     }
-   
+    @Override
+    public InquiryAnswerVO getAnswerByDno(int dno) {
+        return sqlSession.selectOne(NAMESPACE + ".getAnswerByDno", dno);
+    }
+    // 문의 상태 변경
+    @Override
+	public void updateInquiryStatus(int bno){
+    	sqlSession.update(NAMESPACE + ".updateInquiryStatus", bno);
+    };
+    public InquiryVO getInquiryByBno(int bno) {
+        return sqlSession.selectOne(NAMESPACE + ".getInquiryByBno", bno);
+    }
+    // 조회수
+    public void updateViewCount(int bno) {
+        sqlSession.update(NAMESPACE + ".updateViewCount", bno);
+        logger.debug("update view 조회수 +1 증가 메서드 실행 {}",bno);
+    }
+    
     
 }
     
