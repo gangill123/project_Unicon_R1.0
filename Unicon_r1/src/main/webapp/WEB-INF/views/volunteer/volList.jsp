@@ -246,7 +246,7 @@
 			                            <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
 			                            <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/></p>
 			                        </div>
-			                        <button class="btn btn-secondary w-100" disabled>마감됨</button>
+			                        <button class="btn btn-secondary w-100" disabled>모집마감</button>
 			                    </div>
 			                </div>
 			            </div>

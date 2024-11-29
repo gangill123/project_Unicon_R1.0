@@ -39,6 +39,11 @@ public class VolunteerDAOImpl implements VolunteerDAO {
     }
     
     @Override
+    public void updateRecruitStatus(Map<String, Object> params) throws Exception {
+        sqlSession.update(NAMESPACE + ".updateRecruitStatus", params);
+    }
+    
+    @Override
     public VolunteerVO selectVolunteer(Long voId) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".selectVolunteer", voId);
     }

@@ -73,7 +73,7 @@ public class VolunteerServiceImpl implements VolunteerService {
     }
     
     @Override
-    public Map<String, Object> getVolunteerList(int page, int size, String status, 
+    public Map<String, Object> getVolunteerList(int page, int size, String recruitStatus, 
             String keyword, String startDate, String endDate) throws Exception {
         
         int startIndex = (page - 1) * size;
@@ -84,13 +84,10 @@ public class VolunteerServiceImpl implements VolunteerService {
         params.put("keyword", keyword);
         params.put("startDate", startDate);
         params.put("endDate", endDate);
-        
-        List<VolunteerVO> volunteers;
-        if ("active".equals(status)) {
-            volunteers = volDAO.getOngoingVolunteers(params);
-        } else {
-            volunteers = volDAO.getClosedVolunteers(params);
-        }
+        params.put("recruitStatus", recruitStatus); // OPEN 또는 CLOSE
+
+        // 삭제되지 않은(status='active') 봉사활동만 조회
+        List<VolunteerVO> volunteers = volDAO.getOngoingVolunteers(params);
         
         int totalCount = volDAO.selectVolunteerCount(params);
         
@@ -124,8 +121,8 @@ public class VolunteerServiceImpl implements VolunteerService {
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("voId", voId);
-            params.put("status", "CLOSED");
-            volDAO.updateVolunteerStatus(params);
+            params.put("recruitStatus", "CLOSE");  
+            volDAO.updateRecruitStatus(params);  // 메서드명 변경
         } catch (Exception e) {
             logger.error("봉사활동 마감 처리 실패", e);
             throw new RuntimeException("봉사활동 마감에 실패했습니다.", e);

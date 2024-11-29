@@ -60,6 +60,13 @@
         where voId = #{voId}
     </update>
     
+    <!-- 봉사활동 상태 변경 (모집/마감) -->
+    <update id="updateRecruitStatus">
+	    update _volunteer
+	    set recruitStatus = #{recruitStatus}
+	    where voId = #{voId}
+	</update>
+    
     <!-- 봉사활동 단일 조회 -->
     <select id="selectVolunteer" resultType="VolunteerVO">
         select 
@@ -79,20 +86,8 @@
 	         where volunteerId = v.voId and status != 'CANCELED') as applicationCount
 	    from _volunteer v
 	    where v.status = 'active'
-	    <if test="keyword != null and keyword != ''">
-	        and (v.voTitle like concat('%', #{keyword}, '%') 
-	        or v.voLocation like concat('%', #{keyword}, '%'))
-	    </if>
-	    <if test="startDate != null">
-	        and v.voRecruitEnd >= #{startDate}
-	    </if>
-	    <if test="endDate != null">
-	        and v.voRecruitStart &lt;= #{endDate}
-	    </if>
+	    and v.recruitStatus = 'OPEN'
 	    order by v.voRegDate desc
-	    <if test="start != null and size != null">
-	        limit #{start}, #{size}
-	    </if>
 	</select>
 	
 	<!-- 마감된 봉사활동 -->
@@ -102,21 +97,9 @@
 	        (select count(*) from _volunteer_apply 
 	         where volunteerId = v.voId and status != 'CANCELED') as applicationCount
 	    from _volunteer v
-	    where v.status = 'draft'
-	    <if test="keyword != null and keyword != ''">
-	        and (v.voTitle like concat('%', #{keyword}, '%') 
-	        or v.voLocation like concat('%', #{keyword}, '%'))
-	    </if>
-	    <if test="startDate != null">
-	        and v.voRecruitEnd >= #{startDate}
-	    </if>
-	    <if test="endDate != null">
-	        and v.voRecruitStart &lt;= #{endDate}
-	    </if>
+	    where v.status = 'active'
+	    and v.recruitStatus = 'CLOSE'
 	    order by v.voRegDate desc
-	    <if test="start != null and size != null">
-	        limit #{start}, #{size}
-	    </if>
 	</select>
 	
     <!-- 봉사활동 신청 등록 -->
