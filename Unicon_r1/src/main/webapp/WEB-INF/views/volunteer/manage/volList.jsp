@@ -86,11 +86,11 @@
 				        <form id="searchForm" class="row g-3">
 				            <!-- 상태 선택 -->
 				            <div class="col-md-2">
-				                <select class="form-select h-100" name="status">
-				                    <option value="">전체 상태</option>
-				                    <option value="RECRUITING">모집중</option>
-				                    <option value="CLOSED">마감</option>
-				                </select>
+				                <select class="form-select h-100" name="recruitStatus">
+								    <option value="">전체 상태</option>
+								    <option value="OPEN">모집중</option>
+								    <option value="CLOSE">마감</option>
+								</select>
 				            </div>
 				            <!-- 검색어 입력 -->
 				            <div class="col-md-4">
@@ -132,38 +132,38 @@
                                 <tbody>
                                     <c:forEach items="${volunteers}" var="vol">
                                         <tr>
-                                            <td>${vol.id}</td>
+                                            <td>${vol.voId}</td>
                                             <td>
-                                                <a href="/admin/volunteer/detail/${vol.id}">${vol.title}</a>
+                                                <a href="/admin/volunteer/detail/${vol.voId}">${vol.voTitle}</a>
                                             </td>
                                             <td>
-                                                <fmt:formatDate value="${vol.recruitStart}" pattern="yyyy.MM.dd"/> -
-                                                <fmt:formatDate value="${vol.recruitEnd}" pattern="yyyy.MM.dd"/>
+                                                <fmt:formatDate value="${vol.voRecruitStart}" pattern="yyyy.MM.dd"/> -
+                                                <fmt:formatDate value="${vol.voRecruitEnd}" pattern="yyyy.MM.dd"/>
                                             </td>
                                             <td>
-                                                <fmt:formatDate value="${vol.activityStart}" pattern="yyyy.MM.dd"/> -
-                                                <fmt:formatDate value="${vol.activityEnd}" pattern="yyyy.MM.dd"/>
+                                                <fmt:formatDate value="${vol.voStartDate}" pattern="yyyy.MM.dd"/> -
+                                                <fmt:formatDate value="${vol.voEndDate}" pattern="yyyy.MM.dd"/>
                                             </td>
-                                            <td>${vol.capacity}명</td>
-                                            <td>${vol.applicationCount}명</td>
+                                            <td>${vol.voCapacity}명</td>
+                                            <td>${vol.voApplicationCount}명</td>
                                             <td>
-                                                <span class="badge ${vol.status == 'RECRUITING' ? 'bg-success' : 'bg-secondary'}">
-                                                    ${vol.status == 'RECRUITING' ? '모집중' : '마감'}
-                                                </span>
+                                                <span class="badge ${vol.recruitStatus == 'OPEN' ? 'bg-success' : 'bg-secondary'}">
+											        ${vol.recruitStatus == 'OPEN' ? '모집중' : '마감'}
+											    </span>
                                             </td>
                                             <td>
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-sm btn-outline-primary"
-                                                            onclick="location.href='/admin/volunteer/edit/${vol.id}'">
+                                                            onclick="location.href='/admin/volunteer/edit/${vol.voId}'">
                                                         수정
                                                     </button>
                                                     <button type="button" class="btn btn-sm btn-outline-danger"
-                                                            onclick="deleteVolunteer(${vol.id})">
+                                                            onclick="deleteVolunteer(${vol.voId})">
                                                         삭제
                                                     </button>
-                                                    <c:if test="${vol.status == 'RECRUITING'}">
+                                                    <c:if test="${vol.voStatus == 'RECRUITING'}">
                                                         <button type="button" class="btn btn-sm btn-outline-warning"
-                                                                onclick="closeRecruitment(${vol.id})">
+                                                                onclick="closeRecruitment(${vol.voId})">
                                                             마감
                                                         </button>
                                                     </c:if>
