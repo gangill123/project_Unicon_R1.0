@@ -1,6 +1,8 @@
 package com.Unicon.persistence;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -32,10 +34,8 @@ public class AdptDAO {
 		
 		sqlSession.insert(NAMESPACE+"insertAnimal", avo);
 		
-		Map<String, Object> imageParams = new HashMap<>();
-		imageParams.put("animal_id", avo.getAnimal_id());
-		imageParams.put("images", avo.getAnimal_images());
-		sqlSession.insert(NAMESPACE+"insertAnimalImages", imageParams);
+		List<ImageVO> images = new ArrayList<ImageVO>(avo.getAnimal_images());
+		sqlSession.insert(NAMESPACE+"insertAnimalImages", images);
 		
 		Map<String, Object> healthParams = new HashMap<>();
 		healthParams.put("animal_id", avo.getAnimal_id());
@@ -46,6 +46,13 @@ public class AdptDAO {
 		vaccineParams.put("animal_id", avo.getAnimal_id());
 		vaccineParams.put("vaccines", avo.getAnimal_vaccines());
 		sqlSession.insert(NAMESPACE+"insertAnimalVaccines", vaccineParams);
+	}
+	
+	
+	public Integer checkAnimalId(String animId) {
+		logger.info("( •̀ ω •́ )✧ checkAnimalId(String animId) 실행");
+		
+		return sqlSession.selectOne(NAMESPACE+"checkAnimalId", animId);
 	}
 	
 	
