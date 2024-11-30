@@ -89,8 +89,19 @@
 	/*=============== 텍스트 css ===============*/
 	.custom-label, .custom-text {
 		font-size: 1.2rem !important;
+		white-space: nowrap;
+	}
+	
+	textarea.custom-text {
+		white-space: normal;
 	}
 
+	@media (max-width: 1500px) {
+		.custom-text {
+			font-size: 1rem !important;
+		}
+	}
+	
 	@media (max-width: 600px) {
 		.custom-text {
 			font-size: 0.95rem !important;
@@ -148,6 +159,19 @@
 		padding: 8px;
 		cursor: pointer;
 		color: #001737;
+		padding: 0.4rem 0.5rem !important;
+	}
+	
+	@media(max-width: 600px) {
+		.dropdown-item {
+			font-size: 0.95rem !important;
+		}
+	}
+	
+	@media(max-width: 1500px) {
+		.dropdown-item {
+			font-size: 1rem !important;
+		}
 	}
 	
 	.dropdown-item:hover {
@@ -164,6 +188,51 @@
 		pointer-events: none;
 		color: #181824;
 		font-size: 0.8rem;
+	}
+	
+	#aAge {
+		cursor: pointer;
+	}
+
+	.a-year-dropdown {
+		display: none;
+		border: 0.1rem solid #ccc;
+		position: absolute;
+		background: white;
+		z-index: 1000;
+		height: auto;
+		cursor: pointer;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.3rem;
+		padding: 0.3rem;
+		border-radius: 0.6rem;
+		width: auto;
+	}
+	
+	@media(max-width:420px) {
+		.a-year-dropdown {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	
+	.a-year-dropdown.show {
+		display: grid;
+	}
+	
+	.a-year-option {
+		padding: 0.5rem;
+		cursor: pointer;
+		text-align: center;
+		font-size: 1.2rem;
+		border: 0.1rem solid #ccc;
+		border-radius: 0.5rem;
+		transition: background-color 0.3s;
+		white-space: nowrap;
+	}
+
+	.a-year-option:hover {
+		background-color: #006e60;
+		color: white;
 	}
 	/*=============== 드롭다운 css ===============*/
 	
@@ -218,6 +287,16 @@
 		opacity: 0;
 		transition: opacity 0.3s;
 		font-size: 1.1rem;
+	}
+	
+	@media(max-width:500px) {
+		.aAct-tooltip-text, .aSocial-tooltip-text {
+			width: 17rem;
+			margin: 0 -8rem;
+			opacity: 0;
+			transition: opacity 0.3s;
+			font-size: 0.8rem;
+		}
 	}
 	
 	.aSocial-tooltip-text i {
@@ -279,8 +358,7 @@
 		border-radius: 0 0.7rem 0.7rem 0;
 		color: #bbb;
 	}
-	
-	
+
 	.aAct-checkbox-box i, .aSocial-checkbox-box i,
 	.aAct-checkbox-box-first i, .aSocial-checkbox-box-first i,
 	.aAct-checkbox-box-end i, .aSocial-checkbox-box-end i {
@@ -317,24 +395,20 @@
 	
 	/*=============== 버튼 css ===============*/
 	.custom-a-btn-name {
-		position: absolute;
-		transform: translateY(-100%);
-		right: 0.7rem;
-		top: 96%;
 		font-size: 0.8rem;
 		border-color: #006e60;
+		border-radius: 0 0.5rem 0.5rem 0;
+		padding: 0.5rem;
 	}
 	
-	@media(max-width:400px) {
+	@media(max-width:500px) {
 		.custom-a-btn-name {
-			position: absolute;
-			transform: translateY(-100%);
-			right: 0.7rem;
-			top: 96%;
 			font-size: 0.8rem;
 			border-color: #006e60;
-			width: 20%;
-			height: 55%;
+		}
+		
+		.custom-a-btn-name i {
+			font-size: 1.1rem;
 		}
 		
 		.custom-a-btn-text {
@@ -363,7 +437,7 @@
 		background-color: #005247;
 		border-color: #004f44;
 		-webkit-box-shadow: 0 0 0 0.2rem rgba(0, 82, 71, 0.5);
-		box-shadow: 0 0 0 0.2rem rgba(0, 82, 71, 0.5); 
+		box-shadow: 0 0 0 0.2rem rgba(0, 82, 71, 0.5);
 	}
 	
 	.btn-custom-a.disabled, .btn-custom-a:disabled {
@@ -387,7 +461,7 @@
 
 	.btn-outline-custom-a {
 		color: #006e60;
-		background-color: transparent;
+		background-color: #fff;
 		background-image: none;
 		border-color: #006e60;
 	}
@@ -399,7 +473,7 @@
 	}
 	
 	.btn-outline-custom-a:focus, .btn-outline-custom-a.focus {
-		box-shadow: 0 0 0 3px rgba(0, 110, 96, 0.5);
+		/* box-shadow: 0 0 0 3px rgba(0, 110, 96, 0.5); */
 	}
 	
 	.btn-outline-custom-a.disabled, .btn-outline-custom-a:disabled {
@@ -465,6 +539,7 @@
 												<div class="form-group row d-flex justify-content-center">
 													<div class="col-12 col-xl-4 col-lg-8 col-md-6 mb-3">
 														<label for="aName" class="text-dark custom-label">동물 이름</label>
+														<div class="input-group">
 														<input type="text" id="aName" name="animal_name" class="form-control custom-text"
 															placeholder="최대 10자" maxlength="10" required/>
 														<button type="button" id="autoGenaName" 
@@ -474,6 +549,7 @@
 															</span>
 															<i class="fa-solid fa-wand-magic-sparkles"></i>
 														</button>
+														</div>
 													</div>
 													<div class="col-12 col-xl-3 col-md-6 mb-3">
 														<label for="aColor" class="text-dark custom-label">색상</label>
@@ -504,7 +580,9 @@
 													<div class="col-12 col-xl-3 col-md-6 mb-3">
 														<label for="aAge" class="text-dark custom-label">동물 나이</label>
 														<input type="text" id="aAge" name="animal_age" class="form-control custom-text"
-															placeholder="최대 10자" maxlength="10" required/>
+															placeholder="--" readonly/>
+														<div class="a-year-dropdown" id="aYearDropdown"></div>
+														<i class="f-arrow fa-solid fa-angle-down"></i>
 													</div>
 													<div class="col-12 col-xl-2 col-lg-3 col-md-2 mb-3">
 														<label for="aWeight" class="text-dark custom-label">크기</label>
@@ -774,7 +852,7 @@
 														</div>
 														<div class="col-12 col-xl-6 col-lg-8 col-md-6">
 															<label class="text-dark custom-label">비고/기타사항</label>
-															<textarea rows="5" name="animal_etc" class="form-control custom-text" 
+															<textarea rows="5" wrap="soft" name="animal_etc" class="form-control custom-text" 
 																placeholder="최대 200자" maxlength="200"></textarea>
 														</div>
 													</div>
@@ -802,14 +880,14 @@
 		</div>
 		<!-- container-scroller -->
 		<!-- plugins:js -->
-		<script src="${pageContext.request.contextPath}/resources/admin/vendors/js/vendor.bundle.base.js"></script>
+			<script src="${pageContext.request.contextPath}/resources/admin/vendors/js/vendor.bundle.base.js"></script>
 		<!-- endinject -->
 		<!-- Plugin js for this page -->
 		<!-- End plugin js for this page -->
 		<!-- inject:js -->
-		<script src="${pageContext.request.contextPath}/resources/admin/js/off-canvas.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/admin/js/hoverable-collapse.js"></script>
-		<script src="${pageContext.request.contextPath}/resources/admin/js/misc.js"></script>
+			<script src="${pageContext.request.contextPath}/resources/admin/js/off-canvas.js"></script>
+			<script src="${pageContext.request.contextPath}/resources/admin/js/hoverable-collapse.js"></script>
+			<script src="${pageContext.request.contextPath}/resources/admin/js/misc.js"></script>
 		<!-- endinject -->
 		<!-- Custom js for this page -->
 		<script>
@@ -1040,14 +1118,14 @@
 					if(animal_act == undefined || animal_social == undefined) {
 						if(animal_act == undefined) {
 							$('#aAct-checkbox-all').addClass('a-checkbox-alert');
+							$('.aAct-hint-text').show();
 						}
 
 						if(animal_social == undefined) {
 							$('#aSocial-checkbox-all').addClass('a-checkbox-alert');
+							$('.aSocial-hint-text').show();
 						}
 						
-						$('.aAct-hint-text').show();
-						$('.aSocial-hint-text').show();
 						$('[name="animal_act"]').focus();
 						checkedMove = true;
 						
@@ -1071,7 +1149,88 @@
 				/*=============== 이름 자동생성 ===============*/
 				
 				
+				/*=============== 동물 나이 드롭다운 ===============*/
+				var currentYear = new Date().getFullYear();
+				var fixedYear = new Date().getFullYear();
+
+				function addAYearDropdown() {
+					$('#aYearDropdown').empty();
+
+					for (var amonth = 1; amonth <= 12; amonth++) {
+						$('#aYearDropdown').append(
+							'<div class="a-year-option" data-value="'+ currentYear +'년'+ amonth +'월생">' +
+							currentYear + '-' + amonth + '</div>'
+						);
+					}
+				}
+				
+				addAYearDropdown();
+				
+				$('#aAge').click(function() {
+					$('#aYearDropdown').toggleClass('show');
+				});
+
+				$(document).on('click', '.a-year-option', function() {
+					const selectedOption = $(this).data('value');
+					$('#aAge').val(selectedOption);
+					$('#aYearDropdown').removeClass('show');
+				});
+
+				$(document).click(function(e) {
+					if (!$(e.target).closest('#aAge').length) {
+						$('#aYearDropdown').removeClass('show');
+					}
+				});
+				
+				function updateAYearDropdown(aYearNum) {
+					currentYear += aYearNum;
+					addAYearDropdown();
+				}
+				
+				$('#aYearDropdown').on('wheel', function(event) {
+					event.preventDefault();
+					if (event.originalEvent.deltaY < 0) {
+						if(currentYear != fixedYear) {
+							updateAYearDropdown(1);
+						}
+					} else {
+						if(currentYear > fixedYear - 30) {
+							updateAYearDropdown(-1);
+						}
+					}
+				});
+		
+				let startX;	
+				
+				$('#aYearDropdown').on('touchstart', function(event) {
+					startX = event.touches[0].clientX;
+				});
+				
+				$('#aYearDropdown').on('touchmove', function(event) {
+					event.preventDefault();
+					let moveX = event.touches[0].clientX;
+					let deltaX = startX - moveX;
+				
+					if (Math.abs(deltaX) > 60) {
+						if (deltaX > 0) {
+							if(currentYear != fixedYear) {
+								updateAYearDropdown(1);
+							}
+						} else {
+							if(currentYear > fixedYear - 30) {
+								updateAYearDropdown(-1);
+							}
+						}
+					}
+				});
+				/*=============== 동물 나이 드롭다운 ===============*/
+				
+				
 				/*=============== 이미지 미리보기 ===============*/
+				
+				
+				
+				
 				$('.image-input').on('change', function(e) {
 					const file = e.target.files[0];
 					const reader = new FileReader();
