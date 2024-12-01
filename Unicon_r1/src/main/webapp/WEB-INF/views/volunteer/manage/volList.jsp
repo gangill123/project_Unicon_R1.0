@@ -84,6 +84,20 @@ body,
     margin-bottom: 1rem !important;	
 }
 
+.input-group .input-group-text.bg-light {
+    border-right: none !important;
+    background-color: #f8f9fa !important;
+    font-size: 0.9rem !important;
+}
+
+.input-group input[type="date"] {
+    border-left: none !important;
+}
+
+.input-group span:not(.bg-light) {
+    background-color: #e9ecef !important;
+}
+
 /* 테이블 */
 .table-responsive {
     margin: 0 !important;
@@ -254,12 +268,14 @@ body,
 				                       placeholder="봉사활동명 검색" value="${param.keyword}">
 				            </div>
 				            <div class="col-md-4">
-				                <div class="input-group">
-				                    <input type="date" class="form-control" name="startDate" value="${param.startDate}">
-				                    <span class="input-group-text">~</span>
-				                    <input type="date" class="form-control" name="endDate" value="${param.endDate}">
-				                </div>
-				            </div>
+							    <div class="input-group">
+							        <span class="input-group-text bg-light">봉사일</span>
+							        <input type="date" class="form-control" name="startDate" value="${param.voStartDate}">
+							        <span class="input-group-text">~</span>
+							        <!-- <span class="input-group-text bg-light">봉사종료일</span> -->
+							        <input type="date" class="form-control" name="endDate" value="${param.voEndDate}">
+							    </div>
+							</div>
 				            <div class="col-md-3">
 							    <div class="d-flex gap-2">
 							        <button type="submit" class="btn btn-primary w-50">
@@ -447,7 +463,6 @@ function openRecruitment(id) {
         }
     });
 }
-
 window.goToPage = function(page) {
     var recruitStatus = $('select[name="recruitStatus"]').val();
     var keyword = $('input[name="keyword"]').val();

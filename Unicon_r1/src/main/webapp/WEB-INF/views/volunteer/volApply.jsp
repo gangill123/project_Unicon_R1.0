@@ -131,7 +131,16 @@
                 <div class="form-section">
                     <h5>개인정보 수집 및 이용 동의<span class="required-mark">*</span></h5>
                     <div class="agreement-box mb-3">
-                        개인정보 수집 및 이용에 대한 안내...
+                        [개인정보 수집 및 이용 동의 안내]<br>
+                        봉사활동 참여자 대상 개인정보 수집과 이용에 관한 동의를 받고자 하오니<br>
+                        내용을 확인하신 후 동의 여부를 선택해 주세요.<br>
+						•수집하는 자: 유니콘<br>
+						•개인정보 수집 및 이용 목적: 봉사활동 참여자 관리<br>
+						•수집하는 개인정보 항목: 이름, 생년월일, 연락처, 이메일<br>
+						•개인정보 보유 및 이용 기간: 탈퇴시 까지<br>
+						※ 귀하께서는 동의하지 않을 권리가 있습니다. <br>
+						동의하지 않을 경우 봉사활동 참여에서 제외됨을 알려드립니다.<br>
+						위 내용을 확인하시고 개인정보 수집 및 이용에 동의하시겠습니까?
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="privacyAgreement" required>
