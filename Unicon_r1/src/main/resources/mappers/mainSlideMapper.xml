@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Unicon.mapper.MainSlideMapper">
+
+	<!-- 슬라이드 등록하기 -->
+	<insert id="createSlide">
+		insert into _main_slide(ms_name, ms_tText, ms_bText1, ms_sText, ms_bText2, ms_btnText, ms_btnUrl, 
+		ms_src, ms_startdate, ms_enddate) 
+		values(#{ms_name}, #{ms_tText}, #{ms_bText1}, #{ms_sText}, #{ms_bText2}, #{ms_btnText}, #{ms_btnUrl}, 
+		#{ms_src}, #{ms_startdate}, #{ms_enddate}) 
+	</insert>
+	
+	<!-- 슬라이드 모든 정보 가져오기 -->
+	<select id="getSildeAll" resultType="MainSlideVO">
+		select * from _main_slide order by ms_enddate desc 
+	</select>
+	
+	<!-- 슬라이드 특정 정보 가져오기 -->
+	<select id="getSilde" resultType="MainSlideVO">
+		select * from _main_slide where ms_id = #{ms_id} 
+	</select>
+	
+	<!-- 슬라이드 정보 수정 -->
+	<update id="updateSilde">
+		update _main_slide 
+		set ms_name=#{ms_name}, ms_tText=#{ms_tText}, ms_bText1=#{ms_bText1}, ms_sText=#{ms_sText}, 
+		ms_bText2=#{ms_bText2}, ms_btnText=#{ms_btnText}, ms_btnUrl=#{ms_btnUrl}, ms_src=#{ms_src}, 
+		ms_startdate=#{ms_startdate}, ms_enddate=#{ms_enddate} 
+		where ms_id=#{ms_id} 
+	</update>
+	
+	<!-- 슬라이드 삭제 -->
+	<delete id="deleteSilde">
+		delete from _main_slide where ms_id = #{ms_id} 
+	</delete>
+	
+	<!-- 슬라이드 가져오기(메인용) -->
+	<select id="getSlideForMain" resultType="MainSlideVO">
+		select * from _main_slide where ms_startdate &lt; now() and ms_enddate &gt; now() 
+	</select>
+	
+
+</mapper>
+
+

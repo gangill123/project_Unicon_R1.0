@@ -49,6 +49,8 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
+	
+	<!-- <context:component-scan base-package="com.Unicon"/> -->
 	<context:component-scan base-package="com.Unicon.persistence"/>
 	<context:component-scan base-package="com.Unicon.service"/>
 	<context:component-scan base-package="com.Unicon.config"/>

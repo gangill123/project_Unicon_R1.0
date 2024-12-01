@@ -1,46 +1,58 @@
 package com.Unicon.persistence;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.Unicon.domain.AdptHealthVO;
-import com.Unicon.domain.AdptVO;
-import com.Unicon.domain.AdptVaccineVO;
+import com.Unicon.domain.AnimalHealthVO;
+import com.Unicon.domain.AnimalVO;
+import com.Unicon.domain.AnimalVaccineVO;
 import com.Unicon.domain.ImageVO;
 
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
+
 
 @Repository("AdptDAO")
-@Log4j
 public class AdptDAO {
 	
 	@Inject
 	private SqlSession sqlSession; 
+	private static final Logger logger = LoggerFactory.getLogger(AdptDAO.class);
+
+	private static final String NAMESPACE = "com.Unicon.mapper.adptMapper.";
 	
-	private static final String NAMESPACE = "com.Unicon.mapper.AdptMapper.";
+	public void animalInsert(AnimalVO avo) {
+		logger.info("( •̀ ω •́ )✧ animalInsert() 실행");
+		
+		sqlSession.insert(NAMESPACE+"insertAnimal", avo);
+		
+		List<ImageVO> images = new ArrayList<ImageVO>(avo.getAnimal_images());
+		sqlSession.insert(NAMESPACE+"insertAnimalImages", images);
+		
+		Map<String, Object> healthParams = new HashMap<>();
+		healthParams.put("animal_id", avo.getAnimal_id());
+		healthParams.put("healths", avo.getAnimal_healths());
+		sqlSession.insert(NAMESPACE+"insertAnimalHealths", healthParams);
+		
+		Map<String, Object> vaccineParams = new HashMap<>();
+		vaccineParams.put("animal_id", avo.getAnimal_id());
+		vaccineParams.put("vaccines", avo.getAnimal_vaccines());
+		sqlSession.insert(NAMESPACE+"insertAnimalVaccines", vaccineParams);
+	}
 	
 	
-	public void adptInsert(AdptVO adptVO) {
+	public Integer checkAnimalId(String animId) {
+		logger.info("( •̀ ω •́ )✧ checkAnimalId(String animId) 실행");
 		
-		log.info("( •̀ ω •́ )✧ adptInsert() 실행");
-		
-		sqlSession.insert(NAMESPACE+"adptInsert", adptVO);
-		for(ImageVO imageVO : adptVO.getAdpt_images()) {
-			sqlSession.insert(NAMESPACE+"adptImageInsert", imageVO);
-		}
-		for(AdptHealthVO healthVO : adptVO.getAdpt_healths()) {
-			sqlSession.insert(NAMESPACE+"adptHealthInsert", healthVO);
-		}
-		for(AdptVaccineVO vaccineVO : adptVO.getAdpt_vaccines()) {
-			sqlSession.insert(NAMESPACE+"adptVaccineInsert", vaccineVO);
-		}
-		
+		return sqlSession.selectOne(NAMESPACE+"checkAnimalId", animId);
 	}
 	
 	

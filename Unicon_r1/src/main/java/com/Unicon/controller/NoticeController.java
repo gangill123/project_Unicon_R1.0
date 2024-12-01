@@ -48,9 +48,11 @@ public class NoticeController {
             @RequestParam(value = "size", defaultValue = "12") int size,
             @RequestParam(value = "category", required = false) String category,
             @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "startDate", required = false) String startDate,
+            @RequestParam(value = "endDate", required = false) String endDate,
             Model model) throws Exception {
         
-        Map<String, Object> result = noService.getNoticeList(page, size, category, keyword);
+        Map<String, Object> result = noService.getNoticeList(page, size, category, keyword, startDate, endDate);
         
         model.addAttribute("notices", result.get("boards"));
         model.addAttribute("totalCount", result.get("totalCount"));
@@ -99,10 +101,12 @@ public class NoticeController {
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "category", required = false) String category,
             @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "startDate", required = false) String startDate,
+            @RequestParam(value = "endDate", required = false) String endDate, 
             Model model) throws Exception {
             
         // 1부터 시작하는 페이지 번호를 0부터 시작하는 인덱스로 변환
-        Map<String, Object> result = noService.getNoticeList(page, size, category, keyword);
+    	Map<String, Object> result = noService.getNoticeList(page, size, category, keyword, startDate, endDate);
         
         List<NoticeVO> notices = (List<NoticeVO>) result.get("boards");
         int totalCount = (Integer) result.get("totalCount");
@@ -161,6 +165,7 @@ public class NoticeController {
         @RequestParam("noCategory") String noCategory,
         @RequestParam(value = "important", defaultValue = "false") boolean important,
         @RequestParam(value = "noEmail", defaultValue = "false") boolean noEmail,
+        @RequestParam(value = "status", required = false, defaultValue = "active") String status,
         @RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
         HttpServletRequest request) {
         
@@ -175,6 +180,7 @@ public class NoticeController {
             noVO.setNoCategory(noCategory);
             noVO.setImportant(important);
             noVO.setNoEmail(noEmail);
+            noVO.setStatus(status);
             
             // 썸네일 처리
             if (thumbnail != null && !thumbnail.isEmpty()) {
@@ -418,6 +424,30 @@ public class NoticeController {
         }
     }
     
+    // 임시저장 목록 조회
+    @GetMapping("/manage/drafts")
+    @ResponseBody
+    public ResponseEntity<List<NoticeVO>> getDrafts() {
+        try {
+            List<NoticeVO> drafts = noService.getDraftList();
+            return ResponseEntity.ok(drafts);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    // 임시저장 글 조회
+    @GetMapping("/manage/draft/{noId}")
+    @ResponseBody
+    public ResponseEntity<NoticeVO> getDraft(@PathVariable Long noId) {
+        try {
+            NoticeVO draft = noService.getDraft(noId);
+            return ResponseEntity.ok(draft);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    
     @PostMapping("/api/{noId}/update")
     @ResponseBody
     public ResponseEntity<String> update(
@@ -473,6 +503,33 @@ public class NoticeController {
         } catch (Exception e) {
             logger.error("공지사항 삭제 실패", e);
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/api/more")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getMoreNotices(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate) {
+    	
+    	
+        try {
+            int size = 16; // 한 페이지당 16개의 게시글
+            Map<String, Object> result = noService.getNoticeList(page, size, category, keyword, startDate, endDate);
+            List<NoticeVO> notices = (List<NoticeVO>) result.get("boards");
+            int totalCount = (Integer) result.get("totalCount");
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("notices", notices);
+            response.put("hasNext", (page * size) < totalCount);
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            logger.error("공지사항 추가 로딩 중 오류 발생", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }

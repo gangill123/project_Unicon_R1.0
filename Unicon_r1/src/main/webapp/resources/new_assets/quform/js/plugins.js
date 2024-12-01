@@ -286,38 +286,38 @@
 		});
 	}; // var Quform
 
-	$.fn.Quform = function (options) {
-		var defaults = {
-				container: '.quform-elements',
-				loading: '.quform-loading-wrap',
-				submitButton: '.quform-submit',
-				reset: true,
-				hideFormSpeed: false,
-				successFadeInSpeed: 'slow',
-				successFadeOutSpeed: 'slow',
-				successTimeout: 8000,
-				scrolling: true,
-				scrollSpeed: 400,
-				scrollThreshold: 20,
-				scrollOffset: -50,
-				errorTitle: 'There was a problem',
-				errorResponseEmpty: 'An error occurred and the response from the server was empty.',
-				errorAjax: 'An Ajax error occurred.',
-				errorPosition: 'above'
-			},
-			settings = $.extend({}, defaults, options);
-
-		if (typeof $.scrollTo !== 'function') {
-			settings.scrolling = false;
-		}
-
-		return this.each(function () {
-			var $this = $(this);
-			if (!$this.data('quform')) {
-				$this.data('quform', new Quform($(this), settings));
-			}
-		});
-	}; // End $.fn.Quform
+//	$.fn.Quform = function (options) {
+//		var defaults = {
+//				container: '.quform-elements',
+//				loading: '.quform-loading-wrap',
+//				submitButton: '.quform-submit',
+//				reset: true,
+//				hideFormSpeed: false,
+//				successFadeInSpeed: 'slow',
+//				successFadeOutSpeed: 'slow',
+//				successTimeout: 8000,
+//				scrolling: true,
+//				scrollSpeed: 400,
+//				scrollThreshold: 20,
+//				scrollOffset: -50,
+//				errorTitle: 'There was a problem',
+//				errorResponseEmpty: 'An error occurred and the response from the server was empty.',
+//				errorAjax: 'An Ajax error occurred.',
+//				errorPosition: 'above'
+//			},
+//			settings = $.extend({}, defaults, options);
+//
+//		if (typeof $.scrollTo !== 'function') {
+//			settings.scrolling = false;
+//		}
+//
+//		return this.each(function () {
+//			var $this = $(this);
+//			if (!$this.data('quform')) {
+//				$this.data('quform', new Quform($(this), settings));
+//			}
+//		});
+//	}; // End $.fn.Quform
 })(jQuery); // End jQuery wrapper
 
 /*

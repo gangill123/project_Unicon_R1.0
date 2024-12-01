@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Unicon.mapper.categoryDataMapper">
+<resultMap type="com.Unicon.domain.CategoryDataVO" id="CategoryDataMap">
+	<id property="category_code" column="category_code"/>
+	<result property="category_type" column="category_type"/>
+	<result property="category_value" column="category_value"/>
+</resultMap>
+
+
+<select id="petTypeAll" resultMap="CategoryDataMap">
+	select category_code, category_type 
+	 from _category_data 
+	  where mod(category_code,1000) = 0 and category_code/1000 in(1,2,3)
+</select>
+
+<select id="petTypeDetail" resultMap="CategoryDataMap">
+	select category_code, category_type, category_value 
+	 from _category_data 
+	  where truncate((category_code/1000),0) = truncate((#{category_code}/1000),0) 
+	   <if test="category_code != 3000">
+	  	and category_code != #{category_code}
+	   </if>
+</select>
+
+<select id="petProductsCategory" resultMap="CategoryDataMap">
+	select distinct category_code, category_type 
+	 from _category_data 
+	  where truncate((category_code/5000),0) = 1;
+</select>
+
+<select id="petProductsCategoryDetail" resultMap="CategoryDataMap">
+	select category_value 
+	 from _category_data 
+	  where category_code = #{value};
+</select>
+
+
+
+</mapper>

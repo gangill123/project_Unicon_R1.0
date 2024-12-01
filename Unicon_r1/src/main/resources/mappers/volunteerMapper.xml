@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Unicon.mapper.VolunteerMapper">
+    <!-- 봉사활동 등록 -->
+    <insert id="insertVolunteer" parameterType="VolunteerVO" useGeneratedKeys="true" keyProperty="voId">
+        insert into _volunteer (
+            voTitle, voLocation, voTarget, voContent, voCapacity,
+            voManager, voContact, voStartDate, voEndDate,
+            voRecruitStart, voRecruitEnd, status
+        ) values (
+            #{voTitle}, #{voLocation}, #{voTarget}, #{voContent}, #{voCapacity},
+            #{voManager}, #{voContact}, #{voStartDate}, #{voEndDate},
+            #{voRecruitStart}, #{voRecruitEnd}, #{status}
+        )
+    </insert>
+    
+    <!-- 봉사활동 가이드 -->
+    <update id="updateGuide" parameterType="VolunteerVO">
+	    update _volunteer_guide
+	    set
+	        voLocation = #{voLocation},
+	        voTarget = #{voTarget},
+	        voContent = #{voContent},
+	        voCapacity = #{voCapacity},
+	        voManager = #{voManager},
+	        voContact = #{voContact}
+	    where guideId = 1
+	</update>
+	
+	<!-- 봉사활동 안내 정보 조회 -->
+	<select id="selectVolunteerInfo" parameterType="VolunteerVO" resultType="VolunteerVO">
+	    select * from _volunteer_guide where guideId = #{guideId}
+	</select>
+
+    <!-- 봉사활동 수정 -->
+    <update id="updateVolunteer" parameterType="VolunteerVO">
+        update _volunteer
+        set
+            voTitle = #{voTitle},
+            voLocation = #{voLocation},
+            voTarget = #{voTarget},
+            voContent = #{voContent},
+            voCapacity = #{voCapacity},
+            voManager = #{voManager},
+            voContact = #{voContact},
+            voStartDate = #{voStartDate},
+            voEndDate = #{voEndDate},
+            voRecruitStart = #{voRecruitStart},
+            voRecruitEnd = #{voRecruitEnd},
+            status = #{status}
+        where voId = #{voId}
+    </update>
+
+    <!-- 봉사활동 상태 변경 (삭제/임시저장) -->
+    <update id="updateVolunteerStatus">
+        update _volunteer
+        set status = #{status}
+        where voId = #{voId}
+    </update>
+    
+    <!-- 봉사활동 상태 변경 (모집/마감) -->
+    <update id="updateRecruitStatus">
+	    update _volunteer
+	    set recruitStatus = #{recruitStatus}
+	    where voId = #{voId}
+	</update>
+	
+	<!-- 봉사활동 모집상태 열기 (CLOSE -> OPEN) -->
+	<update id="openRecruitment">
+	    update _volunteer
+	    set recruitStatus = 'OPEN'
+	    where voId = #{voId}
+	</update>
+    
+    <!-- 봉사활동 단일 조회 -->
+    <select id="selectVolunteer" resultType="VolunteerVO">
+        select 
+            v.*,
+            (select count(*) from _volunteer_apply 
+             where volunteerId = v.voId and status != 'CANCELED') as applicationCount
+        from _volunteer v
+        where v.voId = #{voId}
+    </select>
+
+    <!-- 봉사활동 목록 조회 -->
+    <!-- 봉사활동 전체 목록 조회 -->
+	<select id="getAllVolunteers" parameterType="map" resultType="VolunteerVO">
+	    select 
+	        v.*,
+	        (select count(*) from _volunteer_apply 
+	         where volunteerId = v.voId and status != 'CANCELED') as applicationCount
+	    from _volunteer v
+	    where v.status = 'active'
+	    <if test="recruitStatus != null and recruitStatus != ''">
+	        and v.recruitStatus = #{recruitStatus}
+	    </if>
+	    <if test="keyword != null and keyword != ''">
+	        and (v.voTitle like concat('%', #{keyword}, '%') 
+	        or v.voLocation like concat('%', #{keyword}, '%'))
+	    </if>
+	    <if test="startDate != null">
+	        and v.voRecruitEnd >= #{startDate}
+	    </if>
+	    <if test="endDate != null">
+	        and v.voRecruitStart &lt;= #{endDate}
+	    </if>
+	    order by v.voRegDate desc
+	    <if test="start != null and size != null">
+	        limit #{start}, #{size}
+	    </if>
+	</select>
+    
+    
+    <!-- 진행중인 봉사활동 -->
+	<select id="getOngoingVolunteers" parameterType="map" resultType="VolunteerVO">
+	    select 
+	        v.*,
+	        (select count(*) from _volunteer_apply 
+	         where volunteerId = v.voId and status != 'CANCELED') as applicationCount
+	    from _volunteer v
+	    where v.status = 'active'
+	    and v.recruitStatus = 'OPEN'
+	    order by v.voRegDate desc
+	    <!-- 페이징 추가 -->
+	    <if test="start != null and size != null">
+	        limit #{start}, #{size}
+	    </if>
+	</select>
+
+	<!-- 마감된 봉사활동 -->
+	<select id="getClosedVolunteers" parameterType="map" resultType="VolunteerVO">
+	    select 
+	        v.*,
+	        (select count(*) from _volunteer_apply 
+	         where volunteerId = v.voId and status != 'CANCELED') as applicationCount
+	    from _volunteer v
+	    where v.status = 'active'
+	    and v.recruitStatus = 'CLOSE'
+	    order by v.voRegDate desc
+	    <!-- 페이징 추가 -->
+	    <if test="start != null and size != null">
+	        limit #{start}, #{size}
+	    </if>
+	</select>
+	
+    <!-- 봉사활동 신청 등록 -->
+    <insert id="insertVolunteerApply" parameterType="VolunteerApplyVO">
+        insert into _volunteer_apply (
+            volunteerId, voApplicant, voBirth, voTel, voEmail,
+            voExperience, voReason, voAgree, status
+        ) values (
+            #{volunteerId}, #{voApplicant}, #{voBirth}, #{voTel}, #{voEmail},
+            #{voExperience}, #{voReason}, #{voAgree}, #{status}
+        )
+    </insert>
+
+    <!-- 봉사활동 신청 상태 변경 -->
+    <update id="updateVolunteerApplyStatus">
+	    update _volunteer_apply
+	    set 
+	        status = #{status}
+	        <if test="cancelReason != null">
+	            , cancelReason = #{cancelReason}       
+	            , cancelReasonDetail = #{cancelReasonDetail} 
+	        </if>
+	        , voUpdateDate = CURRENT_TIMESTAMP
+	    where voId = #{voId}
+	</update>
+    
+    <!-- 봉사활동 신청 단일 조회 -->
+	<select id="selectVolunteerApply" resultType="VolunteerApplyVO">
+	    select 
+	        a.*,
+	        v.voTitle,
+	        v.voStartDate,
+	        v.voEndDate,
+	        v.voManager,
+	        v.voContact,
+	        v.voLocation,
+	        v.voContent
+	    from _volunteer_apply a
+	    join _volunteer v ON a.volunteerId = v.voId 
+	    where a.voId = #{voId}
+	</select>
+
+    <!-- 봉사활동 신청 목록 조회 -->
+    <select id="selectVolunteerApplyList" parameterType="map" resultType="VolunteerApplyVO">
+        select 
+            a.*,
+            v.voTitle,
+            v.voStartDate,
+            v.voEndDate,
+            v.voManager,
+            v.voContact,
+            v.voLocation,
+            v.voContent
+        from _volunteer_apply a
+        join _volunteer v ON a.volunteerId = v.voId
+        where 1=1
+        <if test="volunteerId != null">
+            and a.volunteerId = #{volunteerId}
+        </if>
+        <if test="status != null and status != ''">
+            and a.status = #{status}
+        </if>
+        order by a.voRegDate desc
+    </select>
+
+    <!-- 봉사활동 신청 건수 조회 -->
+    <select id="selectVolunteerApplyCount" resultType="int">
+        select count(*)
+        from _volunteer_apply
+        where volunteerId = #{volunteerId}
+        and status in ('PENDING', 'APPROVED')
+    </select>
+    
+    <!-- 봉사활동 전체 개수 조회 -->
+    <select id="selectVolunteerCount" parameterType="map" resultType="int">
+	    select count(*)
+	    from _volunteer v
+	    where v.status = 'active'
+	    <if test="recruitStatus != null and recruitStatus != ''">
+	        and v.recruitStatus = #{recruitStatus}
+	    </if>
+	    <if test="keyword != null and keyword != ''">
+	        and (
+	            v.voTitle like concat('%', #{keyword}, '%')
+	            OR v.voLocation like concat('%', #{keyword}, '%')
+	        )
+	    </if>
+	    <if test="startDate != null">
+	        and v.voRecruitEnd >= #{startDate}
+	    </if>
+	    <if test="endDate != null">
+	        and v.voRecruitStart &lt;= #{endDate}
+	    </if>
+	</select>
+</mapper>

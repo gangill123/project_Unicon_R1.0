@@ -806,7 +806,7 @@ input:focus, textarea:focus, select:focus {
   letter-spacing: 0.6px;
   text-transform: none;
   position: relative;
-  z-index: 9999;
+  z-index: 1000;
   display: inline-block;
   white-space: nowrap;
   border: none;

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>    
-<%@ include file="../inc/topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
+<%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
 
@@ -11,8 +11,10 @@
 
     <!-- Template Stylesheet -->
     <link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-<%@ include file="../inc/header.jsp" %> <!-- header -->
+<%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
 <!-- 공지사항 상세 부분 -->
@@ -84,7 +86,7 @@
                                class="btn btn-outline-secondary d-flex align-items-center">
                                 <span class="d-none d-md-inline">다음글: ${nextNotice.noTitle}</span>
                                 <span class="d-inline d-md-none">다음글</span>
-                                <i class="fas fa-chevron-left me-2"></i>
+                                <i class="fas fa-chevron-right me-2"></i>
                             </a>
                         </c:if>
                     </div>
@@ -111,4 +113,4 @@
     <!-- Template Javascript -->
     <script src="${pageContext.request.contextPath }/resources/assets_sub/js/main.js"></script>
 
-<%@ include file="../inc/footer.jsp" %> <!-- footer -->
+<%@ include file="../inc/new_footer.jsp" %> <!-- footer -->

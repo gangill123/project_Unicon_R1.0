@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../inc/topHeader.jsp"%>
+<%@ include file="../inc/new_topHeader.jsp"%>
 <!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
@@ -57,9 +57,10 @@ td, th {
 
 /* 제목 스타일 */
 .title {
-	width: 60%;
-	text-align: center;
-	font-weight: bold;
+    width: 60%;
+    text-align: left;
+    font-weight: bold;
+ 
 }
 
 /* 글쓴이와 작성일 */
@@ -74,6 +75,10 @@ td, th {
 .status {
 	font-weight: bold;
 	color: #2ecc71; /* 진행중 상태는 초록색 */
+}
+th.istatus {
+	font-weight: bold;
+	text-align: center;	
 }
 
 /* 검색창 스타일 */
@@ -112,12 +117,35 @@ h2 {
     background-color: #27ae60; /* 호버 시 색상 변경 */
 }
 
-/* 상태 열 스타일 */
+/* 상태 열 스타일 - 가로 정렬 */
 .status {
-    text-align: center;
     font-weight: bold;
     color: #333;
+    writing-mode: horizontal-tb; /* 텍스트를 가로 방향으로 설정 */
+    text-align: left; /* 기본 정렬 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
+
+/* th 요소는 제외하고, td 요소의 istatus에만 스타일 적용 */
+td.istatus {
+    font-weight: bold;
+    color: #333;
+    writing-mode: horizontal-tb;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e6f7ff;
+    padding: 5px 20px;
+    border-radius: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    align-items: center; /* 아이콘과 텍스트를 수평 정렬 */
+    gap: 8px; /* 아이콘과 텍스트 간 간격 */
+    transition: all 0.3s ease;
+   
+	line-height: 30px; /* 텍스트가 수직으로 중앙에 오게 설정 */
+}
+
+
 
 /* 진행 중 상태 */
 .status-ongoing {
@@ -163,40 +191,73 @@ h2 {
 
 </style>
 </head>
-<%@ include file="../inc/header.jsp"%>
+<%@ include file="../inc/new_header.jsp"%>
 <!-- header -->
 
 <!--====================================작성부=====================================-->
-<h1 class="main-title"> unicon 고객센터</h1>
+<section class="page-title-section bg-primary">
+    <div class="container">
+		
+        <div class="row">
+            <div class="col-md-12">
+                <h1>unicon 고객센터</h1>
+            </div>
+            <div class="col-md-12">
+                <ul class="ps-0">
+                    <li><a href="inquiry"><i class="ti-home"></i></a></li>
+                    <li class="active"><a href="board">Unicon Q&A 문의게시판</a></li>
+                </ul>
+            </div>
+        </div>
+	
+    </div>
+</section>
+<br>
 <br>
 
-<h2> 종합 문의 게시판</h2>
 
 
-<!-- 테이블 -->
-<table id="inquiryTable">
-	<thead>
-		<tr>
-			<th class="no">No</th>
-			<th class="title">제목</th>
-			<th class="member">작성자</th>
-			<th class="date">작성일</th>
-			<th class="status">상태</th>
-		</tr>
-	</thead>
-	<tbody>
-		<!-- 데이터를 Ajax로 채움 -->
-	</tbody>
-</table>
+
+
+<div class="container">
+	<div class="section-heading">
+		<h3>Unicon Q&A 문의게시판</h3>
+	</div>
+	<div class="row position-relative">
+		<div class="col-12">
+			<div class="table-responsive">
+				<table class="table" id="inquiryTable">
+					<thead>
+						<tr>
+							<th class="no">No</th>
+							<th class="istatus">카테고리</th>
+							<th class="title"><a href="/inquiry/board/{bno}">제목</a></th>
+							<th class="member">작성자</th>
+							<th class="date">작성일</th>
+							<th class="status">상태</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- 데이터를 Ajax로 채움 -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- 글쓰기 버튼 -->
 <div class="write-btn-container">
     <button class="write-btn" onclick="location.href='/inquiry/write'">문의하기</button>
 </div>
-
-
 <!-- 페이지네이션 -->
-<ul class="pagination" id="pagination"></ul>
+<div class="pagination text-small text-uppercase text-extra-dark-gray">
+	<ul class="ps-0 mb-0" id="pagination"></ul>
+</div>
+
+
+<br>
+<br>
 
 <script>
 $(document).ready(function () {
@@ -222,9 +283,10 @@ $(document).ready(function () {
                     tbody +=
                         '<tr>' +
                         '<td class="no">' + inquiry.bno + '</td>' +
-                        '<td class="title">' + inquiry.title + '</td>' +
+                        '<td class="istatus">' + inquiry.istatus + '</td>' +
+                        '<td class="title"><a href="/inquiry/board/' + inquiry.bno + '">' + inquiry.title + '</a></td>' + // 게시글 제목에 링크 추가
                         '<td class="member">' + inquiry.member_name + '</td>' +
-                        '<td class="date">' + inquiry.created_at + '</td>' +
+                        '<td class="date">' + inquiry.created_at + '</td>' +                       
                         '<td class="status ' + statusClass + '">' + statusText + '</td>' +
                         '</tr>';
                 });
@@ -285,5 +347,5 @@ $(document).ready(function () {
 
 <!--====================================작성부=====================================-->
 
-<%@ include file="../inc/footer.jsp"%>
+<%@ include file="../inc/new_footer.jsp"%>
 <!-- footer -->

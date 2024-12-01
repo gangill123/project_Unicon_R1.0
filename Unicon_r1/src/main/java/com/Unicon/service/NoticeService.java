@@ -1,5 +1,6 @@
 package com.Unicon.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -10,8 +11,12 @@ public interface NoticeService {
 	// 공지사항 등록
     void registerNotice(NoticeVO noVO) throws Exception;
     
+    // 임시저장
+    List<NoticeVO> getDraftList() throws Exception;
+    NoticeVO getDraft(Long noId) throws Exception;
+    
     // 공지사항 목록 조회
-    Map<String, Object> getNoticeList(int page, int size, String category, String keyword) throws Exception;
+    Map<String, Object> getNoticeList(int page, int size, String category, String keyword, String startDate, String endDate) throws Exception;
     
     // 공지사항 상세 조회
     NoticeVO getNotice(Long noId) throws Exception;

@@ -50,7 +50,7 @@ $desk-lg-screen: 1200px;
 $desk-md-screen: 1199px;
 $desk-small-screen: 1024px;
 $desk-md-sm-screen: 1023px;
-$desk-sm-screen: 992px; 
+$desk-sm-screen: 992px;
 $desk-xs-screen: 991px;
 $tablet-sm-screen: 768px;
 $tablet-xs-screen: 767px;
@@ -142,7 +142,9 @@ $mobile-xs-screen: 479px;
 
 /* theme color and basic options */
 a {
-  &:hover, &:active {
+
+  &:hover,
+  &:active {
     color: $PrimaryColor;
     text-decoration: none;
   }
@@ -178,7 +180,8 @@ a {
   background: linear-gradient(-90deg, transparent, $SecondaryColor 65%);
 }
 
-.text-primary, .text-primary-hover:hover {
+.text-primary,
+.text-primary-hover:hover {
   color: $PrimaryColor !important;
 }
 
@@ -220,7 +223,8 @@ a {
 .transition-hover {
   transition: transform 0.3s ease;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     -webkit-transform: translateY(-8px);
     transform: translateY(-8px);
   }
@@ -262,14 +266,21 @@ a {
   border-width: .2rem;
 
   > {
-    .btn, .butn, .btn-style2, .btn-style3, .btn-group {
+
+    .btn,
+    .butn,
+    .btn-style2,
+    .btn-style3,
+    .btn-group {
       margin-top: .25rem;
       margin-bottom: .25rem;
     }
   }
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   border: 1px solid $PrimaryColor;
 }
 
@@ -337,7 +348,7 @@ input:focus, textarea:focus, select:focus {
   height: 200px;
 }
 
-.custom-control-input:checked ~ .custom-control-label::before {
+.custom-control-input:checked~.custom-control-label::before {
   color: #fff;
   border-color: $PrimaryColor;
   background-color: $PrimaryColor;
@@ -406,7 +417,7 @@ input:focus, textarea:focus, select:focus {
 .overlap-column {
   margin-bottom: 3rem;
 
-  > [class*="col-"] {
+  >[class*="col-"] {
     &:first-child {
       position: relative;
       left: 2rem;
@@ -424,7 +435,7 @@ input:focus, textarea:focus, select:focus {
   .overlap-column {
     margin-bottom: 0;
 
-    > [class*="col-"]:last-child {
+    >[class*="col-"]:last-child {
       left: 0;
       top: 0;
     }
@@ -437,13 +448,19 @@ input:focus, textarea:focus, select:focus {
   margin-bottom: 35px;
   padding-bottom: 15px;
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: 600;
     margin-bottom: 0;
     padding-bottom: 0;
   }
 
-  h3, h4 {
+  h3,
+  h4 {
     font-size: 26px;
     font-weight: 600;
   }
@@ -459,7 +476,8 @@ input:focus, textarea:focus, select:focus {
   .line-title {
     margin-bottom: 30px;
 
-    h3, h4 {
+    h3,
+    h4 {
       font-size: 24px;
     }
   }
@@ -471,7 +489,9 @@ input:focus, textarea:focus, select:focus {
 
 @media screen and (max-width: $mobile-sm-screen) {
   .line-title {
-    h3, h4 {
+
+    h3,
+    h4 {
       font-size: 22px;
     }
   }
@@ -1131,7 +1151,7 @@ input:focus, textarea:focus, select:focus {
   letter-spacing: 0.6px;
   text-transform: none;
   position: relative;
-  z-index: 9999;
+  z-index: 1000;
   display: inline-block;
   white-space: nowrap;
   border: none;
@@ -1330,7 +1350,9 @@ input:focus, textarea:focus, select:focus {
     padding: 8px 20px !important;
   }
 
-  &:hover, &:active, &:focus {
+  &:hover,
+  &:active,
+  &:focus {
     background: $PrimaryColor;
     color: #fff;
     border-color: $PrimaryColor;
@@ -1341,7 +1363,9 @@ input:focus, textarea:focus, select:focus {
     border-color: $PrimaryColor;
     color: #fff;
 
-    &:hover, &:active, &:focus {
+    &:hover,
+    &:active,
+    &:focus {
       background: #232323;
       color: #fff;
       border-color: #232323;
@@ -1377,7 +1401,9 @@ input:focus, textarea:focus, select:focus {
     padding: 8px 20px !important;
   }
 
-  &:hover, &:active, &:focus {
+  &:hover,
+  &:active,
+  &:focus {
     background: #232323;
     color: #fff;
     border-color: #232323;
@@ -1460,7 +1486,12 @@ input:focus, textarea:focus, select:focus {
   padding-left: 3.1em !important;
   background: $SecondaryColor;
   padding-right: 3.1em !important;
-  transition: padding 0.3s ease, color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, background-position 0.3s ease, box-shadow 0.3s ease !important;
+  transition: padding 0.3s ease,
+  color 0.3s ease,
+  border-color 0.3s ease,
+  background-color 0.3s ease,
+  background-position 0.3s ease,
+  box-shadow 0.3s ease !important;
 
   &.medium {
     &:hover {
@@ -1690,7 +1721,12 @@ input:focus, textarea:focus, select:focus {
     margin-bottom: 30px;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     position: relative;
     padding-bottom: 10px;
     font-weight: 700;
@@ -1699,7 +1735,12 @@ input:focus, textarea:focus, select:focus {
     line-height: 140%;
   }
 
-  h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+  h1:after,
+  h2:after,
+  h3:after,
+  h4:after,
+  h5:after,
+  h6:after {
     content: '';
     display: block;
     width: 100px;
@@ -1713,17 +1754,36 @@ input:focus, textarea:focus, select:focus {
   }
 
   &.white {
-    h1, h2, h3, h4, h5, h6, p, span {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span {
       color: #fff;
     }
   }
 
   &.grey {
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: #b7b7b7;
     }
 
-    h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+    h1:after,
+    h2:after,
+    h3:after,
+    h4:after,
+    h5:after,
+    h6:after {
       background: #b7b7b7;
     }
 
@@ -1735,11 +1795,21 @@ input:focus, textarea:focus, select:focus {
   &.left {
     text-align: left;
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       padding-bottom: 15px;
     }
 
-    h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+    h1:after,
+    h2:after,
+    h3:after,
+    h4:after,
+    h5:after,
+    h6:after {
       margin: 0;
       left: 0;
     }
@@ -1828,7 +1898,12 @@ input:focus, textarea:focus, select:focus {
   }
 }
 
-h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-style2.white, h5.title-style2.white, h6.title-style2.white {
+h1.title-style2.white,
+h2.title-style2.white,
+h3.title-style2.white,
+h4.title-style2.white,
+h5.title-style2.white,
+h6.title-style2.white {
   color: #fff;
 }
 
@@ -1867,19 +1942,35 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   padding-bottom: 10px;
   border-bottom: 1px solid #eee;
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     padding: 0;
     margin: 0;
   }
 
-  h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+  h1:after,
+  h2:after,
+  h3:after,
+  h4:after,
+  h5:after,
+  h6:after {
     content: none;
   }
 }
 
 /* title style4 */
 .section-heading.title-style4 {
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     text-transform: uppercase;
     font-weight: 700;
     padding: 0;
@@ -1897,7 +1988,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     text-transform: uppercase;
   }
 
-  h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+  h1:after,
+  h2:after,
+  h3:after,
+  h4:after,
+  h5:after,
+  h6:after {
     content: none;
   }
 }
@@ -1922,22 +2018,40 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
 /* title style5 */
 .section-heading.title-style5 {
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     padding: 0;
     margin: 0;
   }
 
   &.white {
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: #fff;
     }
   }
 
-  h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+  h1:after,
+  h2:after,
+  h3:after,
+  h4:after,
+  h5:after,
+  h6:after {
     content: none;
   }
 
-  .separator-left, .separator-right {
+  .separator-left,
+  .separator-right {
     height: 1px;
     position: absolute;
     top: 50%;
@@ -1981,7 +2095,13 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
 /* title style6 */
 .section-heading.title-style6 {
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     position: relative;
     padding-bottom: 10px;
     font-weight: 500;
@@ -1991,7 +2111,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     text-transform: inherit;
   }
 
-  h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+  h1:after,
+  h2:after,
+  h3:after,
+  h4:after,
+  h5:after,
+  h6:after {
     content: '';
     display: block;
     width: 50px;
@@ -2018,7 +2143,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   &.left {
     text-align: left;
 
-    h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+    h1:after,
+    h2:after,
+    h3:after,
+    h4:after,
+    h5:after,
+    h6:after {
       margin: 0;
     }
   }
@@ -2048,11 +2178,21 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   position: relative;
   margin-bottom: 70px;
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     padding-bottom: 0;
   }
 
-  h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+  h1:after,
+  h2:after,
+  h3:after,
+  h4:after,
+  h5:after,
+  h6:after {
     content: none;
   }
 
@@ -2098,7 +2238,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 .section-heading.title-style8 {
   text-align: center;
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     position: relative;
     font-weight: 700;
     position: relative;
@@ -2108,7 +2253,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     text-transform: capitalize;
   }
 
-  h1:before, h2:before, h3:before, h4:before, h5:before, h6:before {
+  h1:before,
+  h2:before,
+  h3:before,
+  h4:before,
+  h5:before,
+  h6:before {
     position: absolute;
     content: '';
     background: $PrimaryColor;
@@ -2119,7 +2269,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     margin-left: -45px;
   }
 
-  h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+  h1:after,
+  h2:after,
+  h3:after,
+  h4:after,
+  h5:after,
+  h6:after {
     position: absolute;
     content: '';
     background: $PrimaryColor;
@@ -2175,7 +2330,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     text-align: center;
     position: relative;
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-size: 36px;
       position: relative;
       margin-bottom: 0;
@@ -2191,7 +2351,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   &.white {
-    h2, h3, h4, h5, h6 {
+
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       color: #fff;
     }
   }
@@ -2207,7 +2372,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       }
     }
 
-    h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+    h1:after,
+    h2:after,
+    h3:after,
+    h4:after,
+    h5:after,
+    h6:after {
       content: none;
     }
 
@@ -2236,7 +2406,13 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
 @media screen and (max-width: $desk-xs-screen) {
   .section-heading.title-style9 {
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-size: 32px;
     }
   }
@@ -2244,7 +2420,13 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
 @media screen and (max-width: $tablet-xs-screen) {
   .section-heading.title-style9 {
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-size: 28px;
     }
   }
@@ -2252,7 +2434,13 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
 /* inner title */
 .inner-title {
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: 18px;
     margin-bottom: 30px;
     padding-bottom: 10px;
@@ -2260,7 +2448,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     font-weight: 600;
   }
 
-  h1:after, h2:after, h3:after, h4:after, h5:after, h6:after {
+  h1:after,
+  h2:after,
+  h3:after,
+  h4:after,
+  h5:after,
+  h6:after {
     content: '';
     display: block;
     width: 40px;
@@ -2274,7 +2467,13 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   &.half {
-    h1, h2, h3, h4, h5, h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       margin-bottom: 15px;
     }
   }
@@ -2361,7 +2560,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   &.white h2 {
-    &::before, &::after {
+
+    &::before,
+    &::after {
       background: #fff;
     }
   }
@@ -2555,16 +2756,19 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     Navigation
 ====================================== */
 .navbar-nav li {
-  &.current > a, &.active > a {
+
+  &.current>a,
+  &.active>a {
     color: $PrimaryColor;
   }
 }
 
-.navbar > ul > li.current > a:after {
+.navbar>ul>li.current>a:after {
   border-color: transparent $PrimaryColor $PrimaryColor transparent;
 }
 
-.header-style8 .attr-nav > ul > li, .header-style1.button-header .attr-nav > ul > li {
+.header-style8 .attr-nav>ul>li,
+.header-style1.button-header .attr-nav>ul>li {
   float: none;
   vertical-align: middle;
   display: inline-block;
@@ -2575,44 +2779,52 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 }
 
 @media screen and (max-width: $desk-xl-screen) {
-  .header-style8 .navbar-nav > li > a {
+  .header-style8 .navbar-nav>li>a {
     padding: 21px 0.2rem;
   }
 }
 
 @media screen and (min-width: $desk-sm-screen) {
+
   /*header style01*/
-  .header-style1 .navbar-nav li.current > a, .header-style2 .navbar-nav li.current > a {
+  .header-style1 .navbar-nav li.current>a,
+  .header-style2 .navbar-nav li.current>a {
     color: $PrimaryColor;
   }
 
   .header-style1 {
-    .navbar-nav li.active > a {
+    .navbar-nav li.active>a {
       color: $PrimaryColor;
     }
 
-    .navbar > ul > li.current > a:after {
+    .navbar>ul>li.current>a:after {
       border-color: transparent $PrimaryColor $PrimaryColor transparent;
     }
+
     &.scrollHeader {
       .butn.primary.white-hover:after {
         background: #282b2d;
       }
+
       .butn.primary.white-hover:hover span {
         color: #fff;
       }
     }
   }
 
-  .header-style2 .navbar > ul > li.current > a:after {
+  .header-style2 .navbar>ul>li.current>a:after {
     border-color: transparent $PrimaryColor $PrimaryColor transparent;
   }
 
-  .header-style1.scrollHeader .navbar-nav li.current > a, .header-style2.scrollHeader .navbar-nav li.current > a, .header-style1.scrollHeader .navbar-nav li.current > a:hover, .header-style2.scrollHeader .navbar-nav li.current > a:hover {
+  .header-style1.scrollHeader .navbar-nav li.current>a,
+  .header-style2.scrollHeader .navbar-nav li.current>a,
+  .header-style1.scrollHeader .navbar-nav li.current>a:hover,
+  .header-style2.scrollHeader .navbar-nav li.current>a:hover {
     color: $PrimaryColor;
   }
 
-  .header-style1.scrollHeader .navbar > ul > li.current > a:after, .header-style2.scrollHeader .navbar > ul > li.current > a:after {
+  .header-style1.scrollHeader .navbar>ul>li.current>a:after,
+  .header-style2.scrollHeader .navbar>ul>li.current>a:after {
     border-color: transparent $PrimaryColor $PrimaryColor transparent;
   }
 
@@ -2623,11 +2835,11 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
   /*header style04*/
   .header-style4 {
-    .navbar-nav li.current > a {
+    .navbar-nav li.current>a {
       color: $PrimaryColor;
     }
 
-    .navbar > ul > li.current > a:after {
+    .navbar>ul>li.current>a:after {
       border-color: transparent $PrimaryColor $PrimaryColor transparent;
     }
   }
@@ -2650,16 +2862,16 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
   /*menu area light*/
   .menu_area-light {
-    .navbar-nav li.current > a {
+    .navbar-nav li.current>a {
       color: $PrimaryColor;
     }
 
-    .navbar > ul > li.current > a:after {
+    .navbar>ul>li.current>a:after {
       border-color: transparent $PrimaryColor $PrimaryColor transparent;
     }
 
     &.scrollHeader {
-      .navbar-nav li.current > a {
+      .navbar-nav li.current>a {
         color: $PrimaryColor;
 
         &:hover {
@@ -2667,7 +2879,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
         }
       }
 
-      .navbar > ul > li.current > a:after {
+      .navbar>ul>li.current>a:after {
         border-color: transparent $PrimaryColor $PrimaryColor transparent;
       }
     }
@@ -2675,6 +2887,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 }
 
 @media screen and (max-width: $desk-xs-screen) {
+
   /*header style03*/
   .header-style3 {
     border-bottom: 2px solid rgba($PrimaryRgbColor, 0.9);
@@ -2682,7 +2895,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
   /*header style05*/
   .header-style5 {
-    #top-bar, .navbar-toggler {
+
+    #top-bar,
+    .navbar-toggler {
       background: $PrimaryColor;
     }
   }
@@ -2691,7 +2906,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     margin-right: 63px;
   }
 
-  .header-style8 .navbar-nav > li > a {
+  .header-style8 .navbar-nav>li>a {
     padding: 10px 20px;
   }
 
@@ -2751,7 +2966,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     }
   }
 
-  .active a, li.active:last-child a {
+  .active a,
+  li.active:last-child a {
     color: #fff;
   }
 }
@@ -2831,7 +3047,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     }
   }
 
-  .active a, li.active:last-child a {
+  .active a,
+  li.active:last-child a {
     color: #fff;
   }
 }
@@ -2986,7 +3203,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 /* ===================================
    Owl carousel
 ====================================== */
-.owl-theme .owl-nav.disabled + .owl-dots {
+.owl-theme .owl-nav.disabled+.owl-dots {
   z-index: 1;
   margin-top: 50px;
 
@@ -3012,7 +3229,10 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 }
 
 .owl-theme .owl-dots .owl-dot {
-  &.active span, &:hover span, &:focus span {
+
+  &.active span,
+  &:hover span,
+  &:focus span {
     width: 12px;
     height: 12px;
     background: $PrimaryColor;
@@ -3859,7 +4079,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     }
   }
 
-  .owl-carousel, .owl-stage-outer, .owl-stage {
+  .owl-carousel,
+  .owl-stage-outer,
+  .owl-stage {
     height: 100%;
   }
 
@@ -3938,7 +4160,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     }
   }
 
-  .owl-nav.disabled + .owl-dots {
+  .owl-nav.disabled+.owl-dots {
     margin-top: -45px;
     margin-bottom: 15px;
     position: relative;
@@ -3955,7 +4177,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
         background: rgba(0, 0, 0, 0.09);
       }
 
-      &.active span, &:hover span {
+      &.active span,
+      &:hover span {
         background-color: $PrimaryColor;
       }
     }
@@ -4114,14 +4337,17 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   .owl-nav {
-    i, span {
+
+    i,
+    span {
       font-weight: 600;
       color: #fff !important;
       transition-duration: 500ms;
       font-size: 20px;
     }
 
-    .owl-next:hover i, .owl-prev:hover i {
+    .owl-next:hover i,
+    .owl-prev:hover i {
       color: #fff;
     }
   }
@@ -4238,7 +4464,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   .custom-controls {
-    .tp-leftarrow, .tp-rightarrow {
+
+    .tp-leftarrow,
+    .tp-rightarrow {
       width: 40px !important;
       height: 40px !important;
     }
@@ -4352,7 +4580,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   &:hover .feature-textbox {
     background-color: $PrimaryColor;
 
-    .title, .feature-desc, a.read-more {
+    .title,
+    .feature-desc,
+    a.read-more {
       color: #fff;
     }
   }
@@ -4400,7 +4630,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     height: 100%;
     overflow: hidden;
 
-    > img {
+    >img {
       width: 100%;
       max-width: none;
     }
@@ -4480,7 +4710,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       counter-increment: count;
       content: "0" counter(count);
       float: right;
-      font-family: "Montserrat",sans-serif;
+      font-family: "Montserrat", sans-serif;
     }
   }
 
@@ -4499,7 +4729,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       border: 1px solid #fff;
     }
 
-    p, h4, i {
+    p,
+    h4,
+    i {
       color: #fff;
     }
   }
@@ -4576,7 +4808,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
 /*features demo-06*/
 .feature-box-06 {
-  &:nth-child(1), &:nth-child(2) {
+
+  &:nth-child(1),
+  &:nth-child(2) {
     border-right: 1px solid #dee2e6 !important;
     border-bottom: 1px solid #dee2e6 !important;
   }
@@ -4585,7 +4819,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     border-bottom: 1px solid #dee2e6 !important;
   }
 
-  &:nth-child(4), &:nth-child(5) {
+  &:nth-child(4),
+  &:nth-child(5) {
     border-right: 1px solid #dee2e6 !important;
   }
 
@@ -4671,7 +4906,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
 @media screen and (max-width: $mobile-sm-screen) {
   .feature-box-06 {
-    &:nth-child(1), &:nth-child(3) {
+
+    &:nth-child(1),
+    &:nth-child(3) {
       border-right: none !important;
     }
 
@@ -5274,7 +5511,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
 /* services block three */
 .services-block-three {
-  > a {
+  >a {
     display: block;
     border: 3px solid rgba(0, 0, 0, 0.1);
     border-radius: 0;
@@ -5321,7 +5558,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       opacity: 1;
       border-color: #d5d5d5;
 
-      &:before, &:after {
+      &:before,
+      &:after {
         width: 95%;
         height: 90%;
       }
@@ -5666,7 +5904,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 .service-block5 {
   position: relative;
 
-  > a {
+  >a {
     display: inline-block;
     width: 100%;
   }
@@ -5827,7 +6065,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   position: relative;
   line-height: 95px;
 
-  > i {
+  >i {
     font-size: 42px;
     color: $PrimaryColor;
     margin-top: 40px;
@@ -5840,7 +6078,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     height: 70px;
     line-height: 85px;
 
-    > i {
+    >i {
       font-size: 32px;
     }
   }
@@ -5937,7 +6175,10 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     box-shadow: -1px 9px 18px 0px rgba(75, 81, 91, 0.1);
     background: $PrimaryColor;
 
-    h3, p, .text-primary, a {
+    h3,
+    p,
+    .text-primary,
+    a {
       color: #fff;
     }
 
@@ -5947,7 +6188,12 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   &:hover {
-    h3, i, p, .text-primary, a {
+
+    h3,
+    i,
+    p,
+    .text-primary,
+    a {
       color: #fff;
     }
   }
@@ -5980,7 +6226,10 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     }
   }
 
-  h3, h4, h5, h6 {
+  h3,
+  h4,
+  h5,
+  h6 {
     line-height: 34px;
   }
 
@@ -6035,7 +6284,10 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       padding: 30px 25px 30px;
     }
 
-    h3, h4, h5, h6 {
+    h3,
+    h4,
+    h5,
+    h6 {
       line-height: 28px;
     }
   }
@@ -6053,7 +6305,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 }
 
 .zigzag-block {
-  > p {
+  >p {
     padding-left: 75px;
     position: relative;
 
@@ -6098,7 +6350,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
 @media screen and (max-width: $tablet-xs-screen) {
   .zigzag-block {
-    > p {
+    >p {
       padding-left: 50px;
 
       &:before {
@@ -6122,7 +6374,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   padding: 50px 30px;
   border: 1px solid #eee;
 
-  p, h4 {
+  p,
+  h4 {
     transition: all 0.3s ease-in-out;
   }
 
@@ -6250,7 +6503,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     font-size: 18px;
   }
 
-  > span {
+  >span {
     text-transform: uppercase;
     font-size: 12px;
     letter-spacing: 1px;
@@ -6409,7 +6662,11 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   &:hover {
-    a, h3, p, .icon {
+
+    a,
+    h3,
+    p,
+    .icon {
       color: #fff;
       transition-delay: .2s;
     }
@@ -6567,7 +6824,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   .client-single {
     margin-bottom: 30px;
 
-    &:last-child, p {
+    &:last-child,
+    p {
       margin-bottom: 0;
     }
 
@@ -6639,7 +6897,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     z-index: 1;
     border-radius: inherit;
 
-    > img {
+    >img {
       border-radius: inherit;
     }
   }
@@ -6661,7 +6919,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     visibility: visible;
     transform: translateY(0%);
 
-    + .main-image {
+    +.main-image {
       opacity: 0;
       transform: translateY(100%);
     }
@@ -6685,7 +6943,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 ====================================== */
 /* counterbox style1*/
 .counter-box {
-  h3, h4 {
+
+  h3,
+  h4 {
     display: inline-block;
     font-weight: 600;
   }
@@ -6778,7 +7038,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.1);
   padding: 20px 10px;
 
-  h3:after, h4:after {
+  h3:after,
+  h4:after {
     content: '+';
   }
 }
@@ -6872,7 +7133,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     position: relative;
     z-index: 9;
 
-    > .row {
+    >.row {
       box-shadow: 0px 10px 30px 0px rgba(50, 50, 50, 0.16);
       margin-bottom: 50px;
     }
@@ -6915,7 +7176,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   &.highlight {
     background: $PrimaryColor;
 
-    h4, .counter-icon {
+    h4,
+    .counter-icon {
       color: #fff;
     }
 
@@ -7043,7 +7305,11 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   padding: 0;
   overflow: hidden;
 
-  .embed-responsive-item, iframe, embed, object, video {
+  .embed-responsive-item,
+  iframe,
+  embed,
+  object,
+  video {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -7114,7 +7380,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   -webkit-transition-duration: 0s;
   -o-transition-duration: 0s;
 
-  &:hover i, &:focus i {
+  &:hover i,
+  &:focus i {
     color: #fff;
   }
 
@@ -7162,7 +7429,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 }
 
 .video_btn-style2 {
-  &:after, &:before {
+
+  &:after,
+  &:before {
     border-color: rgba(0, 0, 0, 0.1);
   }
 }
@@ -7763,7 +8032,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     margin-left: -1.5px;
   }
 
-  > li {
+  >li {
     margin-bottom: 20px;
     position: relative;
 
@@ -7845,7 +8114,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       }
     }
 
-    &.timeline-inverted > .timeline-panel {
+    &.timeline-inverted>.timeline-panel {
       float: right;
 
       &:before {
@@ -7887,12 +8156,14 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 }
 
-.timeline-body > {
-  p, ul {
+.timeline-body> {
+
+  p,
+  ul {
     margin-bottom: 0;
   }
 
-  p + p {
+  p+p {
     margin-top: 5px;
   }
 }
@@ -7903,7 +8174,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       left: 40px;
     }
 
-    > li > {
+    >li> {
       .timeline-panel {
         width: calc(100% - 90px);
         width: -moz-calc(100% - 90px);
@@ -8174,14 +8445,14 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     width: 100%;
   }
 
-  &.owl-theme .owl-nav.disabled + .owl-dots span{
+  &.owl-theme .owl-nav.disabled+.owl-dots span {
     width: 12px;
     height: 12px;
     margin: 0 7px;
     background: rgba(0, 0, 0, 0.2);
     cursor: pointer;
     display: block;
-    border:  none;
+    border: none;
     -webkit-backface-visibility: visible;
     border-radius: 0;
     transition-duration: .3s;
@@ -8198,7 +8469,10 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   &.owl-theme .owl-dots .owl-dot {
-    &.active span, &:hover span, &:focus span {
+
+    &.active span,
+    &:hover span,
+    &:focus span {
       background: $PrimaryColor;
       -webkit-backface-visibility: visible;
       border-radius: 0;
@@ -8243,7 +8517,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       flex-wrap: wrap;
     }
 
-    .testimonial-separator, .testimonial-pic:before {
+    .testimonial-separator,
+    .testimonial-pic:before {
       display: none;
     }
   }
@@ -8357,7 +8632,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     position: relative;
   }
 
-  .client-info > span {
+  .client-info>span {
     font-weight: 500;
     text-transform: uppercase;
   }
@@ -8633,7 +8908,9 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   .owl-theme .owl-dots .owl-dot {
-    &.active span, &:hover span {
+
+    &.active span,
+    &:hover span {
       background: $PrimaryColor;
       border-color: $PrimaryColor;
     }
@@ -8837,7 +9114,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     text-align: center;
   }
 
-  &.owl-theme .owl-nav.disabled + .owl-dots {
+  &.owl-theme .owl-nav.disabled+.owl-dots {
     margin-top: 50px;
     text-align: center;
   }
@@ -9088,7 +9365,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     display: block;
   }
 
-  &.owl-theme .owl-nav.disabled + .owl-dots span {
+  &.owl-theme .owl-nav.disabled+.owl-dots span {
     width: 12px;
     height: 12px;
     margin: 5px;
@@ -9104,8 +9381,11 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     -webkit-transition-duration: .3s;
     -o-transition-duration: .3s;
   }
+
   &.owl-theme .owl-dots .owl-dot {
-    &.active span, &:hover span {
+
+    &.active span,
+    &:hover span {
       width: 12px;
       height: 12px;
       background: $PrimaryColor;
@@ -9185,7 +9465,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 }
 
 .carousel-style2 {
-  .owl-theme .owl-nav.disabled + .owl-dots span{
+  .owl-theme .owl-nav.disabled+.owl-dots span {
     width: 12px;
     height: 12px;
     margin: 5px;
@@ -9200,12 +9480,15 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   .owl-theme .owl-dots .owl-dot {
-    &.active span, &:hover span, &:focus span {
+
+    &.active span,
+    &:hover span,
+    &:focus span {
       background: $PrimaryColor;
       -webkit-backface-visibility: visible;
       border-radius: 30px;
     }
-  } 
+  }
 }
 
 
@@ -9227,7 +9510,10 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
   }
 
   &:hover {
-    a, p, i {
+
+    a,
+    p,
+    i {
       color: #fff;
     }
   }
@@ -9508,7 +9794,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 .team-members:hover .team-members-text {
   background: $PrimaryColor;
 
-  h4 a, span {
+  h4 a,
+  span {
     color: #fff;
   }
 }
@@ -9683,7 +9970,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     z-index: 1;
   }
 
-  .team-member-img > img {
+  .team-member-img>img {
     transition: all 0.2s ease 0s;
   }
 
@@ -9699,7 +9986,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       transform: translateY(0);
     }
 
-    .team-member-img > img {
+    .team-member-img>img {
       filter: blur(4px) grayscale(4%);
     }
 
@@ -9726,7 +10013,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
   .social-links {
     transform: translateY(15px);
-    transition: transform 300ms ease-in-out,opacity 150ms ease-in;
+    transition: transform 300ms ease-in-out, opacity 150ms ease-in;
     opacity: 0;
     color: #fff;
     -webkit-font-smoothing: antialiased;
@@ -9734,7 +10021,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
 
   .about-me {
     transform: translateY(15px);
-    transition: transform 300ms ease-in-out,opacity 150ms ease-in;
+    transition: transform 300ms ease-in-out, opacity 150ms ease-in;
     opacity: 0;
     color: #fff;
     -webkit-font-smoothing: antialiased;
@@ -9792,7 +10079,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     z-index: 1;
   }
 
-  .team-member-img > img {
+  .team-member-img>img {
     transition: all 0.2s ease 0s;
   }
 
@@ -9803,18 +10090,18 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     }
 
     .social-links {
-      transition-delay: 100ms,100ms;
+      transition-delay: 100ms, 100ms;
       opacity: 1;
       transform: translateY(0);
     }
 
     .about-me {
-      transition-delay: 200ms,200ms;
+      transition-delay: 200ms, 200ms;
       opacity: 1;
       transform: translateY(0);
     }
 
-    .team-member-img > img {
+    .team-member-img>img {
       filter: blur(4px) grayscale(4%);
     }
 
@@ -9896,7 +10183,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     z-index: 1;
   }
 
-  .team-member-img > img {
+  .team-member-img>img {
     transition: all 0.2s ease 0s;
   }
 
@@ -9918,7 +10205,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
       transition-delay: 200ms, 200ms;
     }
 
-    .team-member-img > img {
+    .team-member-img>img {
       filter: blur(4px) grayscale(4%);
     }
 
@@ -9967,7 +10254,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     text-align: center;
   }
 
-  &.owl-theme .owl-nav.disabled + .owl-dots span {
+  &.owl-theme .owl-nav.disabled+.owl-dots span {
     width: 12px;
     height: 12px;
     margin: 5px;
@@ -9983,8 +10270,11 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     -o-transition-duration: .3s;
   }
 
-  &.owl-theme .owl-dots .owl-dot {    
-    &.active span, &:hover span, &:focus span {
+  &.owl-theme .owl-dots .owl-dot {
+
+    &.active span,
+    &:hover span,
+    &:focus span {
       width: 12px;
       height: 12px;
       background: $PrimaryColor;
@@ -10177,7 +10467,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
         transition: all .5s ease;
       }
 
-      &:hover, a:hover {
+      &:hover,
+      a:hover {
         opacity: 0.65;
       }
 
@@ -11284,10 +11575,10 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     -ms-flex-direction: column;
     flex-direction: column;
     padding: 30px;
-    -webkit-transition: opacity .5s ease,-webkit-transform .5s ease;
-    transition: opacity .5s ease,-webkit-transform .5s ease;
-    transition: transform .5s ease,opacity .5s ease;
-    transition: transform .5s ease,opacity .5s ease,-webkit-transform .5s ease;
+    -webkit-transition: opacity .5s ease, -webkit-transform .5s ease;
+    transition: opacity .5s ease, -webkit-transform .5s ease;
+    transition: transform .5s ease, opacity .5s ease;
+    transition: transform .5s ease, opacity .5s ease, -webkit-transform .5s ease;
     -webkit-transform: translateY(40%);
     transform: translateY(40%);
     opacity: 0;
@@ -12088,7 +12379,8 @@ ul.resp-tabs-list {
   color: $PrimaryColor;
 }
 
-.resp-content-active, .resp-accordion-active {
+.resp-content-active,
+.resp-accordion-active {
   display: block;
 }
 
@@ -12228,7 +12520,9 @@ h2.resp-accordion {
 
 /* tab-style1 */
 .tab-style1 {
-  .resp-tabs-list li.resp-tab-active, .resp-tab-content-active {
+
+  .resp-tabs-list li.resp-tab-active,
+  .resp-tab-content-active {
     background: $PrimaryColor !important;
     color: #fff;
   }
@@ -12808,7 +13102,8 @@ h2.resp-accordion {
       padding: 25px;
     }
 
-    &.resp-vtabs .resp-tab-content:last-child, h2.resp-accordion {
+    &.resp-vtabs .resp-tab-content:last-child,
+    h2.resp-accordion {
       border-color: #ececec !important;
     }
   }
@@ -13146,7 +13441,7 @@ h2.resp-accordion {
   transform: scale(1.09);
 }
 
-.pricing-list > i {
+.pricing-list>i {
   background: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 100%;
@@ -13225,7 +13520,7 @@ h2.resp-accordion {
     display: inline-block;
     border: 2px solid $PrimaryColor;
     background: #fff;
-    font-family: "Montserrat",sans-serif;
+    font-family: "Montserrat", sans-serif;
     color: #282b2d;
     font-size: 16px;
     font-weight: 500;
@@ -13271,7 +13566,8 @@ h2.resp-accordion {
     padding: 30px 0;
     position: relative;
 
-    &:before, &:after {
+    &:before,
+    &:after {
       content: '';
       background: #eee;
       width: 70%;
@@ -13533,7 +13829,7 @@ h2.resp-accordion {
       display: inline-block;
       border: 2px solid $PrimaryColor;
       background: #fff;
-      font-family: "Montserrat",sans-serif;
+      font-family: "Montserrat", sans-serif;
       color: #282b2d;
       font-size: 16px;
       font-weight: 500;
@@ -13777,7 +14073,9 @@ h4.cd-headline {
   z-index: 999999;
 
   .lg-thumb-item {
-    &.active, &:hover {
+
+    &.active,
+    &:hover {
       border-color: $PrimaryColor;
     }
   }
@@ -13970,7 +14268,11 @@ ul.countdown li {
   }
 
   p {
-    &.timeRefDays, &.timeRefHours, &.timeRefMinutes, &.timeRefSeconds {
+
+    &.timeRefDays,
+    &.timeRefHours,
+    &.timeRefMinutes,
+    &.timeRefSeconds {
       font-size: 12px;
       font-weight: 500;
       margin: 0;
@@ -14146,7 +14448,7 @@ ul.countdown li {
   .card-img-overlay {
     display: flex;
 
-    > * {
+    >* {
       flex: 1;
     }
   }
@@ -14184,7 +14486,7 @@ ul.countdown li {
 
 /* shop product grid */
 .product-grid {
-  > [class*="col-"] {
+  >[class*="col-"] {
     margin-top: 30px;
   }
 
@@ -14209,7 +14511,7 @@ ul.countdown li {
     justify-content: center;
     z-index: 9999;
 
-    > a {
+    >a {
       width: 35px;
       height: 35px;
       justify-content: center;
@@ -14230,7 +14532,7 @@ ul.countdown li {
       margin-right: 0;
     }
 
-    > a:hover {
+    >a:hover {
       background: $PrimaryColor;
       color: #fff;
     }
@@ -14251,7 +14553,7 @@ ul.countdown li {
     text-align: center;
     font-size: 18px;
 
-    > a {
+    >a {
       margin-bottom: 5px;
       display: inline-block;
       font-weight: 600;
@@ -14265,7 +14567,7 @@ ul.countdown li {
 }
 
 /* shop product list */
-.product-list > [class*="col-"] {
+.product-list>[class*="col-"] {
   margin-top: 30px;
 }
 
@@ -14409,7 +14711,9 @@ ul.countdown li {
   color: #282b2d;
 }
 
-.xzoom-preview { z-index: 99999; }
+.xzoom-preview {
+  z-index: 99999;
+}
 
 /* table bordered */
 .table.bordered {
@@ -14421,11 +14725,13 @@ ul.countdown li {
     background-color: #f7faff;
   }
 
-  td, th {
+  td,
+  th {
     padding: 1rem 0.75rem;
   }
 
-  td, th {
+  td,
+  th {
     vertical-align: middle;
     text-align: center;
     border-right: 1px solid #e8e8e8;
@@ -14449,7 +14755,8 @@ ul.countdown li {
     background: #f7faff;
   }
 
-  .product-price, .product-quantity {
+  .product-price,
+  .product-quantity {
     color: #363f4d;
     font-size: 16px;
     font-weight: 600;
@@ -14490,7 +14797,8 @@ ul.countdown li {
   vertical-align: middle;
   padding: 10px 30px;
 
-  td, th {
+  td,
+  th {
     border-color: transparent;
     vertical-align: middle;
     padding: 10px 30px;
@@ -14509,7 +14817,7 @@ ul.countdown li {
 
 /* shop product grid and list*/
 .product-list {
-  .product-block:hover > img {
+  .product-block:hover>img {
     opacity: 0.65;
   }
 
@@ -14614,11 +14922,14 @@ ul.countdown.count-style1 li {
     }
   }
 
-  &.owl-theme .owl-nav.disabled + .owl-dots span {
+  &.owl-theme .owl-nav.disabled+.owl-dots span {
     background: rgba(0, 0, 0, 0.09);
   }
+
   &.owl-theme .owl-dots .owl-dot {
-    &.active span, &:hover span {
+
+    &.active span,
+    &:hover span {
       background-color: $PrimaryColor;
     }
   }
@@ -14726,7 +15037,8 @@ ul.countdown.count-style1 li {
     transition: all 900ms ease;
   }
 
-  &:hover .services-text, &.active .services-text {
+  &:hover .services-text,
+  &.active .services-text {
     opacity: 0;
   }
 
@@ -14761,7 +15073,8 @@ ul.countdown.count-style1 li {
     transition: all 900ms ease;
   }
 
-  &:hover .overlay-box, &.active .overlay-box {
+  &:hover .overlay-box,
+  &.active .overlay-box {
     opacity: 1;
     -moz-transform: translateY(0px);
     -webkit-transform: translateY(0px);
@@ -15308,7 +15621,9 @@ ul.countdown.count-style1 li {
   }
 
   .widget-title {
-    h5, h6 {
+
+    h5,
+    h6 {
       position: relative;
       padding-bottom: 5px;
       font-size: 14px;
@@ -15317,7 +15632,8 @@ ul.countdown.count-style1 li {
       margin-bottom: 20px;
     }
 
-    h5:after, h6:after {
+    h5:after,
+    h6:after {
       content: '';
       width: 30px;
       height: 1px;
@@ -15914,7 +16230,7 @@ ul.countdown.count-style1 li {
   position: relative;
 }
 
-.quform-element > label {
+.quform-element>label {
   font-weight: normal;
   padding-bottom: 5px;
   margin-bottom: 0;
@@ -15948,7 +16264,7 @@ ul.countdown.count-style1 li {
   margin: 0;
   line-height: normal;
 
-  > .quform-error {
+  >.quform-error {
     padding: 0;
     background: none;
     border: none;
@@ -15970,12 +16286,18 @@ ul.countdown.count-style1 li {
 }
 
 .quform-has-error {
-  input, textarea, select, input[type=file], .custom-file-label {
+
+  input,
+  textarea,
+  select,
+  input[type=file],
+  .custom-file-label {
     border-color: #f5543f;
   }
 }
 
-.quform-success-message, .quform-outer-no-js .quform-success-message {
+.quform-success-message,
+.quform-outer-no-js .quform-success-message {
   padding: 0.75rem 1.25rem 0.75rem 3rem;
 }
 
@@ -16007,7 +16329,7 @@ ul.countdown.count-style1 li {
   box-shadow: none;
 }
 
-.light-validation .quform-errors > .quform-error {
+.light-validation .quform-errors>.quform-error {
   color: #fff;
 }
 
@@ -16051,7 +16373,10 @@ ul.countdown.count-style1 li {
   }
 
   .quform-has-error {
-    input, textarea, select {
+
+    input,
+    textarea,
+    select {
       border-color: #f5543f;
     }
   }
@@ -16092,7 +16417,10 @@ ul.countdown.count-style1 li {
   }
 
   .quform-has-error {
-    input, textarea, select {
+
+    input,
+    textarea,
+    select {
       border-color: #f5543f;
     }
   }
@@ -16188,7 +16516,7 @@ ul.countdown.count-style1 li {
   border-radius: .25rem;
 }
 
-.custom-file-input:lang(en) ~ .custom-file-label::after {
+.custom-file-input:lang(en)~.custom-file-label::after {
   content: "Browse";
 }
 
@@ -16592,14 +16920,17 @@ ul.countdown.count-style1 li {
   border-radius: 4px;
   color: #fff;
 
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     padding: 12px 12px;
     font-size: 14px;
     border-radius: 4px;
     height: auto;
   }
 
-  h4, h3 {
+  h4,
+  h3 {
     color: #fff;
     font-weight: 700;
   }
@@ -17174,7 +17505,7 @@ footer {
 .footer-post {
   margin-bottom: 0;
 
-  > li {
+  >li {
     float: left;
     width: 100%;
     margin-bottom: 25px;
@@ -17258,7 +17589,7 @@ footer {
       padding-bottom: 5px;
     }
 
-    > li {
+    >li {
       width: 50%;
       margin-bottom: 0;
     }
@@ -17267,7 +17598,7 @@ footer {
 
 @media screen and (max-width: $tablet-xs-screen) {
   .footer-post {
-    > li {
+    >li {
       width: 100%;
       margin-bottom: 20px;
     }
@@ -17420,7 +17751,7 @@ footer h3.footer-title-style7 {
   padding: 0;
   color: #616161;
 
-  > .container {
+  >.container {
     padding: 120px 15px;
   }
 
@@ -17481,13 +17812,13 @@ footer h3.footer-title-style9 {
 }
 
 @media screen and (max-width: $desk-md-screen) {
-  .footer-style9 > .container {
+  .footer-style9>.container {
     padding: 90px 15px;
   }
 }
 
 @media screen and (max-width: $desk-xs-screen) {
-  .footer-style9 > .container {
+  .footer-style9>.container {
     padding: 70px 15px;
   }
 }
@@ -17506,7 +17837,7 @@ footer.footer-style10 {
   border-top: 1px solid rgba(0, 0, 0, 0.075);
 }
 
-.footer-style10 > .container {
+.footer-style10>.container {
   padding-top: 90px;
   padding-bottom: 90px;
 }
@@ -17597,14 +17928,14 @@ footer.footer-style10 {
 }
 
 @media screen and (max-width: $desk-md-screen) {
-  .footer-style10 > .container {
+  .footer-style10>.container {
     padding-top: 70px;
     padding-bottom: 70px;
   }
 }
 
 @media screen and (max-width: $tablet-xs-screen) {
-  .footer-style10 > .container {
+  .footer-style10>.container {
     padding-top: 50px;
     padding-bottom: 50px;
   }
@@ -17783,7 +18114,7 @@ footer .footer-title-style10 {
   }
 
   h3 {
-    font-family: Montserrat,sans-serif;
+    font-family: Montserrat, sans-serif;
   }
 }
 
@@ -17809,7 +18140,9 @@ footer .footer-icon3 ul li {
 }
 
 footer h3 {
-  &.footer-title-style15:after, &.footer-style:after {
+
+  &.footer-title-style15:after,
+  &.footer-style:after {
     content: none;
   }
 }
@@ -17873,19 +18206,24 @@ pre[class*="language-"] {
   }
 
   &:hover {
-    .copy-element, .source-element {
+
+    .copy-element,
+    .source-element {
       opacity: 1;
     }
   }
 }
 
 .box-hover:hover {
-  .copy-element, .source-element {
+
+  .copy-element,
+  .source-element {
     opacity: 1;
   }
 }
 
-.copy-element > a, .source-element > a {
+.copy-element>a,
+.source-element>a {
   border-radius: 0.25rem;
   background: #dde1e6;
   color: #777 !important;
@@ -17897,7 +18235,8 @@ pre[class*="language-"] {
   font-weight: 600;
 }
 
-.copy-element > a:hover, .source-element > a:hover {
+.copy-element>a:hover,
+.source-element>a:hover {
   background: $PrimaryColor;
   color: #fff !important;
 }

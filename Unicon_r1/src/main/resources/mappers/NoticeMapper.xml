@@ -11,10 +11,30 @@
             noEmail, noRegdate
         ) values (
             #{noTitle}, #{noContent}, #{noWriter}, #{noImage}, #{noThumb},
-            #{noCategory}, #{important}, #{temporary}, #{visibility}, 'active',
+            #{noCategory}, #{important}, #{temporary}, #{visibility}, #{status},
             #{noEmail}, now()
         )
     </insert>
+    
+    <select id="selectDraftList" resultType="NoticeVO">
+	    select *
+	    from _notice
+	    where status = 'draft'
+	    order by noRegdate desc
+	</select>
+
+	<select id="selectDraft" resultType="NoticeVO">
+	    select *
+	    from _notice
+	    where noId = #{noId}
+	    and status = 'draft'
+	</select>
+	
+	<update id="updateNoticeStatus">
+	    update _notice
+	    set status = #{status}
+	    where noId = #{noId}
+	</update>
     
     <update id="updateNotice" parameterType="NoticeVO">
         update _notice 
@@ -49,41 +69,44 @@
 	</select>
     
     <select id="selectNoticeList" parameterType="map" resultType="NoticeVO">
-    select 
-        noId, noTitle, noContent, noWriter,
-        noThumb, noCategory, important, noEmail,
-        noRegdate, noModdate, status
-    from _notice
-    where status = 'active'
-    <if test="category != null and category != ''">
-        and noCategory = #{category}
-    </if>
-    <if test="keyword != null and keyword != ''">
-        and (
-            noTitle LIKE CONCAT('%', #{keyword}, '%')
-            or noContent like concat('%', #{keyword}, '%')
-        )
-    </if>
-    order by 
-        important DESC,
-        noRegdate DESC
-    limit #{start}, #{size}
+	    select *
+	    from _notice
+	    where status = 'active'
+	    <if test="category != null and category != ''">
+	        and noCategory = #{category}
+	    </if>
+	    <if test="keyword != null and keyword != ''">
+	        and (noTitle like concat('%', #{keyword}, '%') 
+	        or noContent like concat('%', #{keyword}, '%'))
+	    </if>
+	    <if test="startDate != null and startDate != ''">
+	        and date(noRegdate) >= #{startDate}
+	    </if>
+	    <if test="endDate != null and endDate != ''">
+	        and date(noRegdate) &lt;= #{endDate}
+	    </if>
+	    order by important desc, noId desc
+	    limit #{start}, #{size}
 	</select>
-    
-    <select id="selectNoticeCount" parameterType="map" resultType="int">
-        select count(*) 
-        from _notice
-        where status = #{status}
-        <if test="category != null and category != ''">
-            and noCategory = #{category}
-        </if>
-        <if test="keyword != null and keyword != ''">
-            and (
-                noTitle like concat('%', #{keyword}, '%')
-                or noContent like concat('%', #{keyword}, '%')
-            )
-        </if>
-    </select>
+	
+	<select id="selectNoticeCount" parameterType="map" resultType="int">
+	    select count(*)
+	    from _notice
+	    where status = 'active'
+	    <if test="category != null and category != ''">
+	        and noCategory = #{category}
+	    </if>
+	    <if test="keyword != null and keyword != ''">
+	        and (noTitle like concat('%', #{keyword}, '%') 
+	        or noContent like concat('%', #{keyword}, '%'))
+	    </if>
+	    <if test="startDate != null and startDate != ''">
+	        and date(noRegdate) >= #{startDate}
+	    </if>
+	    <if test="endDate != null and endDate != ''">
+	        and date(noRegdate) &lt;= #{endDate}
+	    </if>
+	</select>
     
     <update id="updateViewCount" parameterType="Long">
         update _notice 

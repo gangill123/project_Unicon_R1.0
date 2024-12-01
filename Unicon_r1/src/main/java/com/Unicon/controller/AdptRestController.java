@@ -1,83 +1,76 @@
 package com.Unicon.controller;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Unicon.domain.AdptHealthVO;
-import com.Unicon.domain.AdptVO;
-import com.Unicon.domain.AdptVaccineVO;
+import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.service.AdptService;
 
-import lombok.extern.log4j.Log4j;
 
 @RestController
-@Log4j
 @RequestMapping("/adptmgmt/**")
 public class AdptRestController {
 	
 	@Inject
-	AdptService aService;
+	private AdptService aService;
+	private static final Logger logger = LoggerFactory.getLogger(AdptRestController.class);
 	
-	/*
-	@PostMapping("")
-	public ResponseEntity<String> adptInsert(AdptVO adptVO) {
-		log.info("( •̀ ω •́ )✧ adptInsert() 실행");
-		log.info("( •̀ ω •́ )✧ adptVO : "+adptVO);
+	@PostMapping(value = "/animals")
+	public ResponseEntity<Void> registerAnimal(AnimalVO avo, HttpServletRequest req) {
+		logger.info("( •̀ ω •́ )✧ registerAnimal(AnimalVO avo, HttpServletRequest req) 실행");
 		
-		List<ImageVO> images = adptVO.getAdpt_images();
-		if (images == null) {
-		    images = new ArrayList<ImageVO>();
-		    adptVO.setAdpt_images(images);
+		try {
+			
+			if (avo == null) {
+				return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			}
+			avo.setAnimal_id(aService.genAnimalId());
+			
+			List<ImageVO> images = aService.saveImage(avo, req);
+			if (images == null || images.isEmpty()) {
+				return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			avo.setAnimal_images(images);
+			aService.animalInsert(avo);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			logger.error("( •̀ ω •́ )✧ 오류 발생: " + e.getMessage());
+			
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		List<AdptHealthVO> healths = adptVO.getAdpt_healths();
-		if (healths == null) {
-			healths = new ArrayList<AdptHealthVO>();
-		    adptVO.setAdpt_healths(healths);
-		}
-		List<AdptVaccineVO> vaccines = adptVO.getAdpt_vaccines();
-		if (vaccines == null) {
-			vaccines = new ArrayList<AdptVaccineVO>();
-		    adptVO.setAdpt_vaccines(vaccines);
-		}
-		
-		
-		for(int i = 1; i < 6; i++) {
-			ImageVO imageVO = new ImageVO();
-			imageVO.setImage_id("입양이미지테스트id");
-			imageVO.setImage_type("입양이미지종류테스트");
-			imageVO.setImage_src("입양이미지경로테스트");
-			imageVO.setImage_sequence(i);
-			images.add(imageVO);
-		}
-		for(int i = 1; i < 6; i++) {
-			AdptHealthVO healthVO = new AdptHealthVO();
-			healthVO.setAdpt_id(adptVO.getAdpt_id());
-			healthVO.setHealth("검진정보테스트");
-			healthVO.setHealth_check("검진정보확인테스트");
-			healths.add(healthVO);
-		}
-		for(int i = 1; i < 6; i++) {
-			AdptVaccineVO vaccineVO = new AdptVaccineVO();
-			vaccineVO.setAdpt_id(adptVO.getAdpt_id());
-			vaccineVO.setVaccine("접종정보테스트");
-			vaccineVO.setVaccine_check("접종정보확인테스트");
-			vaccines.add(vaccineVO);
-		}
-		
-		aService.adptInsert(adptVO);
-		return new ResponseEntity<String>("입력완료",HttpStatus.OK);
-		
 	}
-	*/
+	
+	
+	@GetMapping(value = "/animals/autoname")
+	public ResponseEntity<Map<String, String>> animalAutoName(
+			@RequestParam("animal_act") int act, @RequestParam("animal_social") int social) {
+		logger.info("( •̀ ω •́ )✧ animalAutoName() 실행");
+		logger.info("( •̀ ω •́ )✧ act : {}, social : {}",act,social);
+		
+		String autoName = aService.genAutoName(act, social); 
+		Map<String, String> resp = new HashMap<String, String>();
+		resp.put("autoName", autoName);
+		return new ResponseEntity<Map<String, String>>(resp,HttpStatus.OK);
+	}
 
 	
-}
+
+	
+	
+}//class

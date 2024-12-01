@@ -1,219 +1,265 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../inc/topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
+<%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
+
+  <!-- Customized Bootstrap Stylesheet -->
+    <link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
 
 <!-- 추가 템플릿 css/js 작성란 -->
 <style>
 
-/* 메인 타이틀 스타일 */
-.main-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin: 60px 0 20px 200px;
-    color: black;       
-}
-
-/* 서브 타이틀 스타일 */
-.sub-title {
-    font-size: 1.5rem;
-    font-weight: 300;
-    margin: 0 0 30px 0;
-    text-align: center;          /* 텍스트를 가운데 정렬 */
-      color: black;                 /* 글자 색상 */
-      font: bold;
-}
-
-/* 검색창 섹션 스타일 */
-.search-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-/* 검색 입력 필드 */
-.search-box input {
-    padding: 10px 15px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    width: 300px;
-    outline: none;
-}
-
-/* 검색 버튼 */
-.search-box button {
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    background-color: #ff7f50;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.highlight {
-    color: #ff4500;              /* 강조 색상 (주황색) */
-    font-weight: bolder;          /* 더욱 굵게 설정 */
-    font-size: 1.8rem;            /* 약간 큰 글자 크기 */
-}
-
-.search-box button:hover {
-    background-color: #ff6347;
-
-}
-/* 네비게이션 탭 스타일 */
-.tabs ul {
-	
-    list-style-type: none;
-    padding: 0;
-    margin: 20px 0;
-    display: flex;
-    justify-content: center; /* 가운데 정렬 */
-}
-
-.tabs ul li {
-	
-    margin-right: 20px;
-}
-
-.tabs ul li a {
-	   
-    text-decoration: none;
-    color: #333;
-    font-size: 1.1rem;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.tabs ul li a:hover {
-	
-    background-color: #007bff;
-    color: white;
-    border-color: #007bff;
-}
 
 
 </style>
 </head>
-<%@ include file="../inc/header.jsp" %> <!-- header -->
+<%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
-	<div class="customer-support">
-    <h1 class="main-title"> unicon 고객센터</h1>
-    <h2 class="sub-title">
-    <span class="highlight">유니콘 고객센터</span> <br>무엇을 도와드릴까요?</h2>
-     <!-- 네비게이션 탭 -->
-    <nav class="tabs">
-        <ul>
-            <li><a href="board">문의사항 게시판</a></li>
-            <li><a href="history">내 문의내역</a></li>
-            <li><a href="question">자주 묻는 질문</a></li>
-            <li><a href="write">문의하기</a></li>
-        </ul>
-    </nav>
-    
-    
-    
-    <div class="search-box">
-        <input type="text" placeholder="검색어를 입력하세요..." />
-        <button>검색</button>
+	
+	
+	
+
+<!-- start page title section -->
+<section class="page-title-section bg-primary">
+    <div class="container">
+		
+        <div class="row">
+            <div class="col-md-12">
+                <h1>unicon 고객센터</h1>
+            </div>
+            <div class="col-md-12">
+                <ul class="ps-0">
+                     <li><a href="inquiry"><i class="ti-home"></i></a></li>
+                    <li class="active"><a href="inquiry">main</a></li>
+                </ul>
+            </div>
+        </div>
+	
     </div>
-</div>
+</section>
+ <!-- end page title section -->                
+ 
 
 
+<!-- start subscribe section -->
+<section class="lg bg-very-light-gray bg-img" data-overlay-dark="0" data-background="img/bg/bg-pattern.png">
+    <div class="container">
 
+        <div class="section-heading title-style8">
+            <h3>unicon &amp; FAQ <span class="inner-title">무엇을 도와드릴까요?</span></h3>
+            <p class="w-lg-55 w-md-75 mx-auto">서비스명과 함께 검색해보세요.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-7">
+
+                <!-- start form here -->
+
+                <form class="quform newsletter-rounded" action="quform/newsletter-two.php" method="post" enctype="multipart/form-data" onclick="">
+
+                    <div class="quform-elements">
+
+                        <div class="row">
+
+                            <!-- Begin Text input element -->
+                            <div class="col-md-12">
+                                <div class="quform-element">
+                                    <div class="quform-input">
+                                        <input class="rounded-pill form-control" id="email_address" type="text" name="email_address" placeholder="문의사항을 입력하세요." />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Text input element -->
+
+                            <!-- Begin Submit button -->
+                            <div class="col-md-12">
+                                <div class="quform-submit-inner">
+                                    <button class="btn btn-white text-primary m-0 px-4" type="submit"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                                <div class="quform-loading-wrap"><span class="quform-loading"></span></div>
+                            </div>
+                            <!-- End Submit button -->
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+                <!-- end form here -->
+
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- end subscribe section -->
 
 	
-<div class="sec-banner bg0 p-t-80 p-b-50">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
-					<!-- Block1 -->
-					<div class="block1 wrap-pic-w">
-						<img src="${pageContext.request.contextPath}/resources/assets/images/yang.jpg" alt="IMG-BANNER">
-
-						<a href="adoption" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
-							<div class="block1-txt-child1 flex-col-l">
-								<span class="block1-name ltext-102 trans-04 p-b-8">
-									입양
-								</span>
-
-								<span class="block1-info stext-102 trans-04">
-									유기견 입양 관련 문의
-								</span>
-							</div>
-
-							<div class="block1-txt-child2 p-b-4 trans-05">
-								<div class="block1-link stext-101 cl0 trans-09">
-									inquiry Now
-								</div>
-							</div>
-						</a>
+		
+<section>
+	  <div class="container">
+		<div class="row mt-n1-9">
+                    <div class="col-md-6 col-lg-3 mt-1-9">
+					    <div class="service-block10">
+					        <!-- 링크 추가: <a> 태그로 전체 블록을 감싸기 -->
+					        <a href="board" class="service-link">
+					            <div class="position-relative z-index-1">
+					                <span class="mb-4 d-block"><i class="icon-lightbulb color-h-one"></i></span>
+					                <h4>문의 게시판</h4>
+					                <p class="mb-0">문의 목록을 한눈에 볼 수 있습니다.</p>
+					            </div>
+					        </a>
+					        <!-- 링크 추가 끝 -->
+					    </div>
 					</div>
-				</div>
+                    <div class="col-md-6 col-lg-3 mt-1-9">
+                        <div class="service-block10">
+							 <a href="history" class="service-link">
+                            <div class="position-relative z-index-1">								
+                                <span class="mb-4 d-block"><i class="icon-tools-2 color-h-two"></i></span>
+                                <h4>내 문의내역</h4>
+                                <p class="mb-0">나의 문의 현황을 한눈에 볼 수 있습니다.</p>
+                            </div>
+							</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mt-1-9">
+                        <div class="service-block10">
+							<a href="question">
+                            <div class="position-relative z-index-1">
+								
+                                <span class="mb-4 d-block"><i class="icon-mobile color-h-three"></i></span>
+                                <h4>자주 묻는 질문</h4>
+                                <p class="mb-0">자주 묻는 질문 목록을 한눈에 볼 수 있습니다.</p>
+                            </div>
+							</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mt-1-9">
+                        <div class="service-block10">
+							<a href="write">
+                            <div class="position-relative z-index-1">
 
-				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
-					<!-- Block1 -->
-					<div class="block1 wrap-pic-w">
-						<img src="${pageContext.request.contextPath}/resources/assets/images/yong.jpg" alt="IMG-BANNER">
-
-						<a href="shop" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
-							<div class="block1-txt-child1 flex-col-l">
-								<span class="block1-name ltext-102 trans-04 p-b-8">
-									쇼핑몰
-								</span>
-
-								<span class="block1-info stext-102 trans-04">
-									애견 용품 쇼핑 관련 문의
-								</span>
-							</div>
-
-							<div class="block1-txt-child2 p-b-4 trans-05">
-								<div class="block1-link stext-101 cl0 trans-09">
-									inquiry Now
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-
-				<div class="col-md-6 col-xl-4 p-b-30 m-lr-auto">
-					<!-- Block1 -->
-					<div class="block1 wrap-pic-w">
-						<img src="${pageContext.request.contextPath}/resources/assets/images/co.jpg" alt="IMG-BANNER">
-
-						<a href="community" class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3">
-							<div class="block1-txt-child1 flex-col-l">
-								<span class="block1-name ltext-102 trans-04 p-b-8">
-									커뮤니티
-								</span>
-
-								<span class="block1-info stext-102 trans-04">
-									 커뮤니티 관련 문의
-								</span>
-							</div>
-
-							<div class="block1-txt-child2 p-b-4 trans-05">
-								<div class="block1-link stext-101 cl0 trans-09">
-									inquiry Now
-								</div>
-							</div>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                <span class="mb-4 d-block"><i class="icon-layers color-h-four"></i></span>
+                                <h4>문의하기</h4>
+                                <p class="mb-0">각종 문의 사항을 작성 할 수 있습니다.</p>
+							
+                            </div>
+							</a>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+</section>		
+		
+		
 
 
+ <section class="project-single-two"  style="padding: 30px; margin-bottom: 20px;">
 
+            <div class="container">
+                <div class="section-heading">
+                    <h2>서비스별 고객센터</h2>
+                </div>
+            </div>
+
+            <div class="container-fluid p-0">
+
+                <div class="owl-carousel owl-theme owl-loaded owl-drag">
+ 
+                    
+                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 1933px;"><div class="owl-item active" style="width: 453.25px; margin-right: 30px;"><div class="project-grid-style3">
+                        <div class="inner-box">
+                            <div class="project-image">
+                                <img src="${pageContext.request.contextPath}/resources/assets/images/yang.jpg" alt="...">
+                                <div class="overlay">
+                                    <div class="overlay-inner">
+                                        <div class="description">
+                                            <div class="text"> 입양 관련 문의 </div>
+                                            <a href="adoption" class="read-more"><span class="fa fa-angle-right"></span> Inquiry now </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-desc">
+                                <div class="category">입양 문의</div>
+                                <h3><a href="adoption">#입양 #입양 방법 #입양 현황</a></h3>
+                            </div>
+                        </div>
+                    </div></div><div class="owl-item active" style="width: 453.25px; margin-right: 30px;"><div class="project-grid-style3">
+                        <div class="inner-box">
+                            <div class="project-image">
+                                <img src="${pageContext.request.contextPath}/resources/assets/images/yong.jpg" alt="...">
+                                <div class="overlay">
+                                    <div class="overlay-inner">
+                                        <div class="description">
+                                            <div class="text">애견 쇼핑몰 관련 문의</div>
+                                            <a href="shop" class="read-more"><span class="fa fa-angle-right"></span>Inquiry now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-desc">
+                                <div class="category">애견 용품 문의</div>
+                                <h3><a href="shop">#애견옷 #애견 용품 #애견 용품 주문</a></h3>
+                            </div>
+                        </div>
+                    </div></div><div class="owl-item active" style="width: 453.25px; margin-right: 30px;"><div class="project-grid-style3">
+                        <div class="inner-box">
+                            <div class="project-image">
+                                <img src="${pageContext.request.contextPath}/resources/assets/images/co.jpg" alt="...">
+                                <div class="overlay">
+                                    <div class="overlay-inner">
+                                        <div class="description">
+                                            <div class="text">애견 커뮤니티 관련 문의</div>
+                                            <a href="community" class="read-more"><span class="fa fa-angle-right"></span>Inquiry now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-desc">
+                                <div class="category">커뮤니티 문의</div>
+                                <h3><a href="community">#커뮤니티 #애견 커뮤니티 </a></h3>
+
+                            </div>
+                        </div>
+                    </div></div><div class="owl-item active" style="width: 453.25px; margin-right: 30px;"><div class="project-grid-style3">
+                        <div class="inner-box">
+                            <div class="project-image">
+                                <img src="${pageContext.request.contextPath}/resources/assets/images/git.jpg" alt="...">
+                                <div class="overlay">
+                                    <div class="overlay-inner">
+                                        <div class="description">
+                                            <div class="text">기타 관련 문의</div>
+                                            <a href="etc" class="read-more"><span class="fa fa-angle-right"></span>Inquiry now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="project-desc">
+                                <div class="category">기타 문의</div>
+                                <h3><a href="etc">#결제 #시스템 #기타사항</a></h3>
+                            </div>
+                        </div>
+                    </div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div><div class="owl-thumbs"></div></div>
+            </div>
+        </section>
 <script>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -225,5 +271,22 @@
 	
 
 <!--====================================작성부=====================================-->
+<!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets_sub/lib/wow/wow.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets_sub/lib/easing/easing.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets_sub/lib/waypoints/waypoints.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets_sub/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets_sub/lib/counterup/counterup.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets_sub/lib/parallax/parallax.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets_sub/lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="${pageContext.request.contextPath }/resources/assets_sub/lib/lightbox/js/lightbox.min.js"></script>
 
-<%@ include file="../inc/footer.jsp" %> <!-- footer -->
+    <!-- Template Javascript -->
+    <script src="${pageContext.request.contextPath }/resources/assets_sub/js/main.js"></script>
+
+
+
+
+<%@ include file="../inc/new_footer.jsp" %> <!-- footer -->

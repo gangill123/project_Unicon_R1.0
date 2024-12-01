@@ -25,4 +25,8 @@ public interface NoticeDAO {
 	NoticeVO selectPrevNotice(Long noId) throws Exception;
     
 	NoticeVO selectNextNotice(Long noId) throws Exception;
+	
+	List<NoticeVO> selectDraftList(Map<String, Object> params) throws Exception;
+    
+	NoticeVO selectDraft(Long noId) throws Exception;
 }

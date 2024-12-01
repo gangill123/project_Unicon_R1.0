@@ -13,34 +13,11 @@
 
         <!-- HEADER
         ================================================== -->
-        <header class="header-style5">
-            <div id="top-bar">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-9">
-                            <div class="top-bar-info">
-                                <ul class="ps-0">
-                                    <li><i class="fas fa-mobile-alt"></i>(+123) 456 7890</li>
-                                    <li><i class="fas fa-envelope"></i>addyour@emailhere</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-3 d-none d-md-block">
-                            <ul class="top-social-icon ps-0">
-                                <li><a href="#!"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-instagram"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-linkedin-in"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <header>
             <div class="navbar-default">
 
                 <!-- start top search -->
-                <div class="top-search bg-extra-dark-gray">
+                <div class="top-search bg-black">
                     <div class="container">
                         <form class="search-form" action="search.html" method="GET" accept-charset="utf-8">
                             <div class="input-group">
@@ -62,56 +39,15 @@
 
                                     <div class="navbar-header navbar-header-custom">
                                         <!-- start logo -->
-                                        <a href="index.html" class="navbar-brand logodefault"><img id="logo" src="${pageContext.request.contextPath }/resources/new_assets/img/logos/logo.png" alt="logo"></a>
+                                        <a href="/main" class="navbar-brand logodefault"><img id="logo" src="${pageContext.request.contextPath }/resources/new_assets/img/logos/logo.png" alt="logo"></a>
                                         <!-- end logo -->
                                     </div>
 
                                     <div class="navbar-toggler"></div>
 
                                     <!-- menu area -->
-                                    <ul class="navbar-nav ms-auto" id="nav" style="display: none;">
-                                        <li><a href="#!">Home</a>
-                                            <ul>
-                                                <li><a href="#!">Default Homes</a>
-                                                    <ul>
-                                                        <li><a href="home-1.html">Home 01</a></li>
-                                                        <li><a href="home-2.html">Home 02</a></li>
-                                                        <li><a href="home-3.html">Home 03</a></li>
-                                                        <li><a href="home-4.html">Home 04</a></li>
-                                                        <li><a href="home-5.html">Home 05</a></li>
-                                                        <li><a href="home-6.html">Home 06</a></li>
-                                                        <li><a href="home-7.html">Home 07</a></li>
-                                                        <li><a href="home-8.html">Home 08</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">Creative Homes</a>
-                                                    <ul>
-                                                        <li><a href="home-9.html">Home 09</a></li>
-                                                        <li><a href="home-10.html">Home 10</a></li>
-                                                        <li><a href="home-11.html">Home 11</a></li>
-                                                        <li><a href="home-12.html">Home 12</a></li>
-                                                        <li><a href="home-13.html">Home 13</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">Classic Homes</a>
-                                                    <ul>
-                                                        <li><a href="home-startup.html">Home 14 - Startup</a></li>
-                                                        <li><a href="home-marketing-agency.html">Home 15 - Marketing</a></li>
-                                                        <li><a href="home-business.html">Home 16 - Business</a></li>
-                                                        <li><a href="home-finance.html">Home 17 - Finance</a></li>
-                                                        <li><a href="home-corporate.html">Home 18 - Corporate</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">One Page Demos</a>
-                                                    <ul>
-                                                        <li><a href="one-page/agency/index.html" target="_blank">Agency</a></li>
-                                                        <li><a href="one-page/business/index.html" target="_blank">Business</a></li>
-                                                        <li><a href="one-page/consulting/index.html" target="_blank">Consulting</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="home-14.html">Home Shop</a></li>
-                                                <li><a href="admin-template/index.html" target="_blank">Admin Dashboard</a></li>
-                                            </ul>
+                                    <ul class="navbar-nav ms-5" id="nav" style="display: none;">
+                                        <li><a href="/main">홈</a>
                                         </li>
                                         <li><a href="#!">Pages</a>
                                             <ul>
@@ -344,86 +280,28 @@
                                                 <li><a href="blog-post.html">Blog Post</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#!">Shop</a>
+                                        
+                                        
+                                           <li><a href="/inquiry/inquiry">고객센터</a>
                                             <ul>
-                                                <li><a href="shop-product-grid.html">Product Grid</a></li>
-                                                <li><a href="shop-product-list.html">Product List</a></li>
-                                                <li><a href="shop-product-full-three-coulmn.html">Product Three Coulmns</a></li>
-                                                <li><a href="shop-product-full-four-coulmn.html">Product Four Coulmns</a></li>
-                                                <li><a href="shop-product-detail.html">Product Detail</a></li>
-                                                <li><a href="shop-cart.html">Shop Cart</a></li>
-                                                <li><a href="shop-checkout.html">Shop Checkout</a></li>
+                                                <li><a href="/inquiry/inquiry">고객센터</a></li>                                               
+                                            </ul>
+                                           </li>
+                                        
+                                        
+                                        
+                                        <li><a href="#!">관리자페이지</a>
+                                            <ul>
+                                                <li><a href="/admin/slide_manage">슬라이드관리</a></li>
+                                                <li><a href="/admin/news_manage">소식관리</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#!">Elements</a>
-                                            <ul class="row megamenu">
-                                                <li class="col-lg-3">
-                                                    <span class="mb-lg-2 d-block py-2 px-4 p-lg-0 small text-uppercase sub-title">Elements 01</span>
-                                                    <ul>
-                                                        <li><a href="accordions.html"><i class="fas fa-sliders-h me-2"></i>Accordions</a></li>
-                                                        <li><a href="action-boxes.html"><i class="far fa-square me-2"></i>Action Boxes</a></li>
-                                                        <li><a href="alerts.html"><i class="fas fa-bell me-2"></i>Alerts</a></li>
-                                                        <li><a href="audio-video.html"><i class="fas fa-volume-up me-2"></i>Audio Video</a></li>
-                                                        <li><a href="blockquote.html"><i class="fas fa-vector-square me-2"></i>Blockquote</a></li>
-                                                        <li><a href="blog-content.html"><i class="fas fa-edit me-2"></i>Blog Content</a></li>
-                                                        <li><a href="bootstrap-grid.html"><i class="fas fa-th me-2"></i>Bootstrap Grid</a></li>
-                                                        <li><a href="buttons.html"><i class="fas fa-link me-2"></i>Buttons</a></li>
-                                                        <li><a href="count-down.html"><i class="fas fa-flag me-2"></i>Count Down</a></li>
-                                                        <li><a href="charts.html"><i class="fas fa-chart-pie me-2"></i>Charts</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="col-lg-3">
-                                                    <span class="mb-lg-2 d-block py-2 px-4 p-lg-0 small text-uppercase sub-title">Elements 02</span>
-                                                    <ul>
-                                                        <li><a href="countups.html"><i class="fas fa-compress me-2"></i>Countups</a></li>
-                                                        <li><a href="dropcaps.html"><i class="fas fa-highlighter me-2"></i>Dropcaps</a></li>
-                                                        <li><a href="dropdowns.html"><i class="far fa-caret-square-down me-2"></i>Dropdowns</a></li>
-                                                        <li><a href="feature-boxes.html"><i class="fas fa-square-full me-2"></i>Feature Boxes</a></li>
-                                                        <li><a href="feature-boxes-fancy.html"><i class="fas fa-pen-square me-2"></i>Feature Boxes Fancy</a></li>
-                                                        <li><a href="forms.html"><i class="fab fa-wpforms me-2"></i>Forms</a></li>
-                                                        <li><a href="google-map.html"><i class="fas fa-map-marker-alt me-2"></i>Google Map</a></li>
-                                                        <li><a href="html5-video.html"><i class="fas fa-video me-2"></i>HTML5 Video</a></li>
-                                                        <li><a href="icon-types.html"><i class="fab fa-envira me-2"></i>Icon Types</a></li>
-                                                        <li><a href="image-slider.html"><i class="far fa-images me-2"></i>Image Slider</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="col-lg-3">
-                                                    <span class="mb-lg-2 d-block py-2 px-4 p-lg-0 small text-uppercase sub-title">Elements 03</span>
-                                                    <ul>
-                                                        <li><a href="lightbox.html"><i class="far fa-sun me-2"></i>Lightbox</a></li>
-                                                        <li><a href="liststyles.html"><i class="fas fa-list-ul me-2"></i>List Styles</a></li>
-                                                        <li><a href="media-object.html"><i class="fas fa-photo-video me-2"></i>Media Object</a></li>
-                                                        <li><a href="pagetitles.html"><i class="fas fa-file-alt me-2"></i>Page titles</a></li>
-                                                        <li><a href="partners.html"><i class="fas fa-handshake me-2"></i>Partners</a></li>
-                                                        <li><a href="pricing-lists.html"><i class="fas fa-clipboard-list me-2"></i>Pricing Lists</a></li>
-                                                        <li><a href="process.html"><i class="fas fa-expand me-2"></i>Process</a></li>
-                                                        <li><a href="progress-bars.html"><i class="fas fa-tasks me-2"></i>Progress Bars</a></li>
-                                                        <li><a href="project-elements.html"><i class="fas fa-project-diagram me-2"></i>Project Elements</a></li>
-                                                        <li><a href="responsive-videos.html"><i class="fas fa-video me-2"></i>Responsive Popup Videos</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li class="col-lg-3">
-                                                    <span class="mb-lg-2 d-block py-2 px-4 p-lg-0 small text-uppercase sub-title">Elements 04</span>
-                                                    <ul>
-                                                        <li><a href="social-icons.html"><i class="fas fa-share-square me-2"></i>Social Icons</a></li>
-                                                        <li><a href="subscribe.html"><i class="fas fa-newspaper me-2"></i>Subscribe</a></li>
-                                                        <li><a href="table.html"><i class="fas fa-server me-2"></i>Table</a></li>
-                                                        <li><a href="tabs.html"><i class="fas fa-sliders-h me-2"></i>Tabs</a></li>
-                                                        <li><a href="testmonials.html"><i class="fas fa-quote-left me-2"></i>Testmonials</a></li>
-                                                        <li><a href="testmonials-2.html"><i class="fas fa-quote-right me-2"></i>Testmonials 2</a></li>
-                                                        <li><a href="timeline.html"><i class="fas fa-clock me-2"></i>Timeline</a></li>
-                                                        <li><a href="typography.html"><i class="fas fa-text-height me-2"></i>Typography</a></li>
-                                                        <li><a href="vimeo-video.html"><i class="fab fa-vimeo me-2"></i>Vimeo Video</a></li>
-                                                        <li><a href="youtube-video.html"><i class="fab fa-youtube me-2"></i>Youtube Video</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                        <li></li>
                                     </ul>
                                     <!-- end menu area -->
 
                                     <!-- start attribute navigation -->
-                                    <div class="attr-nav me-lg-0">
+                                    <div class="attr-nav me-lg-0 ms-auto">
                                         <ul>
                                             <li class="dropdown me-3 me-lg-0">
                                                 <a href="#" class="dropdown-toggle"  id="dropdownMenuLink" data-bs-toggle="dropdown">
@@ -453,6 +331,13 @@
                                                 </ul>
                                             </li>
                                             <li class="search"><a href="#!"><i class="fas fa-search"></i></a></li>
+                                            <li><a href="/mypage">
+			                                	<img src="${pageContext.request.contextPath }/resources/new_assets/img/slider01.jpg"
+			                                	 class="rounded-circle" style="width: 41px; height: 41px;">
+			                            	</a></li>
+                                            
+                                            <li class="d-none d-xl-inline-block" style="margin-left: 10px;">
+                                            <a href="contact.html" class="butn-style2 text-white small"><span>글쓰기</span></a></li>
                                         </ul>
                                     </div>
                                     <!-- end attribute navigation -->

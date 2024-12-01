@@ -11,7 +11,7 @@
 	Default Header style
 ====================================== */
 
-header{ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); transition: all 0.5s ease 0s; position: relative; z-index: 99999; }
+header{ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); transition: all 0.5s ease 0s; position: relative; z-index: 1020; }
 
 .navbar-brand { display: inline-block; }
 .navbar-brand img{ max-height: 43px; transition-duration: 0.5s; }

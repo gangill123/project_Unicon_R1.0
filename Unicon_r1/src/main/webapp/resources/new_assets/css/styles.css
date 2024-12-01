@@ -806,7 +806,7 @@ input:focus, textarea:focus, select:focus {
   letter-spacing: 0.6px;
   text-transform: none;
   position: relative;
-  z-index: 9999;
+  z-index: 1000;
   display: inline-block;
   white-space: nowrap;
   border: none;
@@ -2599,7 +2599,8 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     font-weight: 400;
     letter-spacing: -1.5px;
     margin: 0;
-    font-size: 72px; }
+    font-size: 72px;
+    color: white; }
   .slider-fade-shop .owl-carousel .caption p {
     color: inherit;
     font-size: 16px;
@@ -2608,7 +2609,7 @@ h1.title-style2.white, h2.title-style2.white, h3.title-style2.white, h4.title-st
     margin-bottom: 0; }
   .slider-fade-shop .subheading {
     font-weight: 500;
-    font-size: 48px;
+    font-size: 50px;
     line-height: normal;
     margin-bottom: 20px; }
     .slider-fade-shop .subheading strong {
@@ -9709,7 +9710,7 @@ ul.countdown li {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999; }
+  z-index: 1050; }
   .product-details .product-cart > a {
     width: 35px;
     height: 35px;

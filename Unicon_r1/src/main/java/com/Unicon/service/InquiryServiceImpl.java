@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Unicon.domain.InquiryAnswerVO;
+import com.Unicon.domain.InquiryFileVO;
 import com.Unicon.domain.InquiryVO;
 import com.Unicon.persistence.InquiryDAO;
 
@@ -45,23 +47,31 @@ public class InquiryServiceImpl implements InquiryService {
 		return response;
 	}
 
-	// 문의 데이터 삽입
-	@Override
-	public void insertInquiry(InquiryVO inquiry) {
-		logger.debug("문의 작성 전"+inquiry);
+	// 문의 데이터를 삽입하고 bno 반환
+	public int insertInquiry(InquiryVO inquiry) {
 		inquiryDAO.insertInquiry(inquiry);
-		logger.debug("문의 작성 완료"+inquiry);
+		return inquiry.getBno(); // insert 후 생성된 bno 값을 반환
 	}
 
-	// 파일 저장
+	public void saveFile(InquiryFileVO fileVO) {
+		inquiryDAO.insertFile(fileVO);
+	}
+
+	// 게시글 상세 정보 조회
 	@Override
-	public void saveFile(MultipartFile file) throws Exception {
-		if (!Files.exists(Paths.get(uploadDir))) {
-			Files.createDirectories(Paths.get(uploadDir)); // 폴더 없으면 생성
-		}
-
-		Path filePath = Paths.get(uploadDir + file.getOriginalFilename());
-		Files.write(filePath, file.getBytes()); // 파일 저장
+	public InquiryVO getBoardDetail(int bno) {
+		return inquiryDAO.getBoardDetail(bno); // DAO에서 게시글 정보 가져오기
 	}
-
+	
+	  // 답변 추가
+	@Override
+    public void addAnswer(InquiryAnswerVO answer) {
+        inquiryDAO.insertAnswer(answer);
+    }
+	@Override
+    // 게시글 번호에 해당하는 답변 조회
+    public List<InquiryAnswerVO> getAnswersByBno(int bno) {
+        return inquiryDAO.getAnswersByBno(bno);
+    }
+	
 }

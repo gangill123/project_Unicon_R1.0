@@ -1,5 +1,8 @@
 package com.Unicon.persistence;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -21,14 +24,39 @@ public class CommunityDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommunityDAO.class);
 	
-	// 게시물 등록
+	// member_id로 기존의 post_id 값 유무 체크(불러오기)
+	public String checkPostId(String member_id) {
+		logger.info(" DAO - checkPostId() 실행 ");
+		return sqlSession.selectOne(NAMESPACE+"checkPostId", member_id);
+	}
+	
+	// 게시물 정보 등록
 	public void postInsert(PostVO postVO) {
 		logger.info(" DAO - postInsert() 실행 ");
 		
 		sqlSession.insert(NAMESPACE+"postInsert", postVO);
-		for(ImageVO imageVO : postVO.getPost_images()) {
-			sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
-		}
+		
+		Map<String, Object> imageParams = new HashMap<>();
+		imageParams.put("post_id", postVO.getPost_id());
+		imageParams.put("images", postVO.getPost_images());
+		sqlSession.insert(NAMESPACE+"insertPostImages", imageParams);
+		
 	} // postInsert()
+	
+	
+	
+	
+	
+//	// 이미지 정보 등록(반복은 매퍼에서 처리)
+//	public void imageInsert(ImageVO imageVO) {
+//		logger.info(" DAO - imageInsert() 실행 ");
+//		
+//		sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
+//		
+////		for(ImageVO imageVO : postVO.getPost_images()) {
+////		sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
+////	}
+//		
+//	}
 	
 }

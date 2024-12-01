@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.Unicon.domain.InquiryAnswerVO;
+import com.Unicon.domain.InquiryFileVO;
 import com.Unicon.domain.InquiryVO;
 
 @Repository
@@ -45,5 +47,32 @@ public class InquiryDAOImpl implements InquiryDAO {
 	public void insertInquiry(InquiryVO inquiry) {
 	    sqlSession.insert(NAMESPACE + ".insertInquiry", inquiry);  // inquiry 객체를 전달
 	}
+	
 
+    @Override
+    public void insertFile(InquiryFileVO inquiryFileVO) {
+        sqlSession.insert(NAMESPACE + ".insertFile", inquiryFileVO);  // 파일 정보 저장
+    }
+    @Override
+    public InquiryVO getBoardDetail(int bno) {
+    	return sqlSession.selectOne(NAMESPACE + ".getBoardDetail", bno);  // 파일 정보 저장
+    	
+    }
+    // 답변 메서드 ////////////////////////////////
+    
+    // 답변 추가
+    public void insertAnswer(InquiryAnswerVO answer) {
+        sqlSession.insert(NAMESPACE +".insertAnswer", answer);
+    }
+
+    // 게시글 번호에 해당하는 답변 조회
+    public List<InquiryAnswerVO> getAnswersByBno(int bno) {
+        return sqlSession.selectList(NAMESPACE+".getAnswersByBno", bno);
+    }
+   
+    
 }
+    
+    
+
+

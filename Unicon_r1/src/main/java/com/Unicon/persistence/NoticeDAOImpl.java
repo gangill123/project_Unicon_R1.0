@@ -89,4 +89,14 @@ public class NoticeDAOImpl implements NoticeDAO {
             throw new Exception("다음글 조회 중 오류가 발생했습니다.", e);
         }
     }
+    
+    @Override
+    public List<NoticeVO> selectDraftList(Map<String, Object> params) throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".selectDraftList", params);
+    }
+
+    @Override
+    public NoticeVO selectDraft(Long noId) throws Exception {
+        return sqlSession.selectOne(NAMESPACE + ".selectDraft", noId);
+    }
 }

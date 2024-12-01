@@ -18,21 +18,21 @@
 	<result property="post_pet_date" column="post_pet_date"/>
 	
 	<association property="jypMember" resultMap="JypMemberResultMap" />
-	<association property="petData" resultMap="PetDataResultMap" />
+	<association property="categoryData" resultMap="CategoryDataResultMap" />
 	
 <!-- 	<association property="adptCounsel" resultMap="CounselResultMap"/> -->
 <!-- 	<association property="adptMember" resultMap="MemberResultMap"/> -->
 <!-- 	<association property="adptInterest" resultMap="InterestResultMap"/> -->
 	
-<!-- 	<collection property="adpt_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/> -->
+	<collection property="adpt_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
 <!-- 	<collection property="adpt_healths" ofType="com.Unicon.domain.AdptHealthVO" resultMap="HealthResultMap"/> -->
 <!-- 	<collection property="adpt_vaccins" ofType="com.Unicon.domain.AdptVaccinVO" resultMap="VaccinResultMap"/> -->
 </resultMap>
 
-<resultMap id="PetDataResultMap" type="com.Unicon.domain.PetDataVO">
-	<id property="pet_code" column="pet_code"/>
-	<result property="pet_type" column="pet_type"/>
-	<result property="pet_breed" column="pet_breed"/>
+<resultMap id="CategoryDataResultMap" type="com.Unicon.domain.CategoryDataVO">
+	<id property="category_code" column="category_code"/>
+	<result property="category_type" column="category_type"/>
+	<result property="category_value" column="category_value"/>
 </resultMap>
 
 <resultMap id="CommentResultMap" type="com.Unicon.domain.CommentVO">
@@ -113,16 +113,40 @@
 
 
 
+<!-- 기존의 post_id 값 유무 체크(불러오기) -->
+<select id="checkPostId" resultType="String">
+	select post_id from _post where member_id = #{member_id} order by post_date desc limit 1
+</select>
+
 <!-- 게시물 등록 -->
 <!-- post_id, 이미지 구조 변경 필요 -->
 <insert id="postInsert">
-	insert into _post (post_id, member_id, post_title, post_content, post_date, post_type, pet_code, pet_etc, breed, post_pet_place, post_pet_date) 
+	insert into _post (post_id, member_id, post_title, post_content, post_date, post_type, pet_code, pet_etc_breed, post_pet_place, post_pet_date) 
 	values (#{post_id}, #{member_id}, #{post_title}, #{post_content}, now(), #{post_type}, #{pet_code}, #{pet_etc_breed}, #{post_pet_place}, #{post_pet_date}) 
 </insert>
-<insert id="postImageInsert">
-	insert into _image 
-	 values (#{image_id}, #{image_type}, #{image_sequence}, #{image_src}) 
+
+
+<insert id="insertPostImages" parameterType="map">
+	insert into _image (image_id, image_type, image_sequence, image_src) 
+	 values 
+	  <foreach collection="images" item="i" separator=","> 
+	   (#{post_id}, #{i.image_type}, #{i.image_sequence}, #{i.image_src}) 
+	  </foreach> 
 </insert>
+
+
+<!-- <insert id="postImageInsert"> -->
+<!-- 	insert into _image (image_id, image_type, image_sequence, image_src) values  -->
+<!-- 	<foreach collection="list" item="image" separator=","> -->
+<!-- 		(#{image.image_id}, #{image.image_type}, #{image.image_sequence}, #{image.image_src})  -->
+<!-- 	</foreach>  -->
+<!-- </insert> -->
+
+<!-- <insert id="postImageInsert"> -->
+<!-- 	insert into _image (image_id, image_type, image_sequence, image_src)  -->
+<!-- 	values (#{member_id}, #{post_type}, 1, #{image_src})  -->
+	
+<!-- </insert> -->
 
 
 
