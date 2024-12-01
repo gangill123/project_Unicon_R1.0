@@ -32,7 +32,7 @@
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
-	
+	<%-- ${petAllInfo } --%>
 	
 	<section  style="padding-top: 50px;">
             <div class="container">
@@ -68,8 +68,9 @@
                         
                         <div class="row text-center" style="border-bottom: 1px solid #eee; padding-bottom: 20px;">
                             <div class="col-lg-3 mb-3 mb-lg-0">
-                                <img class="rounded-circle" style="margin-bottom: 15px;"
-                                src="${pageContext.request.contextPath }/resources/new_assets/img/testmonials/t-4.jpg">
+                                <div class="product-img" style="padding: 10px;">
+                                <img class="rounded-circle" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/product-01.jpg" alt="...">
+                           		</div>
                             </div>
                             
                             <div class="col-lg-9 text-lg-start">
@@ -81,13 +82,19 @@
 	                                <div class="col">
 	                                	<a href="#!"><div>
 		                                	<h5 style="margin-bottom: 0;">1</h5>
-		                                	<span>My유니콘</span>
+		                                	<span>유니콘</span>
 	                                	</div></a>
 	                            	</div>
 	                                <div class="col">
 	                                	<div>
 		                                	<h5 style="margin-bottom: 0;">1</h5>
-		                                	<span>My이웃</span>
+		                                	<span>팔로워</span>
+	                                	</div>
+	                            	</div>
+	                                <div class="col">
+	                                	<div>
+		                                	<h5 style="margin-bottom: 0;">1</h5>
+		                                	<span>팔로잉</span>
 	                                	</div>
 	                            	</div>
 	                                <div class="col">
@@ -116,26 +123,16 @@
                 </div>
                         
                  <div class="row product-grid" style="min-height: 333.5px;">
-                 	<div class="col-lg-12" style="text-align: end; margin-top: 0;">
-                     	<button type="button" class="btn btn-secondary btn-sm">유니콘 등록</button>
-                     </div>
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="product-details">
-                            <div class="product-img">
-                                <img src="${pageContext.request.contextPath }/resources/new_assets/img/shop/product-01.jpg" alt="...">
-                            </div>
-                            <div class="product-info">
-                                <a href="#!">Sneakers Shoe</a>
-                                <p class="price text-center m-0">
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                 	
                 </div>
-                        
-                        
-                        
-                        
+                
+                <div class="row mt-1-9 mt-lg-6" style="margin-top: 0;">
+	                     <div class="col-12">
+	                         <div class="pagination text-small text-uppercase text-extra-dark-gray">
+	                             <ul id="pagination"></ul>
+	                         </div>
+	                     </div>
+               		</div>
                         
                         </div> <!-- common -->
                         </div>
@@ -155,12 +152,14 @@
 
 <script>
 $(document).ready(function () {
+	let id = 'myUni';
+	mypagePaging(id)
 	
 	$('.filtering span').on('click', function(){
-		let id = $(this).attr('id');
+		id = $(this).attr('id');
 		console.log(id);
 		$('.product-grid').empty();
-		myPageForPropile(id);
+		mypagePaging(id);
 	});
 	
 	

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Unicon.mapper.MypageMapper">
+
+	<!-- 펫 카테고리 가져오기 -->
+	<select id="getPetType" resultType="CategoryDataVO">
+		select * 
+		from _category_data 
+		where category_code between (#{petOpt}+1) and (#{petOpt}+999); 
+	</select>
+	
+	<!-- 펫 등록하기 -->
+	<insert id="createPet">
+		insert into _pet(pet_id, member_id, pet_src, pet_name, pet_gender, pet_type, pet_detail, pet_detail_etc)
+		values(#{pet_id}, #{member_id}, #{pet_src}, #{pet_name}, #{pet_gender}, #{pet_type}, #{pet_detail}, #{pet_detail_etc})
+	</insert>
+	
+	<!-- 펫 조회(member_id) -->
+	<select id="getPetAll" resultType="PetVO">
+		select * from _pet where member_id = #{member_id} 
+	</select>
+	
+	<!-- 펫 조회(pet_id) -->
+	<select id="getPet" resultType="PetVO">
+		select * from _pet where pet_id = #{pet_id} 
+	</select>
+	
+	<!-- 펫 정보 수정 -->
+	<update id="petUpdate">
+		update _pet
+		set pet_src=#{pet_src}, pet_name=#{pet_name}, pet_gender=#{pet_gender}, pet_type=#{pet_type}, 
+		pet_detail=#{pet_detail}, pet_detail_etc=#{pet_detail_etc} 
+		where pet_id = #{pet_id} 
+	</update>
+	
+
+</mapper>
+
+
