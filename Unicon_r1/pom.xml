@@ -233,7 +233,24 @@
 	        <artifactId>spring-security-config</artifactId>
 	        <version>5.0.6.RELEASE</version>
 	    </dependency>
-	    
+	    <!--  redis,oauth2 -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-oauth2-client</artifactId>
+		    <version>5.0.6.RELEASE</version>
+		</dependency>
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.9.0</version> <!-- Spring Data Redis와 호환 가능한 Jedis 버전 -->
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-redis</artifactId>
+		    <version>2.0.6.RELEASE</version>
+		</dependency>
+
+		<!--  redis,oauth2 -->    
 	    <dependency>
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-taglibs</artifactId>
