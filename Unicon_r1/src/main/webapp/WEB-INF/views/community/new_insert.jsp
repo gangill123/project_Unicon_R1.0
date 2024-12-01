@@ -75,7 +75,7 @@
                                         <label for="post_type">게시글 종류 <span class="quform-required">*</span></label>
                                         <div class="quform-input">
                                             <select id="post_type" class="form-control form-select" name="post_type">
-                                                <option>게시글 종류</option>
+                                                <option value="">게시글 종류</option>
                                                 <option value="post01">입양 후기</option>
                                                 <option value="post02">반려 이야기</option>
                                                 <option value="post03">실종</option>
@@ -510,6 +510,72 @@ $(function() {
 	    
 	});
 	// 드롭다운 클릭
+	
+	// 글 등록
+	$('#formPost').on('submit', function(event) {
+		event.preventDefault();
+		var formData = new FormData(this);
+		
+		if($('#post_type').val() == '') {
+			alert('게시글 종류를 선택해주세요!');
+			$('#post_type').focus();
+			return;
+		} else if($('#pet_code').val() == '') {
+			alert('동물 품종을 선택해주세요!');
+			$('#pet_code').focus();
+			return;
+		} else if ($('#image-input-1').val() == '') {
+			alert('대표 이미지를 입력해주세요!');
+			$('#image-input-1').focus();
+			return;
+		}
+		
+		Swal.fire({
+			title: '제출하시겠습니까?',
+			text: '제출 내용을 확인해주세요!',
+			icon: 'info',
+			showCancelButton: true,
+			confirmButtonColor: '#006e60',
+			cancelButtonColor: '#aab2bd',
+			confirmButtonText: '제출',
+			cancelButtonText: '닫기'
+		}).then(function(result) {
+			if (result.isConfirmed) {
+				$.ajax({
+					url: '/community/insert',
+					type: 'POST',
+					data: formData,
+					contentType: false,
+					processData: false,
+					success: function(response) {
+						Swal.fire({
+						title: '제출 완료',
+						text: '제출에 성공했습니다!',
+						icon: 'success',
+						confirmButtonColor: '#006e60',
+						confirmButtonText: '확인'
+						}).then(function(result){
+							if(result.isConfirmed){
+								location.reload();
+							}
+						});
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						console.error('제출 실패:', textStatus, errorThrown);
+						Swal.fire({
+							title: '오류!',
+							text: '제출에 실패했습니다.',
+							icon: 'error',
+							confirmButtonColor: '#006e60',
+							confirmButtonText: '확인'
+						});
+					}
+				});
+			}
+		});
+	});
+	// 글 등록
+	
 	
 // 	// 페이지 이동
 //     $('#formPost').on('submit', function(event) {
