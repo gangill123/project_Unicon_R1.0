@@ -52,7 +52,7 @@
                             <div class="row">
                               <div class="col-12 grid-margin stretch-card">
 				                <div style="width:100%;">
-				                  <div style="padding : padding: 1.0rem 2.0rem;">
+				                  <div style="padding : 1.0rem 2.0rem;">
 				                  	<div style="display: flex; justify-content: space-between;">
 				                  		<div style="display: flex;align-items: center;">
 						                    <h4 class="card-title" style="margin-bottom: 0">카테고리 </h4>
@@ -89,7 +89,7 @@
                             <div class="row">
                               <div class="col-12 grid-margin stretch-card">
 				                <div style="width:100%;">
-				                  <div style="padding : padding: 1.0rem 2.0rem;">
+				                  <div style="padding: 1.0rem 2.0rem;">
 				                  	<div style="display: flex; justify-content: space-between;">
 				                  		<div style="display: flex;align-items: center;">
 						                    <h4 class="card-title" style="margin-bottom: 0">상품명 </h4>
@@ -128,7 +128,7 @@
                             <div class="row">
                               <div class="col-12 grid-margin stretch-card">
 				                <div style="width:100%;">
-				                  <div style="padding : padding: 1.0rem 2.0rem;">
+				                  <div style="padding : 1.0rem 2.0rem;">
 				                  	<div style="display: flex; justify-content: space-between;">
 				                  		<div style="display: flex;align-items: center;">
 						                    <h4 class="card-title" style="margin-bottom: 0">판매가 </h4>
@@ -216,7 +216,7 @@
                             <div class="row">
                               <div class="col-12 grid-margin stretch-card">
 				                <div style="width:100%;">
-				                  <div style="padding : padding: 1.0rem 2.0rem;">
+				                  <div style="padding : 1.0rem 2.0rem;">
 				                  	<div style="display: flex; justify-content: space-between;">
 				                  		<div style="display: flex;align-items: center;">
 						                    <h4 class="card-title" style="margin-bottom: 0">재고수량 </h4>
@@ -246,7 +246,7 @@
                             <div class="row">
                               <div class="col-12 grid-margin stretch-card">
 				                <div style="width:100%;">
-				                  <div style="padding : padding: 1.0rem 2.0rem;">
+				                  <div style="padding : 1.0rem 2.0rem;">
 				                  	<div style="display: flex; justify-content: space-between;">
 				                  		<div style="display: flex;align-items: center;">
 						                    <h4 class="card-title" style="margin-bottom: 0">옵션 </h4>
@@ -280,7 +280,7 @@
 												    	<div>
 													        <p class="tooltiptext"><i class="icon-must" aria-label="필수항목"></i> 조합형이란?</p>
 													        <span>
-															        옵션별로 옵션가가 다르거나 재고수량이 다른 경우를 말합니다. 단, 옵션 중에 정상 판매중이고, 옵션가가 0원으로 설정이 반드시 하나 이상 존재해야 합니다.
+															        옵션별로 옵션가가 다르거나 재고수량이 다른 경우를 말합니다.
 													        </span>
 												    	</div>
 												    </div>
@@ -304,7 +304,6 @@
 											        	<select>
 											        		<option selected="selected" value="1">1개</option>
 											        		<option value="2">2개</option>
-											        		<option value="3">3개</option>
 											        	</select>
 											        </div>
 											    </div>
@@ -339,7 +338,7 @@
 											              id="option-value-1"
 											              class="option-input"
 											              type="text"
-											              placeholder="예시:컬러"
+											              placeholder="예시: 빨강,노랑 (,로 구분)"
 											              name="option-productNames"
 											            />
 											          </div>
@@ -356,7 +355,50 @@
 												<button class="option-list-apply" disabled>옵션 목록 적용</button>
 												</div>
 				                    		</div>
-				                    	<div class="dropdown-divider"></div>
+											<div style="width: 100%; overflow-x: auto; border: 1px solid #ccc; padding: 0;">
+											   <div style="width: 100%;text-align: center;display: flex;align-items: center;border-bottom: 1px solid;justify-content: center;" class="option-list-header">
+											    	<div style="width: 4%;padding: 0.7em 0 0.7em;"><input type="checkbox"></div>
+											    	<div style="border-right: 1px solid; border-left: 1px solid;width: 30%;display: flex;flex-direction: column;" class="option-list-header">
+												    	<div style="border-bottom: 1px solid;position: relative;top: 0px;padding: 10px 0; ">
+												    		<span style="color:#000000">옵션명</span>
+												    	</div>
+												    	<div style="padding: 10px 0;color:#000000;height: 44px; display: flex;justify-content: center;gap: 5rem;">
+												    		 <div></div>
+														     <div style="border-right: 1px solid;height: 46px;position: relative;top: -11px;color: #a7afb7;"></div>
+												    		 <div></div>
+												    	</div>
+											    	</div>
+											    	<div style="width: 30%;padding: 0.7em 0 0.7em;display: flex;align-items: center;justify-content: center;color:#000000;">옵션가</div>
+											    	<div style="border-right: 1px solid;height: 86px;"></div>
+											    	<div style="width: 30%;padding: 0.7em 0 0.7em;display: flex;align-items: center;justify-content: center;color:#000000;">재고수량</div>
+											    	<div style="border-right: 1px solid;height: 86px;"></div>
+											    	<div style="width: 5%;padding: 0.7em 0 0.7em;display: flex;align-items: center;justify-content: center;color:#000000;">삭제</div>
+											    </div>
+											    
+											    <div class="option-list-body">
+													<div style="width: 100%;text-align: center;display: flex;align-items: center;justify-content: center; background-color: #fff; color:#000000">
+												    	<div style="width: 4%;"><input type="checkbox"></div>
+												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: -1px;color:#a7afb7"></div>
+												    	<div style="width: 30%;">
+												    		<div style="display: flex;justify-content: center;gap: 5rem;align-items: center;">
+													    		<div></div>
+														    	<div style="border-right: 1px solid;height: 30px;color:#a7afb7"></div>
+													    		<div></div>
+												    		</div>
+												    	</div>
+												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div>
+												    	<div style="width: 30%;"></div>
+												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div>
+												    	<div style="width: 30%;"></div>
+												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div>
+												    	<div style="width: 5%;display: flex;align-items: center;justify-content: center;">
+												    		<button style="border: none; background-color: transparent;">
+												    			<i class="mdi mdi-close"></i>
+												    		</button>
+												    	</div>
+												    </div>
+											    </div>
+											</div>
 										</div>
 				                      <div class="dropdown-divider"></div>
 				                    </div>
@@ -374,7 +416,7 @@
                             <div class="row">
                               <div class="col-12 grid-margin stretch-card">
 				                <div style="width:100%;">
-				                  <div style="padding : padding: 1.0rem 2.0rem;">
+				                  <div style="padding :  1.0rem 2.0rem;">
 				                  	<div style="display: flex; justify-content: space-between;">
 				                  		<div style="display: flex;align-items: center;">
 						                    <h4 class="card-title" style="margin-bottom: 0">옵션 </h4>
