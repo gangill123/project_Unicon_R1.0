@@ -1522,6 +1522,10 @@
 									icon: 'success',
 									confirmButtonColor: '#006e60',
 									confirmButtonText: '확인'
+									}).then(function(result){
+										if(result.isConfirmed){
+											location.reload();
+										}
 									});
 								},
 								error: function(jqXHR, textStatus, errorThrown) {
