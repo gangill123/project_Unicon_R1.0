@@ -17,11 +17,11 @@ import com.Unicon.service.MainSlideService;
 @RequestMapping("/main")
 public class MainController {
 	
+	// http://localhost:8088/main/new_template
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	@Autowired
 	private MainSlideService msService;
-	
 	
 	@GetMapping("")
 	public String main(Model model) {
