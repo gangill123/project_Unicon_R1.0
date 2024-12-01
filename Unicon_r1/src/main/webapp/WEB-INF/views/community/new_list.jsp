@@ -215,15 +215,32 @@
                             </div>
                             
                             
+<!--                             <div class="media" style="margin-bottom: 30px;"> -->
+<%--                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="..."> --%>
+<!--                                 <div class="media-body"> -->
+<!--                                     <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4> -->
+<!--                                     Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore. -->
+<!--                                 </div> -->
+<!--                                 <div class="datetime" style="margin-left: 15px;">1998-07-11 00:00</div> -->
+<!--                                 <div class="likecount" style="margin-left: 15px;">좋아요 711개</div> -->
+<!--                                 <div class="like" style="margin-left: 15px;"><i class="fa-solid fa-heart"></i></div> -->
+<!--                             </div> -->
+                            
                             <div class="media" style="margin-bottom: 30px;">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
-                                    <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
-                                    Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.
+                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
+									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
+									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
+									        <div class="box" style="display: flex; width: 25%">1998-07-11 00:00</div>
+									        <div class="box" style="display: flex; width: 25%">좋아요 711개</div>
+									        <div class="box" style="display: flex; width: 5%"><i class="fa-solid fa-heart"></i></div>
+									    </div>
+									    <div class="bottom-section" style="display: flex; justify-content: center; align-items: center;">
+									        <div class="box">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</div>
+									    </div>
+									</div>
                                 </div>
-                                <div class="datetime" style="margin-left: 15px;">1998-07-11 00:00</div>
-                                <div class="likecount" style="margin-left: 15px;">좋아요 711개</div>
-                                <div class="like" style="margin-left: 15px;"><i class="fa-solid fa-heart"></i></div>
                             </div>
                             
                             
@@ -336,12 +353,15 @@
                            
                            
                            
-                       </div>
-                   </div>
-               </div>
+                       </div> <!-- <div class="product-detail"> -->
+                   </div> <!-- <div class="col-lg-7 ps-lg-2-3"> -->
+               </div> <!-- <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9"> -->
+            </div> <!-- <div class="modal-body"> -->
+            <div class="modal-footer">
+            
             </div>
-        </div>
-    </div>
+        </div> <!-- <div class="modal-content"> -->
+    </div> <!-- <div class="modal-dialog" style="max-width: 1200px;"> -->
 </div>
 
 
