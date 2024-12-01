@@ -269,7 +269,7 @@ body,
 				            </div>
 				            <div class="col-md-4">
 							    <div class="input-group">
-							        <span class="input-group-text bg-light">봉사일</span>
+							        <span class="input-group-text bg-light">모집일</span>
 							        <input type="date" class="form-control" name="startDate" value="${param.voStartDate}">
 							        <span class="input-group-text">~</span>
 							        <!-- <span class="input-group-text bg-light">봉사종료일</span> -->
