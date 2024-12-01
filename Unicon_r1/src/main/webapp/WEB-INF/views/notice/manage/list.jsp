@@ -304,10 +304,10 @@ body,
 		                    </div>
 		                    <div class="col-md-3">
 		                        <div class="d-flex gap-2">
-		                            <button type="submit" class="btn btn-primary flex-grow-1">
+		                            <button type="submit" class="btn btn-primary w-50">
 		                                <i class="fas fa-search"></i> 검색
 		                            </button>
-		                            <button type="button" class="btn btn-outline-secondary flex-grow-1" onclick="resetSearch()">
+		                            <button type="button" class="btn btn-outline-secondary w-50" onclick="resetSearch()">
 		                                <i class="fas fa-undo"></i> 초기화
 		                            </button>
 		                        </div>

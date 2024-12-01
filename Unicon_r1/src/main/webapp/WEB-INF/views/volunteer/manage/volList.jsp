@@ -240,33 +240,39 @@ body,
 
                 <!-- 검색 필터 -->
                 <div class="card">
-                    <div class="card-body">
-                        <form id="searchForm" class="row g-3">
-                            <div class="col-md-2">
-                                <select class="form-select" name="recruitStatus">
-                                    <option value="">전체 상태</option>
-                                    <option value="OPEN">모집중</option>
-                                    <option value="CLOSE">마감</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" name="keyword" placeholder="봉사활동명 검색">
-                            </div>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="date" class="form-control" name="startDate">
-                                    <span class="input-group-text">~</span>
-                                    <input type="date" class="form-control" name="endDate">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <i class="fas fa-search"></i> 검색
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+				    <div class="card-body">
+				        <form id="searchForm" class="row g-3">
+				            <div class="col-md-2">
+							    <select name="recruitStatus" class="form-select">
+							        <option value="">전체 상태</option>
+							        <option value="OPEN" ${param.recruitStatus == 'OPEN' ? 'selected' : ''}>모집중</option>
+							        <option value="CLOSE" ${param.recruitStatus == 'CLOSE' ? 'selected' : ''}>마감</option>
+							    </select>
+							</div>
+				            <div class="col-md-3">
+				                <input type="text" class="form-control" name="keyword" 
+				                       placeholder="봉사활동명 검색" value="${param.keyword}">
+				            </div>
+				            <div class="col-md-4">
+				                <div class="input-group">
+				                    <input type="date" class="form-control" name="startDate" value="${param.startDate}">
+				                    <span class="input-group-text">~</span>
+				                    <input type="date" class="form-control" name="endDate" value="${param.endDate}">
+				                </div>
+				            </div>
+				            <div class="col-md-3">
+							    <div class="d-flex gap-2">
+							        <button type="submit" class="btn btn-primary w-50">
+							            <i class="fas fa-search"></i> 검색
+							        </button>
+							        <button type="button" class="btn btn-outline-secondary w-50" onclick="resetSearch()">
+							            <i class="fas fa-undo"></i> 초기화
+							        </button>
+							    </div>
+							</div>
+				        </form>
+				    </div>
+				</div>
 
                 <!-- 공고 목록 -->
                 <div class="card">
@@ -442,18 +448,30 @@ function openRecruitment(id) {
     });
 }
 
-function goToPage(page) {
-    const form = $('#searchForm');
-    const pageInput = $('<input>').attr({
-        type: 'hidden',
-        name: 'page',
-        value: page
-    });
+window.goToPage = function(page) {
+    var recruitStatus = $('select[name="recruitStatus"]').val();
+    var keyword = $('input[name="keyword"]').val();
+    var startDate = $('input[name="startDate"]').val();
+    var endDate = $('input[name="endDate"]').val();
     
-    form.append(pageInput);
-    form.submit();
-}
+    var params = new URLSearchParams();
+    params.append('page', page);
+    params.append('size', '10');
+    
+    if (recruitStatus) params.append('recruitStatus', recruitStatus);
+    if (keyword) params.append('keyword', keyword);
+    if (startDate) params.append('startDate', startDate);
+    if (endDate) params.append('endDate', endDate);
+    
+    window.location.href = '/volunteer/manage?' + params.toString(); 
+};
 
+// 검색 초기화
+window.resetSearch = function() {
+    window.location.href = '/volunteer/manage?page=1&size=10';
+};
+
+// DOM이 완전히 로드된 후 이벤트 핸들러 설정
 $(document).ready(function() {
     // 검색 폼 제출
     $('#searchForm').on('submit', function(e) {
