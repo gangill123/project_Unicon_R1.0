@@ -10,6 +10,26 @@
 	aspect-ratio: 1920 / 650; /* 원하는 가로:세로 비율 설정 */
 }
 
+.slider-fade-shop .owl-theme .owl-nav [class*='owl-'] {
+	background: transparent !important;
+}
+
+.img-holder {
+    width: 100%;
+    aspect-ratio: 5 / 3; /* 원하는 가로:세로 비율 설정 */
+    overflow: hidden;    /* 이미지가 컨테이너를 벗어나지 않도록 */
+}
+
+.img-holder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+}
+
+.butn-style2.small:hover{
+	padding-right: 6em !important;
+}
+
 </style>
 
 
@@ -73,23 +93,25 @@
         </section>
         
         
-        <section style="padding: 40px 0;"> 
+        <section style="padding: 50px 0;"> 
             <div class="container">
-                <div class="section-heading"><span>Welcome</span>
+                <div class="section-heading" style="margin-bottom: 20px;"><span>안녕하세요!!</span>
                     <h2>새로운 유니콘 소개</h2>
-                    <p class="w-95 w-sm-85 w-md-75 w-lg-55">Business consectetur adipisicing elit</p>
                 </div>
-
-                <div class="row portfolio-gallery mt-n1-9">
-
-                    <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="100ms" data-src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-01.jpg" data-sub-html="<h4 class='text-white'>Business Consultation #01</h4><p>Business</p>">
+				<div style="text-align: end; margin-bottom: 20px;">
+					<button type="submit" class="butn-style2 small" style="font-size: 0.7rem;">
+					<span>더보기</span></button>
+				</div>
+                <div class="row mt-n1-9">
+                    <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="100ms">
                         <div class="portfolio-style1">
                         	<div class="label-offer bg-red"><i class="fa-solid fa-dog"></i> Sale</div>
                             <img src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-01.jpg" class="border-radius-10" alt="...">
-                            <a href="#!" class="portfolio-text">
+                            <a href="#!" class="portfolio-text" data-bs-toggle="modal" data-bs-target="#exampleModal2">
                                 <span class="display-31 font-weight-700 text-orange letter-spacing-2 text-uppercase d-block mb-2">Business</span>
                                 <h3 class="mb-0 h5">Business Consultation</h3>
                             </a>
+                            
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="200ms" data-src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-02.jpg" data-sub-html="<h4 class='text-white'>Finance Strategy #02</h4><p>Finance</p>">
@@ -127,14 +149,18 @@
         
         
         
-        <section class="pb-0 pb-lg-5">
+        <section class="pb-0 pb-lg-5" style="padding-top: 50px; margin-bottom: 50px;">
             <div class="container">
+            	<div class="section-heading"><span>알려드려요!!</span>
+                    <h2>반려동물 소식</h2>
+                </div>
+            
                 <div class="row about-style2">
 
                     <div class="col-lg-5 mb-2-3 mb-lg-0">
                         <div class="about2-text wow fadeInLeft" data-wow-delay="500ms">
-                            <img src="${pageContext.request.contextPath }/resources/new_assets/img/content/about-07.jpg" class="rounded" alt="...">
-                            <span class="wow fadeInRight bg-img" data-background="${pageContext.request.contextPath }/resources/new_assets/img/content/about-09.jpg" data-wow-delay="550ms">25</span>
+                            <img src="${pageContext.request.contextPath }/resources/new_assets/img/news01.jpg" class="rounded" alt="...">
+                            <span class="wow fadeInRight" data-wow-delay="550ms">25</span>
                             <h5 class="wow fadeInLeft" data-wow-delay="550ms">Years of experience</h5>
                         </div>
                     </div>
@@ -170,14 +196,14 @@
 		
 		<section style="padding: 60px 0;">
             <div class="container">
-                <div class="section-heading"><span>축하해주세요!</span>
+                <div class="section-heading"><span>축하해주세요!!</span>
                     <h2>유니콘 입양후기</h2>
                     <p class="w-95 w-sm-85 w-md-75 w-lg-55">Business consectetur adipisicing elit eiusmod tempor incididunt ut labore et dolore magna aliqua quis nostrud exercitation consequat.</p>
                 </div>
                 <div class="service-grids owl-carousel owl-theme" id="service-grids">
                     <div class="service-block">
                         <div class="img-holder">
-                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/content/services/service-1b.jpg">
+                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
                         </div>
                         <div class="details">
                             <div class="number alt-font">01</div>
@@ -188,7 +214,7 @@
                     </div>
                     <div class="service-block">
                         <div class="img-holder">
-                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/content/services/service-2b.jpg">
+                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/slider01.jpg">
                         </div>
                         <div class="details">
                             <div class="number alt-font">02</div>
