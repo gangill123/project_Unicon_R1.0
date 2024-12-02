@@ -156,7 +156,7 @@
         )
     </insert>
 
-    <!-- 봉사활동 신청 상태 변경 -->
+    <!-- 봉사활동신청 사용자 취소 -->
     <update id="updateVolunteerApplyStatus">
 	    update _volunteer_apply
 	    set 
@@ -164,6 +164,19 @@
 	        <if test="cancelReason != null">
 	            , cancelReason = #{cancelReason}       
 	            , cancelReasonDetail = #{cancelReasonDetail} 
+	        </if>
+	        , voUpdateDate = CURRENT_TIMESTAMP
+	    where voId = #{voId}
+	</update>
+	
+	<!-- 봉사활동신청 관리자 거절 -->
+	<update id="updateVolunteerApplyReject">
+	    update _volunteer_apply
+	    set 
+	        status = #{status}
+	        <if test="rejectReason != null">
+	            , rejectReason = #{rejectReason}       
+	            , rejectReasonDetail = #{rejectReasonDetail} 
 	        </if>
 	        , voUpdateDate = CURRENT_TIMESTAMP
 	    where voId = #{voId}

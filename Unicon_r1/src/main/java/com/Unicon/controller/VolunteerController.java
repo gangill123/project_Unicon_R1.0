@@ -225,16 +225,17 @@ public class VolunteerController {
         }
     }
     
-    @PostMapping("/manage/reject/{applicationId}")
+    @PostMapping("/manage/reject/{voId}")
     @ResponseBody
     public ResponseEntity<String> rejectApplication(
-            @PathVariable Long applicationId,
-            @RequestParam String reason) {
+            @PathVariable Long voId,
+            @RequestParam String reason,
+            @RequestParam String reasonDetail) {
         try {
-            volService.rejectApplication(applicationId, reason);
-            return ResponseEntity.ok("거절되었습니다.");
+            volService.rejectApplication(voId, reason, reasonDetail);
+            return ResponseEntity.ok("신청이 거절되었습니다.");
         } catch (Exception e) {
-            logger.error("봉사활동 신청 거절 실패", e);
+            logger.error("봉사활동 신청 거절 실패: voId=" + voId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                .body("거절 처리 중 오류가 발생했습니다.");
         }

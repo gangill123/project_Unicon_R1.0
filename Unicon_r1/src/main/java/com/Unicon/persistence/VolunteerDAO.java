@@ -23,6 +23,7 @@ public interface VolunteerDAO {
     // 봉사활동 신청 관련
     void insertVolunteerApply(VolunteerApplyVO apply) throws Exception;
     void updateVolunteerApplyStatus(Map<String, Object> params) throws Exception;
+    void updateVolunteerApplyReject(Map<String, Object> params) throws Exception;
     VolunteerApplyVO selectVolunteerApply(Long voId) throws Exception;
     List<VolunteerApplyVO> selectVolunteerApplyList(Map<String, Object> params) throws Exception;
     int selectVolunteerApplyCount(Long volunteerId) throws Exception;
