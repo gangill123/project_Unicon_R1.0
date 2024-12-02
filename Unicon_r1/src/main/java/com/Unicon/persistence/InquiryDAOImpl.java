@@ -92,14 +92,30 @@ public class InquiryDAOImpl implements InquiryDAO {
 	public void updateInquiryStatus(int bno){
     	sqlSession.update(NAMESPACE + ".updateInquiryStatus", bno);
     };
+    @Override
     public InquiryVO getInquiryByBno(int bno) {
         return sqlSession.selectOne(NAMESPACE + ".getInquiryByBno", bno);
     }
     // 조회수
+    @Override
     public void updateViewCount(int bno) {
         sqlSession.update(NAMESPACE + ".updateViewCount", bno);
         logger.debug("update view 조회수 +1 증가 메서드 실행 {}",bno);
     }
+    @Override
+    public void deleteBoards(List<Integer> ids) {
+    	sqlSession.delete(NAMESPACE + ".deleteBoards", ids);	
+    }
+    @Override
+    public List<InquiryVO> searchBoards(String startDate, String endDate, String istatus) {
+        Map<String, String> params = Map.of(
+                "startDate", startDate,
+                "endDate", endDate,
+                "istatus", istatus
+        );
+        return sqlSession.selectList(NAMESPACE+".searchBoards", params);
+    }
+    
     
     
 }

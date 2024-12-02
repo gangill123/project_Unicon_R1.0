@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!-- 추가 템플릿 css/js 작성란 -->
 <style>
@@ -79,9 +80,7 @@
                         <div class="posts">
                             <!--  start post-->
                             <div class="post">
-<!--                                 <div class="post-img"> -->
-<!--                                     <img src="해당 게시글 번호의 첨부파일 주소 " alt="..."> -->
-<!--                                 </div> -->
+
                                 <div class="content">
                                     <div class="blog-list-simple-text">
                                         <div class="post-title">
@@ -125,7 +124,9 @@
                                     <div class="post-cont">
                                          	${boardDetail.content}
                      						<!-- boardDetail.jsp -->
-											<img src="${boardDetail.inquiryFile.thumbnailPath}" alt="Thumbnail" />
+											<c:if test="${not empty boardDetail.inquiryFile.thumbnailPath}">
+											    <img src="${boardDetail.inquiryFile.thumbnailPath}" alt="Thumbnail" />
+											</c:if>
                                     </div>
                                     <div class="share-post">
                                         <span>Share Post</span>
@@ -149,25 +150,32 @@
     <div class="comment-box">
         <div class="comment-info">
             <div class="reply">
-                <c:forEach var="answer" items="${answers}">
-                    <div class="answer-item">
-                        <!-- 작성자 이름과 이미지 수정-->
-                        <h6>
-                            <img src="${pageContext.request.contextPath}/resources/assets/images/U문의.jpg" 
-                                 alt="U" class="rounded-circle me-2" style="width: 30px; height: 30px;">
-                            ${answer.dname}
-                        </h6>
-                        <!-- 답변 내용 -->
-                        <p>${answer.dcontent}</p>
-                        <!-- 답변 작성 날짜 -->
-                         <p style="text-align: right;"><small>${answer.created_at}</small></p>
-                    </div>
-                </c:forEach>
+				<c:choose>
+				   <c:when test="${empty answers}">
+				       <p>관리자가 문의 답변 예정입니다.</p>
+				   </c:when>
+				   <c:otherwise>
+				       <c:forEach var="answer" items="${answers}">
+				           <div class="answer-item">
+				               <!-- 작성자 이름과 이미지 수정-->
+				               <h6>
+				                   <img src="${pageContext.request.contextPath}/resources/assets/images/U문의.jpg" 
+				                        alt="U" class="rounded-circle me-2" style="width: 30px; height: 30px;">
+				                   ${answer.dname}
+				               </h6>
+				               <!-- 답변 내용 -->
+				               <p>${answer.dcontent}</p>
+				               <!-- 답변 작성 날짜 -->
+				               <p style="text-align: right;"><small>${answer.created_at}</small></p>
+				           </div>
+				       </c:forEach>
+				   </c:otherwise>
+				</c:choose>
             </div>
         </div>
     </div>
 </div>
-                            <!-- end comment-->
+<!-- end comment-->
 
                            
                         </div>

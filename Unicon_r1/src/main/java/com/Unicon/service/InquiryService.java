@@ -34,4 +34,8 @@ public interface InquiryService {
 	public boolean validatePassword(int bno, String password);
 	
 	public void increaseViewCount(int bno);
+
+	public void deleteBoards(List<Integer> ids);
+
+	public List<InquiryVO> searchBoards(String startDate, String endDate, String istatus);
 }

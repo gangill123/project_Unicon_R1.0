@@ -103,9 +103,20 @@ public class InquiryServiceImpl implements InquiryService {
 		 InquiryVO inquiry = inquiryDAO.getInquiryByBno(bno);
 		 return inquiry != null && inquiry.getPost_password().equals(password);
 	}
-	
+	//조회수 증가
+	@Override
 	public void increaseViewCount(int bno) {
 	    inquiryDAO.updateViewCount(bno);
 	}
+	//삭제 전체 삭제
+	@Override
+	public void deleteBoards(List<Integer> ids) {
+		inquiryDAO.deleteBoards(ids);
+	    }
+	@Override
+	public List<InquiryVO> searchBoards(String startDate, String endDate, String istatus) {
+		 return inquiryDAO.searchBoards(startDate, endDate, istatus);
+	}
+	
 
 }

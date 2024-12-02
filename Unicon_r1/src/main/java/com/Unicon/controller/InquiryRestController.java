@@ -205,5 +205,29 @@ public class InquiryRestController {
 		logger.debug("패스워드 검증 결과: bno={}, isValid={}", bno, isValid);
 		return response;
 	}
+	
+	// 관리자 선택/전체 삭제 
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteBoards(@RequestBody Map<String, List<Integer>> request) {
+        List<Integer> ids = request.get("ids");
+        if (ids == null || ids.isEmpty()) {
+            return ResponseEntity.badRequest().body("삭제할 항목이 없습니다.");
+        }
+
+        inquiryService.deleteBoards(ids);
+        return ResponseEntity.ok("선택한 항목이 삭제되었습니다.");
+    }
+    // 카테고리,날짜별 검색 기능
+    @GetMapping("/search")
+    public ResponseEntity<?> searchBoards(
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate,
+            @RequestParam(required = false) String istatus) {
+
+        List<InquiryVO> boards = inquiryService.searchBoards(startDate, endDate, istatus);
+
+        return ResponseEntity.ok(Map.of("boards", boards));
+    }
+	
 
 } // InquiryController

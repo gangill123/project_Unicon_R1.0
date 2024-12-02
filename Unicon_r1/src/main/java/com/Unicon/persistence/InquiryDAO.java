@@ -39,6 +39,10 @@ public interface InquiryDAO {
 	public InquiryVO getInquiryByBno(int bno);
 	
 	public void updateViewCount(int bno);
+
+	void deleteBoards(List<Integer> ids);
+
+	List<InquiryVO> searchBoards(String startDate, String endDate, String istatus);
 	
 
 }

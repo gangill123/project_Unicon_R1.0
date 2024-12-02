@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/css/vendor.bundle.base.css">
+    <link rel="preload" href="http://localhost:8088/resources/admin/fonts/Nunito/Nunito-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">    
     <!-- endinject -->
     <!-- Plugin css for this page -->
     
@@ -104,11 +105,7 @@ th.istatus {
 	text-align: center;	
 }
 
-/* 검색창 스타일 */
-.search-bar {
-	text-align: center;
-	margin-bottom: 20px;
-}
+
 
 /* 게시판 제목 */
 h2 {
@@ -118,27 +115,6 @@ h2 {
 	margin-bottom: 20px;
 }
 
-/* 글쓰기 버튼 스타일 */
-.write-btn-container {
-    text-align: right; /* 오른쪽 정렬 */
-    margin: 20px 390px 20px 40px; /* 페이지 우측 공간과 상단 여백 설정 */
-}
-
-.write-btn {
-    background-color: #2ecc71; /* 버튼 색상 */
-    color: white; /* 텍스트 색상 */
-    font-size: 14px; /* 폰트 크기 */
-    font-weight: bold;
-    padding: 10px 20px; /* 버튼 여백 */
-    border: none; /* 테두리 제거 */
-    border-radius: 5px; /* 둥근 모서리 */
-    cursor: pointer; /* 마우스 커서 변경 */
-    transition: background-color 0.3s ease; /* 호버 효과 추가 */
-}
-
-.write-btn:hover {
-    background-color: #27ae60; /* 호버 시 색상 변경 */
-}
 
 
 
@@ -186,11 +162,6 @@ td.istatus {
     font-size: 14px; /* 텍스트 크기 */
 }
 
-.pagination li a:hover,
-.pagination li.active a {
-    background-color: #2ecc71;
-    color: white;
-}
     
     
     </style>
@@ -217,128 +188,249 @@ td.istatus {
           <div class="content-wrapper">
           
           
-          <div class="card">
-			<div class="card-body">
-                    <h4 class="card-title">Unicon Q&A 문의게시판</h4>
-                    <p class="card-description"> <code>문의 게시판 관리자 페이지</code>
-                    </p>
-                    <table class="table table-striped" id="inquiryTable">
-                      <thead>
-                        <tr>
-                          <th class="no">No</th>
-							<th class="istatus">카테고리</th>
-							<th class="title">제목</th>
-							<th class="member">작성자</th>
-							<th class="date">작성일</th>
-							<th class="view_count">조회수</th>
-							<th class="status">상태</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                       
-                      </tbody>
-                    </table>
+ <div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Unicon Q&A 문의게시판</h4>
+        <p class="card-description"><code>문의 게시판 관리자 페이지</code></p>
+        
+        <!-- 필터 -->
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="startDate">시작 날짜</label>
+                <input type="date" id="startDate" class="form-control">
             </div>
-         </div>   
-          
+            <div class="col-md-3">
+                <label for="endDate">종료 날짜</label>
+                <input type="date" id="endDate" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="category">카테고리</label>
+                <select id="category" class="form-control">
+                    <option value="">전체</option>
+                    <option value="입양 문의">입양 문의</option>
+                    <option value="쇼핑몰 문의">쇼핑몰 문의</option>
+                    <option value="커뮤니티 문의">커뮤니티 문의</option>
+                    <option value="기타 문의">기타 문의</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label>&nbsp;</label>
+                <button id="searchBtn" class="btn btn-primary btn-block">검색</button>
+            </div>
+        </div>
+
+        <!-- 테이블 -->
+        <div class="mb-2">
+            <button id="selectAll" class="btn btn-sm btn-primary">전체 선택</button>
+            <button id="deselectAll" class="btn btn-sm btn-secondary">전체 선택 해제</button>
+            <button id="deleteSelected" class="btn btn-sm btn-danger">선택 삭제</button>
+        </div>
+        <table class="table table-striped" id="inquiryTable">
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="checkAll"></th>
+                    <th class="no">No</th>
+                    <th class="istatus">카테고리</th>
+                    <th class="title">제목</th>
+                    <th class="member">작성자</th>
+                    <th class="date">작성일</th>
+                    <th class="view_count">조회수</th>
+                    <th class="status">상태</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
 
 
 <!-- 페이지네이션 -->
 <div class="pagination">
-	<ul class="ps-0 mb-0" id="pagination"></ul>
+    <ul class="ps-0 mb-0" id="pagination"></ul>
 </div>
+
 
 
 <br>
 <br>
 
 <script>
-$(document).ready(function () {
-    // 현재 페이지와 페이지 크기
-    let currentPage = 1;
-    const pageSize = 10;
+let currentPage = 1;
+const pageSize = 10;
 
-    function loadPage(page) {
+// 페이지 로드 함수
+function loadPage(page) {
+    $.ajax({
+        url: "/api/boards",
+        method: "GET",
+        data: { page: page, size: pageSize },
+        dataType: "json",
+        success: function (response) {
+            const data = response.boards;
+            const totalPages = response.totalPages;
+
+            let tbody = "";
+            data.forEach(function (inquiry) {
+                let statusText = inquiry.status === 1 ? "진행 중" : "답변 완료";
+                let statusClass = inquiry.status === 1 ? "status-ongoing" : "status-completed";
+
+                tbody +=
+                    '<tr>' +
+                    '<td><input type="checkbox" class="row-check" value="' + inquiry.bno + '"></td>' +
+                    '<td class="no">' + inquiry.bno + '</td>' +
+                    '<td class="istatus">' + inquiry.istatus + '</td>' +
+                    '<td class="title"><a href="/inquiry/manage/' + inquiry.bno + '">' + inquiry.title + '</a></td>' +
+                    '<td class="member">' + inquiry.member_name + '</td>' +
+                    '<td class="date">' + inquiry.created_at + '</td>' +
+                    '<td class="view_count">' + inquiry.view_count + '</td>' +
+                    '<td class="status ' + statusClass + '">' + statusText + '</td>' +
+                    '</tr>';
+            });
+
+            $("#inquiryTable tbody").html(tbody);
+            renderPagination(totalPages, page);
+        },
+        error: function (error) {
+            console.error("데이터 로드 실패:", error);
+        }
+    });
+}
+
+// 페이지네이션 렌더링 함수
+function renderPagination(totalPages, currentPage) {
+    let paginationHtml = "";
+    if (currentPage > 1) {
+        paginationHtml +=
+            '<li><a href="#" data-page="' + (currentPage - 1) + '">«</a></li>';
+    }
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHtml +=
+            '<li class="' + (i === currentPage ? "active" : "") + '">' +
+            '<a href="#" data-page="' + i + '">' + i + '</a></li>';
+    }
+    if (currentPage < totalPages) {
+        paginationHtml +=
+            '<li><a href="#" data-page="' + (currentPage + 1) + '">»</a></li>';
+    }
+    $("#pagination").html(paginationHtml);
+}
+
+// 페이지네이션 클릭 이벤트
+$(document).on("click", "#pagination a", function (e) {
+    e.preventDefault();
+    const page = $(this).data("page");
+    currentPage = page;
+    loadPage(page);
+});
+
+// 검색 버튼 클릭 이벤트
+$("#searchBtn").click(function () {
+    const startDate = $("#startDate").val();
+    const endDate = $("#endDate").val();
+    const istatus = $("#category").val();
+
+    // 검색 후 첫 번째 페이지로 리셋
+    currentPage = 1;
+
+    // 검색 요청
+    $.ajax({
+        url: "/api/search",
+        method: "GET",
+        data: {
+            startDate: startDate,
+            endDate: endDate,
+            istatus: istatus,
+            page: currentPage,
+            size: pageSize
+        },
+        dataType: "json",
+        success: function (response) {
+            const data = response.boards;
+            const totalPages = response.totalPages;
+            const currentPage = response.currentPage; // 검색 결과에 맞는 페이지 번호로 업데이트
+
+            // 게시글 데이터 출력
+            let tbody = "";
+            data.forEach(function (inquiry) {
+                let statusText = inquiry.status === 1 ? "진행 중" : "답변 완료";
+                let statusClass = inquiry.status === 1 ? "status-ongoing" : "status-completed";
+
+                tbody +=
+                    '<tr>' +
+                    '<td><input type="checkbox" class="row-check" value="' + inquiry.bno + '"></td>' +
+                    '<td class="no">' + inquiry.bno + '</td>' +
+                    '<td class="istatus">' + inquiry.istatus + '</td>' +
+                    '<td class="title"><a href="/inquiry/manage/' + inquiry.bno + '">' + inquiry.title + '</a></td>' +
+                    '<td class="member">' + inquiry.member_name + '</td>' +
+                    '<td class="date">' + inquiry.created_at + '</td>' +
+                    '<td class="view_count">' + inquiry.view_count + '</td>' +
+                    '<td class="status ' + statusClass + '">' + statusText + '</td>' +
+                    '</tr>';
+            });
+
+            // 게시글 데이터 테이블에 삽입
+            $("#inquiryTable tbody").html(tbody);
+
+            // 페이지네이션 처리
+            renderPagination(totalPages, currentPage);
+        },
+        error: function (error) {
+            console.error("검색 실패:", error);
+        }
+    });
+});
+
+// 전체 선택
+$("#selectAll").click(function () {
+    $(".row-check").prop("checked", true);
+});
+
+// 전체 선택 해제
+$("#deselectAll").click(function () {
+    $(".row-check").prop("checked", false);
+});
+
+// "모두 선택" 체크박스 기능
+$(document).on("change", "#checkAll", function () {
+    $(".row-check").prop("checked", $(this).prop("checked"));
+});
+
+// 선택 삭제
+$("#deleteSelected").click(function () {
+    const selectedIds = $(".row-check:checked")
+        .map(function () {
+            return $(this).val();
+        })
+        .get();
+
+    if (selectedIds.length === 0) {
+        alert("삭제할 항목을 선택하세요.");
+        return;
+    }
+
+    if (confirm("선택한 항목을 삭제하시겠습니까?")) {
         $.ajax({
-            url: "/api/boards",
-            method: "GET",
-            data: { page: page, size: pageSize },
-            dataType: "json",
-            success: function (response) {
-                const data = response.boards; // 서버에서 가져온 데이터
-                const totalPages = response.totalPages; // 전체 페이지 수
-
-                let tbody = "";
-                data.forEach(function (inquiry) {
-                    let statusText = inquiry.status === 1 ? "진행 중" : "답변 완료";
-                    let statusClass = inquiry.status === 1 ? "status-ongoing" : "status-completed";
-
-                    tbody +=
-                        '<tr>' +
-                        '<td class="no">' + inquiry.bno + '</td>' +
-                        '<td class="istatus">' + inquiry.istatus + '</td>' +
-                        '<td class="title"><a href="/inquiry/manage/' + inquiry.bno + '">' + inquiry.title + '</a></td>' + // 게시글 제목에 링크 추가
-                        '<td class="member">' + inquiry.member_name + '</td>' +
-                        '<td class="date">' + inquiry.created_at + '</td>' +                       
-                        '<td class="view_count">' + inquiry.view_count + '</td>' +   
-                        '<td class="status ' + statusClass + '">' + statusText + '</td>' +
-                        '</tr>';
-                });
-
-                $("#inquiryTable tbody").html(tbody);
-                renderPagination(totalPages, page);
+            url: "/api/delete",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ ids: selectedIds }),
+            success: function () {
+                alert("삭제가 완료되었습니다.");
+                loadPage(currentPage);
             },
             error: function (error) {
-                console.error("데이터 로드 실패:", error);
+                console.error("삭제 실패:", error);
             }
         });
     }
-
-    function renderPagination(totalPages, currentPage) {
-        let paginationHtml = "";
-
-        // 이전 버튼
-        if (currentPage > 1) {
-            paginationHtml +=
-                '<li>' +
-                '<a href="#" data-page="' + (currentPage - 1) + '">«</a>' +
-                '</li>';
-        }
-
-        // 페이지 번호
-        for (let i = 1; i <= totalPages; i++) {
-            paginationHtml +=
-                '<li class="' + (i === currentPage ? "active" : "") + '">' +
-                '<a href="#" data-page="' + i + '">' + i + '</a>' +
-                '</li>';
-        }
-
-        // 다음 버튼
-        if (currentPage < totalPages) {
-            paginationHtml +=
-                '<li>' +
-                '<a href="#" data-page="' + (currentPage + 1) + '">»</a>' +
-                '</li>';
-        }
-
-        $("#pagination").html(paginationHtml);
-    }
-
-    // 페이지네이션 클릭 이벤트
-    $(document).on("click", ".pagination a", function (e) {
-        e.preventDefault();
-        const page = $(this).data("page");
-        currentPage = page;
-        loadPage(page);
-    });
-
-    // 초기 페이지 로드
-    loadPage(currentPage);
 });
 
+// 초기 페이지 로드
+loadPage(currentPage);
+
 </script>
-          
-          
+    
+       
           
        
           
