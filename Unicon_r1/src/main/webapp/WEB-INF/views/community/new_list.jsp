@@ -33,7 +33,7 @@
        </div>
 
        <!-- start portfolio gallery -->
-       <div class="portfolio-gallery-isotope text-center row">
+       <div class="text-center row">
 
            <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
                <div class="project-grid">
@@ -41,7 +41,7 @@
                    </div>
                    <div class="project-grid-overlay">
                        <div class="w-100 px-3">
-                           <h4><a href="#!">Investment Project</a></h4>
+                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">Investment Project</a></h4>
                            <p>Finance Plan</p>
                        </div>
                    </div>
@@ -156,11 +156,11 @@
     <div class="modal-dialog" style="max-width: 1200px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">해당 커뮤니티 종류</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9">
+                <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9" style="margin-bottom: 28px;">
                    <div class="col-lg-5 text-center text-lg-start mb-1-9 mb-lg-0">
 
                        <!-- product left start -->
@@ -176,13 +176,17 @@
                        <!-- product left end -->
 
                    </div>
+                   
+                   
+                   
+                   
                    <div class="col-lg-7 ps-lg-2-3">
-                       <div class="product-detail">
+                       <div class="product-detail" style="overflow-y: auto; max-height: 470px;">
                            <div class="media">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
-                                    <h4 class="mt-0 mb-2 h4">닉네임 들어갈 거임</h4>
-                                    <h6 class="mt-0 mb-2 h6">게시물 생성시간 들어갈 거임</h6>
+                                    <h4 class="mt-0 mb-2 h4">징젱종잉123</h4>
+                                    <!-- <h6 class="mt-0 mb-2 h6">1998-07-11 00:00 좋아요 711개 <i class="fa-regular fa-heart"></i></h6> -->
                                     <p>동물병원 다녀왔어요 ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ</p>
                                 </div>
                             </div>
@@ -194,24 +198,36 @@
                            <div class="media" style="margin-bottom: 30px;">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
-                                    <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
-                                    괜찮으신가요 ㅜㅜㅜㅜㅜ
+                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
+									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
+									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
+									    </div>
+									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
+									        <div class="box" style="text-align: left;">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</div>
+									    </div>
+									</div>
                                 </div>
-                                <div class="datetime" style="margin-left: 15px;">1998-07-11 00:00</div>
-                                <div class="likecount" style="margin-left: 15px;">좋아요 711개</div>
-                                <div class="like" style="margin-left: 15px;"><i class="fa-regular fa-heart"></i></div>
                             </div>
                             
                             
                             <div class="media" style="margin-bottom: 30px;">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
-                                    <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
-                                    괜찮으신가요 ㅜㅜㅜㅜㅜ
+                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
+									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
+									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
+									    </div>
+									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
+									        <div class="box" style="text-align: left;">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</div>
+									    </div>
+									</div>
                                 </div>
-                                <div class="datetime" style="margin-left: 15px;">1998-07-11 00:00</div>
-                                <div class="likecount" style="margin-left: 15px;">좋아요 711개</div>
-                                <div class="like" style="margin-left: 15px;"><i class="fa-regular fa-heart"></i></div>
                             </div>
                             
                             
@@ -232,12 +248,12 @@
                                     <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
 									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
 									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
-									        <div class="box" style="display: flex; width: 25%">1998-07-11 00:00</div>
-									        <div class="box" style="display: flex; width: 25%">좋아요 711개</div>
-									        <div class="box" style="display: flex; width: 5%"><i class="fa-solid fa-heart"></i></div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
 									    </div>
-									    <div class="bottom-section" style="display: flex; justify-content: center; align-items: center;">
-									        <div class="box">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</div>
+									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
+									        <div class="box" style="text-align: left;">괜찮으신가요ㅜㅜㅜㅜㅜ</div>
 									    </div>
 									</div>
                                 </div>
@@ -247,24 +263,36 @@
                             <div class="media" style="margin-bottom: 30px;">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
-                                    <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
-                                    괜찮으신가요 ㅜㅜㅜㅜㅜ
+                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
+									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
+									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
+									    </div>
+									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
+									        <div class="box" style="text-align: left;">괜찮으신가요ㅜㅜㅜㅜㅜ</div>
+									    </div>
+									</div>
                                 </div>
-                                <div class="datetime" style="margin-left: 15px;">1998-07-11 00:00</div>
-                                <div class="likecount" style="margin-left: 15px;">좋아요 711개</div>
-                                <div class="like" style="margin-left: 15px;"><i class="fa-regular fa-heart"></i></div>
                             </div>
                             
                             
                             <div class="media" style="margin-bottom: 30px;">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
-                                    <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
-                                    괜찮으신가요 ㅜㅜㅜㅜㅜ
+                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
+									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
+									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
+									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
+									    </div>
+									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
+									        <div class="box" style="text-align: left;">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</div>
+									    </div>
+									</div>
                                 </div>
-                                <div class="datetime" style="margin-left: 15px;">1998-07-11 00:00</div>
-                                <div class="likecount" style="margin-left: 15px;">좋아요 711개</div>
-                                <div class="like" style="margin-left: 15px;"><i class="fa-regular fa-heart"></i></div>
                             </div>
                            
                            
@@ -354,12 +382,29 @@
                            
                            
                        </div> <!-- <div class="product-detail"> -->
+                       
+                       <div style="width: 100%; height: 36px; margin-top: 10px;">
+                       		<span style="margin-right: 5%;">1998-07-11 00:00</span><span style="margin-right: 5%;">좋아요 711개</span><span><i class="fa-regular fa-heart"></i></span>
+                       </div>
+                       <input type="text" style="width: 100%; height: 36px; margin-bottom: 10px;" placeholder="댓글 달기...">
+                       <button type="button" class="btn btn-outline-success">댓글</button>
+                       <button type="button" class="btn btn-outline-primary">수정</button>
+                       <button type="button" class="btn btn-outline-danger">신고</button>
+                       <button type="button" class="btn btn-outline-danger">삭제</button>
+                       
                    </div> <!-- <div class="col-lg-7 ps-lg-2-3"> -->
+                   
+                   
+                   
+                       
+                       
+                       
+                       
                </div> <!-- <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9"> -->
             </div> <!-- <div class="modal-body"> -->
-            <div class="modal-footer">
+<!--             <div class="modal-footer"> -->
             
-            </div>
+<!--             </div> -->
         </div> <!-- <div class="modal-content"> -->
     </div> <!-- <div class="modal-dialog" style="max-width: 1200px;"> -->
 </div>
