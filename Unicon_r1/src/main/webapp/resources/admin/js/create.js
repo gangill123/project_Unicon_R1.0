@@ -96,6 +96,13 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             } else {
                 $Box.css('display', 'none'); // 보여져 있으면 숨김
             }
+        } else if('option' == value) {
+        	 const $Box = $('.closeBox-option');
+             if ($Box.css('display') === 'none') {
+                 $Box.css('display', 'block'); // 숨겨져 있으면 보여줌
+             } else {
+                 $Box.css('display', 'none'); // 보여져 있으면 숨김
+             }
         }
         
     }
@@ -219,6 +226,8 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                 display: 'none'
             });
         });
+        
+        // 할인 버튼 제어
         function toggleButtons1(isSettingOn) {
         	if (isSettingOn) {
         		$('#discount-set-on').addClass('setting-active').removeClass('setting-inactive');
@@ -256,6 +265,56 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
         		display: 'none'
         	});
         });
+        // 할인 버튼 제어
+        
+        
+        // 옵션 버튼 제어
+        function toggleButtons2(isSettingOn) {
+        	if (isSettingOn) {
+        		$('#option-set-on').addClass('setting-active').removeClass('setting-inactive');
+        		$('#option-set-off').removeClass('setting-active').addClass('setting-inactive');
+        	} else {
+        		$('#option-set-off').addClass('setting-active').removeClass('setting-inactive');
+        		$('#option-set-on').removeClass('setting-active').addClass('setting-inactive');
+        	}
+        }
+        
+        $('#option-set-on').on('click', function() {
+        	
+        	
+        	toggleButtons2(true); // 설정안함 버튼 클릭
+        	$('.option-box').css({
+        		display: 'block'
+        	});
+        });
+        
+        $('#option-set-off').on('click', function() {
+        	toggleButtons2(false); // 설정안함 버튼 클릭
+        	$('.option-box').css({
+        		display: 'none'
+        	});
+        });
+        // 옵션 버튼 제어
+        
+        
+        // 메인이미지 버튼 제어
+        $('#option-set-on').on('click', function() {
+        	$('.option-box').css({
+        		display: 'block'
+        	});
+        });
+        // 메인이미지 버튼 제어
+        
+        // 메인이미지 버튼 제어
+        $('#option-set-off').on('click', function() {
+        	$('.option-box').css({
+        		display: 'none'
+        	});
+        });
+        // 메인이미지 버튼 제어
+        
+        
+        
      // 오늘 날짜 설정
         const today = new Date();
         
@@ -509,22 +568,22 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             $('.option-list-header').html(''); // 기존 내용 초기화
             $('.option-list-body').html(''); // .option-list-body 초기화
             
-         // 라디오 버튼 체크 상태 확인
+            // 라디오 버튼 체크 상태 확인
             if ($('#single').is(':checked')) {
             	// 단독형일때 + 길이 1
             	if (optionData.options.length == 1) {
                     var headerHtml = 
-                    	 '<div style="width: 4%; padding: 0.7em 0;"><input type="checkbox"></div>' +
+                    	 '<div style="width: 3.9%; padding: 0.7em 0;"><input type="checkbox"></div>' +
                     	 '<div style="border-right: 1px solid; height: 86px;"></div>' +
-                         '<div style=" width: 50%; display: flex; flex-direction: column;" class="option-list-header">' +
+                         '<div style=" width:48%; display: flex; flex-direction: column;" class="option-list-header">' +
                          '    <div style="	position: relative; top: 0px; padding: 10px 0;">' +
                          '        <span style="color:#000000">옵션명</span>' +
                          '    </div>' +
                          '</div>' +
-                         '<div style="border-right: 1px solid; height: 86px;"></div>' +
-                         '<div style="width: 45%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">옵션값</div>' +
-                         '<div style="border-right: 1px solid; height: 86px;"></div>' +
-                         '<div style="width: 6%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">삭제</div>';
+                         '<div style="position: relative;left: -1px;border-right: 1px solid; height: 86px;"></div>' +
+                         '<div style="width: 43%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">옵션값</div>' +
+                         '<div style="position: relative;left: -1px;border-right: 1px solid; height: 86px;"></div>' +
+                         '<div style="width: 7%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">삭제</div>';
                      
                      // 새로운 HTML 추가
                      $('.option-list-header').html(headerHtml);
@@ -535,42 +594,43 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                     
                     values.forEach(function(value) {
                     	 var bodyHtml = 
-                             '<div style="border-bottom: 1px solid #a7afb7;width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; background-color: #fff; color: #000000;">' +
-                             '    <div style="width: 4%;"><input type="checkbox"></div>' +
+                             '<div class="option-list" style="border-bottom: 1px solid #a7afb7;width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; background-color: #fff; color: #000000;">' +
+                             '    <div style="width: 4.12%;"><input type="checkbox"></div>' +
                              '    <div style="border-right: 1px solid; height: 30px; position: relative; color:#a7afb7"></div>' +
                              '    <div style="width: 50%;">' +
-                             '        <div>' + optionData.options[0].name +  
-                             '			</div>' + 
+                             '        <div class="option-item-name">' + optionData.options[0].name +  
+                             '		  </div>' + 
                              '    </div>' +
                              '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -6px; color:#a7afb7"></div>' +
-                             '    <div style="width: 46%;">'+ value.trim() +
-                             '</div>' +
+                             '    <div class="option-item-value" style="width: 46%;">'+ value.trim() +
+                             '    </div>' +
                              '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color:#a7afb7"></div>' +
                              '    <div style="width: 6%; display: flex; align-items: center; justify-content: center;">' +
-                             '        <button style="border: none; background-color: transparent;">' +
+                             '        <button  class="option-list-remove" style="border: none; background-color: transparent;">' +
                              '            <i class="mdi mdi-close"></i>' +
                              '        </button>' +
                              '    </div>' +
                              '</div>';
                          
                          // .option-list-body에 추가
+                    	 
                          $('.option-list-body').append(bodyHtml);
                     });
                 }else {
                 	// 단독형 + 2줄
                 	var headerHtml = 
-                   	 	'<div style="width: 4%; padding: 0.7em 0;"><input type="checkbox"></div>' +
-                   	 	'<div style="border-right: 1px solid; height: 86px;"></div>' +
-                        '<div style=" width: 50%; display: flex; flex-direction: column;" class="option-list-header">' +
+                		'<div style="width: 3.9%; padding: 0.7em 0;"><input type="checkbox"></div>' +
+                   	 '<div style="border-right: 1px solid; height: 86px;"></div>' +
+                        '<div style=" width:48%; display: flex; flex-direction: column;" class="option-list-header">' +
                         '    <div style="	position: relative; top: 0px; padding: 10px 0;">' +
                         '        <span style="color:#000000">옵션명</span>' +
                         '    </div>' +
                         '</div>' +
-                        '<div style="border-right: 1px solid; height: 86px;"></div>' +
-                        '<div style="width: 45%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">옵션가</div>' +
-                        '<div style="border-right: 1px solid; height: 86px;"></div>' +
-                        '<div style="width: 6%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">삭제</div>';
-                    
+                        '<div style="position: relative;left: -1px;border-right: 1px solid; height: 86px;"></div>' +
+                        '<div style="width: 43%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">옵션값</div>' +
+                        '<div style="position: relative;left: -1px;border-right: 1px solid; height: 86px;"></div>' +
+                        '<div style="width: 7%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">삭제</div>';
+
                     // 새로운 HTML 추가
                     $('.option-list-header').html(headerHtml);
                     
@@ -581,17 +641,17 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                         
                         values.forEach(function(value) {
                             var bodyHtml = 
-                                '<div style="border-bottom: 1px solid #a7afb7; width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; background-color: #fff; color: #000000;">' +
+                                '<div class="option-list" style="border-bottom: 1px solid #a7afb7; width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; background-color: #fff; color: #000000;">' +
                                 '    <div style="width: 4%;"><input type="checkbox"></div>' +
-                                '    <div style="border-right: 1px solid; height: 30px; position: relative; color:#a7afb7"></div>' +
+                                '    <div style="border-right: 1px solid; height: 30px; position: relative; color:#a7afb7;left: 1px;"></div>' +
                                 '    <div style="width: 50%;">' +
-                                '        <div>' + option.name + '</div>' + // 옵션명과 값을 조합
+                                '        <div class="option-item-name">' + option.name + '</div>' + // 옵션명과 값을 조합
                                 '    </div>' +
-                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -6px; color:#a7afb7"></div>' +
-                                '    <div style="width: 46%;">' + value.trim()  + '</div>' + // 옵션명 추가
+                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -7px; color:#a7afb7"></div>' +
+                                '    <div class="editable-field option-item-value" style="width: 46%;">' + value.trim()  + '</div>' + //  옵션 값 추가
                                 '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color:#a7afb7"></div>' +
                                 '    <div style="width: 6%; display: flex; align-items: center; justify-content: center;">' +
-                                '        <button style="border: none; background-color: transparent;">' +
+                                '        <button  class="option-list-remove" style="border: none; background-color: transparent;">' +
                                 '            <i class="mdi mdi-close"></i>' +
                                 '        </button>' +
                                 '    </div>' +
@@ -601,6 +661,7 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                             $('.option-list-body').append(bodyHtml);
                         });
                     });
+                    removeOption();
                 }
             } else {
             	// 조합형 + 길이 1
@@ -610,20 +671,20 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                     const values = optionValue.split(','); // 값을 ,로 분리
             		console.log("조합형");
                     var headerHtml = 
-                    	'<div style="width: 4%; padding: 0.7em 0;"><input type="checkbox"></div>' +
-                        '<div style="border-right: 1px solid; border-left: 1px solid; width: 30%; display: flex; flex-direction: column;" class="option-list-header">' +
+                    	'<div style="width: 4.5%; padding: 0.7em 0;"><input type="checkbox"></div>' +
+                        '<div style="border-right: 1px solid; border-left: 1px solid; width: 30%; display: flex; flex-direction: column;">' +
                         '    <div style="border-bottom: 1px solid; position: relative; top: 0px; padding: 10px 0;">' +
                         '        <span style="color:#000000">옵션명</span>' +
                         '    </div>' +
-                        '    <div style="padding: 10px 0; color:#000000; height: 44px;">' +
+                        '    <div style="padding: 10px 0; color:#000000; height: 44px;" class="option-item-name">' +
                         '        ' + option.name + // 옵션명 추가
                         '    </div>' +
                         '</div>' +
-                        '<div style="width: 30%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">옵션가</div>' +
-                        '<div style="border-right: 1px solid; height: 86px;"></div>' +
+                        '<div style="width: 29.9%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">옵션가</div>' +
+                        '<div style="border-right: 1px solid; height: 86px;position: relative;left: -0.5px;"></div>' +
                         '<div style="width: 30%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">재고수량</div>' +
                         '<div style="border-right: 1px solid; height: 86px;"></div>' +
-                        '<div style="width: 5%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">삭제</div>';
+                        '<div style="width: 6.7%; padding: 0.7em 0; display: flex; align-items: center; justify-content: center; color:#000000;">삭제</div>';
 
                     // 헤더 추가
                     $('.option-list-header').append(headerHtml);
@@ -634,19 +695,19 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                     
                     values.forEach(function(value) {
                     	 var bodyHtml = 
-                    		 '<div style="border-bottom: 1px solid #a7afb7;width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; background-color: #fff; color: #000000;">' +
+                    		 '<div class="option-list" style="border-bottom: 1px solid #a7afb7;width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; background-color: #fff; color: #000000;">' +
                              '    <div style="width: 4%;"><input type="checkbox"></div>' +
                              '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -1px; color:#a7afb7"></div>' +
                              '    <div style="width: 30%;">' +
-                             '        <div>' + value.trim() + '</div>' + // 옵션명 및 값
+                             '        <div class="option-item-value">' + value.trim() + '</div>' + // 옵션명 및 값
                              '    </div>' +
+                             '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 0px; color:#a7afb7"></div>' +
+                             '    <div class="editable-field option-item-price" style="width: 30%; cursor: pointer;font-size: 14px;height: 30px;line-height: 28px;">0</div>' + // 기본 텍스트 설정
                              '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color:#a7afb7"></div>' +
-                             '    <div style="width: 30%;">0</div>' + // 옵션가
-                             '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color:#a7afb7"></div>' +
-                             '    <div style="width: 30%;">0</div>' + // 재고 수량
+                             '    <div class="editable-field option-item-stock" style="width: 30%; cursor: pointer;font-size: 14px;height: 30px;line-height: 28px;">0</div>' + // 기본 텍스트 설정
                              '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color:#a7afb7"></div>' +
                              '    <div style="width: 5%; display: flex; align-items: center; justify-content: center;">' +
-                             '        <button style="border: none; background-color: transparent;">' +
+                             '        <button  class="option-list-remove" style="border: none; background-color: transparent;">' +
                              '            <i class="mdi mdi-close"></i>' +
                              '        </button>' +
                              '    </div>' +
@@ -659,21 +720,21 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                 	// 조합형 + 2줄
                 	var headerHtml = 
                 		'<div style="width: 4%;padding: 0.7em 0 0.7em;"><input type="checkbox"></div>' +
-                		'<div style="border-right: 1px solid; border-left: 1px solid;width: 30%;display: flex;flex-direction: column;" class="option-list-header">' +
+                		'<div style="border-right: 1px solid; border-left: 1px solid;width: 40%;display: flex;flex-direction: column;" >' +
                 		'    <div style="border-bottom: 1px solid;position: relative;top: 0px;padding: 10px 0;">' +
                 		'        <span style="color:#000000">옵션명</span>' +
                 		'    </div>' +
-                		'    <div style="color:#000000;height: 44px; display: flex;justify-content: center;    gap: 4.5rem;align-items: center;">' +
-                		'        <div>' + optionData.options[0].name + '</div>' +  // 첫 번째 옵션 이름
-                		'        <div style="border-right: 1px solid;height: 46px;position: relative;color: #a7afb7;left: 8px"></div>' +
-                		'        <div>' + optionData.options[1].name + '</div>' +  // 두 번째 옵션 이름
+                		'    <div style="color:#000000;height: 44px; display: flex;align-items: center;">' +
+                		'        <div style="width: 50%" class="option-item-name1">' + optionData.options[0].name + '</div>' +  // 첫 번째 옵션 이름
+                		'        <div style="border-right: 1px solid;height:46px;color: #a7afb7;"></div>' +
+                		'        <div style="width: 50%" class="option-item-name2">' + optionData.options[1].name + '</div>' +  // 두 번째 옵션 이름
                 		'    </div>' +
                 		'</div>' +
-                		'<div style="width: 30%;padding: 0.7em 0 0.7em;display: flex;align-items: center;justify-content: center;color:#000000;">옵션가</div>' +
+                		'<div style="width: 25%;padding: 0.7em 0 0.7em;display: flex;align-items: center;justify-content: center;color:#000000;">옵션가</div>' +
                 		'<div style="border-right: 1px solid;height: 86px;"></div>' +
-                		'<div style="width: 30%;padding: 0.7em 0 0.7em;display: flex;align-items: center;justify-content: center;color:#000000;">재고수량</div>' +
-                		'<div style="border-right: 1px solid;height: 86px;"></div>' +
-                		'<div style="width: 5%;padding: 0.7em 0 0.7em;display: flex;align-items: center;justify-content: center;color:#000000;">삭제</div>';
+                		'<div style="width: 25%;padding: 0.7em 17px 0.7em 0;display: flex;align-items: center;justify-content: center;color:#000000;">재고수량</div>' +
+                		'<div style="border-right: 1px solid;height: 86px;position: relative;left: -15px;"></div>' +
+                		'<div style="width: 5%;padding:0.7em 0 0.7em 4px;display: flex;align-items: center;color:#000000;">삭제</div>';
 
 
                     // 새로운 HTML 추가
@@ -687,27 +748,27 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                     let values2 = optionValue2.split(','); // 값을 ,로 분리
                     
                    
-                 // 모든 조합 생성
+                    // 모든 조합 생성
                     values1.forEach(function(value1) {
                         values2.forEach(function(value2) {
                             var bodyHtml = 
-                                '<div style="border-bottom: 1px solid #a7afb7;width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; background-color: #fff; color: #000000;">' +
+                            	'<div class="option-list" style="border-bottom: 1px solid #a7afb7;width: 100%; text-align: center; display: flex; align-items: center; justify-content: center; background-color: #fff; color: #000000;font-size: 14px;">' +
                                 '    <div style="width: 4%;"><input type="checkbox"></div>' +
                                 '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -1px; color: #a7afb7;"></div>' +
-                                '    <div style="width: 30%;">' +
-                                '        <div style="display: flex; justify-content: center; gap: 5rem; align-items: center;">' +
-                                '            <div>' + value1 + '</div>' + // 첫 번째 값
-                                '            <div style="border-right: 1px solid; height: 30px; color: #a7afb7;"></div>' +
-                                '            <div>' + value2 + '</div>' + // 두 번째 값
+                                '    <div style="width: 40%;">' +
+                                '        <div style="display: flex; align-items: center;">' +
+                                '            <div style="width: 50%" class="option-item-value1">' + value1 + '</div>' + // 첫 번째 값
+                                '            <div style="border-right: 1px solid; height: 30px; color: #a7afb7;position: relative;left: 4px;"></div>' +
+                                '            <div style="width: 50%;" class="option-item-value2">' + value2 + '</div>' + // 두 번째 값
                                 '        </div>' +
                                 '    </div>' +
-                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color: #a7afb7;"></div>' +
-                                '    <div style="width: 30%;"></div>' +
-                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color: #a7afb7;"></div>' +
-                                '    <div style="width: 30%;"></div>' +
+                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -6px; color: #a7afb7;"></div>' +
+                                '    <div class="editable-field option-item-price" style="width: 25%; cursor: pointer;height: 30px;line-height: 28px;">0</div>' + // 기본 텍스트 설정
+                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -9.5px; color: #a7afb7;"></div>' +
+                                '    <div class="editable-field option-item-stock" style="width: 25%; cursor: pointer;height: 30px;line-height: 28px;">0</div>' + // 기본 텍스트 설정
                                 '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color: #a7afb7;"></div>' +
                                 '    <div style="width: 5%; display: flex; align-items: center; justify-content: center;">' +
-                                '        <button style="border: none; background-color: transparent;">' +
+                                '        <button class="option-list-remove" style="border: none; background-color: transparent;">' +
                                 '            <i class="mdi mdi-close"></i>' +
                                 '        </button>' +
                                 '    </div>' +
@@ -717,15 +778,135 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                             $('.option-list-body').append(bodyHtml);
                         });
                     });
+                    removeOption();
                 }
             }
             
-    		 
-
-
+    		 // input 박스 값 초기화
+           $("#options-container .display-f").find('input[id^="option-name-"]').val(""); // 옵션명
+           $("#options-container .display-f").find('input[id^="option-value-"]').val(""); // 옵션값
+           updateApplyButtonState();
             console.log(optionData);
         });
+        
+        
+        // 클릭 시 입력 필드로 변경
+        $(document).on('click', '.editable-field', function() {
+            console.log("클릭됨");
+            var currentText = $(this).text(); // 현재 텍스트 가져오기
+            $(this).html('<input type="text" value="' + currentText + '" style="height: 30px; width: 95%; position: relative; left: 7px; top: -0px; border: 1px solid" />'); // 입력 필드로 변경
 
+            // 입력 필드에서 포커스를 주고, 블러 이벤트로 텍스트 영역을 다시 변경
+            $(this).find('input').focus().on('blur', function() {
+                var newValue = $(this).val(); // 새 값 가져오기
+                
+                // 입력값이 비어있는 경우 0으로 설정
+                if (newValue.trim() === '') {
+                    newValue = '0'; // 빈 값일 경우 0으로 설정
+                }
+                
+                $(this).parent().html(newValue); // 새로운 값으로 텍스트 변경
+            });
+        });
+        
+
+        $(document).on('click', '.option-list-remove', function() {
+            // this를 사용하여 클릭한 버튼의 부모 요소인 option-list를 찾고 삭제
+            $(this).closest('.option-list').remove();
+        });
+        
+        // 클릭해서 input 아무값도 입력 하지 않으면 0으로 되게 해보자.       
+        
+        
+        
+        $(document).on('click', '.console', function() {
+            var options = []; // 옵션 객체를 저장할 배열
+            
+            
+            
+            if ($('#single').is(':checked')) {
+            	// 각 .option-list 요소를 반복
+                $(".option-list").each(function() {
+                    // 현재 .option-list 요소에서 옵션명 가져오기
+                    var optionName = $(this).find('.option-item-name').text().trim(); // 옵션명
+                    var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
+
+                    // 객체 생성 후 배열에 추가
+                    options.push({
+                        option_name : optionName,
+                        option_value: optionValue
+                    });
+                });
+            } else {
+            	var optionName1 = $('.option-list-header').find('.option-item-name1').text().trim(); // 첫 번째 옵션명
+            	console.log(optionName1);
+            	
+            	
+            	if (!optionName1) {
+            		// 조합형 + 길이 1
+                	
+            		var optionName = $('.option-list-header').find('.option-item-name').text().trim(); // 첫 번째 옵션명
+                	$(".option-list").each(function() {
+                        // 현재 .option-list 요소에서 옵션명 가져오기
+                        var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
+                        var optionPrice = $(this).find('.option-item-price').text().trim(); // 옵션값
+                        var optionStock = $(this).find('.option-item-stock').text().trim(); // 옵션값
+
+                        // 객체 생성 후 배열에 추가
+                        options.push({
+                            option_name : optionName,
+                            option_value: optionValue,
+                            option_price: optionPrice,
+                            option_stock: optionStock
+                            
+                        });
+                    });
+                }else {
+                	// 조합형 + 길이 2
+                	var optionName1 = $('.option-list-header').find('.option-item-name1').text().trim(); // 옵션명
+                	var optionName2 = $('.option-list-header').find('.option-item-name2').text().trim(); // 옵션명
+                	
+                	$(".option-list").each(function() {
+                        // 현재 .option-list 요소에서 옵션명 가져오기
+                        var optionValue1 = $(this).find('.option-item-value1').text().trim(); // 옵션값
+                        var optionValue2 = $(this).find('.option-item-value2').text().trim(); // 옵션값
+                        var optionPrice = $(this).find('.option-item-price').text().trim(); // 옵션값
+                        var optionStock = $(this).find('.option-item-stock').text().trim(); // 옵션값
+
+                        // 객체 생성 후 배열에 추가
+                        options.push({
+                            option_name : optionName1,
+                            option_value: optionValue1,
+                            option_name2 : optionName2,
+                            option_value2: optionValue2,
+                            option_price: optionPrice,
+                            option_stock: optionStock
+                            
+                        });
+                    });
+                }
+            }
+            
+            
+
+            /*// 각 .option-list 요소를 반복
+            $(".option-list").each(function() {
+                // 현재 .option-list 요소에서 옵션명 가져오기
+                var optionName = $(this).find('.option-item-name').text().trim(); // 옵션명
+                var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
+
+                // 객체 생성 후 배열에 추가
+                options.push({
+                    option_name : optionName,
+                    option_value: optionValue
+                });
+            });*/
+
+            // 결과 출력
+            console.log("옵션 리스트:", options);
+        });
+        
+        
 
         
      
@@ -733,33 +914,137 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
      
      
      
-     /*=============== 이미지 미리보기 ===============*/
+        /*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
 		$('.image-input').on('change', function(e) {
 			const file = e.target.files[0];
 			const reader = new FileReader();
-			
 			const inputId = e.target.id;
-			const previewId = '#image-preview' + inputId.charAt(inputId.length - 1);
-			const plusIconId = '#plusIcon' + inputId.charAt(inputId.length - 1);
-			
+			const idNoNum = inputId.replace(/\d+/g, '');
+			const idNum = inputId.charAt(inputId.length - 1);
+			const previewId = '#image-preview' + idNum;
+			const plusIconId = '#plusIcon' + idNum;
 			const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
 			
 			if (file) {
-				if(fileTypeFilter.exec(file.name)) {
-					reader.onload = function(e) {
-						$(previewId).attr('src', e.target.result).show();
-						$(plusIconId).hide();
+				 if(fileTypeFilter.exec(file.name)) {
+					 switch(idNum) {
+					 	case '1': {
+					 		reader.readAsDataURL(file);
+							reader.onload = function(e) {
+								$(previewId).attr('src', e.target.result).show();
+								$(plusIconId).hide();
+							}
+							break;
+					 	}
+						case '2': {
+							if($('#' + idNoNum + (idNum - 1)).val() == '') {
+								const adataTransfer = new DataTransfer();
+								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+								$('#' + idNoNum + idNum).val('');
+								$('#' + idNoNum + idNum).removeAttr('src');
+								$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+								$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
+							} else {
+								reader.readAsDataURL(file);
+								reader.onload = function(e) {
+									$(previewId).attr('src', e.target.result).show();
+									$(plusIconId).hide();
+								}
+							}
+							break;
+						}
+						case '3': {
+							if($('#' + idNoNum + (idNum - 2)).val() == '' 
+									&& $('#' + idNoNum + (idNum - 1)).val() == '') {
+								const adataTransfer = new DataTransfer();
+								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+								$('#' + idNoNum + idNum).val('');
+								$('#' + idNoNum + idNum).removeAttr('src');
+								$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
+								$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
+							} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
+								const adataTransfer = new DataTransfer();
+								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+								$('#' + idNoNum + idNum).val('');
+								$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+								$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
+							} else {
+								reader.readAsDataURL(file);
+								reader.onload = function(e) {
+									$(previewId).attr('src', e.target.result).show();
+									$(plusIconId).hide();
+								}
+							}
+							break;
+						}
+						case '4': {
+							if($('#' + idNoNum + (idNum - 3)).val() == '' 
+									&& $('#' + idNoNum + (idNum - 2)).val() == '' 
+										&& $('#' + idNoNum + (idNum - 1)).val() == '') {
+								const adataTransfer = new DataTransfer();
+								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+								$('#' + idNoNum + idNum).val('');
+								$('#' + idNoNum + idNum).removeAttr('src');
+								$('#' + idNoNum + (idNum - 3))[0].files = adataTransfer.files;
+								$('#' + idNoNum + (idNum - 3))[0].dispatchEvent(new Event('change'));
+							} else if($('#' + idNoNum + (idNum - 2)).val() == '' 
+									&& $('#' + idNoNum + (idNum - 1)).val() == '') {
+								const adataTransfer = new DataTransfer();
+								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+								$('#' + idNoNum + idNum).val('');
+								$('#' + idNoNum + idNum).removeAttr('src');
+								$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
+								$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
+							} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
+								const adataTransfer = new DataTransfer();
+								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+								$('#' + idNoNum + idNum).val('');
+								$('#' + idNoNum + idNum).removeAttr('src');
+								$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+								$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
+							} else {
+								reader.readAsDataURL(file);
+								reader.onload = function(e) {
+									$(previewId).attr('src', e.target.result).show();
+									$(plusIconId).hide();
+								}
+							}
+							break;
+						}
+						default: {
+							console.error("잘못된 번호");
+							break;
+						}
 					}
-					reader.readAsDataURL(file);
 				} else {
+					alert('허용되지 않는 파일 형식이 포함되어 있습니다.');
 					$(this).val('');
 				}
 			} else {
-				$(previewId).hide();
-				$(plusIconId).show();
+				if(idNum < 4) {
+					$(previewId).hide();
+					$(plusIconId).show();
+					for(let i = parseInt(idNum, 10); i <= 4; i++) {
+						if(i == idNum) {
+							continue;
+						} else if($('#' + idNoNum + i).val() != '') {
+							const adataTransfer = new DataTransfer();
+							adataTransfer.items.add($('#' + idNoNum + i)[0].files[0]);
+							$('#' + idNoNum + i).val('');
+							$('#image-preview'+i).hide();
+							$('#plusIcon'+i).show();
+							$('#' + idNoNum + (i - 1))[0].files = adataTransfer.files;
+							$('#' + idNoNum + (i - 1))[0].dispatchEvent(new Event('change'));
+						}
+					}
+				} else {
+					$(previewId).hide();
+					$(plusIconId).show();
+				}
 			}
 		});
-		/*=============== 이미지 미리보기 ===============*/
+		/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
+
      
      
      

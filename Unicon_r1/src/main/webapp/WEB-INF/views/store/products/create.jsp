@@ -259,8 +259,8 @@
 										    <label >선택형</label>
 										    <div>
 										        <div class="store-input-container">
-										            <button id="option-set-on" class="btn-setting-on setting-active">설정함</button>
-										            <button id="option-set-off" class="btn-setting-off setting-inactive">설정안함</button>
+										            <button id="option-set-on" class="btn-setting-on setting-inactive">설정함</button>
+										            <button id="option-set-off" class="btn-setting-off setting-active">설정안함</button>
 										        </div>
 										    </div>
 										</div>
@@ -358,7 +358,7 @@
 											<div style="width: 100%; overflow-x: auto; border: 1px solid #ccc; padding: 0;">
 											   <div style="width: 100%;text-align: center;display: flex;align-items: center;border-bottom: 1px solid;justify-content: center;" class="option-list-header">
 											    	<div style="width: 4%;padding: 0.7em 0 0.7em;"><input type="checkbox"></div>
-											    	<div style="border-right: 1px solid; border-left: 1px solid;width: 30%;display: flex;flex-direction: column;" class="option-list-header">
+											    	<div style="border-right: 1px solid; border-left: 1px solid;width: 30%;display: flex;flex-direction: column;">
 												    	<div style="border-bottom: 1px solid;position: relative;top: 0px;padding: 10px 0; ">
 												    		<span style="color:#000000">옵션명</span>
 												    	</div>
@@ -376,27 +376,27 @@
 											    </div>
 											    
 											    <div class="option-list-body">
-													<div style="width: 100%;text-align: center;display: flex;align-items: center;justify-content: center; background-color: #fff; color:#000000">
-												    	<div style="width: 4%;"><input type="checkbox"></div>
-												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: -1px;color:#a7afb7"></div>
-												    	<div style="width: 30%;">
-												    		<div style="display: flex;justify-content: center;gap: 5rem;align-items: center;">
-													    		<div></div>
-														    	<div style="border-right: 1px solid;height: 30px;color:#a7afb7"></div>
-													    		<div></div>
-												    		</div>
-												    	</div>
-												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div>
-												    	<div style="width: 30%;"></div>
-												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div>
-												    	<div style="width: 30%;"></div>
-												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div>
-												    	<div style="width: 5%;display: flex;align-items: center;justify-content: center;">
-												    		<button style="border: none; background-color: transparent;">
-												    			<i class="mdi mdi-close"></i>
-												    		</button>
-												    	</div>
-												    </div>
+<!-- 													<div style="width: 100%;text-align: center;display: flex;align-items: center;justify-content: center; background-color: #fff; color:#000000"> -->
+<!-- 												    	<div style="width: 4%;"><input type="checkbox"></div> -->
+<!-- 												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: -1px;color:#a7afb7"></div> -->
+<!-- 												    	<div style="width: 30%;"> -->
+<!-- 												    		<div style="display: flex;justify-content: center;gap: 5rem;align-items: center;"> -->
+<!-- 													    		<div></div> -->
+<!-- 														    	<div style="border-right: 1px solid;height: 30px;color:#a7afb7"></div> -->
+<!-- 													    		<div></div> -->
+<!-- 												    		</div> -->
+<!-- 												    	</div> -->
+<!-- 												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div> -->
+<!-- 												    	<div style="width: 30%;"></div> -->
+<!-- 												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div> -->
+<!-- 												    	<div style="width: 30%;"></div> -->
+<!-- 												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div> -->
+<!-- 												    	<div style="width: 5%;display: flex;align-items: center;justify-content: center;"> -->
+<!-- 												    		<button style="border: none; background-color: transparent;"> -->
+<!-- 												    			<i class="mdi mdi-close"></i> -->
+<!-- 												    		</button> -->
+<!-- 												    	</div> -->
+<!-- 												    </div> -->
 											    </div>
 											</div>
 										</div>
@@ -409,7 +409,7 @@
                           </div>
                         </div>
                         <!-- 옵션 끝 -->
-                        
+                        <button class="console">확인</button>
                         <!-- 이미지 시작 -->
                         <div class="card">
                           <div class="card-body" style="padding: 1.5rem 2.5rem;" >
@@ -419,62 +419,68 @@
 				                  <div style="padding :  1.0rem 2.0rem;">
 				                  	<div style="display: flex; justify-content: space-between;">
 				                  		<div style="display: flex;align-items: center;">
-						                    <h4 class="card-title" style="margin-bottom: 0">옵션 </h4>
+						                    <h4 class="card-title" style="margin-bottom: 0">상품이미지</h4>
 				                  		</div>
-					                    <button onclick="closeBox('option')"><i class="mdi mdi-chevron-right"></i></button>
+					                    <button onclick="closeBox('img')"><i class="mdi mdi-chevron-right"></i></button>
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
-				                    <div class="closeBox-option">
-				                    	<form id="formAdptAnimal" action="" method="post" enctype="multipart/form-data">
-				                    	<div class="form-group row d-flex justify-content-center">
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
-														<label class="text-dark custom-label">대표 이미지</label>
-													    <div class="upload-container">
-															<label for="image-input1" class="upload-button">
-															<!-- name="upload_images[0]"  -->
+				                    <div class="closeBox-mianImg">
+										<div style="display: flex; align-items: center;">
+										    <label >대표 이미지</label>
+										    <div class="form-group" style="margin: 0">
+										        <div class="store-input-container">
+										        	<div class="upload-container" style="margin-left: 8px;">
+										        		<label for="image-input1" class="upload-button">
 																<input type="file" class="file-upload-default image-input" 
 																	accept="image/*" id="image-input1" name="upload_images[0]" required/>
 																<i id="plusIcon1" class="mdi mdi-plus"></i>
 																<img id="image-preview1" alt="이미지 미리보기" />
-															</label>
-														</div>
-													</div>
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
-														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
-													    <div class="upload-container">
-															<label for="image-input2" class="upload-button">
-																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input2" name="upload_images[1]"/>
-																<i id="plusIcon2" class="mdi mdi-plus"></i>
-																<img id="image-preview2" alt="이미지 미리보기" />
-															</label>
-														</div>
-													</div>
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
-														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
-													    <div class="upload-container">
-															<label for="image-input3" class="upload-button">
-																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input3" name="upload_images[2]"/>
-																<i id="plusIcon3" class="mdi mdi-plus"></i>
-																<img id="image-preview3" alt="이미지 미리보기" />
-															</label>
-														</div>
-													</div>
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
-														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
-													    <div class="upload-container">
-															<label for="image-input4" class="upload-button">
-																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input4" name="upload_images[3]"/>
-																<i id="plusIcon4" class="mdi mdi-plus"></i>
-																<img id="image-preview4" alt="이미지 미리보기" />
-															</label>
-														</div>
-													</div>
+														</label>
+										        	</div>
+										        </div>
+										    </div>
+										</div>    
+										<div class="dropdown-divider"></div>
+										<div style="display: flex; align-items: center;">
+										    <label >대표 이미지</label>
+										    <div class="form-group row d-flex" style="gap:1rem; margin: 0">
+											<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+												<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
+											    <div class="upload-container">
+													<label for="image-input2" class="upload-button">
+														<input type="file" class="file-upload-default image-input" 
+															accept="image/*" id="image-input2" name="upload_images[1]"/>
+														<i id="plusIcon2" class="mdi mdi-plus"></i>
+														<img id="image-preview2" alt="이미지 미리보기" />
+													</label>
 												</div>
-												<button type="submit" class="btn btn-lg btn-rounded btn-primary custom-text mr-2">등록하기</button>
-												</form>
+											</div>
+											<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+												<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
+											    <div class="upload-container">
+													<label for="image-input3" class="upload-button">
+														<input type="file" class="file-upload-default image-input" 
+															accept="image/*" id="image-input3" name="upload_images[2]"/>
+														<i id="plusIcon3" class="mdi mdi-plus"></i>
+														<img id="image-preview3" alt="이미지 미리보기" />
+													</label>
+												</div>
+											</div>
+											<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+												<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
+											    <div class="upload-container">
+													<label for="image-input4" class="upload-button">
+														<input type="file" class="file-upload-default image-input" 
+															accept="image/*" id="image-input4" name="upload_images[3]"/>
+														<i id="plusIcon4" class="mdi mdi-plus"></i>
+														<img id="image-preview4" alt="이미지 미리보기" />
+													</label>
+												</div>
+											</div>
+										</div>
+										</div>         
+				                    	
+										<button type="submit" class="btn btn-lg btn-rounded btn-primary custom-text mr-2">등록하기</button>
 				                    </div>
 				                  </div>
 				                </div>
