@@ -12,11 +12,10 @@ import com.Unicon.service.AdptService;
 
 
 @Controller
-@RequestMapping(value = "/adptmgmt/*")
+@RequestMapping(value = "/AM/*")
 public class AdptMgmtController {
 	
 	@Inject
-	private AdptService aService;
 	private static final Logger logger = LoggerFactory.getLogger(AdptMgmtController.class);
 
 	
@@ -25,10 +24,16 @@ public class AdptMgmtController {
 		logger.info("( •̀ ω •́ )✧ adptmgmtMain() 실행");
 	}
 	
-	@GetMapping(value = "/animals")
+	@GetMapping(value = "/animals/creation")
 	public String animalAdd() throws Exception {
 		logger.info("( •̀ ω •́ )✧ animalAdd() 실행");
 		return "/adptmgmt/animals/insert";
+	}
+	
+	@GetMapping(value = "/animals")
+	public String animalView() throws Exception {
+		logger.info("( •̀ ω •́ )✧ animalView() 실행");
+		return "/adptmgmt/animals/read";
 	}
 	
 }
