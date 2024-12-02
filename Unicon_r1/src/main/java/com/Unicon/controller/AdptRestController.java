@@ -61,13 +61,17 @@ public class AdptRestController {
 	public ResponseEntity<Map<String, String>> animalAutoName(
 			@RequestParam("animal_act") int act, @RequestParam("animal_social") int social) {
 		logger.info("( •̀ ω •́ )✧ animalAutoName() 실행");
-		logger.info("( •̀ ω •́ )✧ act : {}, social : {}",act,social);
 		
 		String autoName = aService.genAutoName(act, social); 
 		Map<String, String> resp = new HashMap<String, String>();
 		resp.put("autoName", autoName);
 		return new ResponseEntity<Map<String, String>>(resp,HttpStatus.OK);
 	}
+	
+	
+	/*
+	 * @GetMapping(value = "") public
+	 */
 
 	
 

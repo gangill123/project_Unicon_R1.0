@@ -128,6 +128,20 @@
 </select>
 
 
+<select id="getAnimalListAll" resultMap="AnimalResultMap">
+	select a.animal_id, a.category_etc_value, a.animal_name, date_format(a.animal_regdate, '%Y-%m-%d') as animal_regdate, 
+	 c.category_type, c.category_value, 
+	  am.member_name, 
+	   ac.common_value 
+	    from _animal a 
+	     join _category_data c on a.category_code = c.category_code 
+	      join _adpt_member am on a.member_id = am.member_id 
+	       join _common ac on a.animal_status = ac.common_code 
+	        where ac.common_column = 'animal_status'
+</select>
+
+
+
 </mapper>
 
 

@@ -40,6 +40,12 @@ public class AdptService {
 	}
 	
 	
+	public List<AnimalVO> getAnimalListAll() {
+		logger.info("( •̀ ω •́ )✧ getAnimalListAll() 실행");
+		
+		return aDao.getAnimalListAll();
+	}
+	
 	
 	
 	/*=============== 메서드 ===============*/
