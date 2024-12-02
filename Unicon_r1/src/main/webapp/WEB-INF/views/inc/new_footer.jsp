@@ -123,14 +123,15 @@
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
 	            <div class="modal-body">
-	                <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9">
+	                <!-- Start Product Section -->
+                <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9">
                     <div class="col-lg-5 text-center text-lg-start mb-1-9 mb-lg-0">
 
                         <!-- product left start -->
                         <div class="xzoom-container">
-                            <img class="xzoom5 mb-1-9" id="xzoom-magnific" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" xoriginal="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" alt="..." style="width: 526px;">
+                            <img class="xzoom5 mb-1-9" id="xzoom-magnific" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" xoriginal="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" alt="...">
                             <div class="xzoom-thumbs m-0">
-                                <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg"><img class="xzoom-gallery5 xactive" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumbs/01_product.jpg" xpreview="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" alt="..." title="The description goes here"></a>
+                                <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumbs/01_product.jpg" xpreview="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" alt="..." title="The description goes here"></a>
                                 <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/02_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/02_product.jpg" alt="..." title="The description goes here"></a>
                                 <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/03_product.jpg" alt="..." title="The description goes here"></a>
                                 <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/04_product.jpg" alt="..." title="The description goes here"></a>
@@ -224,6 +225,8 @@
                         </div>
                     </div>
                 </div>
+                <!-- End Product Section -->
+	                
 	            </div>
 	        </div>
 	    </div>
@@ -308,6 +311,15 @@
     <!--  prism js -->
     <script src="${pageContext.request.contextPath }/resources/new_assets/js/prism.js"></script>
 
+	<!-- zoom js -->
+	<script src="${pageContext.request.contextPath }/resources/new_assets/js/xzoom.js"></script>
+	
+	<!-- hammer js -->
+	<script src="${pageContext.request.contextPath }/resources/new_assets/js/jquery.hammer.min.js"></script>
+	
+	<!-- setup js -->
+	<script src="${pageContext.request.contextPath }/resources/new_assets/js/setup.js"></script>
+	
     <!-- revolution slider js files start -->
     <script src="${pageContext.request.contextPath }/resources/new_assets/js/rev_slider/jquery.themepunch.tools.min.js"></script>
     <script src="${pageContext.request.contextPath }/resources/new_assets/js/rev_slider/jquery.themepunch.revolution.min.js"></script>
@@ -335,6 +347,7 @@
     
     <!-- sweetalert2 js -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
 
     <!-- all js include end -->
 

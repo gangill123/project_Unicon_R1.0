@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Unicon.domain.MainSlideVO;
+import com.Unicon.domain.NewsVO;
 import com.Unicon.service.MainSlideService;
+import com.Unicon.service.NewsService;
 
 @Controller
 @RequestMapping("/main")
@@ -22,6 +24,8 @@ public class MainController {
 	
 	@Autowired
 	private MainSlideService msService;
+	@Autowired
+	private NewsService nService;
 	
 	@GetMapping("")
 	public String main(Model model) {
@@ -31,6 +35,10 @@ public class MainController {
 		// 슬라이드 정보 가져오기
 		List<MainSlideVO> slideInfo = msService.getSlideForMain();
 		model.addAttribute("slideInfo", slideInfo);
+		
+		// 소식 정보 가져오기
+		NewsVO newsInfo = nService.getNewsForMain();
+		model.addAttribute("newsInfo", newsInfo);
 		
 		return "/main/new_main";
 	}

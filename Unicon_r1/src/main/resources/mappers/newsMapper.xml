@@ -43,6 +43,11 @@
 		select * from _news where news_resion = #{news_resion} order by news_enddate desc 
 	</select>
 	
+	<!-- 소식 조회(메인용) -->
+	<select id="getNewsForMain" resultType="NewsVO">
+		select * from _news order by news_enddate desc limit 1 
+	</select>
+	
 	
 
 </mapper>

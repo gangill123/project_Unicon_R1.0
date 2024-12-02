@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
@@ -23,11 +25,36 @@
 .img-holder img {
     width: 100%;
     height: 100%;
-    object-fit: cover;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+    object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+}
+
+.about2-text{
+    width: 100%;
+    aspect-ratio: 3.3 / 4; /* 원하는 가로:세로 비율 설정 */
+    overflow: fill;    /* 이미지가 컨테이너를 벗어나지 않도록 */
+}
+
+.about2-text img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+    border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
 }
 
 .butn-style2.small:hover{
 	padding-right: 6em !important;
+}
+
+.about-style2 .about2-text span{
+	-webkit-text-fill-color: #eee !important;
+	font-size: 100px;
+	left: 0px;
+	bottom: -15px;
+}
+
+.about-style2 .about2-text h5{
+	margin-top: 8px;
+
 }
 
 </style>
@@ -152,35 +179,41 @@
         <section class="pb-0 pb-lg-5" style="padding-top: 50px; margin-bottom: 50px;">
             <div class="container">
             	<div class="section-heading"><span>알려드려요!!</span>
-                    <h2>반려동물 소식</h2>
+                    <h2>반려동물 행사소식</h2>
                 </div>
             
                 <div class="row about-style2">
 
                     <div class="col-lg-5 mb-2-3 mb-lg-0">
                         <div class="about2-text wow fadeInLeft" data-wow-delay="500ms">
-                            <img src="${pageContext.request.contextPath }/resources/new_assets/img/news01.jpg" class="rounded" alt="...">
-                            <span class="wow fadeInRight" data-wow-delay="550ms">25</span>
-                            <h5 class="wow fadeInLeft" data-wow-delay="550ms">Years of experience</h5>
+                            <img src="${newsInfo.news_src }" class="rounded" alt="...">
+                            <span class="wow fadeInRight" data-wow-delay="550ms">
+                           	<c:set var="dateString" value="${newsInfo.news_startdate }"/>
+                           	${fn:substring(dateString, 5, 7)}.${fn:substring(dateString, 8, 10)}	
+                            </span>
+                            <h5 class="wow fadeInLeft" data-wow-delay="550ms" style="text-align: end;">Year ${fn:substring(dateString, 0, 4) } News</h5>
                         </div>
                     </div>
 
                     <div class="offset-xl-1 col-lg-6 wow fadeInRight">
                         <div>
-                            <div class="content mb-lg-1-6 mb-xl-7">
-                                <span class="title-style1">about us</span>
-                                <h2 class="mb-3 font-weight-700 w-lg-90">We provide the perfect solution for company</h2>
-                                <p class="display-28 font-weight-600 fst-italic">25 Years of experience in marketing service</p>
-                                <p class="mb-xl-1-9 w-lg-90">We should encourage people everywhere who want help getting started on building something great from start-ups so they can earn extra money online before starting up business.</p>
-                                <a href="#!" class="butn-style2"><span>More Services</span></a>
+                            <div class="content mb-lg-1-6 mb-xl-7" style="height: 330px;">
+                                <span class="title-style1">about news</span>
+                                <h2 class="mb-3 font-weight-700 w-lg-90">${newsInfo.news_subject }</h2>
+                                <p class="display-28 font-weight-600 fst-italic">${newsInfo.news_place }</p>
+                                <p class="mb-xl-1-9 w-lg-90">
+                                ${fn:substring(newsInfo.news_content, 0, 150)}...
+                                </p>
+                                <a href="#!" class="butn-style2"><span>다양한 소식 더보기</span></a>
                             </div>
-                            <div class="about-bg d-none d-lg-flex">
+                            <div class="about-bg d-none d-lg-flex" style="justify-content: center;">
                                 <div class="z-index-1 me-5 pe-5 border-end">
-                                    <h6 class="text-white">William Fox</h6>
-                                    <p class="mb-0 text-white">CEO of company</p>
+                                    <h6 class="text-white" style="font-size: 1.5rem;"><i class="fa-solid fa-building-columns"></i> 주관기관</h6>
+                                    <p class="mb-0 text-white" style="text-align: center;">${newsInfo.news_ins }</p>
                                 </div>
-                                <div class="z-index-1">
-                                    <img src="${pageContext.request.contextPath }/resources/new_assets/img/content/signature-01.png" alt="...">
+                                <div class="z-index-1 me-5 pe-5">
+                                    <h6 class="text-white" style="font-size: 1.5rem;"><i class="fa-solid fa-users-line"></i> 참석대상</h6>
+                                    <p class="mb-0 text-white" style="text-align: center;">${newsInfo.news_att }</p>
                                 </div>
                             </div>
                         </div>

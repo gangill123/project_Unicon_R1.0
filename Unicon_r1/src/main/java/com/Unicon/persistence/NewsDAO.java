@@ -47,4 +47,10 @@ public class NewsDAO {
 		return sqlSession.selectList(NAMESPACE+".getNewsResion", news_resion);
 	}
 	
+	// 소식 조회(메인용)
+	public NewsVO getNewsForMain() {
+		return sqlSession.selectOne(NAMESPACE+".getNewsForMain");
+	}
+	
+	
 }

@@ -20,7 +20,7 @@
 .product-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+    object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
     border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
 }
 

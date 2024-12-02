@@ -1,5 +1,7 @@
 package com.Unicon.domain;
 
+import java.sql.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
