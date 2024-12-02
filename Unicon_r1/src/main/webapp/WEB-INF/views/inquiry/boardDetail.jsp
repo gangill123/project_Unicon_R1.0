@@ -151,7 +151,7 @@
             <div class="reply">
                 <c:forEach var="answer" items="${answers}">
                     <div class="answer-item">
-                        <!-- 작성자 이름과 이미지 -->
+                        <!-- 작성자 이름과 이미지 수정-->
                         <h6>
                             <img src="${pageContext.request.contextPath}/resources/assets/images/U문의.jpg" 
                                  alt="U" class="rounded-circle me-2" style="width: 30px; height: 30px;">
@@ -172,7 +172,7 @@
                            
                         </div>
                     </div>
-                    <!--  end blog left-->
+                    <!--  end blog lefts-->
 
                     <!--  start blog right-->
                     <div class="col-lg-3">
