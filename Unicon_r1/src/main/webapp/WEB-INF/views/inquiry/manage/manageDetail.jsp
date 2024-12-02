@@ -130,7 +130,9 @@ textarea {
 						<li class="list-inline-item"><i class="fas fa-phone"></i> 휴대폰 번호: ${boardDetail.phone}</li>
 					</ul>
 					<p class="text-dark">${boardDetail.content}</p>
-					<img src="${boardDetail.inquiryFile.thumbnailPath}" alt="Thumbnail" class="img-fluid rounded shadow-sm mb-4">
+					<c:if test="${not empty boardDetail.inquiryFile.thumbnailPath}">
+						<img src="${boardDetail.inquiryFile.thumbnailPath}" alt="Thumbnail" />
+					</c:if>
 					<hr>
 	
 					<!-- Comment Section -->

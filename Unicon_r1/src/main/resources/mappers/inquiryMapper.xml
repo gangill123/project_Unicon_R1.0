@@ -184,6 +184,31 @@
 	    SET view_count = view_count + 1
 	    WHERE bno = #{bno}
 	</update>
+	
+	
+   <delete id="deleteBoards" parameterType="list">
+    DELETE FROM _inquiry
+    WHERE bno IN
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+        #{id}
+    </foreach>
+</delete>
+	
+	 <!-- 검색 쿼리 -->
+    <select id="searchBoards" resultType="com.Unicon.domain.InquiryVO">
+        SELECT *
+        FROM _inquiry
+        WHERE 1=1
+        <if test="startDate != null and startDate != ''">
+            AND created_at &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and endDate != ''">
+            AND created_at &lt;= #{endDate}
+        </if>
+        <if test="istatus != null and istatus != ''">
+            AND istatus = #{istatus}
+        </if>
+    </select>
 
 
 

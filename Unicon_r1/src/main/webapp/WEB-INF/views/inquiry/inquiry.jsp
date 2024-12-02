@@ -5,10 +5,13 @@
   <!-- Customized Bootstrap Stylesheet -->
     <link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
+  <!-- Template Stylesheet -->
+  <link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
 
-<!-- 추가 템플릿 css/js 작성란 -->
+  <!-- 추가 템플릿 css/js 작성란 -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
 
 
@@ -56,40 +59,33 @@
         <div class="row justify-content-center">
             <div class="col-md-10 col-lg-7">
 
-                <!-- start form here -->
-
-                <form class="quform newsletter-rounded" action="quform/newsletter-two.php" method="post" enctype="multipart/form-data" onclick="">
-
-                    <div class="quform-elements">
-
-                        <div class="row">
-
-                            <!-- Begin Text input element -->
-                            <div class="col-md-12">
-                                <div class="quform-element">
-                                    <div class="quform-input">
-                                        <input class="rounded-pill form-control" id="email_address" type="text" name="email_address" placeholder="문의사항을 입력하세요." />
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Text input element -->
-
-                            <!-- Begin Submit button -->
-                            <div class="col-md-12">
-                                <div class="quform-submit-inner">
-                                    <button class="btn btn-white text-primary m-0 px-4" type="submit"><i class="fas fa-paper-plane"></i></button>
-                                </div>
-                                <div class="quform-loading-wrap"><span class="quform-loading"></span></div>
-                            </div>
-                            <!-- End Submit button -->
-
-                        </div>
-
-                    </div>
-
-                </form>
-
-                <!-- end form here -->
+				   <!-- start form here -->
+					<form class="quform newsletter-rounded" id="searchForm" action="" method="get">
+					    <div class="quform-elements">
+					        <div class="row">
+					            <!-- Begin Text input element -->
+					            <div class="col-md-12">
+					                <div class="quform-element">
+					                    <div class="quform-input">
+					                        <input class="rounded-pill form-control" id="searchInput" type="text" placeholder="" />
+					                    </div>
+					                </div>
+					            </div>
+					            <!-- End Text input element -->
+					
+					            <!-- Begin Submit button -->
+					            <div class="col-md-12">
+					                <div class="quform-submit-inner">
+					                    <button id="searchBtn" class="btn btn-white text-primary m-0 px-4" type="button"><i class="fas fa-paper-plane"></i></button>
+					                </div>
+					                <div class="quform-loading-wrap"><span class="quform-loading"></span></div>
+					            </div>
+					            <!-- End Submit button -->
+					        </div>
+					    </div>
+					</form>
+				<!-- end form here -->
+				               
 
             </div>
         </div>
@@ -250,22 +246,42 @@
             </div>
         </section>
 <script>
+$(document).ready(function() {
+    // 검색 버튼 클릭 이벤트
+    $("#searchBtn").click(function() {
+        performSearch();
+    });
 
+    // Enter 키 입력 시 검색 버튼 클릭 처리
+    $("#searchInput").keypress(function(event) {
+        if (event.which === 13) { // 13은 Enter 키의 키코드
+            event.preventDefault(); // 폼 제출 방지
+            performSearch(); // 검색 처리 함수 호출
+        }
+    });
 
+    // 검색 처리 함수
+    function performSearch() {
+        const searchQuery = $("#searchInput").val().trim().toLowerCase();
+        let targetPage = '';
 
+        if (searchQuery.includes('입양') || searchQuery.includes('입양 방법') || searchQuery.includes('입양 현황')) {
+            targetPage = 'adoption';  // 입양 관련 페이지로 이동
+        } else if (searchQuery.includes('쇼핑') || searchQuery.includes('애견옷') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품 주문')) {
+            targetPage = 'shop';  // 쇼핑몰 페이지로 이동
+        } else if (searchQuery.includes('커뮤니티') || searchQuery.includes('애견 커뮤니티')) {
+            targetPage = 'community';  // 커뮤니티 페이지로 이동
+        } else if (searchQuery.includes('기타') || searchQuery.includes('결제') || searchQuery.includes('시스템') || searchQuery.includes('기타 사항')) {
+            targetPage = 'etc';  // 기타 페이지로 이동
+        } else {
+            alert('해당 검색어에 맞는 페이지가 없습니다.');
+            return;  // 페이지 이동을 하지 않고 알림만 출력
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        // 페이지 이동
+        window.location.href = targetPage;
+    }
+});
 </script>
 	
 	
