@@ -203,13 +203,13 @@
 								                <div class="quform-input">
 								                    <div class="custom-file">
 								                        <input class="custom-file-input" type="file" id="image-input-1" name="upload_images[0]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
-								                        <label for="repImage1">대표 이미지 <span class="quform-required">*</span></label>
+								                        <label for="image-input-1" style="cursor: pointer;">대표 이미지 <span class="quform-required">*</span></label>
 								                    </div>
 								                </div>
 								                <!-- End Upload element -->
 								            </div>
 								            <!-- Begin Preview element -->
-								            <div class="project-grid-img" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
+								            <div class="project-grid-img" data-input-id="image-input-1" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
 								                <i class="fa-solid fa-plus fa-2xl" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
 								                <img id="image-preview-1" alt="" style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
 								            </div>
@@ -223,13 +223,13 @@
 								                <div class="quform-input">
 								                    <div class="custom-file">
 								                        <input class="custom-file-input" type="file" id="image-input-2" name="upload_images[1]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
-								                        <label for="Image2">이미지</label>
+								                        <label for="image-input-2" style="cursor: pointer;">이미지</label>
 								                    </div>
 								                </div>
 								                <!-- End Upload element -->
 								            </div>
 								            <!-- Begin Preview element -->
-								            <div class="project-grid-img" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
+								            <div class="project-grid-img" data-input-id="image-input-2" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
 								                <i class="fa-solid fa-plus fa-2xl" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
 								                <img id="image-preview-2" alt="" style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
 								            </div>
@@ -243,13 +243,13 @@
 								                <div class="quform-input">
 								                    <div class="custom-file">
 								                        <input class="custom-file-input" type="file" id="image-input-3" name="upload_images[2]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
-								                        <label for="Image3">이미지</label>
+								                        <label for="image-input-3" style="cursor: pointer;">이미지</label>
 								                    </div>
 								                </div>
 								                <!-- End Upload element -->
 								            </div>
 								            <!-- Begin Preview element -->
-								            <div class="project-grid-img" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
+								            <div class="project-grid-img" data-input-id="image-input-3" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
 								                <i class="fa-solid fa-plus fa-2xl" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
 								                <img id="image-preview-3" alt="" style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
 								            </div>
@@ -263,13 +263,13 @@
 								                <div class="quform-input">
 								                    <div class="custom-file">
 								                        <input class="custom-file-input" type="file" id="image-input-4" name="upload_images[3]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
-								                        <label for="Image4">이미지</label>
+								                        <label for="image-input-4" style="cursor: pointer;">이미지</label>
 								                    </div>
 								                </div>
 								                <!-- End Upload element -->
 								            </div>
 								            <!-- Begin Preview element -->
-								            <div class="project-grid-img" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
+								            <div class="project-grid-img" data-input-id="image-input-4" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
 								                <i class="fa-solid fa-plus fa-2xl" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
 								                <img id="image-preview-4" alt="" style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
 								            </div>
@@ -331,46 +331,132 @@ $(function() {
 	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
 	
     // 이미지 미리보기
-	function setupImagePreview(inputId, previewId) {
-	    $('#' + inputId).change(function(e) {
-	        const file = e.target.files[0];
-	        const reader = new FileReader();
-	
-	        // 파일이 선택되었을 때
-	        if (file) {
-	            // MIME 타입 확인
-	            const fileType = file.type;
-	            const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
-	
-	            if (validImageTypes.includes(fileType)) {
-	                reader.onload = function(e) {
-	                    $('#' + previewId).attr('src', e.target.result).show();
-	                }
-	                reader.readAsDataURL(file);
-	            } else {
-	                // 유효하지 않은 파일 형식일 경우 오류 메시지 표시
-	                alert(' 이미지 파일만 선택할 수 있습니다. (JPEG, PNG, GIF, JPG 형식) ');
-	                // 파일 입력 초기화
-	                $('#' + inputId).val('');
-	                // 미리보기 이미지 숨기기
-	                $('#' + previewId).hide();
-	            }
-	        } else {
-	            // 파일이 선택되지 않았을 경우 미리보기 이미지 숨기기
-	            $('#' + previewId).hide();
-	        }
-	    });
-	
-	    // 미리보기 이미지 클릭 시 파일 선택
-	    $('#' + previewId).parent().click(function() {
-	        $('#' + inputId).click();
-	    });
-	    
-	} // setupImagePreview()
-	setupImagePreview('image-input-1', 'image-preview-1');
-	setupImagePreview('image-input-2', 'image-preview-2');
-	setupImagePreview('image-input-3', 'image-preview-3');
-	setupImagePreview('image-input-4', 'image-preview-4');
+	// 이미지 미리보기 영역 클릭 시 파일 선택창 열기
+    $('.project-grid-img').on('click', function() {
+        const inputId = $(this).data('input-id'); // data-input-id에서 파일 입력 ID 가져오기
+        $('#' + inputId).click(); // 해당 파일 입력 요소 클릭
+    });
+
+    // 기존의 파일 입력 요소의 change 이벤트 처리
+    $('.custom-file-input').on('change', function(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        const inputId = e.target.id;
+        const idNoNum = inputId.replace(/\d+/g, '');
+        const idNum = inputId.charAt(inputId.length - 1);
+        const previewId = '#image-preview-' + idNum;
+        const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
+
+        if (file) {
+            if (fileTypeFilter.exec(file.name)) {
+                switch (idNum) {
+                    case '1': {
+                        reader.readAsDataURL(file);
+                        reader.onload = function(e) {
+                            $(previewId).attr('src', e.target.result).show();
+                        }
+                        break;
+                    }
+                    case '2': {
+                        if ($('#' + idNoNum + (idNum - 1)).val() == '') {
+                            const adataTransfer = new DataTransfer();
+                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+                            $('#' + idNoNum + idNum).val('');
+                            $('#image-preview-' + idNum).removeAttr('src');
+                            $('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+                            $('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
+                        } else {
+                            reader.readAsDataURL(file);
+                            reader.onload = function(e) {
+                                $(previewId).attr('src', e.target.result).show();
+                            }
+                        }
+                        break;
+                    }
+                    case '3': {
+                        if ($('#' + idNoNum + (idNum - 2)).val() == '' && $('#' + idNoNum + (idNum - 1)).val() == '') {
+                            const adataTransfer = new DataTransfer();
+                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+                            $('#' + idNoNum + idNum).val('');
+                            $('#image-preview-' + idNum).removeAttr('src');
+                            $('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
+                            $('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
+                        } else if ($('#' + idNoNum + (idNum - 1)).val() == '') {
+                            const adataTransfer = new DataTransfer();
+                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+                            $('#' + idNoNum + idNum).val('');
+                            $('#image-preview-' + idNum).removeAttr('src');
+                            $('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+                            $('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
+                        } else {
+                            reader.readAsDataURL(file);
+                            reader.onload = function(e) {
+                                $(previewId).attr('src', e.target.result).show();
+                            }
+                        }
+                        break;
+                    }
+                    case '4': {
+                        if ($('#' + idNoNum + (idNum - 3)).val() == '' && $('#' + idNoNum + (idNum - 2)).val() == '' && $('#' + idNoNum + (idNum - 1)).val() == '') {
+                            const adataTransfer = new DataTransfer();
+                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+                            $('#' + idNoNum + idNum).val('');
+                            $('#image-preview-' + idNum).removeAttr('src');
+                            $('#' + idNoNum + (idNum - 3))[0].files = adataTransfer.files;
+                            $('#' + idNoNum + (idNum - 3))[0].dispatchEvent(new Event('change'));
+                        } else if ($('#' + idNoNum + (idNum - 2)).val() == '' && $('#' + idNoNum + (idNum - 1)).val() == '') {
+                            const adataTransfer = new DataTransfer();
+                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+                            $('#' + idNoNum + idNum).val('');
+                            $('#image-preview-' + idNum).removeAttr('src');
+                            $('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
+                            $('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
+                        } else if ($('#' + idNoNum + (idNum - 1)).val() == '') {
+                            const adataTransfer = new DataTransfer();
+                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+                            $('#' + idNoNum + idNum).val('');
+                            $('#image-preview-' + idNum).removeAttr('src');
+                            $('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+                            $('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
+                        } else {
+                            reader.readAsDataURL(file);
+                            reader.onload = function(e) {
+                                $(previewId).attr('src', e.target.result).show();
+                            }
+                        }
+                        break;
+                    }
+                    default: {
+                        console.error("잘못된 번호");
+                        break;
+                    }
+                }
+            } else {
+                alert('허용되지 않는 파일 형식이 포함되어 있습니다.');
+                $(this).val('');
+            }
+        } else {
+            if (idNum < 4) {
+                $(previewId).hide();
+                for (let i = parseInt(idNum, 10); i <= 4; i++) {
+                    if (i == idNum) {
+                        continue;
+                    } else if ($('#' + idNoNum + i).val() != '') {
+                        const adataTransfer = new DataTransfer();
+                        adataTransfer.items.add($('#' + idNoNum + i)[0].files[0]);
+                        $('#' + idNoNum + i).val('');
+                        $('#image-preview-' + i).hide();
+                        $('#image-preview-' + i).removeAttr('src');
+                        $('#' + idNoNum + (i - 1))[0].files = adataTransfer.files;
+                        $('#' + idNoNum + (i - 1))[0].dispatchEvent(new Event('change'));
+                    }
+                }
+            } else {
+                $(previewId).hide();
+                $(previewId).removeAttr('src');
+            }
+        }
+    });
 	// 이미지 미리보기 설정
     
  	// 동물 종류 리스트
