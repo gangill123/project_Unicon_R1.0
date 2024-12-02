@@ -56,6 +56,13 @@ public class AdptDAO {
 	}
 	
 	
+	public List<AnimalVO> getAnimalListAll() {
+		logger.info("( •̀ ω •́ )✧ getAnimalListAll() 실행");
+		
+		return sqlSession.selectList(NAMESPACE+"getAnimalListAll");
+	}
+	
+	
 	
 	
 }

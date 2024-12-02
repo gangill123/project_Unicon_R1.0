@@ -40,6 +40,12 @@ public class AdptService {
 	}
 	
 	
+	public List<AnimalVO> getAnimalListAll() {
+		logger.info("( •̀ ω •́ )✧ getAnimalListAll() 실행");
+		
+		return aDao.getAnimalListAll();
+	}
+	
 	
 	
 	/*=============== 메서드 ===============*/
@@ -82,7 +88,6 @@ public class AdptService {
 			for (int i = 0; i < uploadImages.size(); i++) {
 				StringBuilder asb = new StringBuilder();
 				MultipartFile aImage = uploadImages.get(i);
-				
 				if(aImage == null || aImage.isEmpty()) {
 					logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 인덱스 : {}",i);
 					continue;
@@ -110,11 +115,10 @@ public class AdptService {
 					logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
 				}
 				
-				try {
-					aImage.transferTo(destinationImage);
-				} catch (IOException e) {
-					e.printStackTrace(); 
-				} 
+				/*
+				 * try { aImage.transferTo(destinationImage); } catch (IOException e) {
+				 * e.printStackTrace(); }
+				 */
 			}
 			
 			return animalImages;

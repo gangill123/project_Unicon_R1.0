@@ -49,4 +49,14 @@ public class NewsService {
 		return ndao.getNewsResion(news_resion);
 	}
 	
+	// 소식 조회(메인용)
+	public NewsVO getNewsForMain() {
+		return ndao.getNewsForMain();
+	}
+	
+	
+	
+	
+	
+	
 }

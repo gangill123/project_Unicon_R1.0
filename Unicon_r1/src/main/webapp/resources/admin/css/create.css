@@ -293,6 +293,8 @@
 	    font-size : 13px;
     }
     .disabled {
+        border: 1px solid #dbdde2;
+    	background-color: #dbdde2;
     }
     .option-add, .option-remove {
     	border: none;
@@ -304,7 +306,12 @@
 	    gap: 1rem;
     }
     
-    
+    .option-list {
+		width: 100%;
+	    padding: 0 1em;
+	    background-color: #fff;
+	    border: 1px solid;
+    }
     
     
     

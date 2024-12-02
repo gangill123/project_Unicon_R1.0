@@ -411,13 +411,18 @@
 			font-size: 1.1rem;
 		}
 		
-		.custom-a-btn-text {
+		.custom-a-btn-name span {
 			display:none;
 		}
 		
 		.card-body {
 			padding: 1rem 1rem !important;
 		}
+	}
+	
+	.custom-a-btn-images {
+		font-size: 0.75rem;
+		padding: 0.5rem;
 	}
 	
 	.btn-custom-a {
@@ -600,27 +605,36 @@
 															class="form-control custom-text" value="dummyID" readonly/>
 													</div>
 												</div>
-												
 												<div class="form-group row d-flex justify-content-center">
 													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
 														<label class="text-dark custom-label">대표 이미지</label>
-													    <div class="upload-container">
+													    <div class="upload-container mb-1">
 															<label for="image-input1" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input1" name="upload_images[0]" required/>
-																<i id="plusIcon1" class="mdi mdi-plus"></i>
-																<img id="image-preview1" alt="이미지 미리보기" />
+																	accept="image/*" id="image-input1" name="upload_images[0]" />
+																<i id="plusIcon1" class="mdi mdi-plus a-preview-i"></i>
+																<img id="image-preview1" class="a-preview" alt="이미지 미리보기" />
 															</label>
 														</div>
+														<input type="file" class="file-upload-default" 
+															accept="image/*" id="a-image-input-multi" multiple/>
+														<button type="button" id="multiImageUpBtn" 
+															class="btn btn-outline-custom-a btn-icon-text custom-a-btn-images"> 
+															<span class="custom-a-btn-text">
+															여러장 올리기
+															</span>
+															<i class="fa-solid fa-images"></i>
+														</button>
 													</div>
 													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<div></div>
 														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
 													    <div class="upload-container">
 															<label for="image-input2" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
 																	accept="image/*" id="image-input2" name="upload_images[1]"/>
-																<i id="plusIcon2" class="mdi mdi-plus"></i>
-																<img id="image-preview2" alt="이미지 미리보기" />
+																<i id="plusIcon2" class="mdi mdi-plus a-preview-i"></i>
+																<img id="image-preview2" class="a-preview" alt="이미지 미리보기" />
 															</label>
 														</div>
 													</div>
@@ -630,8 +644,8 @@
 															<label for="image-input3" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
 																	accept="image/*" id="image-input3" name="upload_images[2]"/>
-																<i id="plusIcon3" class="mdi mdi-plus"></i>
-																<img id="image-preview3" alt="이미지 미리보기" />
+																<i id="plusIcon3" class="mdi mdi-plus a-preview-i"></i>
+																<img id="image-preview3" class="a-preview" alt="이미지 미리보기" />
 															</label>
 														</div>
 													</div>
@@ -641,11 +655,15 @@
 															<label for="image-input4" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
 																	accept="image/*" id="image-input4" name="upload_images[3]"/>
-																<i id="plusIcon4" class="mdi mdi-plus"></i>
-																<img id="image-preview4" alt="이미지 미리보기" />
+																<i id="plusIcon4" class="mdi mdi-plus a-preview-i"></i>
+																<img id="image-preview4" class="a-preview" alt="이미지 미리보기" />
 															</label>
 														</div>
 													</div>
+												</div>
+												<div class="form-group row d-flex justify-content-center align-items-center">
+													<button type="submit" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
+													<button type="button" id="a-reset-btn1" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
 												</div>
 											</fieldset>
 											
@@ -860,7 +878,7 @@
 												
 												<div class="form-group row d-flex justify-content-center align-items-center">
 													<button type="submit" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
-													<button type="reset" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
+													<button type="button" id="a-reset-btn2" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
 												</div>
 											</fieldset>
 										</form>
@@ -885,6 +903,8 @@
 		<!-- Plugin js for this page -->
 		<!-- End plugin js for this page -->
 		<!-- inject:js -->
+			<!-- sweetalert2 -->
+			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 			<script src="${pageContext.request.contextPath}/resources/admin/js/off-canvas.js"></script>
 			<script src="${pageContext.request.contextPath}/resources/admin/js/hoverable-collapse.js"></script>
 			<script src="${pageContext.request.contextPath}/resources/admin/js/misc.js"></script>
@@ -1151,12 +1171,16 @@
 				
 				/*=============== 동물 나이 드롭다운 ===============*/
 				var currentYear = new Date().getFullYear();
+				var currentMonth = new Date().getMonth() + 1;
 				var fixedYear = new Date().getFullYear();
 
 				function addAYearDropdown() {
 					$('#aYearDropdown').empty();
 
-					for (var amonth = 1; amonth <= 12; amonth++) {
+					for(var amonth = 1; amonth <= 12; amonth++) {
+						if(currentYear == 2024 && amonth > currentMonth) {
+							continue;
+						}
 						$('#aYearDropdown').append(
 							'<div class="a-year-option" data-value="'+ currentYear +'년'+ amonth +'월생">' +
 							currentYear + '-' + amonth + '</div>'
@@ -1225,38 +1249,173 @@
 				});
 				/*=============== 동물 나이 드롭다운 ===============*/
 				
+
+				/*=============== 이미지 여러장 업로드 ===============*/
+				$('#multiImageUpBtn').on('click', function(){
+					$("#a-image-input-multi").click();
+				});
 				
-				/*=============== 이미지 미리보기 ===============*/
+				$('#a-image-input-multi').on('change', function(e) {
+					const aImagefiles = e.target.files;
+					const reader = new FileReader();
+					const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
+					let validaImagefiles = true;
+					
+					for (let i = 0; i < aImagefiles.length; i++) {
+						if (!fileTypeFilter.exec(aImagefiles[i].name)) {
+							validaImagefiles = false;
+							break;
+						}
+					}
+					
+					if (aImagefiles.length > 4) {
+						alert('최대 4개의 파일만 선택할 수 있습니다.');
+						$('#a-image-input-multi').val('');
+					} else {
+						if(validaImagefiles) {
+				            for (let i = 0; i < aImagefiles.length; i++) {
+				                    const fileInput = $('#image-input' + (i + 1))[0];
+				                    const dataTransfer = new DataTransfer();
+				                    
+				                    dataTransfer.items.add(aImagefiles[i]);
+				                    fileInput.files = dataTransfer.files;
+				                    fileInput.dispatchEvent(new Event('change'));
+				            }
+						} else {
+							alert('허용되지 않는 파일 형식이 포함되어 있습니다.');
+							$('#a-image-input-multi').val('');
+						}
+		            }
+			            
+				});
+				/*=============== 이미지 여러장 업로드 ===============*/		
 				
 				
-				
-				
+				/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
 				$('.image-input').on('change', function(e) {
 					const file = e.target.files[0];
 					const reader = new FileReader();
-					
 					const inputId = e.target.id;
-					const previewId = '#image-preview' + inputId.charAt(inputId.length - 1);
-					const plusIconId = '#plusIcon' + inputId.charAt(inputId.length - 1);
-					
+					const idNoNum = inputId.replace(/\d+/g, '');
+					const idNum = inputId.charAt(inputId.length - 1);
+					const previewId = '#image-preview' + idNum;
+					const plusIconId = '#plusIcon' + idNum;
 					const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
 					
 					if (file) {
-						if(fileTypeFilter.exec(file.name)) {
-							reader.onload = function(e) {
-								$(previewId).attr('src', e.target.result).show();
-								$(plusIconId).hide();
+						 if(fileTypeFilter.exec(file.name)) {
+							 switch(idNum) {
+							 	case '1': {
+							 		reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										$(previewId).attr('src', e.target.result).show();
+										$(plusIconId).hide();
+									}
+									break;
+							 	}
+								case '2': {
+									if($('#' + idNoNum + (idNum - 1)).val() == '') {
+										const adataTransfer = new DataTransfer();
+										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+										$('#' + idNoNum + idNum).val('');
+										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
+									} else {
+										reader.readAsDataURL(file);
+										reader.onload = function(e) {
+											$(previewId).attr('src', e.target.result).show();
+											$(plusIconId).hide();
+										}
+									}
+									break;
+								}
+								case '3': {
+									if($('#' + idNoNum + (idNum - 2)).val() == '' 
+											&& $('#' + idNoNum + (idNum - 1)).val() == '') {
+										const adataTransfer = new DataTransfer();
+										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+										$('#' + idNoNum + idNum).val('');
+										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
+										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
+									} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
+										const adataTransfer = new DataTransfer();
+										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+										$('#' + idNoNum + idNum).val('');
+										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
+									} else {
+										reader.readAsDataURL(file);
+										reader.onload = function(e) {
+											$(previewId).attr('src', e.target.result).show();
+											$(plusIconId).hide();
+										}
+									}
+									break;
+								}
+								case '4': {
+									if($('#' + idNoNum + (idNum - 3)).val() == '' 
+											&& $('#' + idNoNum + (idNum - 2)).val() == '' 
+												&& $('#' + idNoNum + (idNum - 1)).val() == '') {
+										const adataTransfer = new DataTransfer();
+										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+										$('#' + idNoNum + idNum).val('');
+										$('#' + idNoNum + (idNum - 3))[0].files = adataTransfer.files;
+										$('#' + idNoNum + (idNum - 3))[0].dispatchEvent(new Event('change'));
+									} else if($('#' + idNoNum + (idNum - 2)).val() == '' 
+											&& $('#' + idNoNum + (idNum - 1)).val() == '') {
+										const adataTransfer = new DataTransfer();
+										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+										$('#' + idNoNum + idNum).val('');
+										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
+										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
+									} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
+										const adataTransfer = new DataTransfer();
+										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+										$('#' + idNoNum + idNum).val('');
+										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
+									} else {
+										reader.readAsDataURL(file);
+										reader.onload = function(e) {
+											$(previewId).attr('src', e.target.result).show();
+											$(plusIconId).hide();
+										}
+									}
+									break;
+								}
+								default: {
+									console.error("잘못된 번호");
+									break;
+								}
 							}
-							reader.readAsDataURL(file);
 						} else {
+							alert('허용되지 않는 파일 형식이 포함되어 있습니다.');
 							$(this).val('');
 						}
 					} else {
-						$(previewId).hide();
-						$(plusIconId).show();
+						if(idNum < 4) {
+							$(previewId).hide();
+							$(plusIconId).show();
+							for(let i = parseInt(idNum, 10); i <= 4; i++) {
+								if(i == idNum) {
+									continue;
+								} else if($('#' + idNoNum + i).val() != '') {
+									const adataTransfer = new DataTransfer();
+									adataTransfer.items.add($('#' + idNoNum + i)[0].files[0]);
+									$('#' + idNoNum + i).val('');
+									$('#image-preview'+i).hide();
+									$('#plusIcon'+i).show();
+									$('#' + idNoNum + (i - 1))[0].files = adataTransfer.files;
+									$('#' + idNoNum + (i - 1))[0].dispatchEvent(new Event('change'));
+								}
+							}
+						} else {
+							$(previewId).hide();
+							$(plusIconId).show();
+						}
 					}
 				});
-				/*=============== 이미지 미리보기 ===============*/
+				/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
 				
 				
 				/*=============== 체크박스 제어 ===============*/
@@ -1289,6 +1448,102 @@
 				});
 				/*=============== 체크박스 제어 ===============*/
 
+				
+				/*=============== 초기화(reset) 버튼 제어 ===============*/
+				$('#a-reset-btn1, #a-reset-btn2').on('click',function(e) {
+					
+					Swal.fire({
+						title: '초기화하시겠습니까?',
+						text: '작성 전체가 초기화 됩니다!',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '초기화',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$('#formAdptAnimal')[0].reset();
+							$('.a-preview').hide();
+							$('.a-preview').attr('src','');
+							$('.a-preview-i').show();
+							Swal.fire({
+								title:'초기화 되었습니다!',
+								icon:'success',
+								confirmButtonColor: '#006e60',
+								confirmButtonText: '확인'
+							});
+						}
+					});
+				});
+				/*=============== 초기화(reset) 버튼 제어 ===============*/
+
+				
+				/*=============== 제출(submit) 버튼 제어 ===============*/
+				$('#formAdptAnimal').on('submit', function(event) {
+					event.preventDefault();
+					var formData = new FormData(this);
+					
+					if($('#petTypeDetailCode').val() == '') {
+						alert('세부 종류를 입력해주세요!');
+						$('#petTypeDetail').focus();
+						return;
+					} else if($('#aAge').val() == '') {
+						alert('동물 나이를 입력해주세요!');
+						$('#aAge').focus();
+						return;
+					} else if ($('#image-input1').val() == '') {
+						alert('대표 이미지를 입력해주세요!');
+						$('#image-input1').focus();
+						return;
+					}
+					
+					Swal.fire({
+						title: '제출하시겠습니까?',
+						text: '제출 내용을 확인해주세요!',
+						icon: 'info',
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '제출',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$.ajax({
+								url: '/adptmgmt/animals',
+								type: 'POST',
+								data: formData,
+								contentType: false,
+								processData: false,
+								success: function(response) {
+									Swal.fire({
+									title: '제출 완료',
+									text: '제출에 성공했습니다!',
+									icon: 'success',
+									confirmButtonColor: '#006e60',
+									confirmButtonText: '확인'
+									}).then(function(result){
+										if(result.isConfirmed){
+											location.reload();
+										}
+									});
+								},
+								error: function(jqXHR, textStatus, errorThrown) {
+									console.error('제출 실패:', textStatus, errorThrown);
+									Swal.fire({
+										title: '오류!',
+										text: '제출에 실패했습니다.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
+				});
+				/*=============== 제출(submit) 버튼 제어 ===============*/
+				
 				
 				
 			});//DOM
