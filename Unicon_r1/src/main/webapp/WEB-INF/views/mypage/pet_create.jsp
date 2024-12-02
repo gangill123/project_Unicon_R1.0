@@ -84,7 +84,11 @@
                     <div class="col-lg-9 order-1 order-lg-2 mb-1-9 mb-lg-0">
                       <form class="quform" action="/mypage/pet_create" method="post" enctype="multipart/form-data" >
                         <div class="services-single-right">
-                        	<h4>유니콘 등록</h4>
+                        	<div style="display: flex; justify-content:space-between; align-items: end; margin-bottom: 10px;">
+						        <h4 class="mb-0" style="display: inline-block;">유니콘 등록</h4>
+						        <button type="button" class="btn btn-secondary" onclick="location.href='/mypage';"
+						        ><span class="small">이전으로</span></button>
+							</div>
                         <div class="common-block" style="padding: 30px;">
                         <div class="row">
                           <div class="col-md-4"></div>
