@@ -55,24 +55,19 @@
 				let endDate = new Date(item.news_enddate); 
 				
 				const card = `
-				<div class="col-xl-3 col-sm-6">
-					<div class="product-details">
-						<div class="product-img">
-							<div class="label-offer bg-${today > endDate ? 'red' : 'primary'}">
-							${today > endDate ? '개시마감' : '개시중'}</div>
-							<img src="${item.news_src }" alt="..." class="image rounded-3">
-							<div class="product-cart">
-								<a href="/admin/news_view/${item.news_id }?resion=${resion}&currentPage=${currentPage}" style="width: 50px; height: 50px;">
-									<i class="fa-regular fa-pen-to-square"></i></a>
-								<a class="deleteNews" data-id=${item.news_id } style="width: 50px; height: 50px;">
-									<i class="fa-solid fa-trash-can"></i></a>
-							</div>
-						</div>
-						<div class="product-info" style="padding: 0;">
-							<a href="/admin/news_view/${item.news_id }">${item.news_subject }</a>
-						</div>
-					</div>
-				</div>`;
+				<div class="col-lg-3 col-md-6 items finance mt-3">
+                        <div class="project-grid">
+                            <div class="project-grid-img"><img alt="..." src="${list.news_src }">
+                            </div>
+                            <div class="project-grid-overlay">
+                                <div class="w-100 px-3">
+                                    <h5><a href="#!" id="newViewTag" data-bs-toggle="modal" data-bs-target="#exampleModal3">${list.news_subject }</a></h5>
+                                    <p>${list.news_ins }</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
 				$grid.append(card);
 			});
 			
@@ -548,6 +543,144 @@
 	/////페이징 처리 및 삭제처리/////
 	
 	
-	
+	/////소식페이지 페이징 처리/////
+	function newspagePaging(id){
+		
+		//최초 로딩(페이지 로딩시)
+		fetchData(id);
+		
+		//페이징 처리
+		let allData = []; // 전체 데이터를 저장
+		let currentPage = 1; // 현재 페이지
+		let totalItems;
+		const itemsPerPage = 8; // 페이지당 카드 개수
+		const maxVisiblePages = 5;
+		let startPage = Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
+		
+		// 데이터 가져오기
+		function fetchData(id) {
+			
+			//console.log(id);
+			// id값에 따른 url 설정
+			let url
+			if(id === 'lastest'){
+				url = '/news/getNews_lastest';
+			} else{
+				url = '/mypage/pet_filter/all2';
+			}
+			
+			$.ajax({
+				url: url, // 데이터를 가져올 API URL
+				type: 'GET',
+				success: function (response) {
+					allData = response; // 데이터를 저장
+					console.log(allData);
+					renderPage(currentPage); // 첫 페이지 렌더링
+					totalItems = allData.length;
+				},
+				error: function (err) {
+					console.error('데이터 로드 실패:', err);
+				}
+			});
+		}
+		
+		// 페이지 데이터 렌더링
+		function renderPage(page) {
+			const startIndex = (page - 1) * itemsPerPage;
+			const endIndex = startIndex + itemsPerPage;
+			const pageData = allData.slice(startIndex, endIndex); // 현재 페이지 데이터
+			
+			// 그리드에 데이터 렌더링
+			const $grid = $('#news-grid');
+			$grid.empty(); // 기존 데이터 삭제
+			
+			if(id === 'lastest'){
+				pageData.forEach(item => {
+				let card = `
+					<div class="col-lg-3 col-md-6 mt-3">
+                        <div class="project-grid">
+                            <div class="project-grid-img"><img alt="..." src="${item.news_src }">
+                            </div>
+                            <div class="project-grid-overlay">
+                                <div class="w-100 px-3">
+                                    <h4><a href="#!" data-id="${item.news_id }" id="newViewTag" data-bs-toggle="modal" data-bs-target="#exampleModal3">${item.news_subject }</a></h4>
+                                    <p>${item.news_ins }</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+					`;
+				$grid.append(card);
+			});
+			
+			}
+			
+			renderPagination();
+		}
+		
+		// 페이지네이션 렌더링
+		function renderPagination() {
+			const totalPages = Math.ceil(allData.length / itemsPerPage);
+			const $pagination = $('#pagination');
+			$pagination.empty(); // 기존 페이지 버튼 삭제
+			
+			// Prev 버튼 추가
+			$pagination.append(
+					`<li class="${startPage === 1 ? 'disabled' : ''}">
+					<a href="#!" class="prev-page">
+					<i class="fas fa-long-arrow-alt-left me-1"></i> Prev
+					</a>
+					</li>`	   
+			);
+			
+			// 페이지 번호 추가
+			const endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+			for (let i = startPage; i <= endPage; i++) {
+				$pagination.append(`
+						<li class="${i === currentPage ? 'active' : ''}">
+						<a href="#!" class="page-number">${i}</a>
+						</li>
+				`);
+			}
+			
+			// Next 버튼 추가
+			$pagination.append(
+					`<li class="${startPage + maxVisiblePages - 1 >= totalPages ? 'disabled' : ''}">
+					<a href="#!" class="next-page">
+					Next <i class="fas fa-long-arrow-alt-right ms-1"></i>
+					</a>
+					</li>`
+			);
+			
+		}
+		
+		// 이벤트 바인딩 - 페이지 버튼클릭
+		$('#pagination').on('click', '.page-number', function () {
+			const selectedPage = parseInt($(this).text(), 10);
+			currentPage = selectedPage;
+			renderPage(currentPage);
+		});
+		
+		// 이벤트 바인딩 - 이전 버튼클릭
+		$('#pagination').on('click', '.prev-page', function () {
+			if (startPage > 1) {
+				startPage -= maxVisiblePages;
+				currentPage = startPage + (maxVisiblePages -1);
+				renderPage(currentPage);
+			}
+		});
+		
+		// 이벤트 바인딩 - 다음 버튼클릭
+		$('#pagination').on('click', '.next-page', function () {
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+			if (startPage + maxVisiblePages - 1 < totalPages) {
+				startPage += maxVisiblePages;
+				currentPage = startPage;
+				renderPage(currentPage);
+			}
+		});
+		
+	}
+	/////소식페이지 페이징 처리/////
 	
 	
