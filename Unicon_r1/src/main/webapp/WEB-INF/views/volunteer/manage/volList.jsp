@@ -274,96 +274,80 @@ body,
 /* 모바일 대응 */
 @media (max-width: 768px) {
     .main-panel {
-        margin-left: 0 !important;
-        width: 100% !important;
-    }
-    
-    .modal-xl {
-        max-width: 95% !important;
-        margin: 0.5rem;
-    }
-
-    .sidebar {
-        width: 0 !important;
-    }
-
-    .page-header {
-        flex-direction: column !important;
-        gap: 1rem !important;
-        align-items: center !important;  
-        text-align: center !important;
-    }
-    
-    .page-header .d-flex.gap-2 {
-        display: flex !important;
-        width: 100% !important;
-        gap: 10px !important;
-    }
-
-    .page-header .btn {
-        flex: 1 !important;  
-        width: 50% !important;
-        white-space: nowrap !important;
-    }
-    
-    /* 테이블 컬럼 제어 */
-    .table th:not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(6)):not(:nth-child(7)),
-    .table td:not(:nth-child(2)):not(:nth-child(3)):not(:nth-child(6)):not(:nth-child(7)) {
-        display: none !important;
-    }
-
-    /* 남은 컬럼 너비 조정 */
-    .table td:nth-child(2), 
-    .table th:nth-child(2) {  /* 상태 */
-        width: 80px !important;
-    }
-
-    .table td:nth-child(3), 
-    .table th:nth-child(3) {  /* 봉사활동명 */
-        min-width: auto !important;
-        max-width: none !important;
-    }
-
-    .table td:nth-child(6), 
-    .table th:nth-child(6),
-    .table td:nth-child(7), 
-    .table th:nth-child(7) {  /* 모집인원, 신청인원 */
-        width: 70px !important;
-    }
-
-    /* 테이블 전체 width 관련 */
-    .table-responsive {
-        overflow-x: hidden !important;
-    }
-
-    .table {
-        width: 100% !important;
-        table-layout: fixed !important;
-    }
-
-    .table td, .table th {
-        padding: 0.5rem !important;
-        font-size: 0.875rem !important;
-    }
-
-    .hide-on-mobile {
-        display: none !important;
-    }
-    
-    .action-buttons {
-           display: flex !important;
-           gap: 0.25rem !important;
-           justify-content: flex-end !important;
-           flex-direction: column;
-    }
-    
-    .btn-group {
-        width: 100%;
-    }
-    
-    .btn-group .btn {
-        flex: 1;
-    }
+       margin-left: 0 !important;
+       width: 100% !important;
+   }
+   
+   .sidebar {
+       width: 0 !important;
+   }
+   
+   .modal-dialog.modal-xl {
+       width: 95% !important;
+       margin: 1rem auto !important;
+   }
+   
+   .page-header {
+       flex-direction: column !important;
+       gap: 1rem !important;
+       align-items: center !important;
+       text-align: center !important;
+   }
+   
+   .page-header .d-flex.gap-2 {
+       width: 100% !important;
+       gap: 10px !important;
+   }
+   
+   .page-header .btn {
+       flex: 1 !important;
+       width: 50% !important;
+       white-space: nowrap !important;
+   }
+   
+   #volunteerDetailModal .table th:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(8)),
+   #volunteerDetailModal .table td:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(8)) {
+       display: none !important;
+   }
+   
+    #volunteerDetailModal .table td:nth-child(1),
+   #volunteerDetailModal .table th:nth-child(1) {  /* 상태 */
+       width: 25% !important;
+   }
+   
+   #volunteerDetailModal .table td:nth-child(2),
+   #volunteerDetailModal .table th:nth-child(2) {  /* 이름 */
+       width: 35% !important;
+   }
+   
+   #volunteerDetailModal .table td:nth-child(8),
+   #volunteerDetailModal .table th:nth-child(8) {  /* 관리 */
+       width: 40% !important;
+   }
+   
+   /* 모바일에서 사유 버튼과 행 숨기기 */
+   #volunteerDetailModal .btn-outline-primary,
+   #volunteerDetailModal .reason-row {
+       display: none !important;
+   }
+   
+   .table-responsive {
+       overflow-x: hidden !important;
+   }
+   
+   .action-buttons {
+       flex-direction: column;
+       gap: 0.25rem !important;
+       justify-content: flex-end !important;
+   }
+   
+   .btn-group {
+       width: 100%;
+   }
+   
+   .btn-group .btn {
+       flex: 1;
+   }
 }
 </style>
 </head>
