@@ -96,15 +96,15 @@
 	   #{animal_age}, #{animal_weight}, #{member_id}, #{animal_regnum}, #{animal_act}, #{animal_social}, #{animal_etc})
 </insert>
 
-<insert id="insertAnimalImages" parameterType="map">
+<insert id="insertAnimalImages" parameterType="List">
 	insert into _image (image_id, image_type, image_sequence, image_src) 
 	 values 
-	  <foreach collection="images" item="i" separator=","> 
-	   (#{animal_id}, #{i.image_type}, #{i.image_sequence}, #{i.image_src}) 
+	  <foreach collection="list" item="li" separator=","> 
+	   (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
 	  </foreach> 
 </insert>
 
-<insert id="insertAnimalHealths" parameterType="map">
+<insert id="insertAnimalHealths" parameterType="Map">
 	insert into _animal_health (animal_id, health, health_check) 
 	 values 
 	  <foreach collection="healths" item="h" separator=","> 
@@ -112,7 +112,7 @@
 	  </foreach> 
 </insert>
 
-<insert id="insertAnimalVaccines" parameterType="map">
+<insert id="insertAnimalVaccines" parameterType="Map">
 	insert into _animal_vaccine (animal_id, vaccine, vaccine_check) 
 	 values 
 	  <foreach collection="vaccines" item="v" separator=","> 
@@ -120,6 +120,12 @@
 	  </foreach> 
 </insert>
 
+
+<select id="checkAnimalId" parameterType="String" resultType="Integer">
+	select animal_id 
+	 from _animal 
+	  where animal_id = #{animId} limit 1
+</select>
 
 
 </mapper>

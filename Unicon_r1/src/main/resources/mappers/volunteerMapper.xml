@@ -66,6 +66,13 @@
 	    set recruitStatus = #{recruitStatus}
 	    where voId = #{voId}
 	</update>
+	
+	<!-- 봉사활동 모집상태 열기 (CLOSE -> OPEN) -->
+	<update id="openRecruitment">
+	    update _volunteer
+	    set recruitStatus = 'OPEN'
+	    where voId = #{voId}
+	</update>
     
     <!-- 봉사활동 단일 조회 -->
     <select id="selectVolunteer" resultType="VolunteerVO">
@@ -78,6 +85,34 @@
     </select>
 
     <!-- 봉사활동 목록 조회 -->
+    <!-- 봉사활동 전체 목록 조회 -->
+	<select id="getAllVolunteers" parameterType="map" resultType="VolunteerVO">
+	    select 
+	        v.*,
+	        (select count(*) from _volunteer_apply 
+	         where volunteerId = v.voId and status != 'CANCELED') as applicationCount
+	    from _volunteer v
+	    where v.status = 'active'
+	    <if test="recruitStatus != null and recruitStatus != ''">
+	        and v.recruitStatus = #{recruitStatus}
+	    </if>
+	    <if test="keyword != null and keyword != ''">
+	        and (v.voTitle like concat('%', #{keyword}, '%') 
+	        or v.voLocation like concat('%', #{keyword}, '%'))
+	    </if>
+	    <if test="startDate != null">
+	        and v.voRecruitEnd >= #{startDate}
+	    </if>
+	    <if test="endDate != null">
+	        and v.voRecruitStart &lt;= #{endDate}
+	    </if>
+	    order by v.voRegDate desc
+	    <if test="start != null and size != null">
+	        limit #{start}, #{size}
+	    </if>
+	</select>
+    
+    
     <!-- 진행중인 봉사활동 -->
 	<select id="getOngoingVolunteers" parameterType="map" resultType="VolunteerVO">
 	    select 
@@ -88,8 +123,12 @@
 	    where v.status = 'active'
 	    and v.recruitStatus = 'OPEN'
 	    order by v.voRegDate desc
+	    <!-- 페이징 추가 -->
+	    <if test="start != null and size != null">
+	        limit #{start}, #{size}
+	    </if>
 	</select>
-	
+
 	<!-- 마감된 봉사활동 -->
 	<select id="getClosedVolunteers" parameterType="map" resultType="VolunteerVO">
 	    select 
@@ -100,6 +139,10 @@
 	    where v.status = 'active'
 	    and v.recruitStatus = 'CLOSE'
 	    order by v.voRegDate desc
+	    <!-- 페이징 추가 -->
+	    <if test="start != null and size != null">
+	        limit #{start}, #{size}
+	    </if>
 	</select>
 	
     <!-- 봉사활동 신청 등록 -->
@@ -175,20 +218,23 @@
     
     <!-- 봉사활동 전체 개수 조회 -->
     <select id="selectVolunteerCount" parameterType="map" resultType="int">
-        select count(*)
-        from _volunteer v
-        where v.status = 'active'
-        <if test="keyword != null and keyword != ''">
-            and (
-                v.voTitle like concat('%', #{keyword}, '%')
-                OR v.voLocation like concat('%', #{keyword}, '%')
-            )
-        </if>
-        <if test="startDate != null">
-            and v.voRecruitEnd >= #{startDate}
-        </if>
-        <if test="endDate != null">
-            and v.voRecruitStart &lt;= #{endDate}
-        </if>
-    </select>
+	    select count(*)
+	    from _volunteer v
+	    where v.status = 'active'
+	    <if test="recruitStatus != null and recruitStatus != ''">
+	        and v.recruitStatus = #{recruitStatus}
+	    </if>
+	    <if test="keyword != null and keyword != ''">
+	        and (
+	            v.voTitle like concat('%', #{keyword}, '%')
+	            OR v.voLocation like concat('%', #{keyword}, '%')
+	        )
+	    </if>
+	    <if test="startDate != null">
+	        and v.voRecruitEnd >= #{startDate}
+	    </if>
+	    <if test="endDate != null">
+	        and v.voRecruitStart &lt;= #{endDate}
+	    </if>
+	</select>
 </mapper>

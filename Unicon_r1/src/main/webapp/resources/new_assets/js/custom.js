@@ -60,7 +60,7 @@
 						<div class="product-img">
 							<div class="label-offer bg-${today > endDate ? 'red' : 'primary'}">
 							${today > endDate ? '개시마감' : '개시중'}</div>
-							<img src="${item.news_src }" alt="..." class="image rounded-3" style="height: 300px;">
+							<img src="${item.news_src }" alt="..." class="image rounded-3">
 							<div class="product-cart">
 								<a href="/admin/news_view/${item.news_id }?resion=${resion}&currentPage=${currentPage}" style="width: 50px; height: 50px;">
 									<i class="fa-regular fa-pen-to-square"></i></a>
@@ -244,7 +244,7 @@
 						<div class="product-img">
 						<div class="label-offer bg-${today > endDate ? 'red' : 'primary'}">
 						${today > endDate ? '개시종료' : '개시중'}</div>
-						<img src="${item.ms_src }" alt="..." class="image rounded-3" style="height: 200px;">
+						<img src="${item.ms_src }" alt="..." class="image rounded-3">
 						<div class="product-cart">
 						<a href="/admin/slide_view/${item.ms_id }?currentPage=${currentPage}" style="width: 50px; height: 50px;">
 						<i class="fa-regular fa-pen-to-square"></i></a>
@@ -400,10 +400,152 @@
 	}
 	
 	
-	
-	
-
-	
+	/////마이페이지 페이징 처리/////
+	function mypagePaging(id){
+		
+		//최초 로딩(페이지 로딩시)
+		fetchData(id);
+		
+		//페이징 처리
+		let allData = []; // 전체 데이터를 저장
+		let currentPage = 1; // 현재 페이지
+		let totalItems;
+		const itemsPerPage = 4; // 페이지당 카드 개수
+		const maxVisiblePages = 5;
+		let startPage = Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
+		
+		// 데이터 가져오기
+		function fetchData(id) {
+			
+			//console.log(id);
+			// id값에 따른 url 설정
+			let url
+			if(id === 'myUni'){
+				url = '/mypage/pet_filter/all';
+			} else{
+				url = '/mypage/pet_filter/all2';
+			}
+			
+			$.ajax({
+				url: url, // 데이터를 가져올 API URL
+				type: 'GET',
+				success: function (response) {
+					allData = response; // 데이터를 저장
+					console.log(allData);
+					renderPage(currentPage); // 첫 페이지 렌더링
+					totalItems = allData.length;
+				},
+				error: function (err) {
+					console.error('데이터 로드 실패:', err);
+				}
+			});
+		}
+		
+		// 페이지 데이터 렌더링
+		function renderPage(page) {
+			const startIndex = (page - 1) * itemsPerPage;
+			const endIndex = startIndex + itemsPerPage;
+			const pageData = allData.slice(startIndex, endIndex); // 현재 페이지 데이터
+			
+			// 그리드에 데이터 렌더링
+			const $grid = $('.product-grid');
+			$grid.empty(); // 기존 데이터 삭제
+			
+			let card
+			
+			if(id === 'myUni'){
+				card = `
+				<div class="col-lg-12" style="text-align: end; margin-top: 0;">
+	             	<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/mypage/pet_create'">유니콘 등록</button>
+	            </div>`;
+				$grid.append(card);
+				pageData.forEach(item => {
+				card = `
+					<div class="col-sm-6 col-md-4 col-lg-3">
+	                        <a href="mypage/pet_view/${item.pet_id}"><div class="product-details">
+	                            <div class="product-img" style="padding: 10px;">
+	                                <img src="${item.pet_src }" alt="...">
+	                            </div>
+	                            <div class="product-info" style="padding: 0;">
+	                                <a href="mypage/pet_view/${item.pet_id}">${item.pet_name }</a>
+	                                <p class="price text-center m-0">
+	                                </p>
+	                            </div>
+	                        </div></a>
+	                    </div>
+					`;
+				$grid.append(card);
+			});
+			
+			}
+			
+			renderPagination();
+		}
+		
+		// 페이지네이션 렌더링
+		function renderPagination() {
+			const totalPages = Math.ceil(allData.length / itemsPerPage);
+			const $pagination = $('#pagination');
+			$pagination.empty(); // 기존 페이지 버튼 삭제
+			
+			// Prev 버튼 추가
+			$pagination.append(
+					`<li class="${startPage === 1 ? 'disabled' : ''}">
+					<a href="#!" class="prev-page">
+					<i class="fas fa-long-arrow-alt-left me-1"></i> Prev
+					</a>
+					</li>`	   
+			);
+			
+			// 페이지 번호 추가
+			const endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+			for (let i = startPage; i <= endPage; i++) {
+				$pagination.append(`
+						<li class="${i === currentPage ? 'active' : ''}">
+						<a href="#!" class="page-number">${i}</a>
+						</li>
+				`);
+			}
+			
+			// Next 버튼 추가
+			$pagination.append(
+					`<li class="${startPage + maxVisiblePages - 1 >= totalPages ? 'disabled' : ''}">
+					<a href="#!" class="next-page">
+					Next <i class="fas fa-long-arrow-alt-right ms-1"></i>
+					</a>
+					</li>`
+			);
+			
+		}
+		
+		// 이벤트 바인딩 - 페이지 버튼클릭
+		$('#pagination').on('click', '.page-number', function () {
+			const selectedPage = parseInt($(this).text(), 10);
+			currentPage = selectedPage;
+			renderPage(currentPage);
+		});
+		
+		// 이벤트 바인딩 - 이전 버튼클릭
+		$('#pagination').on('click', '.prev-page', function () {
+			if (startPage > 1) {
+				startPage -= maxVisiblePages;
+				currentPage = startPage + (maxVisiblePages -1);
+				renderPage(currentPage);
+			}
+		});
+		
+		// 이벤트 바인딩 - 다음 버튼클릭
+		$('#pagination').on('click', '.next-page', function () {
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+			if (startPage + maxVisiblePages - 1 < totalPages) {
+				startPage += maxVisiblePages;
+				currentPage = startPage;
+				renderPage(currentPage);
+			}
+		});
+		
+	}
+	/////페이징 처리 및 삭제처리/////
 	
 	
 	
