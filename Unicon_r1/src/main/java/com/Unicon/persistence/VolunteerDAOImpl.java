@@ -98,6 +98,11 @@ public class VolunteerDAOImpl implements VolunteerDAO {
     }
     
     @Override
+    public void updateVolunteerApplyReject(Map<String, Object> params) throws Exception {
+        sqlSession.update(NAMESPACE + ".updateVolunteerApplyReject", params);
+    }
+    
+    @Override
     public VolunteerApplyVO selectVolunteerApply(Long voId) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".selectVolunteerApply", voId);
     }

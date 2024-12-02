@@ -546,8 +546,8 @@ body,
 
 				
 				<!-- 거절 사유 입력 모달 -->
-				<div class="modal fade" id="rejectReasonModal" tabindex="-1" aria-hidden="true">
-				    <div class="modal-dialog">
+				<div class="modal fade" id="rejectReasonModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+				    <div class="modal-dialog modal-dialog-centered">
 				        <div class="modal-content">
 				            <div class="modal-header">
 				                <h5 class="modal-title">신청 거절 사유</h5>
@@ -557,7 +557,20 @@ body,
 				                <input type="hidden" id="rejectApplicationId">
 				                <div class="mb-3">
 				                    <label for="rejectReason" class="form-label">거절 사유</label>
-				                    <textarea class="form-control" id="rejectReason" rows="3" required></textarea>
+				                    <select class="form-select" id="rejectReason" required>
+				                        <option value="">선택해주세요</option>
+				                        <option value="정원초과">정원초과</option>
+				                        <option value="일정변경">일정변경</option>
+				                        <option value="자격미달">자격미달</option>
+				                        <option value="신청정보 부적절">신청정보 부적절</option>
+				                        <option value="봉사자 요건 미충족">봉사자 요건 미충족</option>
+				                        <option value="기타">기타</option>
+				                    </select>
+				                </div>
+				                <div class="mb-3">
+				                    <label for="rejectReasonDetail" class="form-label">거절 사유 상세</label>
+				                    <textarea class="form-control" id="rejectReasonDetail" rows="3" 
+				                        placeholder="거절 사유에 대해 자세히 설명해주세요." required></textarea>
 				                </div>
 				            </div>
 				            <div class="modal-footer">
@@ -611,6 +624,33 @@ body,
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+$(document).ready(function() {
+    // 검색 폼 제출
+    $('#searchForm').on('submit', function(e) {
+        e.preventDefault();
+        goToPage(1);
+    });
+
+ 	// 거절 사유 모달이 닫힐 때 처리
+    $('#rejectReasonModal').on('hidden.bs.modal', function () {
+        // 입력 필드 초기화
+        $('#rejectReason').val('');
+        $('#rejectReasonDetail').val('');
+        
+        // backdrop이 남아있는 경우 처리
+        if ($('.modal-backdrop').length > 1) {
+            $('.modal-backdrop').not(':first').remove();
+        }
+    });
+
+    // 메인 모달이 닫힐 때 처리
+    $('#volunteerDetailModal').on('hidden.bs.modal', function () {
+        // backdrop과 모달 관련 클래스 제거
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open').css('padding-right', '');
+    });
+});
+
 function deleteVolunteer(id) {
     if (!confirm('해당 봉사활동 공고를 삭제하시겠습니까?')) {
         return;
@@ -767,7 +807,7 @@ function getStatusBadge(status) {
     return statusMap[status] || '';
 }
 
-function approveApplication(applicationId) {
+function approveApplication(voId) {
     if (!confirm('해당 신청을 승인하시겠습니까?')) {
         return;
     }
@@ -776,12 +816,12 @@ function approveApplication(applicationId) {
     const currentVolId = volunteerDetailModal.getAttribute('data-volunteer-id');
     
     $.ajax({
-        url: '/volunteer/manage/approve/' + applicationId,
+        url: '/volunteer/manage/approve/' + voId,
         type: 'POST',
         success: function() {
             alert('신청이 승인되었습니다.');
-            // 전체 페이지를 새로고침하지 않고 모달 내용만 새로고침
-            showVolunteerDetail(voId);
+            // currentVolId를 사용하여 모달 내용 새로고침
+            showVolunteerDetail(currentVolId);
         },
         error: function() {
             alert('승인 처리 중 오류가 발생했습니다.');
@@ -789,34 +829,51 @@ function approveApplication(applicationId) {
     });
 }
 
-function showRejectModal(applicationId) {
-    $('#rejectApplicationId').val(applicationId);
+function showRejectModal(voId) {
+    $('#rejectApplicationId').val(voId);
     $('#rejectReason').val('');
-    const rejectModal = new bootstrap.Modal(document.getElementById('rejectReasonModal'));
+    $('#rejectReasonDetail').val('');
+
+    // 거절 모달 열기 전 세팅
+    const rejectModal = new bootstrap.Modal(document.getElementById('rejectReasonModal'), {
+        backdrop: 'static'  // 배경 클릭으로 모달이 닫히지 않도록 설정
+    });
     rejectModal.show();
 }
 
 function submitReject() {
-    const applicationId = $('#rejectApplicationId').val();
+    const voId = $('#rejectApplicationId').val();
     const reason = $('#rejectReason').val();
-    const volunteerDetailModal = document.getElementById('volunteerDetailModal');
-    const currentVolId = volunteerDetailModal.getAttribute('data-volunteer-id');
+    const reasonDetail = $('#rejectReasonDetail').val();
+    const currentVolId = document.getElementById('volunteerDetailModal').getAttribute('data-volunteer-id');
     
     if (!reason) {
-        alert('거절 사유를 입력해주세요.');
+        alert('거절 사유를 선택해주세요.');
+        return;
+    }
+    if (!reasonDetail) {
+        alert('거절 사유 상세내용을 입력해주세요.');
         return;
     }
     
     $.ajax({
-        url: '/volunteer/manage/reject/' + applicationId,
+        url: '/volunteer/manage/reject/' + voId,
         type: 'POST',
-        data: { reason: reason },
+        data: { 
+            reason: reason,
+            reasonDetail: reasonDetail
+        },
         success: function() {
             alert('신청이 거절되었습니다.');
-        	// 거절 사유 모달만 닫기
-            $('#rejectReasonModal').modal('hide');
-            // 메인 모달 내용 새로고침
-            showVolunteerDetail(voId);
+            
+            // 거절 사유 모달 닫기
+            const rejectModal = bootstrap.Modal.getInstance(document.getElementById('rejectReasonModal'));
+            if (rejectModal) {
+                rejectModal.hide();
+            }
+            
+            // 신청자 목록 새로고침
+            showVolunteerDetail(currentVolId);
         },
         error: function() {
             alert('거절 처리 중 오류가 발생했습니다.');
@@ -847,14 +904,6 @@ window.resetSearch = function() {
     window.location.href = '/volunteer/manage?page=1&size=10';
 };
 
-// DOM이 완전히 로드된 후 이벤트 핸들러 설정
-$(document).ready(function() {
-    // 검색 폼 제출
-    $('#searchForm').on('submit', function(e) {
-        e.preventDefault();
-        goToPage(1);
-    });
-});
 </script>
 </body>
 </html>

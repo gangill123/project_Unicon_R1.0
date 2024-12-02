@@ -24,7 +24,7 @@ public interface VolunteerService {
     // 봉사활동 신청 관련
     void submitApplication(VolunteerApplyVO application) throws Exception;
     void approveApplication(Long voId) throws Exception;
-    void rejectApplication(Long voId, String reason) throws Exception;
+    void rejectApplication(Long voId, String reason, String reasonDetail) throws Exception;
     void cancelApplication(Long voId, String reason, String reasonDetail) throws Exception;
     List<VolunteerApplyVO> getMyApplications(String userId) throws Exception;
     Map<String, Object> getApplicationList(Long volunteerId, String status) throws Exception;

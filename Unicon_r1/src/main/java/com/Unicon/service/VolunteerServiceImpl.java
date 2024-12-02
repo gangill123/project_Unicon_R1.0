@@ -205,13 +205,14 @@ public class VolunteerServiceImpl implements VolunteerService {
     
     @Override
     @Transactional
-    public void rejectApplication(Long voId, String reason) throws Exception {
+    public void rejectApplication(Long voId, String reason, String reasonDetail) throws Exception {
         try {
             Map<String, Object> params = new HashMap<>();
             params.put("voId", voId);
             params.put("status", "REJECTED");
             params.put("rejectReason", reason);
-            volDAO.updateVolunteerApplyStatus(params);
+            params.put("rejectReasonDetail", reasonDetail);
+            volDAO.updateVolunteerApplyReject(params);  // 새로운 메서드 호출
         } catch (Exception e) {
             logger.error("봉사활동 신청 거절 실패", e);
             throw new RuntimeException("신청 거절에 실패했습니다.", e);

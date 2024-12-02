@@ -17,6 +17,7 @@ public class VolunteerApplyVO {
     private String voAgree;             // 정보수신동의
     private String status;              // 상태(PENDING/APPROVED/REJECTED/CANCELED)
     private String rejectReason;        // 거절사유
+    private String rejectReasonDetail;
     private String cancelReason;        // 취소사유
     private Date voRegDate;             // 신청일시
     private Date voUpdateDate;          // 수정일시
