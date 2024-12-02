@@ -15,24 +15,32 @@ public class AnimalVO {
 	private String animal_name;
 	private String animal_color;
 	private int animal_gender; // 1: 남아, 2: 여아
+	private String gender_value;
 	private int animal_neuter; // 1: 유, 2: 무
+	private String neuter_value;
 	private String animal_age;
 	private int animal_weight; // 1: 소형(~5kg), 2: 중형(5~25kg), 3: 대형(25kg~)
+	private String weight_value;
 	private String member_id;
 	private Timestamp animal_regdate;
 	private Timestamp animal_upddate;
 	private String animal_status; // 1: 대기중, 2: 모집중, 3: 상담중, 4: 입양완료, 5: 종료
+	private String status_value;
 	private String animal_regnum;
 	private int animal_act; // 0~5, 0: 미입력
+	private String act_value;
 	private int animal_social; // 0~5, 0: 미입력
+	private String social_value;
 	private String animal_etc;
+	private String adpt_member;
 	private List<ImageVO> animal_images;
 	private List<MultipartFile> upload_images;
 	private List<AnimalHealthVO> animal_healths;
 	private List<AnimalVaccineVO> animal_vaccines;
 	
-	private AdptCounselVO adptCounsel;
-	private AdptMemberVO adptMember;
-	private AnimalInterestVO animalInterest;
-	private AdptVO adpt;
+	private AdptCounselVO adptCounselVO;
+	private AdptMemberVO adptMemberVO;
+	private AnimalInterestVO animalInterestVO;
+	private AdptVO adptVO;
+	private CategoryDataVO categoryDataVO;
 }

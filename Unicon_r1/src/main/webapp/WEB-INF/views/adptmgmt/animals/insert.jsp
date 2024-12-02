@@ -1318,6 +1318,7 @@
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
+										$('#image-preview' + idNum).removeAttr('src');
 										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
 										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
 									} else {
@@ -1335,12 +1336,14 @@
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
+										$('#image-preview' + idNum).removeAttr('src');
 										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
 										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
 									} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
+										$('#image-preview' + idNum).removeAttr('src');
 										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
 										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
 									} else {
@@ -1359,6 +1362,7 @@
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
+										$('#image-preview' + idNum).removeAttr('src');
 										$('#' + idNoNum + (idNum - 3))[0].files = adataTransfer.files;
 										$('#' + idNoNum + (idNum - 3))[0].dispatchEvent(new Event('change'));
 									} else if($('#' + idNoNum + (idNum - 2)).val() == '' 
@@ -1366,12 +1370,14 @@
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
+										$('#image-preview' + idNum).removeAttr('src');
 										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
 										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
 									} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
+										$('#image-preview' + idNum).removeAttr('src');
 										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
 										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
 									} else {
@@ -1404,6 +1410,7 @@
 									adataTransfer.items.add($('#' + idNoNum + i)[0].files[0]);
 									$('#' + idNoNum + i).val('');
 									$('#image-preview'+i).hide();
+									$('#image-preview'+i).removeAttr('src');
 									$('#plusIcon'+i).show();
 									$('#' + idNoNum + (i - 1))[0].files = adataTransfer.files;
 									$('#' + idNoNum + (i - 1))[0].dispatchEvent(new Event('change'));
@@ -1411,6 +1418,7 @@
 							}
 						} else {
 							$(previewId).hide();
+							$(previewId).removeAttr('src');
 							$(plusIconId).show();
 						}
 					}
@@ -1510,7 +1518,7 @@
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: '/adptmgmt/animals',
+								url: '/adptmgmt/animals/creation',
 								type: 'POST',
 								data: formData,
 								contentType: false,

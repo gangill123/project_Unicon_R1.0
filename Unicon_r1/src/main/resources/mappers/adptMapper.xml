@@ -12,22 +12,30 @@
 	<result property="animal_name" column="animal_name"/>
 	<result property="animal_color" column="animal_color"/>
 	<result property="animal_gender" column="animal_gender"/>
+	<result property="gender_value" column="gender_value"/>
 	<result property="animal_neuter" column="animal_neuter"/>
+	<result property="neuter_value" column="neuter_value"/>
 	<result property="animal_age" column="animal_age"/>
 	<result property="animal_weight" column="animal_weight"/>
+	<result property="weight_value" column="weight_value"/>
 	<result property="member_id" column="member_id"/>
 	<result property="animal_regdate" column="animal_regdate"/>
 	<result property="animal_upddate" column="animal_upddate"/>
+	<result property="animal_status" column="animal_status"/>
+	<result property="status_value" column="status_value"/>
 	<result property="animal_regnum" column="animal_regnum"/>
 	<result property="animal_act" column="animal_act"/>
+	<result property="act_value" column="act_value"/>
 	<result property="animal_social" column="animal_social"/>
+	<result property="social_value" column="social_value"/>
 	<result property="animal_etc" column="animal_etc"/>
-	<result property="animal_status" column="animal_status"/>
+	<result property="adpt_member" column="adpt_member"/>
 	
-	<association property="adptCounsel" resultMap="CounselResultMap"/>
-	<association property="adptMember" resultMap="MemberResultMap"/>
-	<association property="animalInterest" resultMap="InterestResultMap"/>
-	<association property="adpt" resultMap="AdptResultMap"/>
+	<association property="adptCounselVO" resultMap="CounselResultMap"/>
+	<association property="adptMemberVO" resultMap="MemberResultMap"/>
+	<association property="animalInterestVO" resultMap="InterestResultMap"/>
+	<association property="adptVO" resultMap="AdptResultMap"/>
+	<association property="categoryDataVO" resultMap="CategoryResultMap"/>
 	
 	<collection property="animal_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
 	<collection property="animal_healths" ofType="com.Unicon.domain.AnimalHealthVO" resultMap="HealthResultMap"/>
@@ -88,6 +96,13 @@
 	<result property="vaccine_check" column="vaccine_check"/>
 </resultMap>
 
+<resultMap type="com.Unicon.domain.CategoryDataVO" id="CategoryResultMap">
+	<id property="category_code" column="category_code"/>
+	<result property="category_type" column="category_type"/>
+	<result property="category_value" column="category_value"/>
+</resultMap>
+
+
 
 <insert id="insertAnimal" parameterType="com.Unicon.domain.AnimalVO">
 	insert into _animal (animal_id, category_code, category_etc_value, animal_name, animal_color, animal_gender, animal_neuter, animal_age, 
@@ -132,7 +147,7 @@
 	select a.animal_id, a.category_etc_value, a.animal_name, date_format(a.animal_regdate, '%Y-%m-%d') as animal_regdate, 
 	 c.category_type, c.category_value, 
 	  am.member_name, 
-	   ac.common_value 
+	   ac.common_value as status_value 
 	    from _animal a 
 	     join _category_data c on a.category_code = c.category_code 
 	      join _adpt_member am on a.member_id = am.member_id 

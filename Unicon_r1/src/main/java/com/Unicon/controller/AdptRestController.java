@@ -30,7 +30,7 @@ public class AdptRestController {
 	private AdptService aService;
 	private static final Logger logger = LoggerFactory.getLogger(AdptRestController.class);
 	
-	@PostMapping(value = "/animals")
+	@PostMapping(value = "/animals/creation")
 	public ResponseEntity<Void> registerAnimal(AnimalVO avo, HttpServletRequest req) {
 		logger.info("( •̀ ω •́ )✧ registerAnimal(AnimalVO avo, HttpServletRequest req) 실행");
 		
@@ -47,6 +47,7 @@ public class AdptRestController {
 			}
 			avo.setAnimal_images(images);
 			aService.animalInsert(avo);
+			
 			return new ResponseEntity<Void>(HttpStatus.OK);
 			
 		} catch (Exception e) {
@@ -69,9 +70,17 @@ public class AdptRestController {
 	}
 	
 	
-	/*
-	 * @GetMapping(value = "") public
-	 */
+	@GetMapping(value = "/animals")
+	public ResponseEntity<List<AnimalVO>> animalListAll() {
+		logger.info("( •̀ ω •́ )✧ animalListAll() 실행");
+		List<AnimalVO> animList = aService.getAnimalListAll();
+		if(animList != null) {
+			return new ResponseEntity<List<AnimalVO>>(animList,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<List<AnimalVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	 
 
 	
 
