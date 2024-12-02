@@ -62,19 +62,21 @@
 							<div class="card">
 								<div class="card-body">
 									<h4 class="card-title">Hoverable Table</h4>
-									<table id="animalTable" class="table table-hover col-8">
-										<thead>
-											<tr>
-												<th>동물ID</th>
-												<th>동물종류</th>
-												<th>동물이름</th>
-												<th>등록일자</th>
-												<th>상태</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+									<div class="row justify-content-center">
+										<table id="animalTable" class="table table-hover col-8">
+											<thead>
+												<tr>
+													<th>동물ID</th>
+													<th>동물종류</th>
+													<th>동물이름</th>
+													<th>등록일자</th>
+													<th>상태</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -109,7 +111,13 @@
     <script>
     $(function() {
 		var aTable = $('#animalTable').DataTable({
-			ajax: {
+			"info": false,
+		    "paging": true,
+		    "lengthMenu": [10, 20, 50, 80], 
+		    "language": {
+				"lengthMenu": "표시 항목수 _MENU_"
+			}, 
+			"ajax": {
 				url: '/adptmgmt/animals',
 				type: 'GET',
 				dataType: 'json',
@@ -168,6 +176,11 @@
 			$('#animalTable tbody tr').each(function() {
 				$(this).find('td:eq(0)').addClass('a-first-column');
 				$(this).find('td:eq(3)').addClass('a-fourth-column');
+			});
+			
+			$('#animalTable thead tr').each(function() {
+				$(this).find('th:eq(0)').addClass('a-first-column');
+				$(this).find('th:eq(3)').addClass('a-fourth-column');
 			});
 		});
 	});
