@@ -132,7 +132,8 @@ public class CommunityRestController {
 	// 이미지 저장 및 리스트 생성
 	public List<ImageVO> saveImage(PostVO postVO, HttpServletRequest req) {
 		logger.info("saveImage(PostVO postVO, HttpServletRequest req) 실행  ");
-		String saveDir = req.getRealPath("/uploads/");
+		ServletContext context = req.getServletContext();
+		String saveDir = context.getRealPath("/uploads/");
 		List<MultipartFile> uploadImages = postVO.getUpload_images();
 		List<ImageVO> postImages = new ArrayList<ImageVO>();
 		
@@ -145,6 +146,7 @@ public class CommunityRestController {
 				continue;
 			}
 			
+			// 파일 저장 경로 생성
 			File destinationImage 
 				= new File(asb.append(saveDir)
 						.append(UUID.randomUUID().toString())
@@ -152,7 +154,7 @@ public class CommunityRestController {
 						.append(pImage.getOriginalFilename())
 						.toString());
 			
-			
+			/*
 			int index = destinationImage.getPath().indexOf("\\uploads\\");
 
 			if (index != -1) {
@@ -166,6 +168,22 @@ public class CommunityRestController {
 			} else {
 				logger.info("경로에 '\\uploads\\'가 없습니다.");
 			}
+			*/
+			
+			String modifiedPath = destinationImage.getPath().replace("\\uploads\\", "/uploads/");
+	        int index = modifiedPath.indexOf("/uploads/");
+
+	        if (index != -1) {
+	            String finalPath = modifiedPath.substring(index);
+	            ImageVO ivo = new ImageVO();
+	            ivo.setImage_id(postVO.getPost_id());
+	            ivo.setImage_sequence(i);
+	            ivo.setImage_src(finalPath);
+	            ivo.setImage_type(postVO.getPost_type());
+	            postImages.add(i, ivo);
+	        } else {
+	            logger.info("경로에 '/uploads/'가 없습니다.");
+	        }
 			
 			try {
 				pImage.transferTo(destinationImage);

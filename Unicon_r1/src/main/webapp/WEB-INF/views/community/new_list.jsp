@@ -41,7 +41,9 @@ z-index: 2000;
 
            <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
                <div class="project-grid">
-                   <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg">
+                   <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg">
+                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
+                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
                    </div>
                    <div class="project-grid-overlay">
                        <div class="w-100 px-3">
