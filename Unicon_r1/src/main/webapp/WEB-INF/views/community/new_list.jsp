@@ -3,7 +3,11 @@
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
-
+<style>
+.xzoom-source{
+z-index: 2000;
+}
+</style>
 </head>
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
