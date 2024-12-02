@@ -63,6 +63,26 @@ body,
     flex: 1 1 auto !important;
 }
 
+/* 모달 스타일 */
+.modal-xl {
+    max-width: 95% !important;
+    margin: 1.75rem auto;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: 12px;
+}
+
+.modal-header {
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
 /* 카드 컴포넌트 */
 .card { 
     margin: 1rem !important;
@@ -110,6 +130,7 @@ body,
     margin: 0 !important;
     width: 100% !important;
     border-collapse: collapse !important;
+    text-align: center;
 }
 
 .table th {
@@ -132,6 +153,10 @@ body,
     background-color: #f8f9fa !important;
 }
 
+.table td:nth-child(3) {  
+    text-align: left !important;
+}
+
 /* 폼 요소 */
 .card .form-select, 
 .card .form-control {
@@ -139,11 +164,107 @@ body,
     border: 1px solid #dee2e6 !important;
 }
 
+/* 신청자 정보 스타일 */
+.applicant-info-row td {
+    background-color: #ffffff;
+    border-bottom: none !important;
+}
+
+.reason-row td {
+    background-color: #f8f9fa;
+    padding-top: 0 !important;
+}
+
+.reason-content {
+    text-align: left;
+    padding: 1rem;
+    margin: 0 1rem;
+    background: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+/* 상태 뱃지 */
+.status-badge {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.status-pending { 
+    background-color: #fff3cd; 
+    color: #856404; 
+}
+
+.status-approved { 
+    background-color: #d4edda; 
+    color: #155724; 
+}
+
+.status-rejected { 
+    background-color: #f8d7da; 
+    color: #721c24; 
+}
+
+.status-canceled { 
+    background-color: #e9ecef; 
+    color: #495057; 
+}
+
 .btn {
     padding: 0.5rem 1rem !important;
     font-weight: 500 !important;
     height: 38px !important;
 }
+
+.reason-row td {
+    background-color: #f8f9fa;
+    padding: 0 !important;
+    transition: all 0.3s ease;
+}
+
+.reason-content {
+    text-align: left;
+    padding: 1rem;
+    margin: 0.5rem 1rem;
+    background: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.reason-text {
+    color: #2c3e50;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    white-space: pre-wrap;      /* 줄바꿈 유지 */
+    word-wrap: break-word;      /* 긴 단어 줄바꿈 */
+    max-width: 100%;            /* 가로 스크롤 방지 */
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-group {
+    display: inline-flex;
+    gap: 0.25rem;
+}
+
+/* 사유보기 버튼 스타일 */
+.btn-outline-primary.active {
+    background-color: #e7f1ff;
+}
+
+/* 애니메이션 효과 */
+.reason-row {
+    transition: all 0.3s ease-in-out;
+}
+
 
 /* Footer */
 .footer {
@@ -155,6 +276,11 @@ body,
     .main-panel {
         margin-left: 0 !important;
         width: 100% !important;
+    }
+    
+    .modal-xl {
+        max-width: 95% !important;
+        margin: 0.5rem;
     }
 
     .sidebar {
@@ -228,7 +354,16 @@ body,
            display: flex !important;
            gap: 0.25rem !important;
            justify-content: flex-end !important;
-       }
+           flex-direction: column;
+    }
+    
+    .btn-group {
+        width: 100%;
+    }
+    
+    .btn-group .btn {
+        flex: 1;
+    }
 }
 </style>
 </head>
@@ -317,10 +452,10 @@ body,
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="/admin/volunteer/detail/${vol.voId}" class="text-decoration-none">
-                                                    ${vol.voTitle}
-                                                </a>
-                                            </td>
+											    <a href="#" class="text-decoration-none" onclick="showVolunteerDetail(${vol.voId})">
+											        ${vol.voTitle}
+											    </a>
+											</td>
                                             <td class="text-center">
                                                 <fmt:formatDate value="${vol.voRecruitStart}" pattern="yyyy.MM.dd"/> -
                                                 <fmt:formatDate value="${vol.voRecruitEnd}" pattern="yyyy.MM.dd"/>
@@ -365,6 +500,73 @@ body,
                         </div>
                     </div>
                 </div>
+                
+                <!-- 상세보기 모달 -->
+				<div class="modal fade" id="volunteerDetailModal" tabindex="-1" aria-labelledby="volunteerDetailModalLabel" aria-hidden="true">
+				    <div class="modal-dialog modal-xl">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                <h5 class="modal-title" id="volunteerDetailModalLabel">신청자 목록</h5>
+				                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				            </div>
+				            <div class="modal-body">
+				                <div class="table-responsive">
+				                    <table class="table">
+				                        <colgroup>
+				                            <col style="width: 10%">
+				                            <col style="width: 12%">
+				                            <col style="width: 12%">
+				                            <col style="width: 15%">
+				                            <col style="width: 20%">
+				                            <col style="width: 10%">
+				                            <col style="width: 10%">
+				                            <col style="width: 11%">
+				                        </colgroup>
+				                        <thead>
+				                            <tr>
+				                                <th>상태</th>
+				                                <th>이름</th>
+				                                <th>생년월일</th>
+				                                <th>연락처</th>
+				                                <th>이메일</th>
+				                                <th>반려동물 경험</th>
+				                                <th>정보수신동의</th>
+				                                <th>관리</th>
+				                            </tr>
+				                        </thead>
+				                        <tbody id="applicantsList">
+				                            <!-- 동적으로 채워질 영역 -->
+				                        </tbody>
+				                    </table>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				</div>
+
+				
+				<!-- 거절 사유 입력 모달 -->
+				<div class="modal fade" id="rejectReasonModal" tabindex="-1" aria-hidden="true">
+				    <div class="modal-dialog">
+				        <div class="modal-content">
+				            <div class="modal-header">
+				                <h5 class="modal-title">신청 거절 사유</h5>
+				                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				            </div>
+				            <div class="modal-body">
+				                <input type="hidden" id="rejectApplicationId">
+				                <div class="mb-3">
+				                    <label for="rejectReason" class="form-label">거절 사유</label>
+				                    <textarea class="form-control" id="rejectReason" rows="3" required></textarea>
+				                </div>
+				            </div>
+				            <div class="modal-footer">
+				                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+				                <button type="button" class="btn btn-danger" onclick="submitReject()">거절하기</button>
+				            </div>
+				        </div>
+				    </div>
+				</div>
 
                 <!-- 페이지네이션 -->
                 <div class="d-flex justify-content-center mt-4">
@@ -463,6 +665,165 @@ function openRecruitment(id) {
         }
     });
 }
+
+function formatDate(dateString) {
+    if (!dateString) return '';
+    var date = new Date(dateString);
+    return date.getFullYear() + '-' + 
+           String(date.getMonth() + 1).padStart(2, '0') + '-' + 
+           String(date.getDate()).padStart(2, '0');
+}
+
+function showVolunteerDetail(voId) {
+	const volunteerDetailModal = document.getElementById('volunteerDetailModal');
+    volunteerDetailModal.setAttribute('data-volunteer-id', voId);
+    
+    $.ajax({
+        url: '/volunteer/manage/detail/' + voId,
+        type: 'GET',
+        success: function(response) {
+            const applicantsList = $('#applicantsList');
+            applicantsList.empty();
+            
+            if (response.applications && response.applications.length > 0) {
+                response.applications.forEach(function(app) {
+                    // 신청자 정보 행
+                    const infoRow = '<tr class="applicant-info-row">' +
+                        '<td>' + getStatusBadge(app.status) + '</td>' +
+                        '<td>' + app.voApplicant + '</td>' +
+                        '<td>' + formatDate(app.voBirth) + '</td>' +
+                        '<td>' + app.voTel + '</td>' +
+                        '<td>' + app.voEmail + '</td>' +
+                        '<td>' + (app.voExperience === 'Y' ? '있음' : '없음') + '</td>' +
+                        '<td>' + (app.voAgree === 'Y' ? '동의' : '거부') + '</td>' +
+                        '<td>' +
+                            '<div class="action-buttons">' +
+                                (app.status === 'PENDING' ? 
+                                    '<div class="btn-group me-2">' +
+                                        '<button type="button" class="btn btn-sm btn-success" onclick="approveApplication(' + app.voId + ')">' +
+                                            '승인' +
+                                        '</button>' +
+                                        '<button type="button" class="btn btn-sm btn-danger" onclick="showRejectModal(' + app.voId + ')">' +
+                                            '거절' +
+                                        '</button>' +
+                                    '</div>' : '') +
+                                '<button type="button" class="btn btn-sm btn-outline-primary" onclick="toggleReason(this, ' + app.voId + ')">' +
+                                    '<i class="fas fa-chevron-down"></i> 사유' +
+                                '</button>' +
+                            '</div>' +
+                        '</td>' +
+                    '</tr>';
+                    
+                    // 신청사유 행 (초기에는 숨김)
+                    const reasonRow = '<tr class="reason-row" id="reason-' + app.voId + '" style="display: none;">' +
+                        '<td colspan="8">' +
+                            '<div class="reason-content">' +
+                                '<strong>신청사유</strong><br>' +
+                                '<div class="reason-text">' + (app.voReason || '-') + '</div>' +
+                            '</div>' +
+                        '</td>' +
+                    '</tr>';
+                    
+                    applicantsList.append(infoRow + reasonRow);
+                });
+            } else {
+                applicantsList.append('<tr><td colspan="8" class="text-center">신청자가 없습니다.</td></tr>');
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('volunteerDetailModal'));
+            modal.show();
+        },
+        error: function() {
+            alert('데이터를 불러오는 중 오류가 발생했습니다.');
+        }
+    });
+}
+
+// 사유 토글 함수 추가
+function toggleReason(button, voId) {
+    const reasonRow = document.getElementById('reason-' + voId);
+    const icon = button.querySelector('i');
+    
+    if (reasonRow.style.display === 'none') {
+        reasonRow.style.display = '';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+        button.classList.add('active');
+    } else {
+        reasonRow.style.display = 'none';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+        button.classList.remove('active');
+    }
+}
+
+function getStatusBadge(status) {
+    const statusMap = {
+        'PENDING': '<span class="status-badge status-pending">신청대기</span>',
+        'APPROVED': '<span class="status-badge status-approved">신청완료</span>',
+        'REJECTED': '<span class="status-badge status-rejected">신청거절</span>',
+        'CANCELED': '<span class="status-badge status-canceled">취소완료</span>'
+    };
+    return statusMap[status] || '';
+}
+
+function approveApplication(applicationId) {
+    if (!confirm('해당 신청을 승인하시겠습니까?')) {
+        return;
+    }
+    
+    const volunteerDetailModal = document.getElementById('volunteerDetailModal');
+    const currentVolId = volunteerDetailModal.getAttribute('data-volunteer-id');
+    
+    $.ajax({
+        url: '/volunteer/manage/approve/' + applicationId,
+        type: 'POST',
+        success: function() {
+            alert('신청이 승인되었습니다.');
+            // 전체 페이지를 새로고침하지 않고 모달 내용만 새로고침
+            showVolunteerDetail(voId);
+        },
+        error: function() {
+            alert('승인 처리 중 오류가 발생했습니다.');
+        }
+    });
+}
+
+function showRejectModal(applicationId) {
+    $('#rejectApplicationId').val(applicationId);
+    $('#rejectReason').val('');
+    const rejectModal = new bootstrap.Modal(document.getElementById('rejectReasonModal'));
+    rejectModal.show();
+}
+
+function submitReject() {
+    const applicationId = $('#rejectApplicationId').val();
+    const reason = $('#rejectReason').val();
+    const volunteerDetailModal = document.getElementById('volunteerDetailModal');
+    const currentVolId = volunteerDetailModal.getAttribute('data-volunteer-id');
+    
+    if (!reason) {
+        alert('거절 사유를 입력해주세요.');
+        return;
+    }
+    
+    $.ajax({
+        url: '/volunteer/manage/reject/' + applicationId,
+        type: 'POST',
+        data: { reason: reason },
+        success: function() {
+            alert('신청이 거절되었습니다.');
+        	// 거절 사유 모달만 닫기
+            $('#rejectReasonModal').modal('hide');
+            // 메인 모달 내용 새로고침
+            showVolunteerDetail(voId);
+        },
+        error: function() {
+            alert('거절 처리 중 오류가 발생했습니다.');
+        }
+    });
+}
+
 window.goToPage = function(page) {
     var recruitStatus = $('select[name="recruitStatus"]').val();
     var keyword = $('input[name="keyword"]').val();

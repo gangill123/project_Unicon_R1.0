@@ -90,6 +90,7 @@ body,
     margin: 0 !important;
     width: 100% !important;
     border-collapse: collapse !important;
+    text-align: center;
 }
 
 /* 체크박스 스타일 수정 */
@@ -140,6 +141,10 @@ body,
     height: 45px !important;
     font-size: 0.95rem !important;
     border-bottom: 1px solid #dee2e6 !important;
+}
+
+.table td.notice-title {
+    text-align: left !important;
 }
 
 /* 폼 요소 */

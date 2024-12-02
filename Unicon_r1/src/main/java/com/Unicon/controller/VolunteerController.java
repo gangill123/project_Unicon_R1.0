@@ -1,5 +1,7 @@
 package com.Unicon.controller;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -235,6 +237,40 @@ public class VolunteerController {
             logger.error("봉사활동 신청 거절 실패", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                                .body("거절 처리 중 오류가 발생했습니다.");
+        }
+    }
+    
+    @GetMapping("/manage/detail/{voId}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getVolunteerDetail(@PathVariable Long voId) {
+        try {
+            // 봉사활동 기본 정보 조회
+            VolunteerVO volunteer = volService.getVolunteer(voId);
+            
+            // 해당 봉사활동의 신청자 목록 조회
+            Map<String, Object> applicationResult = volService.getApplicationList(voId, null);
+            List<VolunteerApplyVO> applications = (List<VolunteerApplyVO>) applicationResult.get("applications");
+            
+            // 응답 데이터 구성
+            Map<String, Object> response = new HashMap<>();
+            response.put("voId", volunteer.getVoId());
+            response.put("voTitle", volunteer.getVoTitle());
+            response.put("voContent", volunteer.getVoContent());
+            response.put("voLocation", volunteer.getVoLocation());
+            response.put("voTarget", volunteer.getVoTarget());
+            response.put("voCapacity", volunteer.getVoCapacity());
+            response.put("voManager", volunteer.getVoManager());
+            response.put("voContact", volunteer.getVoContact());
+            response.put("voStartDate", volunteer.getVoStartDate());
+            response.put("voEndDate", volunteer.getVoEndDate());
+            response.put("recruitStatus", volunteer.getRecruitStatus());
+            response.put("applications", applications);
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            logger.error("봉사활동 상세정보 조회 실패", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                               .body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 }
