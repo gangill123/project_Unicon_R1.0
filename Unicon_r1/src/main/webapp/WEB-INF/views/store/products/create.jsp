@@ -67,7 +67,10 @@
 						                    <h4 class="card-title" style="margin-bottom: 0">카테고리 </h4>
 						                    <i class="icon-must" aria-label="필수항목"></i>
 				                  		</div>
-					                    <button onclick="closeBox('category')"><i class="mdi mdi-chevron-right"></i></button>
+					                    <button onclick="closeBox(this,'category')" style="border: none;background: transparent;font-size: 2.1rem;">
+				                    		<i class="mdi mdi-chevron-down"></i>
+					                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
+					                    </button>
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
 				                    <div class="closeBox-category">
@@ -104,7 +107,10 @@
 						                    <h4 class="card-title" style="margin-bottom: 0">상품명 </h4>
 						                    <i class="icon-must" aria-label="필수항목"></i>
 				                  		</div>
-					                    <button onclick="closeBox('productName')"><i class="mdi mdi-chevron-right"></i></button>
+					                    <button onclick="closeBox(this,'productName')" style="border: none;background: transparent;font-size: 2.1rem;">
+					                    <i class="mdi mdi-chevron-down"></i>
+				                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
+					                    </button>
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
 				                    <div class="closeBox-productName">
@@ -143,10 +149,13 @@
 						                    <h4 class="card-title" style="margin-bottom: 0">판매가 </h4>
 						                    <i class="icon-must" aria-label="필수항목"></i>
 				                  		</div>
-					                    <button onclick="closeBox('priceBlock')"><i class="mdi mdi-chevron-right"></i></button>
+					                    <button onclick="closeBox(this,'price')" style="border: none;background: transparent;font-size: 2.1rem;">
+					                    <i class="mdi mdi-chevron-down"></i>
+				                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
+					                    </button>
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
-				                    <div class="closeBox-priceBlock">
+				                    <div class="closeBox-price">
 				                    	<div style="display: flex;">
 								            <label for="price">판매가<i class="icon-must" aria-label="필수항목"></i></label>
 								            <div>
@@ -231,7 +240,10 @@
 						                    <h4 class="card-title" style="margin-bottom: 0">재고수량 </h4>
 						                    <i class="icon-must" aria-label="필수항목"></i>
 				                  		</div>
-					                    <button onclick="closeBox('stock')"><i class="mdi mdi-chevron-right"></i></button>
+					                    <button onclick="closeBox(this,'stock')" style="border: none;background: transparent;font-size: 2.1rem;">
+					                    <i class="mdi mdi-chevron-down"></i>
+				                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
+					                    </button>
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
 				                    <div class="closeBox-stock">
@@ -260,7 +272,10 @@
 				                  		<div style="display: flex;align-items: center;">
 						                    <h4 class="card-title" style="margin-bottom: 0">옵션 </h4>
 				                  		</div>
-					                    <button onclick="closeBox('option')"><i class="mdi mdi-chevron-right"></i></button>
+					                    <button onclick="closeBox(this,'option')" style="border: none;background: transparent;font-size: 2.1rem;">
+					                    	<i class="mdi mdi-chevron-down"></i>
+					                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
+				                    	</button>
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
 				                    <div class="closeBox-option">
@@ -397,7 +412,6 @@
                           </div>
                         </div>
                         <!-- 옵션 끝 -->
-                        <button class="console">확인</button>
                         <!-- 이미지 시작 -->
                         <div class="card">
                           <div class="card-body" style="padding: 1.5rem 2.5rem;" >
@@ -409,10 +423,13 @@
 				                  		<div style="display: flex;align-items: center;">
 						                    <h4 class="card-title" style="margin-bottom: 0">상품이미지</h4>
 				                  		</div>
-					                    <button onclick="closeBox('img')"><i class="mdi mdi-chevron-right"></i></button>
+					                    <button onclick="closeBox(this,'img')" style="border: none;background: transparent;font-size: 2.1rem;">
+					                    	<i class="mdi mdi-chevron-down"></i>
+					                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
+					                    </button>
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
-				                    <div class="closeBox-mianImg">
+				                    <div class="closeBox-img">
 										<div style="display: flex; align-items: center;">
 										    <label >대표 이미지</label>
 										    <div class="form-group" style="margin: 0">
@@ -477,7 +494,7 @@
                         </div>
                         <!-- 이미지 끝 -->
                         
-                        <!-- 이미지 시작 -->
+                        <!-- 상품 본문 시작 -->
                         <div class="card">
                           <div class="card-body" style="padding: 1.5rem 2.5rem;" >
                             <div class="row">
@@ -486,14 +503,28 @@
 				                  <div style="padding :  1.0rem 2.0rem;">
 				                  	<div style="display: flex; justify-content: space-between;">
 				                  		<div style="display: flex;align-items: center;">
-						                    <h4 class="card-title" style="margin-bottom: 0">상세 설명</h4>
-						                    <i class="icon-must" aria-label="필수항목"></i>
+						                    <h4 class="card-title" style="margin-bottom: 0">본문내용</h4>
+						                    <i class="icon-must" aria-label="필수항목" style="margin-right: 3px" ></i>
+						                    <i class="mdi mdi-information-outline img-tooltip" style="cursor: pointer; "></i>
+										    <div class="img-tooltip-box" id="img-tooltip-info">
+										    	<div style="margin-bottom: 0.6rem;">
+											        <p class="tooltiptext">
+											        	본문내용이란?
+											        </p>
+											        <span>
+													       상품의 종류, 기능, 이미지 등이 자세히 안내될 수 있도록 구성하는 기능입니다. 
+											        </span>
+										    	</div>
+										    </div>
 				                  		</div>
-					                    <button onclick="closeBox('img')"><i class="mdi mdi-chevron-right"></i></button>
+					                    <button onclick="closeBox(this,'content')" style="border: none;background: transparent;font-size: 2.1rem;">
+					                    	<i class="mdi mdi-chevron-down"></i>
+					                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
+				                    	</button>
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
-				                    <div class="closeBox-mianImg">
-										<div class="mb-3">
+				                    <div class="closeBox-content">
+										<div class="mb-3" style="display: flex; justify-content: center;">
 					                        <textarea id="noContent" name="noContent"></textarea>
 					                    </div>
 				                    </div>
@@ -503,7 +534,146 @@
                             </div>
                           </div>
                         </div>
-                        <!-- 이미지 끝 -->
+                        <!-- 상품 본문 끝 -->
+                        
+                        <!-- 상품 주요정보 시작 -->
+                        <div class="card">
+                          <div class="card-body" style="padding: 1.5rem 2.5rem;" >
+                            <div class="row">
+                              <div class="col-12 grid-margin stretch-card">
+				                <div style="width:100%;">
+				                  <div style="padding :  1.0rem 2.0rem;">
+				                  	<div style="display: flex; justify-content: space-between;">
+				                  		<div style="display: flex;align-items: center;">
+						                    <h4 class="card-title" style="margin-bottom: 0">상품 주요정보</h4>
+						                    <i class="icon-must" aria-label="필수항목" style="margin-right: 3px" ></i>
+
+				                  		</div>
+					                    <button onclick="closeBox(this,'detail')" 
+					                    	style="border: none;background: transparent;font-size: 2.1rem;">
+					                    	<i class="mdi mdi-chevron-down"></i>
+					                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
+					                    </button>
+				                  	</div>
+				                    <div class="dropdown-divider"></div>
+				                    <div class="closeBox-detail">
+				                    	
+					                    <div class="display-f">
+										    <label>브랜드</label>
+										    <div>
+									        	<div class="store-input-container">
+						                    		<input class="input-brand" type="text" id=""  name="" >
+					                    		</div>
+										    </div>
+			                    		</div>
+					                    <div class="dropdown-divider"></div>
+					                    <div class="display-f">
+										    <label>제조사</label>
+										    <div>
+									        	<div class="store-input-container">
+						                    		<input class="manufacturer" type="text" id="manufacturer"  name="manufacturer" >
+					                    		</div>
+										    </div>
+			                    		</div>
+					                    <div class="dropdown-divider"></div>
+					                    <div class="display-f">
+										    <label>원산지</label>
+										    <div>
+									        	<div class="store-input-container">
+						                    		<input class="product_origin" type="text" id="product_origin"  name="product_origin" >
+					                    		</div>
+										    </div>
+			                    		</div>
+					                    <div class="dropdown-divider"></div>
+					                    <div class="display-f">
+										    <label>유효일자,유통기한</label>
+										    <div>
+									        	<div class="store-input-container">
+									        	
+									        		<!-- TODO 이건 달력으로  -->
+						                    		<input class="product_expiry" type="text" id="product_expiry"  name="product_expiry" >
+					                    		</div>
+										    </div>
+			                    		</div>
+					                    <div class="dropdown-divider"></div>
+				                    </div>
+				                  </div>
+				                </div>
+				              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- 상품 주요정보 끝 -->
+                        
+                        <!-- 배송 시작 -->
+                        <div class="card">
+                          <div class="card-body" style="padding: 1.5rem 2.5rem;" >
+                            <div class="row">
+                              <div class="col-12 grid-margin stretch-card">
+				                <div style="width:100%;">
+				                  <div style="padding :  1.0rem 2.0rem;">
+				                  	<div style="display: flex; justify-content: space-between;">
+				                  		<div style="display: flex;align-items: center;">
+						                    <h4 class="card-title" style="margin-bottom: 0">배송</h4>
+						                    <i class="icon-must" aria-label="필수항목" style="margin-right: 3px" ></i>
+
+				                  		</div>
+					                    <button onclick="closeBox(this,'detail')" 
+					                    	style="border: none;background: transparent;font-size: 2.1rem;">
+					                    	<i class="mdi mdi-chevron-down"></i>
+					                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
+					                    </button>
+				                  	</div>
+				                    <div class="dropdown-divider"></div>
+				                    <div class="closeBox-detail">
+				                    	
+					                    <div class="display-f">
+										    <label>배송방법</label>
+										    <div>
+									        	<div class="store-input-container">
+						                    		<!-- TODO 버튼 2개로 제어  -->
+					                    		</div>
+										    </div>
+			                    		</div>
+					                    <div class="dropdown-divider"></div>
+					                    <div class="display-f">
+										    <label>제조사</label>
+										    <div>
+									        	<div class="store-input-container">
+						                    		<input class="manufacturer" type="text" id="manufacturer"  name="manufacturer" >
+					                    		</div>
+										    </div>
+			                    		</div>
+					                    <div class="dropdown-divider"></div>
+					                    <div class="display-f">
+										    <label>원산지</label>
+										    <div>
+									        	<div class="store-input-container">
+						                    		<input class="product_origin" type="text" id="product_origin"  name="product_origin" >
+					                    		</div>
+										    </div>
+			                    		</div>
+					                    <div class="dropdown-divider"></div>
+					                    <div class="display-f">
+										    <label>유효일자,유통기한</label>
+										    <div>
+									        	<div class="store-input-container">
+						                    		<input class="product_expiry" type="text" id="product_expiry"  name="product_expiry" >
+					                    		</div>
+										    </div>
+			                    		</div>
+					                    <div class="dropdown-divider"></div>
+				                    </div>
+				                  </div>
+				                </div>
+				              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- 배송 끝 -->
+                        
+                        
+                        
                       </div>
                     </div>
                   </div>
@@ -537,6 +707,7 @@
     $(document).ready(function() {
         $('#noContent').summernote({
         	height: 300,
+        	width: 900,   // 에디터 너비 (이 속성은 일부 버전에서 지원되지 않을 수 있습니다)
             lang: 'ko-KR',
             toolbar: [
                 ['style', ['style']],
