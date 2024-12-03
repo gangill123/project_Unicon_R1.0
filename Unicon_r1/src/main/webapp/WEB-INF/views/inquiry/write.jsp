@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../inc/new_topHeader.jsp"%>
 <!-- topHeader / jquery 추가 -->
- <!-- Customized Bootstrap Stylesheet -->
-    <link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
+<!-- Customized Bootstrap Stylesheet -->
+<link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
+<!-- Template Stylesheet -->
+<link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
 
 <!-- 추가 템플릿 css/js 작성란 -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
  <style>
            /* 썸네일 미리보기 스타일 */
         #thumbnailPreview {
@@ -52,7 +53,7 @@
 
                         <!-- start form here -->
 
-       		<form id="quform" class="quform" enctype="multipart/form-data">
+<form id="quform" class="quform" enctype="multipart/form-data">
     <div class="quform-elements">
       <div class="row">
     <!-- 카테고리 선택 -->
@@ -112,7 +113,7 @@
     <div class="col-md-12">
         <div class="quform-element form-group">
             <div class="quform-input">
-                <textarea id="content" class="form-control" name="content" rows="3" placeholder="문의 내용을 입력해주세요."></textarea>
+                <textarea id="content" class="form-control" name="content" rows="8" placeholder="문의 내용을 입력해주세요."></textarea>
             </div>
         </div>
     </div>
@@ -164,31 +165,58 @@
                     <button class="butn" type="submit"><span>문의하기</span></button>
                 </div>
             </div>
+            
+            
+            
+            
+
+
+
+
+
+
+
+
+
+            
         </div>
     </div>
 </form>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</div>
 
 
 
 
                         <!-- end form here -->
 
-                    </div>
+
                     <div class="col-lg-6">
                         <div id="accordion" class="accordion-style3">
                             <div class="card">
                                 <div class="card-header" id="headingOne">
                                     <h5 class="mb-0">
                                         <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                  How can i purchase this item ?
+                                  		개인정보 수집 및 이용 동의(필수)
                                 </button>
                                     </h5>
                                 </div>
                                 <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion" style="">
                                     <div class="card-body bg-white">
-                                        Tempora incidunt ut labore et dolore exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                        sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                        <p style="font-size: 14px; line-height: 1.6;">
+                                        <strong>이용자 문의를 처리하기 위해 다음과 같이 개인정보를 수집 및 이용하며, 이용자의 개인정보를 안전하게 취급하는데 최선을 다하고 있습니다.</strong>
+										    <br>
+										    <br>
+										    <strong>개인정보 수집 및 이용 동의</strong><br><br>
+										    <strong>수집하는 자:</strong> (주)유니콘<br>
+										    <strong>개인정보 수집 및 이용 목적:</strong>문의・요청・불편사항 확인 및 처리결과 회신<br>
+										    <strong>수집하는 개인정보 항목:</strong> 이름, 연락처, 이메일<br>
+										    <strong>개인정보 보유 및 이용 기간:</strong> 수집 일로부터 300일<br><br>
+										
+										    ※ 위 동의를 거부할 권리가 있으며, 동의를 거부하실 경우 문의 처리 및 결과 회신이 제한됩니다. 요구하지 않은 개인정보는 입력하지 않도록 주의해 주세요.<br><br>
+										
+										    개인정보 수집과 이용에 동의하시나요?<br><br>
+                            				<label><input type="checkbox" id="agree-checkbox" name="agree" value="yes"> 예, 개인정보 수집 및 이용에 동의합니다.</label>
+										</p>
                                     </div>
                                 </div>
                             </div>
@@ -196,14 +224,16 @@
                                 <div class="card-header" id="headingTwo">
                                     <h5 class="mb-0">
                                         <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                  why unique and creative design ?
+                                  	개인 정보 수집 관련 
                                 </button>
                                     </h5>
                                 </div>
                                 <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordion" style="">
                                     <div class="card-body bg-white">
-                                        Neque porro quisquam est quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                        sunt in culpa qui officia deserunt mollit anim id est laborum.
+										 <p>서비스 제공을 위한 필요 최소한의 개인정보를 수집합니다.</p>
+										<p>회원 가입 시 또는 서비스 이용 과정에서 홈페이지 또는 개별 어플리케이션이나 프로그램 등을 통해 서비스 제공을 위해 필요 최소한의 개인정보를 수집하고 있습니다.</p>
+										
+										<p>서비스 제공을 위해 반드시 필요한 최소한의 정보를 필수항목으로, 그 외 특화된 서비스를 제공하기 위해 추가 수집하는 정보는 선택항목으로 동의를 받고 있으며, 선택항목에 동의하지 않은 경우에도 서비스 이용 제한은 없습니다.</p>
                                     </div>
                                 </div>
                             </div>
@@ -211,14 +241,79 @@
                                 <div class="card-header" id="headingThree">
                                     <h5 class="mb-0">
                                         <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                  are you ready to buy this theme ?
+                                  		개인정보 이용
                                 </button>
                                     </h5>
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion" style="">
                                     <div class="card-body bg-white no-padding-bottom">
-                                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                                        sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                               <!-- 회원 관리 및 서비스 제공·개선 -->
+									        <fieldset>
+									            <legend><strong>1. 회원 관리 및 서비스 제공·개선</strong></legend>
+									            <ul>
+									                <li>회원 식별 및 가입 의사 확인</li>
+									                <li>본인 및 연령 확인 (특히, 14세 미만 아동의 개인정보 수집 시 법정 대리인의 동의 여부 확인)</li>
+									                <li>이용자간 메시지 전송, 친구 등록 및 친구 추천 기능 제공</li>
+									                <li>친구에게 활동 내역을 알리거나, 이용자 검색 및 등록 기능 제공</li>
+									            </ul>
+									        </fieldset>
+									
+									        <!-- 문의사항 및 불만 처리 -->
+									        <fieldset>
+									            <legend><strong>2. 문의사항 및 불만 처리</strong></legend>
+									            <ul>
+									                <li>문의사항 또는 불만 처리</li>
+									                <li>공지사항 전달</li>
+									            </ul>
+									        </fieldset>
+									
+									        <!-- 유료 서비스 제공 -->
+									        <fieldset>
+									            <legend><strong>3. 유료 서비스 제공</strong></legend>
+									            <ul>
+									                <li>유료 서비스 이용 시 콘텐츠 전송, 배송 및 요금 정산</li>
+									            </ul>
+									        </fieldset>
+									
+									        <!-- 서비스 운영에 관한 관리 -->
+									        <fieldset>
+									            <legend><strong>4. 서비스 운영에 관한 관리</strong></legend>
+									            <ul>
+									                <li>계정 도용 및 부정 이용 행위 방지 및 제재</li>
+									                <li>서비스의 원활한 운영을 위한 기능 제공</li>
+									            </ul>
+									        </fieldset>
+									
+									        <!-- 개인화된 서비스 제공 -->
+									        <fieldset>
+									            <legend><strong>5. 개인화된 서비스 제공</strong></legend>
+									            <ul>
+									                <li>맞춤형 콘텐츠 추천, 이벤트, 광고 마케팅 활용</li>
+									                <li>이용자의 인구통계학적 특성과 관심사, 기호, 성향 추정</li>
+									            </ul>
+									        </fieldset>
+									
+									
+									        <!-- 개인정보의 추가적인 이용 및 제공 -->
+									        <fieldset>
+									            <legend><strong>6. 개인정보의 추가적인 이용·제공</strong></legend>
+									            <p>수집 목적과 합리적으로 관련된 범위에서는 법령에 따라 이용자의 동의 없이 개인정보를 이용하거나 제3자에게 제공할 수 있습니다.</p>
+									            <ul>
+									                <li>당초 수집 목적과 관련성이 있는지, 수집한 정황 또는 처리 관행에 비추어 볼 때 개인정보의 추가적인 이용 또는 제공에 대한 예측 가능성</li>
+									                <li>이용자의 이익을 부당하게 침해하지 않도록 가명처리 및 암호화 등의 안전성 확보</li>
+									            </ul>
+									        </fieldset>
+									
+									        <!-- 가명정보 처리 -->
+									        <fieldset>
+									            <legend><strong>7. 가명정보 처리</strong></legend>
+									            <p>카카오는 수집한 개인정보를 가명처리하여 통계작성, 과학적 연구, 공익적 기록보존 등을 위해 처리할 수 있습니다.</p>
+									            <ul>
+									                <li>가명정보는 재식별되지 않도록 추가정보와 분리하여 별도 저장 및 관리</li>
+									                <li>가명정보 보호를 위해 보안 시스템 운영 및 정기적인 내부 감사</li>
+									                <li>직원들에게 정기적인 교육을 실시</li>
+									            </ul>
+									        </fieldset>
                                     </div>
                                 </div>
                             </div>
@@ -227,6 +322,15 @@
                 </div>
             </div>
         </section>
+
+
+<!-- 유효성 검사 스크립트 -->
+<script>
+// 폼 제출 이벤트 리스너 추가
+document.getElementById("quform").addEventListener("submit", function(event) {
+
+});
+</script>
 
 <!--비밀번호 체크박스   -->
 <script>
@@ -296,6 +400,14 @@ document.getElementById("quform").addEventListener("submit", function (event) {
     const post_password = document.getElementById("post_password").value.trim();  
     const file = document.getElementById("file").files[0]; // 파일 가져오기 (예: file input id="file")
 	
+    var agreeCheckbox = document.getElementById("agree-checkbox");
+
+    // 체크박스가 선택되지 않았다면 폼 제출을 막고 경고 메시지를 띄움
+    if (!agreeCheckbox.checked) {
+        event.preventDefault();  // 폼 제출을 막음
+        alert("개인정보 수집 및 이용에 동의하셔야 합니다.");
+        return; // 유효성 검사 실패 시 제출을 중단
+    }
     // 유효성 검사
     if (!member_name) return alert("작성자 이름을 입력해주세요.");
     if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email))
