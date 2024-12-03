@@ -220,10 +220,28 @@
                             <label class="form-label">이름</label>
                             <input type="text" class="form-control" name="voApplicant" required>
                         </div>
+                        <!-- 생년월일 입력  -->
                         <div class="col-md-6">
-                            <label class="form-label">생년월일</label>
-                            <input type="date" class="form-control" name="voBirth" required>
-                        </div>
+						    <label class="form-label">생년월일</label>
+						    <div class="d-flex gap-2">
+						        <input type="text" class="form-control" name="birthYear" id="birthYear" placeholder="연도 4자리" maxlength="4" required>
+						        <select class="form-select" name="birthMonth" id="birthMonth" required>
+						            <option value="">월</option>
+						            <c:forEach begin="1" end="12" var="month">
+						                <option value="${month}">${month}월</option>
+						            </c:forEach>
+						        </select>
+						        <select class="form-select" name="birthDay" id="birthDay" required>
+						            <option value="">일</option>
+						            <c:forEach begin="1" end="31" var="day">
+						                <option value="${day}">${day}일</option>
+						            </c:forEach>
+						        </select>
+						    </div>
+						    <div class="invalid-feedback" id="birthError"></div>
+						</div>
+
+                        
                         <div class="col-md-6">
                             <label class="form-label">연락처</label>
                             <input type="tel" class="form-control" name="voTel" required>
@@ -302,13 +320,84 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 $(document).ready(function() {
+    // 연도 입력 숫자만 허용
+    $('#birthYear').on('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // 날짜 유효성 검사
+    function isValidDate(year, month, day) {
+        const date = new Date(year, month - 1, day);
+        return date.getFullYear() == year && date.getMonth() == month - 1 && date.getDate() == day;
+    }
+
+    // 나이 계산 함수
+    function calculateAge(birthYear, birthMonth, birthDay) {
+        const today = new Date();
+        const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        
+        if (monthDiff < 0 || (monthDiff == 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
+    // 대상 연령 확인 함수
+    function isEligibleAge(age, target) {
+        if (target.includes('성인')) {
+            return age >= 19;
+        } else if (target.includes('청소년')) {
+            return age >= 14 && age < 19;
+        }
+        return true;
+    }
+
     $('#applicationForm').on('submit', function(e) {
         e.preventDefault();
         
-        if (!confirm('관리자 승인 이후 취소가 불가합니다. 신청하시겠습니까?')) {
-            return;
+        const year = $('#birthYear').val();
+        const month = $('#birthMonth').val();
+        const day = $('#birthDay').val();
+        const target = '${volunteer.voTarget}';
+
+        // 기본 유효성 검사
+        if (year.length != 4 || year < 1900 || year > new Date().getFullYear()) {
+            alert('올바른 연도를 입력해주세요.');
+            return false;
         }
+
+        // 날짜 유효성 검사
+        if (!isValidDate(year, month, day)) {
+            alert('올바른 날짜를 선택해주세요.');
+            return false;
+        }
+
+        // 나이 확인
+        const age = calculateAge(year, month, day);
+        if (!isEligibleAge(age, target)) {
+            if (target.includes('성인')) {
+                alert('성인만 신청 가능합니다.');
+            } else if (target.includes('청소년')) {
+                alert('청소년만 신청 가능합니다.');
+            }
+            return false;
+        }
+
+        // 관리자 승인 확인
+        if (!confirm('관리자 승인 이후 취소가 불가합니다. 신청하시겠습니까?')) {
+            return false;
+        }
+
+        // Date 객체 생성 및 포맷팅
+        const birthDate = new Date(year, month - 1, day);
+        const formattedDate = birthDate.toISOString().split('T')[0];
         
+        // hidden input 추가
+        $(this).append('<input type="hidden" name="voBirth" value="' + formattedDate + '">');
+        
+        // Ajax 제출
         $.ajax({
             url: '/volunteer/apply',
             type: 'POST',
@@ -318,11 +407,21 @@ $(document).ready(function() {
                 window.location.href = '/volunteer/mylist';
             },
             error: function(xhr) {
-                alert('신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+                if (xhr.responseText) {
+                    alert(xhr.responseText);
+                } else {
+                    alert('신청 중 오류가 발생했습니다. 다시 시도해주세요.');
+                }
             }
         });
     });
+
+    // 날짜 선택 시 에러메시지 초기화
+    $('#birthYear, #birthMonth, #birthDay').on('change', function() {
+        $('#birthError').hide();
+    });
 });
+
 </script>
 
 <%@ include file="../inc/new_footer.jsp" %>

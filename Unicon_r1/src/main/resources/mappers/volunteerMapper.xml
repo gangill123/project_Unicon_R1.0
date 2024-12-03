@@ -76,13 +76,28 @@
     
     <!-- 봉사활동 단일 조회 -->
     <select id="selectVolunteer" resultType="VolunteerVO">
-        select 
-            v.*,
-            (select count(*) from _volunteer_apply 
-             where volunteerId = v.voId and status != 'CANCELED') as applicationCount
-        from _volunteer v
-        where v.voId = #{voId}
-    </select>
+	    select 
+	        v.voId,
+	        v.voTitle,
+	        v.voLocation,
+	        cast(v.voTarget as char(10000)) as voTarget,
+	        cast(v.voContent as char(10000)) as voContent,
+	        v.voCapacity,
+	        v.voManager,
+	        v.voContact,
+	        v.voStartDate,
+	        v.voEndDate,
+	        v.voRecruitStart,
+	        v.voRecruitEnd,
+	        v.recruitStatus,
+	        v.voRegDate,
+	        v.voUpdateDate,
+	        v.status,
+	        (select count(*) from _volunteer_apply 
+	         where volunteerId = v.voId and status != 'CANCELED') as applicationCount
+	    from _volunteer v
+	    where v.voId = #{voId}
+</select>
 
     <!-- 봉사활동 목록 조회 -->
     <!-- 봉사활동 전체 목록 조회 -->

@@ -1,8 +1,10 @@
 package com.Unicon.domain;
 
+import java.sql.Clob;
 import java.sql.Date;
 
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 public class VolunteerApplyVO {
@@ -10,6 +12,11 @@ public class VolunteerApplyVO {
     private Long volunteerId;           // 봉사활동번호
     private String voApplicant;         // 신청자명
     private Date voBirth;               // 생년월일
+    
+    private String birthYear;    		// 년도
+    private String birthMonth;  		// 월
+    private String birthDay;
+    
     private String voTel;               // 연락처
     private String voEmail;             // 이메일
     private String voExperience;        // 반려동물경험
@@ -31,4 +38,5 @@ public class VolunteerApplyVO {
     private String voContact; 
     private String voLocation;
     private String voContent;
+    
 }
