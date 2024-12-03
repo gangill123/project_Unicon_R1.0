@@ -49,10 +49,10 @@ public class AdptDAO {
 	}
 	
 	
-	public Integer checkAnimalId(String animId) {
+	public Integer checkAnimalId(String animal_id) {
 		logger.info("( •̀ ω •́ )✧ checkAnimalId(String animId) 실행");
 		
-		return sqlSession.selectOne(NAMESPACE+"checkAnimalId", animId);
+		return sqlSession.selectOne(NAMESPACE+"checkAnimalId", animal_id);
 	}
 	
 	
@@ -63,9 +63,9 @@ public class AdptDAO {
 	}
 	
 	public AnimalVO getAnimalListOne(String animal_id) {
-		logger.info("( •̀ ω •́ )✧ getAnimalListOne() 실행");
+		logger.info("( •̀ ω •́ )✧ getAnimalListOne(String animal_id) 실행");
 		
-		return sqlSession.selectOne(NAMESPACE+"getAnimalListOne");
+		return sqlSession.selectOne(NAMESPACE+"getAnimalListOne",animal_id);
 	}
 	
 	

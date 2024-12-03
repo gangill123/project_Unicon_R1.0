@@ -137,9 +137,9 @@
 
 
 <select id="checkAnimalId" parameterType="String" resultType="Integer">
-	select animal_id 
+	select count(animal_id) 
 	 from _animal 
-	  where animal_id = #{animId} limit 1
+	  where animal_id = #{animal_id} limit 1
 </select>
 
 
@@ -152,20 +152,25 @@
 	     join _category_data c on a.category_code = c.category_code 
 	      join _member m on a.member_id = m.member_id 
 	       join _common ac on a.animal_status = ac.common_code 
-	        where ac.common_column = 'animal_status'
+	        where ac.common_column = 'animal_status' and a.animal_status != 6
 </select>
 
 
-<!-- <select id="getAnimalListOne" resultMap="AnimalResultMap" parameterType="String">
-	select a.animal_id, a.category_code, a.category_etc_value, a.animal_name, a.animal_color, a.animal_gender, 
-	 a.animal_neuter, a.animal_age, a.animal_weight, a.member_id, a.animal_regdate, a.animal_status, a.animal_regnum 
+<select id="getAnimalListOne" resultMap="AnimalResultMap" parameterType="String">
+	select a.animal_id, a.category_etc_value, a.animal_name, a.animal_color, a.animal_gender, 
+	 a.animal_neuter, a.animal_age, a.animal_weight, a.member_id, a.animal_regdate, a.animal_status, a.animal_regnum, 
 	  a.animal_act, a.animal_social, a.animal_etc, a.adpt_member, 
-	    
+	   c.category_value, 
 	    i.image_id, i.image_type, i.image_sequence, i.image_src, 
 	     h.health, h.health_check, 
 	      v.vaccine, v.vaccine_check 
-	       from _animal a join on 
-</select> -->
+		   from _animal a 
+		    join _category_data c on a.category_code = c.category_code 
+		     join _image i on a.animal_id = i.image_id 
+		      join _animal_health h on a.animal_id = h.animal_id 
+		       join _animal_vaccine v on a.animal_id = v.animal_id 
+		        where a.animal_id = #{animal_id} and a.animal_status != 6
+</select>
 
 
 

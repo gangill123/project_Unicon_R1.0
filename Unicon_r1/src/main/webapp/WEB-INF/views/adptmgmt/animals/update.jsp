@@ -1572,19 +1572,28 @@
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/
 				let currentURL = window.location.pathname;
 				let lastSlashIndex = currentURL.lastIndexOf('/');
-				let animalId = currentURL.substring(0,lastSlashIndex);
+				let animalId = currentURL.substring(lastSlashIndex+1);
+				const regex = /^ANIM-\w{6}$/;
+
+				if(regex.test(animalId)) {
+					console.log(typeof animalId);
+					$.ajax({
+						url: '/adptmgmt/animals/' + animalId,
+						method: 'GET',
+						type: 'json',
+						success: function(data) {
+							console.log(data);
+						},
+						error: function(error) {
+							console.error('데이터를 가져오는 데 실패했습니다:', error);
+							window.location.href = '/AM/animals/list';
+						}
+					});
+				} else {
+					window.location.href = '/AM/animals/list';
+				}
 				
-				$.ajax({
-					url: '/adptmgmt/animals/' + animalId,
-					method: 'GET',
-					type: 'json',
-					success: function(data) {
-						
-					},
-					error: function(error) {
-						console.error('데이터를 가져오는 데 실패했습니다:', error);
-					}
-				});
+				
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/
 				
 				

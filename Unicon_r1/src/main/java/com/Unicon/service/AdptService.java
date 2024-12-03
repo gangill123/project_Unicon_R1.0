@@ -62,7 +62,7 @@ public class AdptService {
 			logger.info("( •̀ ω •́ )✧ genAnimalId() 메서드 실행");
 			
 			String aNamePre = "ANIM";
-			String animId = "";
+			String animalId = "";
 			char[] aNameCharacters =
 					"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
 			int aNamelength = 6;
@@ -76,10 +76,10 @@ public class AdptService {
 					int index = aNameRandom.nextInt(aNameCharacters.length);
 					asb.append(aNameCharacters[index]);
 				}
-				animId = asb.toString();
-			} while (aDao.checkAnimalId(animId) != null);
+				animalId = asb.toString();
+			} while (aDao.checkAnimalId(animalId) != null);
 			
-			return animId;
+			return animalId;
 		}
 		/*=============== 동물id 생성 ===============*/
 		

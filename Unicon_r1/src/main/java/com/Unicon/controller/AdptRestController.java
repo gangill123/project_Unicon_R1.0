@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.persistence.AdptDAO;
 import com.Unicon.service.AdptService;
 
 
@@ -29,6 +31,8 @@ public class AdptRestController {
 	
 	@Inject
 	private AdptService aService;
+	@Inject
+	private AdptDAO aDao;
 	private static final Logger logger = LoggerFactory.getLogger(AdptRestController.class);
 	
 	@PostMapping(value = "/animals/creation")
@@ -87,13 +91,17 @@ public class AdptRestController {
 	@GetMapping(value = "/animals/{animal_id}")
 	public ResponseEntity<AnimalVO> animalListOne(@PathVariable("animal_id")String animal_id) {
 		logger.info("( •̀ ω •́ )✧ animalListOne() 실행");
-		
-		AnimalVO animVO = aService.getAnimalListOne(animal_id);
-		if(animVO != null) {
-			return new ResponseEntity<AnimalVO>(animVO,HttpStatus.OK);
+		int checkId = aDao.checkAnimalId(animal_id);
+		if(checkId == 1) {
+			logger.info("( •̀ ω •́ )✧ 존재하는 동물id 확인완료");
+			AnimalVO animalVO = aService.getAnimalListOne(animal_id);
+			logger.info("( •̀ ω •́ )✧ animalVO : {}",animalVO);
+			return new ResponseEntity<AnimalVO>(animalVO,HttpStatus.OK);
 		} else {
+			logger.info("( •̀ ω •́ )✧ 존재하지않는 동물id 입니다");
 			return new ResponseEntity<AnimalVO>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
 	}
 	 
 
