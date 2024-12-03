@@ -79,59 +79,64 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 	    $('.selected-category-text').html("선택한 카테고리 : " + data.category + ' <i class="mdi mdi-chevron-right"></i>'+category);
 	}
  	
-    function closeBox(value) {
-        if ('category' == value) {
-            // 요소의 현재 display 상태를 확인하고 토글
-            const $Box = $('.closeBox-category');
-            if ($Box.css('display') === 'none') {
-                $Box.css('display', 'block'); // 숨겨져 있으면 보여줌
-            } else {
-                $Box.css('display', 'none'); // 보여져 있으면 숨김
-            }
-        } else if('productName' == value) {
-        	// 요소의 현재 display 상태를 확인하고 토글
-            const $Box = $('.closeBox-productName');
-            if ($Box.css('display') === 'none') {
-                $Box.css('display', 'block'); // 숨겨져 있으면 보여줌
-            } else {
-                $Box.css('display', 'none'); // 보여져 있으면 숨김
-            }
-        } else if('option' == value) {
-        	 const $Box = $('.closeBox-option');
-             if ($Box.css('display') === 'none') {
-                 $Box.css('display', 'block'); // 숨겨져 있으면 보여줌
-             } else {
-                 $Box.css('display', 'none'); // 보여져 있으면 숨김
-             }
+    function closeBox(button,value) {
+    	// 첫 번째 아이콘과 두 번째 아이콘을 선택
+        var downIcon = $(button).find('.mdi-chevron-down');
+        var upIcon = $(button).find('.mdi-chevron-up');
+        
+        console.log(button);
+        console.log(downIcon);
+        console.log(upIcon);
+
+        // 아이콘을 토글
+        downIcon.toggle();
+        upIcon.toggle();
+
+        // active 클래스 토글
+        downIcon.toggleClass('active');
+        upIcon.toggleClass('active');
+    	
+     // display 상태에 따라 박스 토글
+        let $Box;
+        switch (value) {
+            case 'category':
+                $Box = $('.closeBox-category');
+                break;
+            case 'productName':
+                $Box = $('.closeBox-productName');
+                break;
+            case 'option':
+                $Box = $('.closeBox-option');
+                break;
+            case 'price':
+                $Box = $('.closeBox-price');
+                break;
+            case 'img':
+                $Box = $('.closeBox-img');
+                break;
+            case 'stock':
+            	$Box = $('.closeBox-stock');
+            	break;
+            case 'content':
+                $Box = $('.closeBox-content');
+                break;
+            case 'detail':
+                $Box = $('.closeBox-detail');
+                break;
+            default:
+                return; // 알 수 없는 경우 함수 종료
+        }
+
+        // 요소의 현재 display 상태를 확인하고 토글
+        if ($Box.css('display') === 'none') {
+            $Box.css('display', 'block'); // 숨겨져 있으면 보여줌
+        } else {
+            $Box.css('display', 'none'); // 보여져 있으면 숨김
         }
         
     }
     
     $(document).ready(function() {
-    	/*=============== 썸머노트  ===============*/
-		// 폼데이터 보낼때.
-		// $('#noContent').summernote('code', draft.noContent || '');
-//        $('#noContent').summernote({
-//            height: 300,
-//            lang: 'ko-KR',
-//            toolbar: [
-//                ['style', ['style']],
-//                ['font', ['bold', 'underline', 'clear']],
-//                ['color', ['color']],
-//                ['para', ['ul', 'ol', 'paragraph']],
-//                ['table', ['table']],
-//                ['insert', ['link', 'picture', 'video']],
-//                ['view', ['fullscreen', 'codeview', 'help']]
-//            ],
-//            callbacks: {
-//                onImageUpload: function(files) {
-//                    for(let file of files) {
-//                        uploadSummernoteImage(file, this);
-//                    }
-//                }
-//            }
-//        });
-        /*=============== 썸머노트  ===============*/
         $('#textInput').focus(function() {
             $(this).closest('.input-container').addClass('focused'); // 포커스 시 클래스 추가
             $('#error-message').hide(); // 에러 메시지 숨김
@@ -434,9 +439,14 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             event.stopPropagation(); // 클릭 이벤트 전파 방지
             $("#tooltip-info").toggle(); // 툴팁 보이기/숨기기
         });
+        $(".img-tooltip").click(function(event) {
+        	event.stopPropagation(); // 클릭 이벤트 전파 방지
+        	$("#img-tooltip-info").toggle(); // 툴팁 보이기/숨기기
+        });
 
         $(document).click(function() {
             $("#tooltip-info").hide(); // 전체 문서 클릭 시 툴팁 숨기기
+            $("#img-tooltip-info").hide(); // 전체 문서 클릭 시 툴팁 숨기기
         });
         
         let optionCount = 1; // 옵션 카운터 초기화
