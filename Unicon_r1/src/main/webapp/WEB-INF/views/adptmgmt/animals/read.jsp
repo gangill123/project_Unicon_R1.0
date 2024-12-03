@@ -125,23 +125,35 @@
 		font-size: 1.1rem;
 	}
 		
-	.table th, .table td {
+	.table td {
 		font-size: 1.2rem;
 		text-align: center;
 		padding: 0.7rem 0.5rem !important;
 	}
 	
 	.table th {
+		font-size: 1.2rem;
+		text-align: center;
 		color: white;
 		background: #006e60;
+		padding: 1.2rem 0.7rem !important;
 	}
 	
-	.table td {
+	.table td, .table tr {
 		cursor: pointer;
+		background-color: transparent !important;
 	}
 	
 	th select {
 		border-radius: 0.7rem;
+	}
+	
+	table.dataTable {
+		background-image: url('/resources/admin/images/pawbrownopacity10.png');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		overflow: hidden;
 	}
     /*=============== 테이블 css ===============*/
     
@@ -262,7 +274,6 @@
 						const formattedDate = date.toLocaleDateString('ko-KR', options);
 						
 						item.animal_regdate = formattedDate;
-						item.categoryDataVO.category_value = '<small>' + item.categoryDataVO.category_value + '</small>';
 						
 						switch(item.categoryDataVO.category_type) {
 							case '개': {

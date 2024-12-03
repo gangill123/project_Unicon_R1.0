@@ -74,6 +74,7 @@ public class AdptRestController {
 	@GetMapping(value = "/animals")
 	public ResponseEntity<List<AnimalVO>> animalListAll() {
 		logger.info("( •̀ ω •́ )✧ animalListAll() 실행");
+		
 		List<AnimalVO> animList = aService.getAnimalListAll();
 		if(animList != null) {
 			return new ResponseEntity<List<AnimalVO>>(animList,HttpStatus.OK);
@@ -84,13 +85,14 @@ public class AdptRestController {
 	
 	
 	@GetMapping(value = "/animals/{animal_id}")
-	public ResponseEntity<List<AnimalVO>> animalListOne(@PathVariable("animal_id")String animal_id) {
+	public ResponseEntity<AnimalVO> animalListOne(@PathVariable("animal_id")String animal_id) {
 		logger.info("( •̀ ω •́ )✧ animalListOne() 실행");
-		List<AnimalVO> animList = aService.getAnimalListAll();
-		if(animList != null) {
-			return new ResponseEntity<List<AnimalVO>>(animList,HttpStatus.OK);
+		
+		AnimalVO animVO = aService.getAnimalListOne(animal_id);
+		if(animVO != null) {
+			return new ResponseEntity<AnimalVO>(animVO,HttpStatus.OK);
 		} else {
-			return new ResponseEntity<List<AnimalVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<AnimalVO>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	 

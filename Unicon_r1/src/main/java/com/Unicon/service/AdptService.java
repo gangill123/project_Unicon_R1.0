@@ -47,6 +47,13 @@ public class AdptService {
 	}
 	
 	
+	public AnimalVO getAnimalListOne(String animal_id) {
+		logger.info("( •̀ ω •́ )✧ getAnimalListiOne() 실행");
+		
+		return aDao.getAnimalListOne(animal_id);
+	}
+	
+	
 	
 	/*=============== 메서드 ===============*/
 		

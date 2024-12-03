@@ -62,6 +62,12 @@ public class AdptDAO {
 		return sqlSession.selectList(NAMESPACE+"getAnimalListAll");
 	}
 	
+	public AnimalVO getAnimalListOne(String animal_id) {
+		logger.info("( •̀ ω •́ )✧ getAnimalListOne() 실행");
+		
+		return sqlSession.selectOne(NAMESPACE+"getAnimalListOne");
+	}
+	
 	
 	
 	
