@@ -9,7 +9,11 @@
     <meta name="_csrf" content="${_csrf.token}" />
     <meta name="_csrf_header" content="${_csrf.headerName}" />
     
-    <title>공지사항 ${notice.noId == null ? '등록' : '수정'}</title>
+    <title>유니콘 - 공지사항 ${notice.noId == null ? '등록' : '수정'}</title>
+    <link rel="stylesheet" href="/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/resources/admin/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="/resources/admin/css/style.css">
+    <link rel="shortcut icon" href="/resources/admin/images/favicon.png" />
     
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -41,11 +45,12 @@
        transition: all 0.3s ease;
    }
    
-   .main-content { 
-       margin-left: 250px; 
-       padding: 20px;
-       transition: margin 0.3s ease;
-   }
+   .main-content {
+	    margin-left: 250px;
+	    padding: 20px;
+	    width: calc(100% - 250px);
+	    min-height: calc(100vh - 70px); /* 헤더 높이를 뺀 높이 */
+	}
 
    /* 카드 스타일 */
    .card {
@@ -170,10 +175,11 @@
            overflow: hidden;
        }
        
-       .main-content {
-           margin-left: 0;
-           padding: 15px;
-       }
+        .main-content {
+	        margin-left: 0;
+	        width: 100%;
+	        padding: 15px;
+	    }
 
        /* 카드 */
        .card-body {
@@ -235,27 +241,15 @@
         }
    }
 
-   /* 태블릿 반응형 */
-   @media (min-width: 769px) and (max-width: 1024px) {
-       .sidebar {
-           width: 200px;
-       }
-       
-       .main-content {
-           margin-left: 200px;
-       }
-       
-       .card-body {
-           padding: 1.5rem;
-       }
-
-       .row > div[class^="col-"] {
-           margin-bottom: 1rem;
-       }
-   }
     </style>
 </head>
 <body>
+
+<div class="container-scroller">
+    <%@ include file="/WEB-INF/views/inc/admin_navbar_adpt.jsp"%>
+    <div class="container-fluid page-body-wrapper">
+        <%@ include file="/WEB-INF/views/inc/admin_sidebar_adpt.jsp"%>
+    
     <div class="main-content">
         <div class="card">
             <div class="card-header">
@@ -345,33 +339,39 @@
 				            </div>
 				        </div>
                     </div>
-                    </div>
-                    <div class="text-right">
-			            <div class="row">
-			                <div class="col-6">
-			                    <button type="button" class="btn btn-secondary w-100" onclick="location.href='/notice/manage'">취소</button>
-			                </div>
-			                <div class="col-6">
-			                    <button type="submit" id="submitBtn" class="btn btn-primary w-100">저장</button>
-			                </div>
+                </div>
+                    
+                <div class="text-right">
+			        <div class="row">
+			            <div class="col-6">
+			                <button type="button" class="btn btn-secondary w-100" onclick="location.href='/notice/manage'">취소</button>
 			            </div>
-			        </div>
-			    </form>
-			<!-- </div> -->
-			<!-- 임시저장 목록 모달 -->
-			<div class="modal fade" id="draftListModal" tabindex="-1">
-			    <div class="modal-dialog">
-			        <div class="modal-content">
-			            <div class="modal-header">
-			                <h5 class="modal-title">임시저장 목록</h5>
-			                <button type="button" class="close" data-dismiss="modal">&times;</button>
-			            </div>
-			            <div class="modal-body">
-			                <div id="draftList"></div>
+			            <div class="col-6">
+			                <button type="submit" id="submitBtn" class="btn btn-primary w-100">저장</button>
 			            </div>
 			        </div>
 			    </div>
+		    </form>
+		</div>
+	</div>
+		<!-- 임시저장 목록 모달 -->
+		<div class="modal fade" id="draftListModal" tabindex="-1">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <h5 class="modal-title">임시저장 목록</h5>
+		                <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        </div>
+			        <div class="modal-body">
+		                <div id="draftList"></div>
+			            </div>
+				    </div>
+				</div>
 			</div>
+			<%@ include file="/WEB-INF/views/inc/admin_footer_adpt.jsp"%>
+	    </div>
+	</div>
+</div>
 
     <script>
     var csrfToken = $("meta[name='_csrf']").attr("content");

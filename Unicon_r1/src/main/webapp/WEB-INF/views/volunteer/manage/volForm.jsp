@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
-    <title>봉사활동 관리</title>
+    <title>유니콘 - 봉사활동 공고등록</title>
     <link rel="stylesheet" href="/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/css/vendor.bundle.base.css">
@@ -17,10 +17,133 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     
-    <style>
+<style>
+	.card {
+	    border: none;
+	    box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+	    border-radius: 12px;
+	    background: #fff;
+	    margin: 20px 0;
+	}
 	
+	.card-body {
+	    padding: 2rem;
+	}
+	
+	.form-control {
+	    border: 2px solid #e9ecef;
+	    border-radius: 8px;
+	    padding: 0.75rem 1rem;
+	    transition: all 0.3s ease;
+	    font-size: 0.95rem;
+	}
+	
+	.form-control:focus {
+	    border-color: #4B49AC;
+	    box-shadow: 0 0 0 0.2rem rgba(75, 73, 172, 0.15);
+	}
+	
+	.col-form-label {
+	    font-weight: 500;
+	    color: #2C2C2C;
+	    font-size: 0.95rem;
+	}
+	
+	.input-group {
+	    border-radius: 8px;
+	    overflow: hidden;
+	}
+	
+	.input-group .form-control {
+	    border-radius: 8px;
+	}
+	
+	.input-group-text {
+	    background-color: #f8f9fa;
+	    border: 2px solid #e9ecef;
+	    color: #6c757d;
+	}
+	
+	textarea.form-control {
+	    min-height: 120px;
+	    resize: vertical;
+	}
+	
+	.btn {
+	    padding: 0.75rem 2rem;
+	    font-weight: 500;
+	    border-radius: 8px;
+	    transition: all 0.3s ease;
+	}
+	
+	.btn-primary {
+	    background-color: #4B49AC;
+	    border-color: #4B49AC;
+	}
+	
+	.btn-primary:hover {
+	    background-color: #3f3e8e;
+	    border-color: #3f3e8e;
+	    transform: translateY(-1px);
+	}
+	
+	.btn-light {
+	    background-color: #f8f9fa;
+	    border-color: #e9ecef;
+	}
+	
+	.btn-light:hover {
+	    background-color: #e9ecef;
+	    border-color: #dde1e5;
+	}
+	
+	.form-group {
+	    margin-bottom: 1.5rem;
+	}
+	
+	.page-title {
+	    color: #2C2C2C;
+	    font-weight: 600;
+	    margin-bottom: 1.5rem;
+	}
+	
+	@media (max-width: 768px) {
+	    .col-form-label {
+	        margin-bottom: 0.5rem;
+	    }
+	    
+	    .form-group {
+	        margin-bottom: 1rem;
+	    }
+	    
+	    .btn {
+	        width: 100%;
+	        margin-bottom: 0.5rem;
+	    }
+	}
+	
+	.form-control:hover {
+	    border-color: #4B49AC;
+	}
+	
+	.form-control[required] {
+	    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Ccircle cx='4' cy='4' r='3' fill='%23dc3545'/%3E%3C/svg%3E");
+	    background-position: right 0.75rem center;
+	    background-repeat: no-repeat;
+	    background-size: 8px 8px;
+	    padding-right: 2rem;
+	}
+	
+	@keyframes fadeIn {
+	    from { opacity: 0; transform: translateY(10px); }
+	    to { opacity: 1; transform: translateY(0); }
+	}
+	
+	.card {
+	    animation: fadeIn 0.5s ease-out;
+	}	
 
-    </style>
+</style>
 </head>
 <body>
 <!-- ======================================================================= -->

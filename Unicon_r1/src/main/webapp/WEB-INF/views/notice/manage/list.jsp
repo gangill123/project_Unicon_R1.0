@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
-    <title>공지사항 관리</title>
+    <title>유니콘 - 공지사항 관리</title>
     <link rel="stylesheet" href="/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/css/vendor.bundle.base.css">
