@@ -82,7 +82,11 @@ public class CommunityController {
 		return "community/new_insert";
 	}
 	
-	
+	// http://localhost:8088/community/main04
+	@GetMapping("main04")
+	public String templateProfile() {
+		return "community/new_profile";
+	}
 	
 	
 	
