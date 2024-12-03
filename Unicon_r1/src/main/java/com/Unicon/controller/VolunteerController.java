@@ -1,5 +1,9 @@
 package com.Unicon.controller;
 
+import java.sql.Clob;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -81,10 +85,43 @@ public class VolunteerController {
         return "volunteer/volApply";
     }
     
+	/*
+	 * @PostMapping("/apply")
+	 * 
+	 * @ResponseBody public ResponseEntity<?> submitApplication(@ModelAttribute
+	 * VolunteerApplyVO apply) { try { volService.submitApplication(apply); return
+	 * ResponseEntity.ok().build(); } catch (Exception e) {
+	 * logger.error("봉사활동 신청 실패", e); return
+	 * ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	 * .body(e.getMessage()); } }
+	 */
+    
+	/* ============================================================================================== */
     @PostMapping("/apply")
     @ResponseBody
     public ResponseEntity<?> submitApplication(@ModelAttribute VolunteerApplyVO apply) {
         try {
+            // 날짜 형식 변환
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String birthDateStr = apply.getBirthYear() + "-" + 
+                                String.format("%02d", Integer.parseInt(apply.getBirthMonth())) + "-" + 
+                                String.format("%02d", Integer.parseInt(apply.getBirthDay()));
+            java.sql.Date birthDate = new java.sql.Date(sdf.parse(birthDateStr).getTime());
+            apply.setVoBirth(birthDate);
+
+            // 나이 계산 및 검증
+            int age = calculateAge(birthDate);
+            VolunteerVO volunteer = volService.getVolunteer(apply.getVolunteerId());
+            
+            // voTarget이 이미 String으로 변환되어 있음
+            String target = volunteer.getVoTarget() != null ? volunteer.getVoTarget() : "";
+
+            if (!isEligibleAge(age, target)) {
+                String message = target.contains("성인") ? 
+                    "성인만 신청 가능합니다." : "청소년만 신청 가능합니다.";
+                return ResponseEntity.badRequest().body(message);
+            }
+
             volService.submitApplication(apply);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -93,6 +130,33 @@ public class VolunteerController {
                                .body(e.getMessage());
         }
     }
+
+    // 나이 계산 메서드
+    private int calculateAge(java.sql.Date birthDate) {
+        Calendar birth = Calendar.getInstance();
+        birth.setTime(birthDate);
+        Calendar today = Calendar.getInstance();
+        
+        int age = today.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+        
+        if (today.get(Calendar.MONTH) < birth.get(Calendar.MONTH) ||
+            (today.get(Calendar.MONTH) == birth.get(Calendar.MONTH) && 
+             today.get(Calendar.DAY_OF_MONTH) < birth.get(Calendar.DAY_OF_MONTH))) {
+            age--;
+        }
+        return age;
+    }
+
+    // 나이 자격 확인 메서드
+    private boolean isEligibleAge(int age, String target) {
+        if (target.contains("성인")) {
+            return age >= 19;
+        } else if (target.contains("청소년")) {
+            return age >= 14 && age < 19;
+        }
+        return true;
+    }
+    /* ============================================================================================== */
     
     @GetMapping("/mylist")
     public String myApplications(HttpSession session, Model model) throws Exception {
