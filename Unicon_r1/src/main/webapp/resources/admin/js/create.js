@@ -108,6 +108,30 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
     }
     
     $(document).ready(function() {
+    	/*=============== 썸머노트  ===============*/
+		// 폼데이터 보낼때.
+		// $('#noContent').summernote('code', draft.noContent || '');
+//        $('#noContent').summernote({
+//            height: 300,
+//            lang: 'ko-KR',
+//            toolbar: [
+//                ['style', ['style']],
+//                ['font', ['bold', 'underline', 'clear']],
+//                ['color', ['color']],
+//                ['para', ['ul', 'ol', 'paragraph']],
+//                ['table', ['table']],
+//                ['insert', ['link', 'picture', 'video']],
+//                ['view', ['fullscreen', 'codeview', 'help']]
+//            ],
+//            callbacks: {
+//                onImageUpload: function(files) {
+//                    for(let file of files) {
+//                        uploadSummernoteImage(file, this);
+//                    }
+//                }
+//            }
+//        });
+        /*=============== 썸머노트  ===============*/
         $('#textInput').focus(function() {
             $(this).closest('.input-container').addClass('focused'); // 포커스 시 클래스 추가
             $('#error-message').hide(); // 에러 메시지 숨김
@@ -905,14 +929,6 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             // 결과 출력
             console.log("옵션 리스트:", options);
         });
-        
-        
-
-        
-     
-     
-     
-     
      
         /*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
 		$('.image-input').on('change', function(e) {
@@ -938,13 +954,22 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 					 	}
 						case '2': {
 							if($('#' + idNoNum + (idNum - 1)).val() == '') {
-								const adataTransfer = new DataTransfer();
+								// 객체에 파일을 저장함. 데이터를 옮기기 위해서
 								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
+								
+								// image-input2 value 값을 지움.
 								$('#' + idNoNum + idNum).val('');
-								$('#' + idNoNum + idNum).removeAttr('src');
+								
+								// image-preview src 지우는 동작
+								$('#image-preview' + idNum).removeAttr('src');
+								
+								// 옮길 데이터를 image-input1 value에 files에 데이터 옮김.					
 								$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
+								
+								// image-input1 이벤트를 수동으로 동작시킴(반복)
 								$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
 							} else {
+								// 이전의 값이 비어있지 않으면 그대로 미리보기 됨.
 								reader.readAsDataURL(file);
 								reader.onload = function(e) {
 									$(previewId).attr('src', e.target.result).show();
@@ -959,13 +984,14 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 								const adataTransfer = new DataTransfer();
 								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 								$('#' + idNoNum + idNum).val('');
-								$('#' + idNoNum + idNum).removeAttr('src');
+								$('#image-preview' + idNum).removeAttr('src');
 								$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
 								$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
 							} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
 								const adataTransfer = new DataTransfer();
 								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 								$('#' + idNoNum + idNum).val('');
+								$('#image-preview' + idNum).removeAttr('src');
 								$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
 								$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
 							} else {
@@ -984,7 +1010,7 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 								const adataTransfer = new DataTransfer();
 								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 								$('#' + idNoNum + idNum).val('');
-								$('#' + idNoNum + idNum).removeAttr('src');
+								$('#image-preview' + idNum).removeAttr('src');
 								$('#' + idNoNum + (idNum - 3))[0].files = adataTransfer.files;
 								$('#' + idNoNum + (idNum - 3))[0].dispatchEvent(new Event('change'));
 							} else if($('#' + idNoNum + (idNum - 2)).val() == '' 
@@ -992,14 +1018,14 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 								const adataTransfer = new DataTransfer();
 								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 								$('#' + idNoNum + idNum).val('');
-								$('#' + idNoNum + idNum).removeAttr('src');
+								$('#image-preview' + idNum).removeAttr('src');
 								$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
 								$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
 							} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
 								const adataTransfer = new DataTransfer();
 								adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 								$('#' + idNoNum + idNum).val('');
-								$('#' + idNoNum + idNum).removeAttr('src');
+								$('#image-preview' + idNum).removeAttr('src');
 								$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
 								$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
 							} else {
@@ -1032,6 +1058,7 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 							adataTransfer.items.add($('#' + idNoNum + i)[0].files[0]);
 							$('#' + idNoNum + i).val('');
 							$('#image-preview'+i).hide();
+							$('#image-preview'+i).removeAttr('src');
 							$('#plusIcon'+i).show();
 							$('#' + idNoNum + (i - 1))[0].files = adataTransfer.files;
 							$('#' + idNoNum + (i - 1))[0].dispatchEvent(new Event('change'));
@@ -1039,49 +1066,13 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 					}
 				} else {
 					$(previewId).hide();
+					$(previewId).removeAttr('src');
 					$(plusIconId).show();
 				}
 			}
 		});
 		/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
-
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
+		 // 이미지 업로드 함수
+	    
 
     });
