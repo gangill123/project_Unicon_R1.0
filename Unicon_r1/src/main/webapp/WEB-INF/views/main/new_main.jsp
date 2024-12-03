@@ -200,20 +200,20 @@
                             <div class="content mb-lg-1-6 mb-xl-7" style="height: 330px;">
                                 <span class="title-style1">about news</span>
                                 <h2 class="mb-3 font-weight-700 w-lg-90">${newsInfo.news_subject }</h2>
-                                <p class="display-28 font-weight-600 fst-italic">${newsInfo.news_place }</p>
+                                <p class="display-28 font-weight-600 fst-italic">장소 : ${newsInfo.news_place }</p>
                                 <p class="mb-xl-1-9 w-lg-90">
                                 ${fn:substring(newsInfo.news_content, 0, 150)}...
                                 </p>
-                                <a href="#!" class="butn-style2"><span>다양한 소식 더보기</span></a>
+                                <a href="/news" class="butn-style2"><span>다양한 소식 보러가기</span></a>
                             </div>
-                            <div class="about-bg d-none d-lg-flex" style="justify-content: center;">
-                                <div class="z-index-1 me-5 pe-5 border-end">
+                            <div class="about-bg d-none d-lg-flex text-center">
+                                <div class="z-index-1 col-lg-6 border-end">
                                     <h6 class="text-white" style="font-size: 1.5rem;"><i class="fa-solid fa-building-columns"></i> 주관기관</h6>
-                                    <p class="mb-0 text-white" style="text-align: center;">${newsInfo.news_ins }</p>
+                                    <p class="mb-0 text-white">${newsInfo.news_ins }</p>
                                 </div>
-                                <div class="z-index-1 me-5 pe-5">
+                                <div class="z-index-1 col-lg-6 ">
                                     <h6 class="text-white" style="font-size: 1.5rem;"><i class="fa-solid fa-users-line"></i> 참석대상</h6>
-                                    <p class="mb-0 text-white" style="text-align: center;">${newsInfo.news_att }</p>
+                                    <p class="mb-0 text-white">${newsInfo.news_att }</p>
                                 </div>
                             </div>
                         </div>

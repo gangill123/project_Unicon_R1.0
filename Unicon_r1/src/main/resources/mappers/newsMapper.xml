@@ -45,17 +45,21 @@
 	
 	<!-- 소식 조회(메인용) -->
 	<select id="getNewsForMain" resultType="NewsVO">
-		select * from _news order by news_enddate desc limit 1 
+		select * from _news 
+		where news_startdate between CURDATE() and CURDATE() + INTERVAL 30 DAY 
+		order by news_startdate asc 
+		limit 1 
 	</select>
 	
-	<!-- 소식 조회(다가오는 행사, 현재일로부터 7일) -->
+	<!-- 소식 조회(모두보기 - 최근등록순) -->
 	<select id="getNewsLastest" resultType="NewsVO">
 		select * from _news where news_enddate &gt; CURDATE() 
 	</select>
 	
-	<!-- 소식 조회(다가오는 행사, 현재일로부터 7일) -->
+	<!-- 소식 조회(다가오는 행사, 현재일로부터 30일) -->
 	<select id="getNewsUpcoming" resultType="NewsVO">
-		select * from _news where news_startdate between CURDATE() and CURDATE() + INTERVAL 7 DAY 
+		select * from _news where news_startdate between CURDATE() and CURDATE() + INTERVAL 30 DAY 
+		order by news_startdate asc 
 	</select>
 
 	<!-- 소식 조회(우리 지역 행사) -->

@@ -239,7 +239,7 @@
                                             <div class="quform-element form-group">
                                                 <label for="message">내용 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
-                                                    <textarea id="message" class="form-control" name="news_content" rows="4" placeholder="How'd you hear about Crizal?"></textarea>
+                                                    <textarea id="message" class="form-control" name="news_content" rows="10" placeholder="How'd you hear about Crizal?"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -314,12 +314,40 @@ $(document).ready(function () {
 	    } else {
 	    	$preview.empty();
 	    }
-        
-        
-        
-        
     });
     
+    // submit시 모달확인
+    $('.quform').on('submit', function(event){
+    	event.preventDefault();
+    	
+    	Swal.fire({
+			  title: '소식을 등록하시겠습니까?',
+			  text: "정보 확인 후 등록하시기 바랍니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '등록',
+			  cancelButtonText: '취소',
+			  customClass: {
+			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			  }
+			}).then((result) => {
+				if (result.isConfirmed) {
+	  				Swal.fire({
+	  	  			  title: '등록이 완료되었습니다!',
+	  	  			  text: "수정하기를 통하여 수정 가능합니다.",
+	  	  			  icon: 'success',
+	  	  			  customClass: {
+	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+	 			 	  }
+	  				}).then(function(){
+	  					$('.quform').off('submit').submit();
+	  				});
+				}
+			});
+    	
+    });
     
     
     
