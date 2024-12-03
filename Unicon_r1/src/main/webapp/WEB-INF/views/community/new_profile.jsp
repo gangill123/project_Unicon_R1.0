@@ -20,9 +20,9 @@ z-index: 2000;
            <button type="button" style="margin-left: 5px; color: black;" class="btn btn-light">팔로잉 : 117 명</button>
            <button type="button" style="margin-left: 5px; color: black; cursor: default;" class="btn btn-light">반려동물 : 6 마리</button>
            <!-- 팔로잉 안했을 시 -->
-           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jjjModal">팔로우</button>
+           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#followModal">팔로우</button>
            <!-- 팔로잉 했을 시 -->
-           <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#jjjModal">팔로잉</button>
+           <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#followModal">팔로잉</button>
            <!-- <p class="w-md-75 w-lg-55">Business consectetur adipisicing elit eiusmod tempor incididunt ut labore et dolore magna aliqua quis nostrud exercitation consequat.</p> -->
        </div>
        <div class="section-heading" style="display: flex; flex-wrap: wrap; justify-content: center;">
@@ -60,8 +60,8 @@ z-index: 2000;
    </div>
    
    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">게시물 모달</button>
-   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">팔로워 모달</button>
-   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">팔로잉 모달</button>
+   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#followModal">팔로워 모달</button>
+   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#followModal">팔로잉 모달</button>
 
    <div class="container">
        <div class="row">
@@ -69,9 +69,9 @@ z-index: 2000;
            <!-- Start links -->
            <div class="filtering col-sm-12 text-center">
                <span data-filter='*' class="active">입양 후기</span>
-               <span data-filter='.business'>반려 이야기</span>
-               <span data-filter='.finance'>실종</span>
-               <span data-filter='.consulting'>임시 보호</span>
+               <span data-filter='.business' class="">반려 이야기</span>
+               <span data-filter='.finance' class="">실종</span>
+               <span data-filter='.consulting' class="">임시 보호</span>
            </div>
            <!-- End links -->
            
@@ -103,7 +103,7 @@ z-index: 2000;
        <!-- start portfolio gallery -->
        <div class="text-center row">
 
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
+           <div class="col-lg-3 col-md-6 items business mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
                <div class="project-grid" style="display: flex; flex-wrap: wrap;">
                    <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
                    <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
@@ -147,7 +147,23 @@ z-index: 2000;
                    </div>
                </div>
            </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
+           <div class="col-lg-3 col-md-6 items consulting mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
+               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
+                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
+                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
+                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
+                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
+                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
+                   </div>
+                   <div class="project-grid-overlay">
+                       <div class="w-100 px-3">
+                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
+                           <p>닉네임</p>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="col-lg-3 col-md-6 items business mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
                <div class="project-grid" style="display: flex; flex-wrap: wrap;">
                    <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
                    <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
@@ -179,7 +195,7 @@ z-index: 2000;
                    </div>
                </div>
            </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
+           <div class="col-lg-3 col-md-6 items consulting mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
                <div class="project-grid" style="display: flex; flex-wrap: wrap;">
                    <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
                    <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
@@ -195,23 +211,7 @@ z-index: 2000;
                    </div>
                </div>
            </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
-               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
-                   </div>
-                   <div class="project-grid-overlay">
-                       <div class="w-100 px-3">
-                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>닉네임</p>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
+           <div class="col-lg-3 col-md-6 items business mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
                <div class="project-grid" style="display: flex; flex-wrap: wrap;">
                    <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
                    <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
@@ -249,8 +249,7 @@ z-index: 2000;
     </div>
 </section>
 
-
-<!-- 모달2 -->
+<!-- 모달 - 게시물 모달 -->
 <div class="modal fade" id="jjjModal" tabindex="-1" 
 	aria-labelledby="exampleModalLabel" aria-hidden="true" style="top: 50px;">
     <div class="modal-dialog" style="max-width: 1200px;">
@@ -279,8 +278,6 @@ z-index: 2000;
                        <!-- product left end -->
 
                    </div>
-                   
-                   
                    
                    
                    <div class="col-lg-7 ps-lg-2-3">
@@ -320,7 +317,6 @@ z-index: 2000;
 									</div>
                                 </div>
                             </div>
-                            
                             
                             <div class="media" style="margin-bottom: 30px;">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
@@ -386,7 +382,6 @@ z-index: 2000;
                                 </div>
                             </div>
                             
-                            
                             <div class="media" style="margin-bottom: 30px;">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
@@ -403,7 +398,6 @@ z-index: 2000;
 									</div>
                                 </div>
                             </div>
-                           
                            
                            <!-- 일단 안씀 -->
                            
@@ -488,8 +482,6 @@ z-index: 2000;
                            
                            <!-- 일단 안씀 -->
                            
-                           
-                           
                        </div> <!-- <div class="product-detail"> -->
                        
                        <div style="width: 100%; height: 36px; margin-top: 10px;">
@@ -503,12 +495,6 @@ z-index: 2000;
                        
                    </div> <!-- <div class="col-lg-7 ps-lg-2-3"> -->
                    
-                   
-                   
-                       
-                       
-                       
-                       
                </div> <!-- <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9"> -->
             </div> <!-- <div class="modal-body"> -->
 <!--             <div class="modal-footer"> -->
@@ -517,6 +503,167 @@ z-index: 2000;
         </div> <!-- <div class="modal-content"> -->
     </div> <!-- <div class="modal-dialog" style="max-width: 1200px;"> -->
 </div>
+<!-- 모달 - 게시물 모달 -->
+
+
+<!-- 모달 - 팔로워 모달 -->
+<div class="modal fade" id="followModal" tabindex="-1" 
+	aria-labelledby="exampleModalLabel" aria-hidden="true" style="top: 50px;">
+    <div class="modal-dialog" style="max-width: 480px;">
+        <div class="modal-content" style="height: 482px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">팔로워</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9" style="margin-bottom: 0px;">
+                	<div style="display: flex; align-items: center; max-width: 360px; margin-bottom: 10px;">
+                		
+					    <i class="fa-solid fa-magnifying-glass" style="margin-right: 10px;"></i>
+					    <input class="form-control" type="text" style="flex: 1; margin-right: 10px;" placeholder="닉네임이나 이름을 검색...">
+					    <button type="button" class="btn btn-primary" style="width: 80px;">검색</button>
+				    </div>
+				    
+				    <div style="overflow-y: auto; max-height: 340px;">
+				    <!-- 유저 목록 -->
+				    <div class="media" style="margin-bottom: 10px;">
+                        <img src="/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
+                        <div class="media-body">
+						    <div class="container" style="display: flex; flex-direction: row; padding: 0px; width: 100%;">
+						        <div class="top-left" style="display: flex; flex-direction: column; width: 50%; height: 100%;">
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
+						            </div>
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <p class="mt-0 mb-2">박재영</p>
+						            </div>
+						        </div>
+						        <div class="top-right" style="width: 50%; height: 100%;">
+						            <div class="box" style="height: 100%; text-align: right;"> <!-- 오른쪽 영역 -->
+						                <button type="button" class="btn btn-secondary">팔로잉</button>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    
+                    <div class="media" style="margin-bottom: 10px;">
+                        <img src="/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
+                        <div class="media-body">
+						    <div class="container" style="display: flex; flex-direction: row; padding: 0px; width: 100%;">
+						        <div class="top-left" style="display: flex; flex-direction: column; width: 50%; height: 100%;">
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
+						            </div>
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <p class="mt-0 mb-2">박재영</p>
+						            </div>
+						        </div>
+						        <div class="top-right" style="width: 50%; height: 100%;">
+						            <div class="box" style="height: 100%; text-align: right;"> <!-- 오른쪽 영역 -->
+						                <button type="button" class="btn btn-primary">팔로우</button>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    
+                    <div class="media" style="margin-bottom: 10px;">
+                        <img src="/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
+                        <div class="media-body">
+						    <div class="container" style="display: flex; flex-direction: row; padding: 0px; width: 100%;">
+						        <div class="top-left" style="display: flex; flex-direction: column; width: 50%; height: 100%;">
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
+						            </div>
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <p class="mt-0 mb-2">박재영</p>
+						            </div>
+						        </div>
+						        <div class="top-right" style="width: 50%; height: 100%;">
+						            <div class="box" style="height: 100%; text-align: right;"> <!-- 오른쪽 영역 -->
+						                <button type="button" class="btn btn-primary">팔로우</button>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    
+                    <div class="media" style="margin-bottom: 10px;">
+                        <img src="/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
+                        <div class="media-body">
+						    <div class="container" style="display: flex; flex-direction: row; padding: 0px; width: 100%;">
+						        <div class="top-left" style="display: flex; flex-direction: column; width: 50%; height: 100%;">
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
+						            </div>
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <p class="mt-0 mb-2">박재영</p>
+						            </div>
+						        </div>
+						        <div class="top-right" style="width: 50%; height: 100%;">
+						            <div class="box" style="height: 100%; text-align: right;"> <!-- 오른쪽 영역 -->
+						                <button type="button" class="btn btn-primary">팔로우</button>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    
+                    <div class="media" style="margin-bottom: 10px;">
+                        <img src="/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
+                        <div class="media-body">
+						    <div class="container" style="display: flex; flex-direction: row; padding: 0px; width: 100%;">
+						        <div class="top-left" style="display: flex; flex-direction: column; width: 50%; height: 100%;">
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
+						            </div>
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <p class="mt-0 mb-2">박재영</p>
+						            </div>
+						        </div>
+						        <div class="top-right" style="width: 50%; height: 100%;">
+						            <div class="box" style="height: 100%; text-align: right;"> <!-- 오른쪽 영역 -->
+						                <button type="button" class="btn btn-primary">팔로우</button>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    
+                    <div class="media" style="margin-bottom: 10px;">
+                        <img src="/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
+                        <div class="media-body">
+						    <div class="container" style="display: flex; flex-direction: row; padding: 0px; width: 100%;">
+						        <div class="top-left" style="display: flex; flex-direction: column; width: 50%; height: 100%;">
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4>
+						            </div>
+						            <div class="box" style="flex: 1; text-align: left;">
+						                <p class="mt-0 mb-2">박재영</p>
+						            </div>
+						        </div>
+						        <div class="top-right" style="width: 50%; height: 100%;">
+						            <div class="box" style="height: 100%; text-align: right;"> <!-- 오른쪽 영역 -->
+						                <button type="button" class="btn btn-primary">팔로우</button>
+						            </div>
+						        </div>
+						    </div>
+						</div>
+                    </div>
+                    <!-- 유저 목록 -->
+                    </div>
+					    
+               </div> <!-- <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9"> -->
+            </div> <!-- <div class="modal-body"> -->
+<!--             <div class="modal-footer"> -->
+            
+<!--             </div> -->
+        </div> <!-- <div class="modal-content"> -->
+    </div> <!-- <div class="modal-dialog" style="max-width: 1200px;"> -->
+</div>
+<!-- 모달 - 팔로워 모달 -->
+
 
 
 <!--====================================작성부=====================================-->
