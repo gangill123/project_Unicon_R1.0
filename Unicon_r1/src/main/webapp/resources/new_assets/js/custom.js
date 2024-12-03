@@ -563,6 +563,9 @@
 		const maxVisiblePages = 5;
 		let startPage = Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
 		
+		//현재날짜 
+		const today = new Date();
+		
 		// 데이터 가져오기
 		function fetchData(id) {
 			
@@ -593,10 +596,39 @@
 			const $grid = $('#news-grid');
 			$grid.empty(); // 기존 데이터 삭제
 				pageData.forEach(item => {
+					
+					let statusColor = '';
+					let statusText = '';
+					
+					let startDate = new Date(item.news_startdate);
+					let endDate = new Date(item.news_enddate); 
+					let diffInMilliseconds = startDate - today;
+					let diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+					
+					//console.log(diffInDays);
+					
+					switch (true) {
+					  case today > endDate:
+						statusColor = 'secondary';
+					    statusText = '종료';
+					    break;
+					  case today < startDate:
+					    statusColor = 'success';
+					    statusText = '준비중';
+					    break;
+					  default:
+						statusColor = 'info';
+					    statusText = '진행중';
+					    break;
+					}
+					
 				let card = `
 					<div class="col-lg-3 col-md-6 mt-3">
                         <div class="project-grid">
-                            <div class="project-grid-img"><img alt="..." src="${item.news_src }">
+                            <div class="project-grid-img">
+                            <div class="label-offer bg-${statusColor}">${statusText}</div>
+							<div class="label-offer2 bg-red">Day -${diffInDays}</div>
+                            <img alt="..." src="${item.news_src }">
                             </div>
                             <div class="project-grid-overlay">
                                 <div class="w-100 px-3">

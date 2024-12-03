@@ -143,7 +143,7 @@
                                             	<label for="name">소식명<span class="quform-required">*</span></label>
                                                 <div class="quform-input">
                                                     <input id="name" class="form-control" type="text" 
-                                                    name="news_subject" placeholder="First Name" value=${newsInfo.news_subject }>
+                                                    name="news_subject" placeholder="First Name" value="${newsInfo.news_subject }">
                                                 </div>
                                             </div>
 
@@ -188,7 +188,7 @@
                                                 <label for="last_name">장소 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
                                                     <input id="last_name" class="form-control" type="text" 
-                                                    name="news_place" placeholder="장소를 입력하세요" value=${newsInfo.news_place }>
+                                                    name="news_place" placeholder="장소를 입력하세요" value="${newsInfo.news_place }">
                                                 </div>
                                             </div>
                                         </div>
@@ -200,7 +200,7 @@
                                                 <label for="last_name">주관기관 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
                                                     <input id="last_name" class="form-control" type="text" 
-                                                    name="news_ins" placeholder="주관기관을 입력하세요" value=${newsInfo.news_ins }>
+                                                    name="news_ins" placeholder="주관기관을 입력하세요" value="${newsInfo.news_ins }">
                                                 </div>
                                             </div>
                                         </div>
@@ -211,7 +211,7 @@
                                                 <label for="last_name">참여대상 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
                                                     <input id="last_name" class="form-control" type="text" 
-                                                    name="news_att" placeholder="참여대상을 입력하세요" value=${newsInfo.news_att }>
+                                                    name="news_att" placeholder="참여대상을 입력하세요" value="${newsInfo.news_att }">
                                                 </div>
                                             </div>
                                         </div>
@@ -220,10 +220,10 @@
                                         <!-- Begin Text input element -->
                                         <div class="col-md-6">
                                             <div class="quform-element form-group">
-                                                <label for="news_startdate">행사일자 <span class="quform-required">*</span></label>
+                                                <label for="news_startdate">행사시작일 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
                                                     <input id="news_startdate" class="form-control" type="date" 
-                                                    name="news_startdate" value=${newsInfo.news_startdate }>
+                                                    name="news_startdate" value="${newsInfo.news_startdate }">
                                                 </div>
                                             </div>
                                         </div>
@@ -232,10 +232,10 @@
                                         <!-- Begin Text input element -->
                                         <div class="col-md-6">
                                             <div class="quform-element form-group">
-                                                <label for="news_enddate">행사일자 <span class="quform-required">*</span></label>
+                                                <label for="news_enddate">행사종료일 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
                                                     <input id="email" class="form-control" type="date" 
-                                                    name="news_enddate" value=${newsInfo.news_enddate }>
+                                                    name="news_enddate" value="${newsInfo.news_enddate }">
                                                 </div>
                                             </div>
                                         </div>
@@ -247,7 +247,7 @@
                                                 <label for="message">내용 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
                                                     <textarea id="message" class="form-control" 
-                                                    name="news_content" rows="4" placeholder="내용을 입력하세요">${newsInfo.news_content }</textarea>
+                                                    name="news_content" rows="10" placeholder="내용을 입력하세요">${newsInfo.news_content }</textarea>
                                                 </div>
                                             </div>
                                         </div>
