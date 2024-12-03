@@ -347,7 +347,7 @@ $(document).ready(function () {
                         lockIcon + // 자물쇠 아이콘
                         '<a href="/inquiry/board/' + inquiry.bno + '">' + inquiry.title + '</a>' +
                         '</td>' +
-                        '<td class="member">' + inquiry.member_name + '</td>' +
+                        '<td class="member">' + maskName(inquiry.member_name) + '</td>' +  // 마스킹된 이름 삽입
                         '<td class="date">' + inquiry.created_at + '</td>' +                       
                         '<td class="view_count">' + inquiry.view_count + '</td>' +   
                         '<td class="status ' + statusClass + '">' + statusText + '</td>' +
@@ -445,6 +445,20 @@ $("#submitPassword").on("click", function () {
         }
     });
 });
+
+</script>
+
+<script>
+//이름 마스킹 함수
+function maskName(name) {
+    // 이름이 최소 2자 이상일 경우만 마스킹
+    if (name.length >= 2) {
+        const masked = name.charAt(0) + "*" + name.charAt(name.length - 1);
+        return masked;
+    }
+    return name; // 이름이 짧을 경우 그대로 반환
+}
+
 
 </script>
 

@@ -93,15 +93,12 @@
                                                     <i aria-hidden="true" class="fa-sharp fa-solid fa-hashtag"></i> NO : ${boardDetail.bno}
                                                 </a>
                                             </li>
+
                                             <li>
-                                                <a href="#!">
-                                                    <i aria-hidden="true" class="fa fa-user"></i> 작성자: ${boardDetail.member_name}
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#!">
-                                                    <i aria-hidden="true" class="fa fa-folder-open"></i>카테고리: ${boardDetail.istatus}
-                                                </a>
+                                               <a href="#!">
+											        <i aria-hidden="true" class="fa fa-user"></i> 작성자: 
+											        <span id="author-name-placeholder">${boardDetail.member_name}</span>
+											    </a>
                                             </li>                                
                                               <li>
                                                 <a href="#!" id="masked-email">
@@ -143,39 +140,39 @@
 
                             <!--  start comment-->
                            <div class="comments-area">
-    <div class="line-title">
-        <h3>문의 답변</h3>
-    </div>
-
-    <div class="comment-box">
-        <div class="comment-info">
-            <div class="reply">
-				<c:choose>
-				   <c:when test="${empty answers}">
-				       <p>관리자가 문의 답변 예정입니다.</p>
-				   </c:when>
-				   <c:otherwise>
-				       <c:forEach var="answer" items="${answers}">
-				           <div class="answer-item">
-				               <!-- 작성자 이름과 이미지 수정-->
-				               <h6>
-				                   <img src="${pageContext.request.contextPath}/resources/assets/images/U문의.jpg" 
-				                        alt="U" class="rounded-circle me-2" style="width: 30px; height: 30px;">
-				                   ${answer.dname}
-				               </h6>
-				               <!-- 답변 내용 -->
-				               <p>${answer.dcontent}</p>
-				               <!-- 답변 작성 날짜 -->
-				               <p style="text-align: right;"><small>${answer.created_at}</small></p>
-				           </div>
-				       </c:forEach>
-				   </c:otherwise>
-				</c:choose>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- end comment-->
+							    <div class="line-title">
+							        <h3>문의 답변</h3>
+							    </div>
+							
+							    <div class="comment-box">
+							        <div class="comment-info">
+							            <div class="reply">
+											<c:choose>
+											   <c:when test="${empty answers}">
+											       <p>관리자가 문의 답변 예정입니다.</p>
+											   </c:when>
+											   <c:otherwise>
+											       <c:forEach var="answer" items="${answers}">
+											           <div class="answer-item">
+											               <!-- 작성자 이름과 이미지 수정-->
+											               <h6>
+											                   <img src="${pageContext.request.contextPath}/resources/assets/images/U문의.jpg" 
+											                        alt="U" class="rounded-circle me-2" style="width: 30px; height: 30px;">
+											                   ${answer.dname}
+											               </h6>
+											               <!-- 답변 내용 -->
+											               <p>${answer.dcontent}</p>
+											               <!-- 답변 작성 날짜 -->
+											               <p style="text-align: right;"><small>${answer.created_at}</small></p>
+											           </div>
+											       </c:forEach>
+											   </c:otherwise>
+											</c:choose>
+							            </div>
+							        </div>
+							    </div>
+							</div>
+							<!-- end comment-->
 
                            
                         </div>
@@ -186,29 +183,25 @@
                     <div class="col-lg-3">
                         <div class="side-bar">
                             <div class="widget">
-                                <form class="search-form w-sm-90 mx-auto mx-lg-0" action="#!" method="post" enctype="multipart/form-data" onclick="">
+                                <form class="search-form w-sm-90 mx-auto mx-lg-0" id="searchForm" action="" method="get">
 
                                     <div class="search-elements">
 
                                         <div class="row">
 
-                                            <!-- Begin Text input element -->
-                                            <div class="col-md-12">
-                                                <div class="search-element">
-                                                    <div class="search-input">
-                                                        <input class="form-control" id="email" type="text" name="email" placeholder="Search Crizal...">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End Text input element -->
-
-                                            <!-- Begin Submit button -->
-                                            <div class="col-md-12">
-                                                <div class="search-submit-inner">
-                                                    <button class="btn btn-white text-primary m-0" type="submit"><i class="fas fa-search"></i></button>
-                                                </div>
-                                            </div>
-                                            <!-- End Submit button -->
+                               <!-- Begin Text input element -->
+											<div class="col-md-12">
+											    <div class="quform-element" style="position: relative;">
+											        <div class="quform-input">
+											            <input class="rounded-pill form-control" id="searchInput" type="text" placeholder="검색..." style="padding-right: 40px;" />
+											            <!-- 검색 버튼을 input 안에 배치 -->
+											            <button id="searchBtn" class="btn btn-white text-primary" type="button" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
+											                <i class="fas fa-paper-plane"></i>
+											            </button>
+											        </div>
+											    </div>
+											</div>
+					            <!-- End Submit button -->
 
                                         </div>
 
@@ -314,7 +307,66 @@
         return phone; // 번호가 짧을 경우 그대로 반환
     }
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 작성자 이름을 받아와서 마스킹 처리
+        const nameElement = document.getElementById("author-name-placeholder");
+        const name = nameElement.textContent.trim();
+        
+        // 작성자 이름 마스킹
+        const maskedName = maskName(name);
+        nameElement.textContent = maskedName;
+    });
 
+    // 작성자 이름 마스킹 함수
+    function maskName(name) {
+        // 이름이 최소 길이(2자 이상)가 되어야 마스킹 처리
+        if (name.length >= 2) {
+            const masked = name.charAt(0) + "*" + name.charAt(name.length - 1);
+            return masked;
+        }
+        return name; // 이름이 짧을 경우 그대로 반환
+    }
+</script>
+
+<script>
+$(document).ready(function() {
+    // 검색 버튼 클릭 이벤트
+    $("#searchBtn").click(function() {
+        performSearch();
+    });
+
+    // Enter 키 입력 시 검색 버튼 클릭 처리
+    $("#searchInput").keypress(function(event) {
+        if (event.which === 13) { // 13은 Enter 키의 키코드
+            event.preventDefault(); // 폼 제출 방지
+            performSearch(); // 검색 처리 함수 호출
+        }
+    });
+
+    // 검색 처리 함수
+    function performSearch() {
+        const searchQuery = $("#searchInput").val().trim().toLowerCase();
+        let targetPage = '';
+
+        if (searchQuery.includes('입양') || searchQuery.includes('입양 방법') || searchQuery.includes('입양 현황')) {
+            targetPage = '../adoption';  // 입양 관련 페이지로 이동
+        } else if (searchQuery.includes('쇼핑') || searchQuery.includes('애견옷') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품 주문')) {
+            targetPage = '../shop';  // 쇼핑몰 페이지로 이동
+        } else if (searchQuery.includes('커뮤니티') || searchQuery.includes('애견 커뮤니티')) {
+            targetPage = '../community';  // 커뮤니티 페이지로 이동
+        } else if (searchQuery.includes('기타') || searchQuery.includes('결제') || searchQuery.includes('시스템') || searchQuery.includes('기타 사항')) {
+            targetPage = '../etc';  // 기타 페이지로 이동
+        } else {
+            alert('해당 검색어에 맞는 페이지가 없습니다.');
+            return;  // 페이지 이동을 하지 않고 알림만 출력
+        }
+
+        // 페이지 이동
+        window.location.href = targetPage;
+    }
+});
+</script>
 
 
 <!--====================================작성부=====================================-->
