@@ -48,7 +48,31 @@
 		select * from _news order by news_enddate desc limit 1 
 	</select>
 	
+	<!-- 소식 조회(다가오는 행사, 현재일로부터 7일) -->
+	<select id="getNewsLastest" resultType="NewsVO">
+		select * from _news where news_enddate &gt; CURDATE() 
+	</select>
 	
+	<!-- 소식 조회(다가오는 행사, 현재일로부터 7일) -->
+	<select id="getNewsUpcoming" resultType="NewsVO">
+		select * from _news where news_startdate between CURDATE() and CURDATE() + INTERVAL 7 DAY 
+	</select>
+
+	<!-- 소식 조회(우리 지역 행사) -->
+	<select id="getNewsLocal" resultType="NewsVO">
+		select * from _news 
+		where news_resion = 
+		(select SUBSTRING_INDEX(road_address, ' ', 1) as resion 
+		from _member 
+		where member_id = #{member_id}) and news_enddate > CURDATE() 
+	</select>
+	
+	<!-- 소식 조회(종료된 행사) -->
+	<select id="getNewsClosed" resultType="NewsVO">
+		select * from _news 
+		where news_enddate &lt; CURDATE() 
+	</select>
+
 
 </mapper>
 

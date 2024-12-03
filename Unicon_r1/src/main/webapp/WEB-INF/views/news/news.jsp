@@ -10,7 +10,7 @@
 
 .project-grid-img {
     width: 100%;
-    aspect-ratio: 3 / 4; /* 원하는 가로:세로 비율 설정 */
+    aspect-ratio: 3 / 3.3; /* 원하는 가로:세로 비율 설정 */
     overflow: hidden;    /* 이미지가 컨테이너를 벗어나지 않도록 */
 }
 
@@ -23,6 +23,7 @@
 
 .filtering span{
 	margin-right: 35px;
+	font-size: 1.2rem;
 }
 
 .filtering{
@@ -30,10 +31,13 @@
 }
 
 #news_image {
-	aspect-ratio: 3 / 4; /* 원하는 가로:세로 비율 설정 */
+	aspect-ratio: 3 / 4.4; /* 원하는 가로:세로 비율 설정 */
+	border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
 }
 </style>
 
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
@@ -54,8 +58,8 @@
 
                     <!-- Start links -->
                     <div class="filtering col-sm-12 text-center">
-                        <span data-id='lastest' class="active">최신등록순</span>
-                        <span data-id='this-week'>이번 주 행사</span>
+                        <span data-id='lastest' class="active">모두보기</span>
+                        <span data-id='upcoming'>다가오는 행사</span>
                         <span data-id='local'>우리 지역 행사</span>
                         <span data-id='closed'>종료된 행사</span>
                     </div>
@@ -84,104 +88,66 @@
         
         <!-- 모달2 -->
 	<div class="modal fade" id="exampleModal3" tabindex="-1" 
-		aria-labelledby="exampleModalLabel" aria-hidden="true" style="top: 50px;">
+		aria-labelledby="exampleModalLabel" aria-hidden="true" style="top: 35px;">
 	    <div class="modal-dialog" style="max-width: 1200px;">
 	        <div class="modal-content">
 	            <div class="modal-header">
-	                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	                <h5 class="modal-title" id="exampleModalLabel">소식 상세정보</h5>
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
 	            <div class="modal-body">
 	                <!-- Start Product Section -->
-                <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9" style="margin-bottom: 1rem;">
+                <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9" style="margin-bottom: 0;">
                     <div class="col-lg-5 text-center text-lg-start mb-1-9 mb-lg-0">
-
                         <!-- product left start -->
                         <div>
-                            <img class="mb-1-9" id="news_image" src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg" >
+                            <img class="mb-1-9" id="news_image" src="${pageContext.request.contextPath }/resources/new_assets/img/news01.jpg" >
                         </div>
                         <!-- product left end -->
-
                     </div>
                     <div class="col-lg-7 ps-lg-2-3">
                         <div class="product-detail">
-                            <h3 class="mb-2">Crop Top for Girls <span class="label-sale bg-primary text-white text-uppercase display-30">Sale</span></h3>
+                            <h3 class="mb-2">새해맞이 축제 <span class="label-sale bg-primary text-white text-uppercase display-30">진행중</span></h3>
                             <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
-                            <p class="rating-text"><span>SKU:</span> <span class="text-primary">290397</span></p>
-                            <p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
-
-                            <div class="mb-4">
-
-                                <div class="d-inline-block me-3 pe-3 border-end border-color-extra-medium-gray">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-
-                                <div class="d-inline-block">
-                                    <a class="text-primary" href="#!">Write a review</a>
-                                </div>
-
+                            <p class="rating-text"><span>주관 :</span> <span class="text-primary">해운대구청</span
+                            ><span>  /  참여대상 :</span> <span class="text-primary">전국민 누구나</span></p>
+                            <div style="min-height:200px; max-height:200px; overflow-y: auto;">
+                            	<p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.
+                            	Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.
+                            	Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
                             </div>
-                            <div class="mb-4">
-                                <span class="me-3 display-25 font-weight-600 offer-price">$499.00</span>
-                                <span class="display-25 font-weight-700 text-primary">$299.00</span>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-4 col-md-2 col-lg-2">
-                                    <label>Size:</label>
-
-                                    <select class="mb-4">
-                                        <option value="S">S</option>
-                                        <option value="M">M</option>
-                                        <option value="L">L</option>
-                                        <option value="XL">XL</option>
-                                    </select>
-
+							<div class="row" style="margin-top: 30px;">
+                                <div class="col-lg-6 text-center">
+                                    <h6 style="font-size: 1.3rem;"><i class="fa-solid fa-map-location-dot"></i> 행사장소</h6>
+                                    <p class="mb-0">부산시청</p>
                                 </div>
-                                <div class="col-6 col-md-2 col-lg-3">
-                                    <div class="product-color">
-                                        <label>Color:</label>
-                                        <select class="mb-4">
-                                            <option value="Red">Black</option>
-                                            <option value="Black">Red</option>
-                                            <option value="Beige">Beige</option>
-                                            <option value="White">White</option>
-                                        </select>
+                                <div class="col-lg-5 text-center">
+                                    <h6 style="font-size: 1.3rem;"><i class="fa-solid fa-calendar-days"></i> 행사일</h6>
+                                    <p class="mb-0">전국민 누구나</p>
+                                </div>
+                            </div>
+                            
+                            <div class="row" style="margin-top: 40px;">
+                                <div class="col-12">
+                                    <div class="inner-title">
+                                        <h6 style="margin-bottom: 10px;">다음 소식 알아보기</h6>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4 col-lg-2">
-                                    <label>Qty:</label>
-                                    <input type="text" class="form-control mb-4" value="1" placeholder="1">
-                                </div>
-
-                            </div>
-
-                            <div class="row mb-4">
+                                <!-- start feature box item -->
                                 <div class="col-lg-12">
-                                    <button class="butn primary me-2 mb-2 mb-md-0"><span><i class="fas fa-shopping-cart me-1"></i> Add to Cart</span></button>
-                                    <button class="butn text-uppercase"><span><i class="fas fa-heart me-1"></i> Add to wishlist</span></button>
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <div class="col-lg-7">
-
-                                    <label>Share on:</label>
-                                    <ul class="social-icon-style3 ps-0">
-                                        <li><a href="#!"><i class="fab fa-facebook-f"></i></a></li>
-                                        <li><a href="#!"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a href="#!"><i class="fab fa-instagram"></i></a></li>
-                                        <li><a href="#!"><i class="fab fa-youtube"></i></a></li>
-                                        <li><a href="#!"><i class="fab fa-linkedin-in"></i></a></li>
-                                    </ul>
-
+                                    <div class="row">
+                                        <div class="col-sm-4 mb-4 mb-md-0">
+                                            <img class="rounded" style="height: 100%; aspect-ratio: 1/1;"
+                                            src="${pageContext.request.contextPath }/resources/new_assets/img/news02.jpg" alt="...">
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <h5 class="h6 font-weight-600 mb-2">Life Insurance</h5>
+                                            <div style="min-height: 150px; max-height: 150px; overflow: hidden;">
+                                           		<p>행사일 : 2024.11.12<br>장소 : 우리나라 어디선가 진행됨<br>Exhaustive technology of implementing multi Exhaustive technology of implementing multi</p>
+                                            </div>
+                                            <a href="#!" class="readmore"><span>소식 상세보기</span></a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -202,6 +168,8 @@
 
 <script>
 $(document).ready(function () {
+	let allData = []; // 전체 데이터를 저장
+	
 	let id = 'lastest';
 	// 화면 로드 시 페이징처리
 	newspagePaging(id)
@@ -216,13 +184,20 @@ $(document).ready(function () {
 		
 	// 이름 클릭시 모달 열기
 	$('#news-grid').on('click', '#newViewTag', function(){
-		let newsId = $(this).data('id');
+		let newsId = $(this).data('news');
 		console.log(newsId);
+		
+		newsModalProcess(newsId);
 	});
 	
-	
-	
-	
+	// 다음 소식 상세보기 시 모달 내용 교체
+	$('.modal-content').on('click', '.readmore', function(){
+		//alert("next");
+		let nextId = $(this).data('nextid');
+		console.log("nextId : " + nextId);
+		
+		newsModalProcess(nextId);
+	});
 	
 }); //jquery
 

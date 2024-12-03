@@ -1,5 +1,5 @@
 
-	/////소식 페이징 처리 및 삭제처리/////
+	/////관리자 소식 페이징 처리 및 삭제처리/////
 	function newsPaging(resion, currentPage){
 		
 		//현재날짜 
@@ -55,18 +55,24 @@
 				let endDate = new Date(item.news_enddate); 
 				
 				const card = `
-				<div class="col-lg-3 col-md-6 items finance mt-3">
-                        <div class="project-grid">
-                            <div class="project-grid-img"><img alt="..." src="${list.news_src }">
-                            </div>
-                            <div class="project-grid-overlay">
-                                <div class="w-100 px-3">
-                                    <h5><a href="#!" id="newViewTag" data-bs-toggle="modal" data-bs-target="#exampleModal3">${list.news_subject }</a></h5>
-                                    <p>${list.news_ins }</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+				<div class="col-xl-3 col-sm-6">
+					<div class="product-details">
+						<div class="product-img">
+							<div class="label-offer bg-${today > endDate ? 'red' : 'primary'}">
+							${today > endDate ? '개시종료' : '개시중'}</div>
+							<img src="${item.news_src }" alt="..." class="image rounded-3" style="height: 300px;">
+							<div class="product-cart">
+								<a href="/admin/news_view/${item.news_id }?resion=${resion}&currentPage=${currentPage}" style="width: 50px; height: 50px;">
+									<i class="fa-regular fa-pen-to-square"></i></a>
+								<a class="deleteNews" data-id=${item.news_id } style="width: 50px; height: 50px;">
+									<i class="fa-solid fa-trash-can"></i></a>
+							</div>
+						</div>
+						<div class="product-info" style="padding: 0;">
+							<a href="/admin/news_view/${item.news_id }">${item.news_subject }</a>
+						</div>
+					</div>
+				</div>
                     `;
 				$grid.append(card);
 			});
@@ -550,7 +556,7 @@
 		fetchData(id);
 		
 		//페이징 처리
-		let allData = []; // 전체 데이터를 저장
+		allData = []; // 데이터 리셋
 		let currentPage = 1; // 현재 페이지
 		let totalItems;
 		const itemsPerPage = 8; // 페이지당 카드 개수
@@ -561,16 +567,9 @@
 		function fetchData(id) {
 			
 			//console.log(id);
-			// id값에 따른 url 설정
-			let url
-			if(id === 'lastest'){
-				url = '/news/getNews_lastest';
-			} else{
-				url = '/mypage/pet_filter/all2';
-			}
 			
 			$.ajax({
-				url: url, // 데이터를 가져올 API URL
+				url: '/news/getNews/'+id, // 데이터를 가져올 API URL
 				type: 'GET',
 				success: function (response) {
 					allData = response; // 데이터를 저장
@@ -593,8 +592,6 @@
 			// 그리드에 데이터 렌더링
 			const $grid = $('#news-grid');
 			$grid.empty(); // 기존 데이터 삭제
-			
-			if(id === 'lastest'){
 				pageData.forEach(item => {
 				let card = `
 					<div class="col-lg-3 col-md-6 mt-3">
@@ -603,7 +600,7 @@
                             </div>
                             <div class="project-grid-overlay">
                                 <div class="w-100 px-3">
-                                    <h4><a href="#!" data-id="${item.news_id }" id="newViewTag" data-bs-toggle="modal" data-bs-target="#exampleModal3">${item.news_subject }</a></h4>
+                                    <h4><a href="#!" data-news="${item.news_id }" id="newViewTag" data-bs-toggle="modal" data-bs-target="#exampleModal3">${item.news_subject }</a></h4>
                                     <p>${item.news_ins }</p>
                                 </div>
                             </div>
@@ -612,8 +609,6 @@
 					`;
 				$grid.append(card);
 			});
-			
-			}
 			
 			renderPagination();
 		}
@@ -682,5 +677,103 @@
 		
 	}
 	/////소식페이지 페이징 처리/////
+	
+	
+	
+	//////// 소식 모달페이지 처리///////
+	function newsModalProcess(newsId){
+		
+		const newsIds = $("[data-news]").map(function() {
+		  return $(this).data("news"); // data-id 값 가져오기
+		}).get();
+
+		const index = $.inArray(newsId, newsIds);
+		
+		let news_src = allData[index].news_src;
+		let news_subject = allData[index].news_subject;
+		let news_ins = allData[index].news_ins;
+		let news_att = allData[index].news_att;
+		let news_content = allData[index].news_content;
+		let news_place = allData[index].news_place;
+		let news_startdate = allData[index].news_startdate;
+		
+		let news_src_next = index < allData.length - 1 ? allData[index+1].news_src : allData[0].news_src;
+		let news_subject_next = index < allData.length - 1 ? allData[index+1].news_subject : allData[0].news_subject;
+		let news_content_next = index < allData.length - 1 ? allData[index+1].news_content : allData[0].news_content;
+		let news_place_next = index < allData.length - 1 ? allData[index+1].news_place : allData[0].news_place;
+		let news_startdate_next = index < allData.length - 1 ? allData[index+1].news_startdate : allData[0].news_startdate;
+		
+		if(news_content_next.length > 80){
+			news_content_next = news_content_next.substring(0, 80) + "...";
+		}
+		
+		
+		
+		
+		const $modalBody = $('.modal-body');
+		$modalBody.empty(); // 기존 데이터 삭제
+		
+		let modalContext = `
+		<div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9" style="margin-bottom: 0;">
+	        <div class="col-lg-5 text-center text-lg-start mb-1-9 mb-lg-0">
+	            <!-- product left start -->
+	            <div>
+	                <img class="mb-1-9" id="news_image" src="${news_src}" >
+	            </div>
+	            <!-- product left end -->
+	        </div>
+	        <div class="col-lg-7 ps-lg-2-3">
+	            <div class="product-detail">
+	                <h3 class="mb-2">${news_subject}<span class="label-sale bg-primary text-white text-uppercase display-30">진행중</span></h3>
+	                <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
+	                <p class="rating-text"><span>주관 :</span> <span class="text-primary">${news_ins}</span
+	                ><span>  /  참여대상 :</span> <span class="text-primary">${news_att}</span></p>
+	                <div style="min-height:200px; max-height:200px; overflow-y: auto;">
+	                	<p style="white-space: pre-line;">${news_content}</p>
+	                </div>
+					<div class="row" style="margin-top: 30px;">
+	                    <div class="col-lg-6 text-center">
+	                        <h6 style="font-size: 1.3rem;"><i class="fa-solid fa-map-location-dot"></i> 행사장소</h6>
+	                        <p class="mb-0">${news_place}</p>
+	                    </div>
+	                    <div class="col-lg-5 text-center">
+	                        <h6 style="font-size: 1.3rem;"><i class="fa-solid fa-calendar-days"></i> 행사일</h6>
+	                        <p class="mb-0">${news_startdate}</p>
+	                    </div>
+	                </div>
+	                
+	                <div class="row" style="margin-top: 40px;">
+	                    <div class="col-12">
+	                        <div class="inner-title">
+	                            <h6 style="margin-bottom: 10px;">다음 소식 알아보기</h6>
+	                        </div>
+	                    </div>
+	                    <!-- start feature box item -->
+	                    <div class="col-lg-12">
+	                        <div class="row">
+	                            <div class="col-sm-4 mb-4 mb-md-0">
+	                                <img class="rounded" style="height: 100%; aspect-ratio: 1/1;"
+	                                src="${news_src_next}" alt="...">
+	                            </div>
+	                            <div class="col-sm-8">
+	                                <h5 class="h6 font-weight-600 mb-2">${news_subject_next}</h5>
+	                                <div style="min-height: 150px; max-height: 150px; overflow: hidden;">
+	                               		<p>행사일 : ${news_startdate_next}
+	                               		<br>장소 : ${news_place_next}
+	                               		<br>${news_content_next}</p>
+	                                </div>
+	                                <a href="#!" class="readmore" data-nextid="${index < allData.length - 1 ? allData[index+1].news_id : allData[0].news_id}"><span>다음 소식 보기</span></a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>`
+			
+		$modalBody.append(modalContext);
+	}
+	
+	
 	
 	

@@ -54,8 +54,25 @@ public class NewsService {
 		return ndao.getNewsForMain();
 	}
 	
+	// 소식 조회(모두보기)
+	public List<NewsVO> getNewsLastest() {
+		return ndao.getNewsLastest();
+	}
 	
+	// 소식 조회(다가오는 행사)
+	public List<NewsVO> getNewsUpcoming() {
+		return ndao.getNewsUpcoming();
+	}
 	
+	// 소식 조회(우리 지역 행사)
+	public List<NewsVO> getNewsLocal(String member_id) {
+		return ndao.getNewsLocal(member_id);
+	}
+	
+	// 소식 조회(종료된 소식)
+	public List<NewsVO> getNewsClosed() {
+		return ndao.getNewsClosed();
+	}
 	
 	
 	
