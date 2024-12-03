@@ -14,8 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -108,6 +111,7 @@ public class StoreRestController {
 				animalImages.add(i, ivo);
 			} else {
 				logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
+				
 			}
 			
 			try {
@@ -121,6 +125,52 @@ public class StoreRestController {
 	}
 	/*=============== 이미지 저장 및 리스트 생성 ===============*/
 	
-	
+	/*=============== 썸머노트 img src ===============*/
+	@PostMapping("/api/upload")
+    public ResponseEntity<String> uploadImage(
+            @RequestParam("file") MultipartFile file,
+            HttpServletRequest request) {
+        try {
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest().body("파일이 비어있습니다.");
+            }
+            logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
+            logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
+            // 파일 확장자 검사
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
+            if (!extension.matches("jpg|jpeg|png|gif")) {
+                return ResponseEntity.badRequest().body("지원하지 않는 파일 형식입니다.");
+            }
+
+            // 저장할 파일명 생성
+            String storedFileName = "image_" + UUID.randomUUID().toString() + "." + extension;
+            
+            // 이미지 저장 경로 설정
+            String uploadDir = request.getServletContext().getRealPath("/uploads/images");
+            
+            logger.info("uploadDir" + uploadDir);
+            
+            File dir = new File(uploadDir);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            
+            // 파일 저장
+            File destFile = new File(dir, storedFileName);
+            file.transferTo(destFile);
+            
+            // 이미지 URL 반환
+            String imageUrl = "/uploads/images/" + storedFileName;
+            logger.info("이미지 업로드 완료: {}", imageUrl);
+
+            return ResponseEntity.ok(imageUrl);
+            
+        } catch (Exception e) {
+            logger.error("이미지 업로드 실패", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                               .body("이미지 업로드 실패: " + e.getMessage());
+        }
+    }
 	
 }

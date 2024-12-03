@@ -25,9 +25,18 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/admin/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/admin/css/style.css">
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/admin/images/favicon.png" />
-    <style type="text/css">
     
-    </style>
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+    
+    
+    
   </head>
   <body>
     <div class="container-scroller">
@@ -146,7 +155,7 @@
 											        <span style="padding: 4px 10px; line-height: 24px; color: #4d5159; background-color: #f8f9fd; border: 1px solid #dbdde2; border-radius: 0; border-left: none;">원</span>
 											    </div>
 											    <p class="price-error-messag">10원 단위로 입력해주세요.</p>
-											    <p class="error-message price-error">올바른 판매가를 입력하세요.</p>
+											    <p class="error-message price-error" style="color : #a6a7ad;">올바른 판매가를 입력하세요.</p>
 								            </div>
 				                    	</div>
 					                    <div class="dropdown-divider"></div>
@@ -376,27 +385,6 @@
 											    </div>
 											    
 											    <div class="option-list-body">
-<!-- 													<div style="width: 100%;text-align: center;display: flex;align-items: center;justify-content: center; background-color: #fff; color:#000000"> -->
-<!-- 												    	<div style="width: 4%;"><input type="checkbox"></div> -->
-<!-- 												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: -1px;color:#a7afb7"></div> -->
-<!-- 												    	<div style="width: 30%;"> -->
-<!-- 												    		<div style="display: flex;justify-content: center;gap: 5rem;align-items: center;"> -->
-<!-- 													    		<div></div> -->
-<!-- 														    	<div style="border-right: 1px solid;height: 30px;color:#a7afb7"></div> -->
-<!-- 													    		<div></div> -->
-<!-- 												    		</div> -->
-<!-- 												    	</div> -->
-<!-- 												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div> -->
-<!-- 												    	<div style="width: 30%;"></div> -->
-<!-- 												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div> -->
-<!-- 												    	<div style="width: 30%;"></div> -->
-<!-- 												    	<div style="border-right: 1px solid;height: 30px;position: relative;right: 1px;color:#a7afb7"></div> -->
-<!-- 												    	<div style="width: 5%;display: flex;align-items: center;justify-content: center;"> -->
-<!-- 												    		<button style="border: none; background-color: transparent;"> -->
-<!-- 												    			<i class="mdi mdi-close"></i> -->
-<!-- 												    		</button> -->
-<!-- 												    	</div> -->
-<!-- 												    </div> -->
 											    </div>
 											</div>
 										</div>
@@ -442,7 +430,7 @@
 										</div>    
 										<div class="dropdown-divider"></div>
 										<div style="display: flex; align-items: center;">
-										    <label >대표 이미지</label>
+										    <label >추가 이미지</label>
 										    <div class="form-group row d-flex" style="gap:1rem; margin: 0">
 											<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
 												<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
@@ -478,9 +466,36 @@
 												</div>
 											</div>
 										</div>
-										</div>         
-				                    	
-										<button type="submit" class="btn btn-lg btn-rounded btn-primary custom-text mr-2">등록하기</button>
+										</div>
+										<div class="dropdown-divider"></div>         
+				                    </div>
+				                  </div>
+				                </div>
+				              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- 이미지 끝 -->
+                        
+                        <!-- 이미지 시작 -->
+                        <div class="card">
+                          <div class="card-body" style="padding: 1.5rem 2.5rem;" >
+                            <div class="row">
+                              <div class="col-12 grid-margin stretch-card">
+				                <div style="width:100%;">
+				                  <div style="padding :  1.0rem 2.0rem;">
+				                  	<div style="display: flex; justify-content: space-between;">
+				                  		<div style="display: flex;align-items: center;">
+						                    <h4 class="card-title" style="margin-bottom: 0">상세 설명</h4>
+						                    <i class="icon-must" aria-label="필수항목"></i>
+				                  		</div>
+					                    <button onclick="closeBox('img')"><i class="mdi mdi-chevron-right"></i></button>
+				                  	</div>
+				                    <div class="dropdown-divider"></div>
+				                    <div class="closeBox-mianImg">
+										<div class="mb-3">
+					                        <textarea id="noContent" name="noContent"></textarea>
+					                    </div>
 				                    </div>
 				                  </div>
 				                </div>
@@ -512,5 +527,58 @@
     <script src="/resources/admin/js/hoverable-collapse.js"></script>
     <script src="/resources/admin/js/misc.js"></script>
     <script src="/resources/admin/js/dashboard.js"></script>
+    
+    
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-ko-KR.min.js"></script>
+    <script type="text/javascript">
+    
+    $(document).ready(function() {
+        $('#noContent').summernote({
+        	height: 300,
+            lang: 'ko-KR',
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            callbacks: {
+                onImageUpload: function (files) {
+                  for (let file of files) {
+                    uploadSummernoteImage(file, this);
+                  }
+                },
+              },
+        });
+        
+        function uploadSummernoteImage(file, editor) {
+    	    var formData = new FormData();
+    	    formData.append("file", file);
+
+    	    $.ajax({
+    	        url: '/store/api/upload',
+    	        type: 'POST',
+    	        data: formData,
+    	        processData: false,
+    	        contentType: false,
+    	        success: function(imageUrl) {
+    	            console.log('이미지 업로드 성공:', imageUrl);
+    	            $(editor).summernote('insertImage', imageUrl);
+    	        },
+    	        error: function(xhr, status, error) {
+    	            console.error('이미지 업로드 실패:', error);
+    	            console.error('상태 코드:', xhr.status);
+    	            console.error('응답 텍스트:', xhr.responseText);
+    	            alert('이미지 업로드에 실패했습니다.');
+    	        }
+    	    });
+    	}
+    });
+    </script>
   </body>
 </html>

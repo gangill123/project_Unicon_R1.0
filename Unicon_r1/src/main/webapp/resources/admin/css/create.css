@@ -356,3 +356,9 @@
 		display: none;
 	}
 	/*=============== 이미지 css ===============*/
+	
+	
+	/* 에디터 */
+    #noContent {
+        height: 200px !important;
+    }
