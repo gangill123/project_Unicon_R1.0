@@ -12,13 +12,13 @@
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#adoption-mgmt" aria-expanded="false" aria-controls="adoption-mgmt">
                 <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">입양글 관리</span>
+                <span class="menu-title">입양 동물 관리</span>
                 <i class="menu-arrow"></i>
               </a>
               <div class="collapse" id="adoption-mgmt">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="/adptmgmt/writings">입양글 등록</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">Dropdowns</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/AM/animals/creation">동물 등록</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/AM/animals/list">동물 목록</a></li>
                   <li class="nav-item"> <a class="nav-link" href="#">Typography</a></li>
                 </ul>
               </div>

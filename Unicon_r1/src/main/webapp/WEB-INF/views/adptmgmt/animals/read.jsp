@@ -9,6 +9,8 @@
     <title>유니콘</title>
     <!-- plugins:css -->
     <!-- dataTables.css -->
+    <!-- Font-Awesome CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/flag-icon-css/css/flag-icon.min.css">
@@ -33,12 +35,127 @@
 
 
     /*=============== 테이블 css ===============*/
-		@media(max-width:600px) {
-			.a-first-column, .a-fourth-column {
-				display: none;
-			}
+	@media(max-width:650px) {
+		.a-first-column, .a-fifth-column {
+			display: none;
 		}
+		
+		.card .card-body {
+			padding: 0.8rem;
+		}
+		
+		.table th, .table td {
+			font-size: 0.9rem !important;
+		}
+		
+		.table td.a-six-column label {
+			font-size: 1rem !important;
+		}
+		
+		thead th.a-second-column {
+			border-radius: 1rem 0 0 0;
+		}
+		
+		tfoot th.a-second-column {
+			border-radius: 0 0 0 1rem;
+		}
+	}
+	
+	@media(max-width:1200px) {
+		.a-third-column {
+			display: none;
+		}
+	}
+	
+	thead th.a-first-column {
+		border-radius: 1rem 0 0 0;
+	}
+	
+	tfoot th.a-first-column {
+		border-radius: 0 0 0 1rem;
+	}
+	
+	thead th.a-six-column {
+		border-radius: 0 1rem 0 0;
+	}
+	
+	tfoot th.a-six-column {
+		border-radius: 0 0 1rem 0;
+	}
+	
+	.a-second-column i {
+		color: #006e60
+	}
+	
+	.dataTables_wrapper .dataTables_length select, .dataTables_wrapper .dataTables_filter input {
+		border-radius: 1rem;
+		padding: 0.3rem;
+		margin-left: 0.5rem;
+		background: #fff;
+	}
+	
+	.dataTables_wrapper .dataTables_paginate {
+		padding-top: 0.3rem;
+	}
+	
+	.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+		background: #ccc;
+	}
+	
+	.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+	.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+		background: #006e60;
+		border: #006e60;
+		border-radius: 3rem;
+		color: white !important;
+	}
+	
+	.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+		background: #006e60;
+		border: #006e60;
+		border-radius: 3rem;
+	}
+	
+	.dataTables_length label, .dataTables_filter label {
+		padding: 0.2rem 0.5rem;
+		margin-bottom: 0.5rem;
+	}
+	
+	.table td.a-six-column label {
+		font-size: 1.1rem;
+	}
+		
+	.table th, .table td {
+		font-size: 1.2rem;
+		text-align: center;
+		padding: 0.7rem 0.5rem !important;
+	}
+	
+	.table th {
+		color: white;
+		background: #006e60;
+	}
+	
+	.table td {
+		cursor: pointer;
+	}
+	
+	th select {
+		border-radius: 0.7rem;
+	}
     /*=============== 테이블 css ===============*/
+    
+    
+    /*=============== 바탕 css ===============*/
+    .card {
+		border-radius: 2rem;
+	}
+	
+	.card-body {
+		min-height: 80vh;
+		height: auto;
+	}
+    /*=============== 바탕 css ===============*/
     
     
     </style>
@@ -54,20 +171,17 @@
         <!-- partial -->
 		<div class="main-panel">
 			<div class="content-wrapper">
-				<div class="page-header">
-					<h3 class="page-title"> Basic Tables </h3>
-				</div>
 					<div class="row">
 						<div class="col-12 grid-margin stretch-card">
 							<div class="card">
 								<div class="card-body">
-									<h4 class="card-title">Hoverable Table</h4>
-									<div class="row justify-content-center">
-										<table id="animalTable" class="table table-hover col-8">
+									<h4 class="card-title">입양 동물 관리 - 동물 목록</h4>
+										<table id="animalTable" class="table table-hover col-12">
 											<thead>
 												<tr>
 													<th>동물ID</th>
 													<th>동물종류</th>
+													<th>세부종류</th>
 													<th>동물이름</th>
 													<th>등록일자</th>
 													<th>상태</th>
@@ -75,8 +189,17 @@
 											</thead>
 											<tbody>
 											</tbody>
+											<tfoot>
+												<tr>
+													<th></th>
+													<th>동물종류</th>
+													<th>세부종류</th>
+													<th></th>
+													<th></th>
+													<th>상태</th>
+												</tr>
+											</tfoot>
 										</table>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -110,13 +233,24 @@
     <!-- Custom js for this page -->
     <script>
     $(function() {
+    	
+    	/*=============== DataTable 라이브러리 ===============*/
 		var aTable = $('#animalTable').DataTable({
+			"autoWidth": false, 
 			"info": false,
 		    "paging": true,
 		    "lengthMenu": [10, 20, 50, 80], 
 		    "language": {
-				"lengthMenu": "표시 항목수 _MENU_"
-			}, 
+				"lengthMenu": "표시 항목수 _MENU_",
+				"search": "검색",
+				"paginate": {
+					next: "다음",
+					previous: "이전"
+				}
+			},
+			"stateSave": true,
+			"stateDuration": -1,
+			/*=============== DataTable ajax ===============*/
 			"ajax": {
 				url: '/adptmgmt/animals',
 				type: 'GET',
@@ -126,48 +260,92 @@
 						const date = new Date(item.animal_regdate);
 						const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 						const formattedDate = date.toLocaleDateString('ko-KR', options);
+						
 						item.animal_regdate = formattedDate;
+						item.categoryDataVO.category_value = '<small>' + item.categoryDataVO.category_value + '</small>';
+						
+						switch(item.categoryDataVO.category_type) {
+							case '개': {
+								item.categoryDataVO.category_type = '개<i class="fa-solid fa-dog"></i>';
+								break;
+							}
+							case '고양이': {
+								item.categoryDataVO.category_type = '고양이<i class="fa-solid fa-cat"></i>';
+								break;
+							}
+							case '기타': {
+								item.categoryDataVO.category_type = '기타<i class="fa-solid fa-dove"></i>';
+								break;
+							}
+						}
 						
 						switch(item.status_value) {
 							case '대기중': {
 								item.status_value = '<label class="badge badge-warning">대기중</label>';
-								return item;
 								break;
 							}
 							case '모집중': {
 								item.status_value = '<label class="badge badge-primary">모집중</label>';
-								return item;
 								break;
 							}
 							case '상담중': {
 								item.status_value = '<label class="badge badge-danger">상담중</label>';
-								return item;
 								break;
 							}
 							case '입양완료': {
 								item.status_value = '<label class="badge badge-success">입양완료</label>';
-								return item;
 								break;
 							}
 							case '종료': {
 								item.status_value = '<label class="badge badge-secondary">종료</label>';
-								return item;
 								break;
 							}
-							default : break;
 						}
+						return item;
 					});
 				}
 			},
-			columns: [
+			"columns": [
 				{ data: 'animal_id' },
+				{ data: 'categoryDataVO.category_type' },
 				{ data: 'categoryDataVO.category_value' },
 				{ data: 'animal_name' },
 				{ data: 'animal_regdate' },
 				{ data: 'status_value' }
-			]
+			],
+			/*=============== DataTable ajax ===============*/
+			"order": [[4, "desc"]],
+			"columnDefs": [
+			],
+			/*=============== DataTable 필터링 ===============*/
+			"initComplete": function() {
+				var api = this.api();
+				
+				api.columns().every(function(index) {
+					var column = this;
+					  
+					if (index === 0 || index === 3 || index === 4) {
+						return;
+					}
+					
+					var select = $('<select><option value=""></option></select>')
+									.appendTo($(column.footer()).empty())
+									.on('change', function() {
+										var val = $.fn.dataTable.util.escapeRegex($(this).val());
+										column.search(val ? '^' + val + '$' : '', true, false).draw();
+									});
+					
+					column.data().unique().sort().each(function(d, j) {
+						var textValue = typeof d === 'string' ? d : $(d).text();
+						textValue = textValue.replace(/<[^>]*>/g, ''); 
+						select.append('<option value="' + textValue + '">' + textValue + '</option>');
+					});
+				});
+			}
+			/*=============== DataTable 필터링 ===============*/
 		});
-
+		
+		/*=============== DataTable 열마다 클래스 부여 ===============*/
 		aTable.on('draw', function() {
 			$('#animalTable tbody').find('td').each(function() {
 				$(this).html($(this).html());
@@ -175,14 +353,50 @@
 			
 			$('#animalTable tbody tr').each(function() {
 				$(this).find('td:eq(0)').addClass('a-first-column');
+				$(this).find('td:eq(1)').addClass('a-second-column');
+				$(this).find('td:eq(2)').addClass('a-third-column');
 				$(this).find('td:eq(3)').addClass('a-fourth-column');
+				$(this).find('td:eq(4)').addClass('a-fifth-column');
+				$(this).find('td:eq(5)').addClass('a-six-column');
+				$(this).addClass('a-view-animal');
 			});
 			
 			$('#animalTable thead tr').each(function() {
 				$(this).find('th:eq(0)').addClass('a-first-column');
+				$(this).find('th:eq(1)').addClass('a-second-column');
+				$(this).find('th:eq(2)').addClass('a-third-column');
 				$(this).find('th:eq(3)').addClass('a-fourth-column');
+				$(this).find('th:eq(4)').addClass('a-fifth-column');
+				$(this).find('th:eq(5)').addClass('a-six-column');
+			});
+			
+			$('#animalTable tfoot tr').each(function() {
+				$(this).find('th:eq(0)').addClass('a-first-column');
+				$(this).find('th:eq(1)').addClass('a-second-column');
+				$(this).find('th:eq(2)').addClass('a-third-column');
+				$(this).find('th:eq(3)').addClass('a-fourth-column');
+				$(this).find('th:eq(4)').addClass('a-fifth-column');
+				$(this).find('th:eq(5)').addClass('a-six-column');
 			});
 		});
+		/*=============== DataTable 열마다 클래스 부여 ===============*/
+		/*=============== DataTable 라이브러리 ===============*/
+		
+		
+		
+		/*=============== tr 선택 상세 조회 ===============*/
+		$('table').on('click', 'tr.a-view-animal', function() {
+			const animal_id = $(this).find('td:eq(0)').text();
+			window.location.href = '/AM/animals/list/' + animal_id;
+		});
+		/*=============== tr 선택 상세 조회 ===============*/
+		
+		
+		
+		
+		
+		
+		
 	});
 	</script>
     <!-- End custom js for this page -->
