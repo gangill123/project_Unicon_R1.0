@@ -31,9 +31,54 @@
 	
 	.volunteer-summary {
 	    background: #f8f9fa;
-	    padding: 1.5rem;
-	    border-radius: 8px;
+	    padding: 2rem;
+	    border-radius: 12px;
 	    margin-bottom: 2rem;
+	    padding-bottom: 2rem;
+	}
+	
+	.info-container {
+	    display: flex;
+	    flex-direction: column;
+	    gap: 1.5rem;
+	}
+	
+	.info-row {
+	    display: flex;
+	    align-items: flex-start;
+	    gap: 1.2rem;
+	    padding: 1rem;
+	    background: white;
+	    border-radius: 8px;
+	    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+	}
+	
+	.icon-wrapper {
+	    font-size: 1.5rem;
+	    color: #0d6efd;
+	    min-width: 40px;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	}
+	
+	.info-content {
+	    flex: 1;
+	    display: flex;
+	    flex-direction: column;
+	    gap: 0.5rem;
+	}
+	
+	.info-content strong {
+	    font-size: 1rem;
+	    color: #495057;
+	    display: block;
+	}
+	
+	.info-text {
+	    font-size: 1rem;
+	    color: #212529;
+	    line-height: 1.5;
 	}
 	
 	.agreement-box {
@@ -49,6 +94,31 @@
 	    color: #dc3545;
 	    margin-left: 4px;
 	}
+	
+	@media (max-width: 768px) {
+    .volunteer-summary {
+        padding: 1rem;
+    }
+
+    .info-row {
+        padding: 0.8rem;
+        gap: 1rem;
+    }
+
+    .icon-wrapper {
+        font-size: 1.5rem;
+        min-width: 32px;
+    }
+
+    .info-content strong {
+        font-size: 1rem;
+    }
+
+    .info-text {
+        font-size: 1.1rem;
+    }
+}
+	
 </style>
 
 <%@ include file="../inc/new_header.jsp" %>
@@ -60,26 +130,84 @@
             
             <!-- 봉사활동 요약 정보 -->
             <div class="volunteer-summary">
-                <div class="row">
-                    <h5>${volunteer.voTitle}</h5>
-                   	<div class="col-md-6">
-                        <p><i class="fas fa-tasks info-icon me-2"></i>활동내용: ${volunteer.voContent}</p>
-                    </div> 
-                    <div class="col-md-6">
-                        <p><i class="fas fa-map-marker-alt me-2"></i>봉사장소: ${volunteer.voLocation}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p class="text-muted">
-                            <i class="far fa-calendar-alt me-2"></i>
-                            봉사기간: <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
-                            <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/>
-                        </p>
-                    </div>
-                    <div class="col-md-6">    
-                        <p><i class="fas fa-users me-2"></i>모집인원: ${volunteer.voCapacity}명</p>
-                    </div>
-                </div>
-            </div>
+			    <div class="info-container">
+			        <div class="info-row">
+			            <span class="icon-wrapper">
+			                <i class="far fa-calendar-alt"></i>
+			            </span>
+			            <span class="info-content">
+			                <strong>모집명</strong>
+			                <span class="info-text">${volunteer.voTitle}</span>
+			            </span>
+			        </div>
+			        <div class="info-row">
+			            <span class="icon-wrapper">
+			                <i class="fas fa-tasks"></i>
+			            </span>
+			            <span class="info-content">
+			                <strong>활동내용</strong>
+			                <span class="info-text">${volunteer.voContent}</span>
+			            </span>
+			        </div>
+			        <div class="info-row">
+			            <span class="icon-wrapper">
+			                <i class="fas fa-map-marker-alt"></i>
+			            </span>
+			            <span class="info-content">
+			                <strong>봉사장소</strong>
+			                <span class="info-text">${volunteer.voLocation}</span>
+			            </span>
+			        </div>
+			        <div class="info-row">
+			            <span class="icon-wrapper">
+			                <i class="far fa-clock"></i>
+			            </span>
+			            <span class="info-content">
+			                <strong>봉사기간</strong>
+			                <span class="info-text">
+			                    <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
+			                    <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/>
+			                </span>
+			            </span>
+			        </div>
+			        <div class="info-row">
+			            <span class="icon-wrapper">
+			                <i class="fas fa-user-friends"></i>
+			            </span>
+			            <span class="info-content">
+			                <strong>모집대상</strong>
+			                <span class="info-text">${volunteer.voTarget}</span>
+			            </span>
+			        </div>
+			        <div class="info-row">
+			            <span class="icon-wrapper">
+			                <i class="fas fa-users"></i>
+			            </span>
+			            <span class="info-content">
+			                <strong>모집인원</strong>
+			                <span class="info-text">${volunteer.voCapacity}명</span>
+			            </span>
+			        </div>
+			        <div class="info-row">
+			            <span class="icon-wrapper">
+			                <i class="fas fa-user-tie"></i>
+			            </span>
+			            <span class="info-content">
+			                <strong>담당자</strong>
+			                <span class="info-text">${volunteer.voManager}</span>
+			            </span>
+			        </div>
+			        <div class="info-row">
+			            <span class="icon-wrapper">
+			                <i class="fas fa-phone"></i>
+			            </span>
+			            <span class="info-content">
+			                <strong>연락처</strong>
+			                <span class="info-text">${volunteer.voContact}</span>
+			            </span>
+			        </div>
+			    </div>
+			</div>
 
             <form id="applicationForm" action="/volunteer/apply" method="post">
                 <input type="hidden" name="volunteerId" value="${volunteer.voId}">

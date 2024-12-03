@@ -362,9 +362,9 @@ body,
 			    <div class="page-header d-flex justify-content-between mb-4">
 			        <h4 class="mb-0" style="min-width: 200px;">봉사활동 관리</h4>
 			        <div class="d-flex gap-2" justify-content: flex-end;"> 
-			            <button type="button" class="btn btn-info" onclick="location.href='/volunteer/manage/volGuideForm'">
+			            <!-- <button type="button" class="btn btn-info" onclick="location.href='/volunteer/manage/volGuideForm'">
 			                <i class="fas fa-edit"></i> 안내문 수정
-			            </button>
+			            </button> -->
 			            <button class="btn btn-primary" onclick="location.href='/volunteer/manage/volForm'">
 			                <i class="fas fa-plus"></i> 공고 등록
 			            </button>
