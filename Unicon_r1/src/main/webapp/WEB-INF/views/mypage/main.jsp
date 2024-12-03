@@ -26,6 +26,12 @@
 .filtering span{
 	margin-right: 50px;
 }
+
+.product-grid > [class*="col-"]{
+	margin-top: 0;
+}
+
+
 </style>
 
 </head>
