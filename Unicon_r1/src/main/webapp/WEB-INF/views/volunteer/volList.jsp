@@ -10,100 +10,218 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <style>
-	.volunteer-card {
-	    cursor: pointer;
-	    transition: transform 0.2s;
-	    height: 100%;
-	    border: 1px solid #dee2e6;
-	    border-radius: 8px;
-	}
-	
-	.volunteer-card:hover {
-	    transform: translateY(-5px);
-	    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-	}
-	
-	.status-badge {
-	    position: absolute;
-	    top: 10px;
-	    right: 10px;
-	    z-index: 1;
-	}
-	
-	.card-info {
-	    padding: 1.25rem;
-	}
-	
-	.date-info {
-	    font-size: 0.9rem;
-	    color: #6c757d;
-	}
-	
-	.tab-content {
-	    padding: 20px 0;
-	}
-	
-	.volunteer-info {
-	    background: #f8f9fa;
-	    padding: 2rem;
-	    border-radius: 8px;
-	    margin-bottom: 2rem;
-	}
-	
-	.info-grid {
-	    display: flex;
-	    flex-direction: column;
-	    gap: 2rem;
-	}
-	
-	.info-grid .row:first-child {
-	    margin-bottom: 0;
-	}
-	
-	.info-grid .row {
-	    display: flex;
-	    margin: 0;
-	}
-	
-	.info-grid .col-md-4 {
-	    flex: 1;
-	    padding: 0 1rem;
-	}
-	
-	@media (max-width: 768px) {
-    .info-grid .row {
-        flex-direction: column;
-        gap: 1.5rem;
+/* 탭 스타일 */
+.nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 2rem;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    padding: 1rem 2rem;
+    font-weight: 500;
+    color: #6c757d;
+    position: relative;
+}
+
+.nav-tabs .nav-link.active {
+    color: #0d6efd;
+    background: transparent;
+    border-bottom: 3px solid #0d6efd;
+}
+
+/* 카드 스타일 */
+.volunteer-card {
+    cursor: pointer;
+    transition: transform 0.2s;
+    height: 100%;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.volunteer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.card-info {
+    padding: 1.5rem;
+}
+
+.vol-category {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 0;
+}
+
+.card-info-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0; /* 이 속성이 없으면 말줄임표가 적용되지 않을 수 있음 */
+    gap: 8px; /* 뱃지 사이 간격 */
+}
+
+.target-badge {
+    background-color: #e7f3ff;
+    color: #0d6efd;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.location-badge {
+    background-color: #f8f9fa;
+    color: #495057;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.target-badge, .location-badge {
+    max-width: 200px; /* 적절한 최대 너비 설정 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.vol-title {
+    color: #1a1a1a;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 최대 2줄까지 표시 */
+    -webkit-box-orient: vertical;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+}
+
+.date-info {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.date-info p {
+    margin-bottom: 0.5rem;
+    color: #495057;
+    font-size: 0.925rem;
+}
+
+.date-info p:last-child {
+    margin-bottom: 0;
+}
+
+.date-info i {
+    color: #0d6efd;
+}
+
+/* 장바구니 뱃지 스타일 */
+.cart-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 4px 6px;
+    border-radius: 50%;
+    font-size: 10px;
+}
+
+/* 상태 뱃지 스타일 */
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-badge.bg-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-badge.bg-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-primary {
+    text-transform: none;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.15);
+}
+
+@media (max-width: 768px) {
+    .volunteer-card {
+        margin-bottom: 1rem;
     }
     
-    .info-grid .col-md-4 {
-        width: 100%;
+    .card-info {
+        padding: 1.25rem;
     }
     
-    .info-grid {
-        gap: 1.5rem;
+    .vol-title {
+        font-size: 1.1rem;
+    }
+    
+    .vol-category {
+        display: flex;
+	    gap: 8px;
+	    flex-wrap: wrap;
+	    margin-bottom: 1rem;
+    }
+    
+    .target-badge,
+    .location-badge {
+        font-size: 0.8rem;
+        padding: 3px 10px;
+        display: inline-flex; 
+        align-items: center;
+    }
+    
+    .date-info {
+        padding: 0.875rem;
+    }
+    
+    .date-info p {
+        font-size: 0.85rem;
+    }
+    
+    .status-badge {
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+    
+    .status-badge .badge {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+    
+    .btn-primary {
+        padding: 0.6rem 1.25rem;
+        font-size: 0.9rem;
     }
 }
-	
-	.info-item {
-	    display: flex;
-	    align-items: start;
-	    gap: 1rem;
-	}
-	
-	.info-icon {
-	    font-size: 1.5rem;
-	    color: #0d6efd;
-	}
-	
-	.nav-tabs .nav-link {
-	    padding: 1rem 2rem;
-	    font-weight: 500;
-	}
-	
-	.nav-tabs .nav-link.active {
-	    border-bottom: 3px solid #0d6efd;
-	}
 </style>
 
 <%@ include file="../inc/new_header.jsp" %>
@@ -111,7 +229,7 @@
 <div class="container-xxl py-5">
     <div class="container">
         <!-- 봉사활동 안내 섹션 -->
-        <div class="volunteer-info">
+        <%-- <div class="volunteer-info">
 		    <h4 class="mb-4">봉사활동 안내</h4>
 		    <div class="info-grid">
 		        <!-- 첫 번째 줄: 봉사장소, 모집대상, 활동내용 -->
@@ -176,7 +294,7 @@
 		            </div>
 		        </div>
 		    </div>
-		</div>
+		</div> --%>
 
         <!-- 공고 내역 탭 -->
         <ul class="nav nav-tabs mb-4" id="volunteerTabs" role="tablist">
@@ -194,69 +312,89 @@
 
         <div class="tab-content">
             <!-- 모집중인 봉사활동 -->
-            <div class="tab-pane fade show active" id="ongoing">
-			    <div class="row g-4" id="ongoingList">
-			        <c:forEach items="${ongoingVolunteers}" var="volunteer" varStatus="status">
-			            <div class="col-lg-4 col-md-6 volunteer-item ${status.index >= 6 ? 'd-none' : ''}">
-			                <div class="volunteer-card">
-			                    <div class="status-badge">
-			                        <span class="badge bg-success">모집중</span>
-			                    </div>
-			                    <div class="card-info">
-			                        <h5 class="mb-3">${volunteer.voTitle}</h5>
-			                        <div class="date-info mb-2">
-			                            <p><i class="far fa-calendar-alt me-2"></i>모집기간: 
-			                            <fmt:formatDate value="${volunteer.voRecruitStart}" pattern="yyyy.MM.dd"/> - 
-			                            <fmt:formatDate value="${volunteer.voRecruitEnd}" pattern="yyyy.MM.dd"/></p>
-			                            <p><i class="far fa-clock me-2"></i>봉사기간: 
-			                            <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
-			                            <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/></p>
-			                        </div>
-			                        <button class="btn btn-primary w-100" onclick="location.href='/volunteer/apply/${volunteer.voId}'">
-			                            신청하기
-			                        </button>
-			                    </div>
-			                </div>
-			            </div>
-			        </c:forEach>
-			    </div>
-			    <c:if test="${fn:length(ongoingVolunteers) > 6}">
-			        <div class="text-center mt-4">
-			            <button class="btn btn-outline-primary" id="loadMoreOngoing">더보기</button>
-			        </div>
-			    </c:if>
-			</div>
+             <div class="tab-pane fade show active" id="ongoing">
+		        <div class="row g-4" id="ongoingList">
+		            <c:forEach items="${ongoingVolunteers}" var="volunteer" varStatus="status">
+		                <div class="col-lg-4 col-md-6 volunteer-item ${status.index >= 6 ? 'd-none' : ''}">
+		                    <div class="volunteer-card">
+		                        <div class="card-info">
+		                            <div class="vol-category">
+		                                <div class="card-info-left">
+		                                <span class="target-badge">${volunteer.voTarget}</span>
+		                                <span class="location-badge">
+		                                    <i class="fas fa-map-marker-alt me-1"></i>${volunteer.voLocation}
+		                                </span>
+		                                </div>
+		                            	<span class="status-badge bg-success">모집중</span>
+		                            </div>
+		                            <h5 class="vol-title">${volunteer.voTitle}</h5>
+		                            <div class="date-info">
+		                                <p>
+		                                    <i class="far fa-calendar-alt me-2"></i>모집기간: 
+		                                    <fmt:formatDate value="${volunteer.voRecruitStart}" pattern="yyyy.MM.dd"/> - 
+		                                    <fmt:formatDate value="${volunteer.voRecruitEnd}" pattern="yyyy.MM.dd"/>
+		                                </p>
+		                                <p>
+		                                    <i class="far fa-clock me-2"></i>봉사기간: 
+		                                    <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
+		                                    <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/>
+		                                </p>
+		                            </div>
+		                            <button class="btn btn-primary w-100" onclick="location.href='/volunteer/apply/${volunteer.voId}'">
+		                                신청하기
+		                            </button>
+		                        </div>
+		                    </div>
+		                </div>
+		            </c:forEach>
+		        </div>
+		        <c:if test="${fn:length(ongoingVolunteers) > 6}">
+		            <div class="text-center mt-4">
+		                <button class="btn btn-outline-primary" id="loadMoreOngoing">더보기</button>
+		            </div>
+		        </c:if>
+		    </div>
 
             <!-- 마감된 봉사활동 -->
             <div class="tab-pane fade" id="closed">
-			    <div class="row g-4" id="closedList">
-			        <c:forEach items="${closedVolunteers}" var="volunteer" varStatus="status">
-			            <div class="col-lg-4 col-md-6 volunteer-item ${status.index >= 6 ? 'd-none' : ''}">
-			                <div class="volunteer-card">
-			                    <div class="status-badge">
-			                        <span class="badge bg-secondary">마감</span>
-			                    </div>
-			                    <div class="card-info">
-			                        <h5 class="mb-3">${volunteer.voTitle}</h5>
-			                        <div class="date-info mb-2">
-			                            <p><i class="far fa-calendar-alt me-2"></i>모집기간: 
-			                            <fmt:formatDate value="${volunteer.voRecruitStart}" pattern="yyyy.MM.dd"/> - 
-			                            <fmt:formatDate value="${volunteer.voRecruitEnd}" pattern="yyyy.MM.dd"/></p>
-			                            <p><i class="far fa-clock me-2"></i>봉사기간: 
-			                            <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
-			                            <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/></p>
-			                        </div>
-			                        <button class="btn btn-secondary w-100" disabled>모집마감</button>
-			                    </div>
-			                </div>
-			            </div>
-			        </c:forEach>
-			    </div>
-			    <c:if test="${fn:length(closedVolunteers) > 6}">
-			        <div class="text-center mt-4">
-			            <button class="btn btn-outline-primary" id="loadMoreClosed">더보기</button>
-			        </div>
-			    </c:if>
+			   <div class="row g-4" id="closedList">
+			       <c:forEach items="${closedVolunteers}" var="volunteer" varStatus="status">
+			           <div class="col-lg-4 col-md-6 volunteer-item ${status.index >= 6 ? 'd-none' : ''}">
+			               <div class="volunteer-card">
+			                   <div class="card-info">
+			                       <div class="vol-category">
+			                           <div class="card-info-left">
+			                           <span class="target-badge">${volunteer.voTarget}</span>
+			                           <span class="location-badge">
+			                               <i class="fas fa-map-marker-alt me-1"></i>${volunteer.voLocation}
+			                           </span>
+			                           </div>
+			                           <span class="status-badge bg-secondary">마감</span>
+			                       </div>
+			                       <h5 class="vol-title">${volunteer.voTitle}</h5>
+			                       <div class="date-info">
+			                           <p>
+			                               <i class="far fa-calendar-alt me-2"></i>모집기간: 
+			                               <fmt:formatDate value="${volunteer.voRecruitStart}" pattern="yyyy.MM.dd"/> - 
+			                               <fmt:formatDate value="${volunteer.voRecruitEnd}" pattern="yyyy.MM.dd"/>
+			                           </p>
+			                           <p>
+			                               <i class="far fa-clock me-2"></i>봉사기간: 
+			                               <fmt:formatDate value="${volunteer.voStartDate}" pattern="yyyy.MM.dd"/> - 
+			                               <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/>
+			                           </p>
+			                       </div>
+			                       <button class="btn btn-secondary w-100" disabled>모집마감</button>
+			                   </div>
+			               </div>
+			           </div>
+			       </c:forEach>
+			   </div>
+			   <c:if test="${fn:length(closedVolunteers) > 6}">
+			       <div class="text-center mt-4">
+			           <button class="btn btn-outline-primary" id="loadMoreClosed">더보기</button>
+			       </div>
+			   </c:if>
 			</div>
 
         </div>
