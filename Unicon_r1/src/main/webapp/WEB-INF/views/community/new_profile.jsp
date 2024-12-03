@@ -15,12 +15,53 @@ z-index: 2000;
 <section>
    <div class="container">
        <div class="section-heading">
-           <h2>유니콘 커뮤니티</h2>
-           <p class="w-md-75 w-lg-55">Business consectetur adipisicing elit eiusmod tempor incididunt ut labore et dolore magna aliqua quis nostrud exercitation consequat.</p>
+           <h2>"젱종" 님의 프로필에 오신걸 환영해요 !!</h2>
+           <button type="button" style="margin-left: 5px; color: black;" class="btn btn-light">팔로워 : 117 명</button>
+           <button type="button" style="margin-left: 5px; color: black;" class="btn btn-light">팔로잉 : 117 명</button>
+           <button type="button" style="margin-left: 5px; color: black; cursor: default;" class="btn btn-light">반려동물 : 6 마리</button>
+           <!-- 팔로잉 안했을 시 -->
+           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jjjModal">팔로우</button>
+           <!-- 팔로잉 했을 시 -->
+           <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#jjjModal">팔로잉</button>
+           <!-- <p class="w-md-75 w-lg-55">Business consectetur adipisicing elit eiusmod tempor incididunt ut labore et dolore magna aliqua quis nostrud exercitation consequat.</p> -->
+       </div>
+       <div class="section-heading" style="display: flex; flex-wrap: wrap; justify-content: center;">
+       		<div style="text-align: center; margin: 10px;">
+		        <img src="${pageContext.request.contextPath}/resources/assets/images/avatar-01.jpg" class="me-0" style="border-radius: 50%; width: 80px; height: 80px;" alt="...">
+		        <p style="margin: 0;"><i class="fa-solid fa-mars"></i>뽀삐</p>
+		        <p style="margin: 0; padding-top: 0">말티즈</p>
+		    </div>
+		    <div style="text-align: center; margin: 10px;">
+		        <img src="${pageContext.request.contextPath}/resources/assets/images/avatar-01.jpg" class="me-0" style="border-radius: 50%; width: 80px; height: 80px;" alt="...">
+		        <p style="margin: 0;"><i class="fa-solid fa-venus"></i>초코</p>
+		        <p style="margin: 0; padding-top: 0">말티즈</p>
+		    </div>
+		    <div style="text-align: center; margin: 10px;">
+		        <img src="${pageContext.request.contextPath}/resources/assets/images/avatar-01.jpg" class="me-0" style="border-radius: 50%; width: 80px; height: 80px;" alt="...">
+		        <p style="margin: 0;"><i class="fa-solid fa-mars"></i>루비</p>
+		        <p style="margin: 0; padding-top: 0">말티즈</p>
+		    </div>
+		    <div style="text-align: center; margin: 10px;">
+		        <img src="${pageContext.request.contextPath}/resources/assets/images/avatar-01.jpg" class="me-0" style="border-radius: 50%; width: 80px; height: 80px;" alt="...">
+		        <p style="margin: 0;"><i class="fa-solid fa-venus"></i>모카</p>
+		        <p style="margin: 0; padding-top: 0">말티즈</p>
+		    </div>
+		    <div style="text-align: center; margin: 10px;">
+		        <img src="${pageContext.request.contextPath}/resources/assets/images/avatar-01.jpg" class="me-0" style="border-radius: 50%; width: 80px; height: 80px;" alt="...">
+		        <p style="margin: 0;"><i class="fa-solid fa-mars"></i>코코</p>
+		        <p style="margin: 0; padding-top: 0">말티즈</p>
+		    </div>
+		    <div style="text-align: center; margin: 10px;">
+		        <img src="${pageContext.request.contextPath}/resources/assets/images/avatar-01.jpg" class="me-0" style="border-radius: 50%; width: 80px; height: 80px;" alt="...">
+		        <p style="margin: 0;"><i class="fa-solid fa-venus"></i>바니</p>
+		        <p style="margin: 0; padding-top: 0">말티즈</p>
+		    </div>
        </div>
    </div>
    
-   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">Launch modal</button>
+   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">게시물 모달</button>
+   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">팔로워 모달</button>
+   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">팔로잉 모달</button>
 
    <div class="container">
        <div class="row">
@@ -48,11 +89,14 @@ z-index: 2000;
 		       <option value="">토끼</option>
 		   </select>
 		   
+		   <!-- 이거는 없앨수도 있음 검색 필터 너무 많음 / 없애면 그냥 기본은 최신순으로(근데 그러면 게시물 좋아요는 왜 있지...?) -->
 		   <select id="" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
 		       <option value="">정렬순</option>
 		       <option value="">최신순</option>
 		       <option value="">좋아요순</option>
 		   </select>
+		   
+		   <button type="button" class="btn btn-primary" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 80px;">검색</button>
 
        </div>
 
