@@ -88,8 +88,11 @@ public class AdptService {
 			for (int i = 0; i < uploadImages.size(); i++) {
 				StringBuilder asb = new StringBuilder();
 				MultipartFile aImage = uploadImages.get(i);
-				if(aImage == null || aImage.isEmpty()) {
-					logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 인덱스 : {}",i);
+				if(aImage == null) {
+					logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 null 인덱스 : {}",i);
+					continue;
+				} else if(aImage.isEmpty()) {
+					logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 isEmpty 인덱스 : {}",i);
 					continue;
 				}
 				
@@ -100,25 +103,20 @@ public class AdptService {
 							.append(aImage.getOriginalFilename())
 							.toString());
 				
+				asb.setLength(0);
 				
 				int index = destinationImage.getPath().indexOf("\\uploads\\");
-	
-				if (index != -1) {
-					String modifiedPath = destinationImage.getPath().substring(index);
-					ImageVO ivo = new ImageVO();
-					ivo.setImage_id(avo.getAnimal_id());
-					ivo.setImage_sequence(i);
-					ivo.setImage_src(modifiedPath);
-					ivo.setImage_type("apdt");
-					animalImages.add(i, ivo);
-				} else {
-					logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
-				}
+				String indexStr = "\\uploads\\";
+				String indexSubStr = destinationImage.getPath().substring(index + indexStr.length());
+				String modifiedPath = asb.append("/uploads/").append(indexSubStr).toString();
 				
-				/*
-				 * try { aImage.transferTo(destinationImage); } catch (IOException e) {
-				 * e.printStackTrace(); }
-				 */
+				ImageVO ivo = new ImageVO();
+				ivo.setImage_id(avo.getAnimal_id());
+				ivo.setImage_sequence(i);
+				ivo.setImage_src(modifiedPath);
+				ivo.setImage_type("apdt");
+				animalImages.add(i, ivo);
+				
 			}
 			
 			return animalImages;
@@ -131,7 +129,8 @@ public class AdptService {
 			logger.info("( •̀ ω •́ )✧ genAutoName(int act, int social) 메서드 실행");
 			Random r = new Random();
 			String autoName = "";
-	
+			
+			/*
 			String[][] actAdjective = {
 				{"느긋하고", "졸리고", "한가롭고", "편안하고", "평화롭고"},
 				{"잔잔하고", "차분하고", "묵묵하고", "평온하고", "조용하고"},
@@ -147,6 +146,15 @@ public class AdptService {
 				{"관심있는", "따르는", "협력적인", "협동적인", "동행하는"},
 				{"사랑스런", "적극적인", "다정한", "친근한", "상냥한"}
 			};
+			*/
+			
+			String[][] mixedAdjective = {
+				{"느긋한", "씩씩한", "잔잔한", "자유로운", "경쾌한"},
+				{"졸린", "신비로운", "명랑한", "사랑스런", "신나는"},
+				{"한가로운", "소박한", "가뿐한", "적극적인", "행복한"},
+				{"편안한", "신중한", "상쾌한", "사교적인", "열정적인"},
+				{"평화로운", "다정한", "유쾌한", "긍정적인", "탐험하는"}
+			};
 			
 			String[] aNames = {
 				"바둑", "콩이", "초코", "루비", "산이",
@@ -159,8 +167,7 @@ public class AdptService {
 			
 			if (act >= 1 && act <= 5 && social >= 1 && social <= 5) {
 					StringBuilder ansb = new StringBuilder();
-					ansb.append(actAdjective[act - 1][r.nextInt(actAdjective[act - 1].length)])
-					.append(socialAdjective[social - 1][r.nextInt(socialAdjective[social - 1].length)])
+					ansb.append(mixedAdjective[r.nextInt(mixedAdjective[act - 1].length)][r.nextInt(mixedAdjective[social - 1].length)])
 					.append(aNames[r.nextInt(aNames.length-1)]);
 					autoName = ansb.toString();
 			}
