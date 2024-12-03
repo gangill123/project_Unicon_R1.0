@@ -39,7 +39,7 @@ public class AdptMgmtController {
 	
 	@GetMapping(value = "/animals/list/{animal_id}")
 	public String animalViewOne() throws Exception {
-		logger.info("( •̀ ω •́ )✧ animalView() 실행");
+		logger.info("( •̀ ω •́ )✧ animalViewOne() 실행");
 		return "/adptmgmt/animals/update";
 	}
 	

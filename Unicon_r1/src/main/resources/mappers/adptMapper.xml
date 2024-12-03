@@ -55,9 +55,9 @@
 	<result property="member_id" column="member_id"/>
 	<result property="member_name" column="member_name"/>
 	<result property="member_tel" column="member_tel"/>
-	<result property="member_addr" column="member_addr"/>
+	<result property="road_address" column="road_address"/>
 	<result property="member_email" column="member_email"/>
-	<result property="membar_age" column="membar_age"/>
+	<result property="member_birth" column="member_birth"/>
 	<result property="member_gender" column="member_gender"/>
 </resultMap>
 
@@ -146,14 +146,26 @@
 <select id="getAnimalListAll" resultMap="AnimalResultMap">
 	select a.animal_id, a.category_etc_value, a.animal_name, date_format(a.animal_regdate, '%Y-%m-%d') as animal_regdate, 
 	 c.category_type, c.category_value, 
-	  am.member_name, 
+	  m.member_name, 
 	   ac.common_value as status_value 
 	    from _animal a 
 	     join _category_data c on a.category_code = c.category_code 
-	      join _adpt_member am on a.member_id = am.member_id 
+	      join _member m on a.member_id = m.member_id 
 	       join _common ac on a.animal_status = ac.common_code 
 	        where ac.common_column = 'animal_status'
 </select>
+
+
+<!-- <select id="getAnimalListOne" resultMap="AnimalResultMap" parameterType="String">
+	select a.animal_id, a.category_code, a.category_etc_value, a.animal_name, a.animal_color, a.animal_gender, 
+	 a.animal_neuter, a.animal_age, a.animal_weight, a.member_id, a.animal_regdate, a.animal_status, a.animal_regnum 
+	  a.animal_act, a.animal_social, a.animal_etc, a.adpt_member, 
+	    
+	    i.image_id, i.image_type, i.image_sequence, i.image_src, 
+	     h.health, h.health_check, 
+	      v.vaccine, v.vaccine_check 
+	       from _animal a join on 
+</select> -->
 
 
 
