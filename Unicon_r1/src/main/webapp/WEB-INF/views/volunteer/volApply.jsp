@@ -95,7 +95,28 @@
 	    margin-left: 4px;
 	}
 	
-	@media (max-width: 768px) {
+	#birthYear {
+	    flex: 2;  	
+	}
+	
+	#birthMonth, #birthDay {
+	    flex: 1;  	
+	    width: auto;  	
+	    min-width: 80px;  	
+	}
+	
+	.error-message {
+        display: none;
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+    
+    .form-control.is-invalid {
+        border-color: #dc3545;
+    }
+	
+@media (max-width: 768px) {
     .volunteer-summary {
         padding: 1rem;
     }
@@ -217,9 +238,10 @@
                     <h5>신청자 정보<span class="required-mark">*</span></h5>
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label">이름</label>
-                            <input type="text" class="form-control" name="voApplicant" required>
-                        </div>
+						    <label class="form-label">이름</label>
+						    <input type="text" class="form-control" name="voApplicant" id="voApplicant" required>
+						    <div class="error-message" id="voApplicant-error">이름을 2자 이상 입력해주세요.</div>
+						</div>
                         <!-- 생년월일 입력  -->
                         <div class="col-md-6">
 						    <label class="form-label">생년월일</label>
@@ -243,13 +265,15 @@
 
                         
                         <div class="col-md-6">
-                            <label class="form-label">연락처</label>
-                            <input type="tel" class="form-control" name="voTel" required>
-                        </div>
+						    <label class="form-label">연락처</label>
+						    <input type="tel" class="form-control" name="voTel" id="voTel" required>
+						    <div class="error-message" id="voTel-error">올바른 전화번호 형식이 아닙니다.</div>
+						</div>
                         <div class="col-md-6">
-                            <label class="form-label">이메일</label>
-                            <input type="email" class="form-control" name="voEmail" required>
-                        </div>
+						    <label class="form-label">이메일</label>
+						    <input type="email" class="form-control" name="voEmail" id="voEmail" required>
+						    <div class="error-message" id="voEmail-error">올바른 이메일 형식이 아닙니다.</div>
+						</div>
                     </div>
                 </div>
 
@@ -268,10 +292,11 @@
 
                 <!-- 신청 사유 -->
                 <div class="form-section">
-                    <h5>신청 사유<span class="required-mark">*</span></h5>
-                    <textarea class="form-control" name="voReason" rows="4" required
-                              placeholder="봉사활동 참여 동기와 기대사항을 작성해주세요."></textarea>
-                </div>
+				    <h5>신청 사유<span class="required-mark">*</span></h5>
+				    <textarea class="form-control" name="voReason" id="voReason" rows="4" required
+				              placeholder="봉사활동 참여 동기와 기대사항을 작성해주세요."></textarea>
+				    <div class="error-message" id="voReason-error">신청 사유를 입력해주세요.</div>
+				</div>
 
                 <!-- 개인정보 수집 동의 -->
                 <div class="form-section">
@@ -319,10 +344,59 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
 $(document).ready(function() {
     // 연도 입력 숫자만 허용
     $('#birthYear').on('input', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
+    });
+
+    // 전화번호 형식화 및 유효성 검사
+    $('#voTel').on('input', function() {
+        let value = this.value.replace(/[^0-9]/g, '');
+        if (value.length > 3 && value.length <= 7) {
+            value = value.slice(0,3) + "-" + value.slice(3);
+        } else if (value.length > 7) {
+            value = value.slice(0,3) + "-" + value.slice(3,7) + "-" + value.slice(7,11);
+        }
+        this.value = value;
+        
+        // 전화번호 유효성 검사
+        const phoneRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+        const isValid = phoneRegex.test(value);
+        
+        if (!isValid && value.length > 0) {
+            $(this).addClass('is-invalid');
+            $('#voTel-error').show();
+        } else {
+            $(this).removeClass('is-invalid');
+            $('#voTel-error').hide();
+        }
+    });
+
+    // 이메일 유효성 검사
+    $('#voEmail').on('input', function() {
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        const isValid = emailRegex.test(this.value);
+        
+        if (!isValid && this.value.length > 0) {
+            $(this).addClass('is-invalid');
+            $('#voEmail-error').show();
+        } else {
+            $(this).removeClass('is-invalid');
+            $('#voEmail-error').hide();
+        }
+    });
+
+    // 이름 유효성 검사
+    $('#voApplicant').on('input', function() {
+        if (this.value.length < 2 && this.value.length > 0) {
+            $(this).addClass('is-invalid');
+            $('#voApplicant-error').show();
+        } else {
+            $(this).removeClass('is-invalid');
+            $('#voApplicant-error').hide();
+        }
     });
 
     // 날짜 유효성 검사
@@ -354,49 +428,83 @@ $(document).ready(function() {
         return true;
     }
 
+    // 폼 제출 시 유효성 검사
     $('#applicationForm').on('submit', function(e) {
         e.preventDefault();
-        
+        let isValid = true;
+
+        // 이름 검사
+        if ($('#voApplicant').val().length < 2) {
+            $('#voApplicant').addClass('is-invalid');
+            $('#voApplicant-error').show();
+            $('#voApplicant')[0].scrollIntoView({ behavior: 'smooth' });
+            isValid = false;
+        }
+
+        // 생년월일 검사
         const year = $('#birthYear').val();
         const month = $('#birthMonth').val();
         const day = $('#birthDay').val();
-        const target = '${volunteer.voTarget}';
 
-        // 기본 유효성 검사
-        if (year.length != 4 || year < 1900 || year > new Date().getFullYear()) {
-            alert('올바른 연도를 입력해주세요.');
-            return false;
-        }
-
-        // 날짜 유효성 검사
         if (!isValidDate(year, month, day)) {
-            alert('올바른 날짜를 선택해주세요.');
+            $('#birthYear').addClass('is-invalid');
+            $('#birthError').show();
+            $('#birthYear')[0].scrollIntoView({ behavior: 'smooth' });
+            isValid = false;
+        }
+
+        // 전화번호 검사
+        const phoneRegex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+        if (!phoneRegex.test($('#voTel').val())) {
+            $('#voTel').addClass('is-invalid');
+            $('#voTel-error').show();
+            $('#voTel')[0].scrollIntoView({ behavior: 'smooth' });
+            isValid = false;
+        }
+
+        // 이메일 검사
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailRegex.test($('#voEmail').val())) {
+            $('#voEmail').addClass('is-invalid');
+            $('#voEmail-error').show();
+            $('#voEmail')[0].scrollIntoView({ behavior: 'smooth' });
+            isValid = false;
+        }
+
+        // 개인정보 수집동의 체크박스 검사
+        if (!$('input[name="privacyAgreement"]').is(':checked')) {
+            alert('개인정보 수집 및 이용에 동의해주세요.');
+            $('input[name="privacyAgreement"]')[0].scrollIntoView({ behavior: 'smooth' });
+            isValid = false;
+        }
+
+        if (!isValid) {
             return false;
         }
 
-        // 나이 확인
+        // 연령 제한 검사
         const age = calculateAge(year, month, day);
+        const target = '${volunteer.voTarget}';
+        
         if (!isEligibleAge(age, target)) {
             if (target.includes('성인')) {
-                alert('성인만 신청 가능합니다.');
+                alert('해당 공고는 성인만 신청 가능합니다.');
             } else if (target.includes('청소년')) {
-                alert('청소년만 신청 가능합니다.');
+                alert('해당 공고는 청소년만 신청 가능합니다.');
             }
             return false;
         }
 
-        // 관리자 승인 확인
+        // 최종 제출 확인
         if (!confirm('관리자 승인 이후 취소가 불가합니다. 신청하시겠습니까?')) {
             return false;
         }
 
-        // Date 객체 생성 및 포맷팅
+        // 생년월일 hidden input 추가
         const birthDate = new Date(year, month - 1, day);
         const formattedDate = birthDate.toISOString().split('T')[0];
-        
-        // hidden input 추가
         $(this).append('<input type="hidden" name="voBirth" value="' + formattedDate + '">');
-        
+
         // Ajax 제출
         $.ajax({
             url: '/volunteer/apply',
@@ -414,11 +522,6 @@ $(document).ready(function() {
                 }
             }
         });
-    });
-
-    // 날짜 선택 시 에러메시지 초기화
-    $('#birthYear, #birthMonth, #birthDay').on('change', function() {
-        $('#birthError').hide();
     });
 });
 

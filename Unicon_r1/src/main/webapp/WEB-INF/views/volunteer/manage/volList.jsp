@@ -153,7 +153,7 @@ body,
     background-color: #f8f9fa !important;
 }
 
-.table td:nth-child(3) {  
+.content-wrapper .card .table td:nth-child(3) {
     text-align: left !important;
 }
 
@@ -305,12 +305,29 @@ body,
        white-space: nowrap !important;
    }
    
+	/* 메인 테이블 모바일 스타일 */
+    .content-wrapper .table:not(#volunteerDetailModal .table) th:not(:nth-child(3)):not(:nth-child(8)),
+    .content-wrapper .table:not(#volunteerDetailModal .table) td:not(:nth-child(3)):not(:nth-child(8)) {
+        display: none !important;
+    }
+    
+    .content-wrapper .table:not(#volunteerDetailModal .table) td:nth-child(3),
+    .content-wrapper .table:not(#volunteerDetailModal .table) th:nth-child(3) {  
+        width: 60% !important;
+    }
+    
+    .content-wrapper .table:not(#volunteerDetailModal .table) td:nth-child(8),
+    .content-wrapper .table:not(#volunteerDetailModal .table) th:nth-child(8) { 
+        width: 40% !important;
+    }
+   
+   /* 모달 테이블 모바일 스타일 */
    #volunteerDetailModal .table th:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(8)),
    #volunteerDetailModal .table td:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(8)) {
        display: none !important;
    }
    
-    #volunteerDetailModal .table td:nth-child(1),
+   #volunteerDetailModal .table td:nth-child(1),
    #volunteerDetailModal .table th:nth-child(1) {  /* 상태 */
        width: 25% !important;
    }
