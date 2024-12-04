@@ -24,7 +24,7 @@ import lombok.extern.log4j.Log4j;
 public class PetDataRestController {
 	
 	@Inject
-	CategoryDataService cService;
+	private CategoryDataService cService;
 	
 	
 	@GetMapping("/petType")

@@ -75,7 +75,7 @@
 	
 	<!-- 서블릿 매핑 정의 -->
 	<servlet-mapping>
-	    <servlet-name>default</servlet-name>
+	    <servlet-name>imageServeServlet</servlet-name>
 	    <!-- URL 패턴 설정 (이 패턴에 해당하는 요청은 위의 서블릿으로 처리) -->
 	    <url-pattern>/uploads/*</url-pattern> 
 			<!-- /uploads/ 경로 아래의 모든 요청을 처리 -->

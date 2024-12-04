@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j2;
 public class CategoryDataService {
 	
 	@Inject
-	CategoryDataDAO cDAO;
+	private CategoryDataDAO cDAO;
 	
 	public List<CategoryDataVO> petTypeAll() {
 		log.info("( •̀ ω •́ )✧ petTypeAll() 실행");

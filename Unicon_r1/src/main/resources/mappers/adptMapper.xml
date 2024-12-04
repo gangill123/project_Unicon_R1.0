@@ -100,6 +100,7 @@
 	<id property="category_code" column="category_code"/>
 	<result property="category_type" column="category_type"/>
 	<result property="category_value" column="category_value"/>
+	<result property="category_parent" column="category_parent"/>
 </resultMap>
 
 
@@ -160,7 +161,7 @@
 	select a.animal_id, a.category_etc_value, a.animal_name, a.animal_color, a.animal_gender, 
 	 a.animal_neuter, a.animal_age, a.animal_weight, a.member_id, a.animal_regdate, a.animal_status, a.animal_regnum, 
 	  a.animal_act, a.animal_social, a.animal_etc, a.adpt_member, 
-	   c.category_value, 
+	   c.category_value, c.category_code, c.category_type, c.category_parent, 
 	    i.image_id, i.image_type, i.image_sequence, i.image_src, 
 	     h.health, h.health_check, 
 	      v.vaccine, v.vaccine_check 
