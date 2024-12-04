@@ -9,13 +9,15 @@
 	<select id="getPetType" resultType="CategoryDataVO">
 		select * 
 		from _category_data 
-		where category_code between (#{petOpt}+1) and (#{petOpt}+999); 
+		where category_parent = #{petOpt} 
 	</select>
 	
 	<!-- 펫 등록하기 -->
 	<insert id="createPet">
-		insert into _pet(pet_id, member_id, pet_src, pet_name, pet_gender, pet_type, pet_detail, pet_detail_etc)
-		values(#{pet_id}, #{member_id}, #{pet_src}, #{pet_name}, #{pet_gender}, #{pet_type}, #{pet_detail}, #{pet_detail_etc})
+		insert into _pet(pet_id, member_id, pet_src, pet_name, pet_gender, pet_color, pet_type, pet_code, 
+		pet_etc_breed, pet_birthdate, pet_adopdate) 
+		values(#{pet_id}, #{member_id}, #{pet_src}, #{pet_name}, #{pet_gender}, #{pet_color}, #{pet_type}, 
+		#{pet_code}, #{pet_etc_breed}, #{pet_birthdate}, #{pet_adopdate}) 
 	</insert>
 	
 	<!-- 펫 조회(member_id) -->
@@ -31,8 +33,9 @@
 	<!-- 펫 정보 수정 -->
 	<update id="petUpdate">
 		update _pet
-		set pet_src=#{pet_src}, pet_name=#{pet_name}, pet_gender=#{pet_gender}, pet_type=#{pet_type}, 
-		pet_detail=#{pet_detail}, pet_detail_etc=#{pet_detail_etc} 
+		set pet_src=#{pet_src}, pet_name=#{pet_name}, pet_gender=#{pet_gender}, pet_color=#{pet_color}, 
+		pet_type=#{pet_type}, pet_code=#{pet_code}, pet_etc_breed=#{pet_etc_breed}, pet_birthdate=#{pet_birthdate}, 
+		pet_adopdate=#{pet_adopdate} 
 		where pet_id = #{pet_id} 
 	</update>
 	

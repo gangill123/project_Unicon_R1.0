@@ -125,7 +125,7 @@
 						<div class="line-title" style="margin-bottom: 15px;">
 					        <div style="display: flex; justify-content:space-between;">
 						        <h5 class="mb-0" style="display: inline-block;">소식 수정</h5>
-						        <button type="button" class="btn btn-secondary" onclick="location.href='/admin/news_manage?resion=${param.resion }&currentPage=${param.currentPage}';"
+						        <button type="button" class="btn btn-secondary" onclick="location.href='/admin/news_manage?resion=${param.resion }&currentPage=${param.currentPage}&filter=${param.filter}';"
 						        ><span class="small">목록으로</span></button>
 							</div>
 					    </div>
@@ -153,28 +153,28 @@
                                         <!-- Begin Text input element -->
                                         <div class="col-md-6">
                                             <div class="quform-element form-group">
-                                                <label for="applyfor">지역 <span class="quform-required">*</span></label>
+                                                <label for="news_resion">지역 <span class="quform-required">*</span></label>
                                                 <div class="quform-input">
-                                                    <select id="applyfor" class="form-control form-select" name="news_resion"
+                                                    <select id="news_resion" class="form-control form-select" name="news_resion"
                                                     style="padding: 6px 12px;">
                                                         <option value="" disabled selected>지역을 선택하세요</option>
-													    <option value="서울특별시" ${newsInfo.news_resion == '서울특별시' ? 'selected' : ''}>서울특별시</option>
-													    <option value="부산광역시" ${newsInfo.news_resion == '부산광역시' ? 'selected' : ''}>부산광역시</option>
-													    <option value="대구광역시" ${newsInfo.news_resion == '대구광역시' ? 'selected' : ''}>대구광역시</option>
-													    <option value="인천광역시" ${newsInfo.news_resion == '인천광역시' ? 'selected' : ''}>인천광역시</option>
-													    <option value="광주광역시" ${newsInfo.news_resion == '광주광역시' ? 'selected' : ''}>광주광역시</option>
-													    <option value="대전광역시" ${newsInfo.news_resion == '대전광역시' ? 'selected' : ''}>대전광역시</option>
-													    <option value="울산광역시" ${newsInfo.news_resion == '울산광역시' ? 'selected' : ''}>울산광역시</option>
-													    <option value="세종특별자치시" ${newsInfo.news_resion == '세종특별자치시' ? 'selected' : ''}>세종특별자치시</option>
-													    <option value="경기도" ${newsInfo.news_resion == '경기도' ? 'selected' : ''}>경기도</option>
-													    <option value="강원도" ${newsInfo.news_resion == '강원도' ? 'selected' : ''}>강원도</option>
-													    <option value="충청북도" ${newsInfo.news_resion == '충청북도' ? 'selected' : ''}>충청북도</option>
-													    <option value="충청남도" ${newsInfo.news_resion == '충청남도' ? 'selected' : ''}>충청남도</option>
-													    <option value="전라북도" ${newsInfo.news_resion == '전라북도' ? 'selected' : ''}>전라북도</option>
-													    <option value="전라남도" ${newsInfo.news_resion == '전라남도' ? 'selected' : ''}>전라남도</option>
-													    <option value="경상북도" ${newsInfo.news_resion == '경상북도' ? 'selected' : ''}>경상북도</option>
-													    <option value="경상남도" ${newsInfo.news_resion == '경상남도' ? 'selected' : ''}>경상남도</option>
-													    <option value="제주특별자치도" ${newsInfo.news_resion == '제주특별자치도' ? 'selected' : ''}>제주특별자치도</option>
+													    <option value="서울">서울특별시</option>
+													    <option value="부산">부산광역시</option>
+													    <option value="대구">대구광역시</option>
+													    <option value="인천">인천광역시</option>
+													    <option value="광주">광주광역시</option>
+													    <option value="대전">대전광역시</option>
+													    <option value="울산">울산광역시</option>
+													    <option value="세종특별자치시">세종특별자치시</option>
+													    <option value="경기">경기도</option>
+													    <option value="강원특별자치도">강원특별자치도</option>
+													    <option value="충북">충청북도</option>
+													    <option value="충남">충청남도</option>
+													    <option value="전북특별자치도">전북특별자치도</option>
+													    <option value="전남">전라남도</option>
+													    <option value="경북">경상북도</option>
+													    <option value="경남">경상남도</option>
+													    <option value="제주특별자치도">제주특별자치도</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -281,7 +281,7 @@
                                         </div>
 
                                         <!-- Begin Submit button -->
-                                        <div class="col-md-12">
+                                        <div class="col-md-12" style="margin-top: 15px;">
                                             <div class="text-center">
                                                 <button class="butn w-100" type="submit"><span>수정하기</span></button>
                                             </div>
@@ -303,6 +303,11 @@
 
 <script>
 $(document).ready(function () {
+	
+	// 페이지 로드 시 지역정보 입력
+	$('#news_resion').val('${newsInfo.news_resion}');
+	
+	
     
 	// 파일 선택 이벤트 처리
     $('.custom-file-input').on('change', function (event) {

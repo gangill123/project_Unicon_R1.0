@@ -40,14 +40,10 @@ public class MyPageController {
 	public String Mypage(HttpSession session, Model model) {
 		logger.info("Mypage() 호출");
 		
-		// 임시 아이디 저장
-		session.setAttribute("member_id", "dummyID");
-		
 		// 반려동물 조회
 		String member_id = (String)session.getAttribute("member_id");
 		List<PetVO> petAllInfo = myService.getPetAll(member_id);
 		model.addAttribute("petAllInfo", petAllInfo);
-		
 			
 		return "/mypage/main";
 	}
@@ -56,7 +52,6 @@ public class MyPageController {
 	// 마이페이지 - 유니콘 등록
 	@GetMapping("/pet_create")
 	public String uniCreate() {
-		
 		return "/mypage/pet_create";
 	}
 	
@@ -103,7 +98,7 @@ public class MyPageController {
 		// 서비스 호출
 		myService.createPet(vo);
 		
-		return "/mypage/pet_create";
+		return "redirect:/mypage/pet_create";
 	}
 	
 	
@@ -133,7 +128,7 @@ public class MyPageController {
 	public String petUpdate(PetVO vo) {
 		logger.info("vo : {}",vo);
 		
-		if(vo.getPet_src().equals("")) {
+		if(vo.getPet_src() == null) {
 			
 			// 새로운 src 만들어서 저장
 			MultipartFile file = vo.getPet_file();

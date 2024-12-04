@@ -1,5 +1,7 @@
 package com.Unicon.domain;
 
+import java.sql.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
@@ -12,9 +14,12 @@ public class PetVO {
 	private String pet_src;
 	private String pet_name;
 	private int pet_gender;
+	private String pet_color;
 	private int pet_type;
-	private int pet_detail;
-	private String pet_detail_etc;
+	private int pet_code;
+	private String pet_etc_breed;
 	private MultipartFile pet_file;
+	private Date pet_birthdate;
+	private Date pet_adopdate;
 	
 }

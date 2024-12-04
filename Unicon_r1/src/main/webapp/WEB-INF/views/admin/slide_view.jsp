@@ -163,11 +163,11 @@
 		                        <div class="caption">
 					                    <div class="container">
 					                        <div id="slide_textField" class="overflow-hidden w-md-85 w-lg-75">
-					                            <h1 class="main-font">${slideInfo.ms_tText}</h1>
+					                            <h1 class="main-font" style="color: white;">${slideInfo.ms_tText}</h1>
 					                            <div class="subheading" style="font-size: 30px; display:flex; justify-content: flex-start;">
 					                            <div id="left_btm">${slideInfo.ms_bText1}</div><strong>${slideInfo.ms_sText}</strong><div id="right_btm">${slideInfo.ms_bText2}</div></div>
 										    	<a href="${slideInfo.ms_btnUrl}" class="butn primary">
-										    		<span class="alt-font">${slideInfo.ms_btnText}</span>
+										    		<span id="btnText" class="alt-font">${slideInfo.ms_btnText}</span>
 										    	</a>
 									    	</div>
 					                    </div>
@@ -450,7 +450,7 @@ $(document).ready(function () {
     	$('#right_btm').text($(this).val());
     });
     $('#ms_btnText').on('input', function(){
-    	$('.alt-font').text($(this).val());
+    	$('#btnText').text($(this).val());
     });
     
     

@@ -1,12 +1,12 @@
 
 	/////관리자 소식 페이징 처리 및 삭제처리/////
-	function newsPaging(resion, currentPage){
+	function newsPaging(resion, currentPage, filter){
 		
 		//현재날짜 
 		const today = new Date(); 
 		
 		//최초 로딩(페이지 로딩시)
-		fetchData(resion, currentPage);
+		fetchData(resion, currentPage, filter);
 		
 		//페이징 처리
 		let allData = []; // 전체 데이터를 저장
@@ -17,7 +17,7 @@
 		let startPage = Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
 		
 		// 데이터 가져오기
-		function fetchData(resion, currentPage) {
+		function fetchData(resion, currentPage, filter) {
 			let url;
 			
 			if(resion == '전국'){
@@ -29,6 +29,9 @@
 			$.ajax({
 				url: url, // 데이터를 가져올 API URL
 				type: 'GET',
+				data: {
+			        filter: filter // filter 변수를 전달
+			    },
 				success: function (response) {
 					allData = response; // 데이터를 저장
 					//console.log(allData);
@@ -60,9 +63,9 @@
 						<div class="product-img">
 							<div class="label-offer bg-${today > endDate ? 'red' : 'primary'}">
 							${today > endDate ? '개시종료' : '개시중'}</div>
-							<img src="${item.news_src }" alt="..." class="image rounded-3" style="height: 300px;">
+							<img src="${item.news_src }" alt="..." class="image rounded-3">
 							<div class="product-cart">
-								<a href="/admin/news_view/${item.news_id }?resion=${resion}&currentPage=${currentPage}" style="width: 50px; height: 50px;">
+								<a href="/admin/news_view/${item.news_id }?resion=${resion}&currentPage=${currentPage}&filter=${filter}" style="width: 50px; height: 50px;">
 									<i class="fa-regular fa-pen-to-square"></i></a>
 								<a class="deleteNews" data-id=${item.news_id } style="width: 50px; height: 50px;">
 									<i class="fa-solid fa-trash-can"></i></a>
@@ -170,7 +173,7 @@
 					  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 					 			 	  }
 					  				}).then(function() {
-					  					fetchData(resion, currentPage);
+					  					fetchData(resion, currentPage, filter);
 			                        });
 							},
 							error: function(){
@@ -383,11 +386,11 @@
 			                <div class="caption">
 			                    <div class="container">
 			                        <div id="slide_textField" class="overflow-hidden w-md-85 w-lg-75">
-			                            <h1 class="main-font">상단문구</h1>
+			                            <h1 class="main-font" style="color:white;">상단문구</h1>
 			                            <div class="subheading" style="font-size: 30px; display:flex; justify-content: flex-start;">
 			                            <div id="left_btm">좌측하단</div><strong>강조</strong><div id="right_btm">우측하단</div></div>
 								    	<a href="#!" class="butn primary">
-								    		<span class="alt-font">버튼</span>
+								    		<span id="btnText" class="alt-font">버튼</span>
 								    	</a>
 							    	</div>
 			                    </div>
@@ -626,8 +629,15 @@
 					<div class="col-lg-3 col-md-6 mt-3">
                         <div class="project-grid">
                             <div class="project-grid-img">
-                            <div class="label-offer bg-${statusColor}">${statusText}</div>
-							<div class="label-offer2 bg-red">Day -${diffInDays}</div>
+                            <div class="label-offer bg-${statusColor}">${statusText}</div>`
+					if(statusText === '준비중'){
+						card += `
+							<div class="label-offer2 bg-red">Day - ${diffInDays}</div>`
+					} else if(statusText === '진행중'){
+						card += `
+							<div class="label-offer2 bg-red">"D-day"</div>`
+					}
+						card += `
                             <img alt="..." src="${item.news_src }">
                             </div>
                             <div class="project-grid-overlay">
@@ -715,9 +725,14 @@
 	//////// 소식 모달페이지 처리///////
 	function newsModalProcess(newsId){
 		
-		const newsIds = $("[data-news]").map(function() {
-		  return $(this).data("news"); // data-id 값 가져오기
-		}).get();
+		//현재날짜 
+		const today = new Date();
+		
+		const newsIds = allData.map(function(item){
+			return item.news_id;
+		});
+		
+		console.log("newsIds :"+newsIds);
 
 		const index = $.inArray(newsId, newsIds);
 		
@@ -728,6 +743,7 @@
 		let news_content = allData[index].news_content;
 		let news_place = allData[index].news_place;
 		let news_startdate = allData[index].news_startdate;
+		let news_enddate = allData[index].news_enddate;
 		
 		let news_src_next = index < allData.length - 1 ? allData[index+1].news_src : allData[0].news_src;
 		let news_subject_next = index < allData.length - 1 ? allData[index+1].news_subject : allData[0].news_subject;
@@ -739,8 +755,28 @@
 			news_content_next = news_content_next.substring(0, 80) + "...";
 		}
 		
+		let statusColor = '';
+		let statusText = '';
 		
+		let startDate = new Date(news_startdate);
+		let endDate = new Date(news_enddate); 
+		let diffInMilliseconds = startDate - today;
+		let diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
 		
+		switch (true) {
+		  case today > endDate:
+			statusColor = 'secondary';
+		    statusText = '종료';
+		    break;
+		  case today < startDate:
+		    statusColor = 'success';
+		    statusText = '준비중';
+		    break;
+		  default:
+			statusColor = 'info';
+		    statusText = '진행중';
+		    break;
+		}
 		
 		const $modalBody = $('.modal-body');
 		$modalBody.empty(); // 기존 데이터 삭제
@@ -750,17 +786,26 @@
 	        <div class="col-lg-5 text-center text-lg-start mb-1-9 mb-lg-0">
 	            <!-- product left start -->
 	            <div>
-	                <img class="mb-1-9" id="news_image" src="${news_src}" >
+	                <img class="mb-1" id="news_image" src="${news_src}" >
 	            </div>
 	            <!-- product left end -->
 	        </div>
 	        <div class="col-lg-7 ps-lg-2-3">
 	            <div class="product-detail">
-	                <h3 class="mb-2">${news_subject}<span class="label-sale bg-primary text-white text-uppercase display-30">진행중</span></h3>
-	                <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
+	                <h3 class="mb-2">${news_subject}<span class="label-sale bg-${statusColor} 
+	                text-white text-uppercase display-30">${statusText}</span>`
+	        if(statusText == '준비중'){
+	        	modalContext += `<span class="label-sale bg-red 
+	                text-white text-uppercase display-30">Day - ${diffInDays}</span>`
+	        } else if(statusText == '진행중'){
+	        	modalContext += `<span class="label-sale bg-red 
+	                text-white text-uppercase display-30">"D-day"</span>`
+	        }
+	                
+			modalContext += `</h3><div class="bg-primary separator-line-horrizontal-full mb-4"></div>
 	                <p class="rating-text"><span>주관 :</span> <span class="text-primary">${news_ins}</span
 	                ><span>  /  참여대상 :</span> <span class="text-primary">${news_att}</span></p>
-	                <div style="min-height:200px; max-height:200px; overflow-y: auto;">
+	                <div style="min-height:240px; max-height:240px; overflow-y: auto;">
 	                	<p style="white-space: pre-line;">${news_content}</p>
 	                </div>
 					<div class="row" style="margin-top: 30px;">
@@ -769,8 +814,17 @@
 	                        <p class="mb-0">${news_place}</p>
 	                    </div>
 	                    <div class="col-lg-5 text-center">
-	                        <h6 style="font-size: 1.3rem;"><i class="fa-solid fa-calendar-days"></i> 행사일</h6>
-	                        <p class="mb-0">${news_startdate}</p>
+	                        <h6 style="font-size: 1.3rem;"><i class="fa-solid fa-calendar-days"></i> 행사일</h6>`
+			
+			if(news_startdate == news_enddate){
+				modalContext += `
+					<p class="mb-0">${news_startdate}</p>`
+			} else{
+				modalContext += `
+					<p class="mb-0">${news_startdate} ~ ${news_enddate}</p>`
+			}
+		
+			modalContext += `
 	                    </div>
 	                </div>
 	                

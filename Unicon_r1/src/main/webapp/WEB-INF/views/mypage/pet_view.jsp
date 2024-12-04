@@ -51,7 +51,7 @@
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
-	<%-- ${PetInfo } --%>
+	<%-- ${petInfo } --%>
 	
 	<section  style="padding-top: 50px;">
             <div class="container">
@@ -82,10 +82,10 @@
                     <!-- start right side section -->
                 
                     <div class="col-lg-9 order-1 order-lg-2 mb-1-9 mb-lg-0">
-                      <form class="quform" action="/mypage/pet_update/${petInfo.pet_id }" method="post" enctype="multipart/form-data" >
+                      <form class="quform" action="/mypage/pet_update/+${petInfo.pet_id}" method="post" enctype="multipart/form-data" >
                         <div class="services-single-right">
                         	<div style="display: flex; justify-content:space-between; align-items: end; margin-bottom: 10px;">
-						        <h4 class="mb-0" style="display: inline-block;">유니콘 정보수정</h4>
+						        <h4 class="mb-0" style="display: inline-block;">유니콘 등록</h4>
 						        <button type="button" class="btn btn-secondary" onclick="location.href='/mypage';"
 						        ><span class="small">이전으로</span></button>
 							</div>
@@ -95,14 +95,14 @@
                                     
                           <!-- Begin Select element -->
                           <div class="col-md-4" style="text-align: center;">
-                          	<div class="quform-element form-group" style="margin-bottom: 2rem;">
+                          	<div class="quform-element form-group" style="margin-bottom: 3rem;">
                           	  <label>유니콘 사진 <span class="quform-required">*</span></label>
                               <div class="upload-container rounded">
 								<label for="image-input1" class="upload-button label-no-margin">
 									<input type="file" class="file-upload-default image-input" 
 										accept="image/*" id="image-input1" name="pet_file"/>
 									<i id="plusIcon1" class="fa-solid fa-plus"></i>
-									<img id="image-preview1" src="${petInfo.pet_src }" alt="이미지 미리보기" />
+									<img id="image-preview1" alt="이미지 미리보기" src="${petInfo.pet_src}"/>
 								</label>
 							</div>
 							</div>
@@ -110,104 +110,117 @@
                           <!-- End Select element -->
                           </div>
                           
-						<div class="row">
-						<div class="col-md-3"></div>
-						<div class="col-md-6" style="text-align: center;">
-                                    <div class="quform-element form-group" style="margin-bottom: 1.5rem;">
-                                        <label for="pet_name">유니콘 이름<span class="quform-required">*</span></label>
-                                        <div class="quform-input">
-                                            <input id="pet_name" class="form-control" type="text" 
-                                            name="pet_name" placeholder="유니콘 이름을 입력하세요."
-                                            value="${petInfo.pet_name }">
-                                        </div>
-                                    </div>
-                                    
-                                </div>
+						<div class="row" style="justify-content: center;">
+							<div class="col-md-5">
+	                           <div class="quform-element form-group" style="margin-bottom: 2rem;">
+	                               <label for="pet_name">유니콘 이름 <span class="quform-required">*</span></label>
+	                               <div class="quform-input">
+	                                   <input id="pet_name" class="form-control" type="text" name="pet_name" 
+	                                   placeholder="유니콘 이름을 입력하세요." value="${petInfo.pet_name}">
+	                               </div>
+	                           </div>
+	                         </div>
+						
+		               <!-- Begin Text input element -->
+		               <div class="col-md-3">
+		                   <div class="quform-element form-group" style="margin-bottom: 1.5rem;">
+	                       	<label for="pet_gender">성별 <span class="quform-required">*</span></label>
+	                       <div class="quform-input">
+	                        <select id="pet_gender" class="form-control form-select" name="pet_gender"
+	                        style="padding: 6px 12px;">
+	                            <option value="" disabled selected>성별을 선택하세요</option>
+						    	<option value="1">남아</option>
+								<option value="2">여아</option>
+		                           </select>
+		                       </div>
+		                   </div>
+		               </div>
+		               
+		               <div class="col-md-3">
+                           <div class="quform-element form-group" style="margin-bottom: 2rem;">
+                               <label for="pet_color">색상 <span class="quform-required">*</span></label>
+                               <div class="quform-input">
+                                   <input id="pet_color" class="form-control" type="text" name="pet_color" 
+                                   placeholder="유니콘 이름을 입력하세요." value="${petInfo.pet_color}">
+                               </div>
+                           </div>
+                         </div>
+						
 						</div>
 						
-
-					<div class="row">
-					<div class="col-md-3"></div>
-	               <!-- Begin Text input element -->
-	               <div class="col-md-6" style="text-align: center;">
-	                   <div class="quform-element form-group" style="margin-bottom: 1.5rem;">
-                       	<label for="pet_gender">성별 <span class="quform-required">*</span></label>
-                       <div class="quform-input">
-                        <select id="pet_gender" class="form-control form-select" name="pet_gender"
-                        style="padding: 6px 12px;">
-                            <option value="" disabled selected>성별을 선택하세요</option>
-					    	<option value="1" ${petInfo.pet_gender == 1 ? 'selected' : ''}>남아</option>
-							<option value="2" ${petInfo.pet_gender == 2 ? 'selected' : ''}>여아</option>
+						<div class="row" style="justify-content: center;">
+						
+						<div class="col-md-4">
+		                   <div class="quform-element form-group" style="margin-bottom: 2rem;">
+	                       	<label for="pet_type">종류 <span class="quform-required">*</span></label>
+	                       <div class="quform-input">
+	                        <select id="pet_type" class="form-control form-select" name="pet_type" style="padding: 6px 12px;">
+	                            <option value="" disabled selected>종류를 선택하세요</option>
+						    	<option value="1000">강아지</option>
+								<option value="2000">고양이</option>
+								<option value="3000">기타</option>
 	                           </select>
+		                       </div>
+		                   </div>
+		               </div>
+						
+						<div class="col-md-4">
+		                   <div class="quform-element form-group">
+	                       	<label for="pet_code">세부종류 <span class="quform-required">*</span></label>
+	                       	<div class="quform-input">
+	                        <select id="pet_code" class="form-control form-select" name="pet_code"
+	                        style="padding: 6px 12px;">
+	                            <option value="" disabled selected>종류를 먼저 선택하세요</option>
+		                           </select>
+		                       </div>
+		                   </div>
+		               </div>
+						
+						<div class="col-md-3">
+	                       	<div class="quform-element form-group">
+	                           <label for="pet_etc_breed">세부종류 직접입력(선택)</label>
+	                           <div class="quform-input">
+	                               <input id="pet_etc_breed" class="form-control" type="text" 
+	                               name="pet_etc_breed" placeholder="기타품종 시 작성 가능" disabled>
+	                           </div>
 	                       </div>
 	                   </div>
-	               </div>
-                   </div>
-                   
-					<div class="row">
-					<div class="col-md-3" ></div>
-	               <!-- Begin Text input element -->
-	               <div class="col-md-6" style="text-align: center;">
-	                   <div class="quform-element form-group" style="margin-bottom: 1.5rem;">
-                       	<label for="pet_type">종류 <span class="quform-required">*</span></label>
-                       <div class="quform-input">
-                        <select id="pet_type" class="form-control form-select" name="pet_type"
-                        style="padding: 6px 12px;">
-                            <option value="" disabled selected>종류를 선택하세요</option>
-					    	<option value="1000" ${petInfo.pet_type == 1000 ? 'selected' : ''}>강아지</option>
-							<option value="2000" ${petInfo.pet_type == 2000 ? 'selected' : ''}>고양이</option>
-							<option value="3000" ${petInfo.pet_type == 3000 ? 'selected' : ''}>기타</option>
-							<option value="999" ${petInfo.pet_type == 999 ? 'selected' : ''}>직접입력(종류없음)</option>
-                           </select>
-	                       </div>
-	                   </div>
-	               </div>
-	               </div>
+						
+						</div>
+						
+						
+						
+                         <div class="row" style="justify-content: center;">
+							<div class="col-md-4">
+	                           <div class="quform-element form-group" style="margin-bottom: 4rem;">
+	                               <label for="pet_birthdate">탄생일 <span class="quform-required">*</span></label>
+	                               <div class="quform-input">
+	                                   <input id="pet_birthdate" class="form-control" type="date" name="pet_birthdate" 
+	                                   value="${petInfo.pet_birthdate}">
+	                               </div>
+	                           </div>
+	                         </div>
+							<div class="col-md-4">
+	                           <div class="quform-element form-group">
+	                               <label for="pet_adopdate">입양(분양)일 <span class="quform-required">*</span></label>
+	                               <div class="quform-input">
+	                                   <input id="pet_adopdate" class="form-control" type="date" name="pet_adopdate" 
+	                                   value="${petInfo.pet_adopdate}">
+	                               </div>
+	                           </div>
+	                         </div>
+                         </div>
+						
 	               
-	               <div class="row">
-				   <div class="col-md-3" ></div>
-	               <div class="col-md-6" style="text-align: center;">
-	                   <div class="quform-element form-group" style="margin-bottom: 1.5rem;">
-                       	<label for="pet_detail">세부종류 <span class="quform-required">*</span></label>
-                       	<div class="quform-input">
-                        <select id="pet_detail" class="form-control form-select" name="pet_detail"
-                        style="padding: 6px 12px;">
-                            <option value="" disabled selected>종류를 먼저 선택하세요</option>
-	                           </select>
-	                       </div>
-	                   </div>
-	               </div>
-	               </div>
-	               
-	               
-	               <div class="row">
-				   <div class="col-md-3" ></div>
-	               <div class="col-md-6" style="text-align: center;">
-                       	<div class="quform-element form-group" style="margin-bottom: 3rem;">
-                           <label for="pet_detail_etc">세부종류 직접입력(선택)</label>
-                           <div class="quform-input">
-                               <input id="pet_detail_etc" class="form-control" type="text" 
-                               name="pet_detail_etc" placeholder="세부종류를 입력하세요." disabled>
-                           </div>
-                       </div>
-	                   </div>
-	               </div>
-                  				
-                  	<div class="row">		
-                  	<div class="col-md-3" ></div>
-                  	<!-- Begin Submit button -->
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <button class="butn w-100" type="submit"><span>수정하기</span></button>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="text-center">
-                            <button class="butn w-100" type="submit"><span>삭제하기</span></button>
-                        </div>
-                    </div>
-                    <!-- End Submit button -->			
+                  	<div class="row" style="justify-content: center;">		
+	                    <div class="col-md-8">
+	                        <div class="text-center">
+	                            <button class="butn primary w-100" type="submit"><span>등록하기</span></button>
+	                        </div>
+	                    </div>
                   	</div>			
+                  				
+                        
                         </div> <!-- common -->
                         </div>
                         <input type="hidden" name="pet_src">
@@ -222,12 +235,18 @@
 	
 	
 	
-	
 
 <!--====================================작성부=====================================-->
 
 <script>
 $(document).ready(function () {
+	
+	// 화면 로드 시 사진 입력 후 출력
+	$('#image-preview1').show();
+	$('#plusIcon1').hide();
+	
+	// 성별 값 입력 후 출력
+	$('select[name="pet_gender"]').val('${petInfo.pet_gender}');
 	
 	//수정하기 버튼 클릭 시 submit하기(썸네일 없을 시 swal)
 	$('.quform').on('submit', function(event){
@@ -239,6 +258,7 @@ $(document).ready(function () {
     			  title: '정보없음!!',
     			  text: "이미지파일을 확인하시기 바랍니다.",
     			  icon: 'warning',
+    			  confirmButtonColor: '#86bc42',
     			  customClass: {
     			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
     			  }
@@ -262,8 +282,8 @@ $(document).ready(function () {
   			  text: "수정 전 정보를 다시 한번 확인하시기 바랍니다.",
   			  icon: 'warning',
   			  showCancelButton: true,
-  			  confirmButtonColor: '#3085d6',
-  			  cancelButtonColor: '#d33',
+  			  confirmButtonColor: '#86bc42',
+  			  cancelButtonColor: '#aaa',
   			  confirmButtonText: '수정',
   			  cancelButtonText: '취소',
   			  customClass: {
@@ -275,6 +295,7 @@ $(document).ready(function () {
 	  	  			  title: '수정이 완료되었습니다!',
 	  	  			  text: "수정하기를 통하여 재수정 가능합니다.",
 	  	  			  icon: 'success',
+	  	  			  confirmButtonColor: '#86bc42',
 	  	  			  customClass: {
 	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 	 			 	  }
@@ -286,71 +307,70 @@ $(document).ready(function () {
     	}
 	}); //$('.quform')
 	
-	
-	
-	
-	
-	
-	
-	// 뷰페이지 이동 시 종류에 따른 세부종류 만든 이후 선택하기
-	petDetailMake().done(function() {
-		var petOpt = $('#pet_type').val();
-		
-		if(petOpt === '999'){
-	    	$('#pet_detail_etc').val('${petInfo.pet_detail_etc}'); // 세부종류 값 입력
-		}else {
-		    $('#pet_detail').val('${petInfo.pet_detail}'); // 원하는 옵션 선택
-		}
-		
-		// 화면 변경
-		$('#image-preview1').show();
-		$('#plusIcon1').hide();
-		
-		
-	});
-	
-	function petDetailMake(){
-		const deferred = $.Deferred();
-		let petOpt = $('#pet_type').val();
-		
-		if(petOpt === '999'){
-			$('#pet_detail_etc').attr('disabled', false);
-			$('#pet_detail').attr('disabled', true);
-			$('#pet_detail').val('');
-			
-			deferred.resolve();
-		}else {
-			$('#pet_detail_etc').attr('disabled', true);
-			$('#pet_detail').attr('disabled', false);
-			$('#pet_detail_etc').val('');
-			
-			$.ajax({
-				url: '/mypage/pet_type/'+petOpt,
-				type: 'GET',
-				success: function(data){
-					//console.log(data);
-					$('#pet_detail').empty();
-					data.forEach(function(item){
-						$('#pet_detail').append("<option value='" + item.category_code + "'>" + item.category_value +"</option>");
-					});
-					
-					deferred.resolve();
-				},
-				error: function() {
-					console.error('AJAX 요청 실패');
-				}
-			});
-		}
-		return deferred.promise();
-	}
-	
-	
 	/*=============== 동물 종류 리스트 가져오기 ===============*/
 	$('#pet_type').on('change', function() {
-		petDetailMake()
+		
+		let petOpt = $(this).val();
+		
+		$.ajax({
+			url: '/mypage/pet_type/'+petOpt,
+			type: 'GET',
+			success: function(data){
+				//console.log(data);
+				$('#pet_code').empty();
+				data.forEach(function(item){
+					$('#pet_code').append("<option value='" + item.category_code + "'>" + item.category_value +"</option>");
+				
+					let petCode = $('#pet_code').val();
+					
+					if(petCode == '3000'){
+						$('#pet_etc_breed').attr('disabled', false);
+				} 
+				});
+				
+				if(isFirstLoad){
+					$('#pet_code').val('${petInfo.pet_code}').trigger('change');
+				}
+				
+				
+			},
+			error: function() {
+				console.error('AJAX 요청 실패');
+			}
+		});
 	});
 	/*=============== 동물 종류 리스트 가져오기 ===============*/
 	
+	
+	/*=============== 기타품종 선택 시 입력창 활성화 ===============*/
+	$('#pet_code').on('change', function() {
+		
+		let petCode = $(this).val();
+		
+		if(petCode == '1002' || petCode == '2002' || petCode == '3000'){
+			$('#pet_etc_breed').attr('disabled', false);
+		} else {
+			$('#pet_etc_breed').attr('disabled', true);
+			$('#pet_etc_breed').val('');
+		}
+		
+		if(isFirstLoad){
+			$('#pet_etc_breed').val('${petInfo.pet_etc_breed}');
+			isFirstLoad = false;
+		}
+		
+	});
+	/*=============== 기타품종 선택 시 입력창 활성화 ===============*/
+	
+	
+	
+	// 최초 로드 시 종류 값 입력 -> 세부입력 출력 -> 세부종류 입력 (+ 선택일 경우 값 입력)
+	// 최초 로드 플래그
+	let isFirstLoad = true; 
+	
+	if(isFirstLoad){
+		$('#pet_type').val('${petInfo.pet_type}').trigger('change');
+	}
 	
 	/*=============== 이미지 미리보기 ===============*/
 	$('.image-input').on('change', function(e) {

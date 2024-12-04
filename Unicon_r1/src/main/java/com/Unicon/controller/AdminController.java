@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,11 +48,6 @@ public class AdminController {
 	//관리자페이지 - 소식관리페이지 이동
 	@GetMapping("/news_manage")
 	public String adminNews(Model model) {
-		
-		// 모든정보 조회 서비스
-		List<NewsVO> newsAllInfo = nService.getNewsAll();
-		
-		model.addAttribute("newsAllInfo", newsAllInfo);
 		
 		return "/admin/news_manage";
 	}
@@ -159,25 +155,24 @@ public class AdminController {
 	// 소식 모두(전국) 가져오기(페이징_ajax)
 	@GetMapping("/news_filter/all")
 	@ResponseBody
-	public List<NewsVO> getNewsAllFilter() {
+	public List<NewsVO> getNewsAllFilter(@RequestParam int filter) {
 		
 		logger.debug("다녀옴");
+		logger.debug("filter : {}",filter);
 		
 		// 모든정보 조회 서비스
-		List<NewsVO> newsAllInfo = nService.getNewsAll();
-		
-		return newsAllInfo;
+		return nService.getNewsAll(filter);
 	}
 	
 	// 소식 지역 가져오기(페이징_ajax)
 	@GetMapping("/news_filter/{resion}")
 	@ResponseBody
-	public List<NewsVO> getNewsFilter(@PathVariable("resion") String news_resion) {
+	public List<NewsVO> getNewsFilter(@PathVariable("resion") String news_resion, 
+			@RequestParam int filter) {
 		logger.debug("getNewsFilter() 실행");
 		logger.debug("news_resion : {}", news_resion);
-		List<NewsVO> newsResionInfo = nService.getNewsResion(news_resion);
 		
-		return newsResionInfo;
+		return nService.getNewsResion(news_resion, filter);
 	}
 	
 	
