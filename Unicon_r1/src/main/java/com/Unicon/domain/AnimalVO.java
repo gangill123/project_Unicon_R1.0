@@ -37,6 +37,7 @@ public class AnimalVO {
 	private List<MultipartFile> upload_images;
 	private List<AnimalHealthVO> animal_healths;
 	private List<AnimalVaccineVO> animal_vaccines;
+	private List<CheckImageVO> check_images;
 	
 	private AdptCounselVO adptCounselVO;
 	private AdptMemberVO adptMemberVO;

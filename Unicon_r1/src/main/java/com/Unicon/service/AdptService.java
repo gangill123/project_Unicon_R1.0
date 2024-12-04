@@ -77,7 +77,7 @@ public class AdptService {
 					asb.append(aNameCharacters[index]);
 				}
 				animalId = asb.toString();
-			} while (aDao.checkAnimalId(animalId) != null);
+			} while (aDao.checkAnimalId(animalId) != 0);
 			
 			return animalId;
 		}
@@ -109,6 +109,12 @@ public class AdptService {
 							.append("_")
 							.append(aImage.getOriginalFilename())
 							.toString());
+				
+				try {
+					aImage.transferTo(destinationImage);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				
 				asb.setLength(0);
 				

@@ -19,7 +19,7 @@
 	<annotation-driven />
 	
 	<!-- 정적 리소스 매핑 추가 -->
-    <resources mapping="/uploads/**" location="file:///C:/uploads/notice/" />
+    <!-- <resources mapping="/uploads/**" location="file:///C:/uploads/notice/" /> -->
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />

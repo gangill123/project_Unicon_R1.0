@@ -607,7 +607,7 @@
 													<div class="col-12 col-xl-3 col-lg-5 col-md-5 mb-3">
 														<label for="aRegUser" class="text-dark custom-label">작성자</label>
 														<input type="text" id="aRegUser" name="member_id" 
-															class="form-control custom-text" value="dummyID" readonly/>
+															class="form-control custom-text" value="youreal00" readonly/>
 													</div>
 												</div>
 												<div class="form-group row d-flex justify-content-center">
@@ -667,7 +667,7 @@
 													</div>
 												</div>
 												<div class="form-group row d-flex justify-content-center align-items-center">
-													<button type="submit" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
+													<button type="submit" id="a-submit-btn1" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
 													<button type="button" id="a-reset-btn1" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
 												</div>
 											</fieldset>
@@ -882,7 +882,7 @@
 												</fieldset>
 												
 												<div class="form-group row d-flex justify-content-center align-items-center">
-													<button type="submit" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
+													<button type="submit" id="a-submit-btn2" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
 													<button type="button" id="a-reset-btn2" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
 												</div>
 											</fieldset>
@@ -917,8 +917,9 @@
 		<!-- Custom js for this page -->
 		<script>
 			$(function() {
-				var checkedMove = false;
 				/*=============== 변수 설정 ===============*/
+				$('#aRegUser').val('youreal00');
+				var checkedMove = false;
 				const vaccines = {
 						1000: [
 							{ label: '광견병', value: '광견병' },
@@ -952,33 +953,28 @@
 				
 				
 				/*=============== 동물 종류 리스트 가져오기 ===============*/
-				$('#petType').on('click', function() {
-					
-					if ($('#petType').find('option').length === 1) {
-						$.ajax({
-							url: '/petData/petType',
-							type: 'GET',
-							dataType: 'json',
-							success: function(data) {
-								$('#petType').empty();
-								$('#petType').append('<option value="">--</option>');
-				
-								data.forEach(function(item) {
-									if(item.category_code == 1000) {
-										$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;｡:˚ ૮ ˶ ˆ ᴥ ˆ ˶ ა ˚ :｡</option>");
-									}
-									if(item.category_code == 2000) {
-										$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;/ᐠ - ˕ -マ Ⳋ</option>");
-									}
-									if(item.category_code == 3000) {
-										$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;ପ૮{˶• ༝ •˶}აଓ</option>");
-									}
-								});
-							},
-							error: function(jqXHR, textStatus, errorThrown) {
-								console.error('AJAX 요청 실패:', textStatus, errorThrown);
+				$.ajax({
+					url: '/petData/petType',
+					type: 'GET',
+					dataType: 'json',
+					success: function(data) {
+						$('#petType').empty();
+						$('#petType').append('<option value="">--</option>');
+		
+						data.forEach(function(item) {
+							if(item.category_code == 1000) {
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;｡:˚ ૮ ˶ ˆ ᴥ ˆ ˶ ა ˚ :｡</option>");
+							}
+							if(item.category_code == 2000) {
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;/ᐠ - ˕ -マ Ⳋ</option>");
+							}
+							if(item.category_code == 3000) {
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;ପ૮{˶• ༝ •˶}აଓ</option>");
 							}
 						});
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						console.error('AJAX 요청 실패:', textStatus, errorThrown);
 					}
 				});
 				/*=============== 동물 종류 리스트 가져오기 ===============*/
@@ -1511,6 +1507,7 @@
 						return;
 					}
 					
+					$('#a-submit-btn1, #a-submit-btn2').prop('disabled', true);
 					Swal.fire({
 						title: '제출하시겠습니까?',
 						text: '제출 내용을 확인해주세요!',
@@ -1529,6 +1526,7 @@
 								contentType: false,
 								processData: false,
 								success: function(response) {
+									$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
 									Swal.fire({
 									title: '제출 완료',
 									text: '제출에 성공했습니다!',
@@ -1542,6 +1540,7 @@
 									});
 								},
 								error: function(jqXHR, textStatus, errorThrown) {
+									$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
 									console.error('제출 실패:', textStatus, errorThrown);
 									Swal.fire({
 										title: '오류!',
@@ -1552,6 +1551,8 @@
 									});
 								}
 							});
+						} else {
+							$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
 						}
 					});
 				});

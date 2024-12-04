@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -422,7 +423,7 @@
 	
 	.custom-a-btn-images {
 		font-size: 0.75rem;
-		padding: 0.5rem;
+		padding: 0.45rem;
 	}
 	
 	.btn-custom-a {
@@ -493,6 +494,7 @@
 		border-color: #006e60;
 	}
 	/*=============== 버튼 css ===============*/
+
 
 	/*=============== 바탕 css ===============*/
 	.card {
@@ -607,7 +609,7 @@
 													<div class="col-12 col-xl-3 col-lg-5 col-md-5 mb-3">
 														<label for="aRegUser" class="text-dark custom-label">작성자</label>
 														<input type="text" id="aRegUser" name="member_id" 
-															class="form-control custom-text" value="dummyID" readonly/>
+															class="form-control custom-text" readonly/>
 													</div>
 												</div>
 												<div class="form-group row d-flex justify-content-center">
@@ -618,18 +620,29 @@
 																<input type="file" class="file-upload-default image-input" 
 																	accept="image/*" id="image-input1" name="upload_images[0]" />
 																<i id="plusIcon1" class="mdi mdi-plus a-preview-i"></i>
+																<input type="hidden" id="orgSrc1" name="check_images[0].orgSrc"/>
+																<input type="hidden" id="newFileCheck1" name="check_images[0].newFileCheck"/>
+																<input type="hidden" id="moveSrc1" name="check_images[0].moveSrc"/>
 																<img id="image-preview1" class="a-preview" alt="이미지 미리보기" />
 															</label>
 														</div>
-														<input type="file" class="file-upload-default" 
-															accept="image/*" id="a-image-input-multi" multiple/>
-														<button type="button" id="multiImageUpBtn" 
-															class="btn btn-outline-custom-a btn-icon-text custom-a-btn-images"> 
-															<span class="custom-a-btn-text">
-															여러장 올리기
-															</span>
-															<i class="fa-solid fa-images"></i>
-														</button>
+														<div class="row mt-2">
+															<div class="col text-right">
+																<input type="file" class="file-upload-default" 
+																	accept="image/*" id="a-image-input-multi" multiple/>
+																<button type="button" id="multiImageUpBtn" 
+																	class="btn btn-outline-custom-a btn-icon-text custom-a-btn-images"> 
+																	<span class="custom-a-btn-text">
+																	다중업로드
+																	</span>
+																	<i class="fa-solid fa-images"></i>
+																</button>
+																<button type="button" id="image-delete1" 
+																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images"> 
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
+														</div>
 													</div>
 													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
 														<div></div>
@@ -639,8 +652,19 @@
 																<input type="file" class="file-upload-default image-input" 
 																	accept="image/*" id="image-input2" name="upload_images[1]"/>
 																<i id="plusIcon2" class="mdi mdi-plus a-preview-i"></i>
+																<input type="hidden" id="orgSrc2" name="check_images[1].orgSrc"/>
+																<input type="hidden" id="newFileCheck2" name="check_images[1].newFileCheck"/>
+																<input type="hidden" id="moveSrc2" name="check_images[1].moveSrc"/>
 																<img id="image-preview2" class="a-preview" alt="이미지 미리보기" />
 															</label>
+														</div>
+														<div class="row mt-2">
+															<div class="col text-right">
+																<button type="button" id="image-delete2" 
+																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images"> 
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
 														</div>
 													</div>
 													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
@@ -650,8 +674,19 @@
 																<input type="file" class="file-upload-default image-input" 
 																	accept="image/*" id="image-input3" name="upload_images[2]"/>
 																<i id="plusIcon3" class="mdi mdi-plus a-preview-i"></i>
+																<input type="hidden" id="orgSrc3" name="check_images[2].orgSrc"/>
+																<input type="hidden" id="newFileCheck3" name="check_images[2].newFileCheck"/>
+																<input type="hidden" id="moveSrc3" name="check_images[2].moveSrc"/>
 																<img id="image-preview3" class="a-preview" alt="이미지 미리보기" />
 															</label>
+														</div>
+														<div class="row mt-2">
+															<div class="col text-right">
+																<button type="button" id="image-delete3" 
+																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images"> 
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
 														</div>
 													</div>
 													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
@@ -661,11 +696,23 @@
 																<input type="file" class="file-upload-default image-input" 
 																	accept="image/*" id="image-input4" name="upload_images[3]"/>
 																<i id="plusIcon4" class="mdi mdi-plus a-preview-i"></i>
+																<input type="hidden" id="orgSrc4" name="check_images[3].orgSrc"/>
+																<input type="hidden" id="newFileCheck4" name="check_images[3].newFileCheck"/>
+																<input type="hidden" id="moveSrc4" name="check_images[3].moveSrc"/>
 																<img id="image-preview4" class="a-preview" alt="이미지 미리보기" />
 															</label>
 														</div>
+														<div class="row mt-2">
+															<div class="col text-right">
+																<button type="button" id="image-delete4" 
+																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images"> 
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
+														</div>
 													</div>
 												</div>
+												
 												<div class="form-group row d-flex justify-content-center align-items-center">
 													<button type="submit" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
 													<button type="button" id="a-reset-btn1" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
@@ -875,7 +922,7 @@
 														</div>
 														<div class="col-12 col-xl-6 col-lg-8 col-md-6">
 															<label class="text-dark custom-label">비고/기타사항</label>
-															<textarea rows="5" wrap="soft" name="animal_etc" class="form-control custom-text" 
+															<textarea rows="5" wrap="soft" id="aEtc" name="animal_etc" class="form-control custom-text" 
 																placeholder="최대 200자" maxlength="200"></textarea>
 														</div>
 													</div>
@@ -954,33 +1001,28 @@
 				
 				
 				/*=============== 동물 종류 리스트 가져오기 ===============*/
-				$('#petType').on('click', function() {
-					
-					if ($('#petType').find('option').length === 1) {
-						$.ajax({
-							url: '/petData/petType',
-							type: 'GET',
-							dataType: 'json',
-							success: function(data) {
-								$('#petType').empty();
-								$('#petType').append('<option value="">--</option>');
-				
-								data.forEach(function(item) {
-									if(item.category_code == 1000) {
-										$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;｡:˚ ૮ ˶ ˆ ᴥ ˆ ˶ ა ˚ :｡</option>");
-									}
-									if(item.category_code == 2000) {
-										$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;/ᐠ - ˕ -マ Ⳋ</option>");
-									}
-									if(item.category_code == 3000) {
-										$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;ପ૮{˶• ༝ •˶}აଓ</option>");
-									}
-								});
-							},
-							error: function(jqXHR, textStatus, errorThrown) {
-								console.error('AJAX 요청 실패:', textStatus, errorThrown);
+				$.ajax({
+					url: '/petData/petType',
+					type: 'GET',
+					dataType: 'json',
+					success: function(data) {
+						$('#petType').empty();
+						$('#petType').append('<option value="">--</option>');
+		
+						data.forEach(function(item) {
+							if(item.category_code == 1000) {
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;｡:˚ ૮ ˶ ˆ ᴥ ˆ ˶ ა ˚ :｡</option>");
+							}
+							if(item.category_code == 2000) {
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;/ᐠ - ˕ -マ Ⳋ</option>");
+							}
+							if(item.category_code == 3000) {
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;ପ૮{˶• ༝ •˶}აଓ</option>");
 							}
 						});
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						console.error('AJAX 요청 실패:', textStatus, errorThrown);
 					}
 				});
 				/*=============== 동물 종류 리스트 가져오기 ===============*/
@@ -1044,11 +1086,11 @@
 								const newDiv = $('<div class="col-12 col-xl-3 col-lg-8 col-md-5 mb-3"></div>');
 					
 								const vLabel = $('<label class="text-dark custom-label"></label>')
-									.attr('for', 'vaccine' + i)
+									.attr('for', 'aVaccine' + i)
 									.text(vaccine.label);
 					
 								const vSelect = $('<select></select>')
-									.attr('id', 'vaccine' + i)
+									.attr('id', 'aVaccine' + i)
 									.attr('name', 'animal_vaccines[' + i + '].vaccine_check')
 									.addClass('form-control custom-text');
 					
@@ -1311,7 +1353,9 @@
 					const idNoNum = inputId.replace(/\d+/g, '');
 					const idNum = inputId.charAt(inputId.length - 1);
 					const previewId = '#image-preview' + idNum;
+					const previewIdNoNum = previewId.replace(/\d+/g, '');
 					const plusIconId = '#plusIcon' + idNum;
+					const newFileCheckId = '#newFileCheck' + idNum;
 					const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
 					
 					if (file) {
@@ -1322,11 +1366,12 @@
 									reader.onload = function(e) {
 										$(previewId).attr('src', e.target.result).show();
 										$(plusIconId).hide();
+										$(newFileCheckId).val(1);
 									}
 									break;
 							 	}
 								case '2': {
-									if($('#' + idNoNum + (idNum - 1)).val() == '') {
+									if($('#image-preview'+ (idNum - 1)).attr('src') == '') {
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
@@ -1338,20 +1383,21 @@
 										reader.onload = function(e) {
 											$(previewId).attr('src', e.target.result).show();
 											$(plusIconId).hide();
+											$(newFileCheckId).val(1);
 										}
 									}
 									break;
 								}
 								case '3': {
-									if($('#' + idNoNum + (idNum - 2)).val() == '' 
-											&& $('#' + idNoNum + (idNum - 1)).val() == '') {
+									if($('#image-preview'+ (idNum - 2)).attr('src') == '' 
+											&& $('#image-preview'+ (idNum - 1)).attr('src') == '') {
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
 										$(previewId).removeAttr('src');
 										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
 										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
-									} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
+									} else if($('#image-preview'+ (idNum - 1)).attr('src') == '') {
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
@@ -1363,29 +1409,30 @@
 										reader.onload = function(e) {
 											$(previewId).attr('src', e.target.result).show();
 											$(plusIconId).hide();
+											$(newFileCheckId).val(1);
 										}
 									}
 									break;
 								}
 								case '4': {
-									if($('#' + idNoNum + (idNum - 3)).val() == '' 
-											&& $('#' + idNoNum + (idNum - 2)).val() == '' 
-												&& $('#' + idNoNum + (idNum - 1)).val() == '') {
+									if($('#image-preview'+ (idNum - 3)).attr('src') == '' 
+											&& $('#image-preview'+ (idNum - 2)).attr('src') == '' 
+												&& $('#image-preview'+ (idNum - 1)).attr('src') == '') {
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
 										$(previewId).removeAttr('src');
 										$('#' + idNoNum + (idNum - 3))[0].files = adataTransfer.files;
 										$('#' + idNoNum + (idNum - 3))[0].dispatchEvent(new Event('change'));
-									} else if($('#' + idNoNum + (idNum - 2)).val() == '' 
-											&& $('#' + idNoNum + (idNum - 1)).val() == '') {
+									} else if($('#image-preview'+ (idNum - 2)).attr('src') == '' 
+											&& $('#image-preview'+ (idNum - 1)).attr('src') == '') {
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
 										$(previewId).removeAttr('src');
 										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
 										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
-									} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
+									} else if($('#image-preview'+ (idNum - 1)).attr('src') == '') {
 										const adataTransfer = new DataTransfer();
 										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
 										$('#' + idNoNum + idNum).val('');
@@ -1397,6 +1444,7 @@
 										reader.onload = function(e) {
 											$(previewId).attr('src', e.target.result).show();
 											$(plusIconId).hide();
+											$(newFileCheckId).val(1);
 										}
 									}
 									break;
@@ -1412,20 +1460,32 @@
 						}
 					} else {
 						if(idNum < 4) {
-							$(previewId).hide();
-							$(plusIconId).show();
 							for(let i = parseInt(idNum, 10); i <= 4; i++) {
 								if(i == idNum) {
+									$(previewId).hide();
+									$(plusIconId).show();
 									continue;
 								} else if($('#' + idNoNum + i).val() != '') {
 									const adataTransfer = new DataTransfer();
 									adataTransfer.items.add($('#' + idNoNum + i)[0].files[0]);
 									$('#' + idNoNum + i).val('');
-									$('#image-preview'+i).hide();
-									$('#image-preview'+i).removeAttr('src');
-									$('#plusIcon'+i).show();
+									$('#newFileCheck'+ i).val(1);
+									$('#moveSrc'+ (i - 1)).val($('#orgSrc'+ i).val());
+									$('#image-preview'+ (i - 1)).attr('src', $('#image-preview'+ i).attr('src'));
+									$('#image-preview'+ i).removeAttr('src');
+									$('#image-preview'+ i).hide();
+									$('#plusIcon'+ i).show();
 									$('#' + idNoNum + (i - 1))[0].files = adataTransfer.files;
 									$('#' + idNoNum + (i - 1))[0].dispatchEvent(new Event('change'));
+								} else if($(previewIdNoNum + i).attr('src') != '') {
+									$('#newFileCheck'+ i).val(1);
+									$('#moveSrc'+ (i - 1)).val($('#orgSrc'+ i).val());
+									$('#image-preview'+ (i - 1)).attr('src', $('#image-preview'+ i).attr('src'));
+									$('#image-preview'+ i).removeAttr('src');
+									$('#image-preview'+ i).hide();
+									$('#image-preview'+ (i - 1)).show();
+									$('#plusIcon'+ i).show();
+									$('#plusIcon'+ (i - 1)).hide();
 								}
 							}
 						} else {
@@ -1576,13 +1636,40 @@
 				const regex = /^ANIM-\w{6}$/;
 
 				if(regex.test(animalId)) {
-					console.log(typeof animalId);
 					$.ajax({
 						url: '/adptmgmt/animals/' + animalId,
 						method: 'GET',
 						type: 'json',
 						success: function(data) {
-							console.log(data);
+							$('#petType').val(data.categoryDataVO.category_parent);
+							$('#petType').trigger('change');
+							$('#petTypeDetailCode').val(data.categoryDataVO.category_code);
+							$('#petTypeDetail').val(data.categoryDataVO.category_value);
+							if(data.category_etc_value != '') {
+								$('#petTypeEtc').val(data.category_etc_value); 
+							}
+							$('#aName').val(data.animal_name);
+							$('#aColor').val(data.animal_color);
+							$('#aGender').val(data.animal_gender);
+							$('#aNeuter').val(data.animal_neuter);
+							$('#aAge').val(data.animal_age);
+							$('#aWeight').val(data.animal_weight);
+							$('#aRegUser').val(data.member_id);
+							for(let i = 0; i < 4; i++) {
+								$('#image-preview'+(i + 1)).attr('src',data.animal_images[i].image_src).show();
+								$('#orgSrc'+(i + 1)).val(data.animal_images[i].image_src);
+								$('#plusIcon'+(i + 1)).hide();
+							}
+							$('input[name="animal_act"][value="'+ data.animal_act +'"]').prop('checked',true);
+							$('input[name="animal_social"][value="'+ data.animal_social +'"]').prop('checked',true);
+							for(let i = 0; i < 5; i++) {
+								$('#aHealth'+ i).val(data.animal_healths[i].health_check);
+							}
+							for(let i = 0; i < 4; i++) {
+								$('#aVaccine'+ i).val(data.animal_vaccines[i].vaccine_check);
+							}
+							$('#aRegNum').val(data.animal_regnum);
+							$('#aEtc').val(data.animal_etc);
 						},
 						error: function(error) {
 							console.error('데이터를 가져오는 데 실패했습니다:', error);
