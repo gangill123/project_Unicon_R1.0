@@ -475,7 +475,8 @@ body,
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                     <button type="button" class="btn btn-sm btn-outline-danger"
-                                                            onclick="deleteVolunteer(${vol.voId})">
+                                                            onclick="deleteVolunteer(${vol.voId})"
+				                                            title="삭제">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                     <c:if test="${vol.recruitStatus == 'OPEN'}">
@@ -653,23 +654,33 @@ $(document).ready(function() {
     });
 });
 
-function deleteVolunteer(voId) {
+window.deleteVolunteer = function(voId) {
     if (!confirm('해당 봉사활동 공고를 삭제하시겠습니까?')) {
         return;
     }
     
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
     $.ajax({
-        url: '/admin/volunteer/delete/' + voId,
+        url: '/volunteer/manage/delete/' + voId,
         type: 'POST',
+        beforeSend: function(xhr) {
+            if (token && header) {
+                xhr.setRequestHeader(header, token);
+            }
+        },
         success: function() {
             alert('삭제되었습니다.');
             location.reload();
         },
-        error: function() {
-            alert('삭제 중 오류가 발생했습니다.');
+        error: function(xhr) {
+            console.error('Error:', xhr);
+            var errorMsg = xhr.responseText || '서버 오류가 발생했습니다.';
+            alert('삭제 실패: ' + errorMsg);
         }
     });
-}
+};
 
 function closeRecruitment(voId) {
     if (!confirm('해당 봉사활동 모집을 마감하시겠습니까?')) {
