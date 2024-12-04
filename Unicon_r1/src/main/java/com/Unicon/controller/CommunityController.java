@@ -70,24 +70,33 @@ public class CommunityController {
 		return "community/insert";
 	}
 	
+	// 커뮤니티 - 전체 게시물 보는 사이트
 	// http://localhost:8088/community/main
 	@GetMapping("main")
 	public String template() {
 		return "community/new_list";
 	}
-	
+
+	// 커뮤니티 - 게시물 등록 사이트
 	// http://localhost:8088/community/main02
 	@GetMapping("main02")
 	public String templateInsert() {
 		return "community/new_insert";
 	}
 	
+	// 커뮤니티 - 프로필 게시물 보는 사이트
 	// http://localhost:8088/community/main04
 	@GetMapping("main04")
 	public String templateProfile() {
 		return "community/new_profile";
 	}
 	
+	// 커뮤니티 - 게시물 수정 사이트
+	// http://localhost:8088/community/main06
+	@GetMapping("main06")
+	public String templateUpdate() {
+		return "community/new_update";
+	}
 	
 	
 	

@@ -54,8 +54,8 @@
                 <div class="border bg-white p-1-9 p-lg-2-3 p-xl-6 rounded">
 
                     <div class="text-center mb-1-9">
-                       <h2 class="font-weight-600 mb-3">커뮤니티 게시물 등록</h2>
-                       <p class="mb-0">입양 후기 / 반려 이야기 / 실종 / 임시 보호 에 대한 커뮤니티 게시물을 작성해주세요.</p>
+                       <h2 class="font-weight-600 mb-3">커뮤니티 게시물 수정</h2>
+                       <p class="mb-0">작성한 커뮤니티 게시물의 내용을 수정해주세요.</p>
                     </div>
 
                     <form id="formPost" class="quform" action="${contextPath }/community/insert" method="post" enctype="multipart/form-data" onclick="">
@@ -284,7 +284,7 @@
                                 <!-- Begin Submit button -->
                                 <div class="col-md-6 offset-md-3 mt-4">
                                     <div class="quform-submit-inner text-center">
-                                        <button id="btnCreate" class="butn w-100" type="submit"><span>글 등록하기</span></button>
+                                        <button id="btnCreate" class="butn w-100" type="submit"><span>글 수정하기</span></button>
                                     </div>
                                     <div class="quform-loading-wrap"><span class="quform-loading"></span></div>
                                 </div>

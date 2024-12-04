@@ -5,6 +5,8 @@
 
 <mapper namespace="com.Unicon.mapper.CommunityMapper">
 
+<!-- resultMap 작성란 -->
+
 <resultMap id="PostResultMap" type="com.Unicon.domain.PostVO">
 	<id property="post_id" column="post_id"/>
 	<result property="member_id" column="member_id"/>
@@ -17,22 +19,33 @@
 	<result property="post_pet_place" column="post_pet_place"/>
 	<result property="post_pet_date" column="post_pet_date"/>
 	
-	<association property="jypMember" resultMap="JypMemberResultMap" />
-	<association property="categoryData" resultMap="CategoryDataResultMap" />
+	<association property="jypMemberVO" resultMap="JypMemberResultMap" />
+	<association property="categoryDataVO" resultMap="CategoryDataResultMap" />
 	
-<!-- 	<association property="adptCounsel" resultMap="CounselResultMap"/> -->
-<!-- 	<association property="adptMember" resultMap="MemberResultMap"/> -->
-<!-- 	<association property="adptInterest" resultMap="InterestResultMap"/> -->
-	
-	<collection property="adpt_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
-<!-- 	<collection property="adpt_healths" ofType="com.Unicon.domain.AdptHealthVO" resultMap="HealthResultMap"/> -->
-<!-- 	<collection property="adpt_vaccins" ofType="com.Unicon.domain.AdptVaccinVO" resultMap="VaccinResultMap"/> -->
+	<collection property="post_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
+	<collection property="post_comments" ofType="com.Unicon.domain.CommentVO" resultMap="CommentResultMap"></collection>
+
+</resultMap>
+
+<resultMap id="JypMemberResultMap" type="com.Unicon.domain.JypMemberVO">
+	<id property="member_id" column="member_id"/>
+	<result property="member_name" column="member_name"/>
+	<result property="road_address" column="road_address"/>
+	<result property="member_nickname" column="member_nickname"/>
+	<result property="member_image" column="member_image"/>
 </resultMap>
 
 <resultMap id="CategoryDataResultMap" type="com.Unicon.domain.CategoryDataVO">
 	<id property="category_code" column="category_code"/>
 	<result property="category_type" column="category_type"/>
 	<result property="category_value" column="category_value"/>
+</resultMap>
+
+<resultMap id="ImageResultMap" type="com.Unicon.domain.ImageVO">
+	<id property="image_id" column="image_id"/>
+	<id property="image_type" column="image_type"/>
+	<id property="image_sequence" column="image_sequence"/>
+	<result property="image_src" column="image_src"/>
 </resultMap>
 
 <resultMap id="CommentResultMap" type="com.Unicon.domain.CommentVO">
@@ -43,26 +56,10 @@
 	<result property="comment_date" column="comment_date"/>
 </resultMap>
 
-<resultMap id="PostLikeResultMap" type="com.Unicon.domain.PostLikeVO">
-	<result property="post_id" column="post_id"/>
-	<result property="member_id" column="member_id"/>
-</resultMap>
-
-<resultMap id="CommentLikeResultMap" type="com.Unicon.domain.CommentLikeVO">
-	<result property="comment_id" column="comment_id"/>
-	<result property="member_id" column="member_id"/>
-</resultMap>
-
+<!-- 일단 대기 -->
 <resultMap id="FollowResultMap" type="com.Unicon.domain.FollowVO">
 	<result property="from_member_id" column="from_member_id"/>
 	<result property="to_member_id" column="to_member_id"/>
-</resultMap>
-
-<resultMap id="ImageResultMap" type="com.Unicon.domain.ImageVO">
-	<id property="image_id" column="image_id"/>
-	<id property="image_type" column="image_type"/>
-	<id property="image_sequence" column="image_sequence"/>
-	<result property="image_src" column="image_src"/>
 </resultMap>
 
 <resultMap id="MyPetResultMap" type="com.Unicon.domain.MyPetVO">
@@ -77,39 +74,13 @@
 	<result property="pet_color" column="pet_color"/>
 	<result property="pet_content" column="pet_content"/>
 </resultMap>
+<!-- 일단 대기 -->
 
-<resultMap id="JypMemberResultMap" type="com.Unicon.domain.JypMemberVO">
-	<id property="member_id" column="member_id"/>
-	<result property="member_name" column="member_name"/>
-	<result property="member_addr" column="member_addr"/>
-	<result property="member_nickname" column="member_nickname"/>
-	<result property="member_image" column="member_image"/>
-	<result property="pet_id" column="pet_id"/>
-</resultMap>
+<!-- resultMap 작성란 -->
 
+<!-- 전체 게시글 불러오기 -->
 
-<!-- <select id="selectPostAll" resultMap="PostResultMap"> -->
-<!-- 	select  -->
-<!-- 		a.adpt_id, a.pet_code, a.pet_etc_breed, a.adpt_name,  -->
-<!-- 		a.adpt_color, a.adpt_gender, a.adpt_neuter,  -->
-<!-- 		a.adpt_age, a.adpt_weight, a.adpt_regdate,  -->
-<!-- 		a.adpt_upddate, a.adpt_regnum, a.adpt_act,  -->
-<!-- 		a.adpt_social, a.adpt_intro, a.adpt_etc,  -->
-<!-- 		a.adpt_status, a.adpt_interest_sum,  -->
-<!-- 		c.counsel_id, c.counsel_subdate, c.counsel_procdate, c.counsel_status,  -->
-<!-- 		m.member_id, m.member_name, m.member_tel, m.member_addr,  -->
-<!-- 		m.member_email, m.membar_age, m.member_gender,  -->
-<!-- 		i.image_id, i.image_type, i.image_sequence, i.image_src,  -->
-<!-- 		h.health, v.vaccin,  -->
-<!-- 		i.adpt_id AS image_adpt_id, h.adpt_id AS health_adpt_id, v.adpt_id AS vaccin_adpt_id  -->
-<!-- 	 from adoption a  -->
-<!-- 		LEFT JOIN adpt_counsel c ON a.adpt_id = c.adpt_id  -->
-<!-- 		LEFT JOIN adpt_member m ON a.adpt_id = m.adpt_id  -->
-<!-- 		LEFT JOIN images i ON a.adpt_id = i.adpt_id  -->
-<!-- 		LEFT JOIN adpt_health h ON a.adpt_id = h.adpt_id  -->
-<!-- 		LEFT JOIN adpt_vaccin v ON a.adpt_id = v.adpt_id  -->
-<!-- 	where a.adpt_id = #{adpt_id} -->
-<!-- </select> -->
+<!-- 전체 게시글 불러오기 -->
 
 
 
@@ -133,20 +104,8 @@
 	   (#{post_id}, #{i.image_type}, #{i.image_sequence}, #{i.image_src}) 
 	  </foreach> 
 </insert>
+<!-- 게시물 등록 -->
 
-
-<!-- <insert id="postImageInsert"> -->
-<!-- 	insert into _image (image_id, image_type, image_sequence, image_src) values  -->
-<!-- 	<foreach collection="list" item="image" separator=","> -->
-<!-- 		(#{image.image_id}, #{image.image_type}, #{image.image_sequence}, #{image.image_src})  -->
-<!-- 	</foreach>  -->
-<!-- </insert> -->
-
-<!-- <insert id="postImageInsert"> -->
-<!-- 	insert into _image (image_id, image_type, image_sequence, image_src)  -->
-<!-- 	values (#{member_id}, #{post_type}, 1, #{image_src})  -->
-	
-<!-- </insert> -->
 
 
 

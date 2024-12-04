@@ -76,22 +76,21 @@ z-index: 2000;
            <!-- End links -->
            
            <select id="" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-		       <option value="">거주 지역</option>
+		       <option value="">모든 지역</option>
 		       <option value="">서울</option>
 		       <option value="">부산</option>
 		       <option value="">인천</option>
 		   </select>
 		   
 		   <select id="" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-		       <option value="">동물 종류</option>
+		       <option value="">모든 동물</option>
 		       <option value="">개</option>
 		       <option value="">고양이</option>
-		       <option value="">토끼</option>
+		       <option value="">기타</option>
 		   </select>
 		   
 		   <!-- 이거는 없앨수도 있음 검색 필터 너무 많음 / 없애면 그냥 기본은 최신순으로(근데 그러면 게시물 좋아요는 왜 있지...?) -->
 		   <select id="" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-		       <option value="">정렬순</option>
 		       <option value="">최신순</option>
 		       <option value="">좋아요순</option>
 		   </select>
@@ -255,7 +254,7 @@ z-index: 2000;
     <div class="modal-dialog" style="max-width: 1200px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">해당 커뮤니티 종류</h5>
+                <h5 class="modal-title" id="exampleModalLabel">해당 커뮤니티 종류 / 개 / 기타견종 / 시고르자브종</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -291,6 +290,8 @@ z-index: 2000;
                                 </div>
                             </div>
                            <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
+                           <p>실종 일자 : 2024-08-24</p>
+                           <p>실종 장소 : 부산광역시 부산진구 부전1동 일대</p>
                            <p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
                            <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
                            
