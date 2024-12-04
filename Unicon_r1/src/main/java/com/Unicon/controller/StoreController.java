@@ -50,5 +50,29 @@ public class StoreController {
 		model.addAttribute("CategoryDataList", CategoryDataList);
 	}
 	
+	@RequestMapping( value="/manage/order" , method =RequestMethod.GET )
+	public void orderGET() {
+		logger.info("/manage/order 실행");
+		
+		
+	}
+	@RequestMapping( value="/sale/delivery" , method =RequestMethod.GET )
+	public void deliveryGET() {
+		logger.info("/sale/delivery 실행");
+		
+	}
+	@RequestMapping( value="/sale/deliverySituation" , method =RequestMethod.GET )
+	public void deliverySituationGET() {
+		logger.info("/sale/deliverySituation 실행");
+	}
+	@RequestMapping( value="/claim/cancel" , method =RequestMethod.GET )
+	public void claimCancelGET() {
+		logger.info("/claim/cancel 실행");
+	}
+	@RequestMapping( value="/claim/blackConsumer" , method =RequestMethod.GET )
+	public void blackConsumerGET() {
+		logger.info("/claim/blackConsumerGET 실행");
+	}
+	
 	
 }

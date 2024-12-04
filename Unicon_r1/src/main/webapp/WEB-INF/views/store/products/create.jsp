@@ -325,7 +325,7 @@
 											    <label>옵션명 개수</label>
 											    <div>
 											        <div class="store-input-container">
-											        	<select>
+											        	<select class="select-option">
 											        		<option selected="selected" value="1">1개</option>
 											        		<option value="2">2개</option>
 											        	</select>
@@ -562,7 +562,7 @@
 										    <label>브랜드</label>
 										    <div>
 									        	<div class="store-input-container">
-						                    		<input class="input-brand" type="text" id=""  name="" >
+						                    		<input class="input-brand" type="text" id="brand"  name="brand" >
 					                    		</div>
 										    </div>
 			                    		</div>
@@ -589,9 +589,8 @@
 										    <label>유효일자,유통기한</label>
 										    <div>
 									        	<div class="store-input-container">
-									        	
-									        		<!-- TODO 이건 달력으로  -->
-						                    		<input class="product_expiry" type="text" id="product_expiry"  name="product_expiry" >
+						                    		<input class="product_expiry" type="text" id="product_expiry"  name="product_expiry" placeholder="예시 : 2025-06-10 이거나 그 이후인 상품" >
+						                    		<span class="product-expiry-text">입력 예시 : 2025-06-10 이거나 그 이후</span>
 					                    		</div>
 										    </div>
 			                    		</div>
@@ -618,47 +617,49 @@
 						                    <i class="icon-must" aria-label="필수항목" style="margin-right: 3px" ></i>
 
 				                  		</div>
-					                    <button onclick="closeBox(this,'detail')" 
+					                    <button onclick="closeBox(this,'delivery')" 
 					                    	style="border: none;background: transparent;font-size: 2.1rem;">
 					                    	<i class="mdi mdi-chevron-down"></i>
 					                    	<i class="mdi mdi-chevron-up" style="display: none"></i>
 					                    </button>
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
-				                    <div class="closeBox-detail">
+				                    <div class="closeBox-delivery">
 				                    	
 					                    <div class="display-f">
 										    <label>배송방법</label>
 										    <div>
 									        	<div class="store-input-container">
 						                    		<!-- TODO 버튼 2개로 제어  -->
+						                    		<button id="btn-delivery-on" class="btn-setting-on setting-active">배송</button>
+										            <button id="btn-delivery-off" class="btn-setting-off setting-inactive">배송안함</button>
 					                    		</div>
 										    </div>
 			                    		</div>
 					                    <div class="dropdown-divider"></div>
 					                    <div class="display-f">
-										    <label>제조사</label>
+										    <label>택배사</label>
 										    <div>
 									        	<div class="store-input-container">
-						                    		<input class="manufacturer" type="text" id="manufacturer"  name="manufacturer" >
+<!-- 						                    		<input class="" type="text" id=""  name="delivery_company" > -->
+						                    		<select class="select-delivery-company" >
+										        		<option value="select">선택</option>
+										        		<option value="CJ대한통운">CJ대한통운</option>
+										        		<option value="롯데택배">롯데택배</option>
+										        		<option value="한진택배">한진택배</option>
+										        		<option value="로젠택배">로젠택배</option>
+										        		<option value="우체국">우체국</option>
+										        	</select>
 					                    		</div>
 										    </div>
 			                    		</div>
 					                    <div class="dropdown-divider"></div>
 					                    <div class="display-f">
-										    <label>원산지</label>
+										    <label>택배비</label>
 										    <div>
 									        	<div class="store-input-container">
-						                    		<input class="product_origin" type="text" id="product_origin"  name="product_origin" >
-					                    		</div>
-										    </div>
-			                    		</div>
-					                    <div class="dropdown-divider"></div>
-					                    <div class="display-f">
-										    <label>유효일자,유통기한</label>
-										    <div>
-									        	<div class="store-input-container">
-						                    		<input class="product_expiry" type="text" id="product_expiry"  name="product_expiry" >
+						                    		<input type="text" id="delivery_price"  name="delivery_price" >
+						                    		<span style="padding: 4px 10px; line-height: 24px; color: #4d5159; background-color: #f8f9fd; border: 1px solid #dbdde2; border-radius: 0; border-left: none;">원</span>
 					                    		</div>
 										    </div>
 			                    		</div>
@@ -671,9 +672,6 @@
                           </div>
                         </div>
                         <!-- 배송 끝 -->
-                        
-                        
-                        
                       </div>
                     </div>
                   </div>

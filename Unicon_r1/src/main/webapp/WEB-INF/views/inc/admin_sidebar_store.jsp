@@ -26,10 +26,9 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="/store/manage/order">주문통합검색</a></li>
                   <li class="nav-item"> <a class="nav-link" href="/store/sale/delivery">발주(주문)확인/발송관리</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/store/sale/delivery/situation">배송현황 관리</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/store/sale/deliverySituation">배송현황 관리</a></li>
                   <li class="nav-item"> <a class="nav-link" href="/store/claim/cancel">취소 관리</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/store/claim/return">반품 관리</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/store/blackConsumer">판매방해 고객관리</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/store/claim/blackConsumer">판매방해 고객관리</a></li>
                 </ul>
               </div>
             </li>
