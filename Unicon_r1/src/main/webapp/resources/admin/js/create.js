@@ -518,12 +518,24 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             updateApplyButtonState();
         });
 
-        // 셀렉트 박스 변경 이벤트
-        $(document).on("change", "select", function () {
-            const selectedValue = parseInt($(this).val()); // 선택된 값 가져오기
+        // select-option 클릭 이벤트
+        $(document).on("change", ".select-option", function () {
+            const selectedValue = parseInt($(this).val()); // 클릭된 옵션의 값을 가져오기
             manageOptions(selectedValue);
             updateApplyButtonState();
+            
         });
+        
+        // select-delivery-company의 change 이벤트
+        $(document).on("change", ".select-delivery-company", function () {
+            const selectedValue = $(this).val(); // 선택된 옵션의 값을 가져오기
+            if('select' == selectedValue) {
+            	alert("다른 택배사를 선택하세요.");
+            }
+            console.log("선택된 택배사 : " + selectedValue);
+        });
+        
+        
 
         // 옵션 관리 함수
         function manageOptions(selectedValue) {
@@ -1082,7 +1094,9 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 			}
 		});
 		/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
-		 // 이미지 업로드 함수
+		
+		
+		
 	    
 
     });

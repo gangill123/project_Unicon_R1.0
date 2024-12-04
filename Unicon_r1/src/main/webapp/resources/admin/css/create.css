@@ -249,6 +249,7 @@
 
     input[type="radio"]:checked {
         background-color: #2ecc71; /* 선택된 색상 */
+        
     }
 
     input[type="radio"]:checked::before {
@@ -259,7 +260,7 @@
         width: 12px; /* 내부 원의 크기 */
         height: 12px; /* 내부 원의 크기 */
         border-radius: 50%; /* 둥글게 만들기 */
-        background-color: white; /* 내부 원의 색상 */
+        background-color:  #2ecc71; /* 내부 원의 색상 */
         transform: translate(-50%, -50%);
     }
     .c-tooltip {
@@ -389,6 +390,11 @@
     	background: #fff; /* 포커스 시 배경색을 흰색으로 변경 */
 	}
 	
+	
+	.product-expiry-text {
+		color : #dbdde2;
+		margin-left: 1.5em;
+	}
 	
 	
 	
