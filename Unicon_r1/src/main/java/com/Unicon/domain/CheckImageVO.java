@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class CheckImageVO {
 	private String orgSrc;
-	private int newFileCheck;
+	private int changeCheck;
 	private String moveSrc;
 }
