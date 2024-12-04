@@ -470,7 +470,8 @@ body,
                                             <td>
                                                 <div class="d-flex justify-content-center gap-1">
                                                     <button type="button" class="btn btn-sm btn-outline-primary"
-                                                            onclick="location.href='/admin/volunteer/edit/${vol.voId}'">
+                                                            onclick="location.href='/volunteer/manage/volForm?voId=${vol.voId}'"
+				                                            title="수정">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                     <button type="button" class="btn btn-sm btn-outline-danger"
@@ -652,13 +653,13 @@ $(document).ready(function() {
     });
 });
 
-function deleteVolunteer(id) {
+function deleteVolunteer(voId) {
     if (!confirm('해당 봉사활동 공고를 삭제하시겠습니까?')) {
         return;
     }
     
     $.ajax({
-        url: '/admin/volunteer/delete/' + id,
+        url: '/admin/volunteer/delete/' + voId,
         type: 'POST',
         success: function() {
             alert('삭제되었습니다.');
@@ -670,14 +671,14 @@ function deleteVolunteer(id) {
     });
 }
 
-function closeRecruitment(id) {
+function closeRecruitment(voId) {
     if (!confirm('해당 봉사활동 모집을 마감하시겠습니까?')) {
     
     	return;
     }
     
     $.ajax({
-    	url: '/volunteer/manage/close/' + id,
+    	url: '/volunteer/manage/close/' + voId,
         type: 'POST',
         success: function() {
             alert('모집이 마감되었습니다.');
@@ -689,13 +690,13 @@ function closeRecruitment(id) {
     });
 }
 
-function openRecruitment(id) {
+function openRecruitment(voId) {
     if (!confirm('해당 봉사활동 모집을 시작하시겠습니까?')) {
         return;
     }
     
     $.ajax({
-        url: '/volunteer/manage/open/' + id,
+        url: '/volunteer/manage/open/' + voId,
         type: 'POST',
         success: function() {
             alert('모집이 시작되었습니다.');
