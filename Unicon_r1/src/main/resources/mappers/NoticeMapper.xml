@@ -47,6 +47,7 @@
             important = #{important},
             visibility = #{visibility},
             noEmail = #{noEmail},
+            status = #{status},
             noModdate = now()
         where 
             noId = #{noId}

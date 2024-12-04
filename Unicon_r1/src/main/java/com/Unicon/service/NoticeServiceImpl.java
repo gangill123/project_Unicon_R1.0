@@ -105,6 +105,12 @@ public class NoticeServiceImpl implements NoticeService {
             if (existingNotice == null) {
                 throw new NoticeException("존재하지 않는 공지사항입니다.");
             }
+            
+            // status가 설정되지 않은 경우 'active'로 설정
+            if (noVO.getStatus() == null || noVO.getStatus().isEmpty()) {
+                noVO.setStatus("active");
+            }
+            
             noDAO.updateNotice(noVO);
         } catch (Exception e) {
             logger.error("공지사항 수정 중 오류 발생", e);

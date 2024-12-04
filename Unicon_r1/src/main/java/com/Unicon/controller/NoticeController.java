@@ -180,7 +180,12 @@ public class NoticeController {
             noVO.setNoCategory(noCategory);
             noVO.setImportant(important);
             noVO.setNoEmail(noEmail);
-            noVO.setStatus(status);
+            // status 값이 없거나 비어있을 경우 'active'로 설정
+            if (status == null || status.isEmpty()) {
+                noVO.setStatus("active");
+            } else {
+                noVO.setStatus(status);
+            }
             
             // 썸네일 처리
             if (thumbnail != null && !thumbnail.isEmpty()) {
@@ -445,6 +450,19 @@ public class NoticeController {
             return ResponseEntity.ok(draft);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    
+    @DeleteMapping("/manage/draft/{noId}")
+    @ResponseBody
+    public ResponseEntity<String> deleteDraft(@PathVariable Long noId) {
+        try {
+            noService.deleteNotice(noId);
+            return ResponseEntity.ok("임시저장 삭제 완료");
+        } catch (Exception e) {
+            logger.error("임시저장 삭제 실패", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                               .body("임시저장 삭제 실패: " + e.getMessage());
         }
     }
     
