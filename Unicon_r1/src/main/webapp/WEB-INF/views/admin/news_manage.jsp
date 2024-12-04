@@ -158,24 +158,31 @@
                                         <div class="row justify-content-center">
                                             <div class="col-auto my-2 my-md-0">
                                             	<select id="resionSelector" class="form-control form-select" name="news_resion">
-                                                    <option value="전국" ${param.resion == '전국' ? 'selected' : ''}>전국</option>
-												    <option value="서울특별시" ${param.resion == '서울특별시' ? 'selected' : ''}>서울특별시</option>
-												    <option value="부산광역시" ${param.resion == '부산광역시' ? 'selected' : ''}>부산광역시</option>
-												    <option value="대구광역시" ${param.resion == '대구광역시' ? 'selected' : ''}>대구광역시</option>
-												    <option value="인천광역시" ${param.resion == '인천광역시' ? 'selected' : ''}>인천광역시</option>
-												    <option value="광주광역시" ${param.resion == '광주광역시' ? 'selected' : ''}>광주광역시</option>
-												    <option value="대전광역시" ${param.resion == '대전광역시' ? 'selected' : ''}>대전광역시</option>
-												    <option value="울산광역시" ${param.resion == '울산광역시' ? 'selected' : ''}>울산광역시</option>
+                                                    <option value="전국" ${param.resion == '전국' ? 'selected' : ''}>지역선택</option>
+												    <option value="서울" ${param.resion == '서울' ? 'selected' : ''}>서울특별시</option>
+												    <option value="부산" ${param.resion == '부산' ? 'selected' : ''}>부산광역시</option>
+												    <option value="대구" ${param.resion == '대구' ? 'selected' : ''}>대구광역시</option>
+												    <option value="인천" ${param.resion == '인천' ? 'selected' : ''}>인천광역시</option>
+												    <option value="광주" ${param.resion == '광주' ? 'selected' : ''}>광주광역시</option>
+												    <option value="대전" ${param.resion == '대전' ? 'selected' : ''}>대전광역시</option>
+												    <option value="울산" ${param.resion == '울산' ? 'selected' : ''}>울산광역시</option>
 												    <option value="세종특별자치시" ${param.resion == '세종특별자치시' ? 'selected' : ''}>세종특별자치시</option>
-												    <option value="경기도" ${param.resion == '경기도' ? 'selected' : ''}>경기도</option>
-												    <option value="강원도" ${param.resion == '강원도' ? 'selected' : ''}>강원도</option>
-												    <option value="충청북도" ${param.resion == '충청북도' ? 'selected' : ''}>충청북도</option>
-												    <option value="충청남도" ${param.resion == '충청남도' ? 'selected' : ''}>충청남도</option>
-												    <option value="전라북도" ${param.resion == '전라북도' ? 'selected' : ''}>전라북도</option>
-												    <option value="전라남도" ${param.resion == '전라남도' ? 'selected' : ''}>전라남도</option>
-												    <option value="경상북도" ${param.resion == '경상북도' ? 'selected' : ''}>경상북도</option>
-												    <option value="경상남도" ${param.resion == '경상남도' ? 'selected' : ''}>경상남도</option>
+												    <option value="경기" ${param.resion == '경기' ? 'selected' : ''}>경기도</option>
+												    <option value="강원특별자치도" ${param.resion == '강원특별자치도' ? 'selected' : ''}>강원특별자치도</option>
+												    <option value="충북" ${param.resion == '충북' ? 'selected' : ''}>충청북도</option>
+												    <option value="충남" ${param.resion == '충남' ? 'selected' : ''}>충청남도</option>
+												    <option value="전북특별자치도" ${param.resion == '전북특별자치도' ? 'selected' : ''}>전북특별자치도</option>
+												    <option value="전남" ${param.resion == '전남' ? 'selected' : ''}>전라남도</option>
+												    <option value="경북" ${param.resion == '경북' ? 'selected' : ''}>경상북도</option>
+												    <option value="경남" ${param.resion == '경남' ? 'selected' : ''}>경상남도</option>
 												    <option value="제주특별자치도" ${param.resion == '제주특별자치도' ? 'selected' : ''}>제주특별자치도</option>
+                                                 </select>
+                                            </div>
+                                            <div class="col-auto my-2 my-md-0" style="padding-left: 0;">
+                                            	<select id="filterSelector" class="form-control form-select">
+                                                    <option value="0" ${param.filter == '0' ? 'selected' : ''}>정렬</option>
+                                                    <option value="1" ${param.filter == '1' ? 'selected' : ''}>개시중</option>
+                                                    <option value="2" ${param.filter == '2' ? 'selected' : ''}>개시종료</option>
                                                  </select>
                                             </div>
                                         </div>
@@ -206,7 +213,10 @@
 $(document).ready(function () {
 	
 	let resion = $('#resionSelector').val();
+	let filter = $('#filterSelector').val();
 	let currentPage = 1;
+	
+	//console.log(filter);
 	
 	if(!'${param.currentPage}' == ''){
 		currentPage = parseInt('${param.currentPage}', 10);
@@ -214,12 +224,14 @@ $(document).ready(function () {
 	}
 	
 	//페이징 처리 호출
-	newsPaging(resion, currentPage);
+	newsPaging(resion, currentPage, filter);
 	
-	$('#resionSelector').on('change', function(){
-		resion = $(this).val();
+	// 필터 설정 시 페이징 처리
+	$('#resionSelector, #filterSelector').on('change', function(){
+		resion = $('#resionSelector').val();
+		filter = $('#filterSelector').val();
 		currentPage = 1;
-		newsPaging(resion, currentPage);
+		newsPaging(resion, currentPage, filter);
 	});
 	
 	//F5 클릭 시 최초 페이지로 이동

@@ -18,6 +18,38 @@
 		select * from _news order by news_enddate desc 
 	</select>
 	
+	<!-- 모든 소식 조회 + filter(개시중) -->
+	<select id="getNewsAllPost" resultType="NewsVO">
+		select * from _news where news_enddate &gt; CURDATE() order by news_enddate
+	</select>
+	
+	<!-- 모든 소식 조회 + filter(개시완료) -->
+	<select id="getNewsAllPostEnd" resultType="NewsVO">
+		select * from _news where news_enddate &lt; CURDATE() order by news_enddate desc
+	</select>
+	
+	<!-- 특정 지역 소식 조회하기 -->
+	<select id="getNewsResion" resultType="NewsVO">
+		select * from _news 
+		where news_resion = #{news_resion}
+		order by news_enddate desc
+	</select>
+	
+	<!-- 특정 지역 소식 조회하기 + filter(개시중) -->
+	<select id="getNewsResionPost" resultType="NewsVO">
+		select * from _news 
+		where news_resion = #{news_resion} and news_enddate &gt; CURDATE()
+		order by news_enddate
+	</select>
+	
+	<!-- 특정 지역 소식 조회하기 + filter(개시완료) -->
+	<select id="getNewsResionPostEnd" resultType="NewsVO">
+		select * from _news 
+		where news_resion = #{news_resion}  and news_enddate &lt; CURDATE()
+		order by news_enddate desc 
+	</select>
+	
+	
 	<!-- 특정 소식 조회하기 -->
 	<select id="getNews" resultType="NewsVO">
 		select * from _news where news_id = #{news_id} 
@@ -38,10 +70,6 @@
 		where news_id = #{news_id} 
 	</select>
 	
-	<!-- 특정 지역 소식 조회하기 -->
-	<select id="getNewsResion" resultType="NewsVO">
-		select * from _news where news_resion = #{news_resion} order by news_enddate desc 
-	</select>
 	
 	<!-- 소식 조회(메인용) -->
 	<select id="getNewsForMain" resultType="NewsVO">
@@ -53,7 +81,7 @@
 	
 	<!-- 소식 조회(모두보기 - 최근등록순) -->
 	<select id="getNewsLastest" resultType="NewsVO">
-		select * from _news where news_enddate &gt; CURDATE() 
+		select * from _news where news_enddate &gt; CURDATE() order by news_enddate desc 
 	</select>
 	
 	<!-- 소식 조회(다가오는 행사, 현재일로부터 30일) -->
@@ -68,7 +96,7 @@
 		where news_resion = 
 		(select SUBSTRING_INDEX(road_address, ' ', 1) as resion 
 		from _member 
-		where member_id = #{member_id}) and news_enddate > CURDATE() 
+		where member_id = #{member_id} and news_enddate > CURDATE())  
 	</select>
 	
 	<!-- 소식 조회(종료된 행사) -->

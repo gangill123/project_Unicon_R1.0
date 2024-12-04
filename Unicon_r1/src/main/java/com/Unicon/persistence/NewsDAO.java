@@ -27,6 +27,31 @@ public class NewsDAO {
 		return sqlSession.selectList(NAMESPACE+".getNewsAll");
 	}
 	
+	// 모든 소식 조회 + filter(개시중)
+	public List<NewsVO> getNewsAllPost() {
+		return sqlSession.selectList(NAMESPACE+".getNewsAllPost");
+	}
+	
+	// 모든 소식 조회 + filter(개시완료)
+	public List<NewsVO> getNewsAllPostEnd() {
+		return sqlSession.selectList(NAMESPACE+".getNewsAllPostEnd");
+	}
+	
+	// 특정 지역 소식 조회
+	public List<NewsVO> getNewsResion(String news_resion) {
+		return sqlSession.selectList(NAMESPACE+".getNewsResion", news_resion);
+	}
+	
+	// 특정 지역 소식 조회 + filter(개시중)
+	public List<NewsVO> getNewsResionPost(String news_resion) {
+		return sqlSession.selectList(NAMESPACE+".getNewsResionPost", news_resion);
+	}
+	
+	// 특정 지역 소식 조회 + filter(개시완료)
+	public List<NewsVO> getNewsResionPostEnd(String news_resion) {
+		return sqlSession.selectList(NAMESPACE+".getNewsResionPostEnd", news_resion);
+	}
+	
 	// 특정 소식 조회
 	public NewsVO getNews(int news_id) {
 		return sqlSession.selectOne(NAMESPACE+".getNews", news_id);
@@ -42,10 +67,6 @@ public class NewsDAO {
 		sqlSession.delete(NAMESPACE+".deleteNews", news_id);
 	}
 	
-	// 특정 지역 소식 조회
-	public List<NewsVO> getNewsResion(String news_resion) {
-		return sqlSession.selectList(NAMESPACE+".getNewsResion", news_resion);
-	}
 	
 	// 소식 조회(메인용)
 	public NewsVO getNewsForMain() {

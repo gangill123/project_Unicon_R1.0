@@ -32,7 +32,7 @@
 
 #news_image {
 	width: 100%;
-	aspect-ratio: 3 / 4.4; /* 원하는 가로:세로 비율 설정 */
+	aspect-ratio: 3 / 4.65; /* 원하는 가로:세로 비율 설정 */
 	border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
 }
 
@@ -105,7 +105,7 @@
         
         <!-- 모달2 -->
 	<div class="modal fade" id="exampleModal3" tabindex="-1" 
-		aria-labelledby="exampleModalLabel" aria-hidden="true" style="top: 35px;">
+		aria-labelledby="exampleModalLabel" aria-hidden="true" style="top: 20px;">
 	    <div class="modal-dialog" style="max-width: 1200px;">
 	        <div class="modal-content">
 	            <div class="modal-header">

@@ -35,7 +35,7 @@ public class NewsController {
 	public String newsPage(Model model, HttpSession session) {
 
 		// 임시 아이디 세션저장
-		session.setAttribute("member_id", "dummy01");
+		session.setAttribute("member_id", "bini97");
 		
 		// 소식정보 가져오기
 		List<NewsVO> newsAllInfo = nService.getNewsAll();

@@ -348,7 +348,7 @@ $(document).ready(function () {
     	$('#right_btm').text($(this).val());
     });
     $('#ms_btnText').on('input', function(){
-    	$('.alt-font').text($(this).val());
+    	$('#btnText').text($(this).val());
     });
     
     

@@ -18,15 +18,39 @@ public class NewsService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(NewsService.class);
 	
-	
 	// 소식 생성
 	public void newsCreate(NewsVO vo) {
 		ndao.newsCreate(vo);
 	}
 	
-	// 모든 소식 조회
+	// 모든 소식 조회 + filter
 	public List<NewsVO> getNewsAll() {
+		
 		return ndao.getNewsAll();
+	}
+	
+	// 모든 소식 조회 + filter
+	public List<NewsVO> getNewsAll(int filter) {
+		
+		if(filter == 0) {
+			return ndao.getNewsAll();
+		} else if(filter == 1) {
+			return ndao.getNewsAllPost();
+		} else {
+			return ndao.getNewsAllPostEnd();
+		}
+	}
+	
+	// 특정 지역 소식 조회 + filter
+	public List<NewsVO> getNewsResion(String news_resion, int filter) {
+		
+		if(filter == 0) {
+			return ndao.getNewsResion(news_resion);
+		} else if(filter == 1) {
+			return ndao.getNewsResionPost(news_resion);
+		} else {
+			return ndao.getNewsResionPostEnd(news_resion);
+		}
 	}
 	
 	// 특정 소식 조회
@@ -44,10 +68,6 @@ public class NewsService {
 		ndao.deleteNews(news_id);
 	}
 	
-	// 특정 지역 소식 조회
-	public List<NewsVO> getNewsResion(String news_resion) {
-		return ndao.getNewsResion(news_resion);
-	}
 	
 	// 소식 조회(메인용)
 	public NewsVO getNewsForMain() {
