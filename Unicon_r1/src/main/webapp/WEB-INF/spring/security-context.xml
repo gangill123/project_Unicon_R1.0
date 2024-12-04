@@ -10,7 +10,8 @@
 	<!-- 로그인 성공시 처리하는 객체 -->
 	<beans:bean id="customLoginSuccess" class="com.Unicon.security.CustomLoginSuccessHandler"/>
 
-
+  	<!-- BCryptPasswordEncoder 빈 정의 -->
+    <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
 
  	<!-- 시큐리티 설정 -->
@@ -34,9 +35,10 @@
  		<security:authentication-provider>
  			
 		 	<!-- 1층에서 방문자 기록 (사용자 정보 저장체크) -->
-		 	<security:user-service>
+ 		 	<security:user-service>
 		 		<security:user name="member" password="{noop}1234" authorities="ROLE_MEMBER"/>
-		 	</security:user-service>
+		 	</security:user-service> 
+		 	
 		 		</security:authentication-provider>
 		 	</security:authentication-manager>
  
