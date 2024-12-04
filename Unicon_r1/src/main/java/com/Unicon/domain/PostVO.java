@@ -21,16 +21,18 @@ public class PostVO {
 	private String post_pet_place;		// 실종/발견 장소
 	private String post_pet_date;		// 실종/발견 일자
 	
-//	private MultipartFile image_file1;	// 이미지 파일1
-//	private MultipartFile image_file2;	// 이미지 파일2
-//	private MultipartFile image_file3;	// 이미지 파일3
-//	private MultipartFile image_file4;	// 이미지 파일4
+//	private MultipartFile image_file1;			// 이미지 파일1
+//	private MultipartFile image_file2;			// 이미지 파일2
+//	private MultipartFile image_file3;			// 이미지 파일3
+//	private MultipartFile image_file4;			// 이미지 파일4
 	
-	private List<ImageVO> post_images;
-	private List<MultipartFile> upload_images;
+	private List<ImageVO> post_images;			// 이미지 테이블
+	private List<MultipartFile> upload_images;	// 멀티파트 이미지(실제X)
+	private List<CommentVO> post_comments;		// 댓글 테이블
 	
 //	private List<ImageVO> post_images;	// 게시물 이미지
 	
-	private JypMemberVO jypMember;		// 임시 멤버 테이블
+	private JypMemberVO jypMemberVO;			// 임시 멤버 테이블
+	private CategoryDataVO categoryDataVO;		// 카테고리 테이블
 	
 }
