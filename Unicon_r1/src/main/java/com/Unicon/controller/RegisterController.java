@@ -71,6 +71,20 @@ public class RegisterController {
     @GetMapping("/mRegister5")
     public void mRegister5() {
         logger.info("mRegister5() 실행!");
-    }    
+    }  
+    
+    // 쇼핑몰 관리자 회원가입 페이지 이동
+    // http://localhost:8088/register/sRegister
+    @GetMapping("/sRegister")
+    public void sRegister() {
+        logger.info("sRegister() 실행!");
+    }  
+    
+    // 보호 센터 회원가입 페이지 이동
+    // http://localhost:8088/register/iRegister
+    @GetMapping("/iRegister")
+    public void iRegister() {
+        logger.info("iRegister() 실행!");
+    }        
     
 }
