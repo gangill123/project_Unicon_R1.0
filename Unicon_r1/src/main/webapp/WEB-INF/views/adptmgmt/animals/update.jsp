@@ -69,12 +69,12 @@
 		margin: 0;
 	}
 	
-	#plusIcon1, #plusIcon2, #plusIcon3, #plusIcon4, #plusIcon5 {
+	#plusIcon0, #plusIcon1, #plusIcon2, #plusIcon3, #plusIcon4 {
 		font-size: 2rem;
 		color: #888;
 	}
 	
-	#image-preview1, #image-preview2, #image-preview3, #image-preview4, #image-preview5 {
+	#image-preview0, #image-preview1, #image-preview2, #image-preview3, #image-preview4 {
 		width: 100%;
 		height: 100%;
 		object-fit: fill;
@@ -616,14 +616,14 @@
 													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
 														<label class="text-dark custom-label">대표 이미지</label>
 													    <div class="upload-container mb-1">
-															<label for="image-input1" class="upload-button label-no-margin">
+															<label for="image-input0" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input1" name="upload_images[0]" />
-																<i id="plusIcon1" class="mdi mdi-plus a-preview-i"></i>
-																<input type="hidden" id="orgSrc1" name="check_images[0].orgSrc"/>
-																<input type="hidden" id="newFileCheck1" name="check_images[0].newFileCheck"/>
-																<input type="hidden" id="moveSrc1" name="check_images[0].moveSrc"/>
-																<img id="image-preview1" class="a-preview" alt="이미지 미리보기" />
+																	accept="image/*" id="image-input0" name="upload_images[0]" />
+																<i id="plusIcon0" class="mdi mdi-plus a-preview-i"></i>
+																<input type="hidden" id="orgSrc0" name="check_images[0].orgSrc"/>
+																<input type="hidden" id="changeCheck0" name="check_images[0].changeCheck"/>
+																<input type="hidden" id="moveSrc0" name="check_images[0].moveSrc"/>
+																<img id="image-preview0" class="a-preview" alt="이미지 미리보기" />
 															</label>
 														</div>
 														<div class="row mt-2">
@@ -637,7 +637,7 @@
 																	</span>
 																	<i class="fa-solid fa-images"></i>
 																</button>
-																<button type="button" id="image-delete1" 
+																<button type="button" id="image-delete0" 
 																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images"> 
 																	<i class="fa-solid fa-trash-can"></i>
 																</button>
@@ -648,13 +648,35 @@
 														<div></div>
 														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
 													    <div class="upload-container">
+															<label for="image-input1" class="upload-button label-no-margin">
+																<input type="file" class="file-upload-default image-input" 
+																	accept="image/*" id="image-input1" name="upload_images[1]"/>
+																<i id="plusIcon1" class="mdi mdi-plus a-preview-i"></i>
+																<input type="hidden" id="orgSrc1" name="check_images[1].orgSrc"/>
+																<input type="hidden" id="changeCheck1" name="check_images[1].changeCheck"/>
+																<input type="hidden" id="moveSrc1" name="check_images[1].moveSrc"/>
+																<img id="image-preview1" class="a-preview" alt="이미지 미리보기" />
+															</label>
+														</div>
+														<div class="row mt-2">
+															<div class="col text-right">
+																<button type="button" id="image-delete1" 
+																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images"> 
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
+														</div>
+													</div>
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
+													    <div class="upload-container">
 															<label for="image-input2" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input2" name="upload_images[1]"/>
+																	accept="image/*" id="image-input2" name="upload_images[2]"/>
 																<i id="plusIcon2" class="mdi mdi-plus a-preview-i"></i>
-																<input type="hidden" id="orgSrc2" name="check_images[1].orgSrc"/>
-																<input type="hidden" id="newFileCheck2" name="check_images[1].newFileCheck"/>
-																<input type="hidden" id="moveSrc2" name="check_images[1].moveSrc"/>
+																<input type="hidden" id="orgSrc2" name="check_images[2].orgSrc"/>
+																<input type="hidden" id="changeCheck2" name="check_images[2].changeCheck"/>
+																<input type="hidden" id="moveSrc2" name="check_images[2].moveSrc"/>
 																<img id="image-preview2" class="a-preview" alt="이미지 미리보기" />
 															</label>
 														</div>
@@ -672,39 +694,17 @@
 													    <div class="upload-container">
 															<label for="image-input3" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input3" name="upload_images[2]"/>
+																	accept="image/*" id="image-input3" name="upload_images[3]"/>
 																<i id="plusIcon3" class="mdi mdi-plus a-preview-i"></i>
-																<input type="hidden" id="orgSrc3" name="check_images[2].orgSrc"/>
-																<input type="hidden" id="newFileCheck3" name="check_images[2].newFileCheck"/>
-																<input type="hidden" id="moveSrc3" name="check_images[2].moveSrc"/>
+																<input type="hidden" id="orgSrc3" name="check_images[3].orgSrc"/>
+																<input type="hidden" id="changeCheck3" name="check_images[3].changeCheck"/>
+																<input type="hidden" id="moveSrc3" name="check_images[3].moveSrc"/>
 																<img id="image-preview3" class="a-preview" alt="이미지 미리보기" />
 															</label>
 														</div>
 														<div class="row mt-2">
 															<div class="col text-right">
 																<button type="button" id="image-delete3" 
-																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images"> 
-																	<i class="fa-solid fa-trash-can"></i>
-																</button>
-															</div>
-														</div>
-													</div>
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
-														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
-													    <div class="upload-container">
-															<label for="image-input4" class="upload-button label-no-margin">
-																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input4" name="upload_images[3]"/>
-																<i id="plusIcon4" class="mdi mdi-plus a-preview-i"></i>
-																<input type="hidden" id="orgSrc4" name="check_images[3].orgSrc"/>
-																<input type="hidden" id="newFileCheck4" name="check_images[3].newFileCheck"/>
-																<input type="hidden" id="moveSrc4" name="check_images[3].moveSrc"/>
-																<img id="image-preview4" class="a-preview" alt="이미지 미리보기" />
-															</label>
-														</div>
-														<div class="row mt-2">
-															<div class="col text-right">
-																<button type="button" id="image-delete4" 
 																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images"> 
 																	<i class="fa-solid fa-trash-can"></i>
 																</button>
@@ -1327,7 +1327,7 @@
 					} else {
 						if(validaImagefiles) {
 				            for (let i = 0; i < aImagefiles.length; i++) {
-				                    const fileInput = $('#image-input' + (i + 1))[0];
+				                    const fileInput = $('#image-input' + i)[0];
 				                    const dataTransfer = new DataTransfer();
 				                    
 				                    dataTransfer.items.add(aImagefiles[i]);
@@ -1349,149 +1349,281 @@
 				$('.image-input').on('change', function(e) {
 					const file = e.target.files[0];
 					const reader = new FileReader();
-					const inputId = e.target.id;
-					const idNoNum = inputId.replace(/\d+/g, '');
-					const idNum = inputId.charAt(inputId.length - 1);
-					const previewId = '#image-preview' + idNum;
-					const previewIdNoNum = previewId.replace(/\d+/g, '');
-					const plusIconId = '#plusIcon' + idNum;
-					const newFileCheckId = '#newFileCheck' + idNum;
+					const targetId = e.target.id; // image-input0, image-input1, image-input2, image-input3
+					console.log(targetId);
+					const idNumber = parseInt(targetId.charAt(targetId.length - 1), 10);
+					console.log(idNumber);
+					const imageInputId = '#image-input';
+					const previewId = '#image-preview';
+					const plusIconId = '#plusIcon';
+					const orgSrcId = '#orgSrc';
+					const changeCheckId = '#changeCheck';
+					const moveSrcId = '#moveSrc';
 					const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
 					
+					
 					if (file) {
-						 if(fileTypeFilter.exec(file.name)) {
-							 switch(idNum) {
-							 	case '1': {
-							 		reader.readAsDataURL(file);
-									reader.onload = function(e) {
-										$(previewId).attr('src', e.target.result).show();
-										$(plusIconId).hide();
-										$(newFileCheckId).val(1);
-									}
-									break;
-							 	}
-								case '2': {
-									if($('#image-preview'+ (idNum - 1)).attr('src') == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
-									} else {
-										reader.readAsDataURL(file);
-										reader.onload = function(e) {
-											$(previewId).attr('src', e.target.result).show();
-											$(plusIconId).hide();
-											$(newFileCheckId).val(1);
-										}
-									}
-									break;
-								}
-								case '3': {
-									if($('#image-preview'+ (idNum - 2)).attr('src') == '' 
-											&& $('#image-preview'+ (idNum - 1)).attr('src') == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
-									} else if($('#image-preview'+ (idNum - 1)).attr('src') == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
-									} else {
-										reader.readAsDataURL(file);
-										reader.onload = function(e) {
-											$(previewId).attr('src', e.target.result).show();
-											$(plusIconId).hide();
-											$(newFileCheckId).val(1);
-										}
-									}
-									break;
-								}
-								case '4': {
-									if($('#image-preview'+ (idNum - 3)).attr('src') == '' 
-											&& $('#image-preview'+ (idNum - 2)).attr('src') == '' 
-												&& $('#image-preview'+ (idNum - 1)).attr('src') == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 3))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 3))[0].dispatchEvent(new Event('change'));
-									} else if($('#image-preview'+ (idNum - 2)).attr('src') == '' 
-											&& $('#image-preview'+ (idNum - 1)).attr('src') == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
-									} else if($('#image-preview'+ (idNum - 1)).attr('src') == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
-									} else {
-										reader.readAsDataURL(file);
-										reader.onload = function(e) {
-											$(previewId).attr('src', e.target.result).show();
-											$(plusIconId).hide();
-											$(newFileCheckId).val(1);
-										}
-									}
-									break;
-								}
-								default: {
-									console.error("잘못된 번호");
-									break;
-								}
-							}
-						} else {
+
+						if(!fileTypeFilter.exec(file.name)) {
 							alert('허용되지 않는 파일 형식이 포함되어 있습니다.');
 							$(this).val('');
+							return;
 						}
-					} else {
-						if(idNum < 4) {
-							for(let i = parseInt(idNum, 10); i <= 4; i++) {
-								if(i == idNum) {
-									$(previewId).hide();
-									$(plusIconId).show();
-									continue;
-								} else if($('#' + idNoNum + i).val() != '') {
-									const adataTransfer = new DataTransfer();
-									adataTransfer.items.add($('#' + idNoNum + i)[0].files[0]);
-									$('#' + idNoNum + i).val('');
-									$('#newFileCheck'+ i).val(1);
-									$('#moveSrc'+ (i - 1)).val($('#orgSrc'+ i).val());
-									$('#image-preview'+ (i - 1)).attr('src', $('#image-preview'+ i).attr('src'));
-									$('#image-preview'+ i).removeAttr('src');
-									$('#image-preview'+ i).hide();
-									$('#plusIcon'+ i).show();
-									$('#' + idNoNum + (i - 1))[0].files = adataTransfer.files;
-									$('#' + idNoNum + (i - 1))[0].dispatchEvent(new Event('change'));
-								} else if($(previewIdNoNum + i).attr('src') != '') {
-									$('#newFileCheck'+ i).val(1);
-									$('#moveSrc'+ (i - 1)).val($('#orgSrc'+ i).val());
-									$('#image-preview'+ (i - 1)).attr('src', $('#image-preview'+ i).attr('src'));
-									$('#image-preview'+ i).removeAttr('src');
-									$('#image-preview'+ i).hide();
-									$('#image-preview'+ (i - 1)).show();
-									$('#plusIcon'+ i).show();
-									$('#plusIcon'+ (i - 1)).hide();
+
+						switch(idNumber) {
+							case 0: { // 1번째칸
+							 	reader.readAsDataURL(file);
+								reader.onload = function(e) {
+									$(previewId + idNumber).attr('src', e.target.result).show();
+									$(plusIconId + idNumber).hide();
+									$(changeCheckId + idNumber).val(1);
 								}
+							break;
 							}
-						} else {
-							$(previewId).hide();
-							$(previewId).removeAttr('src');
-							$(plusIconId).show();
+							case 1: { // 2번째칸
+								if($(previewId + (idNumber - 1)).attr('src') == '') {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										const aDataTransfer = new DataTransfer();
+										aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+										$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
+										$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
+										$(plusIconId + (idNumber - 1)).hide();
+										$(changeCheckId + (idNumber - 1)).val(1);
+										$(imageInputId + idNumber).val('');
+									}
+								} else {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										$(previewId + idNumber).attr('src', e.target.result).show();
+										$(plusIconId + idNumber).hide();
+										$(changeCheckId + idNumber).val(1);
+									}
+								}
+							break;
+							}
+							case 2: { // 3번째칸
+								if($(previewId + (idNumber - 2)).attr('src') == '' 
+									&& $(previewId + (idNumber - 1)).attr('src') == '') {
+										reader.readAsDataURL(file);
+										reader.onload = function(e) {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+											$(imageInputId + (idNumber - 2))[0].files = aDataTransfer.files;
+											$(previewId + (idNumber - 2)).attr('src', e.target.result).show();
+											$(plusIconId + (idNumber - 2)).hide();
+											$(changeCheckId + (idNumber - 2)).val(1);
+											$(imageInputId + idNumber).val('');
+										}
+								} else if($(previewId + (idNumber - 1)).attr('src') == '') {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										const aDataTransfer = new DataTransfer();
+										aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+										$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
+										$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
+										$(plusIconId + (idNumber - 1)).hide();
+										$(changeCheckId + (idNumber - 1)).val(1);
+										$(imageInputId + idNumber).val('');
+									}
+								} else {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										$(previewId + idNumber).attr('src', e.target.result).show();
+										$(plusIconId + idNumber).hide();
+										$(changeCheckId + idNumber).val(1);
+									}
+								}
+							break;
+							}
+							case 3: { // 4번째칸
+								if($(previewId + (idNumber - 3)).attr('src') == '' 
+									&& $(previewId + (idNumber - 2)).attr('src') == '' 
+										&& $(previewId + (idNumber - 1)).attr('src') == '') {
+											reader.readAsDataURL(file);
+											reader.onload = function(e) {
+												const aDataTransfer = new DataTransfer();
+												aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+												$(imageInputId + (idNumber - 3))[0].files = aDataTransfer.files;
+												$(previewId + (idNumber - 3)).attr('src', e.target.result).show();
+												$(plusIconId + (idNumber - 3)).hide();
+												$(changeCheckId + (idNumber - 3)).val(1);
+												$(imageInputId + idNumber).val('');
+											}
+								} else if($(previewId + (idNumber - 2)).attr('src') == '' 
+									&& $(previewId + (idNumber - 1)).attr('src') == '') {
+										reader.readAsDataURL(file);
+										reader.onload = function(e) {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+											$(imageInputId + (idNumber - 2))[0].files = aDataTransfer.files;
+											$(previewId + (idNumber - 2)).attr('src', e.target.result).show();
+											$(plusIconId + (idNumber - 2)).hide();
+											$(changeCheckId + (idNumber - 2)).val(1);
+											$(imageInputId + idNumber).val('');
+										}
+								} else if($(previewId + (idNumber - 1)).attr('src') == '') {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										const aDataTransfer = new DataTransfer();
+										aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+										$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
+										$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
+										$(plusIconId + (idNumber - 1)).hide();
+										$(changeCheckId + (idNumber - 1)).val(1);
+										$(imageInputId + idNumber).val('');
+									}
+								} else {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										$(previewId + idNumber).attr('src', e.target.result).show();
+										$(plusIconId + idNumber).hide();
+										$(changeCheckId + idNumber).val(1);
+									}
+								}
+							break;
+							}
+							default: {
+								console.error("잘못된 번호");
+							break;
+							}
+						} // 파일이 있는 경우
+
+					} else { // 파일이 없는 경우(취소한 경우)
+						switch(idNumber) {
+							case 3: { // 4번째 칸
+								console.log('파일X-4번째칸-체크');
+								$(previewId + idNumber).attr('src',''); // removeAttr은 src 속성이 제거되어 attr('src') => undefined 반환
+								$(previewId + idNumber).hide();
+								$(plusIconId + idNumber).show();
+								$(changeCheckId + idNumber).val(1);
+							break;
+							}
+							case 2: { // 3번째 칸
+								if($(previewId + (idNumber + 1)).attr('src') != '') {
+									const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+									const nextOrgSrc = $(orgSrcId + (idNumber + 1)).val();
+									$(previewId + idNumber).attr('src', nextSrc);
+									$(previewId + idNumber).show();
+									$(moveSrcId + idNumber).val(nextOrgSrc);
+									$(changeCheckId + idNumber).val(1);
+									$(previewId + (idNumber + 1)).attr('src','');
+									$(previewId + (idNumber + 1)).hide();
+									$(plusIconId + (idNumber + 1)).show();
+									$(changeCheckId + (idNumber + 1)).val(1);
+								} else {
+									$(previewId + idNumber).attr('src','');
+									$(previewId + idNumber).hide();
+									$(plusIconId + idNumber).show();
+									$(changeCheckId + idNumber).val(1);
+								}
+							break;
+							}
+							case 1: { // 2번째 칸
+								if($(previewId + (idNumber + 1)).attr('src') != ''
+									&& $(previewId + (idNumber + 2)).attr('src') != '') {
+										const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+										const nextOrgSrc = $(orgSrcId + (idNumber + 1)).val();
+										const nextSrc2 = $(previewId + (idNumber + 2)).attr('src');
+										const nextOrgSrc2 = $(orgSrcId + (idNumber + 2)).val();
+										$(previewId + idNumber).attr('src', nextSrc);
+										$(previewId + idNumber).show();
+										$(moveSrcId + idNumber).val(nextOrgSrc);
+										$(changeCheckId + idNumber).val(1);
+										$(previewId + (idNumber + 1)).attr('src', nextSrc2);
+										$(previewId + (idNumber + 1)).show();
+										$(moveSrcId + (idNumber + 1)).val(nextOrgSrc2);
+										$(changeCheckId + (idNumber + 1)).val(1);
+										$(previewId + (idNumber + 2)).attr('src', '');
+										$(previewId + (idNumber + 2)).hide();
+										$(plusIconId + (idNumber + 2)).show();
+										$(changeCheckId + (idNumber + 2)).val(1);
+								} else if($(previewId + (idNumber + 1)).attr('src') != '') {
+									const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+									const nextOrgSrc = $(orgSrcId + (idNumber + 1)).val();
+									$(previewId + idNumber).attr('src', nextSrc);
+									$(previewId + idNumber).show();
+									$(moveSrcId + idNumber).val(nextOrgSrc);
+									$(changeCheckId + idNumber).val(1);
+									$(previewId + (idNumber + 1)).attr('src', '');
+									$(previewId + (idNumber + 1)).hide();
+									$(plusIconId + (idNumber + 1)).show();
+									$(changeCheckId + (idNumber + 1)).val(1);
+								} else {
+									$(previewId + idNumber).attr('src', '');
+									$(previewId + idNumber).hide();
+									$(plusIconId + idNumber).show();
+									$(changeCheckId + idNumber).val(1);
+								}
+							break;
+							}
+							case 0:{ // 1번째 칸
+								if($(previewId + (idNumber + 1)).attr('src') != ''
+									&& $(previewId + (idNumber + 2)).attr('src') != ''
+										&& $(previewId + (idNumber + 3)).attr('src') != '') {
+										const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+										const nextOrgSrc = $(orgSrcId + (idNumber + 1)).val();
+										const nextSrc2 = $(previewId + (idNumber + 2)).attr('src');
+										const nextOrgSrc2 = $(orgSrcId + (idNumber + 2)).val();
+										const nextSrc3 = $(previewId + (idNumber + 3)).attr('src');
+										const nextOrgSrc3 = $(orgSrcId + (idNumber + 3)).val();
+										$(previewId + idNumber).attr('src', nextSrc);
+										$(previewId + idNumber).show();
+										$(moveSrcId + idNumber).val(nextOrgSrc);
+										$(changeCheckId + idNumber).val(1);
+										$(previewId + (idNumber + 1)).attr('src', nextSrc2);
+										$(previewId + (idNumber + 1)).show();
+										$(moveSrcId + (idNumber + 1)).val(nextOrgSrc2);
+										$(changeCheckId + (idNumber + 1)).val(1);
+										$(previewId + (idNumber + 2)).attr('src', nextSrc3);
+										$(previewId + (idNumber + 2)).show();
+										$(moveSrcId + (idNumber + 2)).val(nextOrgSrc3);
+										$(changeCheckId + (idNumber + 2)).val(1);
+										$(previewId + (idNumber + 3)).attr('src', '');
+										$(previewId + (idNumber + 3)).hide();
+										$(plusIconId + (idNumber + 3)).show();
+										$(changeCheckId + (idNumber + 3)).val(1);
+								} else if($(previewId + (idNumber + 1)).attr('src') != ''
+									&& $(previewId + (idNumber + 2)).attr('src') != '') {
+										const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+										const nextOrgSrc = $(orgSrcId + (idNumber + 1)).val();
+										const nextSrc2 = $(previewId + (idNumber + 2)).attr('src');
+										const nextOrgSrc2 = $(orgSrcId + (idNumber + 2)).val();
+										$(previewId + idNumber).attr('src', nextSrc);
+										$(previewId + idNumber).show();
+										$(moveSrcId + idNumber).val(nextOrgSrc);
+										$(changeCheckId + idNumber).val(1);
+										$(previewId + (idNumber + 1)).attr('src', nextSrc2);
+										$(previewId + (idNumber + 1)).show();
+										$(moveSrcId + (idNumber + 1)).val(nextOrgSrc2);
+										$(changeCheckId + (idNumber + 1)).val(1);
+										$(previewId + (idNumber + 2)).attr('src', '');
+										$(previewId + (idNumber + 2)).hide();
+										$(plusIconId + (idNumber + 2)).show();
+										$(changeCheckId + (idNumber + 2)).val(1);
+								} else if($(previewId + (idNumber + 1)).attr('src') != '') {
+									const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+									const nextOrgSrc = $(orgSrcId + (idNumber + 1)).val();
+									$(previewId + idNumber).attr('src', nextSrc);
+									$(previewId + idNumber).show();
+									$(moveSrcId + idNumber).val(nextOrgSrc);
+									$(changeCheckId + idNumber).val(1);
+									$(previewId + (idNumber + 1)).attr('src', '');
+									$(previewId + (idNumber + 1)).hide();
+									$(plusIconId + (idNumber + 1)).show();
+									$(changeCheckId + (idNumber + 1)).val(1);
+								} else {
+									$(previewId + idNumber).attr('src', '');
+									$(previewId + idNumber).hide();
+									$(plusIconId + idNumber).show();
+									$(changeCheckId + idNumber).val(1);
+								}
+							break;
+							}
+							default:{
+								console.log('잘못된 번호'+ idNumber);
+							break;
+							}
 						}
 					}
 				});
@@ -1656,9 +1788,9 @@
 							$('#aWeight').val(data.animal_weight);
 							$('#aRegUser').val(data.member_id);
 							for(let i = 0; i < 4; i++) {
-								$('#image-preview'+(i + 1)).attr('src',data.animal_images[i].image_src).show();
-								$('#orgSrc'+(i + 1)).val(data.animal_images[i].image_src);
-								$('#plusIcon'+(i + 1)).hide();
+								$('#image-preview'+(i)).attr('src',data.animal_images[i].image_src).show();
+								$('#orgSrc'+(i)).val(data.animal_images[i].image_src);
+								$('#plusIcon'+(i)).hide();
 							}
 							$('input[name="animal_act"][value="'+ data.animal_act +'"]').prop('checked',true);
 							$('input[name="animal_social"][value="'+ data.animal_social +'"]').prop('checked',true);
