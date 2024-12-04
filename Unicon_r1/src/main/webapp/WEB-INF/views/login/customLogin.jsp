@@ -19,19 +19,24 @@
     #kakao-login-btn img {
         border: none; /* 이미지 테두리 제거 */
         display: block; /* 공백 제거 */
-        width: 100%; /* 이미지 크기 조정 */
+        width: 50%; /* 이미지 크기 조정 */
+        height: auto; /* 이미지 크기 조정 */
+        margin: 0 auto; /* 수평 중앙 정렬 */
     }
     #naver-login-btn {
         border: none; /* 버튼 테두리 제거 */
         outline: none; /* 버튼 클릭 시 외곽선 제거 */
         padding: 0; /* 패딩 0으로 설정 */
         background: none; /* 배경 없애기 */
+        
     }
 
     #naver-login-btn img {
         border: none; /* 이미지 테두리 제거 */
         display: block; /* 공백 제거 */
-        width: 100%; /* 이미지 크기 조정 */
+        width: 50%; /* 이미지 크기 조정 */
+        height: auto; /* 이미지 크기 조정 */
+        margin: 0 auto; /* 수평 중앙 정렬 */
     }    
     
 </style>
@@ -84,7 +89,7 @@
 					    <img src="${pageContext.request.contextPath}/resources/naver_login.png" alt="네이버 로그인">
 					</button>					
 		            <div class="text-center text-small mt-4">
-		              <span>아직 유니콘의 회원이 아니신가요? <a href="registration.html">회원가입</a></span>
+		              <span>아직 유니콘의 회원이 아니신가요? <a href="http://localhost:8088/register/mType">회원가입</a></span>
 		            </div>
 		          </form>
 		        </div>

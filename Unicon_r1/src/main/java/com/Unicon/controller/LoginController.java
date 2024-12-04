@@ -13,7 +13,7 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	//통합 로그인 페이지
-	// http://localhost:8088/login/mLogin
+	// http://localhost:8088/login/customLogin
 	public void mLogin() {
 		logger.info("mLogin() 실행!");
 	}
