@@ -23,7 +23,7 @@
 }
 .notice-image-wrapper {
     position: relative;
-    padding-bottom: 75%;  /* 4:3 비율 설정 */
+    padding-bottom: 100%;  /* 4:3 비율 설정 */
     overflow: hidden;
 }
 .notice-image {
@@ -103,7 +103,7 @@
 		        <div class="col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
 		            <div class="card notice-card" onclick="location.href='/notice/${notice.noId}'">
 		                <div class="notice-image-wrapper">
-		                    <img src="${not empty notice.noThumb ? (notice.noThumb.startsWith('/') ? notice.noThumb : '/'.concat(notice.noThumb)) : '/resources/assets_sub/img/default-thumb.jpg'}" 
+		                    <img src="${not empty notice.noThumb ? (notice.noThumb.startsWith('/') ? notice.noThumb : '/'.concat(notice.noThumb)) : '/resources/assets/images/default-thumb.png'}" 
 		                         class="notice-image" 
 		                         alt="공지사항 썸네일"
 		                         onerror="this.src='/resources/assets_sub/img/default-thumb.jpg'">

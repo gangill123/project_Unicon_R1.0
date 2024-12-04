@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
-    <title>유니콘 - 봉사활동 공고등록</title>
+    <title>유니콘 - 봉사활동 공고${volunteer.voId == null ? '등록' : '수정'}</title>
     <link rel="stylesheet" href="/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/css/vendor.bundle.base.css">
@@ -231,22 +231,24 @@
 	        <div class="content-wrapper">
 			    <div class="card">
 			        <div class="page-header">
-			            <h3 class="page-title">봉사활동 공고 등록</h3>
+			            <h3 class="page-title">봉사활동 공고${volunteer.voId == null ? '등록' : '수정'}</h3>
 			        </div>
 			        <div class="card-body">
-			            <form id="postForm" class="forms-sample">
+			            <form id="volunteerForm" method="post" action="/volunteer/manage/submit">
+						    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						    <input type="hidden" name="voId" value="${volunteer.voId}" />
 						    
 						    <div class="form-group row">
 						        <div class="form-item">
 						            <label class="col-form-label">봉사활동명</label>
 						            <div class="form-control-wrapper">
-						                <input type="text" class="form-control" name="voTitle" required>
+						                <input type="text" class="form-control" name="voTitle" value="${volunteer.voTitle}" required>
 						            </div>
 						        </div>
 						        <div class="form-item">
 						            <label class="col-form-label">봉사장소</label>
 						            <div class="form-control-wrapper">
-						                <input type="text" class="form-control" name="voLocation" required>
+						                <input type="text" class="form-control" name="voLocation" value="${volunteer.voLocation}" required>
 						            </div>
 						        </div>
 						    </div>
@@ -255,13 +257,13 @@
 						        <div class="form-item">
 						            <label class="col-form-label">모집대상</label>
 						            <div class="form-control-wrapper">
-						                <input type="text" class="form-control" name="voTarget" required>
+						                <input type="text" class="form-control" name="voTarget" value="${volunteer.voTarget}" required>
 						            </div>
 						        </div>
 						        <div class="form-item">
 						            <label class="col-form-label">모집인원</label>
 						            <div class="form-control-wrapper">
-						                <input type="number" class="form-control" name="voCapacity" required>
+						                <input type="number" class="form-control" name="voCapacity" value="${volunteer.voCapacity}" required>
 						            </div>
 						        </div>
 						    </div>
@@ -270,26 +272,28 @@
 						        <div class="form-item">
 						            <label class="col-form-label">담당자</label>
 						            <div class="form-control-wrapper">
-						                <input type="text" class="form-control" name="voManager" required>
+						                <input type="text" class="form-control" name="voManager" value="${volunteer.voManager}" required>
 						            </div>
 						        </div>
-							    
-							    <div class="form-item">
-							        <label class="col-form-label">연락처</label>
-							        <div class="form-control-wrapper">
-							            <input type="text" class="form-control" name="voContact" required>
-							        </div>
-							    </div>
-							</div>
+						        
+						        <div class="form-item">
+						            <label class="col-form-label">연락처</label>
+						            <div class="form-control-wrapper">
+						                <input type="text" class="form-control" name="voContact" value="${volunteer.voContact}" required>
+						            </div>
+						        </div>
+						    </div>
 						
 						    <div class="form-group row">
 						        <div class="form-item">
 						            <label class="col-form-label">모집기간</label>
 						            <div class="form-control-wrapper">
 						                <div class="input-group">
-						                    <input type="date" class="form-control" name="voRecruitStart" required>
+						                    <input type="date" class="form-control" name="voRecruitStart" 
+						                           value="<fmt:formatDate value='${volunteer.voRecruitStart}' pattern='yyyy-MM-dd'/>" required>
 						                    <span class="input-group-text">~</span>
-						                    <input type="date" class="form-control" name="voRecruitEnd" required>
+						                    <input type="date" class="form-control" name="voRecruitEnd" 
+						                           value="<fmt:formatDate value='${volunteer.voRecruitEnd}' pattern='yyyy-MM-dd'/>" required>
 						                </div>
 						            </div>
 						        </div>
@@ -297,9 +301,11 @@
 						            <label class="col-form-label">봉사기간</label>
 						            <div class="form-control-wrapper">
 						                <div class="input-group">
-						                    <input type="date" class="form-control" name="voStartDate" required>
+						                    <input type="date" class="form-control" name="voStartDate" 
+						                           value="<fmt:formatDate value='${volunteer.voStartDate}' pattern='yyyy-MM-dd'/>" required>
 						                    <span class="input-group-text">~</span>
-						                    <input type="date" class="form-control" name="voEndDate" required>
+						                    <input type="date" class="form-control" name="voEndDate" 
+						                           value="<fmt:formatDate value='${volunteer.voEndDate}' pattern='yyyy-MM-dd'/>" required>
 						                </div>
 						            </div>
 						        </div>
@@ -308,16 +314,17 @@
 						    <div class="form-item">
 						        <label class="col-form-label">활동내용</label>
 						        <div class="form-control-wrapper">
-						            <textarea class="form-control" name="voContent" rows="8" required></textarea>
+						            <textarea class="form-control" name="voContent" rows="8" required>${volunteer.voContent}</textarea>
 						        </div>
 						    </div>
-						    
-							</form>
+						</form>
 						</div>
 					</div>
 				<div class="row">
 			        <div class="col-12 text-center mt-4">
-			            <button type="submit" class="btn btn-primary px-5" form="postForm">등록</button>
+			            <button type="submit" class="btn btn-primary px-5" form="volunteerForm">
+						    ${volunteer.voId == null ? '등록' : '수정'}
+						</button>
 			            <button type="button" class="btn btn-light px-5" onclick="history.back()">취소</button>
 			        </div>
 				</div>
@@ -336,35 +343,117 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+    var csrfToken = $("meta[name='_csrf']").attr("content");
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+    // CSRF 토큰이 존재할 때만 ajaxSetup 설정
+    if (csrfToken && csrfHeader) {
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            }
+        });
+    }
+    
     $(document).ready(function() {
-        $('#postForm').on('submit', function(e) {
-            e.preventDefault();
+    	// 폼 유효성 검사 함수 추가
+        function validateForm() {
+            // 필수 입력 필드 검사
+            if (!$('input[name="voTitle"]').val().trim()) {
+                alert('봉사활동명을 입력해주세요.');
+                return false;
+            }
+            if (!$('input[name="voLocation"]').val().trim()) {
+                alert('봉사장소를 입력해주세요.');
+                return false;
+            }
+            if (!$('input[name="voTarget"]').val().trim()) {
+                alert('모집대상을 입력해주세요.');
+                return false;
+            }
+            if (!$('input[name="voCapacity"]').val()) {
+                alert('모집인원을 입력해주세요.');
+                return false;
+            }
+            if (!$('input[name="voManager"]').val().trim()) {
+                alert('담당자를 입력해주세요.');
+                return false;
+            }
+            if (!$('input[name="voContact"]').val().trim()) {
+                alert('연락처를 입력해주세요.');
+                return false;
+            }
             
-            var formData = {
-                voTitle: $('input[name="voTitle"]').val(),
-                voLocation: $('input[name="voLocation"]').val(),
-                voTarget: $('input[name="voTarget"]').val(),
-                voContent: $('textarea[name="voContent"]').val(),
-                voCapacity: $('input[name="voCapacity"]').val(),
-                voManager: $('input[name="voManager"]').val(),
-                voContact: $('input[name="voContact"]').val(),
-                voStartDate: $('input[name="voStartDate"]').val(),
-                voEndDate: $('input[name="voEndDate"]').val(),
-                voRecruitStart: $('input[name="voRecruitStart"]').val(),
-                voRecruitEnd: $('input[name="voRecruitEnd"]').val(),
-                status: 'active'
-            };
+         	// 날짜 값 가져오기
+            const recruitStart = new Date($('input[name="voRecruitStart"]').val());
+            const recruitEnd = new Date($('input[name="voRecruitEnd"]').val());
+            const volStart = new Date($('input[name="voStartDate"]').val());
+            const volEnd = new Date($('input[name="voEndDate"]').val());
             
+         	// 필수 입력 체크
+            if (!recruitStart) {
+                alert('모집 시작일을 입력해주세요.');
+                return false;
+            }
+            if (!recruitEnd) {
+                alert('모집 종료일을 입력해주세요.');
+                return false;
+            }
+            if (!volStart) {
+                alert('봉사 시작일을 입력해주세요.');
+                return false;
+            }
+            if (!volEnd) {
+                alert('봉사 종료일을 입력해주세요.');
+                return false;
+            }
+            
+         	// 날짜 유효성 검사
+            if (recruitEnd < recruitStart) {
+                alert('모집 종료일은 모집 시작일보다 이후여야 합니다.');
+                return false;
+            }
+            if (volEnd < volStart) {
+                alert('봉사 종료일은 봉사 시작일보다 이후여야 합니다.');
+                return false;
+            }
+            if (volStart < recruitStart) {
+                alert('봉사 시작일은 모집 시작일 이후여야 합니다.');
+                return false;
+            }
+
+            if (!$('textarea[name="voContent"]').val().trim()) {
+                alert('활동내용을 입력해주세요.');
+                return false;
+            }
+            return true;
+        }
+
+        $('#volunteerForm').on('submit', function(e) {
+			e.preventDefault();
+            
+            if (!validateForm()) {
+                return false;
+            }
+
+            // FormData 객체 생성
+            var formData = new FormData(this);
+            formData.set('status', 'active');
+            
+            // 폼 제출
             $.ajax({
-                url: '/volunteer/manage/submit',
+                url: this.action,
                 type: 'POST',
                 data: formData,
+                processData: false,
+                contentType: false,
                 success: function(response) {
-                    alert('봉사활동이 등록되었습니다.');
+                    alert(formData.get('voId') ? '봉사활동이 수정되었습니다.' : '봉사활동이 등록되었습니다.');
                     window.location.href = '/volunteer/manage';
                 },
-                error: function(xhr) {
-                    alert('등록 중 오류가 발생했습니다: ' + xhr.responseText);
+                error: function(xhr, status, error) {
+                    console.error('저장 실패:', error);
+                    alert('저장에 실패했습니다.');
                 }
             });
         });
