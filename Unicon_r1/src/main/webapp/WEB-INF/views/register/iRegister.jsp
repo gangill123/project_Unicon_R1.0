@@ -116,6 +116,61 @@
 		</style>
 		<!--  -->
 
+	    <!-- info1 -->
+	    <style>		
+		.if_first {
+		    display: inline-block; /* 텍스트 크기에 맞춰 박스 크기 자동 조정 */
+		    padding-left: 3px;
+		    padding-right: 3px;
+		    background-color: #4CAF50; /* 배경색 */
+		    color: white; /* 글자색 */
+		    border: none; /* 테두리 제거 */
+		    cursor: pointer; /* 커서 포인터로 변경 */
+		    font-size: 12px; /* 폰트 크기 */
+		    margin-left: 10px; /* Tip과의 간격 조정 */
+		    margin-bottom: 20px;
+		}
+		.info-tip {
+		    display: flex; /* Flexbox 사용 */
+		    align-items: center; /* 수직 가운데 정렬 */
+		    margin-top: 20px;
+		    margin-bottom: 0;
+		}
+		.info-section {
+		    background-color: #FFFEF2; /* 연한 노란색 */
+		    border: 1px solid #d0d0d0; /* 테두리 */
+		    border-radius: 4px; /* 모서리 둥글게 */
+		    padding: 15px; /* 패딩 */
+		    margin-top: 0; /* 위쪽 여백 */
+			font-size: 14px; /* 글씨 크기를 작게 설정 (기본값보다 조금 작게) */
+			}		    
+		    
+		}
+		
+		.info-section h3 {
+		    color: #333; /* 제목 색상 */
+		} 
+		.info-section strong {
+		    color: black; /* 검정색 */
+		}
+		.info-section ul {
+		    line-height: 1.2; /* 자간 줄이기 */
+		    padding-top : 15px;
+		    padding-left: 30px; /* 왼쪽 여백 */		    
+		}
+		.info-section li {
+		    margin-bottom: 6px; /* 항목 간 간격 */
+		}	
+		
+
+		.underline {
+		    border-bottom: 0.5px solid #000; /* 원하는 밑줄 두께와 색상을 지정 */
+		    padding-bottom: 0.5px; /* 밑줄과 텍스트 간의 간격 조정 */
+		 }
+				
+	    </style>
+	    <!-- info1 -->		
+
 <!--====================================작성부=====================================-->
 
 <section class="bg-light">
@@ -139,7 +194,16 @@
 		                            <h2 class="font-weight-600 mb-3">회원가입</h2>
 		                            <hr> 
 		                        </div>
-						<p class="mb-0"><strong>UNICORN</strong>에 가입하고 당신만의 소중한 친구를 찾아보세요. <strong>간단한 회원가입</strong>으로 바로 시작할 수 있습니다.</p>                                                       
+						  
+		                                <div class="info-section">
+		                                    <ul>	                                 
+		                                        <li><span class="underline">사설 보호센터</span>는 <strong>사업자등록번호</strong>, <strong>사업자 등록증</strong>을 첨부해주셔야합니다.</li>
+		                                        <li><span class="underline">지자체 보호센터</span>로 가입할 경우, <strong>지자체명</strong>, <strong>위탁여부,</strong> <strong>위탁 계약서</strong>를 첨부해주셔야합니다.</li>
+		                                        <li><span class="underline">비영리 단체 보호센터</span>로 유니콘을 이용하기 위해서는 <strong>비영리단체 등록번호</strong>, <strong>인증서</strong> 파일을 함께 첨부해주셔야합니다.</li>
+		                                    </ul>
+		                                </div>
+						
+						                                                    
                     </div>
 
 <hr>
@@ -149,6 +213,127 @@
 	                <div class="main_page_aticle">
 	                    <div class="form">
                         <form action="${pageContext.request.contextPath}/register/mRegister4" method="POST" onsubmit="return on_submit_check();">
+                        
+
+                                        <!-- Begin Select element -->
+                                        <div class="row mb-3" id="font_size">
+                                            <div class="quform-element form-group">
+                                                <label for="instType" class="col-sm-2 col-form-label" id="fst" style="padding-top:29px; "></label>
+                                                <div class="quform-input">
+                                                    <select id="instType" class="form-control form-select" name="instType" onchange="showFieldsBasedOnSelection()">
+                                                        <option value="">-- 센터 유형을 선택해주세요 --</option>
+                                                        <option value="member">민간(사설) 보호센터</option>
+                                                        <option value="shops">지자체 보호센터</option>
+                                                        <option value="ints">비영리 보호센터</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Select element -->                        
+                        
+                        
+ 							<!-- 민간 공통!!! -->    
+ 							<div id="privateFields" style="display: none;">
+ 							
+                            <!-- 사업자 등록증 첨부 -->
+							<div class="row mb-3" id="font_size">
+							  <label for="coverletter" class="col-sm-2 col-form-label" id="fst">사업자 등록증<span id="ico">*</span></label>
+							  <div class="col-sm-6" id="sst">
+							    <div class="custom-file">
+							      <input class="custom-file-input" type="file" id="coverletter1" name="coverletter" />
+							      <label class="custom-file-label" for="coverletter" data-browse="Browse">파일을 선택해주세요.</label>
+							    </div>
+							  </div>
+							</div>
+                            <!-- 사업자 등록증 첨부 -->                          
+							<!-- 사업자 번호 -->
+                            <div class="row mb-3" id="font_size">
+                              <label for="inst_number" class="col-sm-2 col-form-label" id="fst">사업자 번호<span id=ico>*</span></label>
+                              <div class="col-sm-6" id="sst">
+                                <input type="text" name="instNumber" class="form-control"  id="submit_check_instnumber2" placeholder="사업자 등록번호를 입력해주세요.">
+                              </div>
+                            </div>   
+  							<!-- 사업자 번호 -->   
+  							
+  							</div> <!-- 민강 공통!!! -->
+  							
+                        
+ 
+ 							<!-- 지자체 공통!!!!!! -->
+							<div id="municipalFields" style="display: none;">							
+ 							
+                             <div class="row mb-3" id="font_size">
+                              <label for="local_name" class="col-sm-2 col-form-label" id="fst">지자체명<span id=ico>*</span></label>
+                              <div class="col-sm-6" id="sst">
+                                <input type="text" name="localName" class="form-control"  id="submit_check_localname" placeholder="지자체명을 입력해주세요.">
+                              </div>
+                            </div>   
+ 
+   							
+                            <!-- 위탁 계약서 첨부 -->
+							<div class="row mb-3" id="font_size">
+							  <label for="coverletter" class="col-sm-2 col-form-label" id="fst">위탁 계약서<span id="ico">*</span></label>
+							  <div class="col-sm-6" id="sst">
+							    <div class="custom-file">
+							      <input class="custom-file-input" type="file" id="coverletter2" name="coverletter" />
+							      <label class="custom-file-label" for="coverletter" data-browse="Browse">파일을 선택해주세요.</label>
+							    </div>
+							  </div>
+							</div>
+                            <!-- 위탁 계약서 첨부 -->  
+                            
+							<!-- 위탁 여부 -->
+							  <div class="row mb-3" id="font_size">
+							      <label for="consignment" class="col-sm-2 col-form-label" id="fst">위탁 여부<span id="ico">*</span></label>
+							      <div class="col-sm-6" id="sst">
+							          <div class="form-check form-check-inline">
+							              <input class="form-check-input" type="radio" name="mailSubscription" id="consignYes" value="yes" required>
+							              <label class="form-check-label" for="consignYes">예</label>
+							          </div>
+							          <div class="form-check form-check-inline">
+							              <input class="form-check-input" type="radio" name="mailSubscription" id="consignNo" value="no" required>
+							              <label class="form-check-label" for="consignNo">아니오</label>
+							          </div>
+							      </div>
+							  </div>  
+							<!-- 위탁 여부 -->                            
+                            
+                            </div> <!-- 지자체 공통!!! -->
+                            
+                            
+                                  
+                           <!-- 비영리 공통!!!!!! --> 
+                           <div id="nonprofitFields" style="display: none;">
+                           
+                            <!-- 비영리단체 인증서 첨부 -->
+							<div class="row mb-3" id="font_size">
+								<label for="coverletter" class="col-sm-2 col-form-label" id="fst">비영리 단체 인증서<span id="ico">*</span></label>
+								  <div class="col-sm-6" id="sst">
+								    <div class="custom-file">
+								      <input class="custom-file-input" type="file" id="coverletter3" name="coverletter" />
+								      <label class="custom-file-label" for="coverletter" data-browse="Browse">파일을 선택해주세요.</label>
+								    </div>
+								  </div>
+							</div>
+                            <!-- 비영리단체 인증서 첨부 -->   
+                            
+                            
+                            <!-- 비영리 단체 등록번호 -->
+                             <div class="row mb-3" id="font_size">
+                              <label for="inst_number" class="col-sm-2 col-form-label" id="fst">비영리 단체 번호<span id=ico>*</span></label>
+                              <div class="col-sm-6" id="sst">
+                                <input type="text" name="instNumber" class="form-control"  id="submit_check_instnumber1" placeholder="단체 등록번호를 입력해주세요.">
+                              </div>
+                            </div>                                                    
+                        	<!-- 비영리 단체 등록번호 -->                           
+                            
+                            </div> <!-- 비영리 공통!!!!!!! -->
+
+							
+							<!--  공통항목!!!!!! -->
+							<div id="commonFields">
+							
+                        
                             <div class="row mb-3" id="font_size">
                               <label for="memberId" class="col-sm-2 col-form-label" id="fst" style="padding-top:29px; ">아이디<span id=ico>*</span></label>
                               <div class="col-sm-6 id_bell_f" id="sst" style="padding-top: 19px;">
@@ -184,37 +369,30 @@
                               </div>
 
                               <div class="row mb-3" id="font_size">
-                                <label for="member_name" class="col-sm-2 col-form-label" id="fst">이름<span id=ico>*</span></label>
+                                <label for="member_name" class="col-sm-2 col-form-label" id="fst">센터명<span id=ico>*</span></label>
                                 <div class="col-sm-6" id="sst">
-                                  <input type="text" name="memberName" class="form-control"  id="submit_check_name" placeholder="이름을 입력해주세요">
+                                  <input type="text" name="memberName" class="form-control"  id="submit_check_name" placeholder="센터명을 입력해주세요">
                                 </div>
-                              </div>
+                              </div>                                             
 
-                              <div class="row mb-3" id="font_size">
-                                <label for="memberNickname" class="col-sm-2 col-form-label" id="fst">닉네임<span id=ico>*</span></label>
-                                <div class="col-sm-6" id="sst">
-                                  <input type="text" name="memberNickname" class="form-control"  id="submit_check_nickname" placeholder="이름을 입력해주세요">
+                                <div class="row mb-3" id="font_size">
+                                  <label for="memberemail" class="col-sm-2 col-form-label" id="fst">이메일<span id=ico>*</span></label>
+                                  <div class="col-sm-6" id="sst">
+                                    <input type="email" name="memberEmail" class="form-control inpt_email"  id="submit_check_email" placeholder="예:ksmfou98@inu.ac.kr">
+                                    <button type="button" id="emailjungbok"class="btn btn-outline-primary">중복확인</button>
+                                  </div>
                                 </div>
-                              </div>
 
-                              <div class="row mb-3" id="font_size">
-                                <label for="memberemail" class="col-sm-2 col-form-label" id="fst">이메일<span id=ico>*</span></label>
-                                <div class="col-sm-6" id="sst">
-                                  <input type="email" name="memberEmail" class="form-control inpt_email"  id="submit_check_email" placeholder="예:ksmfou98@inu.ac.kr">
-                                  <button type="button" id="emailjungbok"class="btn btn-outline-primary">중복확인</button>
+                                <div class="row mb-3" id="font_size">
+                                 <label for="phonenumber" class="col-sm-2 col-form-label" id="fst">휴대폰<span id=ico>*</span></label>
+                                  <div class="col-sm-6" id="sst">
+                                   <input type="text" name="memberTel" class="form-control"  id="submit_check_phone" placeholder="숫자만 입력해주세요">
+                                  </div>
                                 </div>
-                              </div>
-
-                              <div class="row mb-3" id="font_size">
-                                <label for="phonenumber" class="col-sm-2 col-form-label" id="fst">휴대폰<span id=ico>*</span></label>
-                                <div class="col-sm-6" id="sst">
-                                  <input type="text" name="memberTel" class="form-control"  id="submit_check_phone" placeholder="숫자만 입력해주세요">
-                                </div>
-                              </div>
 
 							    <!-- 주소 입력 -->
 							    <div class="row mb-3" id="font_size">
-							        <label for="memberaddress" class="col-sm-2 col-form-label" id="fst">사업장 주소<span id="ico">*</span></label>
+							        <label for="memberaddress" class="col-sm-2 col-form-label" id="fst">소재지<span id="ico">*</span></label>
 							        <div class="col-sm-6 juso_search" id="sst">
 							            <input type="text" class="form-control" name="postalCode" id="postal_code" placeholder="우편번호" style="margin-bottom: 5px; width: 200px; margin-right: 10px;">
 							            <input type="button" class="form-control" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="margin-bottom: 5px; width: 120px;">
@@ -222,14 +400,7 @@
 							            <input type="text" class="form-control" name="detailAddress" id="detail_address" placeholder="상세주소" style="margin-bottom: 5px;">
 							            <input type="text" class="form-control" name="extraAddress" id="extra_address" placeholder="참고항목" style="margin-bottom: 5px;">
 							        </div>
-							    </div>
-
-                              <div class="row mb-3" id="font_size">
-                                <label for="memberbirth" class="col-sm-2 col-form-label" id="fst">생일<span id=ico>*</span></label>
-                                <div class="col-sm-6" id="sst">
-                                  <input type="DATE" name="memberBirth" class="form-control inpt_birth"  id="submit_check_birth">                                
-                                </div>
-                              </div>	                              
+							    </div>     							                            
                                                            
 							  <!-- 메일 수신 여부 -->
 							  <div class="row mb-3" id="font_size">
@@ -245,26 +416,7 @@
 							          </div>
 							      </div>
 							  </div>  
-							  
-							<!-- 성별 선택 -->
-							<div class="row mb-3" id="font_size">
-							    <label for="gender" class="col-sm-2 col-form-label" id="fst">성별<span id="ico">*</span></label>
-							    <div class="col-sm-6" id="sst">
-							        <div class="form-check form-check-inline">
-							            <input class="form-check-input" type="radio" name="memberGender" id="male" value="male" required>
-							            <label class="form-check-label" for="male">남성</label>
-							        </div>
-							        <div class="form-check form-check-inline">
-							            <input class="form-check-input" type="radio" name="memberGender" id="female" value="female" required>
-							            <label class="form-check-label" for="female">여성</label>
-							        </div>
-							        <div class="form-check form-check-inline">
-							            <input class="form-check-input" type="radio" name="memberGender" id="notSelected" value="notSelected" required>
-							            <label class="form-check-label" for="notSelected">기타</label>
-							        </div>
-							    </div>
-							</div>
-							  
+							  </div><!-- 공통항목!!!! -->
 							                              
 
                               <hr>
@@ -290,7 +442,38 @@
 </section>
 
 
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+function showFieldsBasedOnSelection() {
+    var selectedType = document.getElementById("instType").value;
+    console.log("선택된 센터 유형: " + selectedType);  // 콘솔 로그로 선택된 값을 확인
+
+    // 모든 특수 항목들 숨기기
+    document.getElementById("privateFields").style.display = "none";
+    document.getElementById("municipalFields").style.display = "none";
+    document.getElementById("nonprofitFields").style.display = "none";
+
+    // 선택된 센터 유형에 맞춰 해당 항목만 보이기
+    if (selectedType == "member") {
+        document.getElementById("privateFields").style.display = "block";
+    } else if (selectedType == "shops") {
+        document.getElementById("municipalFields").style.display = "block";
+    } else if (selectedType == "ints") {
+        document.getElementById("nonprofitFields").style.display = "block";
+    }
+}
+
+// 페이지가 로드될 때에도 선택된 값에 따라 필드가 보이도록 실행
+window.onload = function() {
+    showFieldsBasedOnSelection(); // 페이지 로드 시 자동 실행
+};
+
+</script>
 <script>
 window.addEventListener('DOMContentLoaded',function(){     //시작
 
