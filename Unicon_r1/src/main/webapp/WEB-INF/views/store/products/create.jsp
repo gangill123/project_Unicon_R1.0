@@ -182,7 +182,7 @@
 										    <label for="sale-period">기간 설정<i class="icon-must" aria-label="필수항목"></i></label>
 										    <div style="margin-right: 15px;">
 										        <div class="store-input-container">
-												    <button class="store-btn" id="today">오늘</button>
+												    <button class="store-btn btn-active" id="today ">오늘</button>
 												    <button class="store-btn" id="sevenDays">7일</button>
 												    <button class="store-btn" id="thirtyDays">30일</button>
 												    <button class="store-btn" id="sixtyDays">60일</button>
@@ -248,8 +248,8 @@
 				                    <div class="dropdown-divider"></div>
 				                    <div class="closeBox-stock">
 				                    	<div class="store-input-container">
-				                    		<input placeholder="숫자만 입력하세요." class="input-stock"name="stock">
-				                    		<span style="padding: 4px 10px; line-height: 24px; color: #4d5159; background-color: #f8f9fd; border: 1px solid #dbdde2; border-radius: 0; border-left: none;">개</span>
+				                    		<input placeholder="숫자만 입력하세요." class="input-stock" name="stock">
+				                    		<span style="padding: 4.5px 10px; line-height: 24px; color: #4d5159; background-color: #f8f9fd; border: 1px solid #dbdde2; border-radius: 0; border-left: none;">개</span>
 				                    		<span class="input-message">옵션 재고수량을 사용하면, 옵션의 재고수량으로 적용되어 자동으로 입력됩니다.</span>
 					                    </div>
 				                    </div>
@@ -380,7 +380,7 @@
 												</div>
 				                    		</div>
 											<div style="width: 100%; overflow-x: auto; border: 1px solid #ccc; padding: 0;">
-											   <div style="width: 100%;text-align: center;display: flex;align-items: center;border-bottom: 1px solid;justify-content: center;" class="option-list-header">
+											   <div style="width: 100%;text-align: center;display: flex;align-items: center;border-bottom: 1px solid;justify-content: center;height: 86px;" class="option-list-header">
 											    	<div style="width: 4%;padding: 0.7em 0 0.7em;"><input type="checkbox"></div>
 											    	<div style="border-right: 1px solid; border-left: 1px solid;width: 30%;display: flex;flex-direction: column;">
 												    	<div style="border-bottom: 1px solid;position: relative;top: 0px;padding: 10px 0; ">
@@ -399,7 +399,7 @@
 											    	<div style="width: 5%;padding: 0.7em 0 0.7em;display: flex;align-items: center;justify-content: center;color:#000000;">삭제</div>
 											    </div>
 											    
-											    <div class="option-list-body">
+											    <div class="option-list-body"  style="position: relative;left: 1px;">
 											    </div>
 											</div>
 										</div>
@@ -524,9 +524,12 @@
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
 				                    <div class="closeBox-content">
-										<div class="mb-3" style="display: flex; justify-content: center;">
-					                        <textarea id="noContent" name="noContent"></textarea>
-					                    </div>
+				                    	<form  id="myForm">
+											<div class="mb-3" style="display: flex; justify-content: center;">
+						                        <textarea id="noContent" name="noContent"></textarea>
+						                    </div>
+					                    	<button id="testbutton">테스트</button>
+				                    	</form>
 				                    </div>
 				                  </div>
 				                </div>
@@ -615,7 +618,6 @@
 				                  		<div style="display: flex;align-items: center;">
 						                    <h4 class="card-title" style="margin-bottom: 0">배송</h4>
 						                    <i class="icon-must" aria-label="필수항목" style="margin-right: 3px" ></i>
-
 				                  		</div>
 					                    <button onclick="closeBox(this,'delivery')" 
 					                    	style="border: none;background: transparent;font-size: 2.1rem;">
@@ -625,7 +627,6 @@
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
 				                    <div class="closeBox-delivery">
-				                    	
 					                    <div class="display-f">
 										    <label>배송방법</label>
 										    <div>
@@ -672,6 +673,10 @@
                           </div>
                         </div>
                         <!-- 배송 끝 -->
+                        <div style="text-align: center;">
+                        	<button style="width: 160px;height: 48px;border: 1px solid #dbdde2;background-color: #fff;margin-right: 24px;">취소</button>
+                        	<button style="width: 160px;height: 48px;background-color: #2ecc71;border: 1px solid #2ecc71;color: #fff;" id="submit">저장하기</button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -703,6 +708,39 @@
     <script type="text/javascript">
     
     $(document).ready(function() {
+    	
+    	$('#testbutton').on('click', function(e) {
+            e.preventDefault(); // 기본 폼 제출 방지
+
+            var formData = new FormData($('#myForm')[0]); // 폼 데이터 가져오기
+            var editorContent = $('#noContent').summernote('code'); // Summernote 에디터 내용 가져오기
+            formData.append("editorContent", editorContent); // 에디터 내용 추가
+			/* <p>
+            	<img style="width: 878px;" src="/uploads/images/image_bc21ebf0-802f-4a08-a505-d1cc2f15ca92.png">
+				<img style="width: 878px;" src="/uploads/images/image_f1834b60-9e65-4ad5-9913-4e5352d20dcf.png">
+				<br>
+			   </p> 
+			*/
+            console.log('에디터 내용:', editorContent);
+            console.log(formData);
+            /* $.ajax({
+                url: '/store/api/submit', // 폼 제출을 위한 URL
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log('폼 제출 성공:', response);
+                    alert('폼이 성공적으로 제출되었습니다.');
+                },
+                error: function(xhr, status, error) {
+                    console.error('폼 제출 실패:', error);
+                    alert('폼 제출에 실패했습니다.');
+                }
+            }); */
+        });
+    	
+    	
         $('#noContent').summernote({
         	height: 300,
         	width: 900,   // 에디터 너비 (이 속성은 일부 버전에서 지원되지 않을 수 있습니다)

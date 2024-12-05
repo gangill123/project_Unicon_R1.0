@@ -1,6 +1,6 @@
-let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는 변수
+	let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는 변수
     let selectedCategoryDetail = null; // 이전에 선택된 카테고리를 추적하는 변수
-    const data = {};
+    let data = {};
     
     function category(value,type) {
     	// display 속성을 block으로 변경하여 보이게 함
@@ -205,6 +205,7 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                     var formattedValue = formatNumber(value);
                     $(this).val(formattedValue);
                 }
+                data.price = value;
             }
         });
         function formatNumber(num) {
@@ -220,6 +221,9 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             if (value > 100) {
                 $(this).val(100); // 100 초과 시 100으로 설정
             }
+            
+            data.discount = value;
+            console.log(value);
         });
 
         $('#discount').on('blur', function() {
@@ -229,6 +233,17 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                 $(this).val(0);
             }
         });
+        
+        $('.input-stock').on('input', function() {
+            var value = $(this).val();
+            // 숫자가 아닐 경우 숫자가 아닌 문자 제거
+            if (!/^\d*$/.test(value)) {
+                $(this).val(value.replace(/[^0-9]/g, '')); // 숫자가 아닌 문자 제거
+            }
+            
+            data.stock = value;
+        });
+        
         
         function toggleButtons(isSettingOn) {
             if (isSettingOn) {
@@ -254,6 +269,11 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             $('.sales-period').css({
                 display: 'none'
             });
+            
+            
+            delete data.endDate;
+            
+            
         });
         
         // 할인 버튼 제어
@@ -369,6 +389,11 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 
             // 시작일과 종료일을 입력 필드에 표시
             $(".date-input").val(startDate + (endDate ? " - " + endDate : ""));
+             
+             data.startDate = startDate;
+             data.endDate = endDate;
+            
+            
         }
 
         // 날짜 범위를 설정하는 공통 함수
@@ -384,6 +409,11 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             onDateChange([startDate, endDate]); // 정의한 핸들러 호출
         }
 
+        $('#set-on').click(function() {
+        	setDateRange(0); // 오늘
+        });
+        
+        
         // 버튼 클릭 이벤트에 setDateRange 함수 연결
         $('#today').click(function() {
             setDateRange(0); // 오늘
@@ -410,13 +440,11 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 
             // 유효성 검사
             if (isNaN(price) || price < 0) {
-                $('.price-error').text('올바른 판매가를 입력하세요.'); // 오류 메시지 업데이트
                 $('.discount-price').text('0'); // 초기화
                 return;
             }
 
             if (isNaN(discountRate) || discountRate < 0 || discountRate > 100) {
-                $('.discount-error').text('올바른 할인율을 입력하세요.'); // 오류 메시지 업데이트
                 $('.discount-price').text('0'); // 초기화
                 return;
             }
@@ -487,13 +515,13 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                     '<div class="store-input-container start" style="flex-direction: column; gap: 1rem;">' +
                         '<label  style="display: none;" for="option-name-' + optionCount + '">옵션명</label>' +
                         '<div id="option-name-wrapper" class="option-wrapper">' +
-                            '<input style="width: 15rem;" id="option-name-' + optionCount + '" class="option-input" type="text" placeholder="예시:컬러" name="option-productNames">' +
+                            '<input style="width: 15rem;" id="option-name-' + optionCount + '" class="option-input" type="text" placeholder="예시:사이즈" name="option-productNames">' +
                         '</div>' +
                     '</div>' +
                     '<div class="store-input-container start" style="flex-direction: column; gap: 1rem;">' +
                         '<label  style="display: none;" for="option-value-' + optionCount + '">옵션값</label>' +
                         '<div  id="option-value-wrapper" class="option-wrapper">' +
-                            '<input style="width: 15rem;" id="option-value-' + optionCount + '" class="option-input" type="text" placeholder="예시:컬러" name="option-productValues">' +
+                            '<input style="width: 15rem;" id="option-value-' + optionCount + '" class="option-input" type="text" placeholder="예시: S,M,L,XL,2XL" name="option-productValues">' +
                         '</div>' +
                     '</div>' +
                     '<div class="store-input-container start">' +
@@ -516,6 +544,7 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
         $(document).ready(function() {
             updateButtonVisibility(); // 초기 버튼 가시성 설정
             updateApplyButtonState();
+            setDateRange(0);
         });
 
         // select-option 클릭 이벤트
@@ -531,7 +560,10 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             const selectedValue = $(this).val(); // 선택된 옵션의 값을 가져오기
             if('select' == selectedValue) {
             	alert("다른 택배사를 선택하세요.");
+            }else  {
+            	data.delivery_company = selectedValue;
             }
+            
             console.log("선택된 택배사 : " + selectedValue);
         });
         
@@ -579,8 +611,6 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
             $("#options-container .display-f").each(function() {
                 const optionName = $(this).find('input[id^="option-name-"]').val(); // 옵션명
                 const optionValue = $(this).find('input[id^="option-value-"]').val(); // 옵션값
-                console.log(optionName);
-                console.log(optionValue);
                 
                 // 옵션명 또는 옵션값이 비어있으면
                 // 옵션명 또는 옵션값이 비어있거나 undefined일 경우
@@ -695,7 +725,7 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                                 '    </div>' +
                                 '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -7px; color:#a7afb7"></div>' +
                                 '    <div class="editable-field option-item-value" style="width: 46%;">' + value.trim()  + '</div>' + //  옵션 값 추가
-                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color:#a7afb7"></div>' +
+                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 2px; color:#a7afb7"></div>' +
                                 '    <div style="width: 6%; display: flex; align-items: center; justify-content: center;">' +
                                 '        <button  class="option-list-remove" style="border: none; background-color: transparent;">' +
                                 '            <i class="mdi mdi-close"></i>' +
@@ -747,11 +777,11 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                              '    <div style="width: 30%;">' +
                              '        <div class="option-item-value">' + value.trim() + '</div>' + // 옵션명 및 값
                              '    </div>' +
-                             '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 0px; color:#a7afb7"></div>' +
+                             '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color:#a7afb7"></div>' +
                              '    <div class="editable-field option-item-price" style="width: 30%; cursor: pointer;font-size: 14px;height: 30px;line-height: 28px;">0</div>' + // 기본 텍스트 설정
-                             '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color:#a7afb7"></div>' +
+                             '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 3px; color:#a7afb7"></div>' +
                              '    <div class="editable-field option-item-stock" style="width: 30%; cursor: pointer;font-size: 14px;height: 30px;line-height: 28px;">0</div>' + // 기본 텍스트 설정
-                             '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color:#a7afb7"></div>' +
+                             '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 2px; color:#a7afb7"></div>' +
                              '    <div style="width: 5%; display: flex; align-items: center; justify-content: center;">' +
                              '        <button  class="option-list-remove" style="border: none; background-color: transparent;">' +
                              '            <i class="mdi mdi-close"></i>' +
@@ -777,9 +807,9 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                 		'    </div>' +
                 		'</div>' +
                 		'<div style="width: 25%;padding: 0.7em 0 0.7em;display: flex;align-items: center;justify-content: center;color:#000000;">옵션가</div>' +
-                		'<div style="border-right: 1px solid;height: 86px;"></div>' +
+                		'<div style="border-right: 1px solid;height: 90px;"></div>' +
                 		'<div style="width: 25%;padding: 0.7em 17px 0.7em 0;display: flex;align-items: center;justify-content: center;color:#000000;">재고수량</div>' +
-                		'<div style="border-right: 1px solid;height: 86px;position: relative;left: -15px;"></div>' +
+                		'<div style="border-right: 1px solid;height: 90px;position: relative;left: -15px;"></div>' +
                 		'<div style="width: 5%;padding:0.7em 0 0.7em 4px;display: flex;align-items: center;color:#000000;">삭제</div>';
 
 
@@ -804,13 +834,13 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                                 '    <div style="width: 40%;">' +
                                 '        <div style="display: flex; align-items: center;">' +
                                 '            <div style="width: 50%" class="option-item-value1">' + value1 + '</div>' + // 첫 번째 값
-                                '            <div style="border-right: 1px solid; height: 30px; color: #a7afb7;position: relative;left: 4px;"></div>' +
+                                '            <div style="border-right: 1px solid; height: 30px; color: #a7afb7;position: relative;left: 3px;"></div>' +
                                 '            <div style="width: 50%;" class="option-item-value2">' + value2 + '</div>' + // 두 번째 값
                                 '        </div>' +
                                 '    </div>' +
                                 '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -6px; color: #a7afb7;"></div>' +
                                 '    <div class="editable-field option-item-price" style="width: 25%; cursor: pointer;height: 30px;line-height: 28px;">0</div>' + // 기본 텍스트 설정
-                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -9.5px; color: #a7afb7;"></div>' +
+                                '    <div style="border-right: 1px solid; height: 30px; position: relative; right: -10.5px; color: #a7afb7;"></div>' +
                                 '    <div class="editable-field option-item-stock" style="width: 25%; cursor: pointer;height: 30px;line-height: 28px;">0</div>' + // 기본 텍스트 설정
                                 '    <div style="border-right: 1px solid; height: 30px; position: relative; right: 1px; color: #a7afb7;"></div>' +
                                 '    <div style="width: 5%; display: flex; align-items: center; justify-content: center;">' +
@@ -864,34 +894,40 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
         // 클릭해서 input 아무값도 입력 하지 않으면 0으로 되게 해보자.       
         
         
-        
-        $(document).on('click', '.console', function() {
-            var options = []; // 옵션 객체를 저장할 배열
-            
-            
-            
-            if ($('#single').is(':checked')) {
+        function optionCheck() {
+        	data.option = {type : '', list : []};
+        	/*data = { option: { type: '', list: [] } }; // 데이터 구조 초기화*/
+        	if ($('#single').is(':checked')) {
             	// 각 .option-list 요소를 반복
                 $(".option-list").each(function() {
                     // 현재 .option-list 요소에서 옵션명 가져오기
                     var optionName = $(this).find('.option-item-name').text().trim(); // 옵션명
                     var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
 
-                    // 객체 생성 후 배열에 추가
-                    options.push({
-                        option_name : optionName,
+                 // 객체 생성 후 data 객체에 추가
+                    data.option.list.push({
+                        option_name: optionName,
                         option_value: optionValue
                     });
                 });
+                data.option.type = '단독형';
+                
+                
             } else {
             	var optionName1 = $('.option-list-header').find('.option-item-name1').text().trim(); // 첫 번째 옵션명
             	console.log(optionName1);
             	
+            	// 객체 생성 후 data 객체에 추가
+                data.option.type = '조합형'; // 조합형으로 설정
             	
             	if (!optionName1) {
             		// 조합형 + 길이 1
                 	
             		var optionName = $('.option-list-header').find('.option-item-name').text().trim(); // 첫 번째 옵션명
+            		
+            		
+                    
+                    
                 	$(".option-list").each(function() {
                         // 현재 .option-list 요소에서 옵션명 가져오기
                         var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
@@ -899,12 +935,11 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                         var optionStock = $(this).find('.option-item-stock').text().trim(); // 옵션값
 
                         // 객체 생성 후 배열에 추가
-                        options.push({
-                            option_name : optionName,
+                        data.option.list.push({
+                            option_name: optionName,
                             option_value: optionValue,
                             option_price: optionPrice,
                             option_stock: optionStock
-                            
                         });
                     });
                 }else {
@@ -920,37 +955,21 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
                         var optionStock = $(this).find('.option-item-stock').text().trim(); // 옵션값
 
                         // 객체 생성 후 배열에 추가
-                        options.push({
-                            option_name : optionName1,
-                            option_value: optionValue1,
-                            option_name2 : optionName2,
+                        data.option.list.push({
+                            option_name1: optionName1,
+                            option_value1: optionValue1,
+                            option_name2: optionName2,
                             option_value2: optionValue2,
                             option_price: optionPrice,
                             option_stock: optionStock
-                            
                         });
                     });
                 }
             }
-            
-            
-
-            /*// 각 .option-list 요소를 반복
-            $(".option-list").each(function() {
-                // 현재 .option-list 요소에서 옵션명 가져오기
-                var optionName = $(this).find('.option-item-name').text().trim(); // 옵션명
-                var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
-
-                // 객체 생성 후 배열에 추가
-                options.push({
-                    option_name : optionName,
-                    option_value: optionValue
-                });
-            });*/
-
+        	
             // 결과 출력
-            console.log("옵션 리스트:", options);
-        });
+            console.log("옵션 리스트:", data.option.list);
+        }
      
         /*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
 		$('.image-input').on('change', function(e) {
@@ -1093,7 +1112,117 @@ let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는
 				}
 			}
 		});
+		$('.store-btn').click(function() {
+	        // 모든 버튼에서 btn-active 클래스 제거
+	        $('.store-btn').removeClass('btn-active');
+	        
+	        // 클릭한 버튼에 btn-active 클래스 추가
+	        $(this).addClass('btn-active');
+	    });
 		/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
+		// 클릭 시 입력 필드로 변경
+		/*=============== 제출 ===============*/
+        $(document).on('click', '#submit', function() {
+            console.log("클릭됨");
+            
+            // 판매기간 설정 안했을때 날짜 받아오기.
+            if ($('#set-off').hasClass('setting-active')) {
+            	data.endDate = '2099-12-31';
+            }
+            
+            
+            // 할인율 설정하고 입력을 안했을때.
+            if($('#discount-set-on').hasClass('setting-active')) {
+            	let discount = $('#discount').val();
+            	// 할인율
+            	if(discount == '') {
+            		alert("할인율을 입력하세요.");
+            		return;
+            	}
+            }
+            if($('#discount-set-off').hasClass('setting-active')) {
+            	data.discount = 0;
+            }
+            if($('#option-set-off').hasClass('setting-active')) {
+            	data.option = {};
+            	data.option.type = '설정안함';
+            }
+            if($('#option-set-on').hasClass('setting-active')) {
+            	optionCheck();
+	    		// 옵션 재고 확인
+            	if(data.option.list.length === 0) {
+            		 alert('옵션 리스트가 비어 있습니다.');
+            		 return;
+            	}
+            	if(data.option.type == '조합형') {
+            		for (let i = 0; i < data.option.list.length; i++) {
+            			if (data.option.list[i].option_stock <= 0) { // 재고가 0 이하일 경우
+            				alert("입력되지 않은 재고가 있는 옵션이 있습니다.");
+            			}
+            		}
+            		delete data.stock;
+            	}
+            }
+            
+            /*var temp = $('#brand').val();
+            data.brand = temp;
+            temp = $('#manufacturer').val();
+            data.manufacturer = temp;
+            temp = $('#product_origin').val();
+            data.product_origin = temp;
+            temp = $('#product_expiry').val();
+            data.product_expiry = temp;
+            if($('#btn-delivery-on').hasClass('setting-active')) {
+            	data.delivery = '배송';
+            } else {
+            	data.delivery = '배송안함';
+            }
+            
+            temp = $('#delivery_price').val();
+            data.delivery_price = temp;*/
+            
+            // 입력 필드에서 값 가져오기 및 배송 가격 설정
+            const fields = ['brand', 'manufacturer', 'product_origin', 'product_expiry', 'delivery_price'];
+            fields.forEach(field => {
+                data[field] = $(`#${field}`).val(); // 각 필드의 값을 data 객체에 할당
+            });
+
+            // 배송 정보 설정
+            data.delivery = $('#btn-delivery-on').hasClass('setting-active') ? '배송' : '배송안함';
+            
+            
+            
+            // FormData 객체 생성
+            var formData = new FormData();
+
+            // data 객체의 각 속성을 FormData에 추가
+            for (let key in data) {
+                if (key === 'option') {
+                    // 옵션 리스트가 있을 경우
+                    data.option.list.forEach((option, index) => {
+                        for (let optionKey in option) {
+                            formData.append(`option[${index}][${optionKey}]`, option[optionKey]);
+                        }
+                    });
+                } else {
+                    formData.append(key, data[key]);
+                }
+            }
+
+            // FormData 사용 예시 (AJAX 요청 등)
+            console.log(...formData); // FormData의 내용을 확인하고 싶다면 콘솔에 출력
+            
+            
+            console.log(data);
+        });
+		
+        // 재고수량 받아오기.
+        let stock = $('.input-stock').val();
+        // 재고수량 받아오기.
+        
+        
+        
+		
 		
 		
 		
