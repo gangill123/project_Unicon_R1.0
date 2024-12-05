@@ -240,14 +240,30 @@
 			$grid.empty(); // 기존 데이터 삭제
 			pageData.forEach(item => {
 				
-				let endDate = new Date(item.ms_enddate); 
+				let startDate = new Date(item.ms_startdate);
+				let endDate = new Date(item.ms_enddate);
+				let statusColor;
+				let statusText;
+				
+				switch (true) {
+				  case today > endDate:
+					statusColor = 'secondary';
+				    statusText = '개시종료';
+				    break;
+				  case today < startDate:
+				    statusColor = 'success';
+				    statusText = '개시준비중';
+				    break;
+				  default:
+					statusColor = 'info';
+				    statusText = '개시중';
+				    break;
+				}
 				
 				const card = `
 					<div class="col-xl-6 col-sm-6">
 						<div class="product-details">
-						<div class="product-img">
-						<div class="label-offer bg-${today > endDate ? 'red' : 'primary'}">
-						${today > endDate ? '개시종료' : '개시중'}</div>
+						<div class="product-img"><div class="label-offer bg-${statusColor}">${statusText}</div>
 						<img src="${item.ms_src }" alt="..." class="image rounded-3">
 						<div class="product-cart">
 						<a href="/admin/slide_view/${item.ms_id }?currentPage=${currentPage}" style="width: 50px; height: 50px;">

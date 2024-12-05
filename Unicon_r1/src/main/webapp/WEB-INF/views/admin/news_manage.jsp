@@ -151,8 +151,6 @@
 							</div>
 					    </div>
 					    
-                        <div class="row">
-                            <div class="col-12">
                             <div class="row g-0 align-items-center bg-light rounded p-3">
                                     <div class="col-12 col-md-auto">
                                         <div class="row justify-content-center">
@@ -188,8 +186,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
                   <div class="row product-grid" id="data-grid"></div>
                     <!-- end right panel section -->

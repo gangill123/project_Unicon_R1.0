@@ -76,6 +76,7 @@
                     <!-- Start links -->
                     <div class="filtering col-sm-12 text-center">
                         <span data-id='lastest' class="active">모두보기</span>
+                        <span data-id='now'>진행중인 행사</span>
                         <span data-id='upcoming'>다가오는 행사</span>
                         <span data-id='local'>우리 지역 행사</span>
                         <span data-id='closed'>종료된 행사</span>

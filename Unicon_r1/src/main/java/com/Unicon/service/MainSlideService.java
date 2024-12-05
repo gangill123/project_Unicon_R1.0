@@ -44,4 +44,13 @@ public class MainSlideService {
 		return msdao.getSlideForMain();
 	}
 	
+	// 메인슬라이드src 가져오기(삭제관련)
+	public String getMsSrc(int ms_id) {
+		return msdao.getMsSrc(ms_id);
+	}
+	
+	
+	
+	
+	
 }

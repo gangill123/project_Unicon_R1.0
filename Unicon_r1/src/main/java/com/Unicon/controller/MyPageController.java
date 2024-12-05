@@ -156,4 +156,20 @@ public class MyPageController {
 	}
 	
 	
+	// 마이페이지 주문관리
+	@GetMapping("orders")
+	public String orderPage() {
+		
+		return "/mypage/orders";
+	}
+	
+	// 마이페이지 주문관리 상세보기
+	@GetMapping("orders_detail")
+	public String orderDetailPage() {
+		return "/mypage/orders_detail";
+	}
+	
+	
+	
+	
 } //controller
