@@ -62,12 +62,34 @@ public class AdptDAO {
 		return sqlSession.selectList(NAMESPACE+"getAnimalListAll");
 	}
 	
+	
 	public AnimalVO getAnimalListOne(String animal_id) {
 		logger.debug("( •̀ ω •́ )✧ getAnimalListOne(String animal_id) 실행");
 		
 		return sqlSession.selectOne(NAMESPACE+"getAnimalListOne",animal_id);
 	}
 	
+	
+	public void modifyAnimal(AnimalVO avo) {
+		/*
+		 * logger.debug("( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo) 실행");
+		 * 
+		 * sqlSession.insert(NAMESPACE+"insertAnimal", avo);
+		 * 
+		 * List<ImageVO> images = new ArrayList<ImageVO>(avo.getAnimal_images());
+		 * sqlSession.insert(NAMESPACE+"insertAnimalImages", images);
+		 * 
+		 * Map<String, Object> healthParams = new HashMap<>();
+		 * healthParams.put("animal_id", avo.getAnimal_id());
+		 * healthParams.put("healths", avo.getAnimal_healths());
+		 * sqlSession.insert(NAMESPACE+"insertAnimalHealths", healthParams);
+		 * 
+		 * Map<String, Object> vaccineParams = new HashMap<>();
+		 * vaccineParams.put("animal_id", avo.getAnimal_id());
+		 * vaccineParams.put("vaccines", avo.getAnimal_vaccines());
+		 * sqlSession.insert(NAMESPACE+"insertAnimalVaccines", vaccineParams);
+		 */
+	}
 	
 	
 	
