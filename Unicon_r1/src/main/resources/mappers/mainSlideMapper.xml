@@ -42,6 +42,11 @@
 		select * from _main_slide where ms_startdate &lt; now() and ms_enddate &gt; now() 
 	</select>
 	
+	<!-- 슬라이드src 가져오기(삭제관련) -->
+	<select id="getMsSrc" resultType="String">
+		select ms_src from _main_slide where ms_id = #{ms_id} 
+	</select>
+	
 
 </mapper>
 

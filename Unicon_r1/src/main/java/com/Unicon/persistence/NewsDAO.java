@@ -78,6 +78,11 @@ public class NewsDAO {
 		return sqlSession.selectList(NAMESPACE+".getNewsLastest");
 	}
 	
+	// 소식 조회(진행중인 행사)
+	public List<NewsVO> getNewsNow() {
+		return sqlSession.selectList(NAMESPACE+".getNewsNow");
+	}
+	
 	// 소식 조회(다가오는 행사)
 	public List<NewsVO> getNewsUpcoming() {
 		return sqlSession.selectList(NAMESPACE+".getNewsUpcoming");
@@ -93,7 +98,10 @@ public class NewsDAO {
 		return sqlSession.selectList(NAMESPACE+".getNewsClosed");
 	}
 	
-	
+	// 소식 src가져오기 (삭제관련)
+	public String getNewsSrc(int news_id) {
+		return sqlSession.selectOne(NAMESPACE+".getNewsSrc", news_id);
+	}
 	
 	
 	

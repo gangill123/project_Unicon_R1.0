@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -43,7 +47,6 @@ public class AdminController {
 	private MainSlideService msService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-
 	
 	//관리자페이지 - 소식관리페이지 이동
 	@GetMapping("/news_manage")
@@ -114,7 +117,35 @@ public class AdminController {
 		
 		if(vo.getNews_src().equals("")) {
 			
-			// 새로운 src 만들어서 저장
+			/// 기존 파일 서버에서 삭제하기///
+			
+			// 프로젝트명 가져오기
+			String projectName = servletContext.getContextPath();
+			
+			// 삭제할 파일의 dir 계산
+			String deleteDir = servletContext.getRealPath("/"+projectName);
+			
+			// 기존 프로젝트 src 가져오기
+			int news_id = vo.getNews_id();
+			String newsSrc = nService.getNewsSrc(news_id);
+			logger.debug("newsSrc : {}",newsSrc);
+			
+			// 삭제파일 경로객체 만들기
+			String filePath = deleteDir+newsSrc;
+			Path path = Paths.get(filePath);
+			
+			try {
+	            Files.delete(path); // 파일 삭제
+	            logger.debug("정상적으로 삭제되었습니다.");
+	        } catch (NoSuchFileException e) {
+	            System.out.println("파일을 찾을 수 없습니다: " + filePath);
+	        } catch (IOException e) {
+	            System.out.println("파일 삭제 중 오류 발생: " + e.getMessage());
+	        }
+			
+			/// 기존 파일 서버에서 삭제하기///
+			
+			/// 새로운 src 만들어서 저장 ///
 			MultipartFile file = vo.getNews_file();
 			String uploadDir = servletContext.getRealPath("/uploads/");
 			try {
@@ -149,6 +180,34 @@ public class AdminController {
 	@ResponseBody
 	public void deleteNews(@PathVariable("num") int news_id) {
 		logger.debug("news_id : "+news_id);
+		
+		/// 기존 파일 서버폴더에서 삭제하기///
+		
+		// 프로젝트명 가져오기
+		String projectName = servletContext.getContextPath();
+		
+		// 삭제할 파일의 dir 계산
+		String deleteDir = servletContext.getRealPath("/"+projectName);
+		
+		// 기존 프로젝트 src 가져오기
+		String newsSrc = nService.getNewsSrc(news_id);
+		logger.debug("newsSrc : {}",newsSrc);
+		
+		// 삭제파일 경로객체 만들기
+		String filePath = deleteDir+newsSrc;
+		Path path = Paths.get(filePath);
+		
+		try {
+            Files.delete(path); // 파일 삭제
+            logger.debug("정상적으로 삭제되었습니다.");
+        } catch (NoSuchFileException e) {
+            System.out.println("파일을 찾을 수 없습니다: " + filePath);
+        } catch (IOException e) {
+            System.out.println("파일 삭제 중 오류 발생: " + e.getMessage());
+        }
+		
+		/// 기존 파일 서버폴더에서 삭제하기///
+		
 		nService.deleteNews(news_id);
 	}
 	
@@ -263,6 +322,34 @@ public class AdminController {
 		
 		if(vo.getMs_src().equals("")) {
 			
+			/// 기존 파일 서버에서 삭제하기///
+			
+			// 프로젝트명 가져오기
+			String projectName = servletContext.getContextPath();
+			
+			// 삭제할 파일의 dir 계산
+			String deleteDir = servletContext.getRealPath("/"+projectName);
+			
+			// 기존 프로젝트 src 가져오기
+			int ms_id = vo.getMs_id();
+			String msSrc = msService.getMsSrc(ms_id);
+			logger.debug("msSrc : {}",msSrc);
+			
+			// 삭제파일 경로객체 만들기
+			String filePath = deleteDir+msSrc;
+			Path path = Paths.get(filePath);
+			
+			try {
+	            Files.delete(path); // 파일 삭제
+	            logger.debug("정상적으로 삭제되었습니다.");
+	        } catch (NoSuchFileException e) {
+	            System.out.println("파일을 찾을 수 없습니다: " + filePath);
+	        } catch (IOException e) {
+	            System.out.println("파일 삭제 중 오류 발생: " + e.getMessage());
+	        }
+			
+			/// 기존 파일 서버에서 삭제하기///
+			
 			// 새로운 src 만들어서 저장
 			MultipartFile file = vo.getMs_file();
 			String uploadDir = servletContext.getRealPath("/uploads/");
@@ -292,6 +379,34 @@ public class AdminController {
 	@DeleteMapping("/slide_delete/{num}")
 	@ResponseBody
 	public void deleteSlide(@PathVariable("num") int ms_id) {
+		
+		/// 기존 파일 서버에서 삭제하기///
+		
+		// 프로젝트명 가져오기
+		String projectName = servletContext.getContextPath();
+		
+		// 삭제할 파일의 dir 계산
+		String deleteDir = servletContext.getRealPath("/"+projectName);
+		
+		// 기존 프로젝트 src 가져오기
+		String msSrc = msService.getMsSrc(ms_id);
+		logger.debug("msSrc : {}",msSrc);
+		
+		// 삭제파일 경로객체 만들기
+		String filePath = deleteDir+msSrc;
+		Path path = Paths.get(filePath);
+		
+		try {
+            Files.delete(path); // 파일 삭제
+            logger.debug("정상적으로 삭제되었습니다.");
+        } catch (NoSuchFileException e) {
+            System.out.println("파일을 찾을 수 없습니다: " + filePath);
+        } catch (IOException e) {
+            System.out.println("파일 삭제 중 오류 발생: " + e.getMessage());
+        }
+		
+		/// 기존 파일 서버에서 삭제하기///
+		
 		msService.deleteSilde(ms_id);
 	}
 	

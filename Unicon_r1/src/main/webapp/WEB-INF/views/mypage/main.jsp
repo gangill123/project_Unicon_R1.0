@@ -54,9 +54,9 @@
                         <div class="services-single-left-box">
                             <div class="services-single-menu mb-1-9">
                                 <ul class="m-0 list-unstyled">
-                                    <li class="active"><a href="#!">프로필 관리</a></li>
+                                    <li class="active"><a href="/mypage">프로필 관리</a></li>
                                     <li><a href="#!">커뮤니티 관리</a></li>
-                                    <li><a href="#!">주문 관리</a></li>
+                                    <li><a href="/mypage/orders">주문 관리</a></li>
                                 </ul>
                             </div>
                         </div>

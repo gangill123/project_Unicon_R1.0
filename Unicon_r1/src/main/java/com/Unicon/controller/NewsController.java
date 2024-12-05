@@ -33,9 +33,6 @@ public class NewsController {
 	// 소식페이지 이동
 	@GetMapping("")
 	public String newsPage(Model model, HttpSession session) {
-
-		// 임시 아이디 세션저장
-		session.setAttribute("member_id", "bini97");
 		
 		// 소식정보 가져오기
 		List<NewsVO> newsAllInfo = nService.getNewsAll();
@@ -55,6 +52,9 @@ public class NewsController {
 		if(id.equals("lastest")) {
 			// 전체 소식 가져가기
 			return nService.getNewsLastest();
+		} else if(id.equals("now")){
+			// 진행중인 소식 가져오기
+			return nService.getNewsNow();
 		} else if(id.equals("upcoming")) {
 			// 다가오는 소식 가져가기
 			return nService.getNewsUpcoming();

@@ -54,8 +54,24 @@
 
 .about-style2 .about2-text h5{
 	margin-top: 8px;
+}
+
+.testmonial-single p {
+	font-weight: 500;
+	margin-bottom: 20px;
+	position: relative;
+	margin-left: 25px;
+	text-align: left;
+}
+
+.testmonial-single p:before{
+	margin: 0;
+	top: -5px;
+	left: -45px;
+	position: absolute;
 
 }
+
 
 </style>
 
@@ -231,7 +247,6 @@
             <div class="container">
                 <div class="section-heading"><span>축하해주세요!!</span>
                     <h2>유니콘 입양후기</h2>
-                    <p class="w-95 w-sm-85 w-md-75 w-lg-55">Business consectetur adipisicing elit eiusmod tempor incididunt ut labore et dolore magna aliqua quis nostrud exercitation consequat.</p>
                 </div>
                 <div class="service-grids owl-carousel owl-theme" id="service-grids">
                     <div class="service-block">
@@ -239,43 +254,16 @@
                             <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
                         </div>
                         <div class="details">
-                            <div class="number alt-font">01</div>
-                            <h4>Business Growth</h4>
-                            <p>Exhaustive technology of implementing multi purpose project.</p>
-                            <a class="read-more" href="#!">Read More</a>
-                        </div>
-                    </div>
-                    <div class="service-block">
-                        <div class="img-holder">
-                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/slider01.jpg">
-                        </div>
-                        <div class="details">
-                            <div class="number alt-font">02</div>
-                            <h4>Investment Plan</h4>
-                            <p>Exhaustive technology of implementing multi purpose project.</p>
-                            <a class="read-more" href="#!">Read More</a>
-                        </div>
-                    </div>
-                    <div class="service-block">
-                        <div class="img-holder">
-                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/content/services/service-3b.jpg">
-                        </div>
-                        <div class="details">
-                            <div class="number alt-font">03</div>
-                            <h4>Business Plan</h4>
-                            <p>Exhaustive technology of implementing multi purpose project.</p>
-                            <a class="read-more" href="#!">Read More</a>
-                        </div>
-                    </div>
-                    <div class="service-block">
-                        <div class="img-holder">
-                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/content/services/service-4b.jpg">
-                        </div>
-                        <div class="details">
-                            <div class="number alt-font">04</div>
-                            <h4>Risk Management</h4>
-                            <p>Exhaustive technology of implementing multi purpose project.</p>
-                            <a class="read-more" href="#!">Read More</a>
+                            <div class="number alt-font" style="aspect-ratio: 1/1; overflow: hidden;">
+                            	<img style="width: 100%; height: 100%; object-fit:fill;" alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
+                            </div>
+                            <h4 style="color: #5c636a;">슈퍼스타징젱죵</h4>
+                            <div class="testmonial-single mx-auto w-lg-85">
+                                 <p>Exercitation ullamco laboris nisiut aliqu exeaea commo.</p>
+                             </div>
+                            
+                            <!-- <p><i class="fa-solid fa-quote-left" style="color: #86bc42;"></i>  나의 입양베이비를 입양한 후기를 전달하겠슴</p> -->
+                            <a class="read-more" href="#!">상세보기</a>
                         </div>
                     </div>
                 </div>

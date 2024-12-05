@@ -81,12 +81,19 @@
 	
 	<!-- 소식 조회(모두보기 - 최근등록순) -->
 	<select id="getNewsLastest" resultType="NewsVO">
-		select * from _news where news_enddate &gt; CURDATE() order by news_enddate desc 
+		select * from _news order by news_startdate desc
 	</select>
 	
-	<!-- 소식 조회(다가오는 행사, 현재일로부터 30일) -->
+	<!-- 소식 조회(진행중인 행사) -->
+	<select id="getNewsNow" resultType="NewsVO">
+		select * from _news 
+		where news_startdate &lt;= CURDATE() and news_enddate &gt;= CURDATE() 
+		order by news_startdate
+	</select>
+	
+	<!-- 소식 조회(다가오는 행사, 현재일로부터 14일) -->
 	<select id="getNewsUpcoming" resultType="NewsVO">
-		select * from _news where news_startdate between CURDATE() and CURDATE() + INTERVAL 30 DAY 
+		select * from _news where news_startdate between CURDATE() and CURDATE() + INTERVAL 14 DAY 
 		order by news_startdate asc 
 	</select>
 
@@ -104,6 +111,14 @@
 		select * from _news 
 		where news_enddate &lt; CURDATE() 
 	</select>
+
+
+	<!-- 소식src 가져오기 (삭제관련) -->
+	<select id="getNewsSrc" resultType="String">
+		select news_src from _news where news_id = #{news_id} 
+	</select>
+
+
 
 
 </mapper>

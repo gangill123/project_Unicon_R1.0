@@ -2,6 +2,8 @@ package com.Unicon.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,12 @@ public class MainController {
 	private NewsService nService;
 	
 	@GetMapping("")
-	public String main(Model model) {
+	public String main(Model model, HttpSession session) {
 		
 		logger.debug("main() 호출");
+		
+		// 임시 아이디 세션저장
+		session.setAttribute("member_id", "bini97");
 		
 		// 슬라이드 정보 가져오기
 		List<MainSlideVO> slideInfo = msService.getSlideForMain();

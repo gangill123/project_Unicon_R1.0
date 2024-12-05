@@ -79,6 +79,11 @@ public class NewsService {
 		return ndao.getNewsLastest();
 	}
 	
+	// 소식 조회(진행중인 행사)
+	public List<NewsVO> getNewsNow() {
+		return ndao.getNewsNow();
+	}
+	
 	// 소식 조회(다가오는 행사)
 	public List<NewsVO> getNewsUpcoming() {
 		return ndao.getNewsUpcoming();
@@ -93,6 +98,13 @@ public class NewsService {
 	public List<NewsVO> getNewsClosed() {
 		return ndao.getNewsClosed();
 	}
+	
+	// 소식 src가져오기 (삭제관련)
+	public String getNewsSrc(int news_id) {
+		return ndao.getNewsSrc(news_id);
+	}
+	
+	
 	
 	
 	
