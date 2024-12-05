@@ -112,7 +112,7 @@
 		                    <img src="${not empty notice.noThumb ? (notice.noThumb.startsWith('/') ? notice.noThumb : '/'.concat(notice.noThumb)) : '/resources/assets/images/default-thumb.png'}" 
 		                         class="notice-image" 
 		                         alt="공지사항 썸네일"
-		                         onerror="this.src='/resources/assets_sub/img/default-thumb.jpg'">
+		                         onerror="this.src='/resources/assets/images/default-thumb.png'">
 		                </div>
 		                <div class="card-body">
 		                    <div class="notice-header">
@@ -187,13 +187,13 @@ $(document).ready(function() {
                     response.notices.forEach(function(notice) {
                         var thumbPath = notice.noThumb ? 
                             (notice.noThumb.startsWith('/') ? notice.noThumb : '/' + notice.noThumb) : 
-                            '/resources/assets_sub/img/default-thumb.jpg';
+                            '/resources/assets/images/default-thumb.png';
                             
                         var card = '<div class="col-lg-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">' +
                             '<div class="card notice-card" onclick="location.href=\'/notice/' + notice.noId + '\'">' +
                                 '<div class="notice-image-wrapper">' +
                                     '<img src="' + thumbPath + '" class="notice-image" alt="공지사항 썸네일" ' +
-                                        'onerror="this.src=\'/resources/assets_sub/img/default-thumb.jpg\'">' +
+                                        'onerror="this.src=\'/resources/assets/images/default-thumb.png\'">' +
                                 '</div>' +
                                 '<div class="card-body">' +
                                     '<div class="notice-header">' +
