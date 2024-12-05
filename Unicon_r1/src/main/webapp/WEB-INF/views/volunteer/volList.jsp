@@ -25,9 +25,9 @@
 }
 
 .nav-tabs .nav-link.active {
-    color: #0d6efd;
     background: transparent;
-    border-bottom: 3px solid #0d6efd;
+    color: #86BC42;
+    border-bottom: 3px solid #86BC42;
 }
 
 /* 카드 스타일 */
@@ -70,7 +70,7 @@
 }
 
 .target-badge {
-    background-color: #e7f3ff;
+    background-color: #e7f3ff;  
     color: #0d6efd;
     padding: 4px 12px;
     border-radius: 20px;
@@ -127,7 +127,7 @@
 }
 
 .date-info i {
-    color: #0d6efd;
+    color: #86BC42;
 }
 
 /* 장바구니 뱃지 스타일 */
@@ -164,11 +164,27 @@
     font-weight: 600;
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
+    background-color: #86BC42;
+    border-color: #86BC42;
 }
 
 .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.15);
+	color: white;
+    background-color: #348E38;
+    border-color: #348E38;
+    box-shadow: 0 4px 12px rgba(134, 188, 66, 0.15);
+}
+
+/* 아웃라인 버튼 스타일 수정 */
+.btn-outline-primary {
+    color: #86BC42;
+    border-color: #86BC42;
+}
+
+.btn-outline-primary:hover {
+    background-color: #86BC42;
+    border-color: #86BC42;
+    color: white;
 }
 
 @media (max-width: 768px) {

@@ -40,7 +40,7 @@ public class NoticeController {
     
     // ======= 사용자 뷰 매핑 =======
     // http://localhost:8088/notice
-    
+	
     // 사용자 공지사항 목록
     @GetMapping("")
     public String userList(
@@ -529,20 +529,17 @@ public class NoticeController {
     public ResponseEntity<Map<String, Object>> getMoreNotices(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate) {
-    	
-    	
+            @RequestParam(required = false) String keyword) {
         try {
-            int size = 16; // 한 페이지당 16개의 게시글
-            Map<String, Object> result = noService.getNoticeList(page, size, category, keyword, startDate, endDate);
+            int size = 12; // 한 페이지당 12개씩
+            Map<String, Object> result = noService.getNoticeList(page, size, category, keyword, null, null);
+            
             List<NoticeVO> notices = (List<NoticeVO>) result.get("boards");
             int totalCount = (Integer) result.get("totalCount");
             
             Map<String, Object> response = new HashMap<>();
             response.put("notices", notices);
-            response.put("hasNext", (page * size) < totalCount);
+            response.put("hasNext", ((page - 1) * size + notices.size()) < totalCount);
             
             return ResponseEntity.ok(response);
         } catch (Exception e) {
