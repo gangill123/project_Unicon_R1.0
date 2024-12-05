@@ -549,7 +549,7 @@ function loadDraftList() {
                            '<small class="text-muted">' + formatDate(draft.noRegdate) + '</small>' +
                            '</div>' +
                            '<button type="button" class="btn btn-outline-danger btn-sm ml-2" ' +
-                           'onclick="deleteDraft(' + draft.noId + ')">' +
+                           'onclick="deleteDraft(' + draft.noId + ', true)">' +
                            '<i class="fas fa-trash-alt"></i>' +
                            '</button>' +
                            '</div>' +
@@ -570,46 +570,41 @@ function loadDraftList() {
 }
 
 function loadDraft(noId) {
-    if (!noId) {
-        console.error('Draft ID is missing');
-        return;
-    }
-    
     $.ajax({
         url: '/notice/manage/draft/' + noId,
         type: 'GET',
         success: function(draft) {
             if (draft) {
                 // form 필드 업데이트
-                $('input[name="noId"]').val(draft.noId); // 임시저장 ID 설정
+                $('input[name="noId"]').val(''); // noId를 비워서 신규 등록으로 처리
+                // 임시저장에서 불러온 글임을 표시
+                $('<input>').attr({
+                    type: 'hidden',
+                    id: 'isFromDraft',
+                    name: 'isFromDraft',
+                    value: 'true'
+                }).appendTo('#noticeForm');
+                
+                // 나머지 필드들 업데이트
                 $('input[name="noTitle"]').val(draft.noTitle);
                 $('select[name="noCategory"]').val(draft.noCategory);
                 $('input[name="noWriter"]').val(draft.noWriter);
                 $('#noContent').summernote('code', draft.noContent || '');
                 
-                // 썸네일 미리보기 업데이트
                 if (draft.noThumb) {
                     $('#thumbnailPreview').attr('src', draft.noThumb);
                 } else {
                     $('#thumbnailPreview').attr('src', '/resources/assets_sub/img/default-thumb.jpg');
                 }
                 
-                // 체크박스 상태 업데이트
                 $('#important').prop('checked', draft.important);
                 $('#noEmail').prop('checked', draft.noEmail);
                 
                 $('#draftListModal').modal('hide');
-                
-                console.log('Draft loaded successfully:', draft);
-            } else {
-                console.error('Draft data is empty');
-                alert('임시저장 글을 불러오는데 실패했습니다.');
             }
         },
         error: function(xhr, status, error) {
-            console.error('Error loading draft:', error);
-            console.error('Status:', status);
-            console.error('Response:', xhr.responseText);
+            console.error('임시저장 불러오기 실패:', error);
             alert('임시저장 글을 불러오는데 실패했습니다.');
         }
     });
@@ -628,7 +623,7 @@ function loadRecentDrafts() {
                        '<small class="text-muted">' + formatDate(draft.noRegdate) + '</small>' +
                        '</a>' +
                        '<button type="button" class="btn btn-outline-danger btn-sm ml-2" ' +
-                       'onclick="deleteDraft(' + draft.noId + ')">' +
+                       'onclick="deleteDraft(' + draft.noId + ', false)">' +
                        '<i class="fas fa-trash-alt"></i>' +
                        '</button>' +
                        '</li>';
@@ -639,7 +634,9 @@ function loadRecentDrafts() {
     });
 }
 
-function deleteDraft(noId) {
+function deleteDraft(noId, fromModal) {
+    // fromModal이 undefined일 경우 false로 설정
+    fromModal = fromModal || false;
     Swal.fire({
         title: '임시저장 삭제',
         text: '임시저장된 글을 삭제하시겠습니까?',
@@ -660,7 +657,14 @@ function deleteDraft(noId) {
                         icon: 'success',
                         confirmButtonText: '확인'
                     }).then(() => {
-                        loadRecentDrafts();
+                    	if (fromModal) {
+                            // 모달에서 삭제한 경우
+                            loadRecentDrafts();
+                            loadDraftList();  // 모달 목록 갱신
+                    	} else {
+                            // 최근 임시저장 항목에서 삭제한 경우
+                            loadRecentDrafts();  // 최근 임시저장 목록만 갱신
+                        }
                     });
                 },
                 error: function(xhr, status, error) {
@@ -717,8 +721,8 @@ $(document).ready(function() {
         formData.delete('status'); 
         formData.append('status', 'active'); 
         
-        // 현재 수정 중인 임시저장 ID 가져오기
-        var draftId = $('input[name="noId"]').val();
+     	// 임시저장에서 불러온 글인지, 순수 수정인지 확인
+        var isFromDraft = $('#isFromDraft').length > 0;
         
         // 폼 제출
         $.ajax({
