@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.ProductVO;
 import com.Unicon.service.CategoryDataService;
 
 
@@ -54,19 +55,23 @@ public class StoreRestController {
 	}
 	
 	
-	@RequestMapping(value = "/store/products/create", method = RequestMethod.GET)
-	public ResponseEntity<String> registerAnimal(AnimalVO avo, HttpServletRequest req) {
+	@RequestMapping(value = "/products/create", method = RequestMethod.POST)
+	public ResponseEntity<String> createProduct(ProductVO vo, HttpServletRequest req) {
+		logger.info("vo :  "+ vo);
+		logger.info(" req : "+  req.toString());
 		
 		try {
 			
-			List<ImageVO> images = saveImage(avo, req);
-			if (images == null || images.isEmpty()) {
-				return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물 이미지를 저장하는 데 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-			// 이거 변환하는거는 건들지 않아도 됨. avo.setAnimal_images(images);
 			
-			//  aService.animalInsert(avo);
-			return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
+			  List<ImageVO> images = saveImage(vo, req); 
+			  if (images == null || images.isEmpty()) { 
+				  return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물 이미지를 저장하는 데 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR); 
+			  } // 이거 변환하는거는 건들지 않아도 됨.
+			  
+			  //avo.setAnimal_images(images);
+			
+			  // aService.animalInsert(avo);
+			 return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
 			
 		} catch (Exception e) {
 			return new ResponseEntity<String>("( •̀ ω •́ )✧ 오류가 발생했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -74,8 +79,8 @@ public class StoreRestController {
 	}
 	
 	/*=============== 이미지 저장 및 리스트 생성 ===============*/
-	public List<ImageVO> saveImage(AnimalVO avo, HttpServletRequest req) {
-		logger.info("( •̀ ω •́ )✧ saveImage(AnimalVO avo, HttpServletRequest req) 실행");
+	public List<ImageVO> saveImage(ProductVO avo, HttpServletRequest req) {
+		logger.info("( •̀ ω •́ )✧ saveImage(ProductVO avo, HttpServletRequest req) 실행");
 		String saveDir = req.getRealPath("/uploads/");
 		List<MultipartFile> uploadImages = avo.getUpload_images();
 		List<ImageVO> animalImages = new ArrayList<ImageVO>();
@@ -101,8 +106,9 @@ public class StoreRestController {
 
 			if (index != -1) {
 				String modifiedPath = destinationImage.getPath().substring(index);
+				logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다."+ modifiedPath);
 				ImageVO ivo = new ImageVO();
-				ivo.setImage_id(avo.getAnimal_id());
+				//ivo.setImage_id(avo.getAnimal_id());
 				ivo.setImage_sequence(i);
 				ivo.setImage_src(modifiedPath);
 				ivo.setImage_type("apdt");

@@ -129,6 +129,23 @@
 										· 상품과 직접 관련이 없는 다른 상품명, 스팸성, 유명 상품을 도용한 ~스타일, ~st 키워드 사용
 				                    </div>
 				                    </div>
+				                    
+				                    <div class="dropdown-divider"></div>
+				                    <div style="margin-top: 20px;">
+				                    	<div style="display: flex;margin-bottom: 12px">
+											<h4 class="card-title" style="margin-bottom: 0">상품 키워드 </h4>
+											<i class="icon-must" aria-label="필수항목"></i>
+				                    	</div>
+				                    	<div class="store-input-container" style="flex-direction: column; align-items: flex-start;" class="product_keyword">
+				                    		<input style="width: 20%;border: 1px solid #ccc;border-radius: 4px;margin-bottom: 10px;" type="text" name="product_keyword1" placeholder="키워드를 입력하세요.">
+				                    		<input style="width: 20%;border: 1px solid #ccc;border-radius: 4px;margin-bottom: 10px;" type="text" name="product_keyword2" placeholder="키워드를 입력하세요.">
+				                    		<input style="width: 20%;border: 1px solid #ccc;border-radius: 4px;margin-bottom: 10px;" type="text" name="product_keyword3" placeholder="키워드를 입력하세요.">
+				                    		<p style="color :#a6a7ad; margin: 0 0 4px 0;font-size: 12px;">예시: 애견사료, 강아지 사료 (","로 구분)</p>
+				                    		<p style="color :#a6a7ad; margin: 0;font-size: 12px;">각 입력창의 최대 글자는 10자까지만 가능합니다.</p>
+				                    	</div>
+									</div>
+				                    <div class="dropdown-divider"></div>
+				                    
 
 				                  </div>
 				                </div>
@@ -430,6 +447,7 @@
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
 				                    <div class="closeBox-img">
+				                    	<form id="form-img">
 										<div style="display: flex; align-items: center;">
 										    <label >대표 이미지</label>
 										    <div class="form-group" style="margin: 0">
@@ -484,7 +502,8 @@
 											</div>
 										</div>
 										</div>
-										<div class="dropdown-divider"></div>         
+										<div class="dropdown-divider"></div>
+										</form>         
 				                    </div>
 				                  </div>
 				                </div>
