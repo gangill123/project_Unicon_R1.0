@@ -51,6 +51,12 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE+"getPostListAll");
 	}
 	
+	// 해당 게시물 보기
+	public PostVO getPostListOne(String post_id){
+		logger.info(" DAO - getPostListOne() 실행 ");
+		return sqlSession.selectOne(NAMESPACE+"getPostListOne", post_id);
+	}
+	
 	// 전체 댓글 보기
 	public List<CommentVO> getCommentListAll(String post_id){
 		logger.info(" DAO - getCommentListAll() 실행 ");

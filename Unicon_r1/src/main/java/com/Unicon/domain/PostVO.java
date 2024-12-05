@@ -14,7 +14,7 @@ public class PostVO {
 	private String member_id;			// 유저아이디
 	private String post_title;			// 제목
 	private String post_content;		// 내용
-	private Timestamp post_date;		// 생성 일자
+	private String post_date;			// 생성 일자
 	private String post_type;			// 게시물 종류
 	private int pet_code;				// 동물분류코드
 	private String pet_etc_breed;		// 기타동물품종

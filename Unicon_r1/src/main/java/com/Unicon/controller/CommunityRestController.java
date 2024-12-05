@@ -3,7 +3,9 @@ package com.Unicon.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Unicon.domain.AnimalVO;
+import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.PostVO;
 import com.Unicon.service.CommunityService;
@@ -80,6 +84,31 @@ public class CommunityRestController {
 //		
 //	} // insertPost()
 	
+	// 해당하는 게시물과 전체 댓글 들고 오기
+	@RequestMapping(value = "/getAll/{post_id}",method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getPostListOneAndCommentListAll(@PathVariable("post_id")String post_id){
+		logger.info(" getPostListOneAndCommentListAll() 실행 ");
+		
+		ResponseEntity<Map<String, Object>> result = null;
+		
+		try {
+			PostVO postList = communityService.getPostListOne(post_id);
+			List<CommentVO> commentList = communityService.getCommentListAll(post_id);
+			
+			Map<String, Object> responseMap = new HashMap<>();
+			responseMap.put("postList", postList);
+			responseMap.put("commentList", commentList);
+			
+			result = new ResponseEntity<>(responseMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return result;
+	}
+	
+	// 게시물 등록
 	@PostMapping(value = "/insert")
 	public ResponseEntity<String> registerPost(PostVO postVO, HttpServletRequest req){
 		logger.info(" registerPost(PostVO postVO, HttpServletRequest req) 실행 ");

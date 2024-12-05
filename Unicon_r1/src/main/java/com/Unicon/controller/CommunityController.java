@@ -93,7 +93,7 @@ public class CommunityController {
 	}
 	
 	// 여기다가 클릭시에 해당하는 게시물과 전체 댓글 들고 오는 거 만들거임
-	
+	// restcontroller 참고
 	// 여기다가 클릭시에 해당하는 게시물과 전체 댓글 들고 오는 거 만들거임
 
 	// 커뮤니티 - 게시물 등록 사이트

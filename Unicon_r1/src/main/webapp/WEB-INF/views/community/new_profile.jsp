@@ -290,8 +290,8 @@ z-index: 2000;
                                 </div>
                             </div>
                            <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
-                           <p>실종 일자 : 2024-08-24</p>
-                           <p>실종 장소 : 부산광역시 부산진구 부전1동 일대</p>
+                           <p>실종(발견) 일자 : 2024-08-24</p>
+                           <p>실종(발견) 장소 : 부산광역시 부산진구 부전1동 일대</p>
                            <p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
                            <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
                            
