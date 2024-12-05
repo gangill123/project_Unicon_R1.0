@@ -51,12 +51,12 @@ public class StoreRestController {
 		} else {
 			return new ResponseEntity<List<CategoryDataVO>>(CategoryDetailDataList, HttpStatus.OK);
 		}
-		
 	}
+	
 	
 	@RequestMapping(value = "/store/products/create", method = RequestMethod.GET)
 	public ResponseEntity<String> registerAnimal(AnimalVO avo, HttpServletRequest req) {
-
+		
 		try {
 			
 			List<ImageVO> images = saveImage(avo, req);
@@ -65,14 +65,12 @@ public class StoreRestController {
 			}
 			// 이거 변환하는거는 건들지 않아도 됨. avo.setAnimal_images(images);
 			
-			
 			//  aService.animalInsert(avo);
 			return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
 			
 		} catch (Exception e) {
 			return new ResponseEntity<String>("( •̀ ω •́ )✧ 오류가 발생했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
 	}
 	
 	/*=============== 이미지 저장 및 리스트 생성 ===============*/
