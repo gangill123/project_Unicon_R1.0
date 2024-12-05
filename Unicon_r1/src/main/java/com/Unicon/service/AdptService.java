@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Unicon.domain.AnimalVO;
+import com.Unicon.domain.CheckImageVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.persistence.AdptDAO;
 
@@ -34,21 +37,21 @@ public class AdptService {
 
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
 	public void animalInsert(AnimalVO avo) {
-		logger.info("( •̀ ω •́ )✧ adptInsert() 실행");
+		logger.debug("( •̀ ω •́ )✧ adptInsert() 실행");
 		
 		aDao.animalInsert(avo);
 	}
 	
 	
 	public List<AnimalVO> getAnimalListAll() {
-		logger.info("( •̀ ω •́ )✧ getAnimalListAll() 실행");
+		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
 		
 		return aDao.getAnimalListAll();
 	}
 	
 	
 	public AnimalVO getAnimalListOne(String animal_id) {
-		logger.info("( •̀ ω •́ )✧ getAnimalListiOne() 실행");
+		logger.debug("( •̀ ω •́ )✧ getAnimalListiOne() 실행");
 		
 		return aDao.getAnimalListOne(animal_id);
 	}
@@ -59,7 +62,7 @@ public class AdptService {
 		
 		/*=============== 동물id 생성 ===============*/
 		public String genAnimalId() {
-			logger.info("( •̀ ω •́ )✧ genAnimalId() 메서드 실행");
+			logger.debug("( •̀ ω •́ )✧ genAnimalId() 메서드 실행");
 			
 			String aNamePre = "ANIM";
 			String animalId = "";
@@ -86,7 +89,7 @@ public class AdptService {
 		
 		/*=============== 이미지 저장 및 리스트 생성 ===============*/
 		public List<ImageVO> saveImage(AnimalVO avo, HttpServletRequest req) {
-			logger.info("( •̀ ω •́ )✧ saveImage(AnimalVO avo, HttpServletRequest req) 메서드 실행");
+			logger.debug("( •̀ ω •́ )✧ saveImage(AnimalVO avo, HttpServletRequest req) 메서드 실행");
 			ServletContext context = req.getServletContext();
 			String saveDir = context.getRealPath("/uploads/");
 			List<MultipartFile> uploadImages = avo.getUpload_images();
@@ -96,10 +99,10 @@ public class AdptService {
 				StringBuilder asb = new StringBuilder();
 				MultipartFile aImage = uploadImages.get(i);
 				if(aImage == null) {
-					logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 null 인덱스 : {}",i);
+					logger.debug("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 null 인덱스 : {}",i);
 					continue;
 				} else if(aImage.isEmpty()) {
-					logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 isEmpty 인덱스 : {}",i);
+					logger.debug("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 isEmpty 인덱스 : {}",i);
 					continue;
 				}
 				
@@ -135,11 +138,149 @@ public class AdptService {
 			return animalImages;
 		}
 		/*=============== 이미지 저장 및 리스트 생성 ===============*/
+
+		
+		/*=============== 이미지 수정 및 삭제, 리스트 생성 ===============*/
+		public List<ImageVO> modifyImage(AnimalVO avo, HttpServletRequest req) {
+			logger.debug("( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행");
+			ServletContext context = req.getServletContext();
+			String saveDir = context.getRealPath("/uploads/");
+			List<ImageVO> imageList = new ArrayList<ImageVO>();
+			List<MultipartFile> uploadImageList = new ArrayList<MultipartFile>(avo.getUpload_images());
+			List<CheckImageVO> checkImageList = new ArrayList<CheckImageVO>(avo.getCheck_images());
+			List<String> imageNameList = new ArrayList<String>();
+			List<String> deleteImageList = new ArrayList<String>();
+			
+			for(int i = 0; i < uploadImageList.size(); i++) {
+				if(uploadImageList.get(i).isEmpty()) {
+					if(checkImageList.get(i).getChangeCheck().isEmpty()) {
+						imageNameList.add(checkImageList.get(i).getOrgSrc());
+						ImageVO ivo = new ImageVO();
+						ivo.setImage_id(avo.getAnimal_id());
+						ivo.setImage_type("adpt");
+						ivo.setImage_sequence(i);
+						ivo.setImage_src(checkImageList.get(i).getOrgSrc());
+						imageList.add(ivo);
+					}
+					if(!checkImageList.get(i).getChangeCheck().isEmpty()
+							&& !checkImageList.get(i).getMoveSrc().isEmpty()) {
+						imageNameList.add(checkImageList.get(i).getMoveSrc());
+						ImageVO ivo = new ImageVO();
+						ivo.setImage_id(avo.getAnimal_id());
+						ivo.setImage_type("adpt");
+						ivo.setImage_sequence(i);
+						ivo.setImage_src(checkImageList.get(i).getOrgSrc());
+						imageList.add(ivo);
+					}
+					
+				} else {
+					StringBuilder asb = new StringBuilder();
+					MultipartFile aImage = uploadImageList.get(i);
+					
+					File destinationImage 
+					= new File(asb.append(saveDir)
+							.append(UUID.randomUUID().toString())
+							.append("_")
+							.append(aImage.getOriginalFilename())
+							.toString());
+				
+					try {
+						aImage.transferTo(destinationImage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					asb.setLength(0);
+					
+					int index = destinationImage.getPath().indexOf("\\uploads\\");
+					String indexStr = "\\uploads\\";
+					String indexSubStr = destinationImage.getPath().substring(index + indexStr.length());
+					String modifiedPath = asb.append("/uploads/").append(indexSubStr).toString();
+					
+					ImageVO ivo = new ImageVO();
+					ivo.setImage_id(avo.getAnimal_id());
+					ivo.setImage_sequence(i);
+					ivo.setImage_src(modifiedPath);
+					ivo.setImage_type("apdt");
+					imageList.add(ivo);
+					
+				}
+			}
+			
+			for (int i = 0; i < checkImageList.size(); i++) {
+				String item = checkImageList.get(i).getOrgSrc();
+				logger.debug("( •̀ ω •́ )✧ item{} : {}", i, item);
+				boolean found = false;
+			
+				for (int j = 0; j < imageNameList.size(); j++) {
+					if (imageNameList.get(j).equals(item)) {
+						found = true;
+						break;
+					}
+				}
+				
+				if (!found) {
+					deleteImageList.add(item);
+				}
+			}
+			
+			for(int i = 0; i < deleteImageList.size(); i++) {
+				StringBuilder asb = new StringBuilder();
+				int index = deleteImageList.get(i).indexOf("/uploads/");
+				String indexStr = "/uploads/";
+				String indexSubStr = deleteImageList.get(i).substring(index + indexStr.length());
+				
+				File deleteFile 
+					= new File(asb.append(saveDir)
+							.append(indexSubStr)
+							.toString());
+				
+				if (deleteFile.exists()) {
+					deleteFile.delete();
+				} else {
+					logger.debug("파일이 존재하지 않습니다: " + deleteFile.getPath());
+				}
+			}
+			
+			return imageList;
+		}
+		/*=============== 이미지 수정 및 삭제, 리스트 생성 ===============*/
+
+		
+		/*=============== 이미지 삭제 ===============*/
+		public void deleteImage(List<ImageVO> imageList, HttpServletRequest req) {
+			logger.debug("( •̀ ω •́ )✧ deleteImage(List<ImageVO> imageList, HttpServletRequest req) 실행");
+			ServletContext context = req.getServletContext();
+			String saveDir = context.getRealPath("/uploads/");
+			
+			for(int i = 0; i < imageList.size(); i++) {
+				StringBuilder asb = new StringBuilder();
+				int index = imageList.get(i).getImage_src().indexOf("/uploads/");
+				String indexStr = "/uploads/";
+				String indexSubStr = imageList.get(i).getImage_src().substring(index + indexStr.length());
+				
+				File deleteFile 
+					= new File(asb.append(saveDir)
+							.append(indexSubStr)
+							.toString());
+				
+				if (deleteFile.exists()) {
+					deleteFile.delete();
+				} else {
+					logger.debug("파일이 존재하지 않습니다: " + deleteFile.getPath());
+				}
+			}
+		}
+		/*=============== 이미지 삭제 ===============*/
+		
+		
+		
+		
 		
 		
 		/*=============== 자동이름짓기 ===============*/
 		public String genAutoName(int act, int social) {
-			logger.info("( •̀ ω •́ )✧ genAutoName(int act, int social) 메서드 실행");
+			logger.debug("( •̀ ω •́ )✧ genAutoName(int act, int social) 메서드 실행");
 			Random r = new Random();
 			String autoName = "";
 			

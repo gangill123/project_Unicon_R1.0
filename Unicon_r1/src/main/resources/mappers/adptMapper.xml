@@ -170,8 +170,47 @@
 		     join _image i on a.animal_id = i.image_id 
 		      join _animal_health h on a.animal_id = h.animal_id 
 		       join _animal_vaccine v on a.animal_id = v.animal_id 
-		        where a.animal_id = #{animal_id} and a.animal_status != 6
+		        where a.animal_id = #{animal_id} and a.animal_status != 6 
+		         order by i.image_sequence asc 
 </select>
+
+
+
+<!-- <update id="modifyAnimal" parameterType="com.Unicon.domain.AnimalVO">
+	update _animal set 
+	 category_code = #{category_code}, category_etc_value = #{category_etc_value}, animal_name = #{animal_name}, 
+	  animal_color = #{animal_color}, animal_gender = #{animal_gender}, animal_neuter = #{animal_neuter}, 
+	   animal_age = #{animal_age}, animal_weight = #{animal_weight}, animal_regnum = #{animal_regnum}, 
+	    animal_act = #{animal_act}, animal_social = #{animal_social}, animal_etc = #{animal_etc} 
+	     where animal_id = #{animal_id} 
+</update>
+
+<insert id="insertAnimalImages" parameterType="List">
+	insert into _image (image_id, image_type, image_sequence, image_src) 
+	 values 
+	  <foreach collection="list" item="li" separator=","> 
+	   (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
+	  </foreach> 
+</insert>
+
+<insert id="insertAnimalHealths" parameterType="Map">
+	insert into _animal_health (animal_id, health, health_check) 
+	 values 
+	  <foreach collection="healths" item="h" separator=","> 
+	   (#{animal_id}, #{h.health}, #{h.health_check}) 
+	  </foreach> 
+</insert>
+
+<insert id="insertAnimalVaccines" parameterType="Map">
+	insert into _animal_vaccine (animal_id, vaccine, vaccine_check) 
+	 values 
+	  <foreach collection="vaccines" item="v" separator=","> 
+	   (#{animal_id}, #{v.vaccine}, #{v.vaccine_check}) 
+	  </foreach> 
+</insert>
+ -->
+
+
 
 
 

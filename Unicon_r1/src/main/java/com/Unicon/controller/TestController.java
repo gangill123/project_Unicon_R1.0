@@ -15,15 +15,15 @@ public class TestController {
 	
 	@RequestMapping(value = "/{juso}", method = RequestMethod.GET)
 	public String connect(@PathVariable("juso") String juso) {
-		logger.info("( •̀ ω •́ )✧ connect(@PathVariable(\"juso\") String juso) 호출 ");
-		logger.info("( •̀ ω •́ )✧ juso : {}",juso);
+		logger.debug("( •̀ ω •́ )✧ connect(@PathVariable(\"juso\") String juso) 호출 ");
+		logger.debug("( •̀ ω •́ )✧ juso : {}",juso);
 		return "/pages/"+juso;
 	}
 	
 	@RequestMapping(value = "/{juso}/{jusoTwo}", method = RequestMethod.GET)
 	public String connectTwo(@PathVariable("juso") String juso, @PathVariable("jusoTwo") String jusoTwo) {
-		logger.info("( •̀ ω •́ )✧ connectTwo(@PathVariable(\"juso\") String juso, @PathVariable(\"jusoTwo\") String jusoTwo) 호출 ");
-		logger.info("( •̀ ω •́ )✧ jusoTwo : {}",jusoTwo);
+		logger.debug("( •̀ ω •́ )✧ connectTwo(@PathVariable(\"juso\") String juso, @PathVariable(\"jusoTwo\") String jusoTwo) 호출 ");
+		logger.debug("( •̀ ω •́ )✧ jusoTwo : {}",jusoTwo);
 		return "/pages/"+juso+"/"+jusoTwo;
 	}
 	
