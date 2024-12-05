@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
@@ -58,9 +59,10 @@ z-index: 2000;
        <!-- start portfolio gallery -->
        <div class="text-center row">
 
+		   <c:forEach var="p" items="${postList }">
            <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
                <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
+                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="${p.post_images[0].image_src}">
                    <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
                    <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
                    <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
@@ -69,11 +71,12 @@ z-index: 2000;
                    <div class="project-grid-overlay">
                        <div class="w-100 px-3">
                            <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>닉네임</p>
+                           <p>${p.jypMemberVO.member_nickname }</p>
                        </div>
                    </div>
                </div>
            </div>
+           </c:forEach>
 <%--            <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>"> --%>
 <!--                <div class="project-grid"> -->
 <%--                    <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
@@ -86,13 +89,15 @@ z-index: 2000;
 <!--                    </div> -->
 <!--                </div> -->
 <!--            </div> -->
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
+
+
+			<%-- <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
                <div class="project-grid" style="display: flex; flex-wrap: wrap;">
                    <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
                    <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
                    <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
                    <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
+                   <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg">
                    </div>
                    <div class="project-grid-overlay">
                        <div class="w-100 px-3">
@@ -101,103 +106,9 @@ z-index: 2000;
                        </div>
                    </div>
                </div>
-           </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
-               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
-                   </div>
-                   <div class="project-grid-overlay">
-                       <div class="w-100 px-3">
-                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>닉네임</p>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
-               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
-                   </div>
-                   <div class="project-grid-overlay">
-                       <div class="w-100 px-3">
-                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>닉네임</p>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
-               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
-                   </div>
-                   <div class="project-grid-overlay">
-                       <div class="w-100 px-3">
-                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>닉네임</p>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
-               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
-                   </div>
-                   <div class="project-grid-overlay">
-                       <div class="w-100 px-3">
-                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>닉네임</p>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
-               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
-                   </div>
-                   <div class="project-grid-overlay">
-                       <div class="w-100 px-3">
-                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>닉네임</p>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
-               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
-                   </div>
-                   <div class="project-grid-overlay">
-                       <div class="w-100 px-3">
-                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>닉네임</p>
-                       </div>
-                   </div>
-               </div>
-           </div>
+           </div> --%>
+           
+           
        </div> <!-- <div class="portfolio-gallery-isotope text-center row"> -->
        <!-- end portfolio gallery -->
 
@@ -211,7 +122,12 @@ z-index: 2000;
     <div class="modal-dialog" style="max-width: 1200px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">해당 커뮤니티 종류 / 개 / 기타견종 / 시고르자브종</h5>
+                <h5 class="modal-title" id="exampleModalLabel">
+                해당 커뮤니티 종류 / 
+                개 / 
+                기타견종 / 
+                시고르자브종
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -479,10 +395,9 @@ z-index: 2000;
 <!--====================================작성부=====================================-->
 
 <!--====================================script 작성부=====================================-->
+<script>
 
-
-
-
+</script>
 <!--====================================script 작성부=====================================-->
 
 <%@ include file="../inc/new_footer.jsp" %> <!-- footer -->

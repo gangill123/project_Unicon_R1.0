@@ -1,6 +1,7 @@
 package com.Unicon.persistence;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.PostVO;
 
@@ -42,6 +44,18 @@ public class CommunityDAO {
 		sqlSession.insert(NAMESPACE+"insertPostImages", imageParams);
 		
 	} // postInsert()
+	
+	// 전체 게시물 보기
+	public List<PostVO> getPostListAll(){
+		logger.info(" DAO - getPostListAll() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getPostListAll");
+	}
+	
+	// 전체 댓글 보기
+	public List<CommentVO> getCommentListAll(String post_id){
+		logger.info(" DAO - getCommentListAll() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getCommentListAll", post_id);
+	}
 	
 	
 	

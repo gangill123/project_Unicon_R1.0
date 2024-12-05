@@ -1,6 +1,7 @@
 package com.Unicon.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.PostVO;
 import com.Unicon.persistence.CommunityDAO;
@@ -32,8 +34,20 @@ public class CommunityService {
 	// 게시물 등록
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
 	public void postInsert(PostVO postVO) {
-		logger.info(" Service - postInsert() 실행");
+		logger.info(" Service - postInsert() 실행 ");
 		communityDAO.postInsert(postVO);
 	} // postInsert()
+	
+	// 전체 게시물 보기
+	public List<PostVO> getPostListAll(){
+		logger.info(" Service - getPostListAll() 실행 ");
+		return communityDAO.getPostListAll();
+	}
+	
+	// 전체 댓글 보기
+	public List<CommentVO> getCommentListAll(String post_id){
+		logger.info(" Service - getCommentListAll() 실행 ");
+		return communityDAO.getCommentListAll(post_id);
+	}
 	
 }

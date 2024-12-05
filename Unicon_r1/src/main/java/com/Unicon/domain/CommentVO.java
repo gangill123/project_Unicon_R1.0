@@ -1,6 +1,7 @@
 package com.Unicon.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 
@@ -12,5 +13,9 @@ public class CommentVO {
 	private String member_id;			// 유저아이디
 	private String comment_content;		// 내용
 	private Timestamp comment_date;		// 생성일자
+	
+	private List<CommentLikeVO> comment_likes;		// 댓글 좋아요 테이블
+	
+	private JypMemberVO jypMemberVO;			// 임시 멤버 테이블
 	
 }

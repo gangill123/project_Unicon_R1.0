@@ -29,6 +29,7 @@ public class PostVO {
 	private List<ImageVO> post_images;			// 이미지 테이블
 	private List<MultipartFile> upload_images;	// 멀티파트 이미지(실제X)
 	private List<CommentVO> post_comments;		// 댓글 테이블
+	private List<PostLikeVO> post_likes;		// 게시물 좋아요 테이블
 	
 //	private List<ImageVO> post_images;	// 게시물 이미지
 	

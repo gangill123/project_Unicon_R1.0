@@ -18,12 +18,14 @@
 	<result property="pet_etc_breed" column="pet_etc_breed"/>
 	<result property="post_pet_place" column="post_pet_place"/>
 	<result property="post_pet_date" column="post_pet_date"/>
+	<!-- <result property="post_like_count" column="post_like_count"/> -->
 	
 	<association property="jypMemberVO" resultMap="JypMemberResultMap" />
 	<association property="categoryDataVO" resultMap="CategoryDataResultMap" />
 	
 	<collection property="post_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
 	<collection property="post_comments" ofType="com.Unicon.domain.CommentVO" resultMap="CommentResultMap"></collection>
+	<collection property="post_likes" ofType="com.Unicon.domain.PostLikeVO" resultMap="PostLikeResultMap"></collection>
 
 </resultMap>
 
@@ -54,9 +56,23 @@
 	<result property="member_id" column="member_id"/>
 	<result property="comment_content" column="comment_content"/>
 	<result property="comment_date" column="comment_date"/>
+	<association property="jypMemberVO" resultMap="JypMemberResultMap" />
+	<collection property="comment_likes" ofType="com.Unicon.domain.CommentLikeVO" resultMap="CommentLikeResultMap"></collection>
 </resultMap>
 
-<!-- 일단 대기 -->
+<resultMap id="PostLikeResultMap" type="com.Unicon.domain.PostLikeVO">
+	<result property="post_id" column="post_id" />
+	<result property="member_id" column="member_id" />
+	<result property="post_like_count" column="post_like_count"/>
+</resultMap>
+
+<resultMap id="CommentLikeResultMap" type="com.Unicon.domain.CommentLikeVO">
+	<result property="comment_id" column="comment_id" />
+	<result property="member_id" column="member_id" />
+	<result property="comment_like_count" column="comment_like_count"/>
+</resultMap>
+
+<!-- 일단 대기 (좋아요 vo 처럼 필요없을거 같긴함 (근데 컬럼명이 다르긴 함)) -->
 <resultMap id="FollowResultMap" type="com.Unicon.domain.FollowVO">
 	<result property="from_member_id" column="from_member_id"/>
 	<result property="to_member_id" column="to_member_id"/>
@@ -79,8 +95,41 @@
 <!-- resultMap 작성란 -->
 
 <!-- 전체 게시글 불러오기 -->
-
+<select id="getPostListAll" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _jyp_member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
 <!-- 전체 게시글 불러오기 -->
+
+<!-- 해당 게시글 불러오기 -->
+<select id="getPostListOne" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _jyp_member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_id = #{p.post_id} 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
+<!-- 해당 게시글 불러오기 -->
+
+<!-- 해당 게시글의 전체 댓글 불러오기 -->
+<select id="getCommentListAll" resultMap="CommentResultMap">
+	select cm.*, m.*, count(cl.member_id) as comment_like_count from _comment cm 
+	join _jyp_member m on cm.member_id = m.member_id 
+	join _post p on cm.post_id = p.post_id 
+	left join _comment_like cl on cm.comment_id = cl.comment_id 
+	where p.post_id = #{p.post_id} 
+	group by cm.comment_id, m.member_id 
+	order by cm.comment_date desc 
+</select>
+<!-- 해당 게시글의 전체 댓글 불러오기 -->
 
 
 

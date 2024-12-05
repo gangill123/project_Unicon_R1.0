@@ -16,12 +16,14 @@ import javax.servlet.ServletContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.PostVO;
 import com.Unicon.service.CommunityService;
@@ -73,9 +75,26 @@ public class CommunityController {
 	// 커뮤니티 - 전체 게시물 보는 사이트
 	// http://localhost:8088/community/main
 	@GetMapping("main")
-	public String template() {
+	public String template(Model model) {
+		List<PostVO> postList = communityService.getPostListAll();
+		
+		/* 이것들 필요없어짐 바로 밑에 참조 */
+		/* List<CommentVO> commentList = communityService.getCommentListAll(); */
+		
+		model.addAttribute("postList", postList);
+		
+		/* model.addAttribute("commentList", commentList); */
+		
+		logger.info("--------postList---------{}",postList);
+		
+		/* logger.info("--------commentList---------{}",commentList); */
+		
 		return "community/new_list";
 	}
+	
+	// 여기다가 클릭시에 해당하는 게시물과 전체 댓글 들고 오는 거 만들거임
+	
+	// 여기다가 클릭시에 해당하는 게시물과 전체 댓글 들고 오는 거 만들거임
 
 	// 커뮤니티 - 게시물 등록 사이트
 	// http://localhost:8088/community/main02
