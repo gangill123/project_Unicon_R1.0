@@ -10,7 +10,7 @@
     	
         console.log(value, type);
      	// 기존 카테고리 값을 지우고 새로 선택된 카테고리 값을 저장
-        data.category = type;
+        data.product_category_type = type;
      	
         // 이전 선택된 카테고리가 있다면 색상 초기화
         if (selectedCategory) {
@@ -73,10 +73,10 @@
 		$("#categoryDetail" + index).css('color', '#bf94e4'); // 해당 카테고리 span 색상 변경
 		
 		// 기존 카테고리 값을 지우고 새로 선택된 카테고리 값을 저장
-	    data.categoryDetail = category;
+	    data.product_category_value = category;
 		
 	    // 선택된 카테고리에 대한 정보를 출력할 HTML에 추가
-	    $('.selected-category-text').html("선택한 카테고리 : " + data.category + ' <i class="mdi mdi-chevron-right"></i>'+category);
+	    $('.selected-category-text').html("선택한 카테고리 : " + data.product_category_type + ' <i class="mdi mdi-chevron-right"></i>'+category);
 	}
  	
     function closeBox(button,value) {
@@ -167,16 +167,16 @@
                 $(this).closest('.input-container').css('border-color', '#bf94e4'); // 원래 색상으로 변경
 
                 // 입력된 값을 data 객체에 저장
-                data.productName = $(this).val().trim(); // productName 키에 값 저장
+                data.product_name = $(this).val().trim(); // productName 키에 값 저장
             } else {
                 $('#error-message').show(); // 입력이 없으면 에러 메시지 표시
                 $(this).closest('.input-container').css('border-color', 'lightcoral'); // 경고 색상으로 변경
 
                 // 입력이 없을 경우 data 객체에서 값 삭제
-                delete data.productName; // productName 키 삭제
+                delete data.product_name; // productName 키 삭제
             }
             
-            console.log(data.productName);
+            console.log(data.product_name);
         });
         $('#price').on('input blur', function(event) {
             var value = $(this).val().replace(/,/g, ''); // 콤마 제거
@@ -205,7 +205,7 @@
                     var formattedValue = formatNumber(value);
                     $(this).val(formattedValue);
                 }
-                data.price = value;
+                data.product_price = value;
             }
         });
         function formatNumber(num) {
@@ -222,7 +222,7 @@
                 $(this).val(100); // 100 초과 시 100으로 설정
             }
             
-            data.discount = value;
+            data.discount_rate = value;
             console.log(value);
         });
 
@@ -241,7 +241,7 @@
                 $(this).val(value.replace(/[^0-9]/g, '')); // 숫자가 아닌 문자 제거
             }
             
-            data.stock = value;
+            data.product_stock = value;
         });
         
         
@@ -390,8 +390,8 @@
             // 시작일과 종료일을 입력 필드에 표시
             $(".date-input").val(startDate + (endDate ? " - " + endDate : ""));
              
-             data.startDate = startDate;
-             data.endDate = endDate;
+             data.start_date = startDate+" 00:00:00";
+             data.end_date = endDate+" 00:00:00";
             
             
         }
@@ -1127,7 +1127,7 @@
             
             // 판매기간 설정 안했을때 날짜 받아오기.
             if ($('#set-off').hasClass('setting-active')) {
-            	data.endDate = '2099-12-31';
+            	data.end_date = '2099-12-31 00:00:00';
             }
             
             
@@ -1141,7 +1141,7 @@
             	}
             }
             if($('#discount-set-off').hasClass('setting-active')) {
-            	data.discount = 0;
+            	data.discount_rate = 0;
             }
             if($('#option-set-off').hasClass('setting-active')) {
             	data.option = {};
@@ -1164,22 +1164,6 @@
             	}
             }
             
-            /*var temp = $('#brand').val();
-            data.brand = temp;
-            temp = $('#manufacturer').val();
-            data.manufacturer = temp;
-            temp = $('#product_origin').val();
-            data.product_origin = temp;
-            temp = $('#product_expiry').val();
-            data.product_expiry = temp;
-            if($('#btn-delivery-on').hasClass('setting-active')) {
-            	data.delivery = '배송';
-            } else {
-            	data.delivery = '배송안함';
-            }
-            
-            temp = $('#delivery_price').val();
-            data.delivery_price = temp;*/
             
             // 입력 필드에서 값 가져오기 및 배송 가격 설정
             const fields = ['brand', 'manufacturer', 'product_origin', 'product_expiry', 'delivery_price'];
@@ -1188,8 +1172,24 @@
             });
 
             // 배송 정보 설정
-            data.delivery = $('#btn-delivery-on').hasClass('setting-active') ? '배송' : '배송안함';
+            data.delivery_method = $('#btn-delivery-on').hasClass('setting-active') ? '배송' : '배송안함';
             
+            /*const keyword1 = $('input[name="product_keyword1"]').val().trim();
+            const keyword2 = $('input[name="product_keyword2"]').val().trim();
+            const keyword3 = $('input[name="product_keyword3"]').val().trim();
+
+            // 키워드를 배열로 생성
+            const keywords = [keyword1, keyword2, keyword3];
+
+            // 비어있지 않은 키워드만 필터링
+            const filteredKeywords = keywords.filter(function(keyword) {
+                return keyword !== '';
+            });
+
+            // 키워드를 쉼표로 연결
+            const product_keyword = filteredKeywords.join(',');
+
+            data.product_keyword = product_keyword;*/
             
             
             // FormData 객체 생성
@@ -1208,12 +1208,38 @@
                     formData.append(key, data[key]);
                 }
             }
+            
+            // 이미지 파일 추가 (jQuery 사용)
+            $('input[type="file"]').each(function(index) {
+                if (this.files.length > 0) {
+                    formData.append(`upload_images[${index}]`, this.files[0]); // FormData에 파일 추가
+                }
+            });
 
             // FormData 사용 예시 (AJAX 요청 등)
             console.log(...formData); // FormData의 내용을 확인하고 싶다면 콘솔에 출력
             
             
             console.log(data);
+            
+        	// AJAX 요청
+            $.ajax({
+                url: '/store/products/create', // 요청을 보낼 URL
+                type: 'POST', // 요청 방식
+                data: formData, // FormData 객체
+                processData: false, // jQuery가 데이터를 처리하지 않도록 설정
+                contentType: false, // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
+                success: function(response) {
+                    // 성공적으로 응답을 받았을 때 처리
+                    console.log('응답:', response);
+                    alert('업로드가 성공적으로 완료되었습니다.');
+                },
+                error: function(xhr, status, error) {
+                    // 오류 발생 시 처리
+                    console.error('Error:', error);
+                    alert('업로드 중 오류가 발생했습니다.');
+                }
+            });
         });
 		
         // 재고수량 받아오기.
