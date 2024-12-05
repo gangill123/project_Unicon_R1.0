@@ -70,8 +70,9 @@ z-index: 2000;
                    </div>
                    <div class="project-grid-overlay">
                        <div class="w-100 px-3">
-                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
+                           <h4><a href="#!" class="open-modal" data-post-id="${p.post_id }" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
                            <p>${p.jypMemberVO.member_nickname }</p>
+                           <input type="hidden" id="selectPost" value="${p.post_id}"/>
                        </div>
                    </div>
                </div>
@@ -136,15 +137,15 @@ z-index: 2000;
 
                        <!-- product left start -->
                        <div class="xzoom-container">
-                           <img class="xzoom5 mb-1-9" id="xzoom-magnific" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" xoriginal="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" alt="..." style="min-width:436px; width: 436px; height: 436px; object-fit: fill;">
+                           <img class="xzoom5 mb-1-9" id="xzoom_magnific" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" xoriginal="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" alt="..." style="min-width:436px; width: 436px; height: 436px; object-fit: fill;">
                            <%-- <img class="xzoom5 mb-1-9" id="xzoom-magnific" src="모달 눌렀을때 기본" xoriginal="미리보기 근데 클릭은 이거 아님" alt="..." style="width: 526px;"> --%>
                            <div class="xzoom-thumbs m-0">
-                               <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg"><img class="xzoom-gallery5 xactive" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumbs/01_product.jpg" xpreview="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" alt="..." title="The description goes here"></a>
+                               <a id="aImg1" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg"><img id="imgImg1" class="xzoom-gallery5 xactive" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumbs/01_product.jpg" xpreview="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" alt="..." title="The description goes here"></a>
                                <%-- <a href="첫번째 사진의 미리보기만 됨(근데 모달 처음에 안보임, 미리보긴는 됨)"><img class="xzoom-gallery5 xactive" width="80" src="첫번째 사진 자체(근데 밑에만 있고 위가 없음;" xpreview="이게 클릭시 위" alt="..." title="The description goes here"></a> --%>
-                               <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/02_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/02_product.jpg" alt="..."  title="The description goes here"></a>
+                               <a id="aImg2" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/02_product.jpg"><img id="imgImg2" class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/02_product.jpg" alt="..."  title="The description goes here"></a>
                                <%-- <a href="두번째 사진의 미리보기만 됨"><img class="xzoom-gallery5" width="80" src="두번째 사진 자체(위랑 밑 둘다)" alt="..." title="The description goes here"></a> --%>
-                               <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/03_product.jpg" alt="..." title="The description goes here"></a>
-                               <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/04_product.jpg" alt="..." title="The description goes here"></a>
+                               <a id="aImg3" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg"><img id="imgImg3" class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/03_product.jpg" alt="..." title="The description goes here"></a>
+                               <a id="aImg4" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg"><img id="imgImg4" class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/04_product.jpg" alt="..." title="The description goes here"></a>
                            </div>
                        </div>
                        <!-- product left end -->
@@ -159,15 +160,15 @@ z-index: 2000;
                            <div class="media">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
-                                    <h4 class="mt-0 mb-2 h4">징젱종잉123</h4>
+                                    <h4 id="postMemberNick" class="mt-0 mb-2 h4">징젱종잉123</h4>
                                     <!-- <h6 class="mt-0 mb-2 h6">1998-07-11 00:00 좋아요 711개 <i class="fa-regular fa-heart"></i></h6> -->
-                                    <p>동물병원 다녀왔어요 ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ</p>
+                                    <p id="postTitle">동물병원 다녀왔어요 ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ</p>
                                 </div>
                             </div>
                            <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
-                           <p>실종 일자 : 2024-08-24</p>
-                           <p>실종 장소 : 부산광역시 부산진구 부전1동 일대</p>
-                           <p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
+                           <p id="postPetDate">실종(발견) 일자 : 2024-08-24</p>
+                           <p id="postPetPlace">실종(발견) 장소 : 부산광역시 부산진구 부전1동 일대</p>
+                           <p id="postContent">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
                            <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
                            
                            <div style="margin-bottom: 20px;">
@@ -366,7 +367,7 @@ z-index: 2000;
                        </div> <!-- <div class="product-detail"> -->
                        
                        <div style="width: 100%; height: 36px; margin-top: 10px;">
-                       		<span style="margin-right: 5%;">1998-07-11 00:00</span><span style="margin-right: 5%;">좋아요 711개</span><span style="margin-right: 5%;"><i class="fa-regular fa-heart"></i></span>
+                       		<span id="postDate" style="margin-right: 5%;">1998-07-11 00:00</span><span id="postLikeCount" style="margin-right: 5%;">좋아요 711개</span><span style="margin-right: 5%;"><i class="fa-regular fa-heart"></i></span>
                        </div>
                        <input type="text" style="width: 100%; height: 36px; margin-bottom: 10px;" placeholder="댓글 달기...">
                        <button type="button" class="btn btn-outline-success"><!-- 댓글 --><i class="fas fa-paper-plane"></i></button>
@@ -396,7 +397,102 @@ z-index: 2000;
 
 <!--====================================script 작성부=====================================-->
 <script>
-
+$(document).ready(function(){
+	
+	// 모달 여는 글자 클릭
+	$('.open-modal').on('click', function() {
+		
+        // 클릭한 요소의 data-post-id 속성에서 게시물ID 가져오기
+        var post_id = $(this).data('post-id');
+        
+        // 확인용 콘솔 로그
+        // console.log(post_id);
+        
+        $.ajax({
+        	url : '/community/getAll/' + post_id,
+        	method : 'GET',
+        	dataType : 'json',
+        	success : function(data){
+        		// 모달 게시물 헤더 부분
+        		if(data.postList.post_type == 'post01'){
+        			var exampleModalLabel = '입양 후기 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
+            		$('#exampleModalLabel').html(exampleModalLabel);
+        		} else if(data.postList.post_type == 'post02'){
+        			var exampleModalLabel = '반려 이야기 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
+            		$('#exampleModalLabel').html(exampleModalLabel);
+        		} else if(data.postList.post_type == 'post03'){
+        			var exampleModalLabel = '실종 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
+            		$('#exampleModalLabel').html(exampleModalLabel);
+        		} else{
+        			var exampleModalLabel = '임시보호 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
+            		$('#exampleModalLabel').html(exampleModalLabel);
+        		}
+        		// 모달 게시물 작성자 닉네임 부분
+        		var postMemberNick = data.postList.jypMemberVO.member_nickname;
+        		$('#postMemberNick').html(postMemberNick);
+        		// 모달 게시물 제목 부분
+        		var postTitle = data.postList.post_title;
+        		$('#postTitle').html(postTitle);
+        		// 모달 게시물 내용 부분
+        		var postContent = data.postList.post_content;
+        		$('#postContent').html(postContent);
+        		// 모달 게시물 실종(발견) 장소, 일자 부분
+        		if(data.postList.post_type == 'post03' || data.postList.post_type == 'post04'){
+	        		var postPetDate = '실종(발견) 일자 : '+data.postList.post_pet_date;
+	        		$('#postPetDate').html(postPetDate);
+	        		var postPetPlace = '실종(발견) 장소 : '+data.postList.post_pet_place;
+	        		$('#postPetPlace').html(postPetPlace);
+        		} else {
+        			var postPetDate = data.postList.post_pet_date;
+	        		$('#postPetDate').html(postPetDate);
+	        		var postPetPlace = data.postList.post_pet_place;
+	        		$('#postPetPlace').html(postPetPlace);
+        		}
+        		// 모달 게시물 생성 날짜 부분
+        		var postDate = data.postList.post_date;
+        		$('#postDate').html(postDate);
+        		// 모달 게시물 좋아요 개수 부분
+        		var postLikeCount = data.postList.post_likes[0].post_like_count+'개';
+        		$('#postLikeCount').html(postLikeCount);
+        		// 모달 게시물 이미지 관련 부분
+        		if(data.postList.post_images[0].image_src != null){
+	        		var xzoom_magnific = data.postList.post_images[0].image_src;
+	        		$('#xzoom_magnific').attr('src', xzoom_magnific);
+	        		$('#xzoom_magnific').attr('xoriginal', xzoom_magnific);
+	        		var aImg1 = data.postList.post_images[0].image_src;
+	        		$('#aImg1').attr('href', aImg1);
+	        		var imgImg1 = data.postList.post_images[0].image_src;
+	        		$('#imgImg1').attr('src', imgImg1);
+	        		$('#imgImg1').attr('xpreview', imgImg1);
+        		}
+        		if(data.postList.post_images[1].image_src != null){
+	        		var aImg2 = data.postList.post_images[1].image_src;
+	        		$('#aImg2').attr('href', aImg2);
+	        		var imgImg2 = data.postList.post_images[1].image_src;
+	        		$('#imgImg2').attr('src', imgImg2);
+        		}
+        		if(data.postList.post_images[2].image_src != null){
+	        		var aImg3 = data.postList.post_images[2].image_src;
+	        		$('#aImg3').attr('href', aImg3);
+	        		var imgImg3 = data.postList.post_images[2].image_src;
+	        		$('#imgImg3').attr('src', imgImg3);
+        		}
+        		if(data.postList.post_images[3].image_src != null){
+	        		var aImg4 = data.postList.post_images[3].image_src;
+	        		$('#aImg4').attr('href', aImg4);
+	        		var imgImg4 = data.postList.post_images[3].image_src;
+	        		$('#imgImg4').attr('src', imgImg4);
+        		}
+        		
+        	},
+        	error : function(){
+        		alert('게시물을 불러오는데 실패했습니다.');
+        	}
+        }); // $.ajax 
+        
+    }); // 모달 여는 글자 클릭
+	
+}); // 돔레디
 </script>
 <!--====================================script 작성부=====================================-->
 

@@ -44,6 +44,12 @@ public class CommunityService {
 		return communityDAO.getPostListAll();
 	}
 	
+	// 해당 게시물 보기
+	public PostVO getPostListOne(String post_id) {
+		logger.info(" Service - getPostListOne() 실행 ");
+		return communityDAO.getPostListOne(post_id);
+	}
+	
 	// 전체 댓글 보기
 	public List<CommentVO> getCommentListAll(String post_id){
 		logger.info(" Service - getCommentListAll() 실행 ");
