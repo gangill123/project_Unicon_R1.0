@@ -65,7 +65,7 @@ public class NoticeServiceImpl implements NoticeService {
     
     @Override
     public Map<String, Object> getNoticeList(int page, int size, String category, String keyword, String startDate, String endDate) throws Exception {
-        // 1부터 시작하는 페이지 번호를 0부터 시작하는 인덱스로 변환
+        // 페이지 번호를 0부터 시작하는 인덱스로 변환
         int startIndex = (page - 1) * size;
         
         Map<String, Object> params = new HashMap<>();
@@ -73,8 +73,8 @@ public class NoticeServiceImpl implements NoticeService {
         params.put("size", size);
         params.put("category", category);
         params.put("keyword", keyword);
-        params.put("startDate", startDate); 
-        params.put("endDate", endDate); 
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
         params.put("status", "active");
         
         List<NoticeVO> notices = noDAO.selectNoticeList(params);

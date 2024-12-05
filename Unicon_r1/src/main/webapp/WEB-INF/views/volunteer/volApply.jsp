@@ -60,11 +60,23 @@
 	
 	.icon-wrapper {
 	    font-size: 1.5rem;
-	    color: #0d6efd;
+	    color: #348E38;
 	    min-width: 40px;
 	    display: flex;
 	    align-items: center;
 	    justify-content: center;
+	}
+	
+	.btn-primary {
+	    background-color: #86BC42;
+	    border-color: #86BC42;
+	}
+
+	.btn-primary:hover {
+		color: white;
+	    background-color: #348E38;
+	    border-color: #348E38;
+	    box-shadow: 0 4px 12px rgba(134, 188, 66, 0.15);
 	}
 	
 	.info-content {
@@ -356,7 +368,7 @@
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary px-5">신청하기</button>
-                    <button type="button" class="btn btn-secondary px-5 ms-2" onclick="history.back()">취소</button>
+                    <button type="button" class="btn btn-secondary px-5 ms-2" onclick="history.back()">취소하기</button>
                 </div>
             </form>
         </div>

@@ -42,6 +42,14 @@
 		margin-top: 0;
 	}
 	
+	.card-header {
+	    padding: 0.75rem 1rem;  
+	}
+	
+	.d-flex.justify-content-end.gap-2.mt-3 {
+	    margin-top: 0.75rem !important;  
+	}
+	
 	.card-header .mb-0.fs-6 {
 	    font-weight: 700 !important;
 	    color: #333;
@@ -69,7 +77,7 @@
 	/* 카드 스타일 */
 	.application-card {
 	    height: 100%;
-	    min-height: 400px;
+	    min-height: 320px;
 	    border: 1px solid #dee2e6;
 	    border-radius: 8px;
 	    transition: transform 0.2s;
@@ -78,11 +86,11 @@
 	
 	.application-card:hover {
 	    transform: translateY(-5px);
-	    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    	box-shadow: 0 4px 12px rgba(52, 142, 56, 0.15);
 	}
 	
 	.card-body {
-	    padding: 1.5rem;
+	    padding: 1rem;
 	}
 	
 	/* 상태 배지 */
@@ -90,6 +98,7 @@
 	    font-size: 0.9rem;
 	    padding: 0.5rem 1rem;
 	    border-radius: 20px;
+	    box-shadow: 0 2px 4px rgba(52, 142, 56, 0.2);
 	}
 	
 	.status-pending { background-color: #ffd700; color: #000; }
@@ -101,7 +110,7 @@
 	    display: grid;
 	    grid-template-columns: repeat(1, 1fr);
 	    gap: 1rem;
-	    margin-bottom: 1rem;
+	    margin-bottom: 0.75rem;
 	}
 	
 	/* 공통 아이템 스타일 */
@@ -110,7 +119,7 @@
 	    align-items: start;
 	    gap: 0.5rem;
 	    background-color: #f8f9fa;
-	    padding: 1rem;
+	    padding: 0.75rem;
 	    border-radius: 8px;
 	    transition: transform 0.2s;
 	}
@@ -121,6 +130,7 @@
 	
 	.detail-item:hover {
 	    transform: translateY(-2px);
+   		border-left: 3px solid #86BC42;
 	}
 	
 	.detail-item.full-width {
@@ -153,7 +163,7 @@
 	
 	/* 아이콘 스타일 */
 	.info-icon, .detail-icon {
-	    color: #0d6efd;
+	    color: #86BC42;
 	    font-size: 1.2rem;
 	    width: 24px;
 	}
@@ -161,18 +171,18 @@
 	/* 버튼 스타일 */
 	.btn-detail, .cancel-btn {
 	    border: none;
-	    padding: 0.5rem 1rem;
+	    padding: 0.375rem 0.75rem;
 	    border-radius: 4px;
 	    transition: background-color 0.2s;
 	    color: white;
 	}
 	
 	.btn-detail {
-	    background-color: #0d6efd;
+	    background-color: #86BC42;
 	}
 	
 	.btn-detail:hover {
-	    background-color: #0b5ed7;
+	    background-color: #348E38;
 	}
 	
 	.cancel-btn {
@@ -218,12 +228,12 @@
 	/* 선택 상태 텍스트 스타일 */
 	.selection-text {
 	    font-size: 0.9rem;
-	    color: #0d6efd;
+	    color: #86BC42;
 	}
 	
 	.accordion-button:not(.collapsed) {
-	    background-color: #e7f1ff;
-	    color: #0d6efd;
+	    background-color: #f0f7e6;
+    	color: #348E38;
 	}
 	
 	.accordion-item {
@@ -247,12 +257,13 @@
 	.modal-header {
 	    background-color: #f8f9fa;
 	    border-radius: 8px 8px 0 0;
+	    border-bottom: 3px solid #86BC42;
 	}
 	
 	.form-select:focus,
 	.form-control:focus {
-	    border-color: #0d6efd;
-	    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+	    border-color: #86BC42;
+   		box-shadow: 0 0 0 0.2rem rgba(134, 188, 66, 0.25);
 	}
 	
 	/* SweetAlert2 커스텀 스타일 */
@@ -362,14 +373,14 @@
 	                                    <strong>활동내용</strong><br>
 	                                    ${application.voContent}
 	                                </div>
-	                            </div> --%>
+	                            </div> 
 	                            <div class="info-item">
 	                                <i class="fas fa-map-marker-alt info-icon"></i>
 	                                <div>
 	                                    <strong>장소</strong><br>
 	                                    ${application.voLocation}
 	                                </div>
-	                            </div>
+	                            </div> --%>
 	                            <div class="info-item">
 	                                <i class="far fa-calendar-alt info-icon"></i>
 	                                <div>
