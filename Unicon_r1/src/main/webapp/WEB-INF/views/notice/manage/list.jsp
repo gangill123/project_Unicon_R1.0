@@ -17,6 +17,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
+<!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+
 <style>
 /* 기본 레이아웃 */
 body,
@@ -158,6 +163,23 @@ body,
     padding: 0.5rem 1rem !important;
     font-weight: 500 !important;
     height: 38px !important;
+}
+
+/* SweetAlert2 커스텀 스타일 */
+.swal2-popup .swal2-actions {
+    justify-content: center;
+}
+
+.swal2-popup .swal2-confirm {
+    background-color: #86bc42 !important;
+}
+
+.swal2-popup .swal2-cancel {
+    background-color: #aaa !important;
+}
+
+.swal2-popup {
+    font-size: 0.9rem !important;
 }
 
 /* 모바일 반응형 */
@@ -465,92 +487,135 @@ body,
         window.location.href = '/notice/manage?page=1&size=10';
     };
 
-    // 공지사항 삭제
+ 	// 공지사항 삭제
     window.deleteNotice = function(noId) {
-        if (!confirm('정말 삭제하시겠습니까?')) {
-            return;
-        }
-        
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
-        
-        $.ajax({
-            url: '/notice/api/delete/' + noId,
-            type: 'POST',
-            beforeSend: function(xhr) {
-                if (token && header) {
-                    xhr.setRequestHeader(header, token);
-                }
-            },
-            success: function() {
-                alert('삭제되었습니다.');
-                location.reload();
-            },
-            error: function(xhr) {
-                console.error('Error:', xhr);
-                var errorMsg = xhr.responseText || '서버 오류가 발생했습니다.';
-                alert('삭제 실패: ' + errorMsg);
+        Swal.fire({
+            title: '삭제 확인',
+            text: '정말 삭제하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소',
+            reverseButtons: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                
+                $.ajax({
+                    url: '/notice/api/delete/' + noId,
+                    type: 'POST',
+                    beforeSend: function(xhr) {
+                        if (token && header) {
+                            xhr.setRequestHeader(header, token);
+                        }
+                    },
+                    success: function() {
+                        Swal.fire({
+                            title: '삭제 완료',
+                            text: '성공적으로 삭제되었습니다.',
+                            icon: 'success',
+                            confirmButtonText: '확인'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    },
+                    error: function(xhr) {
+                        console.error('Error:', xhr);
+                        var errorMsg = xhr.responseText || '서버 오류가 발생했습니다.';
+                        Swal.fire({
+                            title: '삭제 실패',
+                            text: errorMsg,
+                            icon: 'error',
+                            confirmButtonText: '확인'
+                        });
+                    }
+                });
             }
         });
     };
-    
+
     // 공지사항 선택 삭제
     window.deleteSelected = function() {
-    const selectedIds = [];
-    $('.notice-check:checked').each(function() {
-        selectedIds.push($(this).val());
-    });
-    
-    if (selectedIds.length === 0) {
-        alert('삭제할 항목을 선택해주세요.');
-        return;
-    }
-    
-    if (!confirm('선택한 ' + selectedIds.length + '개의 항목을 삭제하시겠습니까?')) {
-        return;
-    }
-    
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-    
-    // 선택된 항목들을 순차적으로 삭제
-    let deleteCount = 0;
-    let errorCount = 0;
-    
-    function deleteNext(index) {
-        if (index >= selectedIds.length) {
-            if (errorCount === 0) {
-                alert('선택한 항목이 모두 삭제되었습니다.');
-                location.reload();
-            } else {
-                alert(deleteCount + '개 항목이 삭제되었으며, ' + errorCount + '개 항목 삭제 중 오류가 발생했습니다.');
-                location.reload();
-            }
+        const selectedIds = [];
+        $('.notice-check:checked').each(function() {
+            selectedIds.push($(this).val());
+        });
+        
+        if (selectedIds.length === 0) {
+            Swal.fire({
+                title: '선택 필요',
+                text: '삭제할 항목을 선택해주세요.',
+                icon: 'warning',
+                confirmButtonText: '확인'
+            });
             return;
         }
         
-        $.ajax({
-            url: '/notice/api/delete/' + selectedIds[index],
-            type: 'POST',
-            beforeSend: function(xhr) {
-                if (token && header) {
-                    xhr.setRequestHeader(header, token);
+        Swal.fire({
+            title: '선택 삭제',
+            text: '선택한 ' + selectedIds.length + '개의 항목을 삭제하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소',
+            reverseButtons: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+                
+                let deleteCount = 0;
+                let errorCount = 0;
+                
+                function deleteNext(index) {
+                    if (index >= selectedIds.length) {
+                        if (errorCount === 0) {
+                            Swal.fire({
+                                title: '삭제 완료',
+                                text: '선택한 항목이 모두 삭제되었습니다.',
+                                icon: 'success',
+                                confirmButtonText: '확인'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                title: '일부 삭제 실패',
+                                text: deleteCount + '개 항목이 삭제되었으며, ' + errorCount + '개 항목 삭제 중 오류가 발생했습니다.',
+                                icon: 'warning',
+                                confirmButtonText: '확인'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                        return;
+                    }
+                    
+                    $.ajax({
+                        url: '/notice/api/delete/' + selectedIds[index],
+                        type: 'POST',
+                        beforeSend: function(xhr) {
+                            if (token && header) {
+                                xhr.setRequestHeader(header, token);
+                            }
+                        },
+                        success: function() {
+                            deleteCount++;
+                            deleteNext(index + 1);
+                        },
+                        error: function(xhr) {
+                            console.error('Error:', xhr);
+                            errorCount++;
+                            deleteNext(index + 1);
+                        }
+                    });
                 }
-            },
-            success: function() {
-                deleteCount++;
-                deleteNext(index + 1);
-            },
-            error: function(xhr) {
-                console.error('Error:', xhr);
-                errorCount++;
-                deleteNext(index + 1);
+                
+                deleteNext(0);
             }
         });
-    }
-    
-    deleteNext(0);
-	};
+    };
 
     // DOM이 완전히 로드된 후 이벤트 핸들러 설정
     $(document).ready(function() {
@@ -561,10 +626,10 @@ body,
         });
         
         // 전체 선택 체크박스
-    $('#headerCheckbox').on('change', function() {
-        $('.notice-check').prop('checked', $(this).is(':checked'));
+        $('#headerCheckbox').on('change', function() {
+            $('.notice-check').prop('checked', $(this).is(':checked'));
+        });
     });
-});
  	
 </script>
 </body>

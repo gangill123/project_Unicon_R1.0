@@ -17,6 +17,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
+<!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+
 <style>
 /* 기본 레이아웃 */
 body,
@@ -269,6 +274,23 @@ body,
 /* Footer */
 .footer {
     background: #f8f9fa !important;
+}
+
+/* SweetAlert2 커스텀 스타일 */
+.swal2-popup .swal2-actions {
+    justify-content: center;
+}
+
+.swal2-popup .swal2-confirm {
+    background-color: #86bc42 !important;
+}
+
+.swal2-popup .swal2-cancel {
+    background-color: #aaa !important;
+}
+
+.swal2-popup {
+    font-size: 0.9rem !important;
 }
 
 /* 모바일 대응 */
@@ -655,66 +677,122 @@ $(document).ready(function() {
 });
 
 window.deleteVolunteer = function(voId) {
-    if (!confirm('해당 봉사활동 공고를 삭제하시겠습니까?')) {
-        return;
-    }
-    
-    var token = $("meta[name='_csrf']").attr("content");
-    var header = $("meta[name='_csrf_header']").attr("content");
-    
-    $.ajax({
-        url: '/volunteer/manage/delete/' + voId,
-        type: 'POST',
-        beforeSend: function(xhr) {
-            if (token && header) {
-                xhr.setRequestHeader(header, token);
-            }
-        },
-        success: function() {
-            alert('삭제되었습니다.');
-            location.reload();
-        },
-        error: function(xhr) {
-            console.error('Error:', xhr);
-            var errorMsg = xhr.responseText || '서버 오류가 발생했습니다.';
-            alert('삭제 실패: ' + errorMsg);
+    Swal.fire({
+        title: '삭제 확인',
+        text: '해당 봉사활동 공고를 삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소',
+        reverseButtons: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            
+            $.ajax({
+                url: '/volunteer/manage/delete/' + voId,
+                type: 'POST',
+                beforeSend: function(xhr) {
+                    if (token && header) {
+                        xhr.setRequestHeader(header, token);
+                    }
+                },
+                success: function() {
+                    Swal.fire({
+                        title: '삭제 완료',
+                        text: '성공적으로 삭제되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function(xhr) {
+                    console.error('Error:', xhr);
+                    var errorMsg = xhr.responseText || '서버 오류가 발생했습니다.';
+                    Swal.fire({
+                        title: '삭제 실패',
+                        text: errorMsg,
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
+                }
+            });
         }
     });
 };
 
 function closeRecruitment(voId) {
-    if (!confirm('해당 봉사활동 모집을 마감하시겠습니까?')) {
-    
-    	return;
-    }
-    
-    $.ajax({
-    	url: '/volunteer/manage/close/' + voId,
-        type: 'POST',
-        success: function() {
-            alert('모집이 마감되었습니다.');
-            location.reload();
-        },
-        error: function() {
-            alert('마감 처리 중 오류가 발생했습니다.');
+    Swal.fire({
+        title: '모집 마감',
+        text: '해당 봉사활동 모집을 마감하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '마감',
+        cancelButtonText: '취소',
+        reverseButtons: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/volunteer/manage/close/' + voId,
+                type: 'POST',
+                success: function() {
+                    Swal.fire({
+                        title: '마감 완료',
+                        text: '모집이 마감되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        title: '마감 실패',
+                        text: '마감 처리 중 오류가 발생했습니다.',
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
+                }
+            });
         }
     });
 }
 
 function openRecruitment(voId) {
-    if (!confirm('해당 봉사활동 모집을 시작하시겠습니까?')) {
-        return;
-    }
-    
-    $.ajax({
-        url: '/volunteer/manage/open/' + voId,
-        type: 'POST',
-        success: function() {
-            alert('모집이 시작되었습니다.');
-            location.reload();
-        },
-        error: function() {
-            alert('모집 처리 중 오류가 발생했습니다.');
+    Swal.fire({
+        title: '모집 시작',
+        text: '해당 봉사활동 모집을 시작하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '시작',
+        cancelButtonText: '취소',
+        reverseButtons: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/volunteer/manage/open/' + voId,
+                type: 'POST',
+                success: function() {
+                    Swal.fire({
+                        title: '모집 시작',
+                        text: '모집이 시작되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        title: '시작 실패',
+                        text: '모집 처리 중 오류가 발생했습니다.',
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
+                }
+            });
         }
     });
 }
@@ -821,23 +899,41 @@ function getStatusBadge(status) {
 }
 
 function approveApplication(voId) {
-    if (!confirm('해당 신청을 승인하시겠습니까?')) {
-        return;
-    }
-    
-    const volunteerDetailModal = document.getElementById('volunteerDetailModal');
-    const currentVolId = volunteerDetailModal.getAttribute('data-volunteer-id');
-    
-    $.ajax({
-        url: '/volunteer/manage/approve/' + voId,
-        type: 'POST',
-        success: function() {
-            alert('신청이 승인되었습니다.');
-            // currentVolId를 사용하여 모달 내용 새로고침
-            showVolunteerDetail(currentVolId);
-        },
-        error: function() {
-            alert('승인 처리 중 오류가 발생했습니다.');
+    Swal.fire({
+        title: '승인 확인',
+        text: '해당 신청을 승인하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '승인',
+        cancelButtonText: '취소',
+        reverseButtons: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const volunteerDetailModal = document.getElementById('volunteerDetailModal');
+            const currentVolId = volunteerDetailModal.getAttribute('data-volunteer-id');
+            
+            $.ajax({
+                url: '/volunteer/manage/approve/' + voId,
+                type: 'POST',
+                success: function() {
+                    Swal.fire({
+                        title: '승인 완료',
+                        text: '신청이 승인되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    }).then(() => {
+                        showVolunteerDetail(currentVolId);
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        title: '승인 실패',
+                        text: '승인 처리 중 오류가 발생했습니다.',
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
+                }
+            });
         }
     });
 }
@@ -854,6 +950,17 @@ function showRejectModal(voId) {
     rejectModal.show();
 }
 
+function showRejectModal(voId) {
+    const rejectModal = new bootstrap.Modal(document.getElementById('rejectReasonModal'), {
+        backdrop: 'static'
+    });
+    $('#rejectApplicationId').val(voId);
+    $('#rejectReason').val('');
+    $('#rejectReasonDetail').val('');
+    rejectModal.show();
+}
+
+// 거절 제출
 function submitReject() {
     const voId = $('#rejectApplicationId').val();
     const reason = $('#rejectReason').val();
@@ -861,35 +968,66 @@ function submitReject() {
     const currentVolId = document.getElementById('volunteerDetailModal').getAttribute('data-volunteer-id');
     
     if (!reason) {
-        alert('거절 사유를 선택해주세요.');
+        Swal.fire({
+            title: '입력 필요',
+            text: '거절 사유를 선택해주세요.',
+            icon: 'warning',
+            confirmButtonText: '확인'
+        });
         return;
     }
     if (!reasonDetail) {
-        alert('거절 사유 상세내용을 입력해주세요.');
+        Swal.fire({
+            title: '입력 필요',
+            text: '거절 사유 상세내용을 입력해주세요.',
+            icon: 'warning',
+            confirmButtonText: '확인'
+        });
         return;
     }
     
-    $.ajax({
-        url: '/volunteer/manage/reject/' + voId,
-        type: 'POST',
-        data: { 
-            reason: reason,
-            reasonDetail: reasonDetail
-        },
-        success: function() {
-            alert('신청이 거절되었습니다.');
-            
-            // 거절 사유 모달 닫기
-            const rejectModal = bootstrap.Modal.getInstance(document.getElementById('rejectReasonModal'));
-            if (rejectModal) {
-                rejectModal.hide();
-            }
-            
-            // 신청자 목록 새로고침
-            showVolunteerDetail(currentVolId);
-        },
-        error: function() {
-            alert('거절 처리 중 오류가 발생했습니다.');
+    Swal.fire({
+        title: '거절 확인',
+        text: '해당 신청을 거절하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '거절',
+        cancelButtonText: '취소',
+        reverseButtons: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/volunteer/manage/reject/' + voId,
+                type: 'POST',
+                data: { 
+                    reason: reason,
+                    reasonDetail: reasonDetail
+                },
+                success: function() {
+                    Swal.fire({
+                        title: '거절 완료',
+                        text: '신청이 거절되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    }).then(() => {
+                        // 거절 사유 모달 닫기
+                        const rejectModal = bootstrap.Modal.getInstance(document.getElementById('rejectReasonModal'));
+                        if (rejectModal) {
+                            rejectModal.hide();
+                        }
+                        // 신청자 목록 새로고침
+                        showVolunteerDetail(currentVolId);
+                    });
+                },
+                error: function() {
+                    Swal.fire({
+                        title: '거절 실패',
+                        text: '거절 처리 중 오류가 발생했습니다.',
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
+                }
+            });
         }
     });
 }
