@@ -9,6 +9,11 @@
 <link href="${pageContext.request.contextPath}/resources/assets_sub/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+<!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+
 <style>
 	.application-form {
 	    max-width: 800px;
@@ -115,6 +120,23 @@
     .form-control.is-invalid {
         border-color: #dc3545;
     }
+    
+    /* SweetAlert2 커스텀 스타일 */
+	.swal2-popup .swal2-actions {
+	    justify-content: center;
+	}
+	
+	.swal2-popup .swal2-confirm {
+	    background-color: #86bc42 !important;
+	}
+	
+	.swal2-popup .swal2-cancel {
+	    background-color: #aaa !important;
+	}
+	
+	.swal2-popup {
+	    font-size: 0.9rem !important;
+	}
 	
 @media (max-width: 768px) {
     .volunteer-summary {
@@ -316,7 +338,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="privacyAgreement" required>
                         <label class="form-check-label">
-                            개인정보 수집 및 이용에 동의합니다.
+                            [필수] 개인정보 수집 및 이용에 동의합니다.
                         </label>
                     </div>
                 </div>
@@ -327,7 +349,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="voAgree" value="Y">
                         <label class="form-check-label">
-                            SMS/이메일 수신에 동의합니다.
+                            [선택] SMS/이메일 수신에 동의합니다.
                         </label>
                     </div>
                 </div>
@@ -473,57 +495,92 @@ $(document).ready(function() {
 
         // 개인정보 수집동의 체크박스 검사
         if (!$('input[name="privacyAgreement"]').is(':checked')) {
-            alert('개인정보 수집 및 이용에 동의해주세요.');
-            $('input[name="privacyAgreement"]')[0].scrollIntoView({ behavior: 'smooth' });
-            isValid = false;
-        }
-
+		    Swal.fire({
+		        title: '동의 필요',
+		        text: '개인정보 수집 및 이용에 동의해주세요.',
+		        icon: 'warning',
+		        confirmButtonText: '확인'
+		    });
+		    $('input[name="privacyAgreement"]')[0].scrollIntoView({ behavior: 'smooth' });
+		    isValid = false;
+		}
+        
         if (!isValid) {
             return false;
         }
 
         // 연령 제한 검사
         const age = calculateAge(year, month, day);
-        const target = '${volunteer.voTarget}';
-        
+    	const target = '${volunteer.voTarget}';
+    	
         if (!isEligibleAge(age, target)) {
-            if (target.includes('성인')) {
-                alert('해당 공고는 성인만 신청 가능합니다.');
-            } else if (target.includes('청소년')) {
-                alert('해당 공고는 청소년만 신청 가능합니다.');
-            }
+            Swal.fire({
+                title: '신청 불가',
+                text: target.includes('성인') ? '해당 공고는 성인만 신청 가능합니다.' : '해당 공고는 청소년만 신청 가능합니다.',
+                icon: 'error',
+                confirmButtonText: '확인'
+            });
             return false;
         }
 
         // 최종 제출 확인
-        if (!confirm('관리자 승인 이후 취소가 불가합니다. 신청하시겠습니까?')) {
-            return false;
-        }
-
-        // 생년월일 hidden input 추가
-        const birthDate = new Date(year, month - 1, day);
-        const formattedDate = birthDate.toISOString().split('T')[0];
-        $(this).append('<input type="hidden" name="voBirth" value="' + formattedDate + '">');
-
-        // Ajax 제출
-        $.ajax({
-            url: '/volunteer/apply',
-            type: 'POST',
-            data: $(this).serialize(),
-            success: function(response) {
-                alert('봉사활동 신청이 완료되었습니다.');
-                window.location.href = '/volunteer/mylist';
-            },
-            error: function(xhr) {
-                if (xhr.responseText) {
-                    alert(xhr.responseText);
-                } else {
-                    alert('신청 중 오류가 발생했습니다. 다시 시도해주세요.');
-                }
-            }
-        });
-    });
-});
+        Swal.fire({
+		    title: '신청 확인',
+		    text: '관리자 승인 이후 취소가 불가합니다. 신청하시겠습니까?',
+		    icon: 'warning',
+		    showCancelButton: true,
+		    confirmButtonText: '신청하기',
+		    cancelButtonText: '취소',
+		    reverseButtons: false
+		}).then((result) => {
+		    if (result.isConfirmed) {
+		    	submitForm(year, month, day);
+	        }
+	    });
+	});
+		    	
+		 	// 폼 제출 함수
+		    function submitForm(year, month, day) {	    	
+		        // 생년월일 hidden input 추가
+		        const birthDate = new Date(year, month - 1, day);
+			    const formattedDate = birthDate.toISOString().split('T')[0];
+			    $('#applicationForm').append('<input type="hidden" name="voBirth" value="' + formattedDate + '">');
+		
+		        // Ajax 제출
+			    $.ajax({
+			        url: '/volunteer/apply',
+			        type: 'POST',
+			        data: $('#applicationForm').serialize(),
+			        success: function(response) {
+			            Swal.fire({
+			                title: '신청 완료',
+			                text: '봉사활동 신청이 완료되었습니다.',
+			                icon: 'success',
+			                confirmButtonText: '확인'
+			            }).then(() => {
+			                window.location.href = '/volunteer/mylist';
+			            });
+			        },
+			        error: function(xhr) {
+			            if (xhr.responseText) {
+			                Swal.fire({
+			                    title: '신청 실패',
+			                    text: xhr.responseText,
+			                    icon: 'error',
+			                    confirmButtonText: '확인'
+			                });
+			            } else {
+			                Swal.fire({
+			                    title: '신청 실패',
+			                    text: '신청 중 오류가 발생했습니다. 다시 시도해주세요.',
+			                    icon: 'error',
+			                    confirmButtonText: '확인'
+			                });
+			            }
+			        }
+			    });
+			}
+		});
 
 </script>
 

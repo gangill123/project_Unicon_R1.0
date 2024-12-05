@@ -16,6 +16,11 @@
    	<link rel="shortcut icon" href="/resources/admin/images/favicon.png" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+<!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
     
 <style>
 	.sidebar { 
@@ -176,6 +181,23 @@
 	    background: #ffffff;
 	    border: 1px solid #e0e0e0;
 	    color: #333;
+	}
+	
+	/* SweetAlert2 커스텀 스타일 */
+	.swal2-popup .swal2-actions {
+	    justify-content: center;
+	}
+	
+	.swal2-popup .swal2-confirm {
+	    background-color: #86bc42 !important;
+	}
+	
+	.swal2-popup .swal2-cancel {
+	    background-color: #aaa !important;
+	}
+	
+	.swal2-popup {
+	    font-size: 0.9rem !important;
 	}
 
 /* 모바일 반응형 */
@@ -342,7 +364,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <script>
+<script>
     var csrfToken = $("meta[name='_csrf']").attr("content");
     var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 
@@ -356,82 +378,152 @@
     }
     
     $(document).ready(function() {
-    	// 폼 유효성 검사 함수 추가
+        // 폼 유효성 검사 함수
         function validateForm() {
-            // 필수 입력 필드 검사
             if (!$('input[name="voTitle"]').val().trim()) {
-                alert('봉사활동명을 입력해주세요.');
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '봉사활동명을 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
             if (!$('input[name="voLocation"]').val().trim()) {
-                alert('봉사장소를 입력해주세요.');
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '봉사장소를 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
             if (!$('input[name="voTarget"]').val().trim()) {
-                alert('모집대상을 입력해주세요.');
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '모집대상을 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
             if (!$('input[name="voCapacity"]').val()) {
-                alert('모집인원을 입력해주세요.');
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '모집인원을 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
             if (!$('input[name="voManager"]').val().trim()) {
-                alert('담당자를 입력해주세요.');
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '담당자를 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
             if (!$('input[name="voContact"]').val().trim()) {
-                alert('연락처를 입력해주세요.');
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '연락처를 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
-            
-         	// 날짜 값 가져오기
+
+            // 날짜 값 가져오기
             const recruitStart = new Date($('input[name="voRecruitStart"]').val());
             const recruitEnd = new Date($('input[name="voRecruitEnd"]').val());
             const volStart = new Date($('input[name="voStartDate"]').val());
             const volEnd = new Date($('input[name="voEndDate"]').val());
-            
-         	// 필수 입력 체크
-            if (!recruitStart) {
-                alert('모집 시작일을 입력해주세요.');
+
+            // 필수 입력 체크
+            if (!$('input[name="voRecruitStart"]').val()) {
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '모집 시작일을 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
-            if (!recruitEnd) {
-                alert('모집 종료일을 입력해주세요.');
+            if (!$('input[name="voRecruitEnd"]').val()) {
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '모집 종료일을 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
-            if (!volStart) {
-                alert('봉사 시작일을 입력해주세요.');
+            if (!$('input[name="voStartDate"]').val()) {
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '봉사 시작일을 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
-            if (!volEnd) {
-                alert('봉사 종료일을 입력해주세요.');
+            if (!$('input[name="voEndDate"]').val()) {
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '봉사 종료일을 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
-            
-         	// 날짜 유효성 검사
+
+            // 날짜 유효성 검사
             if (recruitEnd < recruitStart) {
-                alert('모집 종료일은 모집 시작일보다 이후여야 합니다.');
+                Swal.fire({
+                    title: '날짜 확인',
+                    text: '모집 종료일은 모집 시작일보다 이후여야 합니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
             if (volEnd < volStart) {
-                alert('봉사 종료일은 봉사 시작일보다 이후여야 합니다.');
+                Swal.fire({
+                    title: '날짜 확인',
+                    text: '봉사 종료일은 봉사 시작일보다 이후여야 합니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
             if (volStart < recruitStart) {
-                alert('봉사 시작일은 모집 시작일 이후여야 합니다.');
+                Swal.fire({
+                    title: '날짜 확인',
+                    text: '봉사 시작일은 모집 시작일 이후여야 합니다.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
 
             if (!$('textarea[name="voContent"]').val().trim()) {
-                alert('활동내용을 입력해주세요.');
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '활동내용을 입력해주세요.',
+                    icon: 'warning',
+                    confirmButtonText: '확인'
+                });
                 return false;
             }
             return true;
         }
 
+        // 폼 제출 처리
         $('#volunteerForm').on('submit', function(e) {
-			e.preventDefault();
-            
+            e.preventDefault();
+
             if (!validateForm()) {
                 return false;
             }
@@ -440,6 +532,8 @@
             var formData = new FormData(this);
             formData.set('status', 'active');
             
+            const isEdit = formData.get('voId'); // 수정 여부 확인
+
             // 폼 제출
             $.ajax({
                 url: this.action,
@@ -448,17 +542,30 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    alert(formData.get('voId') ? '봉사활동이 수정되었습니다.' : '봉사활동이 등록되었습니다.');
-                    window.location.href = '/volunteer/manage';
+                    Swal.fire({
+                        title: isEdit ? '수정 완료' : '등록 완료',
+                        text: isEdit ? '봉사활동이 수정되었습니다.' : '봉사활동이 등록되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/volunteer/manage';
+                        }
+                    });
                 },
                 error: function(xhr, status, error) {
                     console.error('저장 실패:', error);
-                    alert('저장에 실패했습니다.');
+                    Swal.fire({
+                        title: '저장 실패',
+                        text: '저장 중 오류가 발생했습니다.',
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
                 }
             });
         });
     });
-    </script>
+</script>
     
 </body>
 </html>

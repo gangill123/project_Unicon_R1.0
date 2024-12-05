@@ -9,6 +9,11 @@
 <link href="${pageContext.request.contextPath}/resources/assets_sub/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+<!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+
 <style>
 	/* 카드 스타일 */
 	.application-card {
@@ -211,6 +216,23 @@
 	    margin-bottom: 2rem;
 	    padding-bottom: 1rem;
 	    border-bottom: 2px solid #dee2e6;
+	}
+	
+	/* SweetAlert2 커스텀 스타일 */
+	.swal2-popup .swal2-actions {
+	    justify-content: center;
+	}
+	
+	.swal2-popup .swal2-confirm {
+	    background-color: #86bc42 !important;
+	}
+	
+	.swal2-popup .swal2-cancel {
+	    background-color: #aaa !important;
+	}
+	
+	.swal2-popup {
+	    font-size: 0.9rem !important;
 	}
 	
 	/* 반응형 */
@@ -543,27 +565,60 @@ function submitCancel() {
     const reasonDetail = document.getElementById('cancelReasonDetail').value;
     
     if (!reason) {
-        alert('취소사유를 선택해주세요.');
+        Swal.fire({
+            title: '입력 확인',
+            text: '취소사유를 선택해주세요.',
+            icon: 'warning',
+            confirmButtonText: '확인'
+        });
         return;
     }
     if (!reasonDetail) {
-        alert('취소사유 상세내용을 입력해주세요.');
+        Swal.fire({
+            title: '입력 확인',
+            text: '취소사유 상세내용을 입력해주세요.',
+            icon: 'warning',
+            confirmButtonText: '확인'
+        });
         return;
     }
     
-    $.ajax({
-        url: '/volunteer/cancel/' + cancelVoId,
-        type: 'POST',
-        data: {
-            reason: reason,             
-            reasonDetail: reasonDetail
-        },
-        success: function(response) {
-            alert('신청이 취소되었습니다.');
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            alert('신청 취소 중 오류가 발생했습니다.');
+    Swal.fire({
+        title: '신청 취소',
+        text: '정말 신청을 취소하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '취소하기',
+        cancelButtonText: '돌아가기',
+        reverseButtons: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/volunteer/cancel/' + cancelVoId,
+                type: 'POST',
+                data: {
+                    reason: reason,             
+                    reasonDetail: reasonDetail
+                },
+                success: function(response) {
+                    Swal.fire({
+                        title: '취소 완료',
+                        text: '신청이 취소되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: '취소 실패',
+                        text: '신청 취소 중 오류가 발생했습니다.',
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
+                }
+            });
         }
     });
 }

@@ -35,6 +35,11 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-ko-KR.min.js"></script>
     
+	<!-- SweetAlert2 CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+	<!-- SweetAlert2 JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+
     <style>
      .sidebar { 
        width: 250px; 
@@ -166,6 +171,23 @@
         align-items: center;
         gap: 1rem;
     }
+    
+    /* SweetAlert2 커스텀 스타일 */
+	.swal2-popup .swal2-actions {
+	    justify-content: center;
+	}
+	
+	.swal2-popup .swal2-confirm {
+	    background-color: #86bc42 !important;
+	}
+	
+	.swal2-popup .swal2-cancel {
+	    background-color: #aaa !important;
+	}
+	
+	.swal2-popup {
+	    font-size: 0.9rem !important;
+	}
 
    /* 모바일 반응형 */
    @media (max-width: 768px) {
@@ -492,12 +514,22 @@ function saveDraft() {
         processData: false,
         contentType: false,
         success: function(response) {
-            alert('임시저장되었습니다.');
+            Swal.fire({
+                title: '임시저장 완료',
+                text: '성공적으로 임시저장되었습니다.',
+                icon: 'success',
+                confirmButtonText: '확인'
+            });
             loadRecentDrafts();
         },
         error: function(xhr, status, error) {
             console.error('임시저장 실패:', error);
-            alert('임시저장에 실패했습니다.');
+            Swal.fire({
+                title: '임시저장 실패',
+                text: '임시저장 중 오류가 발생했습니다.',
+                icon: 'error',
+                confirmButtonText: '확인'
+            });
         }
     });
 }
@@ -608,20 +640,41 @@ function loadRecentDrafts() {
 }
 
 function deleteDraft(noId) {
-    if (confirm('임시저장된 글을 삭제하시겠습니까?')) {
-        $.ajax({
-            url: '/notice/manage/draft/' + noId,
-            type: 'DELETE',
-            success: function() {
-                alert('임시저장이 삭제되었습니다.');
-                loadRecentDrafts();
-            },
-            error: function(xhr, status, error) {
-                console.error('임시저장 삭제 실패:', error);
-                alert('임시저장 삭제에 실패했습니다.');
-            }
-        });
-    }
+    Swal.fire({
+        title: '임시저장 삭제',
+        text: '임시저장된 글을 삭제하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: '삭제',
+        cancelButtonText: '취소',
+        reverseButtons: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/notice/manage/draft/' + noId,
+                type: 'DELETE',
+                success: function() {
+                    Swal.fire({
+                        title: '삭제 완료',
+                        text: '임시저장이 삭제되었습니다.',
+                        icon: 'success',
+                        confirmButtonText: '확인'
+                    }).then(() => {
+                        loadRecentDrafts();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('임시저장 삭제 실패:', error);
+                    Swal.fire({
+                        title: '삭제 실패',
+                        text: '임시저장 삭제에 실패했습니다.',
+                        icon: 'error',
+                        confirmButtonText: '확인'
+                    });
+                }
+            });
+        }
+    });
 }
 
 // 페이지 로드 시 초기화
@@ -661,8 +714,6 @@ $(document).ready(function() {
 
         // FormData 객체 생성
         var formData = new FormData(this);
-        
-        // status를 명시적으로 'active'로 설정
         formData.delete('status'); 
         formData.append('status', 'active'); 
         
@@ -677,12 +728,25 @@ $(document).ready(function() {
             processData: false,
             contentType: false,
             success: function(response) {
-                // 임시저장 삭제 로직 제거하고 바로 목록 페이지로 이동
-                window.location.href = '/notice/manage';
+                Swal.fire({
+                    title: formData.get('noId') ? '수정 완료' : '등록 완료',
+                    text: formData.get('noId') ? '공지사항이 수정되었습니다.' : '공지사항이 등록되었습니다.',
+                    icon: 'success',
+                    confirmButtonText: '확인'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/notice/manage';
+                    }
+                });
             },
             error: function(xhr, status, error) {
                 console.error('저장 실패:', error);
-                alert('저장에 실패했습니다.');
+                Swal.fire({
+                    title: '저장 실패',
+                    text: '저장 중 오류가 발생했습니다.',
+                    icon: 'error',
+                    confirmButtonText: '확인'
+                });
             }
         });
     });
