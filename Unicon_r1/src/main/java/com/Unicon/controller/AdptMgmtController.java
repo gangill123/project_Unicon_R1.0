@@ -28,24 +28,24 @@ public class AdptMgmtController {
 	
 	@GetMapping(value = "/main")
 	public void adptmgmtMain() throws Exception {
-		logger.info("( •̀ ω •́ )✧ adptmgmtMain() 실행");
+		logger.debug("( •̀ ω •́ )✧ adptmgmtMain() 실행");
 	}
 	
 	@GetMapping(value = "/animals/creation")
 	public String animalAdd() throws Exception {
-		logger.info("( •̀ ω •́ )✧ animalAdd() 실행");
+		logger.debug("( •̀ ω •́ )✧ animalAdd() 실행");
 		return "/adptmgmt/animals/insert";
 	}
 	
 	@GetMapping(value = "/animals/list")
 	public String animalViewAll() throws Exception {
-		logger.info("( •̀ ω •́ )✧ animalView() 실행");
+		logger.debug("( •̀ ω •́ )✧ animalView() 실행");
 		return "/adptmgmt/animals/read";
 	}
 	
 	@GetMapping(value = "/animals/list/{animal_id}")
 	public String animalViewOne() throws Exception {
-		logger.info("( •̀ ω •́ )✧ animalViewOne() 실행");
+		logger.debug("( •̀ ω •́ )✧ animalViewOne() 실행");
 		return "/adptmgmt/animals/update";
 	}
 	

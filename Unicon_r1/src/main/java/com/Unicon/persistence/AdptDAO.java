@@ -30,7 +30,7 @@ public class AdptDAO {
 	private static final String NAMESPACE = "com.Unicon.mapper.adptMapper.";
 	
 	public void animalInsert(AnimalVO avo) {
-		logger.info("( •̀ ω •́ )✧ animalInsert() 실행");
+		logger.debug("( •̀ ω •́ )✧ animalInsert() 실행");
 		
 		sqlSession.insert(NAMESPACE+"insertAnimal", avo);
 		
@@ -50,20 +50,20 @@ public class AdptDAO {
 	
 	
 	public Integer checkAnimalId(String animal_id) {
-		logger.info("( •̀ ω •́ )✧ checkAnimalId(String animId) 실행");
+		logger.debug("( •̀ ω •́ )✧ checkAnimalId(String animId) 실행");
 		
 		return sqlSession.selectOne(NAMESPACE+"checkAnimalId", animal_id);
 	}
 	
 	
 	public List<AnimalVO> getAnimalListAll() {
-		logger.info("( •̀ ω •́ )✧ getAnimalListAll() 실행");
+		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
 		
 		return sqlSession.selectList(NAMESPACE+"getAnimalListAll");
 	}
 	
 	public AnimalVO getAnimalListOne(String animal_id) {
-		logger.info("( •̀ ω •́ )✧ getAnimalListOne(String animal_id) 실행");
+		logger.debug("( •̀ ω •́ )✧ getAnimalListOne(String animal_id) 실행");
 		
 		return sqlSession.selectOne(NAMESPACE+"getAnimalListOne",animal_id);
 	}

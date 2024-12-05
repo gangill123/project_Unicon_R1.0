@@ -251,9 +251,11 @@
 			"autoWidth": false, 
 			"info": false,
 		    "paging": true,
-		    "lengthMenu": [10, 20, 50, 80], 
+		    "lengthMenu": [10, 20, 50, 80],
+		    "searching": true,
 		    "language": {
 				"lengthMenu": "표시 항목수 _MENU_",
+				"emptyTable": "원하는 데이터를 찾을 수 없습니다.",
 				"search": "검색",
 				"paginate": {
 					next: "다음",

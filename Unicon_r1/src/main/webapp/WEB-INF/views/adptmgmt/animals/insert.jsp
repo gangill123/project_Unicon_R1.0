@@ -934,10 +934,10 @@
 							{ label: '혼합예방주사(CVRP)', value: '혼합예방주사(CVRP)' }
 						],
 						3000: [
-							{ label: '--', value: 'etc' },
-							{ label: '--', value: 'etc' },
-							{ label: '--', value: 'etc' },
-							{ label: '--', value: 'etc' }
+							{ label: '--', value: 'etc0' },
+							{ label: '--', value: 'etc1' },
+							{ label: '--', value: 'etc2' },
+							{ label: '--', value: 'etc3' }
 						],
 				};
 				/*=============== 변수 설정 ===============*/

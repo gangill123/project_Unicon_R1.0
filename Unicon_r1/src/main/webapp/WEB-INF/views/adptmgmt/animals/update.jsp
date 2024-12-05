@@ -984,10 +984,10 @@
 							{ label: '혼합예방주사(CVRP)', value: '혼합예방주사(CVRP)' }
 						],
 						3000: [
-							{ label: '--', value: 'etc' },
-							{ label: '--', value: 'etc' },
-							{ label: '--', value: 'etc' },
-							{ label: '--', value: 'etc' }
+							{ label: '--', value: 'etc0' },
+							{ label: '--', value: 'etc1' },
+							{ label: '--', value: 'etc2' },
+							{ label: '--', value: 'etc3' }
 						],
 				};
 				/*=============== 변수 설정 ===============*/
@@ -1782,112 +1782,14 @@
 				});
 				/*=============== 체크박스 제어 ===============*/
 
-				
-				
-				/*=============== 초기화(reset) 버튼 제어 ===============*/
-				$('#a-reset-btn1, #a-reset-btn2').on('click',function(e) {
-					
-					Swal.fire({
-						title: '초기화하시겠습니까?',
-						text: '작성 전체가 초기화 됩니다!',
-						icon: 'warning',
-						showCancelButton: true,
-						confirmButtonColor: '#006e60',
-						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '초기화',
-						cancelButtonText: '닫기'
-					}).then(function(result) {
-						if (result.isConfirmed) {
-							$('#formAdptAnimal')[0].reset();
-							$('.a-preview').hide();
-							$('.a-preview').attr('src','');
-							$('.a-preview-i').show();
-							Swal.fire({
-								title:'초기화 되었습니다!',
-								icon:'success',
-								confirmButtonColor: '#006e60',
-								confirmButtonText: '확인'
-							});
-						}
-					});
-				});
-				/*=============== 초기화(reset) 버튼 제어 ===============*/
 
-				
-				
-				/*=============== 제출(submit) 버튼 제어 ===============*/
-				$('#formAdptAnimal').on('submit', function(event) {
-					event.preventDefault();
-					var formData = new FormData(this);
-					
-					if($('#petTypeDetailCode').val() == '') {
-						alert('세부 종류를 입력해주세요!');
-						$('#petTypeDetail').focus();
-						return;
-					} else if($('#aAge').val() == '') {
-						alert('동물 나이를 입력해주세요!');
-						$('#aAge').focus();
-						return;
-					} else if ($('#image-input1').val() == '') {
-						alert('대표 이미지를 입력해주세요!');
-						$('#image-input1').focus();
-						return;
-					}
-					
-					Swal.fire({
-						title: '제출하시겠습니까?',
-						text: '제출 내용을 확인해주세요!',
-						icon: 'info',
-						showCancelButton: true,
-						confirmButtonColor: '#006e60',
-						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '제출',
-						cancelButtonText: '닫기'
-					}).then(function(result) {
-						if (result.isConfirmed) {
-							$.ajax({
-								url: '/adptmgmt/animals/creation',
-								type: 'POST',
-								data: formData,
-								contentType: false,
-								processData: false,
-								success: function(response) {
-									Swal.fire({
-									title: '제출 완료',
-									text: '제출에 성공했습니다!',
-									icon: 'success',
-									confirmButtonColor: '#006e60',
-									confirmButtonText: '확인'
-									}).then(function(result){
-										if(result.isConfirmed){
-											location.reload();
-										}
-									});
-								},
-								error: function(jqXHR, textStatus, errorThrown) {
-									console.error('제출 실패:', textStatus, errorThrown);
-									Swal.fire({
-										title: '오류!',
-										text: '제출에 실패했습니다.',
-										icon: 'error',
-										confirmButtonColor: '#006e60',
-										confirmButtonText: '확인'
-									});
-								}
-							});
-						}
-					});
-				});
-				/*=============== 제출(submit) 버튼 제어 ===============*/
 
-				
-				
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/
 				let currentURL = window.location.pathname;
 				let lastSlashIndex = currentURL.lastIndexOf('/');
 				let animalId = currentURL.substring(lastSlashIndex+1);
 				const regex = /^ANIM-\w{6}$/;
-
+				
 				if(regex.test(animalId)) {
 					$.ajax({
 						url: '/adptmgmt/animals/' + animalId,
@@ -1933,9 +1835,117 @@
 				} else {
 					window.location.href = '/AM/animals/list';
 				}
-				
-				
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/
+				
+								
+								
+				/*=============== 초기화(reset) 버튼 제어 ===============*/
+				$('#a-reset-btn1, #a-reset-btn2').on('click',function(e) {
+					
+					Swal.fire({
+						title: '초기화하시겠습니까?',
+						text: '작성 전체가 초기화 됩니다!',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '초기화',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$('#formAdptAnimal')[0].reset();
+							$('.a-preview').hide();
+							$('.a-preview').attr('src','');
+							$('.a-preview-i').show();
+							Swal.fire({
+								title:'초기화 되었습니다!',
+								icon:'success',
+								confirmButtonColor: '#006e60',
+								confirmButtonText: '확인'
+							});
+						}
+					});
+				});
+				/*=============== 초기화(reset) 버튼 제어 ===============*/
+				
+				
+				
+				/*=============== 제출(submit) 버튼 제어 ===============*/
+				$('#formAdptAnimal').on('submit', function(event) {
+					event.preventDefault();
+					var formData = new FormData(this);
+					let currentURL = window.location.pathname;
+					let lastSlashIndex = currentURL.lastIndexOf('/');
+					let animalId = currentURL.substring(lastSlashIndex+1);
+					const regex = /^ANIM-\w{6}$/;
+
+					if(!regex.test(animalId)) {
+						alert('유효하지않은 동물id 입니다');
+						return;
+					}
+
+					if($('#petTypeDetailCode').val() == '') {
+						alert('세부 종류를 입력해주세요!');
+						$('#petTypeDetail').focus();
+						return;
+					} else if($('#aAge').val() == '') {
+						alert('동물 나이를 입력해주세요!');
+						$('#aAge').focus();
+						return;
+					} else if ($('#image-preview0').attr('src') == '') {
+						alert('대표 이미지를 입력해주세요!');
+						$('#image-input1').focus();
+						return;
+					}
+					
+					Swal.fire({
+						title: '제출하시겠습니까?',
+						text: '제출 내용을 확인해주세요!',
+						icon: 'info',
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '제출',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$.ajax({
+								url: '/adptmgmt/animals/'+ animalId +'/modification',
+								method: 'POST',
+								data: formData,
+								contentType: false,
+								processData: false,
+								success: function(response) {
+									Swal.fire({
+									title: '제출 완료',
+									text: '제출에 성공했습니다!',
+									icon: 'success',
+									confirmButtonColor: '#006e60',
+									confirmButtonText: '확인'
+									}).then(function(result){
+										if(result.isConfirmed){
+											location.reload();
+										}
+									});
+								},
+								error: function(jqXHR, textStatus, errorThrown) {
+									console.error('제출 실패:', textStatus, errorThrown);
+									Swal.fire({
+										title: '오류!',
+										text: '제출에 실패했습니다.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
+				});
+				/*=============== 제출(submit) 버튼 제어 ===============*/
+
+				
+				
 				
 				
 				
