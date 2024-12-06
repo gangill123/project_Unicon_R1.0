@@ -23,371 +23,403 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
 
 <style>
-/* 기본 레이아웃 */
-body,
-.container-scroller,
-.page-body-wrapper,
-.main-panel,
-.content-wrapper,
-.page-header,
-.card,
-.card-body {
-    background: #ffffff !important;
-}
-
-/* 사이드바 */
-.sidebar { 
-    width: 250px !important; 
-    position: fixed !important; 
-    left: 0 !important; 
-    height: 100vh !important;
-    background: #f8f9fa !important; 
-    transition: all 0.3s ease !important;
-}
-
-.content-wrapper .card { 
-    margin: 1rem auto !important;  
-    width: 100% !important;
-    padding: 1rem !important;
-    min-width: 0 !important;
-}
-
-/* 메인 패널 */
-.main-panel { 
-    margin-left: 250px !important; 
-    padding: 20px 0 !important;
-    width: calc(100% - 250px) !important;
-    min-width: 0 !important;
-}
-
-/* 컨텐츠 영역 */
-.content-wrapper {
-    width: 100% !important;
-    padding: 0 20px !important;
-    min-width: 0 !important;
-    flex: 1 1 auto !important;
-}
-
-/* 모달 스타일 */
-.modal-xl {
-    max-width: 95% !important;
-    margin: 1.75rem auto;
-}
-
-.modal-content {
-    background: #ffffff;
-    border-radius: 12px;
-}
-
-.modal-header {
-    border-bottom: none;
-    padding: 1.5rem;
-}
-
-.modal-body {
-    padding: 1.5rem;
-}
-
-/* 카드 컴포넌트 */
-.card { 
-    margin: 1rem !important;
-    width: 100% !important;
-    padding: 1rem !important;
-    min-width: 0 !important;
-	
+	/* 기본 레이아웃 */
+	body,
+	.container-scroller,
+	.page-body-wrapper,
+	.main-panel,
+	.content-wrapper,
+	.page-header,
+	.card,
 	.card-body {
-	    padding: 0 !important;
+	    background: #ffffff !important;
+	}
+	
+	/* 사이드바 */
+	.sidebar { 
+	    width: 250px !important; 
+	    position: fixed !important; 
+	    left: 0 !important; 
+	    height: 100vh !important;
+	    background: #f8f9fa !important; 
+	    transition: all 0.3s ease !important;
+	}
+	
+	.content-wrapper .card { 
+	    margin: 1rem auto !important;  
 	    width: 100% !important;
+	    padding: 1rem !important;
 	    min-width: 0 !important;
 	}
-}
-
-.row g-3 {
-	background: #f8f9fa !important;
-    padding: 1rem !important;
-    border-radius: 4px !important;
-    margin-bottom: 1rem !important;	
-}
-
-.input-group .input-group-text.bg-light {
-    border-right: none !important;
-    background-color: #f8f9fa !important;
-    font-size: 0.9rem !important;
-}
-
-.input-group input[type="date"] {
-    border-left: none !important;
-}
-
-.input-group span:not(.bg-light) {
-    background-color: #e9ecef !important;
-}
-
-/* 테이블 */
-.table-responsive {
-    margin: 0 !important;
-    border: 1px solid #dee2e6 !important;
-    border-left: none !important;
-    border-right: none !important;
-}
-
-.table {
-    margin: 0 !important;
-    width: 100% !important;
-    border-collapse: collapse !important;
-    text-align: center;
-}
-
-.table th {
-    background: #f8f9fa !important;
-    font-weight: 600 !important;
-    color: #000000 !important;
-    text-align: center !important;
-    height: 45px !important;
-    padding: 0.75rem !important;
-}
-
-.table td {
-    padding: 0.75rem !important;
-    height: 45px !important;
-    font-size: 0.95rem !important;
-    border-bottom: 1px solid #dee2e6 !important;
-}
-
-.table tbody tr:hover {
-    background-color: #f8f9fa !important;
-}
-
-.content-wrapper .card .table td:nth-child(3) {
-    text-align: left !important;
-}
-
-/* 폼 요소 */
-.card .form-select, 
-.card .form-control {
-    height: 38px !important;
-    border: 1px solid #dee2e6 !important;
-}
-
-/* 신청자 정보 스타일 */
-.applicant-info-row td {
-    background-color: #ffffff;
-    border-bottom: none !important;
-}
-
-.reason-row td {
-    background-color: #f8f9fa;
-    padding-top: 0 !important;
-}
-
-.reason-content {
-    text-align: left;
-    padding: 1rem;
-    margin: 0 1rem;
-    background: #ffffff;
-    border-radius: 4px;
-    border: 1px solid #dee2e6;
-}
-
-/* 상태 뱃지 */
-.status-badge {
-    padding: 0.4rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    display: inline-block;
-}
-
-.status-pending { 
-    background-color: #fff3cd; 
-    color: #856404; 
-}
-
-.status-approved { 
-    background-color: #d4edda; 
-    color: #155724; 
-}
-
-.status-rejected { 
-    background-color: #f8d7da; 
-    color: #721c24; 
-}
-
-.status-canceled { 
-    background-color: #e9ecef; 
-    color: #495057; 
-}
-
-.btn {
-    padding: 0.5rem 1rem !important;
-    font-weight: 500 !important;
-    height: 38px !important;
-}
-
-.reason-row td {
-    background-color: #f8f9fa;
-    padding: 0 !important;
-    transition: all 0.3s ease;
-}
-
-.reason-content {
-    text-align: left;
-    padding: 1rem;
-    margin: 0.5rem 1rem;
-    background: #ffffff;
-    border-radius: 4px;
-    border: 1px solid #dee2e6;
-}
-
-.reason-text {
-    color: #2c3e50;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    white-space: pre-wrap;      /* 줄바꿈 유지 */
-    word-wrap: break-word;      /* 긴 단어 줄바꿈 */
-    max-width: 100%;            /* 가로 스크롤 방지 */
-}
-
-.action-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.btn-group {
-    display: inline-flex;
-    gap: 0.25rem;
-}
-
-/* 사유보기 버튼 스타일 */
-.btn-outline-primary.active {
-    background-color: #e7f1ff;
-}
-
-/* 애니메이션 효과 */
-.reason-row {
-    transition: all 0.3s ease-in-out;
-}
-
-
-/* Footer */
-.footer {
-    background: #f8f9fa !important;
-}
-
-/* SweetAlert2 커스텀 스타일 */
-.swal2-popup .swal2-actions {
-    justify-content: center;
-}
-
-.swal2-popup .swal2-confirm {
-    background-color: #86bc42 !important;
-}
-
-.swal2-popup .swal2-cancel {
-    background-color: #aaa !important;
-}
-
-.swal2-popup {
-    font-size: 0.9rem !important;
-}
-
-/* 모바일 대응 */
-@media (max-width: 768px) {
-    .main-panel {
-       margin-left: 0 !important;
-       width: 100% !important;
-   }
-   
-   .sidebar {
-       width: 0 !important;
-   }
-   
-   .modal-dialog.modal-xl {
-       width: 95% !important;
-       margin: 1rem auto !important;
-   }
-   
-   .page-header {
-       flex-direction: column !important;
-       gap: 1rem !important;
-       align-items: center !important;
-       text-align: center !important;
-   }
-   
-   .page-header .d-flex.gap-2 {
-       width: 100% !important;
-       gap: 10px !important;
-   }
-   
-   .page-header .btn {
-       flex: 1 !important;
-       width: 50% !important;
-       white-space: nowrap !important;
-   }
-   
-	/* 메인 테이블 모바일 스타일 */
-    .content-wrapper .table:not(#volunteerDetailModal .table) th:not(:nth-child(3)):not(:nth-child(8)),
-    .content-wrapper .table:not(#volunteerDetailModal .table) td:not(:nth-child(3)):not(:nth-child(8)) {
-        display: none !important;
+	
+	/* 메인 패널 */
+	.main-panel { 
+	    margin-left: 250px !important; 
+	    padding: 20px 0 !important;
+	    width: calc(100% - 250px) !important;
+	    min-width: 0 !important;
+	}
+	
+	/* 컨텐츠 영역 */
+	.content-wrapper {
+	    width: 100% !important;
+	    padding: 0 20px !important;
+	    min-width: 0 !important;
+	    flex: 1 1 auto !important;
+	}
+	
+	/* 모달 스타일 */
+	.modal-xl {
+	    max-width: 95% !important;
+	    margin: 1.75rem auto;
+	}
+	
+	.modal-content {
+	    background: #ffffff;
+	    border-radius: 12px;
+	}
+	
+	.modal-header {
+	    border-bottom: none;
+	    padding: 1.5rem;
+	}
+	
+	.modal-body {
+	    padding: 1.5rem;
+	}
+	
+	/* 카드 컴포넌트 */
+	.card { 
+	    margin: 1rem !important;
+	    width: 100% !important;
+	    padding: 1rem !important;
+	    min-width: 0 !important;
+		
+		.card-body {
+		    padding: 0 !important;
+		    width: 100% !important;
+		    min-width: 0 !important;
+		}
+	}
+	
+	.row g-3 {
+		background: #f8f9fa !important;
+	    padding: 1rem !important;
+	    border-radius: 4px !important;
+	    margin-bottom: 1rem !important;	
+	}
+	
+	.input-group .input-group-text.bg-light {
+	    border-right: none !important;
+	    background-color: #f8f9fa !important;
+	    font-size: 0.9rem !important;
+	}
+	
+	.input-group input[type="date"] {
+	    border-left: none !important;
+	}
+	
+	.input-group span:not(.bg-light) {
+	    background-color: #e9ecef !important;
+	}
+	
+	/* 테이블 */
+	.table-responsive {
+	    margin: 0 !important;
+	    border: 1px solid #dee2e6 !important;
+	    border-left: none !important;
+	    border-right: none !important;
+	}
+	
+	.table {
+	    margin: 0 !important;
+	    width: 100% !important;
+	    border-collapse: collapse !important;
+	    text-align: center;
+	}
+	
+	.table th {
+        background: #006e60 !important;
+        font-weight: 600 !important;
+        color: #ffffff !important;
+        text-align: center !important;
+        height: 45px !important;
+        padding: 0.75rem !important;
+    }
+	
+	.table td {
+	    padding: 0.75rem !important;
+	    height: 45px !important;
+	    font-size: 0.95rem !important;
+	    border-bottom: 1px solid #dee2e6 !important;
+	}
+	
+	.table tbody tr:hover {
+	    background-color: #f8f9fa !important;
+	}
+	
+	.content-wrapper .card .table td:nth-child(3) {
+	    text-align: left !important;
+	}
+	
+	/* 폼 요소 */
+	.card .form-select, 
+	.card .form-control {
+	    height: 38px !important;
+	    border: 1px solid #dee2e6 !important;
+	}
+	
+	/* 신청자 정보 스타일 */
+	.applicant-info-row td {
+	    background-color: #ffffff;
+	    border-bottom: none !important;
+	}
+	
+	.reason-row td {
+	    background-color: #f8f9fa;
+	    padding-top: 0 !important;
+	}
+	
+	.reason-content {
+	    text-align: left;
+	    padding: 1rem;
+	    margin: 0 1rem;
+	    background: #ffffff;
+	    border-radius: 4px;
+	    border: 1px solid #dee2e6;
+	}
+	
+	/* 상태 뱃지 */
+	.status-badge {
+	    padding: 0.4rem 0.8rem;
+	    border-radius: 20px;
+	    font-size: 0.85rem;
+	    font-weight: 500;
+	    display: inline-block;
+	}
+	
+	.status-pending { 
+	    background-color: #fff3cd; 
+	    color: #856404; 
+	}
+	
+	.status-approved { 
+	    background-color: #d4edda; 
+	    color: #155724; 
+	}
+	
+	.status-rejected { 
+	    background-color: #f8d7da; 
+	    color: #721c24; 
+	}
+	
+	.status-canceled { 
+	    background-color: #e9ecef; 
+	    color: #495057; 
+	}
+	
+	.btn {
+	    padding: 0.5rem 1rem !important;
+	    font-weight: 500 !important;
+	    height: 38px !important;
+	}
+	
+	.reason-row td {
+	    background-color: #f8f9fa;
+	    padding: 0 !important;
+	    transition: all 0.3s ease;
+	}
+	
+	.reason-content {
+	    text-align: left;
+	    padding: 1rem;
+	    margin: 0.5rem 1rem;
+	    background: #ffffff;
+	    border-radius: 4px;
+	    border: 1px solid #dee2e6;
+	}
+	
+	.reason-text {
+	    color: #2c3e50;
+	    font-size: 0.95rem;
+	    line-height: 1.6;
+	    white-space: pre-wrap;      /* 줄바꿈 유지 */
+	    word-wrap: break-word;      /* 긴 단어 줄바꿈 */
+	    max-width: 100%;            /* 가로 스크롤 방지 */
+	}
+	
+	.action-buttons {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    gap: 0.5rem;
+	}
+	
+	.btn-group {
+	    display: inline-flex;
+	    gap: 0.25rem;
+	}
+	
+	.btn-primary {
+        background-color: #006e60 !important;
+        border-color: #006e60 !important;
     }
     
-    .content-wrapper .table:not(#volunteerDetailModal .table) td:nth-child(3),
-    .content-wrapper .table:not(#volunteerDetailModal .table) th:nth-child(3) {  
-        width: 60% !important;
+    .btn-primary:hover {
+        background-color: #005a4e !important;
+        border-color: #005a4e !important;
     }
     
-    .content-wrapper .table:not(#volunteerDetailModal .table) td:nth-child(8),
-    .content-wrapper .table:not(#volunteerDetailModal .table) th:nth-child(8) { 
-        width: 40% !important;
+    .btn-outline-primary {
+        color: #006e60 !important;
+        border-color: #006e60 !important;
     }
-   
-   /* 모달 테이블 모바일 스타일 */
-   #volunteerDetailModal .table th:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(8)),
-   #volunteerDetailModal .table td:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(8)) {
-       display: none !important;
-   }
-   
-   #volunteerDetailModal .table td:nth-child(1),
-   #volunteerDetailModal .table th:nth-child(1) {  /* 상태 */
-       width: 25% !important;
-   }
-   
-   #volunteerDetailModal .table td:nth-child(2),
-   #volunteerDetailModal .table th:nth-child(2) {  /* 이름 */
-       width: 35% !important;
-   }
-   
-   #volunteerDetailModal .table td:nth-child(8),
-   #volunteerDetailModal .table th:nth-child(8) {  /* 관리 */
-       width: 40% !important;
-   }
-   
-   /* 모바일에서 사유 버튼과 행 숨기기 */
-   #volunteerDetailModal .btn-outline-primary,
-   #volunteerDetailModal .reason-row {
-       display: none !important;
-   }
-   
-   .table-responsive {
-       overflow-x: hidden !important;
-   }
-   
-   .action-buttons {
-       flex-direction: column;
-       gap: 0.25rem !important;
-       justify-content: flex-end !important;
-   }
-   
-   .btn-group {
-       width: 100%;
-   }
-   
-   .btn-group .btn {
-       flex: 1;
-   }
-}
+    
+    .btn-outline-primary:hover {
+        background-color: #006e60 !important;
+        color: #fff !important;
+    }
+	
+	/* 사유보기 버튼 스타일 */
+	.btn-outline-primary.active {
+	    background-color: #e7f1ff;
+	}
+	
+	/* 애니메이션 효과 */
+	.reason-row {
+	    transition: all 0.3s ease-in-out;
+	}
+	
+	.pagination .page-item.active .page-link {
+        background-color: #006e60 !important;
+        border-color: #006e60 !important;
+    }
+    
+    .pagination .page-link {
+        color: #006e60 !important;
+    }
+    
+    .pagination .page-item.active .page-link {
+        color: #ffffff !important;
+    }
+	
+	/* Footer */
+	.footer {
+	    background: #f8f9fa !important;
+	}
+	
+	/* SweetAlert2 커스텀 스타일 */
+	.swal2-popup .swal2-actions {
+	    justify-content: center;
+	}
+	
+	.swal2-popup .swal2-confirm {
+	    background-color: #86bc42 !important;
+	}
+	
+	.swal2-popup .swal2-cancel {
+	    background-color: #aaa !important;
+	}
+	
+	.swal2-popup {
+	    font-size: 0.9rem !important;
+	}
+	
+	/* 모바일 대응 */
+	@media (max-width: 768px) {
+	    .main-panel {
+	       margin-left: 0 !important;
+	       width: 100% !important;
+	   }
+	   
+	   .sidebar {
+	       width: 0 !important;
+	   }
+	   
+	   .modal-dialog.modal-xl {
+	       width: 95% !important;
+	       margin: 1rem auto !important;
+	   }
+	   
+	   .page-header {
+	       flex-direction: column !important;
+	       gap: 1rem !important;
+	       align-items: center !important;
+	       text-align: center !important;
+	   }
+	   
+	   .page-header .d-flex.gap-2 {
+	       width: 100% !important;
+	       gap: 10px !important;
+	   }
+	   
+	   .page-header .btn {
+	       flex: 1 !important;
+	       width: 50% !important;
+	       white-space: nowrap !important;
+	   }
+	   
+		/* 메인 테이블 모바일 스타일 */
+	    .content-wrapper .table:not(#volunteerDetailModal .table) th:not(:nth-child(3)):not(:nth-child(8)),
+	    .content-wrapper .table:not(#volunteerDetailModal .table) td:not(:nth-child(3)):not(:nth-child(8)) {
+	        display: none !important;
+	    }
+	    
+	    .content-wrapper .table:not(#volunteerDetailModal .table) td:nth-child(3),
+	    .content-wrapper .table:not(#volunteerDetailModal .table) th:nth-child(3) {  
+	        width: 60% !important;
+	    }
+	    
+	    .content-wrapper .table:not(#volunteerDetailModal .table) td:nth-child(8),
+	    .content-wrapper .table:not(#volunteerDetailModal .table) th:nth-child(8) { 
+	        width: 40% !important;
+	    }
+	   
+	   /* 모달 테이블 모바일 스타일 */
+	   #volunteerDetailModal .table th:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(8)),
+	   #volunteerDetailModal .table td:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(8)) {
+	       display: none !important;
+	   }
+	   
+	   #volunteerDetailModal .table td:nth-child(1),
+	   #volunteerDetailModal .table th:nth-child(1) {  /* 상태 */
+	       width: 25% !important;
+	   }
+	   
+	   #volunteerDetailModal .table td:nth-child(2),
+	   #volunteerDetailModal .table th:nth-child(2) {  /* 이름 */
+	       width: 35% !important;
+	   }
+	   
+	   #volunteerDetailModal .table td:nth-child(8),
+	   #volunteerDetailModal .table th:nth-child(8) {  /* 관리 */
+	       width: 40% !important;
+	   }
+	   
+	   /* 모바일에서 사유 버튼과 행 숨기기 */
+	   #volunteerDetailModal .btn-outline-primary,
+	   #volunteerDetailModal .reason-row {
+	       display: none !important;
+	   }
+	   
+	   .table-responsive {
+	       overflow-x: hidden !important;
+	   }
+	   
+	   .action-buttons {
+	       flex-direction: column;
+	       gap: 0.25rem !important;
+	       justify-content: flex-end !important;
+	   }
+	   
+	   .btn-group {
+	       width: 100%;
+	   }
+	   
+	   .btn-group .btn {
+	       flex: 1;
+	   }
+	}
 </style>
 </head>
 <body>
