@@ -1,0 +1,274 @@
+DEBUG: com.Unicon.controller.AdptRestController 
+- ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+
+DEBUG: com.Unicon.service.AdptService 
+- ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+
+DEBUG: com.Unicon.service.AdptService 
+- ( •̀ ω •́ )✧ checkImageList.get(i).getOrgSrc() : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+
+DEBUG: com.Unicon.service.AdptService 
+- ( •̀ ω •́ )✧ imageList : 
+[ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg)]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : 
+[/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, 
+/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg, 
+/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : 
+[/uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg,
+ /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg]
+ 
+DEBUG: com.Unicon.service.AdptService - 파일이 존재하지 않습니다:
+ C:\STS\unicorn_t1\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Unicon_r1\uploads\5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+
+ 
+ 
+DEBUG: com.Unicon.controller.AdptRestController - ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ checkImageList.get(i).getOrgSrc() :
+ /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+ 
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg)]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : [
+/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, 
+/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg, 
+/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : [/uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg]
+
+
+
+DEBUG: com.Unicon.controller.AdptRestController - ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg),
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/c453292c-2d42-42b4-a7af-e6d7ee831f1d_doga.jpg), 
+ ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/6d10fab3-f6f3-4682-b124-1e195a49b060_dogb.jpg), 
+ ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=3, image_src=/uploads/4c660c30-e566-4e98-8a50-14ee4ffb4bc3_dogc.jpg)]
+ 
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : [/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg]
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : [
+/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, 
+/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg, 
+/uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg]
+
+
+DEBUG: com.Unicon.controller.AdptRestController - ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음 i : 0
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/79ee527d-3073-4efd-9b7a-7cbc3da99338_doga.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/afa589f4-6d60-49ab-bda9-2c23d9952076_dogb.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=3, image_src=/uploads/29442751-f0b6-4aa4-8971-563413f439cd_dogc.jpg)]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : [/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : [
+/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, 
+/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg, 
+/uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg]
+
+
+DEBUG: com.Unicon.controller.AdptRestController - ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음 i : 1
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageList : [
+
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/a79786dd-df02-4c2c-bf48-e012bab91eb2_doga.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/53c70747-2f6d-4b15-bb40-13282ae39d8a_dogc.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=3, image_src=/uploads/e19ce3ab-5f62-4c99-852f-9650b5f15f4c_dogb.jpg)]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : [/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : [
+/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, 
+/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg, 
+/uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg]
+
+DEBUG: com.Unicon.controller.AdptRestController - ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음 i : 0
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 없음 i : 3
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg),
+ ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/6c41a9df-0343-4b63-9d51-5983e1a8a8f6_dogb.jpg),
+  ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/2987d59e-6ede-449c-8681-21383c5fd1c5_dogc.jpg),
+   ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=3, image_src=)]
+   
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : [/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg, ]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : 
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : [
+/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, 
+/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg]
+
+
+
+DEBUG: com.Unicon.controller.AdptRestController - ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음 i : 0
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 없음 i :2
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ checkImageList.get(i).getOrgSrc() : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 없음 i :3
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ checkImageList.get(i).getOrgSrc() : 
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg),
+ ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/3ba1c752-725f-421f-ada5-36f8038a1c99_dogb.jpg)]
+ 
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : [/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : 
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : [
+/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+, ,
+  /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg]
+  
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 파일 이름에 /uploads/가 존재하지 않습니다
+
+
+
+DEBUG: com.Unicon.controller.AdptRestController - ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음 i : 0
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음  
+checkImageList.get(i).getMoveSrc() : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg : 0
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 없음 i : 3
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 없음 checkImageList.get(i).getOrgSrc() :  : 3
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/67d95277-a0f8-42a0-870a-c518d7a62ff9_dogb.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/b224f72a-809a-4cad-a158-cd4ab0c882a7_dogc.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=3, image_src=)]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : [/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg, ]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : 
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : [
+/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, 
+/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ lastImageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/67d95277-a0f8-42a0-870a-c518d7a62ff9_dogb.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/b224f72a-809a-4cad-a158-cd4ab0c882a7_dogc.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=3, image_src=)]
+
+
+DEBUG: com.Unicon.controller.AdptRestController - ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음 i : 0
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음  
+checkImageList.get(i).getMoveSrc() : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg : 0
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 없음 i :3
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 없음  
+checkImageList.get(i).getOrgSrc() : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg : 3
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/2a3494bd-de2d-4d21-8427-4fb097a68aa2_doga.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/6dcd4b13-369c-4729-8236-021611b78ff8_dogb.jpg)]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : [/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : [
+/uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg, 
+/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, 
+/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ lastImageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/2a3494bd-de2d-4d21-8427-4fb097a68aa2_doga.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/6dcd4b13-369c-4729-8236-021611b78ff8_dogb.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=3, image_src=)]
+
+
+DEBUG: com.Unicon.controller.AdptRestController - ( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음 i : 2
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음  
+checkImageList.get(i).getMoveSrc() : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg : 2
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/43b11a0e-900a-4048-baeb-9b56ebc68573_doga.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/a9336478-8533-4a3e-a771-a9dacc3c8c82_dogb.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=3, image_src=/uploads/7c25847d-7882-4f92-b4bb-9d20a787cf4d_dogc.jpg)]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ imageNameList : [/uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item0 : /uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item1 : /uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item2 : /uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ item3 : /uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ deleteImageList : [
+/uploads/7b793ba9-81e5-4f1c-a707-30e29318b2a3_mainb.jpg, 
+/uploads/51dc3d84-45ae-4d2c-81cd-d4d88eba10f6_mainc.jpg, 
+/uploads/f0a8bfcf-522b-4a68-b310-bb51b9a490f3_maind.jpg]
+
+DEBUG: com.Unicon.service.AdptService - ( •̀ ω •́ )✧ lastImageList : [
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=0, image_src=/uploads/43b11a0e-900a-4048-baeb-9b56ebc68573_doga.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=1, image_src=/uploads/a9336478-8533-4a3e-a771-a9dacc3c8c82_dogb.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=2, image_src=/uploads/5fd9a7c2-52ea-4be8-9762-2e7c714de895_maina.jpg), 
+ImageVO(image_id=ANIM-YY0Vp5, image_type=adpt, image_sequence=3, image_src=/uploads/7c25847d-7882-4f92-b4bb-9d20a787cf4d_dogc.jpg)]
+
+ 
+ 

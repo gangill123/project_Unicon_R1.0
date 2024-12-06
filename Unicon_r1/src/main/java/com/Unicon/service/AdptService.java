@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,9 +57,16 @@ public class AdptService {
 		return aDao.getAnimalListOne(animal_id);
 	}
 	
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public void modifyAnimal(AnimalVO avo) {
+		logger.debug("( •̀ ω •́ )✧ modifyAnimal() 실행");
+		
+		aDao.modifyAnimal(avo);
+	}
 	
 	
-	/*=============== 메서드 ===============*/
+	
+	/*========================= 메서드 =========================*/
 		
 		/*=============== 동물id 생성 ===============*/
 		public String genAnimalId() {
@@ -87,7 +95,7 @@ public class AdptService {
 		/*=============== 동물id 생성 ===============*/
 		
 		
-		/*=============== 이미지 저장 및 리스트 생성 ===============*/
+		/*=============== 이미지 저장, 리스트 생성 ===============*/
 		public List<ImageVO> saveImage(AnimalVO avo, HttpServletRequest req) {
 			logger.debug("( •̀ ω •́ )✧ saveImage(AnimalVO avo, HttpServletRequest req) 메서드 실행");
 			ServletContext context = req.getServletContext();
@@ -98,6 +106,7 @@ public class AdptService {
 			for (int i = 0; i < uploadImages.size(); i++) {
 				StringBuilder asb = new StringBuilder();
 				MultipartFile aImage = uploadImages.get(i);
+				
 				if(aImage == null) {
 					logger.debug("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 null 인덱스 : {}",i);
 					continue;
@@ -130,60 +139,82 @@ public class AdptService {
 				ivo.setImage_id(avo.getAnimal_id());
 				ivo.setImage_sequence(i);
 				ivo.setImage_src(modifiedPath);
-				ivo.setImage_type("apdt");
-				animalImages.add(i, ivo);
+				ivo.setImage_type(avo.getAIMAGETYPE());
+				animalImages.add(ivo);
 				
 			}
 			
 			return animalImages;
 		}
-		/*=============== 이미지 저장 및 리스트 생성 ===============*/
+		/*=============== 이미지 저장, 리스트 생성 ===============*/
 
 		
-		/*=============== 이미지 수정 및 삭제, 리스트 생성 ===============*/
+		/*=============== 이미지 수정(삭제포함), 리스트 생성 ===============*/
 		public List<ImageVO> modifyImage(AnimalVO avo, HttpServletRequest req) {
 			logger.debug("( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행");
+			// 경로 설정 //
 			ServletContext context = req.getServletContext();
 			String saveDir = context.getRealPath("/uploads/");
-			List<ImageVO> imageList = new ArrayList<ImageVO>();
+			// 뷰페이지에서 전달된 데이터 처리(MultipartFile, 이미지 파일 변경 상태확인(CheckImage)) //
 			List<MultipartFile> uploadImageList = new ArrayList<MultipartFile>(avo.getUpload_images());
 			List<CheckImageVO> checkImageList = new ArrayList<CheckImageVO>(avo.getCheck_images());
-			List<String> imageNameList = new ArrayList<String>();
-			List<String> deleteImageList = new ArrayList<String>();
+			// 이미지 파일의 조건에 따라 담을 객체 생성 //
+			List<ImageVO> imageList = new ArrayList<ImageVO>(); // return할 객체
+			ImageVO[] imageArray = new ImageVO[4]; // imageList의 빈칸 채우기 위한 배열
+			List<String> imageNameList = new ArrayList<String>(); // 기존 이미지 파일이 존재하는지 확인하기 위한 리스트
+			List<String> deleteImageList = new ArrayList<String>(); // imageNameList에 포함되지않은 기존 이미지 파일 리스트
 			
 			for(int i = 0; i < uploadImageList.size(); i++) {
-				if(uploadImageList.get(i).isEmpty()) {
-					if(checkImageList.get(i).getChangeCheck().isEmpty()) {
+				if(uploadImageList.get(i).isEmpty()) { // multipartfile 이미지 파일이 없을 경우
+					if(checkImageList.get(i).getChangeCheck().isEmpty()) { // 이미지 파일 변경 없음 (기존 이미지 파일 유지)
+						logger.debug("( •̀ ω •́ )✧ 이미지 파일 변경 없음 i : {}",i);
+						logger.debug("( •̀ ω •́ )✧ 이미지 파일 변경 없음  "
+								+ "checkImageList.get(i).getOrgSrc() : {} : {}",checkImageList.get(i).getOrgSrc(),i);
 						imageNameList.add(checkImageList.get(i).getOrgSrc());
 						ImageVO ivo = new ImageVO();
 						ivo.setImage_id(avo.getAnimal_id());
-						ivo.setImage_type("adpt");
+						ivo.setImage_type(avo.getAIMAGETYPE());
 						ivo.setImage_sequence(i);
 						ivo.setImage_src(checkImageList.get(i).getOrgSrc());
 						imageList.add(ivo);
 					}
 					if(!checkImageList.get(i).getChangeCheck().isEmpty()
 							&& !checkImageList.get(i).getMoveSrc().isEmpty()) {
+						// 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음
+						// 이미지 파일 실제 저장없이 DB 데이터 업데이트(sequence, src 수정)
+						logger.debug("( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음 i : {}",i);
+						logger.debug("( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 있음  "
+								+ "checkImageList.get(i).getMoveSrc() : {} : {}",checkImageList.get(i).getMoveSrc(),i);
 						imageNameList.add(checkImageList.get(i).getMoveSrc());
 						ImageVO ivo = new ImageVO();
 						ivo.setImage_id(avo.getAnimal_id());
-						ivo.setImage_type("adpt");
+						ivo.setImage_type(avo.getAIMAGETYPE());
 						ivo.setImage_sequence(i);
-						ivo.setImage_src(checkImageList.get(i).getOrgSrc());
+						ivo.setImage_src(checkImageList.get(i).getMoveSrc());
 						imageList.add(ivo);
 					}
+					if(!checkImageList.get(i).getChangeCheck().isEmpty() 
+							&& checkImageList.get(i).getMoveSrc().isEmpty()) {
+						// 이미지 파일 변경 있음 + 위치 이동된 기존파일 없음
+						// 삭제했을 경우를 나타냄
+						logger.debug("( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 없음 i :{}",i);
+						deleteImageList.add(checkImageList.get(i).getOrgSrc());
+						logger.debug("( •̀ ω •́ )✧ 이미지 파일 변경 있음 + 위치 이동된 기존파일 없음  "
+								+ "checkImageList.get(i).getOrgSrc() : {} : {}",checkImageList.get(i).getOrgSrc(),i);
+					}
 					
-				} else {
+				} else { // multipartfile 이미지 파일이 있을 경우
 					StringBuilder asb = new StringBuilder();
 					MultipartFile aImage = uploadImageList.get(i);
 					
+					// 이미지 파일 저장
 					File destinationImage 
 					= new File(asb.append(saveDir)
 							.append(UUID.randomUUID().toString())
 							.append("_")
 							.append(aImage.getOriginalFilename())
 							.toString());
-				
+					
 					try {
 						aImage.transferTo(destinationImage);
 					} catch (IOException e) {
@@ -192,6 +223,7 @@ public class AdptService {
 					
 					asb.setLength(0);
 					
+					// 이미지 파일 저장 후 이미지 파일 정보를 ImageVO객체에 저장
 					int index = destinationImage.getPath().indexOf("\\uploads\\");
 					String indexStr = "\\uploads\\";
 					String indexSubStr = destinationImage.getPath().substring(index + indexStr.length());
@@ -201,12 +233,15 @@ public class AdptService {
 					ivo.setImage_id(avo.getAnimal_id());
 					ivo.setImage_sequence(i);
 					ivo.setImage_src(modifiedPath);
-					ivo.setImage_type("apdt");
+					ivo.setImage_type(avo.getAIMAGETYPE());
 					imageList.add(ivo);
 					
 				}
 			}
-			
+			logger.debug("( •̀ ω •́ )✧ imageList : {}",imageList);
+			logger.debug("( •̀ ω •́ )✧ imageNameList : {}",imageNameList);
+			// deleteImageList
+			// imageNameList에 포함되지않은 기존 이미지 파일 리스트 생성
 			for (int i = 0; i < checkImageList.size(); i++) {
 				String item = checkImageList.get(i).getOrgSrc();
 				logger.debug("( •̀ ω •́ )✧ item{} : {}", i, item);
@@ -219,15 +254,22 @@ public class AdptService {
 					}
 				}
 				
-				if (!found) {
+				if (!found && !deleteImageList.contains(item)) {
 					deleteImageList.add(item);
 				}
 			}
 			
+			logger.debug("( •̀ ω •́ )✧ deleteImageList : {}",deleteImageList);
+			// imageNameList에 포함되지않은 기존 이미지 파일 삭제
 			for(int i = 0; i < deleteImageList.size(); i++) {
 				StringBuilder asb = new StringBuilder();
 				int index = deleteImageList.get(i).indexOf("/uploads/");
+				if(index == -1) {
+					logger.debug("( •̀ ω •́ )✧ 파일 이름에 /uploads/가 존재하지 않습니다");
+					continue;
+				}
 				String indexStr = "/uploads/";
+				// 기존 이미지 파일 경로에서 /uploads/ 문자열 제거
 				String indexSubStr = deleteImageList.get(i).substring(index + indexStr.length());
 				
 				File deleteFile 
@@ -242,9 +284,29 @@ public class AdptService {
 				}
 			}
 			
-			return imageList;
+			// imageList의 사이즈가 4가 아닐 경우 빈 인덱스를 찾아서 공백으로 처리
+			// 리스트를 고정크기의 배열로 변경 후 처리
+			imageArray = imageList.toArray(imageArray);
+			for(int i = 0; i < imageArray.length; i++) {
+				if(imageArray[i] != null) {
+					continue;
+				} else {
+					imageArray[i] = new ImageVO();
+					imageArray[i].setImage_id(avo.getAnimal_id());
+					imageArray[i].setImage_type(avo.getAIMAGETYPE());
+					imageArray[i].setImage_sequence(i);
+					imageArray[i].setImage_src("");
+				}
+			}
+			
+			// 배열을 리스트로 변환 후 전달
+			List<ImageVO> lastImageList = Arrays.asList(imageArray);
+			logger.debug("( •̀ ω •́ )✧ lastImageList : {}",lastImageList);
+			
+			
+			return lastImageList;
 		}
-		/*=============== 이미지 수정 및 삭제, 리스트 생성 ===============*/
+		/*=============== 이미지 수정(삭제포함), 리스트 생성 ===============*/
 
 		
 		/*=============== 이미지 삭제 ===============*/
@@ -272,10 +334,6 @@ public class AdptService {
 			}
 		}
 		/*=============== 이미지 삭제 ===============*/
-		
-		
-		
-		
 		
 		
 		/*=============== 자동이름짓기 ===============*/
@@ -329,7 +387,6 @@ public class AdptService {
 		}
 		/*=============== 자동이름짓기 ===============*/
 		
-		
-	/*=============== 메서드 ===============*/
+	/*========================= 메서드 =========================*/
 
 }

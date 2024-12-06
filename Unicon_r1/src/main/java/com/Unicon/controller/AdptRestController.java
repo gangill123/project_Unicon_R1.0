@@ -124,7 +124,7 @@ public class AdptRestController {
 				return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			avo.setAnimal_images(animal_images);
-			
+			aService.modifyAnimal(avo);
 			
 			return new ResponseEntity<Void>(HttpStatus.OK);
 			

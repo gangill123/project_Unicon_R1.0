@@ -34,6 +34,7 @@ public class AdptDAO {
 		
 		sqlSession.insert(NAMESPACE+"insertAnimal", avo);
 		
+		// animal_id를 이미지 정보 저장 과정에서 입력되었기에 리스트 전달
 		List<ImageVO> images = new ArrayList<ImageVO>(avo.getAnimal_images());
 		sqlSession.insert(NAMESPACE+"insertAnimalImages", images);
 		
@@ -71,24 +72,23 @@ public class AdptDAO {
 	
 	
 	public void modifyAnimal(AnimalVO avo) {
-		/*
-		 * logger.debug("( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo) 실행");
-		 * 
-		 * sqlSession.insert(NAMESPACE+"insertAnimal", avo);
-		 * 
-		 * List<ImageVO> images = new ArrayList<ImageVO>(avo.getAnimal_images());
-		 * sqlSession.insert(NAMESPACE+"insertAnimalImages", images);
-		 * 
-		 * Map<String, Object> healthParams = new HashMap<>();
-		 * healthParams.put("animal_id", avo.getAnimal_id());
-		 * healthParams.put("healths", avo.getAnimal_healths());
-		 * sqlSession.insert(NAMESPACE+"insertAnimalHealths", healthParams);
-		 * 
-		 * Map<String, Object> vaccineParams = new HashMap<>();
-		 * vaccineParams.put("animal_id", avo.getAnimal_id());
-		 * vaccineParams.put("vaccines", avo.getAnimal_vaccines());
-		 * sqlSession.insert(NAMESPACE+"insertAnimalVaccines", vaccineParams);
-		 */
+		logger.debug("( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo) 실행");
+		 
+		sqlSession.update(NAMESPACE+"modifyAnimal", avo);
+		  
+		List<ImageVO> images = new ArrayList<ImageVO>(avo.getAnimal_images());
+		sqlSession.insert(NAMESPACE+"modifyAnimalImages", images);
+		
+		Map<String, Object> healthParams = new HashMap<>();
+		healthParams.put("animal_id", avo.getAnimal_id());
+		healthParams.put("healths", avo.getAnimal_healths());
+		sqlSession.insert(NAMESPACE+"modifyAnimalHealths", healthParams);
+		 
+		Map<String, Object> vaccineParams = new HashMap<>();
+		vaccineParams.put("animal_id", avo.getAnimal_id());
+		vaccineParams.put("vaccines", avo.getAnimal_vaccines());
+		sqlSession.insert(NAMESPACE+"modifyAnimalVaccines", vaccineParams);
+		 
 	}
 	
 	
