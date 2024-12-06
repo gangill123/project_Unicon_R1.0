@@ -8,6 +8,12 @@
 .xzoom-source{
 z-index: 2000;
 }
+
+#xzoom_magnific{
+	aspect-ratio: 1/1;
+	width: 100%;
+	height: 100%;
+}
 </style>
 </head>
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
@@ -137,15 +143,15 @@ z-index: 2000;
 
                        <!-- product left start -->
                        <div class="xzoom-container">
-                           <img class="xzoom5 mb-1-9" id="xzoom_magnific" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" xoriginal="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" alt="..." style="min-width:436px; width: 436px; height: 436px; object-fit: fill;">
+                           <img class="xzoom5 mb-1-9" id="xzoom_magnific" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" xoriginal="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" alt="..." style="min-width:472px; width: 472px; height: 472px; object-fit: fill;">
                            <%-- <img class="xzoom5 mb-1-9" id="xzoom-magnific" src="모달 눌렀을때 기본" xoriginal="미리보기 근데 클릭은 이거 아님" alt="..." style="width: 526px;"> --%>
                            <div class="xzoom-thumbs m-0">
-                               <a id="aImg1" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg"><img id="imgImg1" class="xzoom-gallery5 xactive" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumbs/01_product.jpg" xpreview="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" alt="..." title="The description goes here"></a>
+                               <a id="aImg1" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg"><img id="imgImg1" class="xzoom-gallery5 xactive" style="height: 80px; width: 80px;" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumbs/01_product.jpg" xpreview="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" alt="..." title="The description goes here"></a>
                                <%-- <a href="첫번째 사진의 미리보기만 됨(근데 모달 처음에 안보임, 미리보긴는 됨)"><img class="xzoom-gallery5 xactive" width="80" src="첫번째 사진 자체(근데 밑에만 있고 위가 없음;" xpreview="이게 클릭시 위" alt="..." title="The description goes here"></a> --%>
-                               <a id="aImg2" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/02_product.jpg"><img id="imgImg2" class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/02_product.jpg" alt="..."  title="The description goes here"></a>
+                               <a id="aImg2" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/02_product.jpg"><img id="imgImg2" class="xzoom-gallery5" style="height: 80px; width: 80px;" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/02_product.jpg" alt="..."  title="The description goes here"></a>
                                <%-- <a href="두번째 사진의 미리보기만 됨"><img class="xzoom-gallery5" width="80" src="두번째 사진 자체(위랑 밑 둘다)" alt="..." title="The description goes here"></a> --%>
-                               <a id="aImg3" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg"><img id="imgImg3" class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/03_product.jpg" alt="..." title="The description goes here"></a>
-                               <a id="aImg4" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg"><img id="imgImg4" class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/04_product.jpg" alt="..." title="The description goes here"></a>
+                               <a id="aImg3" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg"><img id="imgImg3" class="xzoom-gallery5" style="height: 80px; width: 80px;" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/03_product.jpg" alt="..." title="The description goes here"></a>
+                               <a id="aImg4" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg"><img id="imgImg4" class="xzoom-gallery5" style="height: 80px; width: 80px;" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/04_product.jpg" alt="..." title="The description goes here"></a>
                            </div>
                        </div>
                        <!-- product left end -->
@@ -158,7 +164,7 @@ z-index: 2000;
                    <div class="col-lg-7 ps-lg-2-3">
                        <div class="product-detail" style="overflow-y: auto; max-height: 470px;">
                            <div class="media">
-                                <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
+                                <img id="postMemberImg" src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">
                                 <div class="media-body">
                                     <h4 id="postMemberNick" class="mt-0 mb-2 h4">징젱종잉123</h4>
                                     <!-- <h6 class="mt-0 mb-2 h6">1998-07-11 00:00 좋아요 711개 <i class="fa-regular fa-heart"></i></h6> -->
@@ -178,24 +184,29 @@ z-index: 2000;
                        			</select>
                        		</div>
                            
-                           <div class="media" style="margin-bottom: 30px;">
-                                <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
-                                <div class="media-body">
-                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
-									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
-									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
-									    </div>
-									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
-									        <div class="box" style="text-align: left;">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.<button type="button" style="margin-left: 5px; color: grey;" class="btn btn-link">삭제</button></div>
-									    </div>
-									</div>
-                                </div>
-                            </div>
+                           <div class="contentRecycle">
+                           	   <!-- 
+	                           <div class="media" style="margin-bottom: 30px;">
+	                                <img id="commentMemberImg" src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">
+	                                <div class="media-body">
+	                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
+										    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
+										        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 id="commentMemberNick" class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
+										        <div id="commentDate" class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
+										        <div id="commentLikeCount" class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
+										        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
+										    </div>
+										    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
+										        <div id="commentContent" class="box" style="text-align: left;">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.<button type="button" style="margin-left: 5px; color: grey;" class="btn btn-link">삭제</button></div>
+										    </div>
+										</div>
+	                                </div>
+	                            </div>
+	                             -->
+                            </div> <!-- <div class="contentRecycle"> -->
                             
                             
+                            <!-- 
                             <div class="media" style="margin-bottom: 30px;">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
@@ -212,6 +223,7 @@ z-index: 2000;
 									</div>
                                 </div>
                             </div>
+                             -->
                             
                             
 <!--                             <div class="media" style="margin-bottom: 30px;"> -->
@@ -225,6 +237,8 @@ z-index: 2000;
 <!--                                 <div class="like" style="margin-left: 15px;"><i class="fa-solid fa-heart"></i></div> -->
 <!--                             </div> -->
                             
+                            
+                            <!-- 
                             <div class="media" style="margin-bottom: 30px;">
                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
                                 <div class="media-body">
@@ -277,6 +291,7 @@ z-index: 2000;
 									</div>
                                 </div>
                             </div>
+                             -->
                            
                            
                            <!-- 일단 안씀 -->
@@ -398,9 +413,17 @@ z-index: 2000;
 <!--====================================script 작성부=====================================-->
 <script>
 $(document).ready(function(){
+	// 기본 이미지 URL을 변수에 저장
+	var defaultImage1 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg';
+	var defaultImage2 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/02_product.jpg';
+	var defaultImage3 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg';
+	var defaultImage4 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg';
 	
 	// 모달 여는 글자 클릭
 	$('.open-modal').on('click', function() {
+		
+		// 모달 열기 전에 댓글 초기화 시키기
+		$('.contentRecycle').empty();
 		
         // 클릭한 요소의 data-post-id 속성에서 게시물ID 가져오기
         var post_id = $(this).data('post-id');
@@ -413,6 +436,25 @@ $(document).ready(function(){
         	method : 'GET',
         	dataType : 'json',
         	success : function(data){
+        		
+        		// 기본 이미지로 초기화
+        		$('#xzoom_magnific').attr('src', defaultImage1);
+                $('#xzoom_magnific').attr('xoriginal', defaultImage1);
+                $('#aImg1').attr('href', defaultImage1);
+                $('#imgImg1').attr('src', defaultImage1);
+                $('#imgImg1').attr('xpreview', defaultImage1);
+                $('#aImg2').attr('href', defaultImage2);
+                $('#imgImg2').attr('src', defaultImage2);
+                $('#aImg3').attr('href', defaultImage3);
+                $('#imgImg3').attr('src', defaultImage3);
+                $('#aImg4').attr('href', defaultImage4);
+                $('#imgImg4').attr('src', defaultImage4);
+        		
+        		// 확인용 콘솔 로그
+        		console.log('AJAX 호출 성공');
+                console.log(data);
+        		console.log(data.commentList);
+        		
         		// 모달 게시물 헤더 부분
         		if(data.postList.post_type == 'post01'){
         			var exampleModalLabel = '입양 후기 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
@@ -427,6 +469,9 @@ $(document).ready(function(){
         			var exampleModalLabel = '임시보호 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
             		$('#exampleModalLabel').html(exampleModalLabel);
         		}
+        		// 모달 게시물 작성자 프로필 이미지 부분
+         		var postMemberImg = data.postList.jypMemberVO.member_image;
+         		$('#postMemberImg').attr('src', postMemberImg);
         		// 모달 게시물 작성자 닉네임 부분
         		var postMemberNick = data.postList.jypMemberVO.member_nickname;
         		$('#postMemberNick').html(postMemberNick);
@@ -455,7 +500,7 @@ $(document).ready(function(){
         		var postLikeCount = data.postList.post_likes[0].post_like_count+'개';
         		$('#postLikeCount').html(postLikeCount);
         		// 모달 게시물 이미지 관련 부분
-        		if(data.postList.post_images[0].image_src != null){
+        		if(data.postList.post_images[0] != null){
 	        		var xzoom_magnific = data.postList.post_images[0].image_src;
 	        		$('#xzoom_magnific').attr('src', xzoom_magnific);
 	        		$('#xzoom_magnific').attr('xoriginal', xzoom_magnific);
@@ -464,25 +509,69 @@ $(document).ready(function(){
 	        		var imgImg1 = data.postList.post_images[0].image_src;
 	        		$('#imgImg1').attr('src', imgImg1);
 	        		$('#imgImg1').attr('xpreview', imgImg1);
+        		}else{
+        			$('#xzoom_magnific').attr('src', defaultImage1);
+                    $('#xzoom_magnific').attr('xoriginal', defaultImage1);
+                    $('#aImg1').attr('href', defaultImage1);
+                    $('#imgImg1').attr('src', defaultImage1);
+                    $('#imgImg1').attr('xpreview', defaultImage1);
         		}
-        		if(data.postList.post_images[1].image_src != null){
+        		if(data.postList.post_images[1] != null){
 	        		var aImg2 = data.postList.post_images[1].image_src;
 	        		$('#aImg2').attr('href', aImg2);
 	        		var imgImg2 = data.postList.post_images[1].image_src;
 	        		$('#imgImg2').attr('src', imgImg2);
+        		}else{
+        			$('#aImg2').attr('href', defaultImage2);
+                    $('#imgImg2').attr('src', defaultImage2);
         		}
-        		if(data.postList.post_images[2].image_src != null){
+        		if(data.postList.post_images[2] != null){
 	        		var aImg3 = data.postList.post_images[2].image_src;
 	        		$('#aImg3').attr('href', aImg3);
 	        		var imgImg3 = data.postList.post_images[2].image_src;
 	        		$('#imgImg3').attr('src', imgImg3);
+        		}else{
+        			$('#aImg3').attr('href', defaultImage3);
+                    $('#imgImg3').attr('src', defaultImage3);
         		}
-        		if(data.postList.post_images[3].image_src != null){
+        		if(data.postList.post_images[3] != null){
 	        		var aImg4 = data.postList.post_images[3].image_src;
 	        		$('#aImg4').attr('href', aImg4);
 	        		var imgImg4 = data.postList.post_images[3].image_src;
 	        		$('#imgImg4').attr('src', imgImg4);
+        		}else{
+        			$('#aImg4').attr('href', defaultImage4);
+                    $('#imgImg4').attr('src', defaultImage4);
         		}
+        		
+        		// 모달 댓글 부분
+        		$.each(data.commentList, function(index, comments) {
+//         			console.log(comments.jypMemberVO.member_image);
+//         			console.log(comments.jypMemberVO.member_nickname);
+//         			console.log(comments.comment_date);
+//         			console.log(comments.comment_likes[0].comment_like_count);
+//         			console.log(comments.comment_content);
+        			$('.contentRecycle').append(
+        				'<div class="media" style="margin-bottom: 30px;">'+
+                            '<img src="'+comments.jypMemberVO.member_image+'" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">'+
+                            '<div class="media-body">'+
+                             	'<div class="container" style="display: flex; flex-direction: column; padding: 0px;">'+
+								    '<div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">'+
+								        '<div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">'+comments.jypMemberVO.member_nickname+'</h4></div>'+
+								        '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">'+comments.comment_date+'</div>'+
+								        '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 '+comments.comment_likes[0].comment_like_count+'개</div>'+
+								        '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>'+
+								    '</div>'+
+								    '<div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">'+
+							        	'<div class="box" style="text-align: left;">'+comments.comment_content+'<button type="button" style="margin-left: 5px; color: grey;" class="btn btn-link">삭제</button></div>'+
+								    '</div>'+
+								'</div>'+
+                            '</div>'+
+                        '</div>'
+        			);
+					
+        		}); // each 모달 댓글 부분
+
         		
         	},
         	error : function(){

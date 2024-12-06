@@ -12,7 +12,7 @@ public class CommentVO {
 	private String post_id;				// 게시글 아이디
 	private String member_id;			// 유저아이디
 	private String comment_content;		// 내용
-	private Timestamp comment_date;		// 생성일자
+	private String comment_date;		// 생성일자
 	
 	private List<CommentLikeVO> comment_likes;		// 댓글 좋아요 테이블
 	
