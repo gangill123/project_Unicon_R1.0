@@ -239,7 +239,6 @@ $(document).ready(function () {
 	
 	
 });//readay
-
 </script>
 
 

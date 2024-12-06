@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Unicon.mapper.ShopMapper">
+
+
+<!-- resultMap 작성란 -->
+<resultMap type="com.Unicon.domain.ShopVO" id="ShopResultMap">
+	<id property="product_id" column="product_id"/>
+	<result property="product_seller_id" column="product_seller_id"/>
+	<result property="product_category_type" column="product_category_type"/>
+	<result property="product_category_value" column="product_category_value"/>
+	<result property="product_keyword" column="product_keyword"/>
+	<result property="product_name" column="product_name"/>
+	<result property="product_price" column="product_price"/>
+	<result property="start_date" column="start_date"/>
+	<result property="end_date" column="end_date"/>
+	<result property="discount_rate" column="discount_rate"/>
+	<result property="product_stock" column="product_stock"/>
+	<result property="product_content" column="product_content"/>
+	<result property="brand" column="brand"/>
+	<result property="manufacturer" column="manufacturer"/>
+	<result property="product_origin" column="product_origin"/>
+	<result property="product_expiry" column="product_expiry"/>
+	<result property="product_status" column="product_status"/>
+	<result property="delivery_method" column="delivery_method"/>
+	<result property="delivery_company" column="delivery_company"/>
+	<result property="delivery_price" column="delivery_price"/>
+	<result property="address" column="address"/>
+	<result property="create_date" column="create_date"/>
+	<result property="update_date" column="update_date"/>
+	<result property="approval_date" column="approval_date"/>
+	<result property="approval_id" column="approval_id"/>
+	<result property="comments" column="comments"/>
+	<result property="option_type" column="option_type"/>
+	
+	<association property="memberVO" resultMap="MemberResultMap" />
+	<association property="categoryDataVO" resultMap="CategoryDataResultMap" />
+	
+	<collection property="product_options" ofType="com.Unicon.domain.OptionVO" resultMap="OptionResultMap"/>
+	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
+
+</resultMap>
+
+<!-- CategoryResultMap -->
+<resultMap type="com.Unicon.domain.CategoryDataVO" id="CategoryDataResultMap">
+	<id property="category_code" column="category_code"/>
+	<result property="category_type" column="category_type"/>
+	<result property="category_value" column="category_value"/>
+	<result property="category_parent" column="category_parent"/>
+</resultMap>
+
+<!-- MemberResultMap -->
+<resultMap type="com.Unicon.domain.MemberVO" id="MemberResultMap">
+	<result property="memberId" column="member_id"/>
+	<result property="memberName" column="member_name"/>
+</resultMap>
+
+<!-- OptionResultMap -->
+<resultMap type="com.Unicon.domain.OptionVO" id="OptionResultMap">
+	<id property="option_id" column="option_id"/>
+	<result property="product_id" column="product_id"/>
+	<result property="option_name" column="option_name"/>
+	<result property="option_value" column="option_value"/>
+	<result property="option_price" column="option_price"/>
+	<result property="option_stock" column="option_stock"/>
+	<result property="option_name2" column="option_name2"/>
+	<result property="option_value2" column="option_value2"/>
+</resultMap>
+
+<!-- "ImageResultMap" -->
+<resultMap type="com.Unicon.domain.ImageVO" id="ImageResultMap">
+	<id property="image_id" column="image_id"/>
+	<id property="image_type" column="image_type"/>
+	<id property="image_sequence" column="image_sequence"/>
+	<result property="image_src" column="image_src"/>
+</resultMap>
+
+
+
+	<!-- shop 페이지 접속 시 모든 상품정보 가져오기 -->
+	<select id="getProductAll" resultMap="ShopResultMap">
+		select p.*, o.*, i.* 
+		from _products p 
+		join _option o on p.product_id = o.product_id 
+		join _image i on p.product_id = i.image_id 
+	</select>
+
+	<!-- 상세페이지 이동시 해당제품 상품정보 가져오기 -->
+	<select id="getProduct" resultMap="ShopResultMap" parameterType="String">
+		select p.*, o.*, i.*, m.member_name 
+		from _products p 
+		join _option o on p.product_id = o.product_id 
+		join _image i on p.product_id = i.image_id 
+		join _member m on p.product_seller_id = m.member_id 
+		where p.product_id = #{product_id} 
+	</select>
+	
+	
+	<!-- 옵션1 선택시 옵션2 가져오기 -->
+	<select id="getOption" resultType="OptionVO">
+		select distinct option_name2, option_value2 
+		from _option 
+		where product_id = #{product_id} 
+	</select>
+
+
+</mapper>
+
+
