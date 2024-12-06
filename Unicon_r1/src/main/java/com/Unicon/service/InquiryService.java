@@ -38,4 +38,8 @@ public interface InquiryService {
 	public void deleteBoards(List<Integer> ids);
 
 	public List<InquiryVO> searchBoards(String startDate, String endDate, String istatus);
+	
+	public Map<String, Object> getInquiriesByMember(String memberId, int page, int size);
+
+	public Map<String, Map<String, Long>> getMonthlyIstatusCounts();
 }

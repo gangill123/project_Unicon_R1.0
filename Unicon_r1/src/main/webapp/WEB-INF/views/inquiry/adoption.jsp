@@ -197,14 +197,16 @@ section:last-of-type p {
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion" style="">
                                     <div class="card-body">
+                                        <section>
                                         <p>A. 유니콘의 건강보장 기간은 최대 150일입니다.
 										   <br>
 										       통상 15일간 건강이 보장되는 타사와 달리, 약 10배의 기간을 더 보장해 드리고 있습니다.
 										   <br>
-										       강아지분양 또는 고양이분양! 더욱 안전하고 믿을 수 있는 도그마루에서 시작해보세요.
+										       강아지분양 ! 더욱 안전하고 믿을 수 있는 유니콘에서 시작해보세요.
 										   <br>
 										   * 건강보장 기간은 기본 15일이 제공되며, 특약가입 시 최대 150일까지 보장, 연장됩니다.
 										   </p>
+										 </section>  
        								</div>
                                 </div>
                             </div>
@@ -218,6 +220,7 @@ section:last-of-type p {
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion" style="">
                                     <div class="card-body">
+                                       <section>
                                        <p> A. 유니콘에서는 편리하고 쾌적한 이용 서비스를 제공하기 위해
                                        		<br>
 									       '방문예약' 서비스를 진행하고 있습니다.
@@ -233,6 +236,7 @@ section:last-of-type p {
 									      	혜택을 제공해드립니다.
 									      	<br>
 									      * 딜리버리는 이송 또는 홈서비스 이용 시 제공해 드립니다.
+									      </section>
                                     </div>
                                 </div>
                             </div>

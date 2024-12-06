@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,10 +67,20 @@ public class InquiryRestController {
 	public ResponseEntity<String> submitInquiry(@RequestParam("member_name") String memberName,
 			@RequestParam("email") String email, @RequestParam("title") String title,
 			@RequestParam("phone") String phone, @RequestParam("content") String content,
-			@RequestParam("istatus") String istatus,@RequestParam("post_password") String post_password, @RequestParam("recaptcha") String recaptchaResponse,
-			@RequestParam(value = "file", required = false) MultipartFile file // 파일 처리
+			@RequestParam("istatus") String istatus, @RequestParam("post_password") String postPassword,
+			@RequestParam("recaptcha") String recaptchaResponse,
+			@RequestParam(value = "file", required = false) MultipartFile file, // 파일 처리
+			HttpSession session // 세션 객체 추가
 	) {
 		try {
+			// 세션에서 member_id 가져오기
+			String memberId = (String) session.getAttribute("member_id");
+			if (memberId == null) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+			}
+
+			logger.debug("세션에서 가져온 member_id: {}", memberId);
+
 			// 요청 데이터 로그 추가
 			logger.debug("전달된 문의 데이터: {}, 파일: {}", memberName, file != null ? file.getOriginalFilename() : "없음");
 
@@ -80,13 +92,14 @@ public class InquiryRestController {
 
 			// InquiryVO 객체 생성 후 데이터 처리
 			InquiryVO inquiry = new InquiryVO();
+			inquiry.setMember_id(memberId); // 세션에서 가져온 member_id 추가
 			inquiry.setMember_name(memberName);
 			inquiry.setEmail(email);
 			inquiry.setTitle(title);
 			inquiry.setPhone(phone);
 			inquiry.setContent(content);
 			inquiry.setIstatus(istatus);
-			inquiry.setPost_password(post_password);
+			inquiry.setPost_password(postPassword);
 			inquiry.setRecaptcha(recaptchaResponse);
 
 			// 문의 데이터 처리 후, bno 값을 반환받음
@@ -205,29 +218,54 @@ public class InquiryRestController {
 		logger.debug("패스워드 검증 결과: bno={}, isValid={}", bno, isValid);
 		return response;
 	}
-	
-	// 관리자 선택/전체 삭제 
-    @PostMapping("/delete")
-    public ResponseEntity<String> deleteBoards(@RequestBody Map<String, List<Integer>> request) {
-        List<Integer> ids = request.get("ids");
-        if (ids == null || ids.isEmpty()) {
-            return ResponseEntity.badRequest().body("삭제할 항목이 없습니다.");
-        }
 
-        inquiryService.deleteBoards(ids);
-        return ResponseEntity.ok("선택한 항목이 삭제되었습니다.");
-    }
-    // 카테고리,날짜별 검색 기능
-    @GetMapping("/search")
-    public ResponseEntity<?> searchBoards(
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate,
-            @RequestParam(required = false) String istatus) {
+	// 관리자 선택/전체 삭제
+	@PostMapping("/delete")
+	public ResponseEntity<String> deleteBoards(@RequestBody Map<String, List<Integer>> request) {
+		List<Integer> ids = request.get("ids");
+		if (ids == null || ids.isEmpty()) {
+			return ResponseEntity.badRequest().body("삭제할 항목이 없습니다.");
+		}
 
-        List<InquiryVO> boards = inquiryService.searchBoards(startDate, endDate, istatus);
+		inquiryService.deleteBoards(ids);
+		return ResponseEntity.ok("선택한 항목이 삭제되었습니다.");
+	}
 
-        return ResponseEntity.ok(Map.of("boards", boards));
-    }
-	
+	// 카테고리,날짜별 검색 기능
+	@GetMapping("/search")
+	public ResponseEntity<?> searchBoards(@RequestParam(required = false) String startDate,
+			@RequestParam(required = false) String endDate, @RequestParam(required = false) String istatus) {
+
+		List<InquiryVO> boards = inquiryService.searchBoards(startDate, endDate, istatus);
+
+		return ResponseEntity.ok(Map.of("boards", boards));
+	}
+
+	@GetMapping("/boardsA")
+	public ResponseEntity<Map<String, Object>> getMyInquiries(@RequestParam int page, @RequestParam int size,
+			HttpSession session) {
+		String memberId = (String) session.getAttribute("member_id"); // 로그인 세션에서 member_id 가져오기
+		if (memberId == null) {
+			// 세션에 member_id가 없을 경우
+			System.out.println("로그인된 사용자 없음. member_id가 세션에 없습니다.");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // 로그인 필요
+		}
+
+		// 세션에 member_id가 있으면 해당 사용자 데이터를 조회
+		Map<String, Object> result = inquiryService.getInquiriesByMember(memberId, page, size);
+		return ResponseEntity.ok(result);
+	}
+	// 그래프 월별 데이터 가져오기 
+	@GetMapping("/statusCounts")
+	public ResponseEntity<Map<String, Map<String, Long>>> getStatusCounts() {
+		try {
+			// 서비스에서 월별 상태 개수 데이터를 받아옴
+			Map<String, Map<String, Long>> chartData = inquiryService.getMonthlyIstatusCounts();
+			return ResponseEntity.ok(chartData); // JSON 형식으로 반환
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(500).build(); // 에러 처리
+		}
+	}
 
 } // InquiryController

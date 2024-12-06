@@ -145,7 +145,7 @@ section:last-of-type p {
                                 </div>
                                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion" style="">
                                     <div class="card-body">
-						                
+						                <section>
 						                    <h2>유니콘 고객센터 안내</h2>
   
 									    <p>
@@ -171,7 +171,7 @@ section:last-of-type p {
 									       카테고리를 기타 문의로 하여 스크린샷과 함께 첨부해주시면 검토후 조치 하겠습니다, 
 									        <a href="write">문의하러 가기</a> 링크로 접수해 주세요.
 									    </p>
-										
+										</section>
                                     </div>
                                 </div>
                             </div>
@@ -185,10 +185,11 @@ section:last-of-type p {
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion" style="">
                                     <div class="card-body">
+                                    <section>
 									    <h2>유니콘 고객센터 근무시간 안내</h2>
 									    
 									    <p>
-									        네이버페이 고객센터 전화 상담(1588-3819)은 <strong>월~금요일</strong>, 
+									        네이버페이 고객센터 전화 상담(1588-1234)은 <strong>월~금요일</strong>, 
 									        오전 상담 <strong>9시~12시</strong> / 오후 상담 <strong>13시~18시</strong>
 									        (<em>점심시간 12시~13시</em>)입니다.
 									    </p>
@@ -213,6 +214,7 @@ section:last-of-type p {
 									    <p>
 									        ▶ <a href="inquiry">유니콘 고객센터 바로가기</a>
 									    </p>
+							    	</section>
                                 </div>
                             </div>
                             <div class="card">
@@ -225,8 +227,10 @@ section:last-of-type p {
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion" style="">
                                     <div class="card-body">
+                                    <section>
                                        <p> 대량 구매 및 제휴를 원하실 경우 </p>
                                        <p> rkddlf3157@naver.com로 필요 수량 및 연락처 등 기재하여  문의 주시면 회신드리겠습니다.</p>
+                                    </section>
                                     </div>
                                 </div>
                             </div>
