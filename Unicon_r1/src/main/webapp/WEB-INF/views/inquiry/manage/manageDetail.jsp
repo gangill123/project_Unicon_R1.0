@@ -83,6 +83,11 @@ textarea {
 .btn-primary:hover {
     background-color: #0056b3;
 }
+
+#dname {
+    border: none;
+    background-color: transparent; /* 배경색도 없애고 싶다면 */
+}
 </style>
 
 
@@ -173,24 +178,24 @@ textarea {
 
 
 									<!-- 관리자 전용 문의 답변 -->
-<div class="card border-0 shadow-sm mt-4">
-    <div class="card-body">
-        <h6 class="text-primary">관리자 전용 문의 답변</h6>
-        <form id="answerForm">
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <input type="text" id="dname" class="form-control" name="dname" placeholder="관리자" value="관리자" readonly="readonly" style="width: 90px; display: inline-block;">
-                </div>        
-                <div class="col-12">
-                    <textarea id="dcontent" class="form-control" name="dcontent" rows="4" placeholder="답변을 입력해주세요."></textarea>
-                </div>
-                <div class="col-12 text-end">
-                    <button type="button" class="btn btn-primary" onclick="submitAnswer()">답변하기</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+			<div class="card border-0 shadow-sm mt-4">
+			    <div class="card-body">
+			        <h6 class="text-primary">관리자 전용 문의 답변</h6>
+			        <form id="answerForm">
+			            <div class="row g-3">
+			                <div class="col-md-6">
+			                    <input type="text" id="dname" class="form-control" name="dname" placeholder="관리자" value="관리자" readonly="readonly" style="width: 90px; display: inline-block;">
+			                </div>        
+			                <div class="col-12">
+			                    <textarea id="dcontent" class="form-control" name="dcontent" rows="4" placeholder="답변을 입력해주세요."></textarea>
+			                </div>
+			                <div class="col-12 text-end">
+			                    <button type="button" class="btn btn-primary" onclick="submitAnswer()">답변하기</button>
+			                </div>
+			            </div>
+			        </form>
+			    </div>
+			</div>
         </div>
 
         <!-- Blog Right -->

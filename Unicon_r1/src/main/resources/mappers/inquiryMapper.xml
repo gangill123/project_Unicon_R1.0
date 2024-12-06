@@ -68,9 +68,11 @@
 		INSERT INTO _inquiry (member_id, member_name, title,
 		content, created_at,
 		istatus, email, phone, post_password)
-		VALUES (#{member_id},
+		VALUES
+		(#{member_id},
 		#{member_name}, #{title}, #{content}, now(),
-		#{istatus}, #{email},
+		#{istatus},
+		#{email},
 		#{phone}, #{post_password})
 	</insert>
 
@@ -123,7 +125,8 @@
 
 	<!-- 답변 추가 쿼리 -->
 	<insert id="insertAnswer">
-		INSERT INTO _inquiry_answer (bno, dname, dcontent, created_at)
+		INSERT INTO _inquiry_answer (bno, dname, dcontent,
+		created_at)
 		VALUES (#{bno}, #{dname}, #{dcontent}, CURRENT_TIMESTAMP)
 	</insert>
 
@@ -162,54 +165,83 @@
 		SELECT * FROM _inquiry_answer
 		WHERE dno = #{dno}
 	</select>
-	
-   	<select id="getInquiryByBno" parameterType="int" resultType="com.Unicon.domain.InquiryVO">
-        SELECT 
-            bno,
-            istatus,
-            title,
-            member_name,
-            created_at,
-            status,
-            post_password
-        FROM 
-            _inquiry
-        WHERE 
-            bno = #{bno}
-    </select>
-    
-    <!-- 조회수  -->
-    <update id="updateViewCount" parameterType="int">
-	    UPDATE _inquiry
-	    SET view_count = view_count + 1
-	    WHERE bno = #{bno}
+
+	<select id="getInquiryByBno" parameterType="int"
+		resultType="com.Unicon.domain.InquiryVO">
+		SELECT
+		bno,
+		istatus,
+		title,
+		member_name,
+		created_at,
+		status,
+		post_password
+		FROM
+		_inquiry
+		WHERE
+		bno = #{bno}
+	</select>
+
+	<!-- 조회수 -->
+	<update id="updateViewCount" parameterType="int">
+		UPDATE _inquiry
+		SET
+		view_count = view_count + 1
+		WHERE bno = #{bno}
 	</update>
-	
-	
-   <delete id="deleteBoards" parameterType="list">
-    DELETE FROM _inquiry
-    WHERE bno IN
-    <foreach collection="list" item="id" open="(" separator="," close=")">
-        #{id}
-    </foreach>
-</delete>
-	
-	 <!-- 검색 쿼리 -->
-    <select id="searchBoards" resultType="com.Unicon.domain.InquiryVO">
-        SELECT *
-        FROM _inquiry
-        WHERE 1=1
-        <if test="startDate != null and startDate != ''">
-            AND created_at &gt;= #{startDate}
-        </if>
-        <if test="endDate != null and endDate != ''">
-            AND created_at &lt;= #{endDate}
-        </if>
-        <if test="istatus != null and istatus != ''">
-            AND istatus = #{istatus}
-        </if>
-    </select>
 
 
+	<delete id="deleteBoards" parameterType="list">
+		DELETE FROM _inquiry
+		WHERE bno IN
+		<foreach collection="list" item="id" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- 검색 쿼리 -->
+	<select id="searchBoards"
+		resultType="com.Unicon.domain.InquiryVO">
+		SELECT *
+		FROM _inquiry
+		WHERE 1=1
+		<if test="startDate != null and startDate != ''">
+			AND created_at &gt;= #{startDate}
+		</if>
+		<if test="endDate != null and endDate != ''">
+			AND created_at &lt;= #{endDate}
+		</if>
+		<if test="istatus != null and istatus != ''">
+			AND istatus = #{istatus}
+		</if>
+	</select>
+
+	<select id="findInquiriesByMember"
+		resultType="com.Unicon.domain.InquiryVO">
+		SELECT *
+		FROM _inquiry
+		WHERE member_id = #{memberId}
+		ORDER BY
+		bno DESC
+		LIMIT #{offset}, #{size}
+	</select>
+
+	<select id="countInquiriesByMember" resultType="int">
+		SELECT COUNT(*)
+		FROM _inquiry
+		WHERE member_id = #{memberId}
+	</select>
+
+	<!-- 월별 진행 상태 개수 -->
+	<select id="getMonthlyIstatusCounts" resultType="java.util.Map">
+		SELECT
+		MONTH(i.created_at) AS month,  <!-- 월 추출 -->
+		i.istatus,                      <!-- 상태 -->
+		COUNT(*) AS count               <!-- 상태별 개수 -->
+		FROM _inquiry i
+		GROUP BY MONTH(i.created_at), i.istatus
+		ORDER BY MONTH(i.created_at)
+	</select>
 
 </mapper>

@@ -3,7 +3,10 @@ package com.Unicon.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -117,6 +120,48 @@ public class InquiryServiceImpl implements InquiryService {
 	public List<InquiryVO> searchBoards(String startDate, String endDate, String istatus) {
 		 return inquiryDAO.searchBoards(startDate, endDate, istatus);
 	}
-	
+	@Override
+	public Map<String, Object> getInquiriesByMember(String memberId, int page, int size) {
+        int offset = (page - 1) * size;
+        List<InquiryVO> inquiries = inquiryDAO.findInquiriesByMember(memberId, offset, size);
+        int totalRecords = inquiryDAO.countInquiriesByMember(memberId);
 
+        Map<String, Object> result = new HashMap<>();
+        result.put("boards", inquiries);
+        result.put("totalPages", (int) Math.ceil((double) totalRecords / size));
+
+        return result;
+	}
+	
+	
+	
+	public Map<String, Map<String, Long>> getMonthlyIstatusCounts() {
+        // DAO 호출로 월별 상태별 카운트 데이터를 가져옴
+        List<Map<String, Object>> results = inquiryDAO.getMonthlyIstatusCounts();
+        
+        // 결과를 월별로 묶어서 반환할 Map
+        Map<String, Map<String, Long>> chartData = new HashMap<>();
+        
+        // 상태 목록 (이 상태 목록은 고정된 값으로 추가)
+        List<String> istatusNames = Arrays.asList("입양 문의", "쇼핑몰 문의", "커뮤니티 문의", "기타 문의");
+
+        for (Map<String, Object> result : results) {
+            String month = result.get("month").toString();  // 월
+            String istatus = result.get("istatus").toString();  // 상태
+            Long count = ((Number) result.get("count")).longValue();  // 상태별 개수
+
+            // 월별 상태 카운트를 저장
+            chartData.computeIfAbsent(month, k -> {
+                // 월별 상태 초기화 (0으로 설정)
+                Map<String, Long> statusCount = new HashMap<>();
+                for (String status : istatusNames) {
+                    statusCount.put(status, 0L);  // 기본 상태 카운트 0
+                }
+                return statusCount;
+            }).put(istatus, count);  // 상태별 카운트 설정
+        }
+
+        return chartData;  // 가공된 결과 반환
+    }
+    
 }

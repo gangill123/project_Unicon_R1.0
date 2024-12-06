@@ -18,15 +18,14 @@
     
     <style>
     
-/* 진행 중 상태 */
+/* 또는 !important 사용 */
 .status-ongoing {
-    color: #2ecc71; /* 초록색 */
+    color: #2ecc71 !important;
 }
 
-/* 답변 완료 상태 */
 .status-completed {
-    color: #3498db; /* 파란색 */
-}    
+    color: #3498db !important;
+}
     
     
 /* 메인 타이틀 스타일 */
@@ -96,7 +95,7 @@ td, th {
 }
 
 /* 상태 및 검색 필터 */
-.status {
+td.status {
 	font-weight: bold;
 	color: #2ecc71; /* 진행중 상태는 초록색 */
 }
@@ -119,19 +118,34 @@ h2 {
 
 
 /* th 요소는 제외하고, td 요소의 istatus에만 스타일 적용 */
+/* 기본 상태 */
 td.istatus {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
     font-weight: bold;
-    color: #333;
-    writing-mode: horizontal-tb;
-    text-align: center; 
-    background-color: #e6f7ff;
-    padding: 5px 20px;
-    border-radius: 1px;    
-    display: inline-flex;
-    align-items: center; /* 아이콘과 텍스트를 수평 정렬 */
-	line-height: 30px; /* 텍스트가 수직으로 중앙에 오게 설정 */
 }
 
+/* 카테고리별 스타일 */
+td.istatus.입양_문의 {
+    background-color: rgba(255, 87, 51, 0.7); /* 입양 문의에 대한 색상 */
+    color: white;
+}
+
+td.istatus.쇼핑몰_문의 {
+    background-color: rgba(51, 255, 87, 0.7); /* 쇼핑몰 문의에 대한 색상 */
+    color: white;
+}
+
+td.istatus.커뮤니티_문의 {
+    background-color: rgba(51, 87, 255, 0.7); /* 커뮤니티 문의에 대한 색상 */
+    color: white;
+}
+
+td.istatus.기타_문의 {
+    background-color: rgba(255, 51, 161, 0.7); /* 기타 문의에 대한 색상 */
+    color: white;
+}
 
 
 .pagination {
@@ -192,38 +206,37 @@ td.istatus {
     <div class="card-body">
         <h4 class="card-title">Unicon Q&A 문의게시판</h4>
         <p class="card-description"><code>문의 게시판 관리자 페이지</code></p>
-        
-        <!-- 필터 -->
-        <div class="row mb-3">
-            <div class="col-md-3">
-                <label for="startDate">시작 날짜</label>
-                <input type="date" id="startDate" class="form-control">
-            </div>
-            <div class="col-md-3">
-                <label for="endDate">종료 날짜</label>
-                <input type="date" id="endDate" class="form-control">
-            </div>
-            <div class="col-md-3">
-                <label for="category">카테고리</label>
-                <select id="category" class="form-control">
-                    <option value="">전체</option>
-                    <option value="입양 문의">입양 문의</option>
-                    <option value="쇼핑몰 문의">쇼핑몰 문의</option>
-                    <option value="커뮤니티 문의">커뮤니티 문의</option>
-                    <option value="기타 문의">기타 문의</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label>&nbsp;</label>
-                <button id="searchBtn" class="btn btn-primary btn-block">검색</button>
-            </div>
-        </div>
+		        
+		        <!-- 필터 -->
+		<div class="row mb-3">
+		    <div class="col-md-3">
+		        <label for="startDate">시작 날짜</label>
+		        <input type="date" id="startDate" class="form-control">
+		    </div>
+		    <div class="col-md-3">
+		        <label for="endDate">종료 날짜</label>
+		        <input type="date" id="endDate" class="form-control">
+		    </div>
+		    <div class="col-md-3">
+		        <label for="category">카테고리</label>
+		        <select id="category" class="form-control">
+		            <option value="">전체</option>
+		            <option value="입양 문의">입양 문의</option>
+		            <option value="쇼핑몰 문의">쇼핑몰 문의</option>
+		            <option value="커뮤니티 문의">커뮤니티 문의</option>
+		            <option value="기타 문의">기타 문의</option>
+		        </select>
+		    </div>
+		    <div class="col-md-3 d-flex align-items-end"> <!-- d-flex와 align-items-end로 버튼을 아래로 맞추기 -->
+		        <button id="searchBtn" class="btn btn-inverse-primary btn-fw ">검색</button> <!-- 버튼을 전체 너비로 맞춤 -->
+		    </div>
+		</div>
 
         <!-- 테이블 -->
         <div class="mb-2">
-            <button id="selectAll" class="btn btn-sm btn-primary">전체 선택</button>
-            <button id="deselectAll" class="btn btn-sm btn-secondary">전체 선택 해제</button>
-            <button id="deleteSelected" class="btn btn-sm btn-danger">선택 삭제</button>
+            <button id="selectAll" class="btn btn-outline-primary btn-fw">전체 선택</button>
+            <button id="deselectAll" class="btn btn-outline-secondary btn-fw">전체 선택 해제</button>
+            <button id="deleteSelected" class="btn btn-outline-danger btn-fw">선택 삭제</button>
         </div>
         <table class="table table-striped" id="inquiryTable">
             <thead>
@@ -268,17 +281,40 @@ function loadPage(page) {
         success: function (response) {
             const data = response.boards;
             const totalPages = response.totalPages;
-
+			
+            
+            
             let tbody = "";
             data.forEach(function (inquiry) {
                 let statusText = inquiry.status === 1 ? "진행 중" : "답변 완료";
                 let statusClass = inquiry.status === 1 ? "status-ongoing" : "status-completed";
-
+				
+                // inquiry.istatus 값에 따라 동적으로 클래스를 변경
+                let istatusClass = '';
+                switch (inquiry.istatus) {
+                    case '입양 문의':
+                        istatusClass = '입양_문의';
+                        break;
+                    case '쇼핑몰 문의':
+                        istatusClass = '쇼핑몰_문의';
+                        break;
+                    case '커뮤니티 문의':
+                        istatusClass = '커뮤니티_문의';
+                        break;
+                    case '기타 문의':
+                        istatusClass = '기타_문의';
+                        break;
+                    default:
+                        istatusClass = '기타_문의'; // 기본값 설정 (필요시)
+                        break;
+                }
+                
+                
                 tbody +=
                     '<tr>' +
                     '<td><input type="checkbox" class="row-check" value="' + inquiry.bno + '"></td>' +
                     '<td class="no">' + inquiry.bno + '</td>' +
-                    '<td class="istatus">' + inquiry.istatus + '</td>' +
+                    '<td class="istatus ' + istatusClass + '">' + inquiry.istatus + '</td>' +
                     '<td class="title"><a href="/inquiry/manage/' + inquiry.bno + '">' + inquiry.title + '</a></td>' +
                     '<td class="member">' + inquiry.member_name + '</td>' +
                     '<td class="date">' + inquiry.created_at + '</td>' +
@@ -354,12 +390,34 @@ $("#searchBtn").click(function () {
             data.forEach(function (inquiry) {
                 let statusText = inquiry.status === 1 ? "진행 중" : "답변 완료";
                 let statusClass = inquiry.status === 1 ? "status-ongoing" : "status-completed";
-
+				
+                // inquiry.istatus 값에 따라 동적으로 클래스를 변경
+                let istatusClass = '';
+                switch (inquiry.istatus) {
+                    case '입양 문의':
+                        istatusClass = '입양_문의';
+                        break;
+                    case '쇼핑몰 문의':
+                        istatusClass = '쇼핑몰_문의';
+                        break;
+                    case '커뮤니티 문의':
+                        istatusClass = '커뮤니티_문의';
+                        break;
+                    case '기타 문의':
+                        istatusClass = '기타_문의';
+                        break;
+                    default:
+                        istatusClass = '기타_문의'; // 기본값 설정 (필요시)
+                        break;
+                }
+                
+                
+                
                 tbody +=
                     '<tr>' +
                     '<td><input type="checkbox" class="row-check" value="' + inquiry.bno + '"></td>' +
                     '<td class="no">' + inquiry.bno + '</td>' +
-                    '<td class="istatus">' + inquiry.istatus + '</td>' +
+                    '<td class="istatus ' + istatusClass + '">' + inquiry.istatus + '</td>' +
                     '<td class="title"><a href="/inquiry/manage/' + inquiry.bno + '">' + inquiry.title + '</a></td>' +
                     '<td class="member">' + inquiry.member_name + '</td>' +
                     '<td class="date">' + inquiry.created_at + '</td>' +

@@ -208,6 +208,7 @@ section:last-of-type p {
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion" style="">
                                     <div class="card-body">
+                                    <section>
                                      <p>Unicon에서 팔로워를 늘리는 방법은 목표가 무엇인지, 
                                      	그리고 여러분과 타겟 대상이 좋아하는 콘텐츠 유형이 무엇인지에 따라 여러 가지 방법이 있습니다. 
                                      	동영상을 선호한다면 팔로워를 늘리는 가장 효과적인 방법은 매력적인 릴스를 꾸준히 만드는 것입니다. 
@@ -215,6 +216,7 @@ section:last-of-type p {
                                      	사진을 통해 개성을 표현하는 경우 피드 게시물이나 슬라이드를 지속적으로 공유하면 타겟 대상과 소통할 수 있어 콘텐츠의 도달 범위를 넓힐 수 있습니다.
                                      	 다양한 방법을 테스트하고 반복하여 어떤 방법이 가장 적합한지 알아내는 것이 중요합니다.
                                      </p>
+                                     </section>
        								</div>
                                 </div>
                             </div>

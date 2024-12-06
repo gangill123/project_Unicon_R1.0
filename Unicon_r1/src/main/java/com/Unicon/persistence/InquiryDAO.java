@@ -28,21 +28,27 @@ public interface InquiryDAO {
 	// 게시글 번호에 해당하는 답변 조회
 	public List<InquiryAnswerVO> getAnswersByBno(int bno);
 
-	public void updateAnswer(int dno, String dcontent);  
-	    
+	public void updateAnswer(int dno, String dcontent);
+
 	public void deleteAnswer(int dno);
-	   
+
 	public InquiryAnswerVO getAnswerByDno(int dno);
-	
+
 	void updateInquiryStatus(int bno);
-	
+
 	public InquiryVO getInquiryByBno(int bno);
-	
+
 	public void updateViewCount(int bno);
 
 	void deleteBoards(List<Integer> ids);
 
 	List<InquiryVO> searchBoards(String startDate, String endDate, String istatus);
-	
 
+	public List<InquiryVO> findInquiriesByMember(String memberId, int offset, int size);
+
+	public int countInquiriesByMember(String memberId);
+	
+	List<Map<String, Object>> getMonthlyIstatusCounts();
+	
+	
 }

@@ -1,6 +1,7 @@
 package com.Unicon.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Unicon.domain.InquiryAnswerVO;
 import com.Unicon.domain.InquiryVO;
@@ -61,7 +63,16 @@ public class InquiryController {
 	}
 
 	@GetMapping("/history")
-	public String history() {
+	public String history(HttpSession session, Model model) {
+		
+   String memberId = (String) session.getAttribute("member_id");  // 로그인 세션에서 member_id 가져오기
+    
+    // 세션에 member_id가 없으면 로그인 페이지로 리디렉션
+    if (memberId == null) {
+        model.addAttribute("message", "로그인이 필요합니다.");  // 로그인 메시지 전달
+        return "redirect:/login/customLogin";  // 로그인 페이지로 리디렉션
+    }
+		
 		logger.debug("history 메인 페이지 실행");
 		return "inquiry/history";
 	}
@@ -73,9 +84,19 @@ public class InquiryController {
 	}
 
 	@GetMapping("/write")
-	public String write() {
-		logger.debug("write 메인 페이지 실행");
-		return "inquiry/write";
+	public String write(HttpSession session, RedirectAttributes redirectAttributes) {
+	    logger.debug("write 메인 페이지 실행");
+
+	    // 세션에서 member_id 확인
+	    String memberId = (String) session.getAttribute("member_id");
+	    if (memberId == null) {
+	        logger.debug("member_id 없음, 로그인 페이지로 리다이렉트");
+	        redirectAttributes.addFlashAttribute("message", "로그인이 필요합니다.");
+	        return "redirect:/login/customLogin"; // 로그인 페이지로 리다이렉트
+	    }
+
+	    logger.debug("member_id 확인됨: " + memberId);
+	    return "inquiry/write"; // 문의 작성 페이지로 이동
 	}
 
 	@GetMapping("/etc")
@@ -117,7 +138,7 @@ public class InquiryController {
 // ---------------------------- 관리자 페이지 -------------------------------
 
 	@GetMapping("/manage")
-	public String InquiryManage() {
+	public String inquiryManage() {
 		logger.debug("inquiry 관리자 페이지 실행");
 		return "inquiry/manage/main";
 	}
@@ -175,5 +196,16 @@ public class InquiryController {
 		}
 		return phoneNumber; // 번호 길이가 너무 짧을 경우 그대로 반환
 	}
+	// http://localhost:8088/inquiry/graph
+	// 관리자 문의 카테고리별 그래프 
+	@GetMapping("/graph")
+	public String inquiryManageGraph() {
+		logger.debug("inquiry 관리자 페이지 실행");
+		return "inquiry/manage/graph";
+	}
+	
+	
+
+	
 
 } // InquiryController

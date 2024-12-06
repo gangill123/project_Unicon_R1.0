@@ -236,6 +236,8 @@ section:last-of-type p {
                                 </div>
                                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion" style="">
                                     <div class="card-body">
+                                       
+                                       <section>
                                        <h2>상품 취소/반품 환불 소요 기간 안내</h2>
 									    <p>네이버페이 결제 상품을 취소 혹은 반품하신 경우, 결제수단에 따른 환불 방법 및 소요 기간은 아래와 같습니다.</p>
 									
@@ -298,6 +300,7 @@ section:last-of-type p {
 									        ※ 신용카드, 체크카드 환불 소요일 이후에도 환불되지 않을 경우, 카드사로 문의 부탁드립니다.<br>
 									        ※ 영업일이란 주말/공휴일을 제외한 날을 뜻합니다.
 									    </p>
+									    </section>
        								</div>
                                 </div>
                             </div>
@@ -311,6 +314,7 @@ section:last-of-type p {
                                 </div>
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion" style="">
                                     <div class="card-body">
+                                         <section>
                                          <h2>유니콘 주문/결제 안내</h2>
 
 									    <!-- 주문 가능 페이지 안내 -->
@@ -342,8 +346,8 @@ section:last-of-type p {
 									                <li>계좌 간편결제</li>
 									                <li>무통장입금</li>
 									                <li>실시간계좌이체</li>
-									                <li>네이버페이 포인트</li>
-									                <li>네이버페이 머니</li>
+									                <li>포인트</li>
+									                <li>머니</li>
 									            </ul>
 									            <small>현금영수증 신청정보도 입력해주세요. 단, 포인트 사용에 대한 현금영수증 발행은 현금영수증 대상 포인트만 해당합니다.</small>
 									        </li>
@@ -357,6 +361,7 @@ section:last-of-type p {
 									            <small>'주문완료' 페이지에서는 결제정보 및 그 외 입력한 정보들을 확인할 수 있습니다.</small>
 									        </li>
 									    </ol>
+									    </section>
                                     </div>
                                 </div>
                             </div>
