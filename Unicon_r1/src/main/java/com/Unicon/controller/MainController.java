@@ -35,7 +35,7 @@ public class MainController {
 		logger.debug("main() 호출");
 		
 		// 임시 아이디 세션저장
-		session.setAttribute("member_id", "bini97");
+		session.setAttribute("member_id", "junghun87");
 		
 		// 슬라이드 정보 가져오기
 		List<MainSlideVO> slideInfo = msService.getSlideForMain();

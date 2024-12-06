@@ -876,6 +876,64 @@
 		$modalBody.append(modalContext);
 	}
 	
+	//// 주문 상세페이지 로직 처리 ////
 	
+	// 옵션1 선택시 옵션2번 불러오기
+	function getOption(product_id){
+		//alert(product_id);
+		
+		$.ajax({
+			url: '/shop/getOption/'+product_id,
+			type: 'GET',
+			success: function(response){
+				//console.log(data);
+				
+				$('#itemOption2').empty();
+				let option = `<option value="${response[0].option_name2}" disabled selected>${response[0].option_name2}</option>`;
+				
+				response.forEach(function(item){
+					option += `
+						<option value="${item.option_value2}">${item.option_value2}</option>
+					`
+				});
+				
+				$('#itemOption2').append(option);
+			},
+			error: function(){
+				console.log("not");
+			}
+		});
+	}
+	
+	function appendselectItems(option_name, option_value, option_name2, option_value2){
+		
+		let selectItemValue = 
+		`<div class="row g-0 align-items-center bg-light rounded p-3 mb-3">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <label>${option_name}: ${option_value} / ${option_name2}: ${option_value2}</label>
+                        <button type="button" class="btn-close" aria-label="Close"></button>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="itemCntBox">
+                            	<span class="itemCntSpan">-</span>
+                            	<span>1</span>
+                            	<span class="itemCntSpan">+</span>
+                            </div>
+                        </div>
+                        <div class="col-10" style="text-align: end;">
+                            <p class="mb-0 display-32 font-weight-500" style="color: #aaa;">30% 할인 적용</p>
+                            <p class="mb-0"><span class="display-30 me-2" style="text-decoration: line-through; color: #aaa;">50,000원</span>
+                            <span class="display-27 font-weight-600">35,000원</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		`
+		
+		$('#selectItems').append(selectItemValue);
+		
+	}
 	
 	

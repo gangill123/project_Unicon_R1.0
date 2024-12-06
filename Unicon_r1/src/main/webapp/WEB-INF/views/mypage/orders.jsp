@@ -193,9 +193,9 @@
 	                              	</div>
 	                              </div>
 	                              <div class="col-sm-10">
-	                                  <p class="mb-1">주문일 : 2024.12.05.(월)</p>
-	                                  <h6 class="mb-0 font-weight-500">부드러운 슬림 카스테라 워싱 항균 옥수수솜 간절기/여름 이불세트</h6>
-	                                  <p class="mb-0">색상: 오션블루 / 구성 및 사이즈: 슈퍼싱글 이불베개세트(SS이불+베개커버1P)</p>
+	                                  <p class="mb-0">주문일 : 2024.12.05.(월)</p>
+	                                  <p class="mb-0 font-weight-600">부드러운 슬림 카스테라 워싱 항균 옥수수솜 간절기/여름 이불세트</p>
+	                                  <p class="mb-0" style="color: #aaa;">색상: 오션블루 / 구성 및 사이즈: 슈퍼싱글 이불베개세트(SS이불+베개커버1P)</p>
 	                                  <div style="display:flex; justify-content: space-between; align-items: end;">
 	                                  	<div>
 		                                  <h5 class="mb-2">40,000원</h5>
