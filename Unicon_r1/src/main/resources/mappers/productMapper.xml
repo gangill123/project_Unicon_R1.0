@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Unicon.mapper.productMapper">
+ 
+<resultMap type="com.Unicon.domain.ProductVO" id="ProductResultMap">
+	<id property="product_id" column="product_id" />
+	<result property="product_seller_id" column="product_seller_id" />
+	<result property="product_category_type" column="product_category_type" />
+	<result property="product_category_value" column="product_category_value" />
+	<result property="product_keyword" column="product_keyword" />
+	<result property="product_name" column="product_name" />
+	<result property="product_price" column="product_price" />
+	<result property="start_date" column="start_date" />
+	<result property="end_date" column="end_date" />
+	<result property="discount_rate" column="discount_rate" />
+	<result property="product_stock" column="product_stock" />
+	<result property="product_content" column="product_content" />
+	<result property="brand" column="brand" />
+	<result property="manufacturer" column="manufacturer" />
+	<result property="product_origin" column="product_origin" />
+	<result property="product_expiry" column="product_expiry" />
+	<result property="product_status" column="product_status" />
+	<result property="delivery_method" column="delivery_method" />
+	<result property="delivery_company" column="delivery_company" />
+	<result property="delivery_price" column="delivery_price" />
+	<result property="address" column="address" />
+	<result property="create_date" column="create_date" />
+	<result property="update_date" column="update_date" />
+	<result property="approval_date" column="approval_date" />
+	
+	<result property="approval_id" column="approval_id" />
+	<result property="comments" column="comments" />
+	<result property="option_type" column="option_type" />
+	
+	<association property="categoryDataVO" resultMap="CategoryResultMap"/>
+	
+	<collection property="option_id" ofType="com.Unicon.domain.OptionVO" />
+	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" />
+</resultMap>
+
+
+<!-- useGeneratedKeys="true"는 
+ MyBatis에서 데이터베이스에 INSERT 문을 실행할 때, 
+ 자동 생성된 키(주로 기본 키)를 가져오도록 설정하는 속성입니다. 
+ 이 속성을 사용하면, 
+ 데이터베이스에서 새로운 레코드가 삽입될 때 자동으로 생성되는 키 값을 Java 객체에 쉽게 매핑할 수 있습니다. -->
+<insert id="insertProduct" parameterType="com.Unicon.domain.ProductVO">
+    INSERT INTO _products (
+        product_id,
+        product_seller_id,
+        product_category_type,
+        product_category_value,
+        product_keyword,
+        product_name,
+        product_price,
+        start_date,
+        end_date,
+        discount_rate,
+        product_stock,
+        product_content,
+        brand,
+        manufacturer,
+        product_origin,
+        product_expiry,
+        product_status,
+        delivery_method,
+        delivery_price,
+        address,
+        create_date,
+        update_date,
+        approval_date,
+        approval_id,
+        option_type
+    ) 
+    VALUES (
+        (SELECT CONCAT('prod-', YEAR(CURRENT_DATE), '-', LPAD(IFNULL(MAX(SUBSTRING(product_id, -4)), 0) + 1, 4, '0'))
+         FROM (SELECT product_id FROM _products WHERE product_id LIKE CONCAT('prod-', YEAR(CURRENT_DATE), '%')) AS temp),
+        'junghun87',
+        #{product_category_type},
+        #{product_category_value},
+        #{product_keyword},
+        #{product_name},
+        #{product_price},
+        #{start_date},
+        #{end_date},
+        #{discount_rate},
+        #{product_stock},
+        null,
+        #{brand},
+        #{manufacturer},
+        #{product_origin},
+        #{product_expiry},
+        '등록',
+        #{delivery_method},
+        #{delivery_price},
+        (SELECT address FROM member WHERE member_id = 'junghun87'),  -- 서브쿼리 추가 -> 이거 나중에는 'junghun87'이걸 member_id로 변경해야됨
+        NOW(),
+        NOW(),
+        null,
+        null,
+        #{option_type}
+    )
+</insert>
+
+<select id="selectLastInsertedProductId" resultType="string">
+    SELECT product_id 
+    FROM _products 
+    WHERE product_seller_id = 'junghun87'
+    ORDER BY create_date DESC 
+    LIMIT 1
+</select>
+
+
+
+</mapper>

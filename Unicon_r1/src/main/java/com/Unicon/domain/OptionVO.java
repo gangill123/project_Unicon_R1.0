@@ -15,7 +15,7 @@ public class OptionVO {
 	private String product_id;
 	private String option_name;
 	private String option_value;
-	private String option_price;
+	private int option_price;
 	private int option_stock;
 	private String option_name2;
 	private String option_value2;
