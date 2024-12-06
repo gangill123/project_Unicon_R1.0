@@ -132,7 +132,7 @@
 				                    
 				                    <div class="dropdown-divider"></div>
 				                    <div style="margin-top: 20px;">
-				                    	<div style="display: flex;margin-bottom: 12px">
+				                    	<div style="display: flex;margin-bottom: 12px; align-items: center;">
 											<h4 class="card-title" style="margin-bottom: 0">상품 키워드 </h4>
 											<i class="icon-must" aria-label="필수항목"></i>
 				                    	</div>
@@ -547,7 +547,6 @@
 											<div class="mb-3" style="display: flex; justify-content: center;">
 						                        <textarea id="noContent" name="noContent"></textarea>
 						                    </div>
-					                    	<button id="testbutton">테스트</button>
 				                    	</form>
 				                    </div>
 				                  </div>
@@ -581,7 +580,7 @@
 				                    <div class="closeBox-detail">
 				                    	
 					                    <div class="display-f">
-										    <label>브랜드</label>
+										    <label>브랜드<i class="icon-must" aria-label="필수항목" style="margin-right: 3px" ></i></label>
 										    <div>
 									        	<div class="store-input-container">
 						                    		<input class="input-brand" type="text" id="brand"  name="brand" >
@@ -590,7 +589,7 @@
 			                    		</div>
 					                    <div class="dropdown-divider"></div>
 					                    <div class="display-f">
-										    <label>제조사</label>
+										    <label>제조사<i class="icon-must" aria-label="필수항목" style="margin-right: 3px" ></i></label>
 										    <div>
 									        	<div class="store-input-container">
 						                    		<input class="manufacturer" type="text" id="manufacturer"  name="manufacturer" >
@@ -599,7 +598,7 @@
 			                    		</div>
 					                    <div class="dropdown-divider"></div>
 					                    <div class="display-f">
-										    <label>원산지</label>
+										    <label>원산지<i class="icon-must" aria-label="필수항목" style="margin-right: 3px" ></i></label>
 										    <div>
 									        	<div class="store-input-container">
 						                    		<input class="product_origin" type="text" id="product_origin"  name="product_origin" >
@@ -608,7 +607,7 @@
 			                    		</div>
 					                    <div class="dropdown-divider"></div>
 					                    <div class="display-f">
-										    <label>유효일자,유통기한</label>
+										    <label>유효일자,유통기한<i class="icon-must" aria-label="필수항목" style="margin-right: 3px" ></i></label>
 										    <div>
 									        	<div class="store-input-container">
 						                    		<input class="product_expiry" type="text" id="product_expiry"  name="product_expiry" placeholder="예시 : 2025-06-10 이거나 그 이후인 상품" >
@@ -727,38 +726,6 @@
     <script type="text/javascript">
     
     $(document).ready(function() {
-    	
-    	$('#testbutton').on('click', function(e) {
-            e.preventDefault(); // 기본 폼 제출 방지
-
-            var formData = new FormData($('#myForm')[0]); // 폼 데이터 가져오기
-            var editorContent = $('#noContent').summernote('code'); // Summernote 에디터 내용 가져오기
-            formData.append("editorContent", editorContent); // 에디터 내용 추가
-			/* <p>
-            	<img style="width: 878px;" src="/uploads/images/image_bc21ebf0-802f-4a08-a505-d1cc2f15ca92.png">
-				<img style="width: 878px;" src="/uploads/images/image_f1834b60-9e65-4ad5-9913-4e5352d20dcf.png">
-				<br>
-			   </p> 
-			*/
-            console.log('에디터 내용:', editorContent);
-            console.log(formData);
-            /* $.ajax({
-                url: '/store/api/submit', // 폼 제출을 위한 URL
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    console.log('폼 제출 성공:', response);
-                    alert('폼이 성공적으로 제출되었습니다.');
-                },
-                error: function(xhr, status, error) {
-                    console.error('폼 제출 실패:', error);
-                    alert('폼 제출에 실패했습니다.');
-                }
-            }); */
-        });
-    	
     	
         $('#noContent').summernote({
         	height: 300,

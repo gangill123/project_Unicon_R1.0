@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,8 +26,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.ProductVO;
 import com.Unicon.service.CategoryDataService;
+import com.Unicon.service.ProductService;
 
 
 
@@ -39,6 +42,9 @@ public class StoreRestController {
 	
 	@Inject 
 	private CategoryDataService cService;
+	
+	@Inject
+	private ProductService pService;
 	
 	
 	@RequestMapping(value = "/category/{value}", method = RequestMethod.GET)
@@ -58,25 +64,47 @@ public class StoreRestController {
 	@RequestMapping(value = "/products/create", method = RequestMethod.POST)
 	public ResponseEntity<String> createProduct(ProductVO vo, HttpServletRequest req) {
 		logger.info("vo :  "+ vo);
+		logger.info("option1 :  "+ vo.getOption1());
 		logger.info(" req : "+  req.toString());
 		
 		try {
 			
 			
 			  List<ImageVO> images = saveImage(vo, req); 
-			  if (images == null || images.isEmpty()) { 
-				  return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물 이미지를 저장하는 데 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR); 
+			  logger.info("images :  "+ images);
+			  if (images == null || images.isEmpty()) {
+				  return new ResponseEntity<String>("( •̀ ω •́ )✧  이미지가 없음.", HttpStatus.INTERNAL_SERVER_ERROR); 
 			  } // 이거 변환하는거는 건들지 않아도 됨.
 			  
-			  //avo.setAnimal_images(images);
+			  vo.setProduct_images(images);
 			
-			  // aService.animalInsert(avo);
+			  pService.productInsert(vo);
 			 return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
 			
 		} catch (Exception e) {
+			logger.info("오류 발생 ");
+			e.printStackTrace();
 			return new ResponseEntity<String>("( •̀ ω •́ )✧ 오류가 발생했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@RequestMapping(value = "/products/create/content", method = RequestMethod.POST)
+	public ResponseEntity<String> productContent(ProductVO vo, HttpServletRequest req) {
+		
+		try {
+			
+			
+			 return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
+		} catch (Exception e) {
+			logger.info("오류 발생 ");
+			e.printStackTrace();
+			return new ResponseEntity<String>("( •̀ ω •́ )✧ 오류가 발생했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	
+	
 	
 	/*=============== 이미지 저장 및 리스트 생성 ===============*/
 	public List<ImageVO> saveImage(ProductVO avo, HttpServletRequest req) {
@@ -88,11 +116,12 @@ public class StoreRestController {
 		for (int i = 0; i < uploadImages.size(); i++) {
 			StringBuilder asb = new StringBuilder();
 			MultipartFile aImage = uploadImages.get(i);
-			
+			 
 			if(aImage == null || aImage.isEmpty()) {
 				logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 인덱스 : "+i);
 				continue;
 			}
+			logger.info("( •̀ ω •́ )✧  파일이름 화긴 : "+ uploadImages.get(i).getOriginalFilename());
 			
 			File destinationImage 
 				= new File(asb.append(saveDir)
@@ -106,21 +135,22 @@ public class StoreRestController {
 
 			if (index != -1) {
 				String modifiedPath = destinationImage.getPath().substring(index);
-				logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다."+ modifiedPath);
+				logger.info("( •̀ ω •́ )✧ modifiedPath : "+ modifiedPath);
 				ImageVO ivo = new ImageVO();
 				//ivo.setImage_id(avo.getAnimal_id());
 				ivo.setImage_sequence(i);
 				ivo.setImage_src(modifiedPath);
-				ivo.setImage_type("apdt");
-				animalImages.add(i, ivo);
+				ivo.setImage_type("prod");
+				logger.info("( •̀ ω •́ )✧ ivo : "+ivo);
+				animalImages.add(ivo);
 			} else {
 				logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
-				
 			}
 			
 			try {
 				aImage.transferTo(destinationImage);
 			} catch (IOException e) {
+				logger.info("( •̀ ω •́ )✧ 파일저장에 실패");
 				e.printStackTrace(); 
 			} 
 		}

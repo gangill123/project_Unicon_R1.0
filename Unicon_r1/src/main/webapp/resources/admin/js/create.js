@@ -1,6 +1,10 @@
 	let selectedCategory = null; // 이전에 선택된 카테고리를 추적하는 변수
     let selectedCategoryDetail = null; // 이전에 선택된 카테고리를 추적하는 변수
     let data = {};
+    /*let optionContainer = new Map;
+    optionContainer.set("key", "value");
+    console.log(optionContainer);*/
+    
     
     function category(value,type) {
     	// display 속성을 block으로 변경하여 보이게 함
@@ -244,6 +248,32 @@
             data.product_stock = value;
         });
         
+        function toggleButtons4(isSettingOn) {
+            if (isSettingOn) {
+                $('#btn-delivery-on').addClass('setting-active').removeClass('setting-inactive');
+                $('#btn-delivery-off').removeClass('setting-active').addClass('setting-inactive');
+            } else {
+                $('#btn-delivery-off').addClass('setting-active').removeClass('setting-inactive');
+                $('#btn-delivery-on').removeClass('setting-active').addClass('setting-inactive');
+            }
+        }
+        $('#btn-delivery-on').on('click', function() {
+        	toggleButtons4(true); // 설정함 버튼 클릭
+        	$('.select-delivery-company').prop('disabled', false); // 선택된 요소를 활성화
+        	$('#delivery_price').prop('disabled', false); // 선택된 요소를 활성화
+        	
+        	
+        });
+        
+        $('#btn-delivery-off').on('click', function() {
+        	toggleButtons4(false); // 설정안함 버튼 클릭
+        	$('.select-delivery-company').prop('disabled', true); // 선택된 요소를 비활성화
+        	$('#delivery_price').prop('disabled', true); // 선택된 요소를 비활성화
+        	delete data.delivery_company;
+        	delete data.delivery_price;
+        });
+        
+        // 할인 버튼 제어
         
         function toggleButtons(isSettingOn) {
             if (isSettingOn) {
@@ -392,7 +422,7 @@
              
              data.start_date = startDate+" 00:00:00";
              data.end_date = endDate+" 00:00:00";
-            
+            console.log(data);
             
         }
 
@@ -894,82 +924,7 @@
         // 클릭해서 input 아무값도 입력 하지 않으면 0으로 되게 해보자.       
         
         
-        function optionCheck() {
-        	data.option = {type : '', list : []};
-        	/*data = { option: { type: '', list: [] } }; // 데이터 구조 초기화*/
-        	if ($('#single').is(':checked')) {
-            	// 각 .option-list 요소를 반복
-                $(".option-list").each(function() {
-                    // 현재 .option-list 요소에서 옵션명 가져오기
-                    var optionName = $(this).find('.option-item-name').text().trim(); // 옵션명
-                    var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
-
-                 // 객체 생성 후 data 객체에 추가
-                    data.option.list.push({
-                        option_name: optionName,
-                        option_value: optionValue
-                    });
-                });
-                data.option.type = '단독형';
-                
-                
-            } else {
-            	var optionName1 = $('.option-list-header').find('.option-item-name1').text().trim(); // 첫 번째 옵션명
-            	console.log(optionName1);
-            	
-            	// 객체 생성 후 data 객체에 추가
-                data.option.type = '조합형'; // 조합형으로 설정
-            	
-            	if (!optionName1) {
-            		// 조합형 + 길이 1
-                	
-            		var optionName = $('.option-list-header').find('.option-item-name').text().trim(); // 첫 번째 옵션명
-            		
-            		
-                    
-                    
-                	$(".option-list").each(function() {
-                        // 현재 .option-list 요소에서 옵션명 가져오기
-                        var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
-                        var optionPrice = $(this).find('.option-item-price').text().trim(); // 옵션값
-                        var optionStock = $(this).find('.option-item-stock').text().trim(); // 옵션값
-
-                        // 객체 생성 후 배열에 추가
-                        data.option.list.push({
-                            option_name: optionName,
-                            option_value: optionValue,
-                            option_price: optionPrice,
-                            option_stock: optionStock
-                        });
-                    });
-                }else {
-                	// 조합형 + 길이 2
-                	var optionName1 = $('.option-list-header').find('.option-item-name1').text().trim(); // 옵션명
-                	var optionName2 = $('.option-list-header').find('.option-item-name2').text().trim(); // 옵션명
-                	
-                	$(".option-list").each(function() {
-                        // 현재 .option-list 요소에서 옵션명 가져오기
-                        var optionValue1 = $(this).find('.option-item-value1').text().trim(); // 옵션값
-                        var optionValue2 = $(this).find('.option-item-value2').text().trim(); // 옵션값
-                        var optionPrice = $(this).find('.option-item-price').text().trim(); // 옵션값
-                        var optionStock = $(this).find('.option-item-stock').text().trim(); // 옵션값
-
-                        // 객체 생성 후 배열에 추가
-                        data.option.list.push({
-                            option_name1: optionName1,
-                            option_value1: optionValue1,
-                            option_name2: optionName2,
-                            option_value2: optionValue2,
-                            option_price: optionPrice,
-                            option_stock: optionStock
-                        });
-                    });
-                }
-            }
-        	
-            // 결과 출력
-            console.log("옵션 리스트:", data.option.list);
-        }
+        
      
         /*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
 		$('.image-input').on('change', function(e) {
@@ -1127,42 +1082,18 @@
             
             // 판매기간 설정 안했을때 날짜 받아오기.
             if ($('#set-off').hasClass('setting-active')) {
-            	data.end_date = '2099-12-31 00:00:00';
+            	data.end_date = '2025-12-30 00:00:00';
+            	alert("실행");
+            	alert(data.end_date);
             }
             
-            
-            // 할인율 설정하고 입력을 안했을때.
-            if($('#discount-set-on').hasClass('setting-active')) {
-            	let discount = $('#discount').val();
-            	// 할인율
-            	if(discount == '') {
-            		alert("할인율을 입력하세요.");
-            		return;
-            	}
-            }
             if($('#discount-set-off').hasClass('setting-active')) {
             	data.discount_rate = 0;
             }
             if($('#option-set-off').hasClass('setting-active')) {
-            	data.option = {};
-            	data.option.type = '설정안함';
+            	data.option_type = '설정안함';
             }
-            if($('#option-set-on').hasClass('setting-active')) {
-            	optionCheck();
-	    		// 옵션 재고 확인
-            	if(data.option.list.length === 0) {
-            		 alert('옵션 리스트가 비어 있습니다.');
-            		 return;
-            	}
-            	if(data.option.type == '조합형') {
-            		for (let i = 0; i < data.option.list.length; i++) {
-            			if (data.option.list[i].option_stock <= 0) { // 재고가 0 이하일 경우
-            				alert("입력되지 않은 재고가 있는 옵션이 있습니다.");
-            			}
-            		}
-            		delete data.stock;
-            	}
-            }
+            
             
             
             // 입력 필드에서 값 가져오기 및 배송 가격 설정
@@ -1174,7 +1105,7 @@
             // 배송 정보 설정
             data.delivery_method = $('#btn-delivery-on').hasClass('setting-active') ? '배송' : '배송안함';
             
-            /*const keyword1 = $('input[name="product_keyword1"]').val().trim();
+            const keyword1 = $('input[name="product_keyword1"]').val().trim();
             const keyword2 = $('input[name="product_keyword2"]').val().trim();
             const keyword3 = $('input[name="product_keyword3"]').val().trim();
 
@@ -1189,25 +1120,36 @@
             // 키워드를 쉼표로 연결
             const product_keyword = filteredKeywords.join(',');
 
-            data.product_keyword = product_keyword;*/
-            
+            data.product_keyword = product_keyword;
             
             // FormData 객체 생성
             var formData = new FormData();
-
-            // data 객체의 각 속성을 FormData에 추가
-            for (let key in data) {
-                if (key === 'option') {
-                    // 옵션 리스트가 있을 경우
-                    data.option.list.forEach((option, index) => {
-                        for (let optionKey in option) {
-                            formData.append(`option[${index}][${optionKey}]`, option[optionKey]);
-                        }
-                    });
-                } else {
-                    formData.append(key, data[key]);
-                }
+            
+            if($('#option-set-on').hasClass('setting-active')) {
+            	var optionName = $(".option-list").find('.option-item-name').text().trim(); // 옵션명
+            	if(optionName == null) {
+            		alert("옵션이 비어 있습니다.");
+            		return;
+            	}
+            	
+            	
+            	
             }
+         // data 객체의 각 속성을 FormData에 추가
+        	for (let key in data) {
+        	    if (key === 'option') {
+        	        data.option.forEach((option, index) => {
+        	            for (let optionKey in option) {
+        	                formData.append("option", data.option[0].option_name);
+        	            }
+        	        });
+        	    	
+        	    	
+        	    } else {
+        	        formData.append(key, data[key]);
+        	    }
+        	}
+
             
             // 이미지 파일 추가 (jQuery 사용)
             $('input[type="file"]').each(function(index) {
@@ -1215,43 +1157,227 @@
                     formData.append(`upload_images[${index}]`, this.files[0]); // FormData에 파일 추가
                 }
             });
-
+            
             // FormData 사용 예시 (AJAX 요청 등)
-            console.log(...formData); // FormData의 내용을 확인하고 싶다면 콘솔에 출력
             
             
             console.log(data);
             
-        	// AJAX 요청
-            $.ajax({
-                url: '/store/products/create', // 요청을 보낼 URL
-                type: 'POST', // 요청 방식
-                data: formData, // FormData 객체
-                processData: false, // jQuery가 데이터를 처리하지 않도록 설정
-                contentType: false, // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
-                success: function(response) {
-                    // 성공적으로 응답을 받았을 때 처리
-                    console.log('응답:', response);
-                    alert('업로드가 성공적으로 완료되었습니다.');
-                },
-                error: function(xhr, status, error) {
-                    // 오류 발생 시 처리
-                    console.error('Error:', error);
-                    alert('업로드 중 오류가 발생했습니다.');
-                }
-            });
+            let valid = isValid();
+            
+            /*data.option.forEach(option => {
+	    		formData.append('option1',option); // JSON 문자열로 전송
+	    	});
+            */
+            
+            console.log(...formData); // FormData의 내용을 확인하고 싶다면 콘솔에 출력
+            if(valid) {
+            	// AJAX 요청
+            	$.ajax({
+            		url: '/store/products/create', // 요청을 보낼 URL
+            		type: 'POST', // 요청 방식
+            		data: formData, // FormData 객체
+            		processData: false, // jQuery가 데이터를 처리하지 않도록 설정
+            		contentType: false, // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
+            		success: function(response) {
+            			// 성공적으로 응답을 받았을 때 처리
+            			console.log('응답:', response);
+            			alert('업로드가 성공적으로 완료되었습니다.');
+            			
+            			
+            		},
+            		error: function(xhr, status, error) {
+            			// 오류 발생 시 처리
+            			console.error('Error:', error);
+            			alert('업로드 중 오류가 발생했습니다.');
+            		}
+            	});
+            } else {
+            	alert('유효성 검사를 통과하지 못했습니다.');
+            }
         });
 		
-        // 재고수량 받아오기.
-        let stock = $('.input-stock').val();
-        // 재고수량 받아오기.
+        // 옵션내용 
         
         
         
-		
-		
-		
-		
-	    
+        
+        // 본문내용
+        function contentUpload() {
+        	// FormData 객체 생성
+            var formData = new FormData();
+        	
+        	var editorContent = $('#noContent').summernote('code'); // Summernote 에디터 내용 가져오기
+            formData.append("product_content", editorContent); // 에디터 내용 추가
+            
+            $.ajax({
+        		url: '/store/products/create/content', // 요청을 보낼 URL
+        		type: 'POST', // 요청 방식
+        		data: formData, // FormData 객체
+        		processData: false, // jQuery가 데이터를 처리하지 않도록 설정
+        		contentType: false, // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
+        		success: function(response) {
+        			// 성공적으로 응답을 받았을 때 처리
+        			console.log('응답:', response);
+        			alert('업로드가 성공적으로 완료되었습니다.');
+        		},
+        		error: function(xhr, status, error) {
+        			// 오류 발생 시 처리
+        			console.error('Error:', error);
+        			alert('업로드 중 오류가 발생했습니다.');
+        		}
+        	});
+            
+        }
+        
+        function isValid() {
+        	let valid = false;
+            if (!data.product_category_type) {
+                alert("상품 카테고리 타입이 비어 있습니다.");
+                return;
+            }
+            if (!data.product_name) {
+            	alert("상품명이 비어 있습니다.");
+            	return;
+            }
+            
+            if (!data.product_keyword){
+            	alert("키워드가 비어 있습니다.");
+            	return;
+            }
+            
+            if(!data.product_price ){
+            	alert("판매가가 비어있습니다.");
+            	return;
+            }
+            if(data.product_price == 0) {
+            	alert("판매가가 0원입니다.");
+            	return;
+            	
+            }
+            
+            // 할인율 설정하고 입력을 안했을때.
+            if($('#discount-set-on').hasClass('setting-active')) {
+            	let discount = $('#discount').val();
+            	// 할인율
+            	if(discount == '') {
+            		alert("할인율을 입력하세요.");
+            		return;
+            	}
+            }
+            
+            // 옵션을 선택했을때. 유효성 검사.
+            if($('#option-set-on').hasClass('setting-active')) {
+            	var optionName = $(".option-list").find('.option-item-name').text().trim(); // 옵션명
+            	if(optionName == null || optionName === undefined) {
+            		alert("옵션이 비어 있습니다.");
+            		return;
+            	} 
+            	optionDataPush();
+            }
+            
+            if($('#btn-delivery-on').hasClass('setting-active')) {
+            	if(!data.delivery_company) {
+            		alert("택배사를 선택해 주세요.");
+            		return;
+            	}
+            	if(!data.delivery_price) {
+            		alert("택배비를 입력해 주세요.");
+            		return;
+            	}
+            }
+            
+            
+            valid = true;
+            
+            return valid;
+        }
+        
+        function optionDataPush() {
+        	data.option = [];
+        	/*data = { option: { type: '', list: [] } }; // 데이터 구조 초기화*/
+        	if ($('#single').is(':checked')) {
+            	// 각 .option-list 요소를 반복
+                $(".option-list").each(function() {
+                    // 현재 .option-list 요소에서 옵션명 가져오기
+                    var optionName = $(this).find('.option-item-name').text().trim(); // 옵션명
+                    var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
+
+                 // 객체 생성 후 data 객체에 추가
+                    data.option.push({
+                        option_name: optionName,
+                        option_value: optionValue,
+                        option_stock : data.product_stock
+                    });
+                });
+                data.option_type = '단독형';
+                
+            } else {
+            	var optionName1 = $('.option-list-header').find('.option-item-name1').text().trim(); // 첫 번째 옵션명
+            	console.log(optionName1);
+            	
+            	// 객체 생성 후 data 객체에 추가
+                data.option_type = '조합형'; // 조합형으로 설정
+                delete data.stock;
+            	
+                
+            	if (!optionName1) {
+            		// 조합형 + 길이 1
+                	
+            		var optionName = $('.option-list-header').find('.option-item-name').text().trim(); // 첫 번째 옵션명
+                	$(".option-list").each(function() {
+                        // 현재 .option-list 요소에서 옵션명 가져오기
+                        var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
+                        var optionPrice = $(this).find('.option-item-price').text().trim(); // 옵션값
+                        
+                        var optionStock = $(this).find('.option-item-stock').text().trim(); // 옵션값
+                        if(optionStock == 0) {
+                        	alert("입력되지 않은 재고수량이 있습니다.");
+                        	return false;
+                        }
+                        
+                        // 객체 생성 후 배열에 추가
+                        data.option.push({
+                            option_name: optionName,
+                            option_value: optionValue,
+                            option_price: optionPrice,
+                            option_stock: optionStock
+                        });
+                    });
+                }else {
+                	// 조합형 + 길이 2
+                	var optionName = $('.option-list-header').find('.option-item-name1').text().trim(); // 옵션명
+                	var optionName2 = $('.option-list-header').find('.option-item-name2').text().trim(); // 옵션명
+                	
+                	$(".option-list").each(function() {
+                        // 현재 .option-list 요소에서 옵션명 가져오기
+                        var optionValue = $(this).find('.option-item-value1').text().trim(); // 옵션값
+                        var optionValue2 = $(this).find('.option-item-value2').text().trim(); // 옵션값
+                        var optionPrice = $(this).find('.option-item-price').text().trim(); // 옵션값
+                        var optionStock = $(this).find('.option-item-stock').text().trim(); // 옵션값
+                        
+                        if(optionStock == 0) {
+                        	alert("입력되지 않은 재고수량이 있습니다.");
+                        	return false;
+                        }
+
+                        // 객체 생성 후 배열에 추가
+                        data.option.push({
+                            option_name: optionName,
+                            option_value: optionValue,
+                            option_name2: optionName2,
+                            option_value2: optionValue2,
+                            option_price: optionPrice,
+                            option_stock: optionStock
+                        });
+                    });
+                }
+            }
+        	
+            // 결과 출력
+            console.log("옵션 리스트:", data.option);
+            console.log("12", data.option[0].option_name);
+        }
+        
 
     });

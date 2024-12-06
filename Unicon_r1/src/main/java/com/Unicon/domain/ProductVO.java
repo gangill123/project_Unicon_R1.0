@@ -37,8 +37,14 @@ public class ProductVO {
 	private Timestamp approval_date;
 	private String approval_id;
 	private String comments;
-	private List<OptionVO> option_id; 
-	private List<ImageVO> _images;
+	private String option_type; 
+	
+	private OptionVO option1;
+	private List<OptionVO> option;
+	
+	private List<ImageVO> product_images;
+	
 	private List<MultipartFile> upload_images;
+	
 	private CategoryDataVO categoryDataVO;
 }
