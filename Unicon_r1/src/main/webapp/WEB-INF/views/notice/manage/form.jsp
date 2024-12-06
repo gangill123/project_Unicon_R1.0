@@ -46,7 +46,6 @@
        position: fixed; 
        left: 0; 
        height: 100vh; 
-       background: #f8f9fa;
        transition: all 0.3s ease;
    }
    
@@ -55,17 +54,46 @@
 	    padding: 20px;
 	    width: calc(100% - 250px);
 	    min-height: calc(100vh - 70px); /* 헤더 높이를 뺀 높이 */
+		background: #f8f9fa;
+	}
+	
+	.footer {
+	    background: #f8f9fa !important;
 	}
 
    /* 카드 스타일 */
    .card {
-       margin-bottom: 20px;
-       border-radius: 8px;
-       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+       background: #ffffff !important;
+	   border: 1px solid #dee2e6 !important;
+	   border-radius: 1rem !important;
+	   margin-bottom: 1rem !important;
+	   
    }
+   
+   .card:not(.note-editor) > .card-header {
+	    background-color: #006e60 !important;
+	    color: #ffffff !important;
+	    border-top-left-radius: 1rem !important;
+	    border-top-right-radius: 1rem !important;
+	}
+	
+	.card:not(.note-editor) > .card-header .card-title {
+	    color: #ffffff !important;
+	    margin-bottom: 0;
+	}
+   
+   .note-editor.card {
+	    border-radius: 0 !important;
+	}
+   
+   .note-editor .card-header {
+	    background-color: #f8f9fa !important;
+	    color: #000000 !important;
+	    border-radius: 0 !important;
+	}
 
    .card-body {
-       padding: 2rem;
+       padding: 2rem !important;
    }
 
    /* 폼 요소 스타일 */
@@ -113,6 +141,39 @@
 	/* 버튼 여백 조정 */
 	.btn + .btn {
 	    margin-left: 0.5rem;
+	}
+	
+	/* 저장 버튼 스타일 */
+	.btn-primary {
+	    background-color: #006e60 !important;
+	    border-color: #006e60 !important;
+	    color: white;
+	}
+	
+	/* 임시저장 및 불러오기 버튼 스타일 */
+	.btn-info, 
+	.btn-outline-info {
+	    background-color: #006e60 !important;
+	    border-color: #006e60 !important;
+	    color: white;
+	}
+	
+	/* 임시저장 불러오기 버튼(아웃라인 버전) */
+	.btn-outline-info {
+	    background-color: transparent !important;
+	    color: #006e60 !important;
+	}
+	
+	/* 호버 효과 */
+	.btn-primary:hover,
+	.btn-info:hover {
+	    background-color: #005a4e !important;
+	    border-color: #005a4e !important;
+	}
+	
+	.btn-outline-info:hover {
+	    background-color: #006e60 !important;
+	    color: white !important;
 	}
 	
 	.toggle-switch {
