@@ -529,7 +529,7 @@
 												<div class="form-group row d-flex justify-content-center">
 													<div class="col-12 col-xl-3 col-md-5 mb-3">
 														<label for="petType" class="text-dark custom-label">동물 종류</label>
-														<select class="form-control custom-text" id="petType" required>
+														<select class="form-control custom-text" id="petType" disabled>
 															<option value="">--</option>
 														</select>
 													</div>
@@ -624,7 +624,7 @@
 																<input type="hidden" id="tempSrc0"/>
 																<input type="hidden" id="changeCheck0" name="check_images[0].changeCheck"/>
 																<input type="hidden" id="moveSrc0" name="check_images[0].moveSrc"/>
-																<img id="image-preview0" class="a-preview" alt="이미지 미리보기" />
+																<img id="image-preview0" class="a-preview" alt="이미지 미리보기" src=""/>
 															</label>
 														</div>
 														<div class="row mt-2">
@@ -657,7 +657,7 @@
 																<input type="hidden" id="tempSrc1"/>
 																<input type="hidden" id="changeCheck1" name="check_images[1].changeCheck"/>
 																<input type="hidden" id="moveSrc1" name="check_images[1].moveSrc"/>
-																<img id="image-preview1" class="a-preview" alt="이미지 미리보기" />
+																<img id="image-preview1" class="a-preview" alt="이미지 미리보기" src=""/>
 															</label>
 														</div>
 														<div class="row mt-2">
@@ -680,7 +680,7 @@
 																<input type="hidden" id="tempSrc2"/>
 																<input type="hidden" id="changeCheck2" name="check_images[2].changeCheck"/>
 																<input type="hidden" id="moveSrc2" name="check_images[2].moveSrc"/>
-																<img id="image-preview2" class="a-preview" alt="이미지 미리보기" />
+																<img id="image-preview2" class="a-preview" alt="이미지 미리보기" src=""/>
 															</label>
 														</div>
 														<div class="row mt-2">
@@ -703,7 +703,7 @@
 																<input type="hidden" id="tempSrc3"/>
 																<input type="hidden" id="changeCheck3" name="check_images[3].changeCheck"/>
 																<input type="hidden" id="moveSrc3" name="check_images[3].moveSrc"/>
-																<img id="image-preview3" class="a-preview" alt="이미지 미리보기" />
+																<img id="image-preview3" class="a-preview" alt="이미지 미리보기" src=""/>
 															</label>
 														</div>
 														<div class="row mt-2">
@@ -1364,17 +1364,17 @@
 					const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
 					
 					
-					if (file) {
+					if (file) { // 파일이 있는 경우
 
-						if(!fileTypeFilter.exec(file.name)) {
+						if(!fileTypeFilter.exec(file.name)) { // 파일이 있으나 유효하지 않은 파일인 경우
 							alert('허용되지 않는 파일 형식이 포함되어 있습니다.');
 							$(this).val('');
 							return;
 						}
 
-						switch(idNumber) {
+						switch(idNumber) { // 선택한 칸의 아이디 숫자
 							case 0: { // 1번째칸
-							 	reader.readAsDataURL(file);
+							 	reader.readAsDataURL(file); // 파일을 읽어서 그 내용을 Base64 인코딩된 데이터 URL 형식으로 변환
 								reader.onload = function(e) {
 									$(previewId + idNumber).attr('src', e.target.result).show();
 									$(plusIconId + idNumber).hide();
@@ -1387,7 +1387,7 @@
 								if($(previewId + (idNumber - 1)).attr('src') == '') {
 									reader.readAsDataURL(file);
 									reader.onload = function(e) {
-										const aDataTransfer = new DataTransfer();
+										const aDataTransfer = new DataTransfer(); // 데이터 전송 객체
 										aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
 										$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
 										$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
@@ -1600,9 +1600,12 @@
 							break;
 							}
 							case 0:{ // 1번째 칸
-								if($(previewId + (idNumber + 1)).attr('src') != ''
-									&& $(previewId + (idNumber + 2)).attr('src') != ''
+								console.log('0번 이미지 input 삭제 실행');
+								console.log('previewId + idNumber : '+previewId + (idNumber)); // 0
+								if($(previewId + (idNumber + 1)).attr('src') != '' 
+									&& $(previewId + (idNumber + 2)).attr('src') != '' 
 										&& $(previewId + (idNumber + 3)).attr('src') != '') {
+											console.log('0번 이미지 input 삭제 로직 1번');
 										if($(imageInputId + (idNumber + 1)).val() != '') {
 											const aDataTransfer = new DataTransfer();
 											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
@@ -1646,8 +1649,9 @@
 										$(plusIconId + (idNumber + 3)).show();
 										$(changeCheckId + (idNumber + 3)).val(1);
 										$(tempSrcId + (idNumber + 3)).val('');
-								} else if($(previewId + (idNumber + 1)).attr('src') != ''
+								} else if($(previewId + (idNumber + 1)).attr('src') != '' 
 									&& $(previewId + (idNumber + 2)).attr('src') != '') {
+										console.log('0번 이미지 input 삭제 로직 2번');
 										if($(imageInputId + (idNumber + 1)).val() != '') {
 											const aDataTransfer = new DataTransfer();
 											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
@@ -1680,6 +1684,7 @@
 										$(moveSrcId + (idNumber + 2)).val('');
 										$(tempSrcId + (idNumber + 2)).val('');
 								} else if($(previewId + (idNumber + 1)).attr('src') != '') {
+									console.log('0번 이미지 input 삭제 로직 3번');
 									if($(imageInputId + (idNumber + 1)).val() != '') {
 											const aDataTransfer = new DataTransfer();
 											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
@@ -1699,6 +1704,7 @@
 									$(moveSrcId + (idNumber + 1)).val('');
 									$(tempSrcId + (idNumber + 1)).val('');
 								} else {
+									console.log('0번 이미지 input 삭제 로직 4번');
 									$(previewId + idNumber).attr('src', '');
 									$(previewId + idNumber).hide();
 									$(plusIconId + idNumber).show();
@@ -1737,7 +1743,7 @@
 				
 				
 				
-				/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
+				/*=============== 이미지 삭제 버튼 ===============*/
 				$('.image-delete').on('click', function(e) {
 					const targetId = e.currentTarget.id; // image-delete0, image-delete1, image-delete2, image-delete3
 					console.log('targetId : '+ targetId);
@@ -1747,8 +1753,7 @@
 					$(imageInputId + idNumber).val('');
 					$(imageInputId + idNumber).trigger('change');
 				});
-				
-				/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
+				/*=============== 이미지 삭제 버튼 ===============*/
 				
 				
 				
@@ -1810,11 +1815,13 @@
 							$('#aAge').val(data.animal_age);
 							$('#aWeight').val(data.animal_weight);
 							$('#aRegUser').val(data.member_id);
-							for(let i = 0; i < 4; i++) {
-								$('#image-preview'+ i).attr('src',data.animal_images[i].image_src).show();
-								$('#orgSrc'+ i).val(data.animal_images[i].image_src);
-								$('#tempSrc'+ i).val(data.animal_images[i].image_src);
-								$('#plusIcon'+ i).hide();
+							for(let i = 0; i < data.animal_images.length; i++) {
+								if(data.animal_images[i].image_src != '') {
+									$('#image-preview'+ i).attr('src',data.animal_images[i].image_src).show();
+									$('#orgSrc'+ i).val(data.animal_images[i].image_src);
+									$('#tempSrc'+ i).val(data.animal_images[i].image_src);
+									$('#plusIcon'+ i).hide();
+								}
 							}
 							$('input[name="animal_act"][value="'+ data.animal_act +'"]').prop('checked',true);
 							$('input[name="animal_social"][value="'+ data.animal_social +'"]').prop('checked',true);

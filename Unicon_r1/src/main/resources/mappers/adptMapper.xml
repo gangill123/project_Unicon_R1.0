@@ -174,42 +174,47 @@
 		         order by i.image_sequence asc 
 </select>
 
-<!-- 
+
 
 <update id="modifyAnimal" parameterType="com.Unicon.domain.AnimalVO">
 	update _animal set 
 	 category_code = #{category_code}, category_etc_value = #{category_etc_value}, animal_name = #{animal_name}, 
 	  animal_color = #{animal_color}, animal_gender = #{animal_gender}, animal_neuter = #{animal_neuter}, 
 	   animal_age = #{animal_age}, animal_weight = #{animal_weight}, animal_regnum = #{animal_regnum}, 
-	    animal_act = #{animal_act}, animal_social = #{animal_social}, animal_etc = #{animal_etc} 
+	    animal_act = #{animal_act}, animal_social = #{animal_social}, animal_etc = #{animal_etc}, adpt_member = #{adpt_member} 
 	     where animal_id = #{animal_id} 
 </update>
 
-<update id="modifyAnimalImages" parameterType="List">
+<insert id="modifyAnimalImages" parameterType="List">
 	insert into _image (image_id, image_type, image_sequence, image_src) 
 	 values 
-	  <foreach collection="list" item="li" separator=","> 
-	   (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
-	  </foreach> 
-</update>
+	 <foreach collection="list" item="li" separator=","> 
+	  (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
+	 </foreach> 
+	 on duplicate key update 
+	   image_src = values(image_src) 
+</insert>
 
-<update id="modifyAnimalHealths" parameterType="Map">
+<insert id="modifyAnimalHealths" parameterType="Map">
 	insert into _animal_health (animal_id, health, health_check) 
 	 values 
-	  <foreach collection="healths" item="h" separator=","> 
-	   (#{animal_id}, #{h.health}, #{h.health_check}) 
-	  </foreach> 
-</update>
+	<foreach collection="healths" item="h" separator=","> 
+	 (#{animal_id}, #{h.health}, #{h.health_check}) 
+	</foreach> 
+	on duplicate key update 
+	  health_check = values(health_check) 
+</insert>
 
 <update id="modifyAnimalVaccines" parameterType="Map">
 	insert into _animal_vaccine (animal_id, vaccine, vaccine_check) 
 	 values 
-	  <foreach collection="vaccines" item="v" separator=","> 
-	   (#{animal_id}, #{v.vaccine}, #{v.vaccine_check}) 
-	  </foreach> 
+	<foreach collection="vaccines" item="v" separator=","> 
+	 (#{animal_id}, #{v.vaccine}, #{v.vaccine_check}) 
+	</foreach> 
+	on duplicate key update 
+	  vaccine_check = values(vaccine_check) 
 </update>
 
- -->
 
 
 

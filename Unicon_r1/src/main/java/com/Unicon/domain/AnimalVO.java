@@ -44,4 +44,6 @@ public class AnimalVO {
 	private AnimalInterestVO animalInterestVO;
 	private AdptVO adptVO;
 	private CategoryDataVO categoryDataVO;
+	
+	final String AIMAGETYPE = "adpt";
 }
