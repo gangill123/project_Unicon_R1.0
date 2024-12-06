@@ -56,18 +56,18 @@
 	
 	/* 헤더와 바디 통합 스타일 */
 	.page-header {
-	    background: #f5f5f5;
-	    padding: 0.8rem 1.5rem;
-	    border-bottom: 1px solid #e0e0e0;
-	    border-radius: 8px 8px 0 0;
-	    margin: 0;
+	    background: #006e60 !important;
+        padding: 0.8rem 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+        border-radius: 8px 8px 0 0;
+        margin: 0;
 	}
 	
 	.page-title {
 	    margin: 0;
 	    font-size: 1.2rem;
 	    font-weight: 500;
-	    color: #333;
+	    color: #ffffff !important;
 	    line-height: 1.2;
 	}
 	
@@ -168,20 +168,25 @@
 	}
 	
 	.btn-primary {
-	    background: #4B49AC;
-	    border-color: #4B49AC;
+	    background: #006e60 !important;
+        border-color: #006e60 !important;
 	}
 	
 	.btn-primary:hover {
-	    background: #3f3e8e;
-	    border-color: #3f3e8e;
+	    background: #005a4e !important;
+        border-color: #005a4e !important;
 	}
 	
 	.btn-light {
-	    background: #ffffff;
-	    border: 1px solid #e0e0e0;
-	    color: #333;
+	    background: #424242 !important;
+        border-color: #424242 !important;
+        color: #ffffff !important;
 	}
+	
+	.btn-light:hover {
+        background: #383838 !important;
+        border-color: #383838 !important;
+    }
 	
 	/* SweetAlert2 커스텀 스타일 */
 	.swal2-popup .swal2-actions {
