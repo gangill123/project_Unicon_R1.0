@@ -29,6 +29,10 @@ public class ShopDAO {
 		return sqlSession.selectOne(NAMESPACE+".getProduct", product_id);
 	}
 	
+	// 옵션1 정보 가져오기
+	public List<OptionVO> getOption1(String product_id) {
+		return sqlSession.selectList(NAMESPACE+".getOption1", product_id);
+	}
 	
 	
 	// 옵션1 선택시 옵션2 세부옵션 가져오기

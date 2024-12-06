@@ -923,7 +923,7 @@
                             </div>
                         </div>
                         <div class="col-10" style="text-align: end;">
-                            <p class="mb-0 display-32 font-weight-500" style="color: #aaa;">30% 할인 적용</p>
+                            <p class="mb-0 display-32 font-weight-600" style="color: rgb(240, 86, 86);">30% 할인 적용</p>
                             <p class="mb-0"><span class="display-30 me-2" style="text-decoration: line-through; color: #aaa;">50,000원</span>
                             <span class="display-27 font-weight-600">35,000원</span></p>
                         </div>

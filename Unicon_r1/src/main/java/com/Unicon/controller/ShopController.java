@@ -41,8 +41,13 @@ public class ShopController {
 			Model model) {
 		logger.debug("product_id : {}",product_id);
 		
+		// 상품정보 + 이미지정보
 		ShopVO productInfo = sService.getProduct(product_id);
 		model.addAttribute("productInfo", productInfo);
+		
+		// 옵션정보 가져오기
+		List<OptionVO> optionInfo = sService.getOption1(product_id);
+		model.addAttribute("optionInfo", optionInfo);
 		
 		return "/shop/shop_detail";
 	}

@@ -39,7 +39,6 @@
 	<association property="memberVO" resultMap="MemberResultMap" />
 	<association property="categoryDataVO" resultMap="CategoryDataResultMap" />
 	
-	<collection property="product_options" ofType="com.Unicon.domain.OptionVO" resultMap="OptionResultMap"/>
 	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
 
 </resultMap>
@@ -58,18 +57,6 @@
 	<result property="memberName" column="member_name"/>
 </resultMap>
 
-<!-- OptionResultMap -->
-<resultMap type="com.Unicon.domain.OptionVO" id="OptionResultMap">
-	<id property="option_id" column="option_id"/>
-	<result property="product_id" column="product_id"/>
-	<result property="option_name" column="option_name"/>
-	<result property="option_value" column="option_value"/>
-	<result property="option_price" column="option_price"/>
-	<result property="option_stock" column="option_stock"/>
-	<result property="option_name2" column="option_name2"/>
-	<result property="option_value2" column="option_value2"/>
-</resultMap>
-
 <!-- "ImageResultMap" -->
 <resultMap type="com.Unicon.domain.ImageVO" id="ImageResultMap">
 	<id property="image_id" column="image_id"/>
@@ -82,22 +69,26 @@
 
 	<!-- shop 페이지 접속 시 모든 상품정보 가져오기 -->
 	<select id="getProductAll" resultMap="ShopResultMap">
-		select p.*, o.*, i.* 
+		select p.*, i.* 
 		from _products p 
-		join _option o on p.product_id = o.product_id 
 		join _image i on p.product_id = i.image_id 
 	</select>
 
 	<!-- 상세페이지 이동시 해당제품 상품정보 가져오기 -->
 	<select id="getProduct" resultMap="ShopResultMap" parameterType="String">
-		select p.*, o.*, i.*, m.member_name 
+		select p.*, i.*, m.member_name 
 		from _products p 
-		join _option o on p.product_id = o.product_id 
 		join _image i on p.product_id = i.image_id 
 		join _member m on p.product_seller_id = m.member_id 
 		where p.product_id = #{product_id} 
 	</select>
 	
+	<!-- 옵션1 정보 가져오기 -->
+	<select id="getOption1" resultType="OptionVO">
+		select distinct option_name, option_value 
+		from _option 
+		where product_id = #{product_id} 
+	</select>
 	
 	<!-- 옵션1 선택시 옵션2 가져오기 -->
 	<select id="getOption" resultType="OptionVO">

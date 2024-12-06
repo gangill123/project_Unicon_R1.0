@@ -1,26 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
 
 <style>
-.product-details:hover img {
-    opacity: 0.7; /* 투명도 설정 */
-    transition: opacity 0.3s ease; /* 부드러운 애니메이션 효과 */
-}
 
-.product-img {
+.xzoom5 {
     width: 100%;
     aspect-ratio: 1 / 1; /* 원하는 가로:세로 비율 설정 */
-    overflow: hidden;    /* 이미지가 컨테이너를 벗어나지 않도록 */
+    height: 100%;
+    border-radius: 0.5rem;
 }
 
-.product-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
-    border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
+.xzoom-gallery5{
+	aspect-ratio: 1 / 1; /* 원하는 가로:세로 비율 설정 */
+	border-radius: 0.3rem;
+}
+
+.xzoom-preview, .xzoom-source{
+	all: unset !important;
+	display: none !important;
 }
 
 .btn-close{
@@ -64,7 +66,7 @@
 <!-- PAGE TITLE
         ================================================== -->
         ${productInfo}
-        
+        ${optionInfo}
         
         <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
             <div class="container">
@@ -94,13 +96,16 @@
                     <div class="col-lg-6 text-center mb-1-9 mb-lg-0">
 
                         <!-- product left start -->
-                        <div class="xzoom-container">
-                            <img class="xzoom5 mb-1-9" id="xzoom-magnific" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" xoriginal="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" alt="...">
-                            <div class="xzoom-thumbs m-0">
-                                <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumbs/01_product.jpg" xpreview="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" alt="..." title="The description goes here"></a>
-                                <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/02_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/02_product.jpg" alt="..." title="The description goes here"></a>
-                                <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/03_product.jpg" alt="..." title="The description goes here"></a>
-                                <a href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg"><img class="xzoom-gallery5" width="80" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/04_product.jpg" alt="..." title="The description goes here"></a>
+                        <div>
+                            <img class="xzoom5 mb-1-9" src="${productInfo.product_images[0].image_src}" >
+                            <div class="m-0">
+                                <a href="${productInfo.product_images[0].image_src}"><img class="xzoom-gallery5" width="80" src="${productInfo.product_images[0].image_src}" ></a>
+                                <c:if test="${productInfo.product_images.size() > 1 }">
+	                                <c:forEach var="i" begin="1" end="${productInfo.product_images.size() - 1 }">
+	                                	<a href="${productInfo.product_images[i].image_src}"><img class="xzoom-gallery5" width="80" src="${productInfo.product_images[i].image_src}" alt="..." ></a>
+	                                </c:forEach>
+                                </c:if>
+                                
                             </div>
                         </div>
                         <!-- product left end -->
@@ -108,12 +113,12 @@
                     </div>
                     <div class="col-lg-6 ps-lg-2-3">
                         <div class="product-detail">
-                            <h3 class="mb-2">Crop Top for Girls <span class="label-sale bg-red text-white text-uppercase display-30">Sale</span></h3>
+                            <h3 class="mb-2">${productInfo.product_name} <span class="label-sale bg-red text-white text-uppercase display-30">Sale</span></h3>
                             <div class="bg-primary separator-line-horrizontal-full mb-2"></div>
                             <div style="display: flex; justify-content: space-between;">
-                            	<p class="font-weight-600" style="color: #575a7b;">판매자 : 징젱죵주식회사</p>
-                            	<p class="font-weight-600" style="color: #575a7b;">카테고리 분류 <i class="fa-solid fa-angle-right"></i>
-                            	<a class="text-primary" href="#!"> 카테고리 소분류</a></p>
+                            	<p class="font-weight-600" style="color: #575a7b;">판매자 : ${productInfo.memberVO.memberName}</p>
+                            	<p class="font-weight-600" style="color: #575a7b;">${productInfo.product_category_type} <i class="fa-solid fa-angle-right"></i>
+                            	<a class="text-primary" href="#!"> ${productInfo.product_category_value}</a></p>
                             </div>
                             <div class="mb-2">
                                 <div class="d-inline-block me-2" style="color: #86bc42;">
@@ -128,10 +133,12 @@
                                 </div>
                             </div>
                             <div class="mb-4">
-                                <p class="mb-0"><span class="display-27 font-weight-700 me-2">30%</span>
-                                <span class="display-27" style="text-decoration: line-through; color: #aaa;">50,000원</span></p>
+                                <p class="mb-0"><span class="display-27 font-weight-700 me-2">${productInfo.discount_rate}%</span>
+                                <span class="display-27" style="text-decoration: line-through; color: #aaa;">
+                                <fmt:formatNumber value="${productInfo.product_price}" type="number" />원</span></p>
                                 <p><span class="me-3 display-15 font-weight-600" style="color: rgb(240, 86, 86); line-height: 2rem;"
-                                >35,000원</span><span class="display-28 font-weight-600" style="color: rgb(240, 86, 86);">할인가</span></p>
+                                ><fmt:formatNumber value="${(productInfo.product_price*(100-productInfo.discount_rate)/100).intValue()}" 
+                                type="number" />원</span><span class="display-28 font-weight-600" style="color: rgb(240, 86, 86);">할인가</span></p>
                             </div>
                             
                             <p class="mb-1"><span class="display-27 font-weight-600">옵션선택</span></p>
@@ -142,9 +149,10 @@
                                         <div class="quform-input">
                                             <select id="itemOption1" class="form-control form-select" name="news_resion"
                                             style="padding: 6px 12px;">
-                                                <option value="옵션1" disabled selected>옵션1</option>
-											    <option value="옵션1-1">옵션1-1선택</option>
-											    <option value="옵션1-2">옵션1-2선택</option>
+                                                <option value="${optionInfo[0].option_name}" disabled selected>${optionInfo[0].option_name}</option>
+											    <c:forEach var="list" items="${optionInfo}">
+											    	<option value="${list.option_value}">${list.option_value}</option>
+											    </c:forEach>
                                             </select>
                                         </div>
                                     </div>
@@ -215,7 +223,7 @@
 		// 옵션1 선택시 옵션2 세부옵션값 가져오기
 		$('#itemOption1').on('change',function(){
 			//alert("123");
-			getOption('p001');
+			getOption('${productInfo.product_id}');
 		});
 		
 		// 옵션2 선택 시 선택블록 생성 후 옵션창 초기화
