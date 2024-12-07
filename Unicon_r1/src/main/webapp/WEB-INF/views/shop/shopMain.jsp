@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- 추가 템플릿 css/js 작성란 -->
 <style>
@@ -22,6 +23,11 @@
     object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
     border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
 }
+
+.product-grid .product-info{
+	padding: 5px;
+}
+
 
 </style>
 
@@ -218,19 +224,29 @@
                             <div class="col-xl-3 col-sm-6">
                                 <div class="product-details">
                                     <div class="product-img">
+                                    <c:if test="${list.discount_rate != 0 }">
                                         <div class="label-offer bg-red">Sale</div>
+                                    </c:if>
                                         <img src="${list.product_images[0].image_src}" alt="...">
                                         <div class="product-cart">
                                             <a href="/shop/shop_detail/${list.product_id}"><i class="fa-solid fa-magnifying-glass"></i></a>
-                                            <a href="#!"><i class="fas fa-cart-plus"></i></a>
                                             <a href="#!"><i class="fas fa-heart"></i></a>
                                         </div>
                                     </div>
                                     <div class="product-info">
-                                        <a href="#!">${list.product_name}</a>
+                                        <a href="/shop/shop_detail/${list.product_id }" style="margin-bottom: 0;">${list.product_name}</a>
                                         <p class="price text-center m-0">
-                                            <span class="red line-through me-2">${list.product_price}</span>
-                                            <span>${(list.product_price*list.discount_rate/100).intValue()}</span>
+                                        <c:choose>
+                                        	<c:when test="${list.discount_rate != 0 }">
+                                        		<span class="line-through me-2" style="font-size: 15px;">
+                                        		<fmt:formatNumber value="${list.product_price}" type="number" /></span>
+                                            	<span class="red"><fmt:formatNumber 
+                                            	value="${(list.product_price*(100-list.discount_rate)/100)}" type="number" />원</span>
+                                        	</c:when>
+                                        	<c:otherwise>
+                                            	<span><fmt:formatNumber value="${list.product_price}" type="number" />원</span>
+                                        	</c:otherwise>
+                                        </c:choose>
                                         </p>
                                     </div>
                                 </div>

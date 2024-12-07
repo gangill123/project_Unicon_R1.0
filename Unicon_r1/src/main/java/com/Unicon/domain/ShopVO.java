@@ -26,7 +26,6 @@ public class ShopVO {
 	private String product_expiry;
 	private String product_status;
 	private String delivery_method; 
-	private String delivery_company; 
 	private int delivery_price; 
 	private String address;
 	private Timestamp create_date;

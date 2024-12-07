@@ -939,7 +939,7 @@
 				let formattedTotalPrice = new Intl.NumberFormat().format(totalPrice);
 				
 				// 할인율 계산한 가격 (10원자리 버림)
-				let DiscountPrice = Math.floor((totalPrice * (100 - Number(discount_rate)) / 100) / 10) * 10;
+				let DiscountPrice = Math.floor((totalPrice * (100 - Number(discount_rate)) / 100) / 100) * 100;
 				
 				// 할인가격 천자리 쉼표
 				let formattedDiscountPrice = new Intl.NumberFormat().format(DiscountPrice);
@@ -948,7 +948,8 @@
 					`<div class="selectItem row g-0 align-items-center bg-light rounded p-3 mb-3">
 			                <div class="col-12">
 			                    <div class="mb-3">
-			                        <label class="optionVal1" data-opt="${option_value}">${option_name}: ${option_value}`
+			                        <label class="optionVal1" data-opt="${option_value}"
+			                        data-opp="${optionPrice}">${option_name}: ${option_value}`
 			                        
 					if(optionPrice != 0){
 						selectItemValue += ` ( +${optionPrice}원 )`
@@ -957,7 +958,7 @@
 					selectItemValue += `</label>
 			                        <button type="button" class="btn-close" aria-label="Close"></button>
 			                    </div>
-			                    <div class="row">
+			                    <div class="row" style="align-items: end;">
 			                        <div class="col-2">
 			                            <div class="itemCntBox">
 			                            	<span class="minusBtn itemCntSpan">-</span>
@@ -965,11 +966,22 @@
 			                            	<span class="plusBtn itemCntSpan">+</span>
 			                            </div>
 			                        </div>
-			                        <div class="col-10" style="text-align: end;">
-			                            <p class="mb-0 display-32 font-weight-600" style="color: rgb(240, 86, 86);">${discount_rate}% 할인 적용</p>
-			                            <p class="mb-0"><span class="totalPrice display-30 me-2" style="text-decoration: line-through; color: #aaa;"
-			                            data-price="${totalPrice}">${formattedTotalPrice}원</span>
-			                            <span class="discountPrice display-27 font-weight-600" data-price="${DiscountPrice}"
+			                        <div class="col-10" style="text-align: end;">`
+						
+							if(discount_rate != 0){
+								selectItemValue += `<p class="mb-0 display-32 font-weight-600" style="color: rgb(240, 86, 86);"
+								>${discount_rate}% 할인 적용</p>`
+							}
+						
+							selectItemValue +=`<p class="mb-0">`
+							
+							if(discount_rate != 0){
+								selectItemValue += `<span class="totalPrice display-30 me-2" style="text-decoration: line-through; color: #aaa;"
+		                            data-price="${totalPrice}">${formattedTotalPrice}원</span>`
+							}
+								
+								
+								selectItemValue +=`<span class="discountPrice display-27 font-weight-600" data-price="${DiscountPrice}"
 			                            >${formattedDiscountPrice}원</span></p>
 			                        </div>
 			                    </div>
@@ -1012,8 +1024,8 @@
 				// 총가격 천자리 쉼표
 				let formattedTotalPrice = new Intl.NumberFormat().format(totalPrice);
 				
-				// 할인율 계산한 가격 (10원자리 버림)
-				let DiscountPrice = Math.floor((totalPrice * (100 - Number(discount_rate)) / 100) / 10) * 10;
+				// 할인율 계산한 가격 (100원자리 버림)
+				let DiscountPrice = Math.floor((totalPrice * (100 - Number(discount_rate)) / 100) / 100) * 100;
 				
 				// 할인가격 천자리 쉼표
 				let formattedDiscountPrice = new Intl.NumberFormat().format(DiscountPrice);
@@ -1022,7 +1034,8 @@
 					`<div class="selectItem row g-0 align-items-center bg-light rounded p-3 mb-3">
 			                <div class="col-12">
 			                    <div class="mb-3">
-			                        <label class="optionVal1" data-opt="${option_value}">${option_name}: ${option_value} / </label>
+			                        <label class="optionVal1" data-opt="${option_value}"
+			                        data-opp="${optionPrice}">${option_name}: ${option_value} / </label>
 			                        <label class="optionVal2" data-opt="${option_value2}"> ${option_name2}: ${option_value2}`
 			                        
 					if(optionPrice != 0){
@@ -1032,7 +1045,7 @@
 					selectItemValue += `</label>
 			                        <button type="button" class="btn-close" aria-label="Close"></button>
 			                    </div>
-			                    <div class="row">
+			                    <div class="row" style="align-items: end;">
 			                        <div class="col-2">
 			                            <div class="itemCntBox">
 			                            	<span class="minusBtn itemCntSpan">-</span>
@@ -1040,11 +1053,21 @@
 			                            	<span class="plusBtn itemCntSpan">+</span>
 			                            </div>
 			                        </div>
-			                        <div class="col-10" style="text-align: end;">
-			                            <p class="mb-0 display-32 font-weight-600" style="color: rgb(240, 86, 86);">${discount_rate}% 할인 적용</p>
-			                            <p class="mb-0"><span class="totalPrice display-30 me-2" style="text-decoration: line-through; color: #aaa;"
-			                            data-price="${totalPrice}">${formattedTotalPrice}원</span>
-			                            <span class="discountPrice display-27 font-weight-600" data-price="${DiscountPrice}"
+			                        <div class="col-10" style="text-align: end;">`
+						
+                   if(discount_rate != 0){
+                	   selectItemValue += `<p class="mb-0 display-32 font-weight-600" style="color: rgb(240, 86, 86);"
+                	   >${discount_rate}% 할인 적용</p>`
+                   }
+			                      
+					   selectItemValue +=` <p class="mb-0">`
+						
+				   if(discount_rate != 0){	
+					   selectItemValue += `<span class="totalPrice display-30 me-2" style="text-decoration: line-through; color: #aaa;"
+                           data-price="${totalPrice}">${formattedTotalPrice}원</span>`
+				   }
+						
+					   selectItemValue +=`<span class="discountPrice display-27 font-weight-600" data-price="${DiscountPrice}"
 			                            >${formattedDiscountPrice}원</span></p>
 			                        </div>
 			                    </div>
@@ -1086,7 +1109,87 @@
 	}
 	
 	
-	
+	/// 장바구니 클릭 시 디비 저장
+	function shopToCart(option_name, option_name2){
+		let selectItemsLength = $('.selectItem').length;
+		let selectItems = $('.selectItem');
+		
+		if(selectItemsLength < 1){
+			alert("상품을 선택해주세요");
+		} else {
+			
+			selectItems.each(function(index){
+				
+				//option_name
+			    let optionNameInput = $('<input>')
+			        .attr('type', 'hidden') // hidden 타입 설정
+			        .attr('name', `cart_list[${index}].option_name`) // 유니크한 name 설정
+			        .val(option_name); // input 값 설정
+			    
+			  //option_name2
+			    let optionName2Input = $('<input>')
+			        .attr('type', 'hidden') // hidden 타입 설정
+			        .attr('name', `cart_list[${index}].option_name2`) // 유니크한 name 설정
+			        .val(option_name2); // input 값 설정
+			    
+				//option_value
+				let option_value = $(this).find('.optionVal1').data('opt');
+			    let optionValueInput = $('<input>')
+			        .attr('type', 'hidden') // hidden 타입 설정
+			        .attr('name', `cart_list[${index}].option_value`) // 유니크한 name 설정
+			        .val(option_value); // input 값 설정
+			    
+			    //option_value2
+			    let option_value2 = $(this).find('.optionVal2').data('opt');
+			    let optionValue2Input = $('<input>')
+		        .attr('type', 'hidden') // hidden 타입 설정
+		        .attr('name', `cart_list[${index}].option_value2`) // 유니크한 name 설정
+		        .val(option_value2); // input 값 설정
+			    
+			    //quantity
+			    let quantity = $(this).find('.itemCnt').text();
+			    let quantityInput = $('<input>')
+			    .attr('type', 'hidden') // hidden 타입 설정
+			    .attr('name', `cart_list[${index}].quantity`) // 유니크한 name 설정
+			    .val(quantity); // input 값 설정
+			    
+			    //option_price
+			    let option_price = $(this).find('.optionVal1').data('opp');
+			    let optionPriceInput = $('<input>')
+			    .attr('type', 'hidden') // hidden 타입 설정
+			    .attr('name', `cart_list[${index}].option_price`) // 유니크한 name 설정
+			    .val(option_price); // input 값 설정
+			    
+			   // console.log(option_price);
+			    
+			    
+			    // input 태그를 폼에 추가하거나 원하는 위치에 삽입
+			    $('#ShopToCartFormInput').append(optionNameInput, optionName2Input,
+			    		optionValueInput, optionValue2Input, quantityInput, optionPriceInput);
+			});
+			
+			// FormData 객체 생성
+	        let formData = new FormData($('#ShopToCartForm')[0]);
+			
+			console.log(formData);
+			
+	     	// AJAX 요청
+	        $.ajax({
+	            url: '/shop/shopToCart', // 서버의 URL
+	            type: 'POST',
+	            data: formData,
+	            processData: false, // FormData 사용 시 false 설정
+	            contentType: false, // FormData 사용 시 false 설정
+	            success: function (response) {
+	                $('#ShopToCartFormInput').empty();
+	            },
+	            error: function (xhr, status, error) {
+	                console.error("Error:", error);
+	            }
+	        });
+		}
+		
+	}
 	
 	
 	

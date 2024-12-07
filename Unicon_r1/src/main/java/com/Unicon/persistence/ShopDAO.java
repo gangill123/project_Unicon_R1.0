@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.Unicon.domain.CartDetailVO;
+import com.Unicon.domain.CartVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.ShopVO;
 
@@ -57,8 +59,25 @@ public class ShopDAO {
 		return sqlSession.selectOne(NAMESPACE+".getOptionPrice", optionPriceMap);
 	}
 	
+	// 최신 카트번호 가져오기
+	public int getCartid() {
+		Integer cart_id = sqlSession.selectOne(NAMESPACE+".getCartid");
+		return(cart_id == null) ? 0 : cart_id;
+	}
 	
+	// 상세페이지에서 선택한 상품정보 cart, cart_detail 저장하기
+	public void saveCart(CartVO vo) {
+		//cart 테이블에 저장
+		sqlSession.insert(NAMESPACE+".saveCart", vo);
+		
+		//cart detail 테이블에 저장
+		sqlSession.insert(NAMESPACE+".saveCartDetail", vo.getCart_list());
+	}
 	
+	// 장바구니 페이지 이동 시 장바구니 정보 가져오기
+	public List<CartVO> getCartAll(String member_id){
+		return sqlSession.selectList(NAMESPACE+".getCartAll", member_id);
+	}
 	
 	
 	

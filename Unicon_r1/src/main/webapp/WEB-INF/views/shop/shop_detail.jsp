@@ -63,9 +63,9 @@
 <!-- 아래는 예시 -->
 <!-- PAGE TITLE
         ================================================== -->
-        ${productInfo}
+        <%-- ${productInfo}
         ${optionInfo}
-        ${optionInfoForSole}
+        ${optionInfoForSole} --%>
         
         <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
             <div class="container">
@@ -131,14 +131,27 @@
                                     <a class="text-primary font-weight-700" href="#!">0000개 리뷰</a>
                                 </div>
                             </div>
-                            <div class="mb-4">
-                                <p class="mb-0"><span class="display-27 font-weight-700 me-2">${productInfo.discount_rate}%</span>
-                                <span class="display-27" style="text-decoration: line-through; color: #aaa;">
-                                <fmt:formatNumber value="${productInfo.product_price}" type="number" />원</span></p>
-                                <p><span class="me-3 display-15 font-weight-600" style="color: rgb(240, 86, 86); line-height: 2rem;"
-                                ><fmt:formatNumber value="${(productInfo.product_price*(100-productInfo.discount_rate)/100).intValue()}" 
-                                type="number" />원</span><span class="display-28 font-weight-600" style="color: rgb(240, 86, 86);">할인가</span></p>
-                            </div>
+
+							<c:choose>
+								<c:when test="${productInfo.discount_rate != 0 }">
+		                            <div class="mb-4">
+		                                <p class="mb-0"><span class="display-27 font-weight-700 me-2">${productInfo.discount_rate}%</span>
+		                                <span class="display-27" style="text-decoration: line-through; color: #aaa;">
+		                                <fmt:formatNumber value="${productInfo.product_price}" type="number" />원</span></p>
+		                                <p><span class="me-3 display-15 font-weight-600" style="color: rgb(240, 86, 86); line-height: 2rem;"
+		                                ><fmt:formatNumber value="${(productInfo.product_price*(100-productInfo.discount_rate)/100)}" type="number" />원</span>
+		                                <span class="display-28 font-weight-600" style="color: rgb(240, 86, 86);">할인가</span></p>
+		                            </div>
+								</c:when>
+								<c:otherwise>
+									<div class="mb-4 mt-4">
+		                                <p><span class="me-3 display-15 font-weight-600" style="line-height: 2rem;"
+		                                ><fmt:formatNumber value="${(productInfo.product_price*(100-productInfo.discount_rate)/100)}"
+		                                 type="number" />원</span></p>
+		                            </div>
+								</c:otherwise>
+							</c:choose>                            
+                            
                             
                             <p class="mb-1"><span class="display-27 font-weight-600">옵션선택</span></p>
 
@@ -201,23 +214,27 @@
 
 							<div style="display: flex; justify-content: space-between; margin-bottom: 20px; margin-top: 70px;">
 								<p class="mb-1"><span class="display-29 font-weight-600">주문금액</span></p>
-								<p class="mb-1"><span class="orderPrice display-27 font-weight-700">0원</span></p>
+								<p class="mb-1"><span class="orderPrice display-25 font-weight-800">0원</span></p>
 							</div>
 
+							<form id="ShopToCartForm">
+								<input type="hidden" name="member_id" value="${member_id}">
+								<input type="hidden" name="product_id" value="${productInfo.product_id }"> 
+								<div id="ShopToCartFormInput"></div>
                             <div class="row mb-4">
                                 <div class="col-lg-6">
-                                    <button class="butn primary w-100"><span><i class="fas fa-shopping-cart me-1"></i> 장바구니</span></button>
+                                    <button type="submit" class="cartBtn butn primary w-100"><span><i class="fas fa-shopping-cart me-1"></i> 장바구니</span></button>
                                 </div>
                                 <div class="col-lg-6">
                                     <button class="butn text-uppercase w-100"><span><i class="fa-regular fa-credit-card"></i> 바로구매</span></button>
                                 </div>
                             </div>
-
+							</form>
                         </div>
                     </div>
                 </div>
                 <!-- End Product Section -->
-
+				
 
             </div>
         </section>
@@ -356,6 +373,25 @@
 		    
 		    orderPriceCnt();
 		});
+		
+		
+		// 장바구니 클릭 시 선택아이템(selectItems) -> 디비 저장
+		$('#ShopToCartForm').on('submit', function(e){
+			event.preventDefault();
+			shopToCart('${optionInfo[0].option_name}', '${optionInfo[0].option_name2}');
+			Swal.fire({
+  			  title: '장바구니에 담았습니다.',
+  			  text: "장바구니 페이지로 이동합니다.",
+  			  icon: 'success',
+  			  confirmButtonColor: '#3085d6',
+  			  customClass: {
+  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+  			  }
+ 			});
+			
+		});
+		
+		
 		
 		
 		

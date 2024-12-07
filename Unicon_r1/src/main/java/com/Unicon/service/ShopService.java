@@ -1,12 +1,17 @@
 package com.Unicon.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.Unicon.domain.CartDetailVO;
+import com.Unicon.domain.CartVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.ShopVO;
 import com.Unicon.persistence.ShopDAO;
@@ -69,7 +74,32 @@ public class ShopService {
 		return sdao.getOptionPrice(optionPriceMap);
 	}
 	
+	// 상세페이지에서 선택한 상품정보 cart, cart_detail 저장하기
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public void saveCart(CartVO vo) {
+		
+		//최신 카트번호 가져오기
+		int cart_id;
+		if(sdao.getCartid() == 0) {
+			cart_id = 1;
+		} else {
+			cart_id = sdao.getCartid() + 1;
+		}
+		
+		vo.setCart_id(cart_id);
+		
+		for(CartDetailVO cdvo : vo.getCart_list()) {
+			cdvo.setCart_id(cart_id);
+		}
+		
+		// cart 및 cart_detail 테이블에 저장
+		sdao.saveCart(vo);
+	}
 	
+	// 장바구니 페이지 이동 시 장바구니 정보 가져오기
+	public List<CartVO> getCartAll(String member_id){
+		return sdao.getCartAll(member_id);
+	}
 	
 	
 	
