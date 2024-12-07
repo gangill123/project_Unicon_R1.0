@@ -6,7 +6,7 @@
 </head>
 <%@ include file="../inc/new_header.jsp" %>
 <!-- header -->
-
+ 
 <!--====================================작성부=====================================-->
 <section>
     <div class="container">

@@ -21,7 +21,7 @@ public class MBTITestController {
     private List<String> questions;
     private int[] scores;
     private int currentQuestionIndex;
-    private String mbtiResult;
+    private String mbtiResult; 
     private String petRecommendation;
 
     public MBTITestController() {
