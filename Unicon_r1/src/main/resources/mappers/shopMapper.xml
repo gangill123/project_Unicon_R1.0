@@ -26,7 +26,6 @@
 	<result property="product_expiry" column="product_expiry"/>
 	<result property="product_status" column="product_status"/>
 	<result property="delivery_method" column="delivery_method"/>
-	<result property="delivery_company" column="delivery_company"/>
 	<result property="delivery_price" column="delivery_price"/>
 	<result property="address" column="address"/>
 	<result property="create_date" column="create_date"/>
@@ -42,6 +41,44 @@
 	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
 
 </resultMap>
+
+
+	<!-- Cart용 ResultMap -->
+	<resultMap type="com.Unicon.domain.CartVO" id="CartResultMap">
+		<id property="cart_id" column="cart_id"/>
+		
+		<association property="shopVO" resultMap="CartShopResultMap" />
+		<collection property="cart_list" ofType="com.Unicon.domain.CartDetailVO" resultMap="CartDetailResultMap"/>
+		
+	</resultMap>
+
+	<!-- CartProductResultMap -->
+	<resultMap type="com.Unicon.domain.ShopVO" id="CartShopResultMap">
+		<id property="product_id" column="product_id"/>
+		<result property="product_seller_id" column="product_seller_id"/>
+		<result property="product_name" column="product_name"/>
+		<result property="product_price" column="product_price"/>
+		<result property="discount_rate" column="discount_rate"/>
+		<result property="delivery_method" column="delivery_method"/>
+		<result property="delivery_company" column="delivery_company"/>
+		<result property="delivery_price" column="delivery_price"/>
+		
+		<association property="memberVO" resultMap="MemberResultMap" />
+		<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
+		
+	</resultMap>	
+	
+	<!-- CartDetailResultMap -->
+	<resultMap type="com.Unicon.domain.CartDetailVO" id="CartDetailResultMap">
+		<id property="cart_detail_id" column="cart_detail_id"/>
+		<result property="cart_id" column="cart_id"/>
+		<result property="option_name" column="option_name"/>
+		<result property="option_value" column="option_value"/>
+		<result property="option_name2" column="option_name2"/>
+		<result property="option_value2" column="option_value2"/>
+		<result property="quantity" column="quantity"/>
+		<result property="option_price" column="option_price"/>
+	</resultMap>
 
 <!-- CategoryResultMap -->
 <resultMap type="com.Unicon.domain.CategoryDataVO" id="CategoryDataResultMap">
@@ -64,8 +101,6 @@
 	<id property="image_sequence" column="image_sequence"/>
 	<result property="image_src" column="image_src"/>
 </resultMap>
-
-
 
 	<!-- shop 페이지 접속 시 모든 상품정보 가져오기 -->
 	<select id="getProductAll" resultMap="ShopResultMap">
@@ -118,6 +153,43 @@
 		from _option 
 		where product_id = #{product_id} and option_value = #{option_value} and option_value2 = #{option_value2} 
 	</select>
+
+	<!-- 최신 cart번호 가져오기 -->
+	<select id="getCartid" resultType="int">
+		select cart_id from _cart order by cart_id desc limit 1
+	</select>
+
+	<!-- 상세페이지에서 선택한 상품정보 cart, cart_detail 저장하기 -->
+	<!-- cart 테이블 저장 -->
+	<insert id="saveCart">
+		insert into _cart(cart_id, member_id, product_id) 
+		values(${cart_id}, #{member_id}, #{product_id}) 
+	</insert>
+
+	<!-- cart detail 테이블 저장 -->
+	<insert id="saveCartDetail" parameterType="List">
+		insert into _cart_detail(cart_id, option_name, option_value, 
+		option_name2, option_value2, quantity, option_price) 
+		values
+		<foreach collection="list" item="li" separator=","> 
+	   (#{li.cart_id}, #{li.option_name}, #{li.option_value}, #{li.option_name2}, #{li.option_value2}, 
+	   #{li.quantity}, #{li.option_price}) 
+	  </foreach> 
+	</insert>
+
+
+	<!-- 장바구니 페이지 이동 시 장바구니 정보 가져오기 -->
+	<select id="getCartAll" resultMap="CartResultMap" parameterType="String">
+		select c.cart_id, p.product_id, p.product_name, p.product_price, p.discount_rate, 
+		p.delivery_method, p.delivery_price, d.*, m.member_name, i.* 
+		from _cart c 
+		join _cart_detail d on c.cart_id = d.cart_id 
+		join _products p on c.product_id = p.product_id 
+		join _member m on p.product_seller_id = m.member_id 
+		join _image i on p.product_id = i.image_id 
+		where m.member_id = #{member_id} 
+	</select>
+
 
 
 </mapper>
