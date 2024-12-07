@@ -23,52 +23,70 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
     
 <style>
-	.sidebar { 
-	   width: 250px; 
-	   position: fixed; 
-	   left: 0; 
-	   height: 100vh; 
-	   background: #f8f9fa;
-	   transition: all 0.3s ease;
+	body,
+	.container-scroller {
+	    background: #f8f9fa !important;
+	}
+
+	.sidebar {
+	    width: 250px !important;
+	    position: fixed !important;
+	    left: 0 !important;
+	    height: 100vh !important;
+	    background: #ffffff !important;
+	    transition: all 0.3s ease !important;
+	    z-index: 1000 !important;
 	}
 	
 	.main-panel {
-		margin-left: 250px;
-		padding: 20px;
-		width: calc(100% - 250px);
-		min-height: calc(100vh - 70px);
-	    background: #ffffff;
+	    display: flex !important;
+	    flex-direction: column !important;
+	    min-height: 100vh !important;
+	    background: #f8f9fa !important;
+	    margin-left: 250px !important;
+	    width: calc(100% - 250px) !important;
 	}
 	
 	.content-wrapper {
-	    background: #ffffff;
-	    padding: 2rem;
+	    flex: 1 !important;
+	    padding: 2rem !important;
+	    background: #f8f9fa !important;
+	    width: 100% !important;
+	}
+	
+	.footer {
+	    background: #f8f9fa !important;
+	    padding: 1.5rem !important;
 	}
 	
 	/* 카드 스타일 통합 */
 	.card {
-	    background: #ffffff;
-	    border: none;
-	    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-	    border-radius: 8px;
-	    margin-bottom: 20px;
+	    background: #ffffff !important;
+	    border: none !important;
+	    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+	    border-radius: 1rem !important;
+	    margin-bottom: 20px !important;
+	    overflow: hidden !important;
 	}
+		
+	.card-body {
+	    padding: 2rem !important;
+	}	
 	
 	/* 헤더와 바디 통합 스타일 */
 	.page-header {
 	    background: #006e60 !important;
-        padding: 0.8rem 1.5rem;
-        border-bottom: 1px solid #e0e0e0;
-        border-radius: 8px 8px 0 0;
-        margin: 0;
+	    padding: 0.8rem 1.5rem !important;
+	    border-radius: 8px 8px 0 0 !important;
+	    margin: 0 !important;
 	}
 	
 	.page-title {
-	    margin: 0;
-	    font-size: 1.2rem;
-	    font-weight: 500;
+	    margin: 0 !important;
+	    font-size: 1.2rem !important;
+	    font-weight: 500 !important;
 	    color: #ffffff !important;
-	    line-height: 1.2;
+	    line-height: 1.2 !important;
 	}
 	
 	.card-body {
@@ -208,22 +226,21 @@
 /* 모바일 반응형 */
 @media (max-width: 768px) {
 	.sidebar {
-       width: 0;
-       overflow: hidden;
+        width: 0 !important;
+        overflow: hidden !important;
     }
     
     .main-panel {
-    	margin-left: 0;
-	    width: 100%;
-	    padding: 15px;
-	}  
+        margin-left: 0 !important;
+        width: 100% !important;
+    } 
 
     .content-wrapper {
-        padding: 1rem;
+        padding: 1rem !important;
     }
     
     .card-body {
-        padding: 1.5rem;
+        padding: 1.5rem !important;
     }
     
     .page-header {

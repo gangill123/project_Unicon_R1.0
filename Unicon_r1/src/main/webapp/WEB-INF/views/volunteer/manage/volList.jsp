@@ -36,14 +36,15 @@
 	}
 	
 	/* 사이드바 */
-	.sidebar { 
-	    width: 250px !important; 
-	    position: fixed !important; 
-	    left: 0 !important; 
-	    height: 100vh !important;
-	    background: #f8f9fa !important; 
-	    transition: all 0.3s ease !important;
-	}
+	.sidebar {
+        width: 250px !important;
+        position: fixed !important;
+        left: 0 !important;
+        height: 100vh !important;
+        background: #ffffff !important;
+        transition: all 0.3s ease !important;
+        z-index: 1000 !important;
+    }
 	
 	.content-wrapper .card { 
 	    margin: 1rem auto !important;  
@@ -53,20 +54,22 @@
 	}
 	
 	/* 메인 패널 */
-	.main-panel { 
-	    margin-left: 250px !important; 
-	    padding: 20px 0 !important;
-	    width: calc(100% - 250px) !important;
-	    min-width: 0 !important;
-	}
+	.main-panel {
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: 100vh !important;
+        background: #f8f9fa !important;
+        margin-left: 250px !important;
+        width: calc(100% - 250px) !important;
+    }
 	
 	/* 컨텐츠 영역 */
 	.content-wrapper {
-	    width: 100% !important;
-	    padding: 0 20px !important;
-	    min-width: 0 !important;
-	    flex: 1 1 auto !important;
-	}
+        flex: 1 !important;
+        padding: 2rem !important;
+        background: #f8f9fa !important;
+        width: 100% !important;
+    }
 	
 	/* 모달 스타일 */
 	.modal-xl {
@@ -89,19 +92,45 @@
 	}
 	
 	/* 카드 컴포넌트 */
-	.card { 
-	    margin: 1rem !important;
-	    width: 100% !important;
+	.card {
+        background: #ffffff !important;
+	    border: none !important;
+	    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+	    border-radius: 1rem !important;
+	    margin-bottom: 20px !important;
+	    overflow: hidden !important;
+    }
+    
+    .card-body {
+	    padding: 0.5rem !important;
+	}
+    
+    /* 테이블 카드 스타일 */
+    .table-card {
+        border-radius: 1rem !important;
+        overflow: hidden !important;
+    }
+    
+    /* 테이블 반응형 컨테이너 */
+    .table-responsive {
+        margin: 0 !important;
+        border: none !important;
+    }
+    
+    /* 검색 폼 카드 */
+    #searchForm {
+	    background: #ffffff !important;
+	    border: 1px solid #dee2e6 !important;
+	    border-radius: 0.5rem !important;
 	    padding: 1rem !important;
-	    min-width: 0 !important;
-		
-		.card-body {
-		    padding: 0 !important;
-		    width: 100% !important;
-		    min-width: 0 !important;
-		}
+	    margin-bottom: 1.5rem !important;
+	    width: 100% !important;
 	}
 	
+	.row.g-3 {
+	    margin: 0 !important;
+	}
+		
 	.row g-3 {
 		background: #f8f9fa !important;
 	    padding: 1rem !important;
@@ -121,14 +150,6 @@
 	
 	.input-group span:not(.bg-light) {
 	    background-color: #e9ecef !important;
-	}
-	
-	/* 테이블 */
-	.table-responsive {
-	    margin: 0 !important;
-	    border: 1px solid #dee2e6 !important;
-	    border-left: none !important;
-	    border-right: none !important;
 	}
 	
 	.table {
@@ -328,13 +349,13 @@
 	/* 모바일 대응 */
 	@media (max-width: 768px) {
 	    .main-panel {
-	       margin-left: 0 !important;
-	       width: 100% !important;
-	   }
+            margin-left: 0 !important;
+            width: 100% !important;
+        }
 	   
 	   .sidebar {
-	       width: 0 !important;
-	   }
+            width: 0 !important;
+        }
 	   
 	   .modal-dialog.modal-xl {
 	       width: 95% !important;
@@ -343,7 +364,7 @@
 	   
 	   .page-header {
 	       flex-direction: column !important;
-	       gap: 1rem !important;
+	       gap: 0.5rem !important;
 	       align-items: center !important;
 	       text-align: center !important;
 	   }
@@ -358,6 +379,10 @@
 	       width: 50% !important;
 	       white-space: nowrap !important;
 	   }
+	   
+	   .content-wrapper {
+            padding: 1rem !important;
+        }
 	   
 		/* 메인 테이블 모바일 스타일 */
 	    .content-wrapper .table:not(#volunteerDetailModal .table) th:not(:nth-child(3)):not(:nth-child(8)),
@@ -427,251 +452,249 @@
     <%@ include file="/WEB-INF/views/inc/admin_navbar_adpt.jsp"%>
     <div class="container-fluid page-body-wrapper">
         <%@ include file="/WEB-INF/views/inc/admin_sidebar_adpt.jsp"%>
-        
         <div class="main-panel">
             <div class="content-wrapper">
-			    <div class="page-header d-flex justify-content-between mb-4">
-			        <h4 class="mb-0" style="min-width: 200px;">봉사활동 관리</h4>
-			        <div class="d-flex gap-2" justify-content: flex-end;"> 
-			            <!-- <button type="button" class="btn btn-info" onclick="location.href='/volunteer/manage/volGuideForm'">
-			                <i class="fas fa-edit"></i> 안내문 수정
-			            </button> -->
-			            <button class="btn btn-primary" onclick="location.href='/volunteer/manage/volForm'">
-			                <i class="fas fa-plus"></i> 공고 등록
-			            </button>
-			        </div>
-			    </div>
-
-                <!-- 검색 필터 -->
-                <div class="card">
-				    <div class="card-body">
-				        <form id="searchForm" class="row g-3">
-				            <div class="col-md-2">
-							    <select name="recruitStatus" class="form-select">
-							        <option value="">전체 상태</option>
-							        <option value="OPEN" ${param.recruitStatus == 'OPEN' ? 'selected' : ''}>모집중</option>
-							        <option value="CLOSE" ${param.recruitStatus == 'CLOSE' ? 'selected' : ''}>마감</option>
-							    </select>
-							</div>
-				            <div class="col-md-3">
-				                <input type="text" class="form-control" name="keyword" 
-				                       placeholder="봉사활동명 검색" value="${param.keyword}">
-				            </div>
-				            <div class="col-md-4">
-							    <div class="input-group">
-							        <span class="input-group-text bg-light">모집일</span>
-							        <input type="date" class="form-control" name="startDate" value="${param.voStartDate}">
-							        <span class="input-group-text">~</span>
-							        <!-- <span class="input-group-text bg-light">봉사종료일</span> -->
-							        <input type="date" class="form-control" name="endDate" value="${param.voEndDate}">
+		    <div class="row">
+		        <div class="col-12 grid-margin stretch-card">
+		            <div class="card border-0">
+		                <div class="card-body p-0">
+		                    <!-- 헤더 영역 -->
+		                    <div class="page-header d-flex justify-content-between mb-4">
+		                        <h4 class="mb-0" style="min-width: 200px;">봉사활동 관리</h4>
+		                        <div class="d-flex gap-2">
+		                            <button class="btn btn-primary" onclick="location.href='/volunteer/manage/volForm'">
+		                                <i class="fas fa-plus"></i> 공고 등록
+		                            </button>
+		                        </div>
+		                    </div>
+		
+		                <!-- 검색 필터 -->
+		                <div class="mb-4">
+		                        <form id="searchForm" class="row g-3">
+						            <div class="col-md-2">
+									    <select name="recruitStatus" class="form-select">
+									        <option value="">전체 상태</option>
+									        <option value="OPEN" ${param.recruitStatus == 'OPEN' ? 'selected' : ''}>모집중</option>
+									        <option value="CLOSE" ${param.recruitStatus == 'CLOSE' ? 'selected' : ''}>마감</option>
+									    </select>
+									</div>
+						            <div class="col-md-2">
+						                <input type="text" class="form-control" name="keyword" 
+						                       placeholder="봉사활동명 검색" value="${param.keyword}">
+						            </div>
+						            <div class="col-md-5">
+									    <div class="input-group">
+									        <span class="input-group-text bg-light">모집일</span>
+									        <input type="date" class="form-control" name="startDate" value="${param.voStartDate}">
+									        <span class="input-group-text">~</span>
+									        <!-- <span class="input-group-text bg-light">봉사종료일</span> -->
+									        <input type="date" class="form-control" name="endDate" value="${param.voEndDate}">
+									    </div>
+									</div>
+						            <div class="col-md-3">
+									    <div class="d-flex gap-2">
+									        <button type="submit" class="btn btn-primary w-50">
+									            <i class="fas fa-search"></i> 검색
+									        </button>
+									        <button type="button" class="btn btn-outline-secondary w-50" onclick="resetSearch()">
+									            <i class="fas fa-undo"></i> 초기화
+									        </button>
+									    </div>
+									</div>
+						      </form>
+		                    </div>
+		
+		                <!-- 공고 목록 -->
+		                <div class="table-responsive">
+		                        <table class="table">
+		                                <thead>
+		                                    <tr>
+		                                        <th style="width: 80px;">번호</th>
+		                                        <th style="width: 100px;">상태</th>
+		                                        <th>봉사활동명</th>
+		                                        <th style="width: 200px;">모집기간</th>
+		                                        <th style="width: 200px;">봉사기간</th>
+		                                        <th style="width: 100px;">모집인원</th>
+		                                        <th style="width: 100px;">신청인원</th>
+		                                        <th style="width: 150px;">관리</th>
+		                                    </tr>
+		                                </thead>
+		                                <tbody>
+		                                    <c:forEach items="${volunteers}" var="vol">
+		                                        <tr>
+		                                            <td class="text-center">${vol.voId}</td>
+		                                            <td class="text-center">
+		                                                <span class="badge ${vol.recruitStatus == 'OPEN' ? 'bg-success' : 'bg-secondary'}">
+		                                                    ${vol.recruitStatus == 'OPEN' ? '모집중' : '마감'}
+		                                                </span>
+		                                            </td>
+		                                            <td>
+													    <a href="#" class="text-decoration-none" onclick="showVolunteerDetail(${vol.voId})">
+													        ${vol.voTitle}
+													    </a>
+													</td>
+		                                            <td class="text-center">
+		                                                <fmt:formatDate value="${vol.voRecruitStart}" pattern="yyyy.MM.dd"/> -
+		                                                <fmt:formatDate value="${vol.voRecruitEnd}" pattern="yyyy.MM.dd"/>
+		                                            </td>
+		                                            <td class="text-center">
+		                                                <fmt:formatDate value="${vol.voStartDate}" pattern="yyyy.MM.dd"/> -
+		                                                <fmt:formatDate value="${vol.voEndDate}" pattern="yyyy.MM.dd"/>
+		                                            </td>
+		                                            <td class="text-center">${vol.voCapacity}명</td>
+		                                            <td class="text-center">${vol.applicationCount}명</td>
+		                                            <td>
+		                                                <div class="d-flex justify-content-center gap-1">
+		                                                    <button type="button" class="btn btn-sm btn-outline-primary"
+		                                                            onclick="location.href='/volunteer/manage/volForm?voId=${vol.voId}'"
+						                                            title="수정">
+		                                                        <i class="fas fa-edit"></i>
+		                                                    </button>
+		                                                    <button type="button" class="btn btn-sm btn-outline-danger"
+		                                                            onclick="deleteVolunteer(${vol.voId})"
+						                                            title="삭제">
+		                                                        <i class="fas fa-trash"></i>
+		                                                    </button>
+		                                                    <c:if test="${vol.recruitStatus == 'OPEN'}">
+		                                                        <button type="button" class="btn btn-sm btn-outline-warning"
+		                                                                onclick="closeRecruitment(${vol.voId})">
+		                                                            마감
+		                                                        </button>
+		                                                    </c:if>
+		                                                    <c:if test="${vol.recruitStatus == 'CLOSE'}">
+		                                                        <c:set var="now" value="<%=new java.util.Date()%>"/>
+		                                                        <c:if test="${vol.voRecruitEnd > now && vol.applicationCount < vol.voCapacity}">
+		                                                            <button type="button" class="btn btn-sm btn-outline-success"
+		                                                                    onclick="openRecruitment(${vol.voId})">
+		                                                                모집
+		                                                            </button>
+		                                                        </c:if>
+		                                                    </c:if>
+		                                                </div>
+		                                            </td>
+		                                        </tr>
+		                                    </c:forEach>
+		                                </tbody>
+		                            </table>
+		                    	</div>
+		                
+			                <!-- 상세보기 모달 -->
+							<div class="modal fade" id="volunteerDetailModal" tabindex="-1" aria-labelledby="volunteerDetailModalLabel" aria-hidden="true">
+							    <div class="modal-dialog modal-xl">
+							        <div class="modal-content">
+							            <div class="modal-header">
+							                <h5 class="modal-title" id="volunteerDetailModalLabel">신청자 목록</h5>
+							                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							            </div>
+							            <div class="modal-body">
+							                <div class="table-responsive">
+							                    <table class="table">
+							                        <colgroup>
+							                            <col style="width: 10%">
+							                            <col style="width: 12%">
+							                            <col style="width: 12%">
+							                            <col style="width: 15%">
+							                            <col style="width: 20%">
+							                            <col style="width: 10%">
+							                            <col style="width: 10%">
+							                            <col style="width: 11%">
+							                        </colgroup>
+							                        <thead>
+							                            <tr>
+							                                <th>상태</th>
+							                                <th>이름</th>
+							                                <th>생년월일</th>
+							                                <th>연락처</th>
+							                                <th>이메일</th>
+							                                <th>반려동물 경험</th>
+							                                <th>정보수신동의</th>
+							                                <th>관리</th>
+							                            </tr>
+							                        </thead>
+							                        <tbody id="applicantsList">
+							                            <!-- 동적으로 채워질 영역 -->
+							                        </tbody>
+							                    </table>
+							                </div>
+							            </div>
+							        </div>
 							    </div>
 							</div>
-				            <div class="col-md-3">
-							    <div class="d-flex gap-2">
-							        <button type="submit" class="btn btn-primary w-50">
-							            <i class="fas fa-search"></i> 검색
-							        </button>
-							        <button type="button" class="btn btn-outline-secondary w-50" onclick="resetSearch()">
-							            <i class="fas fa-undo"></i> 초기화
-							        </button>
+			
+							
+							<!-- 거절 사유 입력 모달 -->
+							<div class="modal fade" id="rejectReasonModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+							    <div class="modal-dialog modal-dialog-centered">
+							        <div class="modal-content">
+							            <div class="modal-header">
+							                <h5 class="modal-title">신청 거절 사유</h5>
+							                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							            </div>
+							            <div class="modal-body">
+							                <input type="hidden" id="rejectApplicationId">
+							                <div class="mb-3">
+							                    <label for="rejectReason" class="form-label">거절 사유</label>
+							                    <select class="form-select" id="rejectReason" required>
+							                        <option value="">선택해주세요</option>
+							                        <option value="정원초과">정원초과</option>
+							                        <option value="일정변경">일정변경</option>
+							                        <option value="자격미달">자격미달</option>
+							                        <option value="신청정보 부적절">신청정보 부적절</option>
+							                        <option value="봉사자 요건 미충족">봉사자 요건 미충족</option>
+							                        <option value="기타">기타</option>
+							                    </select>
+							                </div>
+							                <div class="mb-3">
+							                    <label for="rejectReasonDetail" class="form-label">거절 사유 상세</label>
+							                    <textarea class="form-control" id="rejectReasonDetail" rows="3" 
+							                        placeholder="거절 사유에 대해 자세히 설명해주세요." required></textarea>
+							                </div>
+							            </div>
+							            <div class="modal-footer">
+							                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+							                <button type="button" class="btn btn-danger" onclick="submitReject()">거절하기</button>
+							            </div>
+							        </div>
 							    </div>
 							</div>
-				        </form>
-				    </div>
-				</div>
-
-                <!-- 공고 목록 -->
-                <div class="card">
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 80px;">번호</th>
-                                        <th style="width: 100px;">상태</th>
-                                        <th>봉사활동명</th>
-                                        <th style="width: 200px;">모집기간</th>
-                                        <th style="width: 200px;">봉사기간</th>
-                                        <th style="width: 100px;">모집인원</th>
-                                        <th style="width: 100px;">신청인원</th>
-                                        <th style="width: 150px;">관리</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${volunteers}" var="vol">
-                                        <tr>
-                                            <td class="text-center">${vol.voId}</td>
-                                            <td class="text-center">
-                                                <span class="badge ${vol.recruitStatus == 'OPEN' ? 'bg-success' : 'bg-secondary'}">
-                                                    ${vol.recruitStatus == 'OPEN' ? '모집중' : '마감'}
-                                                </span>
-                                            </td>
-                                            <td>
-											    <a href="#" class="text-decoration-none" onclick="showVolunteerDetail(${vol.voId})">
-											        ${vol.voTitle}
-											    </a>
-											</td>
-                                            <td class="text-center">
-                                                <fmt:formatDate value="${vol.voRecruitStart}" pattern="yyyy.MM.dd"/> -
-                                                <fmt:formatDate value="${vol.voRecruitEnd}" pattern="yyyy.MM.dd"/>
-                                            </td>
-                                            <td class="text-center">
-                                                <fmt:formatDate value="${vol.voStartDate}" pattern="yyyy.MM.dd"/> -
-                                                <fmt:formatDate value="${vol.voEndDate}" pattern="yyyy.MM.dd"/>
-                                            </td>
-                                            <td class="text-center">${vol.voCapacity}명</td>
-                                            <td class="text-center">${vol.applicationCount}명</td>
-                                            <td>
-                                                <div class="d-flex justify-content-center gap-1">
-                                                    <button type="button" class="btn btn-sm btn-outline-primary"
-                                                            onclick="location.href='/volunteer/manage/volForm?voId=${vol.voId}'"
-				                                            title="수정">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" class="btn btn-sm btn-outline-danger"
-                                                            onclick="deleteVolunteer(${vol.voId})"
-				                                            title="삭제">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                    <c:if test="${vol.recruitStatus == 'OPEN'}">
-                                                        <button type="button" class="btn btn-sm btn-outline-warning"
-                                                                onclick="closeRecruitment(${vol.voId})">
-                                                            마감
-                                                        </button>
-                                                    </c:if>
-                                                    <c:if test="${vol.recruitStatus == 'CLOSE'}">
-                                                        <c:set var="now" value="<%=new java.util.Date()%>"/>
-                                                        <c:if test="${vol.voRecruitEnd > now && vol.applicationCount < vol.voCapacity}">
-                                                            <button type="button" class="btn btn-sm btn-outline-success"
-                                                                    onclick="openRecruitment(${vol.voId})">
-                                                                모집
-                                                            </button>
-                                                        </c:if>
-                                                    </c:if>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 상세보기 모달 -->
-				<div class="modal fade" id="volunteerDetailModal" tabindex="-1" aria-labelledby="volunteerDetailModalLabel" aria-hidden="true">
-				    <div class="modal-dialog modal-xl">
-				        <div class="modal-content">
-				            <div class="modal-header">
-				                <h5 class="modal-title" id="volunteerDetailModalLabel">신청자 목록</h5>
-				                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				            </div>
-				            <div class="modal-body">
-				                <div class="table-responsive">
-				                    <table class="table">
-				                        <colgroup>
-				                            <col style="width: 10%">
-				                            <col style="width: 12%">
-				                            <col style="width: 12%">
-				                            <col style="width: 15%">
-				                            <col style="width: 20%">
-				                            <col style="width: 10%">
-				                            <col style="width: 10%">
-				                            <col style="width: 11%">
-				                        </colgroup>
-				                        <thead>
-				                            <tr>
-				                                <th>상태</th>
-				                                <th>이름</th>
-				                                <th>생년월일</th>
-				                                <th>연락처</th>
-				                                <th>이메일</th>
-				                                <th>반려동물 경험</th>
-				                                <th>정보수신동의</th>
-				                                <th>관리</th>
-				                            </tr>
-				                        </thead>
-				                        <tbody id="applicantsList">
-				                            <!-- 동적으로 채워질 영역 -->
-				                        </tbody>
-				                    </table>
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-				
-				<!-- 거절 사유 입력 모달 -->
-				<div class="modal fade" id="rejectReasonModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
-				    <div class="modal-dialog modal-dialog-centered">
-				        <div class="modal-content">
-				            <div class="modal-header">
-				                <h5 class="modal-title">신청 거절 사유</h5>
-				                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				            </div>
-				            <div class="modal-body">
-				                <input type="hidden" id="rejectApplicationId">
-				                <div class="mb-3">
-				                    <label for="rejectReason" class="form-label">거절 사유</label>
-				                    <select class="form-select" id="rejectReason" required>
-				                        <option value="">선택해주세요</option>
-				                        <option value="정원초과">정원초과</option>
-				                        <option value="일정변경">일정변경</option>
-				                        <option value="자격미달">자격미달</option>
-				                        <option value="신청정보 부적절">신청정보 부적절</option>
-				                        <option value="봉사자 요건 미충족">봉사자 요건 미충족</option>
-				                        <option value="기타">기타</option>
-				                    </select>
-				                </div>
-				                <div class="mb-3">
-				                    <label for="rejectReasonDetail" class="form-label">거절 사유 상세</label>
-				                    <textarea class="form-control" id="rejectReasonDetail" rows="3" 
-				                        placeholder="거절 사유에 대해 자세히 설명해주세요." required></textarea>
-				                </div>
-				            </div>
-				            <div class="modal-footer">
-				                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-				                <button type="button" class="btn btn-danger" onclick="submitReject()">거절하기</button>
-				            </div>
-				        </div>
-				    </div>
-				</div>
-
-                <!-- 페이지네이션 -->
-                <div class="d-flex justify-content-center mt-4">
-                    <nav>
-                        <ul class="pagination">
-                            <c:if test="${page > 1}">
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:goToPage(1)">
-                                        <i class="fas fa-angle-double-left"></i>
-                                    </a>
-                                </li>
-                            </c:if>
-                            
-                            <c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
-                                <li class="page-item ${pageNum == page ? 'active' : ''}">
-                                    <a class="page-link" href="javascript:goToPage(${pageNum})">${pageNum}</a>
-                                </li>
-                            </c:forEach>
-                            
-                            <c:if test="${page < totalPages}">
-                                <li class="page-item">
-                                    <a class="page-link" href="javascript:goToPage(${totalPages})">
-                                        <i class="fas fa-angle-double-right"></i>
-                                    </a>
-                                </li>
-                            </c:if>
-                        </ul>
-                    </nav>
-                </div>
-                <%@ include file="/WEB-INF/views/inc/admin_footer_adpt.jsp"%>
-            </div>
-        </div>
-    </div>
+			
+			                <!-- 페이지네이션 -->
+			                <div class="d-flex justify-content-center mt-4">
+			                    <nav>
+			                        <ul class="pagination">
+			                            <c:if test="${page > 1}">
+			                                <li class="page-item">
+			                                    <a class="page-link" href="javascript:goToPage(1)">
+			                                        <i class="fas fa-angle-double-left"></i>
+			                                    </a>
+			                                </li>
+			                            </c:if>
+			                            
+			                            <c:forEach begin="${startPage}" end="${endPage}" var="pageNum">
+			                                <li class="page-item ${pageNum == page ? 'active' : ''}">
+			                                    <a class="page-link" href="javascript:goToPage(${pageNum})">${pageNum}</a>
+			                                </li>
+			                            </c:forEach>
+			                            
+			                            <c:if test="${page < totalPages}">
+			                                <li class="page-item">
+			                                    <a class="page-link" href="javascript:goToPage(${totalPages})">
+			                                        <i class="fas fa-angle-double-right"></i>
+			                                    </a>
+			                                </li>
+			                            </c:if>
+			                        </ul>
+			                    </nav>
+			                	</div>
+		             		</div>
+		                </div>
+		            </div>
+		        </div>
+			<%@ include file="/WEB-INF/views/inc/admin_footer_adpt.jsp"%>
+		    </div>
+		</div>
+	</div>
 </div>
-
 <!-- Scripts -->
 <script src="/resources/admin/vendors/js/vendor.bundle.base.js"></script>
 <script src="/resources/admin/js/off-canvas.js"></script>
