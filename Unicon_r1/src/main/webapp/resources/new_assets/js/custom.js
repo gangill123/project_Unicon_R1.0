@@ -879,12 +879,15 @@
 	//// 주문 상세페이지 로직 처리 ////
 	
 	// 옵션1 선택시 옵션2번 불러오기
-	function getOption(product_id){
+	function getOption(product_id, option_value){
 		//alert(product_id);
 		
 		$.ajax({
 			url: '/shop/getOption/'+product_id,
 			type: 'GET',
+			data: {
+				option_value: option_value
+			},
 			success: function(response){
 				//console.log(data);
 				
@@ -892,9 +895,12 @@
 				let option = `<option value="${response[0].option_name2}" disabled selected>${response[0].option_name2}</option>`;
 				
 				response.forEach(function(item){
-					option += `
-						<option value="${item.option_value2}">${item.option_value2}</option>
-					`
+					option += `<option value="${item.option_value2}">${item.option_value2}`
+						
+					if(item.option_price != 0){
+						option += ` ( +${item.option_price}원 )`
+					}	
+					option += `</option>`
 				});
 				
 				$('#itemOption2').append(option);
@@ -905,35 +911,183 @@
 		});
 	}
 	
-	function appendselectItems(option_name, option_value, option_name2, option_value2){
+	
+	
+	
+	
+	
+	////// 단독형 선택박스 생성
+	function appendSoleSelectItems(product_id, option_name, option_value, product_price, discount_rate){
 		
-		let selectItemValue = 
-		`<div class="row g-0 align-items-center bg-light rounded p-3 mb-3">
-                <div class="col-12">
-                    <div class="mb-3">
-                        <label>${option_name}: ${option_value} / ${option_name2}: ${option_value2}</label>
-                        <button type="button" class="btn-close" aria-label="Close"></button>
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
-                            <div class="itemCntBox">
-                            	<span class="itemCntSpan">-</span>
-                            	<span>1</span>
-                            	<span class="itemCntSpan">+</span>
-                            </div>
-                        </div>
-                        <div class="col-10" style="text-align: end;">
-                            <p class="mb-0 display-32 font-weight-600" style="color: rgb(240, 86, 86);">30% 할인 적용</p>
-                            <p class="mb-0"><span class="display-30 me-2" style="text-decoration: line-through; color: #aaa;">50,000원</span>
-                            <span class="display-27 font-weight-600">35,000원</span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-		`
-		
-		$('#selectItems').append(selectItemValue);
+		// 옵션1 - 옵션2에 따른 가격 가져오기
+		$.ajax({
+			url: '/shop/getSoleOptionPrice/'+product_id,
+			type: 'GET',
+			data: {
+				option_value: option_value
+			},
+			success: function(response) {
+				
+				console.log(response);
+				
+				let optionPrice = response;
+				
+				// 상품가격 + 옵션가격
+				let totalPrice = Number(product_price) + optionPrice;
+				
+				// 총가격 천자리 쉼표
+				let formattedTotalPrice = new Intl.NumberFormat().format(totalPrice);
+				
+				// 할인율 계산한 가격 (10원자리 버림)
+				let DiscountPrice = Math.floor((totalPrice * (100 - Number(discount_rate)) / 100) / 10) * 10;
+				
+				// 할인가격 천자리 쉼표
+				let formattedDiscountPrice = new Intl.NumberFormat().format(DiscountPrice);
+				
+				let selectItemValue = 
+					`<div class="selectItem row g-0 align-items-center bg-light rounded p-3 mb-3">
+			                <div class="col-12">
+			                    <div class="mb-3">
+			                        <label class="optionVal1" data-opt="${option_value}">${option_name}: ${option_value}`
+			                        
+					if(optionPrice != 0){
+						selectItemValue += ` ( +${optionPrice}원 )`
+					}	
+					
+					selectItemValue += `</label>
+			                        <button type="button" class="btn-close" aria-label="Close"></button>
+			                    </div>
+			                    <div class="row">
+			                        <div class="col-2">
+			                            <div class="itemCntBox">
+			                            	<span class="minusBtn itemCntSpan">-</span>
+			                            	<span class="itemCnt">1</span>
+			                            	<span class="plusBtn itemCntSpan">+</span>
+			                            </div>
+			                        </div>
+			                        <div class="col-10" style="text-align: end;">
+			                            <p class="mb-0 display-32 font-weight-600" style="color: rgb(240, 86, 86);">${discount_rate}% 할인 적용</p>
+			                            <p class="mb-0"><span class="totalPrice display-30 me-2" style="text-decoration: line-through; color: #aaa;"
+			                            data-price="${totalPrice}">${formattedTotalPrice}원</span>
+			                            <span class="discountPrice display-27 font-weight-600" data-price="${DiscountPrice}"
+			                            >${formattedDiscountPrice}원</span></p>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+					`
+					$('#selectItems').append(selectItemValue);
+					
+					orderPriceCnt();
+				
+			},
+			error: function(){
+				consloe.log("error");
+			}
+		});
 		
 	}
+	
+	
+	
+	
+	// 조합형 선택박스 생성
+	function appendSelectItems(product_id, option_name, option_value, option_name2, option_value2,
+			product_price, discount_rate){
+		
+		// 옵션1 - 옵션2에 따른 가격 가져오기
+		$.ajax({
+			url: '/shop/getOptionPrice/'+product_id,
+			type: 'GET',
+			data: {
+				option_value: option_value,
+				option_value2: option_value2
+			},
+			success: function(response) {
+				let optionPrice = response;
+				
+				// 상품가격 + 옵션가격
+				let totalPrice = Number(product_price) + optionPrice;
+				
+				// 총가격 천자리 쉼표
+				let formattedTotalPrice = new Intl.NumberFormat().format(totalPrice);
+				
+				// 할인율 계산한 가격 (10원자리 버림)
+				let DiscountPrice = Math.floor((totalPrice * (100 - Number(discount_rate)) / 100) / 10) * 10;
+				
+				// 할인가격 천자리 쉼표
+				let formattedDiscountPrice = new Intl.NumberFormat().format(DiscountPrice);
+				
+				let selectItemValue = 
+					`<div class="selectItem row g-0 align-items-center bg-light rounded p-3 mb-3">
+			                <div class="col-12">
+			                    <div class="mb-3">
+			                        <label class="optionVal1" data-opt="${option_value}">${option_name}: ${option_value} / </label>
+			                        <label class="optionVal2" data-opt="${option_value2}"> ${option_name2}: ${option_value2}`
+			                        
+					if(optionPrice != 0){
+						selectItemValue += ` ( +${optionPrice}원 )`
+					}	
+					
+					selectItemValue += `</label>
+			                        <button type="button" class="btn-close" aria-label="Close"></button>
+			                    </div>
+			                    <div class="row">
+			                        <div class="col-2">
+			                            <div class="itemCntBox">
+			                            	<span class="minusBtn itemCntSpan">-</span>
+			                            	<span class="itemCnt">1</span>
+			                            	<span class="plusBtn itemCntSpan">+</span>
+			                            </div>
+			                        </div>
+			                        <div class="col-10" style="text-align: end;">
+			                            <p class="mb-0 display-32 font-weight-600" style="color: rgb(240, 86, 86);">${discount_rate}% 할인 적용</p>
+			                            <p class="mb-0"><span class="totalPrice display-30 me-2" style="text-decoration: line-through; color: #aaa;"
+			                            data-price="${totalPrice}">${formattedTotalPrice}원</span>
+			                            <span class="discountPrice display-27 font-weight-600" data-price="${DiscountPrice}"
+			                            >${formattedDiscountPrice}원</span></p>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+					`
+					
+					$('#selectItems').append(selectItemValue);
+					
+					orderPriceCnt();
+				
+			},
+			error: function(){
+				consloe.log("error");
+			}
+		});
+		
+	}
+	
+	function orderPriceCnt(){
+		
+		// 전체 합계를 저장할 변수
+		let orderPrice = 0; 
+		
+		// 모든 .totalPrice 요소를 선택하고 반복
+		$('.discountPrice').each(function() {
+		    // 각 .totalPrice 요소의 텍스트에서 숫자 부분만 추출
+		    let discountPriceText = $(this).text().trim();
+		    let discountPrice = parseInt(discountPriceText.replace(/[^0-9]/g, ''));
+
+		    // 합계에 누적
+		    orderPrice += discountPrice;
+		});
+		
+		let formattedorderPrice = orderPrice.toLocaleString() + "원";
+		$('.orderPrice').text(formattedorderPrice);
+		
+		console.log(orderPrice);
+	}
+	
+	
+	
+	
+	
 	
 	

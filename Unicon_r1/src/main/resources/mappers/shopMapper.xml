@@ -83,18 +83,40 @@
 		where p.product_id = #{product_id} 
 	</select>
 	
-	<!-- 옵션1 정보 가져오기 -->
+	<!-- 옵션1 정보 가져오기(가격제외) -->
 	<select id="getOption1" resultType="OptionVO">
-		select distinct option_name, option_value 
+		select distinct option_name, option_value, option_name2 
 		from _option 
 		where product_id = #{product_id} 
 	</select>
 	
-	<!-- 옵션1 선택시 옵션2 가져오기 -->
-	<select id="getOption" resultType="OptionVO">
-		select distinct option_name2, option_value2 
+	<!-- 옵션1 정보 가져오기(가격포함) -->
+	<select id="getOption1ForSole" resultType="OptionVO">
+		select distinct option_name, option_value, option_price, option_stock, option_name2 
 		from _option 
 		where product_id = #{product_id} 
+	</select>
+	
+	<!-- 단독형 - 옵션 선택 시 해당 옵션가격 가져오기 -->
+	<select id="getSoleOptionPrice" parameterType="map" resultType="int">
+		select option_price 
+		from _option 
+		where product_id = #{product_id} and option_value = #{option_value} 
+	</select>
+	
+	
+	<!-- 조합형 - 옵션1 선택시 옵션2 가져오기 -->
+	<select id="getOption" parameterType="map" resultType="OptionVO">
+		select distinct option_name2, option_value2, option_price 
+		from _option 
+		where product_id = #{product_id} and option_value = #{option_value} 
+	</select>
+	
+	<!-- 조합형 - 옵션1 옵션2 선택시 옵션가격 가져오기 -->
+	<select id="getOptionPrice" parameterType="map" resultType="int">
+		select option_price 
+		from _option 
+		where product_id = #{product_id} and option_value = #{option_value} and option_value2 = #{option_value2} 
 	</select>
 
 
