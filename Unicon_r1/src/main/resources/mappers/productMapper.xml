@@ -38,7 +38,14 @@
 	<association property="categoryDataVO" resultMap="CategoryResultMap"/>
 	
 	<collection property="option_id" ofType="com.Unicon.domain.OptionVO" />
-	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" />
+	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
+</resultMap>
+
+<resultMap type="com.Unicon.domain.ImageVO" id="ImageResultMap">
+	<id property="image_id" column="image_id"/>
+	<id property="image_type" column="image_type"/>
+	<id property="image_sequence" column="image_sequence"/>
+	<result property="image_src" column="image_src"/>
 </resultMap>
 
 
@@ -88,7 +95,7 @@
         #{end_date},
         #{discount_rate},
         #{product_stock},
-        null,
+        #{product_content},
         #{brand},
         #{manufacturer},
         #{product_origin},
@@ -105,14 +112,30 @@
     )
 </insert>
 
-<select id="selectLastInsertedProductId" resultType="string">
+<select id="selectInsertedProductId" resultType="string">
     SELECT product_id 
     FROM _products 
-    WHERE product_seller_id = 'junghun87'
+    WHERE product_seller_id = 'junghun87' and product_name = #{product_name}
     ORDER BY create_date DESC 
     LIMIT 1
 </select>
 
+
+<insert id="insertOptions" parameterType="List">
+	insert into _option (option_id, product_id, option_name, option_value, option_price, option_stock,option_name2, option_value2) 
+	 values 
+	  <foreach collection="list" item="li" separator=","> 
+	   (null, #{li.product_id}, #{li.option_name}, #{li.option_value},#{li.option_price},#{li.option_stock},#{li.option_name2},#{li.option_value2}) 
+	  </foreach> 
+</insert>
+
+<insert id="insertProductImages" parameterType="List">
+	insert into _image (image_id, image_type, image_sequence, image_src) 
+	 values 
+	  <foreach collection="list" item="li" separator=","> 
+	   (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
+	  </foreach> 
+</insert>
 
 
 </mapper>
