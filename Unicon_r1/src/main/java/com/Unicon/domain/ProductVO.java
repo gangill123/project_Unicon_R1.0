@@ -39,7 +39,6 @@ public class ProductVO {
 	private String comments;
 	private String option_type; 
 	
-	private OptionVO option1;
 	private List<OptionVO> option;
 	
 	private List<ImageVO> product_images;

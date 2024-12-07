@@ -1094,8 +1094,6 @@
             	data.option_type = '설정안함';
             }
             
-            
-            
             // 입력 필드에서 값 가져오기 및 배송 가격 설정
             const fields = ['brand', 'manufacturer', 'product_origin', 'product_expiry', 'delivery_price'];
             fields.forEach(field => {
@@ -1122,54 +1120,47 @@
 
             data.product_keyword = product_keyword;
             
-            // FormData 객체 생성
-            var formData = new FormData();
-            
             if($('#option-set-on').hasClass('setting-active')) {
             	var optionName = $(".option-list").find('.option-item-name').text().trim(); // 옵션명
             	if(optionName == null) {
             		alert("옵션이 비어 있습니다.");
             		return;
             	}
-            	
-            	
-            	
             }
-         // data 객체의 각 속성을 FormData에 추가
-        	for (let key in data) {
-        	    if (key === 'option') {
-        	        data.option.forEach((option, index) => {
-        	            for (let optionKey in option) {
-        	                formData.append("option", data.option[0].option_name);
-        	            }
-        	        });
-        	    	
-        	    	
-        	    } else {
-        	        formData.append(key, data[key]);
-        	    }
-        	}
-
-            
-            // 이미지 파일 추가 (jQuery 사용)
-            $('input[type="file"]').each(function(index) {
-                if (this.files.length > 0) {
-                    formData.append(`upload_images[${index}]`, this.files[0]); // FormData에 파일 추가
-                }
-            });
-            
-            // FormData 사용 예시 (AJAX 요청 등)
             
             
             console.log(data);
             
             let valid = isValid();
+            // FormData 객체 생성
+            var formData = new FormData();
             
-            /*data.option.forEach(option => {
-	    		formData.append('option1',option); // JSON 문자열로 전송
-	    	});
-            */
+            // data 객체의 각 속성을 FormData에 추가
+        	for (let key in data) {
+        		if(key == 'option'){
+        			continue;
+        		}
+        	    formData.append(key, data[key]);
+        	}
+
+            data.option.forEach(function(opt, index) {
+                formData.append("option[" + index + "].option_name", opt.option_name);
+                formData.append("option[" + index + "].option_value", opt.option_value);
+                formData.append("option[" + index + "].option_price", opt.option_price);
+                formData.append("option[" + index + "].option_stock", opt.option_stock);
+                formData.append("option[" + index + "].option_name2", opt.option_name2);
+                formData.append("option[" + index + "].option_value2", opt.option_value2);
+            });
+            // 이미지 파일 추가 (jQuery 사용)
+            $('.image-input').each(function(index, input) {
+                if (input.files.length > 0) {
+                    formData.append(`upload_images[${index}]`, input.files[0]); // FormData에 파일 추가
+                }
+            });
+            var htmlContent = $('#noContent').summernote('code');
+            formData.append(`product_content`, htmlContent); // FormData에 파일 추가
             
+           
             console.log(...formData); // FormData의 내용을 확인하고 싶다면 콘솔에 출력
             if(valid) {
             	// AJAX 요청
@@ -1183,7 +1174,6 @@
             			// 성공적으로 응답을 받았을 때 처리
             			console.log('응답:', response);
             			alert('업로드가 성공적으로 완료되었습니다.');
-            			
             			
             		},
             		error: function(xhr, status, error) {
