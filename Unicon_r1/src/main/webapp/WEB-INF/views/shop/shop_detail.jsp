@@ -28,12 +28,10 @@
 .btn-close{
 	position: absolute;
 	display: inline-block;
-	top: 0px;
 	right: 0px;
 	width: 0.3em;
 	height: 0.3em;
 	margin-right: 15px;
-	margin-top: 15px;
 }
 
 .itemCntBox{
@@ -67,6 +65,7 @@
         ================================================== -->
         ${productInfo}
         ${optionInfo}
+        ${optionInfoForSole}
         
         <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
             <div class="container">
@@ -144,29 +143,54 @@
                             <p class="mb-1"><span class="display-27 font-weight-600">옵션선택</span></p>
 
                             <div class="row optionSelect">
-                            <div class="col-md-12">
-                                    <div class="quform-element form-group">
-                                        <div class="quform-input">
-                                            <select id="itemOption1" class="form-control form-select" name="news_resion"
-                                            style="padding: 6px 12px;">
-                                                <option value="${optionInfo[0].option_name}" disabled selected>${optionInfo[0].option_name}</option>
-											    <c:forEach var="list" items="${optionInfo}">
-											    	<option value="${list.option_value}">${list.option_value}</option>
-											    </c:forEach>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            <div class="col-md-12">
-                                    <div class="quform-element form-group">
-                                        <div class="quform-input">
-                                            <select id="itemOption2" class="form-control form-select" name="news_resion"
-                                            style="padding: 6px 12px;">
-                                                <option value="옵션2" disabled selected>옵션2</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                            
+                            <c:choose>
+                            	<c:when test="${productInfo.option_type == '단독형'}">
+                            		<div class="col-md-12">
+	                                    <div class="quform-element form-group">
+	                                        <div class="quform-input">
+	                                            <select id="SoleItemOption" class="form-control form-select" 
+	                                            style="padding: 6px 12px;">
+	                                                <option value="${optionInfo[0].option_name}" disabled selected>${optionInfo[0].option_name}</option>
+												    <c:forEach var="list" items="${optionInfoForSole}">
+												    	<option value="${list.option_value}">${list.option_value}
+												    	<c:if test="${list.option_price != 0}">
+												    	( +<fmt:formatNumber value="${list.option_price}" type="number" />원 )
+												    	</c:if>
+												    	</option>
+												    </c:forEach>
+	                                            </select>
+	                                        </div>
+	                                    </div>
+	                                </div>
+                            	</c:when>
+                            	<c:otherwise>
+	                            	<div class="col-md-12">
+	                                    <div class="quform-element form-group">
+	                                        <div class="quform-input">
+	                                            <select id="itemOption1" class="form-control form-select" 
+	                                            style="padding: 6px 12px;">
+	                                                <option value="${optionInfo[0].option_name}" disabled selected>${optionInfo[0].option_name}</option>
+												    <c:forEach var="list" items="${optionInfo}">
+												    	<option value="${list.option_value}">${list.option_value}</option>
+												    </c:forEach>
+	                                            </select>
+	                                        </div>
+	                                    </div>
+	                                </div>
+		                            <div class="col-md-12">
+		                                <div class="quform-element form-group">
+		                                    <div class="quform-input">
+		                                        <select id="itemOption2" class="form-control form-select" 
+		                                        style="padding: 6px 12px;">
+		                                            <option value="옵션2" disabled selected>옵션2</option>
+		                                        </select>
+		                                    </div>
+		                                </div>
+		                            </div>
+                            	</c:otherwise>
+                            </c:choose>
+                                
                             </div>
                             
                             <!-- 옵션1,옵션2 선택 시 추가되는 창 -->
@@ -177,7 +201,7 @@
 
 							<div style="display: flex; justify-content: space-between; margin-bottom: 20px; margin-top: 70px;">
 								<p class="mb-1"><span class="display-29 font-weight-600">주문금액</span></p>
-								<p class="mb-1"><span class="display-27 font-weight-700">0원</span></p>
+								<p class="mb-1"><span class="orderPrice display-27 font-weight-700">0원</span></p>
 							</div>
 
                             <div class="row mb-4">
@@ -220,22 +244,117 @@
 <script>
 	$(document).ready(function () {
 		
-		// 옵션1 선택시 옵션2 세부옵션값 가져오기
-		$('#itemOption1').on('change',function(){
-			//alert("123");
-			getOption('${productInfo.product_id}');
+		// 옵션 선택 시 옵션값 담는 배열 선언
+		let optionArray = [];
+		
+		// 단독형 옵션 선택 시 선택블록 생성
+		$('#SoleItemOption').on('change', function(){
+			
+			let option_name = '${optionInfo[0].option_name}';
+			let option_value = $('#SoleItemOption').val();
+			
+			if (optionArray.includes(option_value)) {
+		        alert("이미 선택한 옵션입니다.");
+		    } else {
+		        // 중복되지 않으면 배열에 추가하고 선택박스 생성
+		        optionArray.push(option_value);
+				appendSoleSelectItems('${productInfo.product_id}', option_name, option_value,
+						'${productInfo.product_price}', '${productInfo.discount_rate}');
+				
+				//console.log(optionArray);
+		    }
 		});
 		
-		// 옵션2 선택 시 선택블록 생성 후 옵션창 초기화
+		
+		// 조합형 - 옵션1 선택시 옵션2 세부옵션값 가져오기
+		$('#itemOption1').on('change',function(){
+			//alert("123");
+			console.log('${productInfo.product_id}');
+			console.log($(this).val());
+			getOption('${productInfo.product_id}', $(this).val());
+		});
+		
+		// 조합형 - 옵션2 선택 시 선택블록 생성
 		$('#itemOption2').on('change', function(){
 			
-			let option_name = '옵션1';
+			let option_name = '${optionInfo[0].option_name}';
 			let option_value = $('#itemOption1').val();
-			let option_name2 = '옵션2';
+			let option_name2 = '${optionInfo[0].option_name2}';
 			let option_value2 = $('#itemOption2').val();
 			
-			appendselectItems(option_name, option_value, option_name2, option_value2);
+			let exists = optionArray.some(item => item.opt1 == option_value && item.opt2 == option_value2);
 			
+			if (exists) {
+		        alert("이미 선택한 옵션입니다.");
+			} else {
+				 // 중복되지 않으면 배열에 추가하고 선택박스 생성
+				optionArray.push({opt1:option_value, opt2:option_value2});
+				appendSelectItems('${productInfo.product_id}', option_name, option_value, option_name2, option_value2,
+						'${productInfo.product_price}', '${productInfo.discount_rate}');
+				console.log(optionArray);
+			}
+			
+			
+		});
+		
+		
+		// x 눌렀을 경우 selectItem 없애기
+		$('#selectItems').on('click','.btn-close', function(){
+			//alert("ok");
+			$(this).closest('.selectItem').remove();
+			orderPriceCnt();
+			
+			// 삭제 시 배열의 옵션값 삭제(단독,조합)
+			if('${productInfo.option_type}' == '단독형'){
+				let delOpt = $(this).closest('.row').find('.optionVal1').data('opt');
+				let index = optionArray.indexOf(delOpt);
+				if (index !== -1) {
+					optionArray.splice(index, 1); // index 위치에서 1개 요소를 삭제
+				}
+
+				//console.log(optionArray);
+			} else{
+				let delOpt1 = $(this).closest('.row').find('.optionVal1').data('opt');
+				let delOpt2 = $(this).closest('.row').find('.optionVal2').data('opt');
+				let index = optionArray.findIndex(item => item.opt1 == delOpt1 && item.opt2 == delOpt2);
+				if (index !== -1) {
+					optionArray.splice(index, 1); // 해당 인덱스의 객체 제거
+				}
+				
+				console.log(optionArray);
+			}
+			
+			
+			
+		});
+		
+		// 수량 변경 로직
+		$('#selectItems').on('click', '.itemCntSpan', function () {
+			// 숫자가 표시된 요소 선택
+		    let countElement = $(this).siblings('.itemCnt'); 
+		    let currentCount = parseInt(countElement.text()); // 현재 숫자 값
+		    // 클래스에 따라 동작 분기
+		    if ($(this).hasClass('plusBtn')) {
+		        countElement.text(currentCount + 1); // 숫자 증가
+		    } else if ($(this).hasClass('minusBtn')) {
+		        if (currentCount > 1) { // 최소값 1로 제한
+		            countElement.text(currentCount - 1); // 숫자 감소
+		        }
+		    }
+		    
+		 	// 할인 전 금액 가져오기
+		    let initTotalPrice = $(this).closest('.row').find('.totalPrice').data('price');
+		    let totalPrice = initTotalPrice * parseInt(countElement.text());
+		    let formattedTotalPrice = totalPrice.toLocaleString() + "원";
+		    $(this).closest('.row').find('.totalPrice').text(formattedTotalPrice);
+		 	
+		 	// 할인 금액 가져오기
+		    let initdiscountPrice = $(this).closest('.row').find('.discountPrice').data('price');
+		    let discountPrice = initdiscountPrice * parseInt(countElement.text());
+		    let formatteddiscountPrice = discountPrice.toLocaleString() + "원";
+		    $(this).closest('.row').find('.discountPrice').text(formatteddiscountPrice);
+		    
+		    orderPriceCnt();
 		});
 		
 		

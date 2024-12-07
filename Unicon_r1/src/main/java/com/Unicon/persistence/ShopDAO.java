@@ -1,6 +1,7 @@
 package com.Unicon.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +35,27 @@ public class ShopDAO {
 		return sqlSession.selectList(NAMESPACE+".getOption1", product_id);
 	}
 	
-	
-	// 옵션1 선택시 옵션2 세부옵션 가져오기
-	public List<OptionVO> getOption(String product_id) {
-		return sqlSession.selectList(NAMESPACE+".getOption", product_id);
+	// 옵션1 정보 가져오기(단독형 - 가격포함)
+	public List<OptionVO> getOption1ForSole(String product_id) {
+		return sqlSession.selectList(NAMESPACE+".getOption1ForSole", product_id);
 	}
 	
 	
+	// 단독형 - 옵션 선택 시 해당 옵션가격 가져오기
+	public int getSoleOptionPrice(Map<String, String> optionPriceMap) {
+		return sqlSession.selectOne(NAMESPACE+".getSoleOptionPrice", optionPriceMap);
+	}
+	
+	
+	// 조합형 - 옵션1 선택시 옵션2 세부옵션 가져오기
+	public List<OptionVO> getOption(Map<String, String> optionMap) {
+		return sqlSession.selectList(NAMESPACE+".getOption", optionMap);
+	}
+	
+	// 조합형 - 옵션1 옵션2 선택 시 해당 옵션 가격 가져오기
+	public int getOptionPrice(Map<String, String> optionPriceMap) {
+		return sqlSession.selectOne(NAMESPACE+".getOptionPrice", optionPriceMap);
+	}
 	
 	
 	
