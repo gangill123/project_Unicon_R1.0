@@ -123,6 +123,50 @@ public class ShopController {
 		return "/shop/shop_cart";
 	}
 	
+	// 장바구니에서 수량 조절 시 db 실시간 저장
+	@PostMapping("/quantityChange/{num}")
+	@ResponseBody
+	public void quantityChange(@PathVariable("num") int num, @RequestParam("cart_detail_id") int cart_detail_id) {
+		logger.info("quantityPlus() 호출");
+		logger.info("num : {}", num);
+		logger.info("cart_detail_id : {}",cart_detail_id);
+		
+		sService.quantityChange(cart_detail_id, num);
+	}
+	
+	
+	// 옵션 삭제 시 ajax구현(디비 실시간 반영)
+	@PostMapping("/removeOption/{cart_detail_id}")
+	@ResponseBody
+	public void removeOption(@PathVariable("cart_detail_id") int cart_detail_id) {
+		logger.info("removeOption() 호출");
+		logger.info("cart_detail_id : {}",cart_detail_id);
+		
+		sService.removeOption(cart_detail_id);
+	}
+	
+	// 상품 삭제시 ajax구현(디비 실시간 반영)
+	@PostMapping("/removeProduct/{cart_id}")
+	@ResponseBody
+	public void removeProduct(@PathVariable("cart_id") int cart_id) {
+		logger.info("removeProduct() 호출");
+		logger.info("cart_id:{}",cart_id);
+		
+		sService.removeProduct(cart_id);
+		
+	}
+	
+	
+	// 장바구니 비우기 클릭 시 ajax구현(디비 실시간 반영)
+	@PostMapping("/emptyCart")
+	@ResponseBody
+	public void emptyCart(HttpSession session) {
+		logger.info("emptyCart() 호출");
+		String member_id = (String)session.getAttribute("member_id");
+		
+		sService.emptyCart(member_id);
+	}
+	
 	
 	
 

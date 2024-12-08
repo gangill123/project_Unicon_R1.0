@@ -33,6 +33,11 @@
 	border-radius: 0.5rem;
 }
 
+.shop-cart-table .shop-cart td{
+	padding: 11px 8px;
+}
+
+
 </style>
 
 </head>
@@ -75,7 +80,7 @@
                             <colgroup>
                                 <col class="w-100px">
                                 <col>
-                                <col class="w-1px">
+                                <col class="w-10px" style="width: 5%;">
                                 <col>
                                 <col class="w-120px">
                                 <col class="w-1px">
@@ -87,45 +92,76 @@
                                     <th class="text-start text-uppercase font-weight-500">상품명</th>
                                     <th class="text-start text-uppercase font-weight-500">가격</th>
                                     <th class="text-center text-uppercase font-weight-500">수량</th>
-                                    <th class="text-start text-uppercase font-weight-500">합계</th>
+                                    <th class="text-start text-uppercase font-weight-500" style="width: 165px;">합계</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                            	<c:forEach var="list" items="${cartAllInfo }">
+                            	<tr class="${list.cart_id }">
                                     <td class="product-thumbnail text-start">
-                                        <a href="#!" class="d-inline-block w-70px">
-                                        <img src="${cartAllInfo[0].shopVO.product_images[0].image_src }" class="w-70px"></a>
+                                        <a href="/shop/shop_detail/${list.shopVO.product_id}" class="d-inline-block w-70px">
+                                        <img src="${list.shopVO.product_images[0].image_src }" class="w-70px"></a>
                                     </td>
                                     <td class="text-start">
-                                        <a href="#!">${cartAllInfo[0].shopVO.product_name }</a>
-                                        <span class="text-uppercase d-block">
-                                        ${cartAllInfo[0].cart_list[0].option_name} : ${cartAllInfo[0].cart_list[0].option_value}
-                                        / ${cartAllInfo[0].cart_list[0].option_name2} : ${cartAllInfo[0].cart_list[0].option_value2}</span>
-                                        <a href="#!" class="small"><i class="fas fa-edit"></i> Edit</a>
+                                        <a href="/shop/shop_detail/${list.shopVO.product_id}">${list.shopVO.product_name }</a>
+                                        <span class="dprice text-uppercase d-block" data-dprice="${list.shopVO.delivery_price }">
+                                        판매자 : ${list.shopVO.memberVO.memberName } /
+                                        ${list.shopVO.delivery_method }
+                                        <fmt:formatNumber value="${list.shopVO.delivery_price }" type="number" />원
+                                        
+                                        </span>
                                     </td>
                                     <td class="text-start" style="width: 10%;">
-                                        <fmt:formatNumber value="${(cartAllInfo[0].shopVO.product_price + cartAllInfo[0].cart_list[0].option_price)
-                                        *(100 - cartAllInfo[0].shopVO.discount_rate)/100}"
+                                    </td>
+                                    <td class="">
+                                    </td>
+                                    <td class="text-start">
+                                    </td>
+                                    <td class="product-remove text-center" data-cartid="${list.cart_id }">
+                                        <a href="#!"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                                
+                                <c:forEach var="dlist" items="${list.cart_list }">
+                                	<tr class="${list.cart_id }">
+                                    <td class="product-thumbnail text-start"></td>
+                                    <td class="text-start">
+                                        <a href="/shop/shop_detail/${list.shopVO.product_id}">${list.shopVO.product_name }</a>
+                                        <span class="text-uppercase d-block">
+                                        ${dlist.option_name} : ${dlist.option_value}
+                                        <c:if test="${!empty dlist.option_name2}">
+                                        	/ ${dlist.option_name2} : ${dlist.option_value2}
+                                        </c:if>
+                                        </span>
+                                    </td>
+                                    <td class="price text-start" style="width: 10%;">
+                                        <fmt:formatNumber value="${(list.shopVO.product_price + dlist.option_price)
+                                        *(100 - list.shopVO.discount_rate)/100}"
 		                                 type="number" />원
                                     </td>
                                     <td class="product-quantity">
                                         <div class="itemCntBox">
 			                            	<span class="minusBtn itemCntSpan">-</span>
-			                            	<span class="itemCnt">${cartAllInfo[0].cart_list[0].quantity}</span>
+			                            	<span class="itemCnt">${dlist.quantity}</span>
 			                            	<span class="plusBtn itemCntSpan">+</span>
 			                            </div>
                                     </td>
                                     <td class="product-subtotal text-start">
-                                    <fmt:formatNumber value="${(((cartAllInfo[0].shopVO.product_price + cartAllInfo[0].cart_list[0].option_price)
-                                    *(100 - cartAllInfo[0].shopVO.discount_rate)/100)*cartAllInfo[0].cart_list[0].quantity/100)*100}"
+                                    <fmt:formatNumber value="${(((list.shopVO.product_price + dlist.option_price)
+                                    *(100 - list.shopVO.discount_rate)/100)*dlist.quantity/100)*100}"
 		                                 type="number" />원
                                     
                                     </td>
-                                    <td class="product-remove text-center">
+                                    <td class="option-remove text-center" data-dcartid="${dlist.cart_detail_id }">
                                         <a href="#!"><i class="fas fa-times"></i></a>
                                     </td>
                                 </tr>
+                                
+                                </c:forEach>
+                            	
+                            	</c:forEach>
+                                
                             </tbody>
                         </table>
                     </div>
@@ -133,9 +169,7 @@
 
                     <!-- Start Button Set -->
                     <div class="col-12 border-bottom py-4 py-lg-5 mb-4 mb-lg-0">
-                        <button class="butn small mb-2 mb-md-0"><span>Empty Cart</span></button>
-                        <button class="butn small float-end ms-2 mb-2 mb-md-0"><span>Continue Shopping</span></button>
-                        <button class="butn small float-end ms-2"><span>Update Shopping Cart</span></button>
+                        <button class="emptyCart butn small float-end ms-2"><span>장바구니 비우기</span></button>
                     </div>
                     <!-- End Button Set -->
 
@@ -232,12 +266,12 @@
                                 <table class="table cart-sub-total">
                                     <tbody>
                                         <tr>
-                                            <th class="text-end pe-0 text-uppercase">Cart Subtotal</th>
-                                            <td class="text-uppercase text-end pe-0">$1598</td>
+                                            <th class="text-end pe-0 text-uppercase">총 상품금액</th>
+                                            <td class="totalPrice text-uppercase text-end pe-0" style="width: 250px;">$1598</td>
                                         </tr>
                                         <tr>
-                                            <th class="text-end pe-0 text-uppercase">Shipping and Handling</th>
-                                            <td class="text-uppercase text-end pe-0">Free</td>
+                                            <th class="text-end pe-0 text-uppercase">총 배송비</th>
+                                            <td class="totalDeliveryPrice text-uppercase text-end pe-0">Free</td>
                                         </tr>
                                         <tr>
                                             <td class="pe-0" colspan="2">
@@ -245,8 +279,8 @@
                                             </td>
                                         </tr>
                                         <tr class="total">
-                                            <th class="text-uppercase text-end pe-0">Order Total</th>
-                                            <td class="text-uppercase text-end pe-0">$1598</td>
+                                            <th class="text-uppercase text-end pe-0">결제금액</th>
+                                            <td class="payPrice text-uppercase text-end pe-0">$1598</td>
                                         </tr>
                                         <tr>
                                             <td class="pe-0" colspan="2">
@@ -255,7 +289,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a class="butn primary medium float-end" href="#!"><span>Proceed to Checkout</span></a>
+                                <a class="butn primary medium float-end" href="#!"><span>상품 구매하기</span></a>
                             </div>
                         </div>
                     </div>
@@ -276,117 +310,90 @@
 <script>
 	$(document).ready(function () {
 		
-		// 옵션 선택 시 옵션값 담는 배열 선언
-		let optionArray = [];
+		// 페이지 로드 시 총 상품금액 계산
+		let totalPrice = 0; 
+		$('.product-subtotal').each(function() {
+			let subtotalPriceText = $(this).text().trim();
+			let subtotalPrice = parseInt(subtotalPriceText.replace(/[^0-9]/g, ''));
+			
+			totalPrice += subtotalPrice;
+		});
 		
-		// 단독형 옵션 선택 시 선택블록 생성
-		$('#SoleItemOption').on('change', function(){
+		let formattedtotalPrice = totalPrice.toLocaleString() + "원";
+		$('.totalPrice').text(formattedtotalPrice);
+		
+		// 페이지 로드 시 배송비 계산
+		let totalDeliveryPrice = 0;
+		$('.dprice').each(function() {
+			let deliveryPrice = $(this).data('dprice');
 			
-			let option_name = '${optionInfo[0].option_name}';
-			let option_value = $('#SoleItemOption').val();
-			
-			if (optionArray.includes(option_value)) {
-		        alert("이미 선택한 옵션입니다.");
-		    } else {
-		        // 중복되지 않으면 배열에 추가하고 선택박스 생성
-		        optionArray.push(option_value);
-				appendSoleSelectItems('${productInfo.product_id}', option_name, option_value,
-						'${productInfo.product_price}', '${productInfo.discount_rate}');
-				
-				//console.log(optionArray);
-		    }
+			totalDeliveryPrice += deliveryPrice;
+		});
+		
+		let formattedtotalDeliveryPrice = totalDeliveryPrice.toLocaleString() + "원";
+		$('.totalDeliveryPrice').text(formattedtotalDeliveryPrice);
+		
+		
+		// 페이지 로드 시 결제금액 계산
+		let payPrice = totalPrice + totalDeliveryPrice;
+		let formattedpayPrice = payPrice.toLocaleString() + "원";
+		$('.payPrice').text(formattedpayPrice);
+		
+		
+		// 장바구니 비우기 클릭 시 로직
+		$('.emptyCart').on('click', function(){
+			$('.shop-cart tbody').empty();
+			totalPriceCnt();
+			emptyCart();
 		});
 		
 		
-		// 조합형 - 옵션1 선택시 옵션2 세부옵션값 가져오기
-		$('#itemOption1').on('change',function(){
-			//alert("123");
-			console.log('${productInfo.product_id}');
-			console.log($(this).val());
-			getOption('${productInfo.product_id}', $(this).val());
-		});
-		
-		// 조합형 - 옵션2 선택 시 선택블록 생성
-		$('#itemOption2').on('change', function(){
-			
-			let option_name = '${optionInfo[0].option_name}';
-			let option_value = $('#itemOption1').val();
-			let option_name2 = '${optionInfo[0].option_name2}';
-			let option_value2 = $('#itemOption2').val();
-			
-			let exists = optionArray.some(item => item.opt1 == option_value && item.opt2 == option_value2);
-			
-			if (exists) {
-		        alert("이미 선택한 옵션입니다.");
-			} else {
-				 // 중복되지 않으면 배열에 추가하고 선택박스 생성
-				optionArray.push({opt1:option_value, opt2:option_value2});
-				appendSelectItems('${productInfo.product_id}', option_name, option_value, option_name2, option_value2,
-						'${productInfo.product_price}', '${productInfo.discount_rate}');
-				console.log(optionArray);
-			}
-			
+		// 옵션 삭제 눌렀을 경우 td 없애기
+		$('.option-remove').on('click', function(){
+			let dcartid = $(this).data('dcartid');
+			$(this).closest('tr').remove();
+			totalPriceCnt();
+			removeOption(dcartid);
 			
 		});
 		
-		
-		// x 눌렀을 경우 selectItem 없애기
-		$('#selectItems').on('click','.btn-close', function(){
-			//alert("ok");
-			$(this).closest('.selectItem').remove();
-			orderPriceCnt();
-			
-			// 삭제 시 배열의 옵션값 삭제(단독,조합)
-			if('${productInfo.option_type}' == '단독형'){
-				let delOpt = $(this).closest('.row').find('.optionVal1').data('opt');
-				let index = optionArray.indexOf(delOpt);
-				if (index !== -1) {
-					optionArray.splice(index, 1); // index 위치에서 1개 요소를 삭제
-				}
-
-				//console.log(optionArray);
-			} else{
-				let delOpt1 = $(this).closest('.row').find('.optionVal1').data('opt');
-				let delOpt2 = $(this).closest('.row').find('.optionVal2').data('opt');
-				let index = optionArray.findIndex(item => item.opt1 == delOpt1 && item.opt2 == delOpt2);
-				if (index !== -1) {
-					optionArray.splice(index, 1); // 해당 인덱스의 객체 제거
-				}
-				
-				console.log(optionArray);
-			}
-			
-			
-			
+		// 상품 삭제 눌렀을 경우 상품관련 옵션 전부 없애기
+		$('.product-remove').on('click', function(){
+			pid = $(this).data('cartid');
+			$('.' + pid).remove(); // 클래스명이 `pid`인 요소들 제거
+			totalPriceCnt();
+			removeProduct(pid);
 		});
 		
 		// 수량 변경 로직
-		$('#selectItems').on('click', '.itemCntSpan', function () {
+		$('.itemCntSpan').on('click', function () {
+			
+			// cart_detail_id 가져오기
+			let dcartid = $(this).closest('tr').find('.option-remove').data('dcartid');
+			console.log("dcartid : "+dcartid);
+			
 			// 숫자가 표시된 요소 선택
 		    let countElement = $(this).siblings('.itemCnt'); 
 		    let currentCount = parseInt(countElement.text()); // 현재 숫자 값
 		    // 클래스에 따라 동작 분기
 		    if ($(this).hasClass('plusBtn')) {
 		        countElement.text(currentCount + 1); // 숫자 증가
+		        quantityChange(dcartid, 1);
 		    } else if ($(this).hasClass('minusBtn')) {
 		        if (currentCount > 1) { // 최소값 1로 제한
 		            countElement.text(currentCount - 1); // 숫자 감소
+		            quantityChange(dcartid, -1);
 		        }
 		    }
 		    
-		 	// 할인 전 금액 가져오기
-		    let initTotalPrice = $(this).closest('.row').find('.totalPrice').data('price');
-		    let totalPrice = initTotalPrice * parseInt(countElement.text());
-		    let formattedTotalPrice = totalPrice.toLocaleString() + "원";
-		    $(this).closest('.row').find('.totalPrice').text(formattedTotalPrice);
-		 	
-		 	// 할인 금액 가져오기
-		    let initdiscountPrice = $(this).closest('.row').find('.discountPrice').data('price');
-		    let discountPrice = initdiscountPrice * parseInt(countElement.text());
-		    let formatteddiscountPrice = discountPrice.toLocaleString() + "원";
-		    $(this).closest('.row').find('.discountPrice').text(formatteddiscountPrice);
+		 	// 합계 계산
+		    let initPriceText = $(this).closest('tr').find('.price').text();
+		    let initPrice = parseInt(initPriceText.replace(/[^0-9]/g, ''));
+		    let Price = initPrice * parseInt(countElement.text());
+		    let formattedPrice = Price.toLocaleString() + "원";
+		    $(this).closest('tr').find('.product-subtotal').text(formattedPrice);
 		    
-		    orderPriceCnt();
+		    totalPriceCnt();
 		});
 		
 		

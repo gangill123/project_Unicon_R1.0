@@ -1108,6 +1108,42 @@
 		console.log(orderPrice);
 	}
 	
+	function totalPriceCnt(){
+		
+		// 전체 합계를 저장할 변수
+		let totalPrice = 0; 
+		
+		// 모든 .totalPrice 요소를 선택하고 반복
+		$('.product-subtotal').each(function() {
+			let subtotalPriceText = $(this).text().trim();
+			let subtotalPrice = parseInt(subtotalPriceText.replace(/[^0-9]/g, ''));
+			
+			totalPrice += subtotalPrice;
+		});
+		
+		let formattedtotalPrice = totalPrice.toLocaleString() + "원";
+		$('.totalPrice').text(formattedtotalPrice);
+		
+		
+		// 총 배송비 계산
+		let totalDeliveryPrice = 0;
+		$('.dprice').each(function() {
+			let deliveryPrice = $(this).data('dprice');
+			
+			totalDeliveryPrice += deliveryPrice;
+		});
+		
+		let formattedtotalDeliveryPrice = totalDeliveryPrice.toLocaleString() + "원";
+		$('.totalDeliveryPrice').text(formattedtotalDeliveryPrice);
+		
+		
+		// 결제금액 계산
+		let payPrice = totalPrice + totalDeliveryPrice;
+		let formattedpayPrice = payPrice.toLocaleString() + "원";
+		$('.payPrice').text(formattedpayPrice);
+		
+		
+	}
 	
 	/// 장바구니 클릭 시 디비 저장
 	function shopToCart(option_name, option_name2){
@@ -1188,9 +1224,67 @@
 	            }
 	        });
 		}
+	}
+	
+	// 장바구니에서 수량 조절 시 ajax 구현(디비 실시간 반영)
+	function quantityChange(cart_detail_id, num){
+		
+		$.ajax({
+			url: '/shop/quantityChange/'+num,
+			type: 'POST',
+			data: {
+				cart_detail_id:cart_detail_id
+			},
+			success: function(){
+				console.log("ok");
+			},
+			error: function(){
+				console.log("no");
+			}
+		});
 		
 	}
 	
+	// 옵션 삭제 눌렀을 경우 ajax구현(디비 실시간 반영)
+	function removeOption(cart_detail_id){
+		$.ajax({
+			url: '/shop/removeOption/'+cart_detail_id,
+			type: 'POST',
+			success: function(){
+				console.log("ok");
+			},
+			error: function(){
+				console.log("no");
+			}
+		});
+	}
 	
+	// 상품 삭제 눌렀을 경우 ajax구현(디비 실시간 반영)
+	function removeProduct(cart_id){
+		$.ajax({
+			url: '/shop/removeProduct/'+cart_id,
+			type: 'POST',
+			success: function(){
+				console.log("ok");
+			},
+			error: function(){
+				console.log("no");
+			}
+		});
+	}
+	
+	// 장바구니 비우기 클릭 시 ajax구현(디비 실시간 반영)
+	function emptyCart(){
+		$.ajax({
+			url: '/shop/emptyCart',
+			type: 'POST',
+			success: function(){
+				console.log("ok");
+			},
+			error: function(){
+				console.log("no");
+			}
+		});
+	}
 	
 	

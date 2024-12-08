@@ -78,22 +78,36 @@ public class ShopService {
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
 	public void saveCart(CartVO vo) {
 		
-		//최신 카트번호 가져오기
-		int cart_id;
-		if(sdao.getCartid() == 0) {
-			cart_id = 1;
+		// 1. 장바구니에 이미 저장된 product_id가 있는지 확인 -> cart_id 가져옴
+		if(sdao.getCartidToCheck(vo) != 0) {
+			int cart_id = sdao.getCartidToCheck(vo);
+			
+			for(CartDetailVO cdvo : vo.getCart_list()) {
+				cdvo.setCart_id(cart_id);
+			}
+			
+			sdao.updateCart(vo);
+			
+			
 		} else {
-			cart_id = sdao.getCartid() + 1;
+			//최신 카트번호 가져오기
+			int cart_id;
+			if(sdao.getCartid() == 0) {
+				cart_id = 1;
+			} else {
+				cart_id = sdao.getCartid() + 1;
+			}
+			
+			vo.setCart_id(cart_id);
+			
+			for(CartDetailVO cdvo : vo.getCart_list()) {
+				cdvo.setCart_id(cart_id);
+			}
+			
+			// cart 및 cart_detail 테이블에 저장
+			sdao.saveCart(vo);
 		}
 		
-		vo.setCart_id(cart_id);
-		
-		for(CartDetailVO cdvo : vo.getCart_list()) {
-			cdvo.setCart_id(cart_id);
-		}
-		
-		// cart 및 cart_detail 테이블에 저장
-		sdao.saveCart(vo);
 	}
 	
 	// 장바구니 페이지 이동 시 장바구니 정보 가져오기
@@ -102,6 +116,37 @@ public class ShopService {
 	}
 	
 	
+	// 장바구니에서 수량 조절 시 db 실시간 저장
+	public void quantityChange(int cart_detail_id, int num) {
+		
+		Map<String, Integer> quantityChangeMap = new HashMap<String, Integer>();
+		quantityChangeMap.put("cart_detail_id", cart_detail_id);
+		quantityChangeMap.put("num", num);
+		
+		sdao.quantityChange(quantityChangeMap);
+	}
+	
+	// 옵션 삭제 시 ajax구현(디비 실시간 반영)
+	public void removeOption(int cart_detail_id) {
+		sdao.removeOption(cart_detail_id);
+	}
+	
+	// 상품 삭제시 ajax구현(디비 실시간 반영)
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public void removeProduct(int cart_id) {
+		sdao.removeProduct(cart_id);
+	}
+	
+	// 장바구니 비우기 클릭 시 ajax구현(디비 실시간 반영)
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public void emptyCart(String member_id) {
+		
+		// member_id에 해당하는 모든 cart_id 가져오기
+		List<CartVO> cartIds = sdao.getCartIdForEmpty(member_id);
+		
+		// cart와 cart_detail에서 정보 삭제하기
+		sdao.removeCartAndDetail(member_id, cartIds);
+	}
 	
 	
 }

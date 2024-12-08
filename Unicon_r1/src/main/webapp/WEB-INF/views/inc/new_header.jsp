@@ -217,58 +217,7 @@
                                                 <li><a href="loading-bar-banner.html">Loading Bar Banner</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#!">Portfolio</a>
-                                            <ul>
-                                                <li><a href="#!">Portfolio Full Width</a>
-                                                    <ul>
-                                                        <li><a href="portfolio-four-columns.html">Portfolio 4 Columns</a></li>
-                                                        <li><a href="portfolio-three-columns.html">Portfolio 3 Columns</a></li>
-                                                        <li><a href="portfolio-two-columns.html">Portfolio 2 Columns</a></li>
-                                                        <li><a href="portfolio-with-icon-four-columns.html">Icon With 4 Columns</a></li>
-                                                        <li><a href="portfolio-with-icon-three-columns.html">Icon With 3 Columns</a></li>
-                                                        <li><a href="portfolio-with-icon-two-columns.html">Icon With 2 Columns</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">Portfolio Boxed</a>
-                                                    <ul>
-                                                        <li><a href="portfolio-boxed-four-columns.html">Portfolio 4 Columns</a></li>
-                                                        <li><a href="portfolio-boxed-three-columns.html">Portfolio 3 Columns</a></li>
-                                                        <li><a href="portfolio-boxed-two-columns.html">Portfolio 2 Columns</a></li>
-                                                        <li><a href="portfolio-boxed-with-icon-four-columns.html">Icon With 4 Columns</a></li>
-                                                        <li><a href="portfolio-boxed-with-icon-three-columns.html">Icon With 3 Columns</a></li>
-                                                        <li><a href="portfolio-boxed-with-icon-two-columns.html">Icon With 2 Columns</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">Portfolio Classic</a>
-                                                    <ul>
-                                                        <li><a href="portfolio1.html">Portfolio 1</a></li>
-                                                        <li><a href="portfolio2.html">Portfolio 2</a></li>
-                                                        <li><a href="portfolio3.html">Portfolio 3</a></li>
-                                                        <li><a href="portfolio4.html">Portfolio 4</a></li>
-                                                        <li><a href="portfolio5.html">Portfolio 5</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">Portfolio Masonry</a>
-                                                    <ul>
-                                                        <li><a href="projects-masonry-style-1.html">Masonry Style 01</a></li>
-                                                        <li><a href="projects-masonry-style-2.html">Masonry Style 02</a></li>
-                                                        <li><a href="projects-masonry-style-3.html">Masonry Style 03</a></li>
-                                                        <li><a href="projects-masonry-style-4.html">Masonry Style 04</a></li>
-                                                        <li><a href="image-gallery-style1.html">Gallery Style 01</a></li>
-                                                        <li><a href="image-gallery-style2.html">Gallery Style 02</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#!">Single Project</a>
-                                                    <ul>
-                                                        <li><a href="project-detail.html">Projects Detail 01</a></li>
-                                                        <li><a href="project-detail-2.html">Projects Detail 02</a></li>
-                                                        <li><a href="project-detail-3.html">Projects Detail 03</a></li>
-                                                        <li><a href="project-detail-4.html">Projects Detail 04</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#!">소식</a>
+                                        <li><a href="/news">소식</a>
                                             <ul>
                                                 <li><a href="/news">지자체 행사소식</a></li>
                                                 <li><a href="blog-grid-classic.html">Blog Grid Classic</a></li>
@@ -282,14 +231,24 @@
                                             </ul>
                                            </li>
                                         
-                                        
-                                        
-                                        <li><a href="#!">관리자페이지</a>
+                                        <li><a href="/admin/slide_manage">관리자페이지</a>
                                             <ul>
                                                 <li><a href="/admin/slide_manage">슬라이드관리</a></li>
                                                 <li><a href="/admin/news_manage">소식관리</a></li>
                                             </ul>
                                         </li>
+                                        
+                                        <li><a href="/shop">복지몰</a>
+                                            <ul>
+                                                <li><a href="#!">복지몰 홈</a></li>
+                                                <li><a href="#!">카테고리</a></li>
+                                                <li><a href="#!">베스트</a></li>
+                                                <li><a href="#!">기획전</a></li>
+                                            </ul>
+                                        </li>
+                                        
+                                        
+                                        
                                         <li></li>
                                     </ul>
                                     <!-- end menu area -->
@@ -298,31 +257,9 @@
                                     <div class="attr-nav me-lg-0 ms-auto">
                                         <ul>
                                             <li class="dropdown me-3 me-lg-0">
-                                                <a href="#" class="dropdown-toggle"  id="dropdownMenuLink" data-bs-toggle="dropdown">
-                                                    <i class="fas fa-shopping-cart"></i>
+                                                <a href="/shop/cart"><i class="fas fa-shopping-cart"></i>
                                                     <span class="badge bg-primary">3</span>
                                                 </a>
-                                                <ul class="dropdown-menu cart-list">
-                                                    <li>
-                                                        <a href="#!" class="photo"><img src="${pageContext.request.contextPath }/resources/new_assets/img/shop/cart-thumb01.jpg" class="cart-thumb" alt="..."></a>
-                                                        <h6><a href="#!">Sneakers Shoe </a></h6>
-                                                        <p>2x - <span class="price">$99.99</span></p>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#!" class="photo"><img src="${pageContext.request.contextPath }/resources/new_assets/img/shop/cart-thumb02.jpg" class="cart-thumb" alt="..."></a>
-                                                        <h6><a href="#!">Digital Watch</a></h6>
-                                                        <p>1x - <span class="price">$33.33</span></p>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#!" class="photo"><img src="${pageContext.request.contextPath }/resources/new_assets/img/shop/cart-thumb03.jpg" class="cart-thumb" alt="..."></a>
-                                                        <h6><a href="#!">Headphones</a></h6>
-                                                        <p>2x - <span class="price">$99.99</span></p>
-                                                    </li>
-                                                    <li class="total bg-primary">
-                                                        <span class="pull-left"><strong>Total</strong>: $233.31</span>
-                                                        <a href="#!" class="butn small btn-cart white"><span>View Cart</span></a>
-                                                    </li>
-                                                </ul>
                                             </li>
                                             <li class="search"><a href="#!"><i class="fas fa-search"></i></a></li>
                                             <li><a href="/mypage">
