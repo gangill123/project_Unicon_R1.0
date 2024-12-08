@@ -143,8 +143,22 @@
 	delete from _comment 
 	where comment_id = #{comment_id} 
 </delete>
+<delete id="deleteCommentLike">
+	delete from _comment_like 
+	where comment_id = #{comment_id} 
+</delete>
 <!-- 댓글 삭제 -->
 
+<!-- 게시물 삭제 -->
+<delete id="deletePost">
+	delete from _post 
+	where post_id = #{post_id} 
+</delete>
+<delete id="deletePostLike">
+	delete from _post_like 
+	where post_id = #{post_id} 
+</delete>
+<!-- 게시물 삭제 -->
 
 
 <!-- 기존의 post_id 값 유무 체크(불러오기) -->
