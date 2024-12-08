@@ -5,7 +5,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7dc432479314390de8962dfc3739f2f5"></script>
 </head>
 <%@ include file="../inc/new_header.jsp" %>
-<!-- header -->
+<!-- header --> 
 
 <!--====================================작성부=====================================-->
 <section>

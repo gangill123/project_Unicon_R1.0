@@ -10,4 +10,4 @@ public class MapController {
     public String showMap() {
         return "map/map";  // /WEB-INF/views/map/map.jsp를 가리킵니다
     }
-}
+} 
