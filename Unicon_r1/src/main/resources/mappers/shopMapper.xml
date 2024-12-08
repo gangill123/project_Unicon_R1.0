@@ -158,6 +158,43 @@
 	<select id="getCartid" resultType="int">
 		select cart_id from _cart order by cart_id desc limit 1
 	</select>
+	
+	<!-- cart_id가져오기 (중복여부 확인) -->
+	<select id="getCartidToCheck" resultType="int">
+		select cart_id 
+		from _cart 
+		where member_id =#{member_id} and product_id=#{product_id} 
+	</select>
+	
+	<!-- 옵션이 일치하는 값이 존재하는지 수량을 가져오기 -->
+	<select id="optionQuantityCheck" resultType="int">
+		select d.quantity 
+		from _cart c 
+		join _cart_detail d on c.cart_id = d.cart_id 
+		where c.cart_id = #{cart_id} and option_value = #{option_value}
+		<if test="option_value2 != null">
+			and option_value2= #{option_value2}
+		</if>
+	</select>
+	
+	<!-- 옵션 체크 후 해당 옵션값이 없음 => insert -->
+	<insert id="saveCartDetailAfterCheck">
+		insert into _cart_detail(cart_id, option_name, option_value, 
+		option_name2, option_value2, quantity, option_price) 
+		values(#{cart_id}, #{option_name}, #{option_value}, #{option_name2}, #{option_value2}, 
+	    #{quantity}, #{option_price}) 
+	</insert>
+	
+	<!-- 해당 옵션이 이미 있음 가져온 수량에 현재 수량을 더한 값을 저장 -->
+	<update id="updateCartDetailAfterCheck">
+		update _cart_detail 
+		set quantity = #{quantity} 
+		where cart_id = #{cart_id} and option_value = #{option_value} 
+		<if test="option_value2 != null">
+		and option_value2 = #{option_value2}
+		</if>
+	</update>
+	
 
 	<!-- 상세페이지에서 선택한 상품정보 cart, cart_detail 저장하기 -->
 	<!-- cart 테이블 저장 -->
@@ -191,6 +228,61 @@
 	</select>
 
 
+	<!-- 장바구니에서 수량 조절 시 db 실시간 저장 -->
+	<update id="quantityChange" parameterType="map">
+		update _cart_detail  
+		set quantity = quantity + #{num}  
+		where cart_detail_id = #{cart_detail_id} 
+	</update>
+
+	
+	<!-- 옵션 삭제 시 ajax구현(디비 실시간 반영) -->
+	<delete id="removeOption">
+		delete from _cart_detail 
+		where cart_detail_id = #{cart_detail_id} 
+	</delete>
+
+
+	<!-- 상품 삭제시 cart 테이블 해당 정보 삭제 -->
+	<delete id="removeProduct">
+		delete from _cart 
+		where cart_id = #{cart_id} 
+	</delete>
+
+	<!-- 상품 삭제시 cart_detail 테이블 해당 정보 삭제 -->
+	<delete id="removeProductOption">
+		delete from _cart_detail 
+		where cart_id = #{cart_id}
+	</delete>
+	
+	<!-- member_id에 해당하는 모든 cart_id 가져오기 -->
+	<select id="getCartIdForEmpty" resultType="CartVO">
+		select cart_id 
+		from _cart 
+		where member_id = #{member_id} 
+	</select>
+	
+	<!-- cart 테이블 삭제  -->
+	<delete id="removeCart">
+		delete from _cart 
+		where member_id = #{member_id} 
+	</delete>
+	
+	<!-- cart_detail 테이블 삭제 -->
+	<delete id="removeCartDetail" parameterType="list">
+		delete from _cart_detail
+		where cart_id in 
+		<foreach collection="list" item="li" open="(" separator="," close=")">
+			#{li.cart_id} 
+		</foreach>
+	</delete>
+	
+	
+	
+	
+	
+	
+	
 
 </mapper>
 
