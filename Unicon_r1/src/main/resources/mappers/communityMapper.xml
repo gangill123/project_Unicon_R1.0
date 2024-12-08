@@ -131,6 +131,20 @@
 </select>
 <!-- 해당 게시글의 전체 댓글 불러오기 -->
 
+<!-- 댓글 등록 -->
+<insert id="insertComment" parameterType="CommentVO" useGeneratedKeys="true" keyProperty="comment_id">
+	insert into _comment (post_id, member_id, comment_content, comment_date) values 
+	(#{post_id}, #{member_id}, #{comment_content}, now()) 
+</insert>
+<!-- 댓글 등록 -->
+
+<!-- 댓글 삭제 -->
+<delete id="deleteComment">
+	delete from _comment 
+	where comment_id = #{comment_id} 
+</delete>
+<!-- 댓글 삭제 -->
+
 
 
 <!-- 기존의 post_id 값 유무 체크(불러오기) -->

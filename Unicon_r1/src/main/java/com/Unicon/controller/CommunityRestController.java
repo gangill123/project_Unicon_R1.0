@@ -108,6 +108,39 @@ public class CommunityRestController {
 		return result;
 	}
 	
+	// 댓글 등록
+	@RequestMapping(value = "/insertComment",method = RequestMethod.POST)
+	public ResponseEntity<CommentVO> insertComment(@RequestBody CommentVO commentVO){
+		logger.info(" insertComment() 실행 ");
+		logger.info(" commentVO : {}",commentVO);
+		
+		ResponseEntity<CommentVO> respEntity = null;
+		try {
+			communityService.insertComment(commentVO);
+			respEntity = new ResponseEntity<CommentVO>(commentVO,HttpStatus.OK);
+		} catch (Exception e) {
+			respEntity = new ResponseEntity<CommentVO>(HttpStatus.BAD_REQUEST);
+		}
+		return respEntity;
+	}
+	
+	// 댓글 삭제
+	@RequestMapping(value = "/deleteComment/{comment_id}",method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteComment(@PathVariable("comment_id")int comment_id){
+		logger.info(" deleteComment() 실행 ");
+		logger.info(" comment_id : {}",comment_id);
+		
+		ResponseEntity<String> respEntity = null;
+		try {
+			communityService.deleteComment(comment_id);
+			respEntity = new ResponseEntity<String>("deleteOK",HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			respEntity = new ResponseEntity<String>("deleteErr",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return respEntity;
+	}
+	
 	// 게시물 등록
 	@PostMapping(value = "/insert")
 	public ResponseEntity<String> registerPost(PostVO postVO, HttpServletRequest req){

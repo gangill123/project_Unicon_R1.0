@@ -27,6 +27,7 @@ z-index: 2000;
        </div>
    </div>
    
+   <input type="hidden" id="loginMemberId" value="test15">
    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">Launch modal</button>
 
    <div class="container">
@@ -78,7 +79,7 @@ z-index: 2000;
                        <div class="w-100 px-3">
                            <h4><a href="#!" class="open-modal" data-post-id="${p.post_id }" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
                            <p>${p.jypMemberVO.member_nickname }</p>
-                           <input type="hidden" id="selectPost" value="${p.post_id}"/>
+                           <%-- <input type="hidden" id="selectPost" value="${p.post_id}"/> --%>
                        </div>
                    </div>
                </div>
@@ -384,8 +385,9 @@ z-index: 2000;
                        <div style="width: 100%; height: 36px; margin-top: 10px;">
                        		<span id="postDate" style="margin-right: 5%;">1998-07-11 00:00</span><span id="postLikeCount" style="margin-right: 5%;">좋아요 711개</span><span style="margin-right: 5%;"><i class="fa-regular fa-heart"></i></span>
                        </div>
-                       <input type="text" style="width: 100%; height: 36px; margin-bottom: 10px;" placeholder="댓글 달기...">
-                       <button type="button" class="btn btn-outline-success"><!-- 댓글 --><i class="fas fa-paper-plane"></i></button>
+                       <input type="hidden" id="selectPost"/>
+                       <input id="commentContent" type="text" style="width: 100%; height: 36px; margin-bottom: 10px;" placeholder="댓글 달기...">
+                       <button id="commentContentBtn" type="button" class="btn btn-outline-success"><!-- 댓글 --><i class="fas fa-paper-plane"></i></button>
                        <button type="button" class="btn btn-outline-primary">수정</button>
                        <button type="button" class="btn btn-outline-danger">신고</button>
                        <button type="button" class="btn btn-outline-danger">삭제</button>
@@ -427,6 +429,9 @@ $(document).ready(function(){
 		
         // 클릭한 요소의 data-post-id 속성에서 게시물ID 가져오기
         var post_id = $(this).data('post-id');
+        
+        // 클릭한 요소의 게시물ID를 댓글 히든에 저장하기
+        $('#selectPost').val(post_id);
         
         // 확인용 콘솔 로그
         // console.log(post_id);
@@ -544,34 +549,8 @@ $(document).ready(function(){
                     $('#imgImg4').attr('src', defaultImage4);
         		}
         		
-        		// 모달 댓글 부분
-        		$.each(data.commentList, function(index, comments) {
-//         			console.log(comments.jypMemberVO.member_image);
-//         			console.log(comments.jypMemberVO.member_nickname);
-//         			console.log(comments.comment_date);
-//         			console.log(comments.comment_likes[0].comment_like_count);
-//         			console.log(comments.comment_content);
-        			$('.contentRecycle').append(
-        				'<div class="media" style="margin-bottom: 30px;">'+
-                            '<img src="'+comments.jypMemberVO.member_image+'" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">'+
-                            '<div class="media-body">'+
-                             	'<div class="container" style="display: flex; flex-direction: column; padding: 0px;">'+
-								    '<div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">'+
-								        '<div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">'+comments.jypMemberVO.member_nickname+'</h4></div>'+
-								        '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">'+comments.comment_date+'</div>'+
-								        '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 '+comments.comment_likes[0].comment_like_count+'개</div>'+
-								        '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>'+
-								    '</div>'+
-								    '<div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">'+
-							        	'<div class="box" style="text-align: left;">'+comments.comment_content+'<button type="button" style="margin-left: 5px; color: grey;" class="btn btn-link">삭제</button></div>'+
-								    '</div>'+
-								'</div>'+
-                            '</div>'+
-                        '</div>'
-        			);
-					
-        		}); // each 모달 댓글 부분
-
+        		// 댓글 목록
+        		addCommentsToModal(data.commentList);
         		
         	},
         	error : function(){
@@ -579,8 +558,78 @@ $(document).ready(function(){
         	}
         }); // $.ajax 
         
+        // 댓글 등록
+        $('#commentContentBtn').on('click', function(){
+        	var content = {
+        		'post_id':$('#selectPost').val(),
+        		'member_id':$('#loginMemberId').val(),
+        		'comment_content':$('#commentContent').val()
+        	};
+        	$.ajax({
+        		url : '/community/insertComment',
+        		type : 'POST',
+        		data : JSON.stringify(content),
+        		contentType : "application/json",
+        		success : function(data){
+        			console.log('댓글 등록 응답 : ',data);
+        			alert('댓글이 등록되었습니다.');
+        			$('#commentContent').val('');
+        			addCommentsToModal(data);
+        		},
+        		error : function(){
+        			alert('댓글 등록에 실패했습니다.');
+        		}
+        	}); // $.ajax
+        }); // 댓글 등록 클릭
+        // 댓글 등록
+        
+        // 댓글 삭제
+        $(document).on('click', '.btnDelete', function(){
+        	// 버튼에서 댓글 ID 가져오기
+         	var comment_id = $(this).data('comment-id');
+        	$.ajax({
+        		url : '/community/deleteComment/' + comment_id,
+        		type : 'DELETE',
+        		success : function(data){
+        			alert('댓글이 삭제되었습니다.');
+        			addCommentsToModal(data);
+        		},
+        		error : function(){
+        			alert('댓글 삭제에 실패했습니다.');
+        		}
+        	}); // $.ajax
+        }); // 댓글 삭제 클릭
+     	// 댓글 삭제
+     	
     }); // 모달 여는 글자 클릭
-	
+    
+ 	// 댓글을 모달에 추가하는 함수
+    function addCommentsToModal(commentList) {
+        // 댓글 목록을 반복하여 모달에 추가
+        $.each(commentList, function(index, comments) {
+            $('.contentRecycle').append(
+                '<div class="media" style="margin-bottom: 30px;">' +
+                    '<img src="' + comments.jypMemberVO.member_image + '" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">' +
+                    '<div class="media-body">' +
+                        '<div class="container" style="display: flex; flex-direction: column; padding: 0px;">' +
+                            '<div class="top-section" style="display: flex; width: 100%;">' + // grid-template-columns 제거
+                                '<div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">' + comments.jypMemberVO.member_nickname + '</h4></div>' +
+                                '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">' + comments.comment_date + '</div>' +
+                                '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 ' + (comments.comment_likes.length > 0 ? comments.comment_likes[0].comment_like_count : 0) + '개</div>' +
+                                '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>' +
+                            '</div>' +
+                            '<div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">' +
+                                '<div class="box" style="text-align: left;">' + comments.comment_content + '<button type="button" style="margin-left: 5px; color: grey;" class="btn btn-link btnDelete" data-comment-id="'+comments.comment_id+'">삭제</button></div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>'
+            );
+        });
+    }
+ 	// 댓글을 모달에 추가하는 함수
+    
+ 
 }); // 돔레디
 </script>
 <!--====================================script 작성부=====================================-->

@@ -56,4 +56,17 @@ public class CommunityService {
 		return communityDAO.getCommentListAll(post_id);
 	}
 	
+	// 댓글 등록
+	public void insertComment(CommentVO commentVO) {
+		logger.info(" Service - insertComment() 실행 ");
+		communityDAO.insertComment(commentVO);
+	}
+	
+	// 댓글 삭제
+	public int deleteComment(int comment_id) {
+		logger.info(" Service - deleteComment() 실행 ");
+		logger.info(" comment_id : {}",comment_id);
+		return communityDAO.deleteComment(comment_id);
+	}
+	
 }
