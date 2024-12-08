@@ -63,10 +63,19 @@ public class CommunityService {
 	}
 	
 	// 댓글 삭제
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
 	public int deleteComment(int comment_id) {
 		logger.info(" Service - deleteComment() 실행 ");
 		logger.info(" comment_id : {}",comment_id);
 		return communityDAO.deleteComment(comment_id);
+	}
+	
+	// 게시물 삭제
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public int deletePost(String post_id) {
+		logger.info(" Service - deletePost() 실행 ");
+		logger.info(" post_id : {}",post_id);
+		return communityDAO.deletePost(post_id);
 	}
 	
 }

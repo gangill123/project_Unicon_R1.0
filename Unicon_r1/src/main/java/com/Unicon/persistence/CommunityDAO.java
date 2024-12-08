@@ -73,7 +73,18 @@ public class CommunityDAO {
 	public int deleteComment(int comment_id) {
 		logger.info(" DAO - deleteComment() 실행 ");
 		logger.info(" comment_id : {}",comment_id);
-		return sqlSession.delete(NAMESPACE+"deleteComment",comment_id);
+		int result = sqlSession.delete(NAMESPACE+"deleteCommentLike",comment_id);
+		int result2 = sqlSession.delete(NAMESPACE+"deleteComment",comment_id);
+		return result + result2;
+	}
+	
+	// 게시물 삭제
+	public int deletePost(String post_id) {
+		logger.info(" DAO - deletePost() 실행 ");
+		logger.info(" post_id {}",post_id);
+		int result = sqlSession.delete(NAMESPACE+"deletePostLike",post_id);
+		int result2 = sqlSession.delete(NAMESPACE+"deletePost", post_id);
+		return result + result2;
 	}
 	
 	

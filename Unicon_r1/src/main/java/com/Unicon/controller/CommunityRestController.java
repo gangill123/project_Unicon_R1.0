@@ -141,6 +141,23 @@ public class CommunityRestController {
 		return respEntity;
 	}
 	
+	// 게시물 삭제
+	@RequestMapping(value = "/deletePost/{post_id}",method = RequestMethod.DELETE)
+	public ResponseEntity<String> deletePost(@PathVariable("post_id")String post_id){
+		logger.info(" deletePost() 실행 ");
+		logger.info(" post_id : {}",post_id);
+		
+		ResponseEntity<String> respEntity = null;
+		try {
+			communityService.deletePost(post_id);
+			respEntity = new ResponseEntity<String>("deleteOK",HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			respEntity = new ResponseEntity<String>("deleteErr",HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return respEntity;
+	}
+	
 	// 게시물 등록
 	@PostMapping(value = "/insert")
 	public ResponseEntity<String> registerPost(PostVO postVO, HttpServletRequest req){

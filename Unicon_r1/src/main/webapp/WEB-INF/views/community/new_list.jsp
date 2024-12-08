@@ -390,7 +390,7 @@ z-index: 2000;
                        <button id="commentContentBtn" type="button" class="btn btn-outline-success"><!-- 댓글 --><i class="fas fa-paper-plane"></i></button>
                        <button type="button" class="btn btn-outline-primary">수정</button>
                        <button type="button" class="btn btn-outline-danger">신고</button>
-                       <button type="button" class="btn btn-outline-danger">삭제</button>
+                       <button id="deletePost" type="button" class="btn btn-outline-danger">삭제</button>
                        
                    </div> <!-- <div class="col-lg-7 ps-lg-2-3"> -->
                    
@@ -421,14 +421,18 @@ $(document).ready(function(){
 	var defaultImage3 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg';
 	var defaultImage4 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg';
 	
+	// 모달 열때마다 게시물id 초기화
+	var post_id = null;
+	
 	// 모달 여는 글자 클릭
 	$('.open-modal').on('click', function() {
+		
 		
 		// 모달 열기 전에 댓글 초기화 시키기
 		$('.contentRecycle').empty();
 		
         // 클릭한 요소의 data-post-id 속성에서 게시물ID 가져오기
-        var post_id = $(this).data('post-id');
+        post_id = $(this).data('post-id');
         
         // 클릭한 요소의 게시물ID를 댓글 히든에 저장하기
         $('#selectPost').val(post_id);
@@ -565,6 +569,14 @@ $(document).ready(function(){
         		'member_id':$('#loginMemberId').val(),
         		'comment_content':$('#commentContent').val()
         	};
+        	
+        	// 댓글 내용이 비어있는지 확인
+            if (!content.comment_content) {
+                alert('댓글을 적어주세요.');
+                // 실행 중단
+                return;
+            }
+        	
         	$.ajax({
         		url : '/community/insertComment',
         		type : 'POST',
@@ -600,6 +612,23 @@ $(document).ready(function(){
         	}); // $.ajax
         }); // 댓글 삭제 클릭
      	// 댓글 삭제
+     	
+     	// 게시물 삭제
+     	$(document).on('click', '#deletePost', function(){
+     		console.log(post_id);
+     		$.ajax({
+     			url : '/community/deletePost/' + post_id,
+     			type : 'DELETE',
+     			success : function(data){
+     				alert('게시물이 삭제되었습니다.');
+     				location.reload();
+     			},
+     			error : function(){
+     				alert('게시물 삭제에 실패했습니다.');
+     			}
+     		}); // $.ajax
+     	}); // 게시물 삭제 클릭
+     	// 게시물 삭제
      	
     }); // 모달 여는 글자 클릭
     
