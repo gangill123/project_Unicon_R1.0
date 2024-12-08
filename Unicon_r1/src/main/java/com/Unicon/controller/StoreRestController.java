@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -107,7 +108,8 @@ public class StoreRestController {
 	/* =============== 이미지 저장 및 리스트 생성 =============== */
 	public List<ImageVO> saveImage(ProductVO avo, HttpServletRequest req) {
 		logger.info("( •̀ ω •́ )✧ saveImage(ProductVO avo, HttpServletRequest req) 실행");
-		String saveDir = req.getRealPath("/uploads/");
+		ServletContext context = req.getServletContext();
+		String saveDir = context.getRealPath("/uploads/");
 		List<MultipartFile> uploadImages = avo.getUpload_images();
 		List<ImageVO> product_images = new ArrayList<ImageVO>();
 
@@ -121,31 +123,32 @@ public class StoreRestController {
 			}
 			logger.info("( •̀ ω •́ )✧  파일이름 화긴 : " + uploadImages.get(i).getOriginalFilename());
 
-			File destinationImage = new File(asb.append(saveDir).append(UUID.randomUUID().toString()).append("_")
-					.append(aImage.getOriginalFilename()).toString());
-
-			int index = destinationImage.getPath().indexOf("\\uploads\\");
-
-			if (index != -1) {
-				String modifiedPath = destinationImage.getPath().substring(index);
-				logger.info("( •̀ ω •́ )✧ modifiedPath : " + modifiedPath);
-				ImageVO ivo = new ImageVO();
-				// ivo.setImage_id(avo.getAnimal_id());
-				ivo.setImage_sequence(i);
-				ivo.setImage_src(modifiedPath);
-				ivo.setImage_type("prod");
-				logger.info("( •̀ ω •́ )✧ ivo : " + ivo);
-				product_images.add(ivo);
-			} else {
-				logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
-			}
+			File destinationImage = new File(asb.append(saveDir)
+					.append(UUID.randomUUID().toString())
+					.append("_")
+					.append(aImage.getOriginalFilename())
+					.toString());
 
 			try {
 				aImage.transferTo(destinationImage);
 			} catch (IOException e) {
-				logger.info("( •̀ ω •́ )✧ 파일저장에 실패");
 				e.printStackTrace();
 			}
+			asb.setLength(0);
+			
+			int index = destinationImage.getPath().indexOf("\\uploads\\");
+			String indexStr = "\\uploads\\";
+			String indexSubStr = destinationImage.getPath().substring(index + indexStr.length());
+			String modifiedPath = asb.append("/uploads/").append(indexSubStr).toString();
+			
+			logger.info("( •̀ ω •́ )✧ modifiedPath : " + modifiedPath);
+			ImageVO ivo = new ImageVO();
+			ivo.setImage_sequence(i);
+			ivo.setImage_src(modifiedPath);
+			ivo.setImage_type("prod");
+			logger.info("( •̀ ω •́ )✧ ivo : " + ivo);
+			product_images.add(ivo);
+
 		}
 
 		return product_images;
