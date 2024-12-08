@@ -63,6 +63,18 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE+"getCommentListAll", post_id);
 	}
 	
+	// 댓글 등록
+	public void insertComment(CommentVO commentVO) {
+		logger.info(" DAO - insertComment() 실행 ");
+		sqlSession.insert(NAMESPACE+"insertComment", commentVO);
+	}
+	
+	// 댓글 삭제
+	public int deleteComment(int comment_id) {
+		logger.info(" DAO - deleteComment() 실행 ");
+		logger.info(" comment_id : {}",comment_id);
+		return sqlSession.delete(NAMESPACE+"deleteComment",comment_id);
+	}
 	
 	
 	
