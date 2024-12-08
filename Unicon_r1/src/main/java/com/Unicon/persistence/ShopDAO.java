@@ -19,7 +19,7 @@ public class ShopDAO {
 	private SqlSession sqlSession;
 	
 	// Mapper namespace 정보 저장
-		private static final String NAMESPACE = "com.Unicon.mapper.ShopMapper";
+	private static final String NAMESPACE = "com.Unicon.mapper.ShopMapper";
 	
 		
 	// shop페이지 접속 시 모든 상품정보 가져오기

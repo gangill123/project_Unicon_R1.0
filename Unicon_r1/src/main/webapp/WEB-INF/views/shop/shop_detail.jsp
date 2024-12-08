@@ -112,7 +112,11 @@
                     </div>
                     <div class="col-lg-6 ps-lg-2-3">
                         <div class="product-detail">
-                            <h3 class="mb-2">${productInfo.product_name} <span class="label-sale bg-red text-white text-uppercase display-30">Sale</span></h3>
+                            <h3 class="mb-2">${productInfo.product_name} 
+                            <c:if test="${productInfo.discount_rate != 0}">
+                            	<span class="label-sale bg-red text-white text-uppercase display-30">Sale</span>
+                            </c:if>
+                            </h3>
                             <div class="bg-primary separator-line-horrizontal-full mb-2"></div>
                             <div style="display: flex; justify-content: space-between;">
                             	<p class="font-weight-600" style="color: #575a7b;">판매자 : ${productInfo.memberVO.memberName}</p>
@@ -387,6 +391,10 @@
   			  customClass: {
   			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
   			  }
+ 			}).then((result) => {
+ 			    if (result.isConfirmed) { 
+ 			        window.location.href = '/shop/cart'; // 이동할 URL
+ 			    }
  			});
 			
 		});
