@@ -41,8 +41,6 @@
 		        console.log('성공:', response);
 		        // 응답 처리 로직
 		        
-		        
-		        
 		        // category_value를 콤마로 분리하여 배열로 변환
 				const categories = response[0].category_value.split(',');
 		        
@@ -69,10 +67,11 @@
     }
  	// categoryDetail 함수 정의
     function categoryDetail(category, index) {
-		// 처음 선택한 카테고리의 span 색상 변경
-		if (selectedCategoryDetail) {
-			$("#categoryDetail" + selectedCategoryDetail).css('color', '#000000'); // 해당 카테고리 span 색상 변경
-    	}
+    	
+    	// 처음 선택한 카테고리의 span 색상 변경
+        if (selectedCategoryDetail !== null) { // 초기값이 null이 아닌 경우
+            $("#categoryDetail" + selectedCategoryDetail).css('color', '#000000'); // 해당 카테고리 span 색상 변경
+        }
 		selectedCategoryDetail = index;
 		$("#categoryDetail" + index).css('color', '#bf94e4'); // 해당 카테고리 span 색상 변경
 		
@@ -88,9 +87,6 @@
         var downIcon = $(button).find('.mdi-chevron-down');
         var upIcon = $(button).find('.mdi-chevron-up');
         
-        console.log(button);
-        console.log(downIcon);
-        console.log(upIcon);
 
         // 아이콘을 토글
         downIcon.toggle();
@@ -127,6 +123,9 @@
             case 'detail':
                 $Box = $('.closeBox-detail');
                 break;
+            case 'delivery':
+            	$Box = $('.closeBox-delivery');
+            	break;
             default:
                 return; // 알 수 없는 경우 함수 종료
         }
@@ -141,6 +140,8 @@
     }
     
     $(document).ready(function() {
+    	
+    	
         $('#textInput').focus(function() {
             $(this).closest('.input-container').addClass('focused'); // 포커스 시 클래스 추가
             $('#error-message').hide(); // 에러 메시지 숨김
@@ -180,7 +181,6 @@
                 delete data.product_name; // productName 키 삭제
             }
             
-            console.log(data.product_name);
         });
         $('#price').on('input blur', function(event) {
             var value = $(this).val().replace(/,/g, ''); // 콤마 제거
@@ -227,7 +227,6 @@
             }
             
             data.discount_rate = value;
-            console.log(value);
         });
 
         $('#discount').on('blur', function() {
@@ -261,14 +260,15 @@
         	toggleButtons4(true); // 설정함 버튼 클릭
         	$('.select-delivery-company').prop('disabled', false); // 선택된 요소를 활성화
         	$('#delivery_price').prop('disabled', false); // 선택된 요소를 활성화
-        	
-        	
         });
         
         $('#btn-delivery-off').on('click', function() {
         	toggleButtons4(false); // 설정안함 버튼 클릭
         	$('.select-delivery-company').prop('disabled', true); // 선택된 요소를 비활성화
+        	$('.select-delivery-company').val('select').change();
         	$('#delivery_price').prop('disabled', true); // 선택된 요소를 비활성화
+        	$('#delivery_price').val(''); // 배송비 초기화
+        	
         	delete data.delivery_company;
         	delete data.delivery_price;
         });
@@ -421,8 +421,7 @@
             $(".date-input").val(startDate + (endDate ? " - " + endDate : ""));
              
              data.start_date = startDate+" 00:00:00";
-             data.end_date = endDate+" 00:00:00";
-            console.log(data);
+             data.end_date = endDate+" 23:59:59";
             
         }
 
@@ -464,6 +463,8 @@
         $('#oneHundredTwentyDays').click(function() {
             setDateRange(120); // 120일
         });
+        
+        // 할인된 가격 보여주기
         function calculateDiscountPrice() {
             var price = parseFloat($('#price').val().replace(/,/g, '')); // 판매가
             var discountRate = parseFloat($('#discount').val()); // 할인율
@@ -509,7 +510,7 @@
         
         let optionCount = 1; // 옵션 카운터 초기화
 
-     // 버튼 가시성 업데이트 함수
+        // 버튼 가시성 업데이트 함수
         function updateButtonVisibility() {
             $(".option-add").show(); // 모든 추가 버튼을 보이도록 설정
 
@@ -582,8 +583,8 @@
             const selectedValue = parseInt($(this).val()); // 클릭된 옵션의 값을 가져오기
             manageOptions(selectedValue);
             updateApplyButtonState();
-            
         });
+        
         
         // select-delivery-company의 change 이벤트
         $(document).on("change", ".select-delivery-company", function () {
@@ -1082,9 +1083,7 @@
             
             // 판매기간 설정 안했을때 날짜 받아오기.
             if ($('#set-off').hasClass('setting-active')) {
-            	data.end_date = '2025-12-30 00:00:00';
-            	alert("실행");
-            	alert(data.end_date);
+            	data.end_date = '2025-12-30 23:59:00';
             }
             
             if($('#discount-set-off').hasClass('setting-active')) {
