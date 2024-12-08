@@ -1288,3 +1288,92 @@
 	}
 	
 	
+	// 배송지 모달 오픈 시 배송지 정보 출력
+	function addrModalOpen(){
+		
+		$.ajax({
+			url: '/orders/getAddrInfo',
+			type: 'GET',
+			success: function(response){
+				
+				$('.choiceContentBody').empty();
+				
+				response.forEach(function(item){
+					
+					let formattedPhone = (item.recipient_phone).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+					
+					let modalContents = `
+					<div class="rounded mb-4" style="padding: 20px; background: white;">
+                    	<div>
+                		<h5 style="display:inline;">${item.address_name}</h5>`
+                	if(item.is_default_address == 'true'){
+                		modalContents += ` <span class="label-sale text-white rounded px-1 ms-1" style="background:#86bc42;">기본배송지</span>`
+                	}	
+                		
+					modalContents += `</div>
+                	<div class="row">
+                		<div class="col-sm-12">${item.road_address} ${item.extra_address}, ${item.detail_address}</div>
+                	</div>
+                	<div class="row">
+                		<div class="col-sm-6 display-30 mb-2">
+                     		<p class="pe-2" style="color: #aaa; display: inline;">${item.recipient}</p>
+                     		<p class="ps-2" style="color: #aaa; display: inline;">${formattedPhone}</p>
+                 		</div>
+                	</div>
+                	<div class="row">
+                		<div class="col-sm-6 display-30 mb-2">
+                    		<button type="button" class="addrUbtn btn btn-outline-secondary" data-id="${item.address_id}">수정</button>
+                    		<button type="button" class="addrDbtn btn btn-outline-secondary" data-id="${item.address_id}">삭제</button>
+                		</div>
+                		<div class="col-sm-6 display-30 mb-2" style="text-align: end;">
+                    		<button class="selectAddr butn primary small rounded"><span>선택</span></button>
+                		</div>
+                	</div>
+                </div>`
+					
+					$('.choiceContentBody').append(modalContents);
+					
+				});
+			},
+			error: function(){
+			}
+		});
+	}
+	
+	
+	// 배송지 수정 버튼 시 로직
+	function addrUBtn(address_id){
+		
+		$.ajax({
+			url: '/orders/getAddrToId/'+address_id,
+			type: 'POST',
+			success: function(response){
+				//console.log(response);
+				
+				$('#addressInputLabel').text('배송지 수정');
+				$('input[name="address_name"]').val(response.address_name);
+				$('input[name="recipient"]').val(response.recipient);
+				$('input[name="recipient_phone"]').val(response.recipient_phone);
+				$('input[name="postal_code"]').val(response.postal_code);
+				$('input[name="road_address"]').val(response.road_address);
+				$('input[name="detail_address"]').val(response.detail_address);
+				$('input[name="extra_address"]').val(response.extra_address);
+				
+				if(response.is_default_address == 'true'){
+					$('input[name="is_default_address"]').prop('checked', true);
+				}
+				
+				
+			},
+			error: function(){
+				
+			}
+		});
+	}
+	
+	
+	
+	
+	
+	
+	

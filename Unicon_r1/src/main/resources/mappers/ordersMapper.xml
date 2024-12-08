@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Unicon.mapper.OrdersMapper">
+
+<!-- resultMap 작성란 -->
+	
+	<!-- 기본배송지 있는 지 확인 -> address_id 가져옴 -->
+	<select id="checkDefaultAddr" resultType="int">
+		select address_id 
+		from _address 
+		where member_id = #{member_id} and is_default_address = 'true' 
+	</select>
+	
+	<!-- 기존의 기본배송정보를 false로 업데이트 -->
+	<update id="updateDefalutAddr">
+		update _address 
+		set is_default_address = 'false' 
+		where address_id = #{address_id} 
+	</update>
+	
+	
+	<!-- 배송지 등록 -->
+	<insert id="addressCreate">
+		insert into _address(member_id, is_default_address, address_name, postal_code, road_address, detail_address, 
+		extra_address, recipient, recipient_phone) 
+		values(#{member_id}, #{is_default_address}, #{address_name}, #{postal_code}, #{road_address}, 
+			#{detail_address}, #{extra_address}, #{recipient}, #{recipient_phone} ) 
+	</insert>
+	
+	<!-- 배송지 정보 가져오기 -->
+	<select id="getAddrInfo" resultType="AddressVO">
+		select *  
+		from _address  
+		where member_id = #{member_id} 
+		order by is_default_address desc 
+	</select>
+	
+	
+	<!-- 배송지 정보 가져오기(수정 버튼 시) -->
+	<select id="getAddrToId" resultType="AddressVO">
+		select * 
+		from _address 
+		where address_id =#{address_id} 
+	</select>
+	
+
+</mapper>
+
+

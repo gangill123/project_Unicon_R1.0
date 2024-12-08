@@ -167,7 +167,5 @@ public class ShopController {
 		sService.emptyCart(member_id);
 	}
 	
-	
-	
 
 }
