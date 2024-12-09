@@ -32,8 +32,8 @@
 
 /* 모달 내용 */
 .modal-content {
-    background-color: #fff;
-    margin: 15% auto;
+    background-color: white;
+    margin: 30% auto;
     padding: 20px;
     border-radius: 10px;
     width: 80%;
@@ -61,7 +61,7 @@
 /* 텍스트 영역 스타일 */
 textarea {
     width: 100%;
-    padding: 10px;
+    padding: 60px;
     font-size: 16px;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -90,36 +90,36 @@ textarea {
 }
 
 
-    .container {
-        max-width: 1140px;
-    }
-    .card-title {
-        font-size: 1.8rem;
-        font-weight: bold;
-    }
-    .modal-content {
-        padding: 20px;
-        border-radius: 8px;
-        background-color: #f8f9fa;
-    }
-    .modal .close-btn {
-        font-size: 30px;
-        color: #333;
-        cursor: pointer;
-    }
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
-    }
-    .bg-light {
-        background-color: #f9f9f9;
-    }
-    .rounded-circle {
-        border-radius: 50% !important;
-    }
-    .bg-light .p-3 {
-        background-color: #f1f1f1 !important;
-    }
+.container {
+    max-width: 1140px;
+}
+.card-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+.modal-content {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+.modal .close-btn {
+    font-size: 30px;
+    color: #333;
+    cursor: pointer;
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.bg-light {
+    background-color: #f9f9f9;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.bg-light .p-3 {
+    background-color: #f1f1f1 !important;
+}
     
     
 </style>
@@ -150,7 +150,7 @@ textarea {
 
 
 <div class="card">
-   <div class="card" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); background-color: #f9f9f9;">
+   <div class="card">
         <br>
         <br>
         <h4 class="card-title">Unicon Q&amp;A 문의 관리</h4>

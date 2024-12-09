@@ -221,10 +221,10 @@
 
                             <div class="widget">
                                 <div class="widget-title">
-                                    <h6>자주 묻는 질문</h6>
+                                    <h6>문의하기(이메일)</h6>
                                 </div>
                                 <ul class="list-unstyled">
-                                    <li><a href="../question">자주 묻는 질문 바로가기</a></li>
+                                    <li><a href="../question">이메일로 문의하기</a></li>
                                 </ul>
                             </div>
 
