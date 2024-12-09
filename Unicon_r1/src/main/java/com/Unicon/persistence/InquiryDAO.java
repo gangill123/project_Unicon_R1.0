@@ -50,5 +50,7 @@ public interface InquiryDAO {
 	
 	List<Map<String, Object>> getMonthlyIstatusCounts();
 	
+	public double getCompletionRate();
+	
 	
 }

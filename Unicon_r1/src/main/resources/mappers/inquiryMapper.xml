@@ -243,5 +243,12 @@
 		GROUP BY MONTH(i.created_at), i.istatus
 		ORDER BY MONTH(i.created_at)
 	</select>
+	
+    <select id="getCompletionRate" resultType="double">
+       SELECT 
+           (SELECT COUNT(*) FROM _inquiry WHERE status = 2) * 100.0 /
+           (SELECT COUNT(*) FROM _inquiry) AS completionRate
+       FROM DUAL;
+   </select>
 
 </mapper>

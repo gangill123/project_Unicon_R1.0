@@ -351,13 +351,19 @@ $(document).ready(function() {
 
         if (searchQuery.includes('입양') || searchQuery.includes('입양 방법') || searchQuery.includes('입양 현황')) {
             targetPage = '../adoption';  // 입양 관련 페이지로 이동
-        } else if (searchQuery.includes('쇼핑') || searchQuery.includes('애견옷') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품 주문')) {
+        } else if (searchQuery.includes('쇼핑') || searchQuery.includes('애견옷') || searchQuery.includes('쇼핑몰') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품 주문')) {
             targetPage = '../shop';  // 쇼핑몰 페이지로 이동
         } else if (searchQuery.includes('커뮤니티') || searchQuery.includes('애견 커뮤니티')) {
             targetPage = '../community';  // 커뮤니티 페이지로 이동
-        } else if (searchQuery.includes('기타') || searchQuery.includes('결제') || searchQuery.includes('시스템') || searchQuery.includes('기타 사항')) {
+        } else if (searchQuery.includes('기타') || searchQuery.includes('결제') || searchQuery.includes('오류') || searchQuery.includes('시스템') || searchQuery.includes('기타 사항')) {
             targetPage = '../etc';  // 기타 페이지로 이동
-        } else {
+        } else if (searchQuery.includes('문의하기') || searchQuery.includes('게시판 작성') || searchQuery.includes('게시판 문의') || searchQuery.includes('질문') || searchQuery.includes('작성')) {
+            targetPage = '../write';  // 문의 페이지로 이동         
+        } else if (searchQuery.includes('이메일 문의') || searchQuery.includes('이메일') || searchQuery.includes('이메일 문의하기') || searchQuery.includes('email') || searchQuery.includes('이메일 작성')) {
+            targetPage = '../question';  // 이메일 문의 페이지로 이동         
+        }  else if (searchQuery.includes('게시판') || searchQuery.includes('문의게시판') || searchQuery.includes('문의 게시판') || searchQuery.includes('목록 게시판') || searchQuery.includes('목록')) {
+            targetPage = '../board';  // 이메일 문의 페이지로 이동         
+        }  else {
             alert('해당 검색어에 맞는 페이지가 없습니다.');
             return;  // 페이지 이동을 하지 않고 알림만 출력
         }

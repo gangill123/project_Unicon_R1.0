@@ -119,7 +119,7 @@ public class InquiryDAOImpl implements InquiryDAO {
 		Map<String, String> params = Map.of("startDate", startDate, "endDate", endDate, "istatus", istatus);
 		return sqlSession.selectList(NAMESPACE + ".searchBoards", params);
 	}
-
+	@Override
 	public List<InquiryVO> findInquiriesByMember(String memberId, int offset, int size) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("memberId", memberId);
@@ -127,13 +127,18 @@ public class InquiryDAOImpl implements InquiryDAO {
 		params.put("size", size);
 		return sqlSession.selectList(NAMESPACE + ".findInquiriesByMember", params);
 	}
-
+	@Override
 	public int countInquiriesByMember(String memberId) {
 		return sqlSession.selectOne(NAMESPACE + ".countInquiriesByMember", memberId);
 	}
-	
+	@Override
     public List<Map<String, Object>> getMonthlyIstatusCounts() {
         return sqlSession.selectList(NAMESPACE+ ".getMonthlyIstatusCounts");
+    }
+    
+    @Override
+    public double getCompletionRate() {
+        return sqlSession.selectOne(NAMESPACE + ".getCompletionRate");
     }
 	
 
