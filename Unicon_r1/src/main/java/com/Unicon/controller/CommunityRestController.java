@@ -18,17 +18,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Unicon.domain.AnimalVO;
+import com.Unicon.domain.CommentLikeVO;
 import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.PostLikeVO;
 import com.Unicon.domain.PostVO;
 import com.Unicon.service.CommunityService;
 
@@ -86,10 +90,19 @@ public class CommunityRestController {
 	
 	// 해당하는 게시물과 전체 댓글 들고 오기
 	@RequestMapping(value = "/getAll/{post_id}",method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> getPostListOneAndCommentListAll(@PathVariable("post_id")String post_id){
+	public ResponseEntity<Map<String, Object>> getPostListOneAndCommentListAll(@PathVariable("post_id") String post_id,
+			Model model/* , @RequestParam("comment_id")int comment_id */){
 		logger.info(" getPostListOneAndCommentListAll() 실행 ");
 		
 		ResponseEntity<Map<String, Object>> result = null;
+		
+		String member_id = "test7";
+		
+//		boolean isPostLike = communityService.isPostLike(post_id, member_id);
+//		model.addAttribute("isPostLike", isPostLike);
+//		logger.info("post_id : {}",post_id);
+//		logger.info("member_id : {}",member_id);
+//		logger.info(" isPostLike : {}",isPostLike);
 		
 		try {
 			PostVO postList = communityService.getPostListOne(post_id);
@@ -98,6 +111,31 @@ public class CommunityRestController {
 			Map<String, Object> responseMap = new HashMap<>();
 			responseMap.put("postList", postList);
 			responseMap.put("commentList", commentList);
+			logger.info(" commentList : {}",commentList);
+			
+			// 게시물 좋아요 여부 확인 -> member_id : 로그인 세션
+			boolean isPostLike = communityService.isPostLike(post_id, member_id);
+			model.addAttribute("isPostLike", isPostLike);
+			responseMap.put("isPostLike", isPostLike);
+			
+			// 댓글 좋아요 여부 확인 -> member_id : 로그인 세션
+			boolean isCommentLike = communityService.isCommentLike(commentList.get(0).getComment_id(), member_id);
+			
+			/* 삭제예정
+			Map<Integer, Boolean> testMap = new HashMap<Integer, Boolean>();
+			for(int i = 0; i <commentList.size(); i++) {
+				testMap.put(commentList.get(i).getComment_id(), communityService.isCommentLike(commentList.get(i).getComment_id(), member_id) );
+			}
+			삭제예정 */
+			
+			model.addAttribute("isCommentLike", isCommentLike);
+			responseMap.put("isCommentLike", isCommentLike);
+			
+			logger.info("responseMap : {}",responseMap);
+			logger.info("post_id : {}",post_id);
+			logger.info("member_id : {}",member_id);
+			logger.info(" isPostLike : {}",isPostLike);
+			logger.info(" isCommentLike : {}",isCommentLike);
 			
 			result = new ResponseEntity<>(responseMap, HttpStatus.OK);
 		} catch (Exception e) {
@@ -158,6 +196,74 @@ public class CommunityRestController {
 		return respEntity;
 	}
 	
+	// 게시물 좋아요
+	@RequestMapping(value = "/postLikeInsert/{post_id}",method = RequestMethod.POST)
+	public ResponseEntity<String> postLikeInsert(@PathVariable("post_id")String post_id, @RequestParam("member_id")String member_id){
+		logger.info(" postLikeInsert() 실행 ");
+		logger.info(" post_id : {}",post_id);
+		logger.info(" member_id : {}",member_id);
+		
+		ResponseEntity<String> respEntity = null;
+		try {
+			communityService.postLikeInsert(post_id, member_id);
+			respEntity = new ResponseEntity<String>("insertOK",HttpStatus.OK);
+		} catch (Exception e) {
+			respEntity = new ResponseEntity<String>("insertErr",HttpStatus.BAD_REQUEST);
+		}
+		return respEntity;
+	}
+	
+	// 게시물 좋아요 취소
+	@RequestMapping(value = "/postLikeDelete/{post_id}",method = RequestMethod.POST)
+	public ResponseEntity<String> postLikeDelete(@PathVariable("post_id")String post_id, @RequestParam("member_id")String member_id){
+		logger.info(" postLikeDelete() 실행 ");
+		logger.info(" 컨트롤러post_id : {}",post_id);
+		logger.info(" 컨트롤러member_id : {}",member_id);
+		
+		ResponseEntity<String> respEntity = null;
+		try {
+			communityService.postLikeDelete(post_id, member_id);
+			respEntity = new ResponseEntity<String>("deleteOK",HttpStatus.OK);
+		} catch (Exception e) {
+			respEntity = new ResponseEntity<String>("deleteErr",HttpStatus.BAD_REQUEST);
+		}
+		return respEntity;
+	}
+	
+	// 댓글 좋아요
+	@RequestMapping(value = "/commentLikeInsert/{comment_id}",method = RequestMethod.POST)
+	public ResponseEntity<String> commentLikeInsert(@PathVariable("comment_id")int comment_id, @RequestParam("member_id")String member_id){
+		logger.info(" commentLikeInsert() 실행 ");
+		logger.info(" comment_id : {}",comment_id);
+		logger.info(" member_id : {}",member_id);
+		
+		ResponseEntity<String> respEntity = null;
+		try {
+			communityService.commentLikeInsert(comment_id, member_id);
+			respEntity = new ResponseEntity<String>("insertOK",HttpStatus.OK);
+		} catch (Exception e) {
+			respEntity = new ResponseEntity<String>("insertErr",HttpStatus.BAD_REQUEST);
+		}
+		return respEntity;
+	}
+	
+	// 댓글 좋아요 취소
+	@RequestMapping(value = "/commentLikeDelete/{comment_id}",method = RequestMethod.POST)
+	public ResponseEntity<String> commentLikeDelete(@PathVariable("comment_id")int comment_id, @RequestParam("member_id")String member_id){
+		logger.info(" commentLikeDelete() 실행 ");
+		logger.info(" comment_id : {}",comment_id);
+		logger.info(" member_id : {}",member_id);
+		
+		ResponseEntity<String> respEntity = null;
+		try {
+			communityService.commentLikeDelete(comment_id, member_id);
+			respEntity = new ResponseEntity<String>("deleteOK",HttpStatus.OK);
+		} catch (Exception e) {
+			respEntity = new ResponseEntity<String>("deleteErr",HttpStatus.BAD_REQUEST);
+		}
+		return respEntity;
+	}
+	
 	// 게시물 등록
 	@PostMapping(value = "/insert")
 	public ResponseEntity<String> registerPost(PostVO postVO, HttpServletRequest req){
@@ -185,6 +291,7 @@ public class CommunityRestController {
 			return new ResponseEntity<String>(" 오류 발생 : "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 	
 	// /////////////////////////////메서드/////////////////////////////
 	

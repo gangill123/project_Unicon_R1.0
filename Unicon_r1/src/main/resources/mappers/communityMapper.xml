@@ -160,6 +160,52 @@
 </delete>
 <!-- 게시물 삭제 -->
 
+<!-- 게시물 좋아요 확인 -->
+<select id="isPostLike" parameterType="map" resultType="int">
+	select count(*) from _post_like 
+	where post_id = #{post_id} 
+	and member_id = #{member_id} 
+</select>
+<!-- 게시물 좋아요 확인 -->
+
+<!-- 게시물 좋아요 -->
+<insert id="postLikeInsert" parameterType="map">
+	insert into _post_like (post_id, member_id) 
+	values (#{post_id}, #{member_id}) 
+</insert>
+<!-- 게시물 좋아요 -->
+
+<!-- 게시물 좋아요 취소 -->
+<delete id="postLikeDelete" parameterType="map">
+	delete from _post_like 
+	where post_id = #{post_id} 
+	and member_id = #{member_id} 
+</delete>
+<!-- 게시물 좋아요 취소 -->
+
+<!-- 댓글 좋아요 확인 -->
+<select id="isCommentLike" parameterType="map" resultType="int">
+	select count(*) from _comment_like 
+	where comment_id = #{comment_id} 
+	and member_id = #{member_id} 
+</select>
+<!-- 댓글 좋아요 확인 -->
+
+<!-- 댓글 좋아요 -->
+<insert id="commentLikeInsert" parameterType="map">
+	insert into _comment_like (comment_id, member_id) 
+	values (#{comment_id}, #{member_id}) 
+</insert>
+<!-- 댓글 좋아요 -->
+
+<!-- 댓글 좋아요 취소 -->
+<delete id="commentLikeDelete" parameterType="map">
+	delete from _comment_like 
+	where comment_id = #{comment_id} 
+	and member_id = #{member_id} 
+</delete>
+<!-- 댓글 좋아요 취소 -->
+
 
 <!-- 기존의 post_id 값 유무 체크(불러오기) -->
 <select id="checkPostId" resultType="String">

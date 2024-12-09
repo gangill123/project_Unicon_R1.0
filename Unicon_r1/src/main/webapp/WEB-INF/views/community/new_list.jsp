@@ -27,7 +27,7 @@ z-index: 2000;
        </div>
    </div>
    
-   <input type="hidden" id="loginMemberId" value="test15">
+   <input type="hidden" id="loginMemberId" value="test7">
    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">Launch modal</button>
 
    <div class="container">
@@ -383,8 +383,11 @@ z-index: 2000;
                        </div> <!-- <div class="product-detail"> -->
                        
                        <div style="width: 100%; height: 36px; margin-top: 10px;">
-                       		<span id="postDate" style="margin-right: 5%;">1998-07-11 00:00</span><span id="postLikeCount" style="margin-right: 5%;">좋아요 711개</span><span style="margin-right: 5%;"><i class="fa-regular fa-heart"></i></span>
+                       		<span id="postDate" style="margin-right: 5%;">1998-07-11 00:00</span><span id="postLikeCount" style="margin-right: 5%;">좋아요 711개</span><span style="margin-right: 5%;"><i id="postLikeCheck" class="fa-regular fa-heart"></i><%-- <c:if test="${isPostLike }"><i class="fa-solid fa-heart"></i></c:if><c:if test="${!isPostLike }"><i class="fa-regular fa-heart"></i></c:if> --%></span>
                        </div>
+<%--                        <c:if test="${isPostLike }"><input type="text" value="1"></c:if> --%>
+<%--                        <input type="text" value="${post_id }"> --%>
+<%--                        <input type="text" value="${member_id }"> --%>
                        <input type="hidden" id="selectPost"/>
                        <input id="commentContent" type="text" style="width: 100%; height: 36px; margin-bottom: 10px;" placeholder="댓글 달기...">
                        <button id="commentContentBtn" type="button" class="btn btn-outline-success"><!-- 댓글 --><i class="fas fa-paper-plane"></i></button>
@@ -440,11 +443,19 @@ $(document).ready(function(){
         // 확인용 콘솔 로그
         // console.log(post_id);
         
+//         // comment_id 댓글 아이디 값 가져오기
+//         var comment_id = $('.brnDelete').data('comment-id');
+//         console.log(comment_id);
+        
         $.ajax({
         	url : '/community/getAll/' + post_id,
         	method : 'GET',
         	dataType : 'json',
         	success : function(data){
+        		
+//         		// comment_id 댓글 아이디 값 가져오기
+//                 var comment_id = $('.brnDelete').data('comment-id');
+//                 console.log(comment_id);
         		
         		// 기본 이미지로 초기화
         		$('#xzoom_magnific').attr('src', defaultImage1);
@@ -556,10 +567,113 @@ $(document).ready(function(){
         		// 댓글 목록
         		addCommentsToModal(data.commentList);
         		
+        		// 게시물 좋아요 버튼 클릭 이벤트 핸들러
+        		function togglePostLike() {
+        		    if (data.isPostLike == true) {
+        		        $('#postLikeCheck').attr('class', 'fa-solid fa-heart');
+        		    } else {
+        		        $('#postLikeCheck').attr('class', 'fa-regular fa-heart');
+        		    }
+
+        		    $('#postLikeCheck').off('click').on('click', function() {
+        		        if (data.isPostLike == true) {
+        		            // 좋아요 취소
+        		            $.ajax({
+        		                url: '/community/postLikeDelete/' + post_id,
+        		                type: 'POST',
+        		                data: { member_id: $('#loginMemberId').val() },
+        		                success: function(data) {
+        		                    alert('이 게시물의 좋아요를 취소합니다.');
+        		                    $('#postLikeCheck').attr('class', 'fa-regular fa-heart');
+        		                    // 상태 업데이트
+        		                    data.isPostLike = false;
+        		                },
+        		                error: function(data) {
+        		                    alert('이 게시물 좋아요 취소에 실패했습니다.');
+        		                }
+        		            });
+        		        } else {
+        		            // 좋아요 추가
+        		            $.ajax({
+        		                url: '/community/postLikeInsert/' + post_id,
+        		                type: 'POST',
+        		                data: { member_id: $('#loginMemberId').val() },
+        		                success: function(data) {
+        		                    alert('이 게시물을 좋아합니다.');
+        		                    $('#postLikeCheck').attr('class', 'fa-solid fa-heart');
+        		                    // 상태 업데이트
+        		                    data.isPostLike = true;
+        		                },
+        		                error: function(data) {
+        		                    alert('이 게시물 좋아요에 실패했습니다.');
+        		                }
+        		            });
+        		        }
+        		    });
+        		}
+
+        		// 게시물 좋아요 버튼 이벤트
+        		togglePostLike();
+        		
+        		
+        		
+        		
+        		
+        		// 댓글 좋아요 버튼 클릭 이벤트 핸들러
+        		function toggleCommentLike() {
+        		    $('.commentLikeCheck').off('click').on('click', function() {
+        		        var comment_id = $(this).data('comment-id');
+        		        var isCommentLike = $(this).hasClass('fa-solid'); // 현재 좋아요 상태 확인
+
+        		        if (isCommentLike == true) {
+        		            // 좋아요 취소
+        		            $.ajax({
+        		                url: '/community/commentLikeDelete/' + comment_id,
+        		                type: 'POST',
+        		                data: { member_id: $('#loginMemberId').val() },
+        		                success: function(data) {
+        		                    alert('이 댓글의 좋아요를 취소합니다.');
+        		                    $(this).attr('class', 'fa-regular fa-heart commentLikeCheck'); // 클릭한 버튼만 변경
+        		                    console.log(comment_id);
+        		                }.bind(this), // this를 현재 클릭한 요소로 바인딩
+        		                error: function(data) {
+        		                    alert('이 댓글 좋아요 취소에 실패했습니다.');
+        		                    console.log(comment_id);
+        		                    console.log($('#loginMemberId').val());
+        		                }
+        		            });
+        		        } else {
+        		            // 좋아요 추가
+        		            $.ajax({
+        		                url: '/community/commentLikeInsert/' + comment_id,
+        		                type: 'POST',
+        		                data: { member_id: $('#loginMemberId').val() },
+        		                success: function(data) {
+        		                    alert('이 댓글을 좋아합니다.');
+        		                    $(this).attr('class', 'fa-solid fa-heart commentLikeCheck'); // 클릭한 버튼만 변경
+        		                    console.log(comment_id);
+        		                }.bind(this), // this를 현재 클릭한 요소로 바인딩
+        		                error: function(data) {
+        		                    alert('이 댓글 좋아요에 실패했습니다.');
+        		                    console.log(comment_id);
+        		                    console.log($('#loginMemberId').val());
+        		                }
+        		            });
+        		        }
+        		    });
+        		}
+
+        		// 댓글 좋아요 버튼 이벤트
+        		toggleCommentLike();
+        		
+        		
+        		
+        		
         	},
         	error : function(){
         		alert('게시물을 불러오는데 실패했습니다.');
         	}
+        	
         }); // $.ajax 
         
         // 댓글 등록
@@ -645,7 +759,7 @@ $(document).ready(function(){
                                 '<div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">' + comments.jypMemberVO.member_nickname + '</h4></div>' +
                                 '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">' + comments.comment_date + '</div>' +
                                 '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 ' + (comments.comment_likes.length > 0 ? comments.comment_likes[0].comment_like_count : 0) + '개</div>' +
-                                '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>' +
+                                '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart commentLikeCheck" data-comment-id="'+comments.comment_id+'"></i></div>' +
                             '</div>' +
                             '<div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">' +
                                 '<div class="box" style="text-align: left;">' + comments.comment_content + '<button type="button" style="margin-left: 5px; color: grey;" class="btn btn-link btnDelete" data-comment-id="'+comments.comment_id+'">삭제</button></div>' +
