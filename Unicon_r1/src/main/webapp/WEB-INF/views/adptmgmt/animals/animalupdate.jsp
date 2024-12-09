@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,12 +69,12 @@
 		margin: 0;
 	}
 	
-	#plusIcon1, #plusIcon2, #plusIcon3, #plusIcon4, #plusIcon5 {
+	#plusIcon0, #plusIcon1, #plusIcon2, #plusIcon3, #plusIcon4 {
 		font-size: 2rem;
 		color: #888;
 	}
 	
-	#image-preview1, #image-preview2, #image-preview3, #image-preview4, #image-preview5 {
+	#image-preview0, #image-preview1, #image-preview2, #image-preview3, #image-preview4 {
 		width: 100%;
 		height: 100%;
 		object-fit: fill;
@@ -117,6 +118,9 @@
 		font-size: 0.8rem;
 		display: none;
 		text-shadow: 0 0 0.5rem rgba(0, 110, 96, 0.5);
+	}
+	#animalStatus label {
+		font-size: 1.5rem;
 	}
 	/*=============== 텍스트 css ===============*/
 	
@@ -422,7 +426,7 @@
 	
 	.custom-a-btn-images {
 		font-size: 0.75rem;
-		padding: 0.5rem;
+		padding: 0.45rem;
 	}
 	
 	.btn-custom-a {
@@ -492,7 +496,12 @@
 		background-color: #006e60;
 		border-color: #006e60;
 	}
+	
+	#a-close-btn1, #a-close-btn2, #a-close-cancel-btn1, #a-close-cancel-btn2 {
+		display: none;
+	}
 	/*=============== 버튼 css ===============*/
+
 
 	/*=============== 바탕 css ===============*/
 	.card {
@@ -517,7 +526,7 @@
 							<div class="col-12 grid-margin stretch-card">
 								<div class="card">
 									<div class="card-body">
-										<h4 class="card-title">입양 동물 관리 - 동물 정보 등록</h4>
+										<h4 class="card-title">입양 동물 관리 - 정보 수정 및 삭제</h4>
 										
 										<form id="formAdptAnimal" action="" method="post" enctype="multipart/form-data">
 										
@@ -525,9 +534,21 @@
 												<legend class="custom-a-legend">필수 정보</legend>
 												
 												<div class="form-group row d-flex justify-content-center">
+													<div class="col-12 col-xl-3 col-lg-5 col-md-5 mb-3">
+														<label for="animal_id" class="text-dark custom-label">동물ID</label>
+														<input type="text" id="animal_id" name="animal_id" 
+															class="form-control custom-text" readonly/>
+													</div>
+													<div class="col-12 col-xl-3 col-lg-5 col-md-5 mb-3">
+														<label for="aRegDate" class="text-dark custom-label">등록일자</label>
+														<input type="text" id="aRegDate" class="form-control custom-text" readonly/>
+													</div>
+												</div>
+												
+												<div class="form-group row d-flex justify-content-center">
 													<div class="col-12 col-xl-3 col-md-5 mb-3">
 														<label for="petType" class="text-dark custom-label">동물 종류</label>
-														<select class="form-control custom-text" id="petType" required>
+														<select class="form-control custom-text" id="petType" disabled>
 															<option value="">--</option>
 														</select>
 													</div>
@@ -587,14 +608,14 @@
 												</div>
 												
 												<div class="form-group row d-flex justify-content-center mb-5">
-													<div class="col-12 col-xl-3 col-md-6 mb-3">
+													<div class="col-12 col-xl-2 col-md-5 mb-3">
 														<label for="aAge" class="text-dark custom-label">동물 나이</label>
 														<input type="text" id="aAge" name="animal_age" class="form-control custom-text"
 															placeholder="--" readonly/>
 														<div class="a-year-dropdown" id="aYearDropdown"></div>
 														<i class="f-arrow fa-solid fa-angle-down"></i>
 													</div>
-													<div class="col-12 col-xl-2 col-lg-3 col-md-2 mb-3">
+													<div class="col-12 col-xl-2 col-lg-4 col-md-4 mb-3">
 														<label for="aWeight" class="text-dark custom-label">크기</label>
 														<select id="aWeight" name="animal_weight" 
 															class="form-control custom-text" required>
@@ -604,43 +625,95 @@
 															<option value="3">대형&nbsp;(25kg~)</option>
 														</select>
 													</div>
-													<div class="col-12 col-xl-3 col-lg-5 col-md-5 mb-3">
+													<div class="col-12 col-xl-3 col-lg-5 col-md-4 mb-3">
 														<label for="aRegUser" class="text-dark custom-label">작성자</label>
 														<input type="text" id="aRegUser" name="member_id" 
-															class="form-control custom-text" value="youreal00" readonly/>
+															class="form-control custom-text" readonly/>
+													</div>
+													<div class="col-12 col-xl-2 col-lg-5 col-md-4 mb-3">
+														<label for="animal_status" class="text-dark custom-label">동물 상태</label>
+														<div id="animalStatus"></div>
+														<input type="hidden" id="animal_status"/>
 													</div>
 												</div>
 												<div class="form-group row d-flex justify-content-center">
 													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
 														<label class="text-dark custom-label">대표 이미지</label>
 													    <div class="upload-container mb-1">
-															<label for="image-input1" class="upload-button label-no-margin">
+															<label for="image-input0" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input1" name="upload_images[0]" />
-																<i id="plusIcon1" class="mdi mdi-plus a-preview-i"></i>
-																<img id="image-preview1" class="a-preview" alt="이미지 미리보기" />
+																	accept="image/*" id="image-input0" name="upload_images[0]" />
+																<i id="plusIcon0" class="mdi mdi-plus a-preview-i"></i>
+																<input type="hidden" id="orgSrc0" name="check_images[0].orgSrc"/>
+																<input type="hidden" id="tempSrc0"/>
+																<input type="hidden" id="changeCheck0" name="check_images[0].changeCheck"/>
+																<input type="hidden" id="moveSrc0" name="check_images[0].moveSrc"/>
+																<img id="image-preview0" class="a-preview" alt="이미지 미리보기" src=""/>
 															</label>
 														</div>
-														<input type="file" class="file-upload-default" 
-															accept="image/*" id="a-image-input-multi" multiple/>
-														<button type="button" id="multiImageUpBtn" 
-															class="btn btn-outline-custom-a btn-icon-text custom-a-btn-images"> 
-															<span class="custom-a-btn-text">
-															여러장 올리기
-															</span>
-															<i class="fa-solid fa-images"></i>
-														</button>
+														<div class="row mt-2">
+															<div class="col text-right">
+																<input type="file" class="file-upload-default" 
+																	accept="image/*" id="a-image-input-multi" multiple/>
+																<button type="button" id="multiImageUpBtn" 
+																	class="btn btn-outline-custom-a btn-icon-text custom-a-btn-images"> 
+																	<span class="custom-a-btn-text">
+																	다중업로드
+																	</span>
+																	<i class="fa-solid fa-images"></i>
+																</button>
+																<button type="button" id="image-delete0" 
+																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images image-delete"> 
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
+														</div>
 													</div>
 													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
 														<div></div>
 														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
 													    <div class="upload-container">
+															<label for="image-input1" class="upload-button label-no-margin">
+																<input type="file" class="file-upload-default image-input" 
+																	accept="image/*" id="image-input1" name="upload_images[1]"/>
+																<i id="plusIcon1" class="mdi mdi-plus a-preview-i"></i>
+																<input type="hidden" id="orgSrc1" name="check_images[1].orgSrc"/>
+																<input type="hidden" id="tempSrc1"/>
+																<input type="hidden" id="changeCheck1" name="check_images[1].changeCheck"/>
+																<input type="hidden" id="moveSrc1" name="check_images[1].moveSrc"/>
+																<img id="image-preview1" class="a-preview" alt="이미지 미리보기" src=""/>
+															</label>
+														</div>
+														<div class="row mt-2">
+															<div class="col text-right">
+																<button type="button" id="image-delete1" 
+																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images image-delete"> 
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
+														</div>
+													</div>
+													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
+														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
+													    <div class="upload-container">
 															<label for="image-input2" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input2" name="upload_images[1]"/>
+																	accept="image/*" id="image-input2" name="upload_images[2]"/>
 																<i id="plusIcon2" class="mdi mdi-plus a-preview-i"></i>
-																<img id="image-preview2" class="a-preview" alt="이미지 미리보기" />
+																<input type="hidden" id="orgSrc2" name="check_images[2].orgSrc"/>
+																<input type="hidden" id="tempSrc2"/>
+																<input type="hidden" id="changeCheck2" name="check_images[2].changeCheck"/>
+																<input type="hidden" id="moveSrc2" name="check_images[2].moveSrc"/>
+																<img id="image-preview2" class="a-preview" alt="이미지 미리보기" src=""/>
 															</label>
+														</div>
+														<div class="row mt-2">
+															<div class="col text-right">
+																<button type="button" id="image-delete2" 
+																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images image-delete"> 
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
 														</div>
 													</div>
 													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
@@ -648,27 +721,54 @@
 													    <div class="upload-container">
 															<label for="image-input3" class="upload-button label-no-margin">
 																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input3" name="upload_images[2]"/>
+																	accept="image/*" id="image-input3" name="upload_images[3]"/>
 																<i id="plusIcon3" class="mdi mdi-plus a-preview-i"></i>
-																<img id="image-preview3" class="a-preview" alt="이미지 미리보기" />
+																<input type="hidden" id="orgSrc3" name="check_images[3].orgSrc"/>
+																<input type="hidden" id="tempSrc3"/>
+																<input type="hidden" id="changeCheck3" name="check_images[3].changeCheck"/>
+																<input type="hidden" id="moveSrc3" name="check_images[3].moveSrc"/>
+																<img id="image-preview3" class="a-preview" alt="이미지 미리보기" src=""/>
 															</label>
 														</div>
-													</div>
-													<div class="col-10 col-xl-2 col-lg-3 col-md-3 mb-2">
-														<label class="text-dark custom-label">이미지<span class="small">(선택)</span></label>
-													    <div class="upload-container">
-															<label for="image-input4" class="upload-button label-no-margin">
-																<input type="file" class="file-upload-default image-input" 
-																	accept="image/*" id="image-input4" name="upload_images[3]"/>
-																<i id="plusIcon4" class="mdi mdi-plus a-preview-i"></i>
-																<img id="image-preview4" class="a-preview" alt="이미지 미리보기" />
-															</label>
+														<div class="row mt-2">
+															<div class="col text-right">
+																<button type="button" id="image-delete3" 
+																	class="btn btn-outline-danger btn-icon-text custom-a-btn-images image-delete"> 
+																	<i class="fa-solid fa-trash-can"></i>
+																</button>
+															</div>
 														</div>
 													</div>
 												</div>
+												
+												<div class="form-group row justify-content-center align-items-center mb-1">
+													<button type="submit" 
+														class="btn btn-lg btn-rounded btn-custom-a custom-text mx-2 mb-2">
+														수정하기
+													</button>
+													<button type="button" 
+														class="btn btn-lg btn-rounded btn-primary custom-text mx-2 mb-2 a-writing-btn">
+														입양글 작성
+													</button>
+													<button type="button" 
+														class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-2" 
+														onclick="location.href='/AM/animals/list';">
+														목록이동
+													</button>
+												</div>
 												<div class="form-group row d-flex justify-content-center align-items-center">
-													<button type="submit" id="a-submit-btn1" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
-													<button type="button" id="a-reset-btn1" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
+													<button type="button" id="a-delete-btn1" 
+														class="btn btn-lg btn-rounded btn-danger custom-text mx-2 mb-2">
+														삭제
+													</button>
+													<button type="button" id="a-close-btn1" 
+														class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-2">
+														종료
+													</button>
+													<button type="button" id="a-close-cancel-btn1" 
+														class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-2">
+														종료취소
+													</button>
 												</div>
 											</fieldset>
 											
@@ -875,15 +975,39 @@
 														</div>
 														<div class="col-12 col-xl-6 col-lg-8 col-md-6">
 															<label class="text-dark custom-label">비고/기타사항</label>
-															<textarea rows="5" wrap="soft" name="animal_etc" class="form-control custom-text" 
+															<textarea rows="5" wrap="soft" id="aEtc" name="animal_etc" class="form-control custom-text" 
 																placeholder="최대 200자" maxlength="200"></textarea>
 														</div>
 													</div>
 												</fieldset>
 												
-												<div class="form-group row d-flex justify-content-center align-items-center">
-													<button type="submit" id="a-submit-btn2" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
-													<button type="button" id="a-reset-btn2" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
+												<div class="form-group row justify-content-center align-items-center mb-1">
+													<button type="submit" 
+														class="btn btn-lg btn-rounded btn-custom-a custom-text mx-2 mb-2">
+														수정하기
+													</button>
+													<button type="button" 
+														class="btn btn-lg btn-rounded btn-primary custom-text mx-2 mb-2 a-writing-btn">
+														입양글 작성
+													</button>
+													<button type="button" class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-2" 
+														onclick="location.href='/AM/animals/list';">
+														목록이동
+													</button>
+												</div>
+												<div class="form-group row justify-content-center align-items-center">
+													<button type="button" id="a-delete-btn2" 
+														class="btn btn-lg btn-rounded btn-danger custom-text mx-2 mb-2">
+														삭제
+													</button>
+													<button type="button" id="a-close-btn2" 
+														class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-2">
+														종료
+													</button>
+													<button type="button" id="a-close-cancel-btn2" 
+														class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-2">
+														종료취소
+													</button>
 												</div>
 											</fieldset>
 										</form>
@@ -917,9 +1041,8 @@
 		<!-- Custom js for this page -->
 		<script>
 			$(function() {
-				/*=============== 변수 설정 ===============*/
-				$('#aRegUser').val('youreal00');
 				var checkedMove = false;
+				/*=============== 변수 설정 ===============*/
 				const vaccines = {
 						1000: [
 							{ label: '광견병', value: '광견병' },
@@ -943,6 +1066,7 @@
 				/*=============== 변수 설정 ===============*/
 				
 				
+				
 				/*=============== 엔터키 제출 방지 ===============*/
 				$('#formAdptAnimal').on('keydown', function(event) {
 					if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
@@ -950,6 +1074,7 @@
 					}
 				});
 				/*=============== 엔터키 제출 방지 ===============*/
+				
 				
 				
 				/*=============== 동물 종류 리스트 가져오기 ===============*/
@@ -978,6 +1103,7 @@
 					}
 				});
 				/*=============== 동물 종류 리스트 가져오기 ===============*/
+				
 				
 				
 				/*=============== 검색 드롭다운 ===============*/
@@ -1037,11 +1163,11 @@
 								const newDiv = $('<div class="col-12 col-xl-3 col-lg-8 col-md-5 mb-3"></div>');
 					
 								const vLabel = $('<label class="text-dark custom-label"></label>')
-									.attr('for', 'vaccine' + i)
+									.attr('for', 'aVaccine' + i)
 									.text(vaccine.label);
 					
 								const vSelect = $('<select></select>')
-									.attr('id', 'vaccine' + i)
+									.attr('id', 'aVaccine' + i)
 									.attr('name', 'animal_vaccines[' + i + '].vaccine_check')
 									.addClass('form-control custom-text');
 					
@@ -1130,6 +1256,7 @@
 				/*=============== 검색 드롭다운 ===============*/
 				
 				
+				
 				/*=============== 이름 자동생성 ===============*/
 				$('#autoGenaName').on('click', function() {
 					const animal_act = $('[name="animal_act"]:checked').val();
@@ -1168,6 +1295,7 @@
 					
 				});
 				/*=============== 이름 자동생성 ===============*/
+				
 				
 				
 				/*=============== 동물 나이 드롭다운 ===============*/
@@ -1250,6 +1378,7 @@
 				});
 				/*=============== 동물 나이 드롭다운 ===============*/
 				
+				
 
 				/*=============== 이미지 여러장 업로드 ===============*/
 				$('#multiImageUpBtn').on('click', function(){
@@ -1275,7 +1404,7 @@
 					} else {
 						if(validaImagefiles) {
 				            for (let i = 0; i < aImagefiles.length; i++) {
-				                    const fileInput = $('#image-input' + (i + 1))[0];
+				                    const fileInput = $('#image-input' + i)[0];
 				                    const dataTransfer = new DataTransfer();
 				                    
 				                    dataTransfer.items.add(aImagefiles[i]);
@@ -1292,139 +1421,390 @@
 				/*=============== 이미지 여러장 업로드 ===============*/		
 				
 				
+				
 				/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
 				$('.image-input').on('change', function(e) {
 					const file = e.target.files[0];
 					const reader = new FileReader();
-					const inputId = e.target.id;
-					const idNoNum = inputId.replace(/\d+/g, '');
-					const idNum = inputId.charAt(inputId.length - 1);
-					const previewId = '#image-preview' + idNum;
-					const plusIconId = '#plusIcon' + idNum;
+					const targetId = e.target.id; // image-input0, image-input1, image-input2, image-input3
+					const idNumber = parseInt(targetId.charAt(targetId.length - 1), 10);
+					const imageInputId = '#image-input';
+					const previewId = '#image-preview';
+					const plusIconId = '#plusIcon';
+					const tempSrcId = '#tempSrc';
+					const changeCheckId = '#changeCheck';
+					const moveSrcId = '#moveSrc';
 					const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
 					
-					if (file) {
-						 if(fileTypeFilter.exec(file.name)) {
-							 switch(idNum) {
-							 	case '1': {
-							 		reader.readAsDataURL(file);
-									reader.onload = function(e) {
-										$(previewId).attr('src', e.target.result).show();
-										$(plusIconId).hide();
-									}
-									break;
-							 	}
-								case '2': {
-									if($('#' + idNoNum + (idNum - 1)).val() == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
-									} else {
-										reader.readAsDataURL(file);
-										reader.onload = function(e) {
-											$(previewId).attr('src', e.target.result).show();
-											$(plusIconId).hide();
-										}
-									}
-									break;
-								}
-								case '3': {
-									if($('#' + idNoNum + (idNum - 2)).val() == '' 
-											&& $('#' + idNoNum + (idNum - 1)).val() == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
-									} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
-									} else {
-										reader.readAsDataURL(file);
-										reader.onload = function(e) {
-											$(previewId).attr('src', e.target.result).show();
-											$(plusIconId).hide();
-										}
-									}
-									break;
-								}
-								case '4': {
-									if($('#' + idNoNum + (idNum - 3)).val() == '' 
-											&& $('#' + idNoNum + (idNum - 2)).val() == '' 
-												&& $('#' + idNoNum + (idNum - 1)).val() == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 3))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 3))[0].dispatchEvent(new Event('change'));
-									} else if($('#' + idNoNum + (idNum - 2)).val() == '' 
-											&& $('#' + idNoNum + (idNum - 1)).val() == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
-									} else if($('#' + idNoNum + (idNum - 1)).val() == '') {
-										const adataTransfer = new DataTransfer();
-										adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-										$('#' + idNoNum + idNum).val('');
-										$(previewId).removeAttr('src');
-										$('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
-										$('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
-									} else {
-										reader.readAsDataURL(file);
-										reader.onload = function(e) {
-											$(previewId).attr('src', e.target.result).show();
-											$(plusIconId).hide();
-										}
-									}
-									break;
-								}
-								default: {
-									console.error("잘못된 번호");
-									break;
-								}
-							}
-						} else {
+					
+					if (file) { // 파일이 있는 경우
+
+						if(!fileTypeFilter.exec(file.name)) { // 파일이 있으나 유효하지 않은 파일인 경우
 							alert('허용되지 않는 파일 형식이 포함되어 있습니다.');
 							$(this).val('');
+							return;
 						}
-					} else {
-						if(idNum < 4) {
-							$(previewId).hide();
-							$(plusIconId).show();
-							for(let i = parseInt(idNum, 10); i <= 4; i++) {
-								if(i == idNum) {
-									continue;
-								} else if($('#' + idNoNum + i).val() != '') {
-									const adataTransfer = new DataTransfer();
-									adataTransfer.items.add($('#' + idNoNum + i)[0].files[0]);
-									$('#' + idNoNum + i).val('');
-									$('#image-preview'+i).hide();
-									$('#image-preview'+i).removeAttr('src');
-									$('#plusIcon'+i).show();
-									$('#' + idNoNum + (i - 1))[0].files = adataTransfer.files;
-									$('#' + idNoNum + (i - 1))[0].dispatchEvent(new Event('change'));
+
+						switch(idNumber) { // 선택한 칸의 아이디 숫자
+							case 0: { // 1번째칸
+							 	reader.readAsDataURL(file); // 파일을 읽어서 그 내용을 Base64 인코딩된 데이터 URL 형식으로 변환
+								reader.onload = function(e) {
+									$(previewId + idNumber).attr('src', e.target.result).show();
+									$(plusIconId + idNumber).hide();
+									$(changeCheckId + idNumber).val(1);
+									$(tempSrcId + idNumber).val('');
 								}
+							break;
 							}
-						} else {
-							$(previewId).hide();
-							$(previewId).removeAttr('src');
-							$(plusIconId).show();
+							case 1: { // 2번째칸
+								if($(previewId + (idNumber - 1)).attr('src') == '') {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										const aDataTransfer = new DataTransfer(); // 데이터 전송 객체
+										aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+										$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
+										$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
+										$(plusIconId + (idNumber - 1)).hide();
+										$(changeCheckId + (idNumber - 1)).val(1);
+										$(imageInputId + idNumber).val('');
+									}
+								} else {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										$(previewId + idNumber).attr('src', e.target.result).show();
+										$(plusIconId + idNumber).hide();
+										$(changeCheckId + idNumber).val(1);
+										$(tempSrcId + idNumber).val('');
+									}
+								}
+							break;
+							}
+							case 2: { // 3번째칸
+								if($(previewId + (idNumber - 2)).attr('src') == '' 
+									&& $(previewId + (idNumber - 1)).attr('src') == '') {
+										reader.readAsDataURL(file);
+										reader.onload = function(e) {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+											$(imageInputId + (idNumber - 2))[0].files = aDataTransfer.files;
+											$(previewId + (idNumber - 2)).attr('src', e.target.result).show();
+											$(plusIconId + (idNumber - 2)).hide();
+											$(changeCheckId + (idNumber - 2)).val(1);
+											$(imageInputId + idNumber).val('');
+										}
+								} else if($(previewId + (idNumber - 1)).attr('src') == '') {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										const aDataTransfer = new DataTransfer();
+										aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+										$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
+										$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
+										$(plusIconId + (idNumber - 1)).hide();
+										$(changeCheckId + (idNumber - 1)).val(1);
+										$(imageInputId + idNumber).val('');
+									}
+								} else {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										$(previewId + idNumber).attr('src', e.target.result).show();
+										$(plusIconId + idNumber).hide();
+										$(changeCheckId + idNumber).val(1);
+										$(tempSrcId + idNumber).val('');
+									}
+								}
+							break;
+							}
+							case 3: { // 4번째칸
+								if($(previewId + (idNumber - 3)).attr('src') == '' 
+									&& $(previewId + (idNumber - 2)).attr('src') == '' 
+										&& $(previewId + (idNumber - 1)).attr('src') == '') {
+											reader.readAsDataURL(file);
+											reader.onload = function(e) {
+												const aDataTransfer = new DataTransfer();
+												aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+												$(imageInputId + (idNumber - 3))[0].files = aDataTransfer.files;
+												$(previewId + (idNumber - 3)).attr('src', e.target.result).show();
+												$(plusIconId + (idNumber - 3)).hide();
+												$(changeCheckId + (idNumber - 3)).val(1);
+												$(imageInputId + idNumber).val('');
+											}
+								} else if($(previewId + (idNumber - 2)).attr('src') == '' 
+									&& $(previewId + (idNumber - 1)).attr('src') == '') {
+										reader.readAsDataURL(file);
+										reader.onload = function(e) {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+											$(imageInputId + (idNumber - 2))[0].files = aDataTransfer.files;
+											$(previewId + (idNumber - 2)).attr('src', e.target.result).show();
+											$(plusIconId + (idNumber - 2)).hide();
+											$(changeCheckId + (idNumber - 2)).val(1);
+											$(imageInputId + idNumber).val('');
+										}
+								} else if($(previewId + (idNumber - 1)).attr('src') == '') {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										const aDataTransfer = new DataTransfer();
+										aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+										$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
+										$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
+										$(plusIconId + (idNumber - 1)).hide();
+										$(changeCheckId + (idNumber - 1)).val(1);
+										$(imageInputId + idNumber).val('');
+									}
+								} else {
+									reader.readAsDataURL(file);
+									reader.onload = function(e) {
+										$(previewId + idNumber).attr('src', e.target.result).show();
+										$(plusIconId + idNumber).hide();
+										$(changeCheckId + idNumber).val(1);
+										$(tempSrcId + idNumber).val('');
+									}
+								}
+							break;
+							}
+							default: {
+								console.error("잘못된 번호");
+							break;
+							}
+						} // 파일이 있는 경우
+
+					} else { // 파일이 없는 경우(취소한 경우)
+						switch(idNumber) {
+							case 3: { // 4번째 칸
+								$(previewId + idNumber).attr('src',''); // removeAttr은 src 속성이 제거되어 attr('src') => undefined 반환
+								$(previewId + idNumber).hide();
+								$(plusIconId + idNumber).show();
+								$(changeCheckId + idNumber).val(1);
+								$(tempSrcId + idNumber).val('');
+							break;
+							}
+							case 2: { // 3번째 칸
+								if($(previewId + (idNumber + 1)).attr('src') != '') {
+									if($(imageInputId + (idNumber + 1)).val() != '') {
+										const aDataTransfer = new DataTransfer();
+										aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+										$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+										$(imageInputId + (idNumber + 1)).val('');
+									}
+									const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+									const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+									$(previewId + idNumber).attr('src', nextSrc);
+									$(previewId + idNumber).show();
+									$(moveSrcId + idNumber).val(nextTempSrc);
+									$(tempSrcId + idNumber).val(nextTempSrc);
+									$(changeCheckId + idNumber).val(1);
+									$(previewId + (idNumber + 1)).attr('src','');
+									$(previewId + (idNumber + 1)).hide();
+									$(plusIconId + (idNumber + 1)).show();
+									$(changeCheckId + (idNumber + 1)).val(1);
+									$(tempSrcId + (idNumber + 1)).val('');
+								} else {
+									$(previewId + idNumber).attr('src','');
+									$(previewId + idNumber).hide();
+									$(plusIconId + idNumber).show();
+									$(changeCheckId + idNumber).val(1);
+									$(moveSrcId + idNumber).val('');
+									$(tempSrcId + idNumber).val('');
+								}
+							break;
+							}
+							case 1: { // 2번째 칸
+								if($(previewId + (idNumber + 1)).attr('src') != ''
+									&& $(previewId + (idNumber + 2)).attr('src') != '') {
+										if($(imageInputId + (idNumber + 1)).val() != '') {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+											$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+											$(imageInputId + (idNumber + 1)).val('');
+										}
+										if($(imageInputId + (idNumber + 2)).val() != '') {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + (idNumber + 2))[0].files[0]);
+											$(imageInputId + (idNumber + 1))[0].files = aDataTransfer.files;
+											$(imageInputId + (idNumber + 2)).val('');
+										}
+										const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+										const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+										const nextSrc2 = $(previewId + (idNumber + 2)).attr('src');
+										const nextTempSrc2 = $(tempSrcId + (idNumber + 2)).val();
+										$(previewId + idNumber).attr('src', nextSrc);
+										$(previewId + idNumber).show();
+										$(moveSrcId + idNumber).val(nextTempSrc);
+										$(tempSrcId + idNumber).val(nextTempSrc);
+										$(changeCheckId + idNumber).val(1);
+										$(previewId + (idNumber + 1)).attr('src', nextSrc2);
+										$(previewId + (idNumber + 1)).show();
+										$(moveSrcId + (idNumber + 1)).val(nextTempSrc2);
+										$(tempSrcId + (idNumber + 1)).val(nextTempSrc2);
+										$(changeCheckId + (idNumber + 1)).val(1);
+										$(previewId + (idNumber + 2)).attr('src', '');
+										$(previewId + (idNumber + 2)).hide();
+										$(plusIconId + (idNumber + 2)).show();
+										$(changeCheckId + (idNumber + 2)).val(1);
+										$(tempSrcId + (idNumber + 2)).val('');
+								} else if($(previewId + (idNumber + 1)).attr('src') != '') {
+									if($(imageInputId + (idNumber + 1)).val() != '') {
+										const aDataTransfer = new DataTransfer();
+										aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+										$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+										$(imageInputId + (idNumber + 1)).val('');
+									}
+									const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+									const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+									$(previewId + idNumber).attr('src', nextSrc);
+									$(previewId + idNumber).show();
+									$(moveSrcId + idNumber).val(nextTempSrc);
+									$(tempSrcId + idNumber).val(nextTempSrc);
+									$(changeCheckId + idNumber).val(1);
+									$(previewId + (idNumber + 1)).attr('src', '');
+									$(previewId + (idNumber + 1)).hide();
+									$(plusIconId + (idNumber + 1)).show();
+									$(changeCheckId + (idNumber + 1)).val(1);
+									$(moveSrcId + (idNumber + 1)).val('');
+									$(tempSrcId + (idNumber + 1)).val('');
+								} else {
+									$(previewId + idNumber).attr('src', '');
+									$(previewId + idNumber).hide();
+									$(plusIconId + idNumber).show();
+									$(changeCheckId + idNumber).val(1);
+									$(moveSrcId + idNumber).val('');
+									$(tempSrcId + idNumber).val('');
+								}
+							break;
+							}
+							case 0:{ // 1번째 칸
+								if($(previewId + (idNumber + 1)).attr('src') != '' 
+									&& $(previewId + (idNumber + 2)).attr('src') != '' 
+										&& $(previewId + (idNumber + 3)).attr('src') != '') {
+										if($(imageInputId + (idNumber + 1)).val() != '') {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+											$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+											$(imageInputId + (idNumber + 1)).val('');
+										}
+										if($(imageInputId + (idNumber + 2)).val() != '') {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + (idNumber + 2))[0].files[0]);
+											$(imageInputId + (idNumber + 1))[0].files = aDataTransfer.files;
+											$(imageInputId + (idNumber + 2)).val('');
+										}
+										if($(imageInputId + (idNumber + 3)).val() != '') {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + (idNumber + 3))[0].files[0]);
+											$(imageInputId + (idNumber + 2))[0].files = aDataTransfer.files;
+											$(imageInputId + (idNumber + 3)).val('');
+										}
+										const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+										const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+										const nextSrc2 = $(previewId + (idNumber + 2)).attr('src');
+										const nextTempSrc2 = $(tempSrcId + (idNumber + 2)).val();
+										const nextSrc3 = $(previewId + (idNumber + 3)).attr('src');
+										const nextTempSrc3 = $(tempSrcId + (idNumber + 3)).val();
+										$(previewId + idNumber).attr('src', nextSrc);
+										$(previewId + idNumber).show();
+										$(moveSrcId + idNumber).val(nextTempSrc);
+										$(changeCheckId + idNumber).val(1);
+										$(previewId + (idNumber + 1)).attr('src', nextSrc2);
+										$(previewId + (idNumber + 1)).show();
+										$(moveSrcId + (idNumber + 1)).val(nextTempSrc2);
+										$(tempSrcId + (idNumber + 1)).val(nextTempSrc2);
+										$(changeCheckId + (idNumber + 1)).val(1);
+										$(previewId + (idNumber + 2)).attr('src', nextSrc3);
+										$(previewId + (idNumber + 2)).show();
+										$(moveSrcId + (idNumber + 2)).val(nextTempSrc3);
+										$(tempSrcId + (idNumber + 2)).val(nextTempSrc3);
+										$(changeCheckId + (idNumber + 2)).val(1);
+										$(previewId + (idNumber + 3)).attr('src', '');
+										$(previewId + (idNumber + 3)).hide();
+										$(plusIconId + (idNumber + 3)).show();
+										$(changeCheckId + (idNumber + 3)).val(1);
+										$(tempSrcId + (idNumber + 3)).val('');
+								} else if($(previewId + (idNumber + 1)).attr('src') != '' 
+									&& $(previewId + (idNumber + 2)).attr('src') != '') {
+										if($(imageInputId + (idNumber + 1)).val() != '') {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+											$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+											$(imageInputId + (idNumber + 1)).val('');
+										}
+										if($(imageInputId + (idNumber + 2)).val() != '') {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + (idNumber + 2))[0].files[0]);
+											$(imageInputId + (idNumber + 1))[0].files = aDataTransfer.files;
+											$(imageInputId + (idNumber + 2)).val('');
+										}
+										const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+										const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+										const nextSrc2 = $(previewId + (idNumber + 2)).attr('src');
+										const nextTempSrc2 = $(tempSrcId + (idNumber + 2)).val();
+										$(previewId + idNumber).attr('src', nextSrc);
+										$(previewId + idNumber).show();
+										$(moveSrcId + idNumber).val(nextTempSrc);
+										$(changeCheckId + idNumber).val(1);
+										$(previewId + (idNumber + 1)).attr('src', nextSrc2);
+										$(previewId + (idNumber + 1)).show();
+										$(moveSrcId + (idNumber + 1)).val(nextTempSrc2);
+										$(tempSrcId + (idNumber + 1)).val(nextTempSrc2);
+										$(changeCheckId + (idNumber + 1)).val(1);
+										$(previewId + (idNumber + 2)).attr('src', '');
+										$(previewId + (idNumber + 2)).hide();
+										$(plusIconId + (idNumber + 2)).show();
+										$(changeCheckId + (idNumber + 2)).val(1);
+										$(moveSrcId + (idNumber + 2)).val('');
+										$(tempSrcId + (idNumber + 2)).val('');
+								} else if($(previewId + (idNumber + 1)).attr('src') != '') {
+									if($(imageInputId + (idNumber + 1)).val() != '') {
+											const aDataTransfer = new DataTransfer();
+											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+											$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+											$(imageInputId + (idNumber + 1)).val('');
+									}
+									const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+									const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+									$(previewId + idNumber).attr('src', nextSrc);
+									$(previewId + idNumber).show();
+									$(moveSrcId + idNumber).val(nextTempSrc);
+									$(changeCheckId + idNumber).val(1);
+									$(previewId + (idNumber + 1)).attr('src', '');
+									$(previewId + (idNumber + 1)).hide();
+									$(plusIconId + (idNumber + 1)).show();
+									$(changeCheckId + (idNumber + 1)).val(1);
+									$(moveSrcId + (idNumber + 1)).val('');
+									$(tempSrcId + (idNumber + 1)).val('');
+								} else {
+									$(previewId + idNumber).attr('src', '');
+									$(previewId + idNumber).hide();
+									$(plusIconId + idNumber).show();
+									$(changeCheckId + idNumber).val(1);
+									$(moveSrcId + idNumber).val('');
+									$(tempSrcId + idNumber).val('');
+								}
+							break;
+							}
+							default:{
+								console.log('잘못된 번호'+ idNumber);
+							break;
+							}
 						}
+						
 					}
 				});
 				/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
+				
+				
+				
+				/*=============== 이미지 삭제 버튼 ===============*/
+				$('.image-delete').on('click', function(e) {
+					const targetId = e.currentTarget.id; // image-delete0, image-delete1, image-delete2, image-delete3
+					console.log('targetId : '+ targetId);
+					const idNumber = parseInt(targetId.charAt(targetId.length - 1), 10);
+					console.log('idNumber : '+ idNumber);
+					const imageInputId = '#image-input';
+					$(imageInputId + idNumber).val('');
+					$(imageInputId + idNumber).trigger('change');
+				});
+				/*=============== 이미지 삭제 버튼 ===============*/
+				
 				
 				
 				/*=============== 체크박스 제어 ===============*/
@@ -1457,42 +1837,306 @@
 				});
 				/*=============== 체크박스 제어 ===============*/
 
+
+
+				/*=============== 동물 정보 가져오기 & 입력 ===============*/
+				let currentURL = window.location.pathname;
+				let lastSlashIndex = currentURL.lastIndexOf('/');
+				let animalId = currentURL.substring(lastSlashIndex+1);
+				const regex = /^ANIM-\w{6}$/;
 				
-				/*=============== 초기화(reset) 버튼 제어 ===============*/
-				$('#a-reset-btn1, #a-reset-btn2').on('click',function(e) {
+				if(regex.test(animalId)) {
+					$.ajax({
+						url: '/adptmgmt/animals/' + animalId,
+						method: 'GET',
+						type: 'json',
+						success: function(data) {
+							const adate = new Date(data.animal_regdate);
+							const year = adate.getFullYear();
+							const month = String(adate.getMonth() + 1).padStart(2, '0');
+							const day = String(adate.getDay()).padStart(2, '0');
+							const formattedDate = year + '-' + month + '-' + day;
+							data.animal_regdate = formattedDate;
+							
+							$('#animal_id').val(data.animal_id);
+							$('#aRegDate').val(data.animal_regdate);
+							$('#petType').val(data.categoryDataVO.category_parent);
+							$('#petType').trigger('change');
+							$('#petTypeDetailCode').val(data.categoryDataVO.category_code);
+							$('#petTypeDetail').val(data.categoryDataVO.category_value);
+							if(data.category_etc_value != '') {
+								$('#petTypeEtc').val(data.category_etc_value); 
+							}
+							$('#aName').val(data.animal_name);
+							$('#aColor').val(data.animal_color);
+							$('#aGender').val(data.animal_gender);
+							$('#aNeuter').val(data.animal_neuter);
+							$('#aAge').val(data.animal_age);
+							$('#aWeight').val(data.animal_weight);
+							$('#aRegUser').val(data.member_id);
+							switch(data.animal_status) {
+								case 1: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-warning">대기중</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+								case 2: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-primary">모집중</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+								case 3: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-danger">상담중</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+								case 4: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-success">입양완료</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+								case 5: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-secondary">종료</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+							}
+							for(let i = 0; i < data.animal_images.length; i++) {
+								if(data.animal_images[i].image_src != '') {
+									$('#image-preview'+ i).attr('src',data.animal_images[i].image_src).show();
+									$('#orgSrc'+ i).val(data.animal_images[i].image_src);
+									$('#tempSrc'+ i).val(data.animal_images[i].image_src);
+									$('#plusIcon'+ i).hide();
+								}
+							}
+							$('input[name="animal_act"][value="'+ data.animal_act +'"]').prop('checked',true);
+							$('input[name="animal_social"][value="'+ data.animal_social +'"]').prop('checked',true);
+							for(let i = 0; i < 5; i++) {
+								$('#aHealth'+ i).val(data.animal_healths[i].health_check);
+							}
+							for(let i = 0; i < 4; i++) {
+								$('#aVaccine'+ i).val(data.animal_vaccines[i].vaccine_check);
+							}
+							$('#aRegNum').val(data.animal_regnum);
+							$('#aEtc').val(data.animal_etc);
+							
+							if($('#animal_status').val() == '5') {
+								$('#a-close-btn1, #a-close-btn2').hide();
+								$('#a-close-cancel-btn1, #a-close-cancel-btn2').show();
+							} else {
+								$('#a-close-btn1, #a-close-btn2').show();
+								$('#a-close-cancel-btn1, #a-close-cancel-btn2').hide();
+							}
+							
+						},
+						error: function(error) {
+							console.error('데이터를 가져오는 데 실패했습니다:', error);
+							window.location.href = '/AM/animals/list';
+						}
+					});
+				} else {
+					window.location.href = '/AM/animals/list';
+				}
+				/*=============== 동물 정보 가져오기 & 입력 ===============*/
+				
+								
+								
+				/*=============== 삭제(delete) 버튼 제어 ===============*/
+				$('#a-delete-btn1, #a-delete-btn2').on('click',function(e) {
+					const animal_id = $('#animal_id').val();
+					const member_id = $('#aRegUser').val();
 					
 					Swal.fire({
-						title: '초기화하시겠습니까?',
-						text: '작성 전체가 초기화 됩니다!',
+						title: '삭제하시겠습니까?',
+						text: '동물 정보가 삭제됩니다!',
 						icon: 'warning',
 						showCancelButton: true,
-						confirmButtonColor: '#006e60',
+						confirmButtonColor: '#fc5a5a',
 						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '초기화',
+						confirmButtonText: '삭제',
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
-							$('#formAdptAnimal')[0].reset();
-							$('.a-preview').hide();
-							$('.a-preview').attr('src','');
-							$('.a-preview-i').show();
-							Swal.fire({
-								title:'초기화 되었습니다!',
-								icon:'success',
-								confirmButtonColor: '#006e60',
-								confirmButtonText: '확인'
+							$.ajax({
+								url: "/adptmgmt/animals/"+ animal_id +"/deletion?member_id=" + member_id,
+								method: "DELETE",
+								success: function() {
+									Swal.fire({
+										title:'삭제 되었습니다!',
+										icon:'success',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									}).then(function(result) {
+										if(result.isConfirmed) {
+											location.href="/AM/animals/list";
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '삭제에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
 							});
 						}
 					});
 				});
-				/*=============== 초기화(reset) 버튼 제어 ===============*/
+				/*=============== 삭제(delete) 버튼 제어 ===============*/
 
+				
+				
+				/*=============== 입양글(create) 버튼 제어 ===============*/
+				$('.a-writing-btn').on('click', function() {
+					const animal_id = $('#animal_id').val();
+					
+					Swal.fire({
+						title: '입양글을 작성하시겠습니까?',
+						text: '입양글 작성 페이지로 이동합니다',
+						icon: 'info',
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '작성',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							location.href='/AM/writings/add/'+ animal_id;
+						}	
+					});
+				});
+				/*=============== 입양글(create) 버튼 제어 ===============*/
+				
+				
+				
+				
+				/*=============== 종료(close) 버튼 제어 ===============*/
+				$('#a-close-btn1, #a-close-btn2').on('click', function() {
+					const animal_id = $('#animal_id').val();
+					const member_id = $('#aRegUser').val();
+					
+					Swal.fire({
+						title: '종료로 변경하시겠습니까?',
+						text: '동물 상태가 종료로 변경되고 입양글, 상담이 취소됩니다',
+						icon: 'question',
+						showCancelButton: true,
+						confirmButtonColor: '#000711',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '변경',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$.ajax({
+								url: "/adptmgmt/animals/"+ animal_id +"/status",
+								method: "PATCH",
+								contentType: "application/json",
+								data: JSON.stringify({ 
+									"animal_id" : animal_id, 
+									"member_id" : member_id, 
+									"animal_status" : 5 }),
+								success: function() {
+									Swal.fire({
+										title: '종료로 변경되었습니다',
+										icon: 'success',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인',
+									}).then(function(result) {
+										if (result.isConfirmed) {
+											location.reload();
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '변경에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
+				});
+				
+				$('#a-close-cancel-btn1, #a-close-cancel-btn2').on('click', function() {
+					const animal_id = $('#animal_id').val();
+					const member_id = $('#aRegUser').val();
+					
+					Swal.fire({
+						title: '종료를 취소하시겠습니까?',
+						text: '동물 상태가 대기중으로 변경됩니다',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#000711',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '변경',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$.ajax({
+								url: "/adptmgmt/animals/"+ animal_id +"/status",
+								method: "PATCH",
+								contentType: "application/json",
+								data: JSON.stringify({ 
+									"animal_id" : animal_id, 
+									"member_id" : member_id, 
+									"animal_status" : 1 }),
+								success: function() {
+									Swal.fire({
+										title: '동물상태가 대기중으로 변경되었습니다',
+										icon: 'success',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인',
+									}).then(function(result) {
+										if (result.isConfirmed) {
+											location.reload();
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '변경에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
+				});
+				/*=============== 종료(close) 버튼 제어 ===============*/
+				
+				
 				
 				/*=============== 제출(submit) 버튼 제어 ===============*/
 				$('#formAdptAnimal').on('submit', function(event) {
 					event.preventDefault();
 					var formData = new FormData(this);
-					
+					let currentURL = window.location.pathname;
+					let lastSlashIndex = currentURL.lastIndexOf('/');
+					let animalId = currentURL.substring(lastSlashIndex+1);
+					const regex = /^ANIM-\w{6}$/;
+
+					if(!regex.test(animalId)) {
+						alert('유효하지않은 동물id 입니다');
+						return;
+					}
+
 					if($('#petTypeDetailCode').val() == '') {
 						alert('세부 종류를 입력해주세요!');
 						$('#petTypeDetail').focus();
@@ -1501,35 +2145,33 @@
 						alert('동물 나이를 입력해주세요!');
 						$('#aAge').focus();
 						return;
-					} else if ($('#image-input1').val() == '') {
+					} else if ($('#image-preview0').attr('src') == '') {
 						alert('대표 이미지를 입력해주세요!');
 						$('#image-input1').focus();
 						return;
 					}
 					
-					$('#a-submit-btn1, #a-submit-btn2').prop('disabled', true);
 					Swal.fire({
-						title: '제출하시겠습니까?',
-						text: '제출 내용을 확인해주세요!',
+						title: '수정하시겠습니까?',
+						text: '수정 내용을 확인해주세요!',
 						icon: 'info',
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '제출',
+						confirmButtonText: '수정',
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: '/adptmgmt/animals/creation',
-								type: 'POST',
+								url: '/adptmgmt/animals/'+ animalId +'/modification',
+								method: 'POST',
 								data: formData,
 								contentType: false,
 								processData: false,
 								success: function(response) {
-									$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
 									Swal.fire({
-									title: '제출 완료',
-									text: '제출에 성공했습니다!',
+									title: '수정 완료',
+									text: '수정에 성공했습니다!',
 									icon: 'success',
 									confirmButtonColor: '#006e60',
 									confirmButtonText: '확인'
@@ -1540,23 +2182,23 @@
 									});
 								},
 								error: function(jqXHR, textStatus, errorThrown) {
-									$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
-									console.error('제출 실패:', textStatus, errorThrown);
+									console.error('수정 실패:', textStatus, errorThrown);
 									Swal.fire({
 										title: '오류!',
-										text: '제출에 실패했습니다.',
+										text: '수정에 실패했습니다.',
 										icon: 'error',
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									});
 								}
 							});
-						} else {
-							$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
 						}
 					});
 				});
 				/*=============== 제출(submit) 버튼 제어 ===============*/
+
+				
+				
 				
 				
 				

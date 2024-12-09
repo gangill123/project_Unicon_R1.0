@@ -229,6 +229,11 @@
 </update>
 
 
+<select id="getMemberInfo" parameterType="String" resultType="com.Unicon.domain.MemberVO">
+	select * 
+	 from _member 
+	  where member_id = #{member_id} 
+</select>
 
 
 </mapper>
