@@ -168,6 +168,11 @@ public class ShopDAO {
         	odvo.setOrder_id(order_id);
         }
         
+        //0-1. 기존에 임시저장된 orders/ordersDetail/ordersDetailOption 상태 '취소종료'로 변경
+        sqlSession.update(NAMESPACE+".updateOrdersToCancel");
+        sqlSession.update(NAMESPACE+".updateOrdersDetailToCancel");
+        sqlSession.update(NAMESPACE+".updateOrdersDetailOptionToCancel");
+        
         // 1. orders테이블에 임시저장 상태로 생성
  		sqlSession.insert(NAMESPACE+".insertOrders", vo);
 		

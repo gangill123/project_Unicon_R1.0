@@ -28,6 +28,7 @@ public class OrdersVO {
 	private Timestamp create_date;
 	private Timestamp update_date;
 	private Timestamp payment_date;
+	private String imp_uid;
 	
 	private List<OrdersDetailVO> ordersDetails;
 	private MemberVO memberVO;

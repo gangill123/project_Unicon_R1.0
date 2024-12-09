@@ -1526,7 +1526,7 @@
 	
 	
 	// 주문결제 페이지에서 결제하기 버튼 클릭 시 로직
-	function Checkout(address_id){
+	function Checkout(address_id, pay_method, imp_uid){
 		
 		//address
 		let address = $('#address').text();
@@ -1556,8 +1556,20 @@
 		.attr('name', `recipient_phone`) // 유니크한 name 설정
 		.val(recipientPhone); // input 값 설정
 		
+		//pay_method
+		let payMethodInput = $('<input>')
+		.attr('type', 'hidden') // hidden 타입 설정
+		.attr('name', `pay_method`) // 유니크한 name 설정
+		.val(pay_method); // input 값 설정
 		
-		$('#addrInfoFormInput').append(addressInput, detailAddressInput, recipientInput, recipientPhoneInput);
+		//imp_uid
+		let impUidInput = $('<input>')
+		.attr('type', 'hidden') // hidden 타입 설정
+		.attr('name', `imp_uid`) // 유니크한 name 설정
+		.val(imp_uid); // input 값 설정
+		
+		$('#addrInfoFormInput').append(addressInput, detailAddressInput, recipientInput, recipientPhoneInput, 
+				payMethodInput, impUidInput);
 		
 		// FormData 객체 생성
         let formData = new FormData($('#addrInfoForm')[0]);
@@ -1570,8 +1582,19 @@
             processData: false, // FormData 사용 시 false 설정
             contentType: false, // FormData 사용 시 false 설정
             success: function (response) {
-                //$('#addrInfoFormInput').empty();
-            	alert("ok");
+            	Swal.fire({
+  	  			  title: '결제가 완료되었습니다!',
+  	  			  text: "주문 상세 페이지로 이동합니다.",
+  	  			  icon: 'success',
+  	  			  confirmButtonColor: '#3085d6',
+  	  			  customClass: {
+  	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+  	  			  }
+  	 			}).then((result) => {
+  	 			    if (result.isConfirmed) { 
+  	 			        window.location.href = '/mypage/orders_detail'; // 이동할 URL
+  	 			    }
+  	 			});
             },
             error: function (xhr, status, error) {
                 console.error("Error:", error);

@@ -55,7 +55,7 @@
 }
 
 </style>
-<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script type="text/javascript"	src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 </head>
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
@@ -184,7 +184,7 @@
 	                          <div class="row">
 	                          	<div class="col-sm-12">
 	                          		<div style="display: flex; justify-content: space-between; align-items: center;">
-									    <h6 class="mb-0">${list.shopVO.product_name } <i class="fa-solid fa-store"></i></h6>
+									    <h6 class="mb-0">${ordersInfo.memberVO.member_name } <i class="fa-solid fa-store"></i></h6>
 									    <p class="mb-0 font-weight-600">배송비 : 
 									    <c:choose>
 									    	<c:when test="${list.delivery_price != 0 }">
@@ -222,36 +222,8 @@
                           
                           </c:forEach>	
                           
-                          <div class="row" style="margin-top: 65px;">
-                          	<div class="col-sm-6">
-                          	<h5 class="mb-3">결제방법</h5>
-                   			<div class="border rounded px-3 py-3 orderItem mb-4">
-                   				<div>
-		                          <ul class="ps-0 mb-0">
-		                          	<li class="row">	
-		                          		<div class="col-sm-4"><p class="mb-2" style="color: #aaa;">상품금액</p></div>
-		                          		<div class="col-sm-8" style="text-align: end;"><p class="mb-1">40,000원</p></div>
-		                          	</li>
-		                          	<li class="row">
-		                          		<div class="col-sm-4"><p class="mb-2" style="color: #aaa;">배송비</p></div>
-		                          		<div class="col-sm-8" style="text-align: end;"><p class="mb-1">0원</p></div>
-		                          	</li>
-		                          </ul>
-		                          
-		                          <div>
-		                          	<div class="border-bottom my-3"></div>
-		                          	<ul class="ps-0 mb-0">
-		                          		<li class="row">
-			                          		<div class="col-sm-4"><p class="mb-2">주문금액</p></div>
-			                          		<div class="col-sm-8 font-weight-600" style="text-align: end; font-size: 1.2rem;"><p class="mb-1">40,000원</p></div>
-		                          		</li>
-		                          	</ul>
-		                          </div>
-                   				</div>
-                          	</div>
-                          	</div>
-                          	
-                          	<div class="col-sm-6">
+                          <div class="row" style="margin-top: 65px; justify-content: end;">
+                          	<div class="col-sm-8">
                           	<h5 class="mb-3">결제금액</h5>
                    			<div class="border rounded px-3 py-3 orderItem mb-4">
                    				<div>
@@ -368,7 +340,7 @@
                     </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="butn primary rounded w-100" onclick="requestPay()"><span class="saveBtnText">저장하기</span></button>
+                        <button class="butn primary rounded w-100" type="submit"><span class="saveBtnText">저장하기</span></button>
                     </div>
                     </form>
                 </div>
@@ -555,15 +527,43 @@
 		});
 		
 		
+		var IMP = window.IMP;
+		IMP.init("imp16704003");   /* imp~ : 가맹점 식별코드*/
+		
 		// 주문결제 페이지에서 결제하기 버튼 클릭 시 로직
 		$('#addrInfoForm').on('submit', function(e){
 			e.preventDefault();
-			
 			//alert("ok");
 			
-			Checkout('${ordersInfo.order_id}');
+			let totalPrice = parseInt('${ordersInfo.total_price }'.replace(/,/g, '').replace(/[^0-9]/g, ''), 10);
+			let ordersName = '${ordersInfo.ordersDetails[0].shopVO.product_name }';
+			let orderId = '${ordersInfo.order_id }';
+			let buyer_name = '${ordersInfo.memberVO.member_name }';
+			let buyer_email = '${ordersInfo.memberVO.member_email }';
 			
-			
+			IMP.request_pay({
+				pg: 'html5_inicis',
+				pay_method: 'card',
+				merchant_uid: orderId,
+				name: ordersName,
+				amount: 100,
+				buyer_email: buyer_email,  /*필수 항목이라 "" 로 남겨둠*/
+				buyer_name: buyer_name,
+			}, function(rsp) {
+				console.log(rsp);
+		
+			 //결제 성공 시
+			if (rsp.success) {
+				var msg = '결제가 완료되었습니다.';
+				console.log("결제성공 ");
+				// 성공 시 로직처리
+				Checkout('${ordersInfo.order_id}', rsp.pay_method, rsp.imp_uid);
+				
+			} else {
+				var msg = '결제에 실패하였습니다.';
+				msg += '에러내용 : ' + rsp.error_msg;
+			}
+			});
 			
 		});
 		
@@ -636,48 +636,6 @@
     }
 	
 	
-	IMP.init('imp16704003'); // Iamport Key 초기화
-	
-	function requestPay() {
-        IMP.request_pay({
-            pg: "html5_inicis", // PG사 코드
-            pay_method: "card", // 결제수단 (card, trans, vbank 등)
-            merchant_uid: "order_" + new Date().getTime(), // 주문번호
-            name: "상품명: 결제 테스트",
-            amount: 10000, // 결제 금액
-            buyer_email: "test@example.com",
-            buyer_name: "홍길동",
-            buyer_tel: "010-1234-5678",
-            buyer_addr: "서울특별시 강남구 역삼동",
-            buyer_postcode: "123-456"
-        }, function (rsp) {
-            if (rsp.success) {
-                // 성공 시 백엔드로 결제 정보 전송
-                alert("결제가 완료되었습니다.");
-                processPayment(rsp);
-            } else {
-                // 실패 처리
-                alert("결제에 실패하였습니다. 에러: " + rsp.error_msg);
-            }
-        });
-    }
-
-    function processPayment(rsp) {
-        // 결제 정보 전송
-        fetch('/orders/complete', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(rsp)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("서버 결제 검증 완료");
-            } else {
-                alert("서버 결제 검증 실패");
-            }
-        });
-    }
 	
 	
 	

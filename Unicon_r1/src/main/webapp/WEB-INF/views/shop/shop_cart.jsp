@@ -398,7 +398,7 @@
 			e.preventDefault();
 			CartToCheckout();
 			Swal.fire({
-	  			  title: '주문/결제로 이동합니다.',
+	  			  title: '주문페이지로 이동합니다.',
 	  			  icon: 'success',
 	  			  confirmButtonColor: '#3085d6',
 	  			  customClass: {

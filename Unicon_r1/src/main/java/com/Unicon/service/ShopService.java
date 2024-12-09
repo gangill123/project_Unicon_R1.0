@@ -149,8 +149,6 @@ public class ShopService {
 		sdao.removeCartAndDetail(member_id, cartIds);
 	}
 	
-	
-	
 	// 장바구니에서 구매하기 시 주문테이블로 저장
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
 	public void cartToCheckout(OrdersVO vo) {
