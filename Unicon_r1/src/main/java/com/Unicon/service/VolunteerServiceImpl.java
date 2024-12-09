@@ -8,6 +8,8 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,13 @@ public class VolunteerServiceImpl implements VolunteerService {
     
     @Inject
     private VolunteerDAO volDAO;
+    
+    @Inject 
+    private volEmailService volEmailService;
+    
+    @Inject
+    @Qualifier("taskExecutor")
+    private ThreadPoolTaskExecutor taskExecutor;
     
     @Override
     @Transactional
@@ -193,10 +202,31 @@ public class VolunteerServiceImpl implements VolunteerService {
     @Transactional
     public void approveApplication(Long voId) throws Exception {
         try {
+            // 신청 정보 조회
+            VolunteerApplyVO application = volDAO.selectVolunteerApply(voId);
+            VolunteerVO volunteer = volDAO.selectVolunteer(application.getVolunteerId());
+            
+            // 상태 업데이트
             Map<String, Object> params = new HashMap<>();
             params.put("voId", voId);
             params.put("status", "APPROVED");
             volDAO.updateVolunteerApplyStatus(params);
+            
+            // 비동기로 이메일 발송
+            if ("Y".equals(application.getVoAgree())) {
+                new Thread(() -> {
+                    try {
+                        volEmailService.sendVolunteerStatusEmail(
+                            application.getVoEmail(),
+                            "APPROVED",
+                            volunteer.getVoTitle(),
+                            null
+                        );
+                    } catch (Exception e) {
+                        logger.error("이메일 발송 실패", e);
+                    }
+                }).start();
+            }
         } catch (Exception e) {
             logger.error("봉사활동 신청 승인 실패", e);
             throw new RuntimeException("신청 승인에 실패했습니다.", e);
@@ -207,12 +237,33 @@ public class VolunteerServiceImpl implements VolunteerService {
     @Transactional
     public void rejectApplication(Long voId, String reason, String reasonDetail) throws Exception {
         try {
+            // 신청 정보 조회
+            VolunteerApplyVO application = volDAO.selectVolunteerApply(voId);
+            VolunteerVO volunteer = volDAO.selectVolunteer(application.getVolunteerId());
+            
+            // 상태 업데이트
             Map<String, Object> params = new HashMap<>();
             params.put("voId", voId);
             params.put("status", "REJECTED");
             params.put("rejectReason", reason);
             params.put("rejectReasonDetail", reasonDetail);
-            volDAO.updateVolunteerApplyReject(params);  // 새로운 메서드 호출
+            volDAO.updateVolunteerApplyReject(params);
+            
+            // 비동기로 이메일 발송
+            if ("Y".equals(application.getVoAgree())) {
+                new Thread(() -> {
+                    try {
+                        volEmailService.sendVolunteerStatusEmail(
+                            application.getVoEmail(),
+                            "REJECTED",
+                            volunteer.getVoTitle(),
+                            reasonDetail
+                        );
+                    } catch (Exception e) {
+                        logger.error("이메일 발송 실패", e);
+                    }
+                }).start();
+            }
         } catch (Exception e) {
             logger.error("봉사활동 신청 거절 실패", e);
             throw new RuntimeException("신청 거절에 실패했습니다.", e);

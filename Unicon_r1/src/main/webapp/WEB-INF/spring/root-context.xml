@@ -55,5 +55,28 @@
 	<context:component-scan base-package="com.Unicon.service"/>
 	<context:component-scan base-package="com.Unicon.config"/>
 	
+	<!-- JavaMailSender -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="smtp.gmail.com"/>
+    <property name="port" value="587"/>
+    <property name="username" value="kimxx54@gmail.com"/>
+    <property name="password" value="kmrw mesd azuf dnwj"/>
+    <property name="defaultEncoding" value="UTF-8"/>
+    <property name="javaMailProperties">
+        <props>
+            <prop key="mail.smtp.auth">true</prop>
+            <prop key="mail.smtp.starttls.enable">true</prop>
+            <prop key="mail.smtp.charset">UTF-8</prop>
+            <prop key="mail.transport.protocol">smtp</prop>
+        </props>
+    </property>
+</bean>
+
+	<!-- 비동기 처리를 위한 Executor 설정 -->
+	<bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	    <property name="corePoolSize" value="5" />
+	    <property name="maxPoolSize" value="10" />
+	    <property name="queueCapacity" value="25" />
+	</bean>
 	
 </beans>
