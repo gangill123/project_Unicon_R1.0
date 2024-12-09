@@ -1,7 +1,9 @@
 package com.Unicon.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Unicon.domain.CommentLikeVO;
 import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.PostLikeVO;
 import com.Unicon.domain.PostVO;
 import com.Unicon.persistence.CommunityDAO;
 
@@ -76,6 +80,56 @@ public class CommunityService {
 		logger.info(" Service - deletePost() 실행 ");
 		logger.info(" post_id : {}",post_id);
 		return communityDAO.deletePost(post_id);
+	}
+	
+	// 게시물 좋아요 확인
+	public boolean isPostLike(String post_id, String member_id) {
+		return communityDAO.isPostLike(post_id, member_id);
+	}
+	
+	// 게시물 좋아요
+	public void postLikeInsert(String post_id, String member_id) {
+		logger.info(" Service - postLikeInsert() 실행 ");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("post_id", post_id);
+		params.put("member_id", member_id);
+		
+		communityDAO.postLikeInsert(params);
+	}
+	
+	// 게시물 좋아요 취소
+	public int postLikeDelete(String post_id, String member_id) {
+		logger.info(" Service - postLikeDelete() 실행 ");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("post_id", post_id);
+		params.put("member_id", member_id);
+		
+		return communityDAO.postLikeDelete(params);
+	}
+	
+	// 댓글 좋아요 확인
+	public boolean isCommentLike (int comment_id, String member_id) {
+		return communityDAO.isCommentLike(comment_id, member_id);
+	}
+	
+	// 댓글 좋아요
+	public void commentLikeInsert(int comment_id, String member_id) {
+		logger.info(" Service - commentLikeInsert() 실행 ");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("comment_id", comment_id);
+		params.put("member_id", member_id);
+		
+		communityDAO.commentLikeInsert(params);
+	}
+	
+	// 댓글 좋아요 취소
+	public int commentLikeDelete(int comment_id, String member_id) {
+		logger.info(" Service - commentLikeDelete() 실행 ");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("comment_id", comment_id);
+		params.put("member_id", member_id);
+		
+		return communityDAO.commentLikeDelete(params);
 	}
 	
 }

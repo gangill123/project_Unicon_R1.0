@@ -11,8 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.Unicon.domain.CommentLikeVO;
 import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.PostLikeVO;
 import com.Unicon.domain.PostVO;
 
 @Repository("CommunityDAO")
@@ -85,6 +87,53 @@ public class CommunityDAO {
 		int result = sqlSession.delete(NAMESPACE+"deletePostLike",post_id);
 		int result2 = sqlSession.delete(NAMESPACE+"deletePost", post_id);
 		return result + result2;
+	}
+	
+	// 게시물 좋아요 확인
+	public boolean isPostLike(String post_id, String member_id) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("post_id", post_id);
+		params.put("member_id", member_id);
+		
+		Integer count = sqlSession.selectOne(NAMESPACE+"isPostLike", params);
+		return count != null && count > 0;
+	}
+	
+	// 게시물 좋아요
+	public void postLikeInsert(Map<String, Object> postLikeInfo) {
+		logger.info(" DAO - postLikeInsert() 실행 ");
+		sqlSession.insert(NAMESPACE+"postLikeInsert", postLikeInfo);
+	}
+	
+	// 게시물 좋아요 취소
+	public int postLikeDelete(Map<String, Object> postLikeInfo) {
+		logger.info(" DAO - postLikeDelete() 실행 ");
+		logger.info(" DAO - postLikeInfo : {}",postLikeInfo);
+		int result = sqlSession.delete(NAMESPACE+"postLikeDelete", postLikeInfo);
+		return result;
+	}
+	
+	// 댓글 좋아요 확인
+	public boolean isCommentLike(int comment_id, String member_id) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("comment_id", comment_id);
+		params.put("member_id", member_id);
+		
+		Integer count = sqlSession.selectOne(NAMESPACE+"isCommentLike", params);
+		return count != null && count > 0;
+	}
+	
+	// 댓글 좋아요
+	public void commentLikeInsert(Map<String, Object> commentLikeInfo) {
+		logger.info(" DAO - commentLikeInsert() 실행 ");
+		sqlSession.insert(NAMESPACE+"commentLikeInsert", commentLikeInfo);
+	}
+	
+	// 댓글 좋아요 취소
+	public int commentLikeDelete(Map<String, Object> commentLikeInfo) {
+		logger.info(" DAO - commentLikeDelete() 실행 ");
+		int result = sqlSession.delete(NAMESPACE+"commentLikeDelete", commentLikeInfo);
+		return result;
 	}
 	
 	
