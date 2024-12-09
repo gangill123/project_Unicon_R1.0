@@ -16,11 +16,39 @@
     <!-- endinject -->
     <!-- Plugin css for this page -->
 	    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  <!-- Chart.js 라이브러리 -->
+	    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+	    
     
-    <style>
+<style>
+.chart-container {
+	display: flex;
+	justify-content: center; /* 수평 중앙 정렬 */
+	align-items: center; /* 수직 중앙 정렬 */
+	height: 100%; /* 부모 요소의 높이에 맞게 */
+	width: 100%; /* 부모 요소의 너비에 맞게 */
+}
 
-    
-    </style>
+.card-body {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* 내용 중앙 정렬 */
+	justify-content: center;
+	
+	  padding: 100px; /* 카드 안쪽 여백 설정 */
+	
+}
+
+.card-title {
+	margin-bottom: 30px; /* 타이틀과 차트 간의 간격을 조절 */
+	margin-top: 30px; /* 타이틀을 조금 위로 밀기 */
+}
+/* 카드 스타일 */
+.card {
+	height: 1100px; /* 카드의 세로 크기 설정 */
+}
+
+
+</style>
     
     
     <!-- End plugin css for this page -->
@@ -44,14 +72,24 @@
           <div class="content-wrapper">
 
 
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">이번년도 카테고리별 문의 그래프</h4>
+            <canvas id="barChart" style="height: 500px; width: 688px;" width="688" height="344" class="chartjs-render-monitor"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+    	
+        <div class="card-body">
+            <h4 class="card-title">이번년도 문의 답변 차트</h4>
+            <canvas id="doughnutChart" style="height: 500px; width: 1000px;" class="chartjs-render-monitor"></canvas>
+        </div>
+    </div>
+</div>
 
 
-	<div class="card">
-		<div class="card-body">
-			<h4 class="card-title">이번년도 문의 건수 차트</h4>
-			<canvas id="barChart" style="height: 344px; display: block; width: 688px;" width="688" height="344" class="chartjs-render-monitor"></canvas>
-		</div>
-	</div>
 
 <script>
 $(document).ready(function() {
@@ -202,23 +240,53 @@ $(document).ready(function() {
     }
 });
 </script>
-	<div class="card">
-		<div class="card-body">
-			<div class="chartjs-size-monitor">
-				<div class="chartjs-size-monitor-expand">
-					<div class=""></div>
-				</div>
-				<div class="chartjs-size-monitor-shrink">
-					<div class=""></div>
-				</div>
-			</div>
-			<h4 class="card-title">이번년도 문의 답변 작성 완료율</h4>
-			<canvas id="doughnutChart" style="height: 462px; display: block; width: 925px;" width="740" height="369" class="chartjs-render-monitor"></canvas>
-		</div>
-	</div>
 
 
+    <script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/api/inquiryChart',
+            method: 'GET',
+            success: function (completionRate) {
+                const incompleteRate = 100 - completionRate;
 
+                // 레이블에 퍼센트만 표시
+                const labels = [
+                    `답변 완료 (${completionRate}%)`,
+                    `미완료 (${incompleteRate}%)`
+                ];
+
+                const data = {
+                    labels: labels,
+                    datasets: [{
+                        data: [completionRate, incompleteRate],
+                        backgroundColor: ['#4CAF50', '#FF5722']
+                    }]
+                };
+
+                // Chart.js 설정
+                const config = {
+                    type: 'doughnut',
+                    data: data,
+                    options: {
+                        responsive: false,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,  // 범례 표시
+                            }
+                        }
+                    }
+                };
+
+                new Chart(document.getElementById('doughnutChart'), config);
+            },
+            error: function () {
+                alert('데이터를 불러오는 데 실패했습니다.');
+            }
+        });
+    });
+    </script>
 
 
 

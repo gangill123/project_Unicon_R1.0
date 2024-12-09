@@ -267,5 +267,10 @@ public class InquiryRestController {
 			return ResponseEntity.status(500).build(); // 에러 처리
 		}
 	}
+    @GetMapping("/inquiryChart")
+    public ResponseEntity<Double> getCompletionRate() {
+        double completionRate = inquiryService.getCompletionRate();
+        return ResponseEntity.ok(completionRate);
+    }
 
 } // InquiryController

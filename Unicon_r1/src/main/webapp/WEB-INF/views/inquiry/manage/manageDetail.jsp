@@ -88,6 +88,40 @@ textarea {
     border: none;
     background-color: transparent; /* 배경색도 없애고 싶다면 */
 }
+
+
+    .container {
+        max-width: 1140px;
+    }
+    .card-title {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+    .modal-content {
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+    }
+    .modal .close-btn {
+        font-size: 30px;
+        color: #333;
+        cursor: pointer;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .bg-light {
+        background-color: #f9f9f9;
+    }
+    .rounded-circle {
+        border-radius: 50% !important;
+    }
+    .bg-light .p-3 {
+        background-color: #f1f1f1 !important;
+    }
+    
+    
 </style>
 
 
@@ -115,123 +149,124 @@ textarea {
 
 
 
-
 <div class="card">
-	<div class="container my-5">
-	<h4 class="card-title">Unicon Q&amp;A 문의 관리 </h4>
-    <div class="row">    
-        <!-- Blog Left -->
-        <div class="col-lg-9 mb-4">
-			<div class="card border-0 shadow-sm">
-				<div class="card-body">
-					<!-- Post Content -->
-					<h5 class="card-title text-primary">${boardDetail.title}</h5>
-					<ul class="list-inline mb-4" style="color: green;">
-						<li class="list-inline-item"><i class="fa fa-comments"></i> NO: ${boardDetail.bno}</li>
-						<li class="list-inline-item"><i class="fa fa-user"></i> 작성자: ${boardDetail.member_name}</li>
-						<li class="list-inline-item"><i class="fa fa-folder-open"></i> 카테고리: ${boardDetail.istatus}</li>
-						<li class="list-inline-item"><i class="fas fa-calendar-alt"></i> 작성일: ${boardDetail.created_at}</li>
-						<li class="list-inline-item"><i class="fas fa-envelope"></i> 이메일: ${boardDetail.email}</li>
-						<li class="list-inline-item"><i class="fas fa-phone"></i> 휴대폰 번호: ${boardDetail.phone}</li>
-					</ul>
-					<p class="text-dark">${boardDetail.content}</p>
-					<c:if test="${not empty boardDetail.inquiryFile.thumbnailPath}">
-						<img src="${boardDetail.inquiryFile.thumbnailPath}" alt="Thumbnail" />
-					</c:if>
-					<hr>
-	
-					<!-- Comment Section -->
-	
-					<h6 class="text-dark">문의 답변</h6>
-					<div class="bg-secondary text-white p-3 rounded">
-						<c:forEach var="answer" items="${answers}">
-							<div class="bg-secondary text-white p-3 rounded mb-3">										
-								<h6><img src="${pageContext.request.contextPath}/resources/assets/images/U문의.jpg" 
-										alt="U" class="rounded-circle me-2" style="width: 30px; height: 30px;"> ${answer.dname}</h6>
-								<p>${answer.dcontent}</p>
-								<p>
-								<small>${answer.created_at}</small>
-								</p>
-	
-								<!-- 수정할 답변을 입력받는 모달 -->
-								<div id="updateModal" class="modal">
-									<div class="modal-content">
-										<span class="close-btn" onclick="closeModal()">&times;</span>
-										<h2>답변 수정</h2>
-										<textarea id="update-dcontent" placeholder="수정할 답변 내용을 입력하세요" rows="5"></textarea>
-										<button class="btn btn-primary" onclick="saveAnswer()">수정 완료</button>
-									</div>
-								</div>
-	
-								<!-- 수정 버튼 -->
-								<button onclick="openUpdateModal(${answer.dno})" class="btn btn-warning btn-sm">수정</button>
-	
-								<!-- 삭제 버튼 -->
-								<button type="button" class="btn btn-danger btn-sm" onclick="deleteAnswer(${answer.dno})">삭제</button>
-							</div>
-						</c:forEach>
-					</div>
-				
-				</div>
-			</div>
+   <div class="card" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); background-color: #f9f9f9;">
+        <br>
+        <br>
+        <h4 class="card-title">Unicon Q&amp;A 문의 관리</h4>
+        <div class="row">    
+            <!-- Blog Left -->
+            <div class="col-lg-9 mb-4">
+                <div class="card" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); background-color: #f9f9f9;">
+                    <div class="card-body">
+                        <!-- Post Content -->
+                        <h5 class="card-title text-primary">${boardDetail.title}</h5>
+                        <ul class="list-inline mb-4" style="color: green;">
+                            <li class="list-inline-item"><i class="fa fa-comments"></i> NO: ${boardDetail.bno}</li>
+                            <li class="list-inline-item"><i class="fa fa-user"></i> 작성자: ${boardDetail.member_name}</li>
+                            <li class="list-inline-item"><i class="fa fa-folder-open"></i> 카테고리: ${boardDetail.istatus}</li>
+                            <li class="list-inline-item"><i class="fas fa-calendar-alt"></i> 작성일: ${boardDetail.created_at}</li>
+                            <li class="list-inline-item"><i class="fas fa-envelope"></i> 이메일: ${boardDetail.email}</li>
+                            <li class="list-inline-item"><i class="fas fa-phone"></i> 휴대폰 번호: ${boardDetail.phone}</li>
+                        </ul>
+                        <p class="text-dark">${boardDetail.content}</p>
+                        <c:if test="${not empty boardDetail.inquiryFile.thumbnailPath}">
+                            <img src="${boardDetail.inquiryFile.thumbnailPath}" alt="Thumbnail" />
+                        </c:if>
+                        <hr>
 
+                        <!-- Comment Section -->
 
+                        <h6 class="text-dark">문의 답변</h6>
+                        <div class="bg-secondary text-white p-3 rounded">
+                            <c:forEach var="answer" items="${answers}">
+                                <div class="bg-secondary text-white p-3 rounded mb-3">                                          
+                                    <h6><img src="${pageContext.request.contextPath}/resources/assets/images/U문의.jpg" 
+                                            alt="U" class="rounded-circle me-2" style="width: 30px; height: 30px;"> ${answer.dname}</h6>
+                                    <p>${answer.dcontent}</p>
+                                    <p>
+                                    <small>${answer.created_at}</small>
+                                    </p>
 
-									<!-- 관리자 전용 문의 답변 -->
-			<div class="card border-0 shadow-sm mt-4">
-			    <div class="card-body">
-			        <h6 class="text-primary">관리자 전용 문의 답변</h6>
-			        <form id="answerForm">
-			            <div class="row g-3">
-			                <div class="col-md-6">
-			                    <input type="text" id="dname" class="form-control" name="dname" placeholder="관리자" value="관리자" readonly="readonly" style="width: 90px; display: inline-block;">
-			                </div>        
-			                <div class="col-12">
-			                    <textarea id="dcontent" class="form-control" name="dcontent" rows="4" placeholder="답변을 입력해주세요."></textarea>
-			                </div>
-			                <div class="col-12 text-end">
-			                    <button type="button" class="btn btn-primary" onclick="submitAnswer()">답변하기</button>
-			                </div>
-			            </div>
-			        </form>
-			    </div>
-			</div>
-        </div>
+                                    <!-- 수정할 답변을 입력받는 모달 -->
+                                    <div id="updateModal" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close-btn" onclick="closeModal()">&times;</span>
+                                            <h2>답변 수정</h2>
+                                            <textarea id="update-dcontent" placeholder="수정할 답변 내용을 입력하세요" rows="5"></textarea>
+                                            <button class="btn btn-primary" onclick="saveAnswer()">수정 완료</button>
+                                        </div>
+                                    </div>
 
-        <!-- Blog Right -->
-        <div class="col-lg-3">
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body">
-                    <h6 class="text-primary">문의 게시판</h6>
-                    <ul class="list-unstyled mb-0">
-                        <li><a href="../inquiry" class="text-dark">고객 문의 게시판</a></li>
-                    </ul>
+                                    <!-- 수정 버튼 -->
+                                    <button onclick="openUpdateModal(${answer.dno})" class="btn btn-warning btn-sm">수정</button>
+
+                                    <!-- 삭제 버튼 -->
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteAnswer(${answer.dno})">삭제</button>
+                                </div>
+                            </c:forEach>
+                        </div>
+                    
+                    </div>
+                </div>
+
+                <!-- 관리자 전용 문의 답변 -->
+               <div class="card" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); background-color: #f9f9f9;">
+                    <div class="card-body">
+                        <h6 class="text-primary">관리자 전용 문의 답변</h6>
+                        <form id="answerForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <input type="text" id="dname" class="form-control" name="dname" placeholder="관리자" value="관리자" readonly="readonly" style="width: 90px; display: inline-block;">
+                                </div>        
+                                <div class="col-12">
+                                    <textarea id="dcontent" class="form-control" name="dcontent" rows="4" placeholder="답변을 입력해주세요."></textarea>
+                                </div>
+                                <div class="col-12 text-end">
+                                    <button type="button" class="btn btn-primary" onclick="submitAnswer()">답변하기</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="card border-0 shadow-sm mb-4">
-                <div class="card-body">
-                    <h6 class="text-primary">관리자 문의 게시판</h6>
-                    <ul class="list-unstyled mb-0">
-                        <li><a href="../manage" class="text-dark">관리자 문의 게시판 돌아가기</a></li>
-                    </ul>
+
+            <!-- Blog Right -->
+            <div class="col-lg-3">
+                <div class="card" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); background-color: #f9f9f9;">
+                    <div class="card-body">
+                        <h6 class="text-primary">문의 상황판</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="../graph" class="text-dark">문의 현 상황판</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <h6 class="text-primary">고객 서비스 카테고리 페이지</h6>
-                    <ul class="list-unstyled">
-                        <li><a href="../inquiry" class="text-dark">고객센터 메인</a></li>
-                        <li><a href="../adoption" class="text-dark">입양 관련 문의</a></li>
-                        <li><a href="../shop" class="text-dark">쇼핑 관련 문의</a></li>
-                        <li><a href="../community" class="text-dark">커뮤니티 관련 문의</a></li>
-                        <li><a href="../etc" class="text-dark">기타 문의</a></li>
-                    </ul>
+              	<div class="card" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); background-color: #f9f9f9;">
+
+                    <div class="card-body">
+                        <h6 class="text-primary">관리자 문의 게시판</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li><a href="../manage" class="text-dark">관리자 문의 게시판 돌아가기</a></li>
+                        </ul>
+                    </div>
+                </div>
+				<div class="card" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); background-color: #f9f9f9;">
+                    <div class="card-body">
+                        <h6 class="text-primary">고객 서비스 카테고리 페이지</h6>
+                        <ul class="list-unstyled">
+                            <li><a href="../inquiry" class="text-dark">고객센터 메인</a></li>
+                            <li><a href="../adoption" class="text-dark">입양 관련 문의</a></li>
+                            <li><a href="../shop" class="text-dark">쇼핑 관련 문의</a></li>
+                            <li><a href="../community" class="text-dark">커뮤니티 관련 문의</a></li>
+                            <li><a href="../etc" class="text-dark">기타 문의</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+
 
 
 <!-- 삭제 버튼  -->

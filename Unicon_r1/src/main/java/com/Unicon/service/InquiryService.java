@@ -42,4 +42,6 @@ public interface InquiryService {
 	public Map<String, Object> getInquiriesByMember(String memberId, int page, int size);
 
 	public Map<String, Map<String, Long>> getMonthlyIstatusCounts();
+	
+	 public double getCompletionRate();
 }

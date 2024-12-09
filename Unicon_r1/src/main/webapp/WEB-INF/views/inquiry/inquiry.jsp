@@ -129,8 +129,8 @@
                             <div class="position-relative z-index-1">
 								
                                 <span class="mb-4 d-block"><i class="icon-mobile color-h-three"></i></span>
-                                <h4>자주 묻는 질문</h4>
-                                <p class="mb-0">자주 묻는 질문 목록을 한눈에 볼 수 있습니다.</p>
+                                <h4>문의하기(이메일)</h4>
+                                <p class="mb-0">이메일로 문의 할수있고 답변을 받아볼수있습니다.</p>
                             </div>
 							</a>
                         </div>
@@ -141,7 +141,7 @@
                             <div class="position-relative z-index-1">
 
                                 <span class="mb-4 d-block"><i class="icon-layers color-h-four"></i></span>
-                                <h4>문의하기</h4>
+                                <h4>문의하기(게시판)</h4>
                                 <p class="mb-0">각종 문의 사항을 작성 할 수 있습니다.</p>
 							
                             </div>
@@ -267,13 +267,19 @@ $(document).ready(function() {
 
         if (searchQuery.includes('입양') || searchQuery.includes('입양 방법') || searchQuery.includes('입양 현황')) {
             targetPage = 'adoption';  // 입양 관련 페이지로 이동
-        } else if (searchQuery.includes('쇼핑') || searchQuery.includes('애견옷') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품 주문')) {
+        } else if (searchQuery.includes('쇼핑') || searchQuery.includes('애견옷') || searchQuery.includes('쇼핑몰') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품') || searchQuery.includes('애견 용품 주문')) {
             targetPage = 'shop';  // 쇼핑몰 페이지로 이동
         } else if (searchQuery.includes('커뮤니티') || searchQuery.includes('애견 커뮤니티')) {
             targetPage = 'community';  // 커뮤니티 페이지로 이동
-        } else if (searchQuery.includes('기타') || searchQuery.includes('결제') || searchQuery.includes('시스템') || searchQuery.includes('기타 사항')) {
+        } else if (searchQuery.includes('기타') || searchQuery.includes('결제') || searchQuery.includes('오류') || searchQuery.includes('시스템') || searchQuery.includes('기타 사항')) {
             targetPage = 'etc';  // 기타 페이지로 이동
-        } else {
+        } else if (searchQuery.includes('문의하기') || searchQuery.includes('게시판 작성') || searchQuery.includes('게시판 문의') || searchQuery.includes('질문') || searchQuery.includes('작성')) {
+            targetPage = 'write';  // 문의 페이지로 이동         
+        } else if (searchQuery.includes('이메일 문의') || searchQuery.includes('이메일') || searchQuery.includes('이메일 문의하기') || searchQuery.includes('email') || searchQuery.includes('이메일 작성')) {
+            targetPage = 'question';  // 이메일 문의 페이지로 이동         
+        }  else if (searchQuery.includes('게시판') || searchQuery.includes('문의게시판') || searchQuery.includes('문의 게시판') || searchQuery.includes('목록 게시판') || searchQuery.includes('목록')) {
+            targetPage = 'board';  // 이메일 문의 페이지로 이동         
+        }  else {
             alert('해당 검색어에 맞는 페이지가 없습니다.');
             return;  // 페이지 이동을 하지 않고 알림만 출력
         }
