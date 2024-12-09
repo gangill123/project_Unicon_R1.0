@@ -1188,37 +1188,6 @@
 		
         // 옵션내용 
         
-        
-        
-        
-        // 본문내용
-        function contentUpload() {
-        	// FormData 객체 생성
-            var formData = new FormData();
-        	
-        	var editorContent = $('#noContent').summernote('code'); // Summernote 에디터 내용 가져오기
-            formData.append("product_content", editorContent); // 에디터 내용 추가
-            
-            $.ajax({
-        		url: '/store/products/create/content', // 요청을 보낼 URL
-        		type: 'POST', // 요청 방식
-        		data: formData, // FormData 객체
-        		processData: false, // jQuery가 데이터를 처리하지 않도록 설정
-        		contentType: false, // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
-        		success: function(response) {
-        			// 성공적으로 응답을 받았을 때 처리
-        			console.log('응답:', response);
-        			alert('업로드가 성공적으로 완료되었습니다.');
-        		},
-        		error: function(xhr, status, error) {
-        			// 오류 발생 시 처리
-        			console.error('Error:', error);
-        			alert('업로드 중 오류가 발생했습니다.');
-        		}
-        	});
-            
-        }
-        
         function isValid() {
         	let valid = false;
             if (!data.product_category_type) {

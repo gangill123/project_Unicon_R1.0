@@ -49,11 +49,6 @@
 </resultMap>
 
 
-<!-- useGeneratedKeys="true"는 
- MyBatis에서 데이터베이스에 INSERT 문을 실행할 때, 
- 자동 생성된 키(주로 기본 키)를 가져오도록 설정하는 속성입니다. 
- 이 속성을 사용하면, 
- 데이터베이스에서 새로운 레코드가 삽입될 때 자동으로 생성되는 키 값을 Java 객체에 쉽게 매핑할 수 있습니다. -->
 <insert id="insertProduct" parameterType="com.Unicon.domain.ProductVO">
     INSERT INTO _products (
         product_id,
@@ -125,7 +120,15 @@
 	insert into _option (option_id, product_id, option_name, option_value, option_price, option_stock,option_name2, option_value2) 
 	 values 
 	  <foreach collection="list" item="li" separator=","> 
-	   (null, #{li.product_id}, #{li.option_name}, #{li.option_value},#{li.option_price},#{li.option_stock},#{li.option_name2},#{li.option_value2}) 
+	   (null, #{li.product_id}, #{li.option_name}, #{li.option_value},#{li.option_price},#{li.option_stock},
+	   <choose>
+             <when test="li.option_name2 == 'undefined'">null</when>
+             <otherwise>#{li.option_name2}</otherwise>
+       </choose>, 
+	   <choose>
+             <when test="li.option_value2 == 'undefined'">null</when>
+             <otherwise>#{li.option_value2}</otherwise>
+       </choose>
 	  </foreach> 
 </insert>
 
