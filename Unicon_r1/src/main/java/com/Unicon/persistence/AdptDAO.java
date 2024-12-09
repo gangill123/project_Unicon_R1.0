@@ -91,6 +91,19 @@ public class AdptDAO {
 		 
 	}
 	
+	public void deleteAnimal(String animal_id, String member_id) {
+		logger.debug("( •̀ ω •́ )✧ deleteAnimal(String animal_id, String member_id) 실행");
+		Map<String, String> animalParams = new HashMap<String, String>();
+		animalParams.put("animal_id", animal_id);
+		animalParams.put("member_id", member_id);
+		sqlSession.update(NAMESPACE+"deleteAnimal", animalParams);
+	}
 	
+	
+	public void modifyAnimalStatus(Map<String, Object> statusData) {
+		logger.debug("( •̀ ω •́ )✧ modifyAnimalStatus(Map<String, Object> statusData) 실행");
+		
+		sqlSession.update(NAMESPACE+"modifyAnimalStatus", statusData);
+	}
 	
 }

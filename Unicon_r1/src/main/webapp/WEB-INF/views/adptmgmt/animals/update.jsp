@@ -119,6 +119,9 @@
 		display: none;
 		text-shadow: 0 0 0.5rem rgba(0, 110, 96, 0.5);
 	}
+	#animalStatus label {
+		font-size: 1.5rem;
+	}
 	/*=============== 텍스트 css ===============*/
 	
 	
@@ -493,6 +496,10 @@
 		background-color: #006e60;
 		border-color: #006e60;
 	}
+	
+	#a-close-btn1, #a-close-btn2, #a-close-cancel-btn1, #a-close-cancel-btn2 {
+		display: none;
+	}
 	/*=============== 버튼 css ===============*/
 
 
@@ -519,12 +526,24 @@
 							<div class="col-12 grid-margin stretch-card">
 								<div class="card">
 									<div class="card-body">
-										<h4 class="card-title">입양 동물 관리 - 정보 수정</h4>
+										<h4 class="card-title">입양 동물 관리 - 정보 수정 및 삭제</h4>
 										
 										<form id="formAdptAnimal" action="" method="post" enctype="multipart/form-data">
 										
 											<fieldset class="custom-a-fieldset mb-3">
 												<legend class="custom-a-legend">필수 정보</legend>
+												
+												<div class="form-group row d-flex justify-content-center">
+													<div class="col-12 col-xl-3 col-lg-5 col-md-5 mb-3">
+														<label for="animal_id" class="text-dark custom-label">동물ID</label>
+														<input type="text" id="animal_id" name="animal_id" 
+															class="form-control custom-text" readonly/>
+													</div>
+													<div class="col-12 col-xl-3 col-lg-5 col-md-5 mb-3">
+														<label for="aRegDate" class="text-dark custom-label">등록일자</label>
+														<input type="text" id="aRegDate" class="form-control custom-text" readonly/>
+													</div>
+												</div>
 												
 												<div class="form-group row d-flex justify-content-center">
 													<div class="col-12 col-xl-3 col-md-5 mb-3">
@@ -589,14 +608,14 @@
 												</div>
 												
 												<div class="form-group row d-flex justify-content-center mb-5">
-													<div class="col-12 col-xl-3 col-md-6 mb-3">
+													<div class="col-12 col-xl-2 col-md-5 mb-3">
 														<label for="aAge" class="text-dark custom-label">동물 나이</label>
 														<input type="text" id="aAge" name="animal_age" class="form-control custom-text"
 															placeholder="--" readonly/>
 														<div class="a-year-dropdown" id="aYearDropdown"></div>
 														<i class="f-arrow fa-solid fa-angle-down"></i>
 													</div>
-													<div class="col-12 col-xl-2 col-lg-3 col-md-2 mb-3">
+													<div class="col-12 col-xl-2 col-lg-4 col-md-4 mb-3">
 														<label for="aWeight" class="text-dark custom-label">크기</label>
 														<select id="aWeight" name="animal_weight" 
 															class="form-control custom-text" required>
@@ -606,10 +625,15 @@
 															<option value="3">대형&nbsp;(25kg~)</option>
 														</select>
 													</div>
-													<div class="col-12 col-xl-3 col-lg-5 col-md-5 mb-3">
+													<div class="col-12 col-xl-3 col-lg-5 col-md-4 mb-3">
 														<label for="aRegUser" class="text-dark custom-label">작성자</label>
 														<input type="text" id="aRegUser" name="member_id" 
 															class="form-control custom-text" readonly/>
+													</div>
+													<div class="col-12 col-xl-2 col-lg-5 col-md-4 mb-3">
+														<label for="animal_status" class="text-dark custom-label">동물 상태</label>
+														<div id="animalStatus"></div>
+														<input type="hidden" id="animal_status"/>
 													</div>
 												</div>
 												<div class="form-group row d-flex justify-content-center">
@@ -718,8 +742,10 @@
 												</div>
 												
 												<div class="form-group row d-flex justify-content-center align-items-center">
-													<button type="submit" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
-													<button type="button" id="a-reset-btn1" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
+													<button type="submit" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">수정하기</button>
+													<button type="button" id="a-delete-btn1" class="btn btn-lg btn-rounded btn-danger custom-text mr-2 mb-2">삭제</button>
+													<button type="button" id="a-close-btn1" class="btn btn-lg btn-rounded btn-light custom-text mb-2">종료</button>
+													<button type="button" id="a-close-cancel-btn1" class="btn btn-lg btn-rounded btn-light custom-text mb-2">종료취소</button>
 												</div>
 											</fieldset>
 											
@@ -933,8 +959,10 @@
 												</fieldset>
 												
 												<div class="form-group row d-flex justify-content-center align-items-center">
-													<button type="submit" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
-													<button type="button" id="a-reset-btn2" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
+													<button type="submit" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">수정하기</button>
+													<button type="button" id="a-delete-btn2" class="btn btn-lg btn-rounded btn-danger custom-text mr-2 mb-2">삭제</button>
+													<button type="button" id="a-close-btn2" class="btn btn-lg btn-rounded btn-light custom-text mb-2">종료</button>
+													<button type="button" id="a-close-cancel-btn2" class="btn btn-lg btn-rounded btn-light custom-text mb-2">종료취소</button>
 												</div>
 											</fieldset>
 										</form>
@@ -1600,12 +1628,9 @@
 							break;
 							}
 							case 0:{ // 1번째 칸
-								console.log('0번 이미지 input 삭제 실행');
-								console.log('previewId + idNumber : '+previewId + (idNumber)); // 0
 								if($(previewId + (idNumber + 1)).attr('src') != '' 
 									&& $(previewId + (idNumber + 2)).attr('src') != '' 
 										&& $(previewId + (idNumber + 3)).attr('src') != '') {
-											console.log('0번 이미지 input 삭제 로직 1번');
 										if($(imageInputId + (idNumber + 1)).val() != '') {
 											const aDataTransfer = new DataTransfer();
 											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
@@ -1651,7 +1676,6 @@
 										$(tempSrcId + (idNumber + 3)).val('');
 								} else if($(previewId + (idNumber + 1)).attr('src') != '' 
 									&& $(previewId + (idNumber + 2)).attr('src') != '') {
-										console.log('0번 이미지 input 삭제 로직 2번');
 										if($(imageInputId + (idNumber + 1)).val() != '') {
 											const aDataTransfer = new DataTransfer();
 											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
@@ -1684,7 +1708,6 @@
 										$(moveSrcId + (idNumber + 2)).val('');
 										$(tempSrcId + (idNumber + 2)).val('');
 								} else if($(previewId + (idNumber + 1)).attr('src') != '') {
-									console.log('0번 이미지 input 삭제 로직 3번');
 									if($(imageInputId + (idNumber + 1)).val() != '') {
 											const aDataTransfer = new DataTransfer();
 											aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
@@ -1704,7 +1727,6 @@
 									$(moveSrcId + (idNumber + 1)).val('');
 									$(tempSrcId + (idNumber + 1)).val('');
 								} else {
-									console.log('0번 이미지 input 삭제 로직 4번');
 									$(previewId + idNumber).attr('src', '');
 									$(previewId + idNumber).hide();
 									$(plusIconId + idNumber).show();
@@ -1719,24 +1741,7 @@
 							break;
 							}
 						}
-						console.log('( •̀ ω •́ )✧ ===== 디버깅 =====');
-						console.log('tempSrc0 : '+ $(tempSrcId + 0).val());
-						console.log('tempSrc1 : '+ $(tempSrcId + 1).val());
-						console.log('tempSrc2 : '+ $(tempSrcId + 2).val());
-						console.log('tempSrc3 : '+ $(tempSrcId + 3).val());
-						console.log('moveSrc0 : '+ $(moveSrcId + 0).val());
-						console.log('moveSrc1 : '+ $(moveSrcId + 1).val());
-						console.log('moveSrc2 : '+ $(moveSrcId + 2).val());
-						console.log('moveSrc3 : '+ $(moveSrcId + 3).val());
-						console.log('image-input0 : '+ $(imageInputId + 0).val());
-						console.log('image-input1 : '+ $(imageInputId + 1).val());
-						console.log('image-input2 : '+ $(imageInputId + 2).val());
-						console.log('image-input3 : '+ $(imageInputId + 3).val());
-						console.log('changeCheck0 : '+ $(changeCheckId + 0).val());
-						console.log('changeCheck1 : '+ $(changeCheckId + 1).val());
-						console.log('changeCheck2 : '+ $(changeCheckId + 2).val());
-						console.log('changeCheck3 : '+ $(changeCheckId + 3).val());
-						console.log('( •̀ ω •́ )✧ ===== 디버깅 =====');
+						
 					}
 				});
 				/*=============== 이미지 미리보기 && 이미지 빈칸 제어 ===============*/
@@ -1801,6 +1806,15 @@
 						method: 'GET',
 						type: 'json',
 						success: function(data) {
+							const adate = new Date(data.animal_regdate);
+							const year = adate.getFullYear();
+							const month = String(adate.getMonth() + 1).padStart(2, '0');
+							const day = String(adate.getDay()).padStart(2, '0');
+							const formattedDate = year + '-' + month + '-' + day;
+							data.animal_regdate = formattedDate;
+							
+							$('#animal_id').val(data.animal_id);
+							$('#aRegDate').val(data.animal_regdate);
 							$('#petType').val(data.categoryDataVO.category_parent);
 							$('#petType').trigger('change');
 							$('#petTypeDetailCode').val(data.categoryDataVO.category_code);
@@ -1815,6 +1829,38 @@
 							$('#aAge').val(data.animal_age);
 							$('#aWeight').val(data.animal_weight);
 							$('#aRegUser').val(data.member_id);
+							switch(data.animal_status) {
+								case 1: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-warning">대기중</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+								case 2: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-primary">모집중</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+								case 3: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-danger">상담중</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+								case 4: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-success">입양완료</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+								case 5: {
+									$('#animalStatus').empty();
+									$('#animalStatus').append('<label class="badge badge-secondary">종료</label>');
+									$('#animal_status').val(data.animal_status);
+									break;
+								}
+							}
 							for(let i = 0; i < data.animal_images.length; i++) {
 								if(data.animal_images[i].image_src != '') {
 									$('#image-preview'+ i).attr('src',data.animal_images[i].image_src).show();
@@ -1833,6 +1879,15 @@
 							}
 							$('#aRegNum').val(data.animal_regnum);
 							$('#aEtc').val(data.animal_etc);
+							
+							if($('#animal_status').val() == '5') {
+								$('#a-close-btn1, #a-close-btn2').hide();
+								$('#a-close-cancel-btn1, #a-close-cancel-btn2').show();
+							} else {
+								$('#a-close-btn1, #a-close-btn2').show();
+								$('#a-close-cancel-btn1, #a-close-cancel-btn2').hide();
+							}
+							
 						},
 						error: function(error) {
 							console.error('데이터를 가져오는 데 실패했습니다:', error);
@@ -1846,34 +1901,156 @@
 				
 								
 								
-				/*=============== 초기화(reset) 버튼 제어 ===============*/
-				$('#a-reset-btn1, #a-reset-btn2').on('click',function(e) {
+				/*=============== 삭제(delete) 버튼 제어 ===============*/
+				$('#a-delete-btn1, #a-delete-btn2').on('click',function(e) {
+					const animal_id = $('#animal_id').val();
+					const member_id = $('#aRegUser').val();
 					
 					Swal.fire({
-						title: '초기화하시겠습니까?',
-						text: '작성 전체가 초기화 됩니다!',
+						title: '삭제하시겠습니까?',
+						text: '동물 정보가 삭제됩니다!',
 						icon: 'warning',
 						showCancelButton: true,
-						confirmButtonColor: '#006e60',
+						confirmButtonColor: '#fc5a5a',
 						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '초기화',
+						confirmButtonText: '삭제',
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
-							$('#formAdptAnimal')[0].reset();
-							$('.a-preview').hide();
-							$('.a-preview').attr('src','');
-							$('.a-preview-i').show();
-							Swal.fire({
-								title:'초기화 되었습니다!',
-								icon:'success',
-								confirmButtonColor: '#006e60',
-								confirmButtonText: '확인'
+							$.ajax({
+								url: "/adptmgmt/animals/"+ animal_id +"/deletion?member_id=" + member_id,
+								method: "DELETE",
+								success: function() {
+									Swal.fire({
+										title:'삭제 되었습니다!',
+										icon:'success',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									}).then(function(result) {
+										if(result.isConfirmed) {
+											location.href="/AM/animals/list";
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '삭제에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
 							});
 						}
 					});
 				});
-				/*=============== 초기화(reset) 버튼 제어 ===============*/
+				/*=============== 삭제(delete) 버튼 제어 ===============*/
+
+				
+				
+				/*=============== 종료(close) 버튼 제어 ===============*/
+				$('#a-close-btn1, #a-close-btn2').on('click', function() {
+					const animal_id = $('#animal_id').val();
+					const member_id = $('#aRegUser').val();
+					
+					Swal.fire({
+						title: '종료로 변경하시겠습니까?',
+						text: '동물 상태가 종료로 변경되고 입양글, 상담이 취소됩니다',
+						icon: 'question',
+						showCancelButton: true,
+						confirmButtonColor: '#000711',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '변경',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$.ajax({
+								url: "/adptmgmt/animals/"+ animal_id +"/status",
+								method: "PATCH",
+								contentType: "application/json",
+								data: JSON.stringify({ 
+									"animal_id" : animal_id, 
+									"member_id" : member_id, 
+									"animal_status" : 5 }),
+								success: function() {
+									Swal.fire({
+										title: '종료로 변경되었습니다',
+										icon: 'success',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인',
+									}).then(function(result) {
+										if (result.isConfirmed) {
+											location.reload();
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '변경에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
+				});
+				
+				$('#a-close-cancel-btn1, #a-close-cancel-btn2').on('click', function() {
+					const animal_id = $('#animal_id').val();
+					const member_id = $('#aRegUser').val();
+					
+					Swal.fire({
+						title: '종료를 취소하시겠습니까?',
+						text: '동물 상태가 대기중으로 변경됩니다',
+						icon: 'question',
+						showCancelButton: true,
+						confirmButtonColor: '#000711',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '변경',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$.ajax({
+								url: "/adptmgmt/animals/"+ animal_id +"/status",
+								method: "PATCH",
+								contentType: "application/json",
+								data: JSON.stringify({ 
+									"animal_id" : animal_id, 
+									"member_id" : member_id, 
+									"animal_status" : 1 }),
+								success: function() {
+									Swal.fire({
+										title: '동물상태가 대기중으로 변경되었습니다',
+										icon: 'success',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인',
+									}).then(function(result) {
+										if (result.isConfirmed) {
+											location.reload();
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '변경에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
+				});
+				/*=============== 종료(close) 버튼 제어 ===============*/
 				
 				
 				
@@ -1906,13 +2083,13 @@
 					}
 					
 					Swal.fire({
-						title: '제출하시겠습니까?',
-						text: '제출 내용을 확인해주세요!',
+						title: '수정하시겠습니까?',
+						text: '수정 내용을 확인해주세요!',
 						icon: 'info',
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '제출',
+						confirmButtonText: '수정',
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
@@ -1924,8 +2101,8 @@
 								processData: false,
 								success: function(response) {
 									Swal.fire({
-									title: '제출 완료',
-									text: '제출에 성공했습니다!',
+									title: '수정 완료',
+									text: '수정에 성공했습니다!',
 									icon: 'success',
 									confirmButtonColor: '#006e60',
 									confirmButtonText: '확인'
@@ -1936,10 +2113,10 @@
 									});
 								},
 								error: function(jqXHR, textStatus, errorThrown) {
-									console.error('제출 실패:', textStatus, errorThrown);
+									console.error('수정 실패:', textStatus, errorThrown);
 									Swal.fire({
 										title: '오류!',
-										text: '제출에 실패했습니다.',
+										text: '수정에 실패했습니다.',
 										icon: 'error',
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'

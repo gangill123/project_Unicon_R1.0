@@ -12,12 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -109,9 +111,12 @@ public class AdptRestController {
 	}
 	
 	
-	@PostMapping(value = "/animals/{animal_id}/modification")
+	@PostMapping(value = "/animals/{animalId}/modification")
 	public ResponseEntity<Void> modifyAnimal(@ModelAttribute AnimalVO avo, HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행");
+		logger.debug("( •̀ ω •́ )✧ avo : {}",avo);
+		
+		// 동물정보에 등록된 아이디인지 검증절차 추가예정
 		
 		try {
 			
@@ -120,23 +125,50 @@ public class AdptRestController {
 			}
 			
 			List<ImageVO> animal_images = aService.modifyImage(avo, req);
-			if (animal_images == null || animal_images.isEmpty()) {
-				return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+			
+			if (animal_images == null || animal_images.isEmpty()) { 
+				return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR); 
 			}
+			
 			avo.setAnimal_images(animal_images);
 			aService.modifyAnimal(avo);
-			
 			return new ResponseEntity<Void>(HttpStatus.OK);
 			
 		} catch (Exception e) {
-			logger.error("( •̀ ω •́ )✧ 오류 발생: " + e.getMessage());
+			logger.error("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
 			
 			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
 
+	@DeleteMapping(value = "/animals/{animal_id}/deletion")
+	public ResponseEntity<Void> deleteAnimal(
+			@PathVariable("animal_id") String animal_id, @RequestParam("member_id")String member_id) {
+		logger.debug("( •̀ ω •́ )✧ deleteAnimal() 실행");
+		
+		try {
+			aService.deleteAnimal(animal_id, member_id);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch(Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 	
+	@PatchMapping(value = "/animals/{animal_id}/status")
+	public ResponseEntity<Void> modifyAnimalStatus(@RequestBody Map<String, Object> statusData) {
+		logger.debug("( •̀ ω •́ )✧ modifyAnimalStatus() 실행");
+		try {
+			aService.modifyAnimalStatus(statusData);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch(Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 	
 	

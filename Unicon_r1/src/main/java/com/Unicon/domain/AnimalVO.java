@@ -24,7 +24,7 @@ public class AnimalVO {
 	private String member_id;
 	private Timestamp animal_regdate;
 	private Timestamp animal_upddate;
-	private String animal_status; // 1: 대기중, 2: 모집중, 3: 상담중, 4: 입양완료, 5: 종료
+	private int animal_status; // 1: 대기중, 2: 모집중, 3: 상담중, 4: 입양완료, 5: 종료, 6: 삭제
 	private String status_value;
 	private String animal_regnum;
 	private int animal_act; // 0~5, 0: 미입력
