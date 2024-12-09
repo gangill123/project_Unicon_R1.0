@@ -90,8 +90,8 @@
 
 <!-- MemberResultMap -->
 <resultMap type="com.Unicon.domain.MemberVO" id="MemberResultMap">
-	<result property="memberId" column="member_id"/>
-	<result property="memberName" column="member_name"/>
+	<result property="member_id" column="member_id"/>
+	<result property="member_name" column="member_name"/>
 </resultMap>
 
 <!-- "ImageResultMap" -->

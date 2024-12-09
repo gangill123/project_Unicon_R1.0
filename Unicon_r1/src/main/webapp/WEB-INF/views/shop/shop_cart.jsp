@@ -106,7 +106,7 @@
                                     <td class="text-start">
                                         <a href="/shop/shop_detail/${list.shopVO.product_id}">${list.shopVO.product_name }</a>
                                         <span class="dprice text-uppercase d-block" data-dprice="${list.shopVO.delivery_price }">
-                                        판매자 : ${list.shopVO.memberVO.memberName } /
+                                        판매자 : ${list.shopVO.memberVO.member_name } /
                                         ${list.shopVO.delivery_method }
                                         <fmt:formatNumber value="${list.shopVO.delivery_price }" type="number" />원
                                         
