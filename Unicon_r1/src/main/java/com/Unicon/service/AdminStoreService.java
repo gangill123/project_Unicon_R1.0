@@ -58,6 +58,13 @@ public class AdminStoreService {
 		aDao.updateMainImg(list);
 	}
 	
+	
+	public List<ProductVO> getNewProducts() {
+		List<ProductVO> list = aDao.getNewProducts();
+		
+		return list;
+	}
+	
 //	public List<AnimalVO> getAnimalListAll() {
 //		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
 //		
