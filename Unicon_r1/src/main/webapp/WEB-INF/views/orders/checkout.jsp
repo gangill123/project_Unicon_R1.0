@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
@@ -62,7 +63,8 @@
 <!-- 아래는 예시 -->
 <!-- PAGE TITLE
         ================================================== -->
-        
+        ${addrDefalut }
+        ${ordersInfo }
         <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
             <div class="container">
 
@@ -95,50 +97,58 @@
 		                        <h4 class="mb-1">주문/결제</h4>
 	                        </div>
                           
-                          
+                          <form id="addrInfoForm" method="post">
                           <div class="border-bottom mb-2" style="display: flex; justify-content: space-between; align-items: end;">
 	                          <h5 class="mb-2">배송지</h5>
 	                          <h6><a class="addrChange" href="#!" style="color: #86bc42 !important;">변경하기</a></h6>
                           </div>
                           <div class="py-3 orderItem" style="margin-bottom: 55px;">
-	                          <ul class="ps-0 mb-0">
-	                          	<li class="row">
-	                          		<h5>배송이름1</h5>
+	                          <ul class="ps-0 mb-0" style="list-style: none;">
+	                          	<li>
+	                          		<h5 id="addrName" style="display: inline;">${addrDefalut.address_name }</h5>
+	                          		<c:if test="${addrDefalut.is_default_address == 'true' }">
+		                          		<span class="isDefault label-sale text-white rounded px-1 ms-1" style="background:#86bc42;">기본배송지</span>
+	                          		</c:if>
+	                          		
 	                          	</li>
 	                          	<li class="row">
-	                          		<div class="col-sm-6"><p class="mb-0">부산광역시 부산진구 디딜로 12(징졩죵내), 1001호</p></div>
+	                          		<div class="col-sm-6"><p class="mb-0" id="totalAddr"><span id="address">${addrDefalut.road_address }${addrDefalut.extra_address }</span>
+	                          		, <span id="detail_address">${addrDefalut.detail_address }</span></p>
+	                          		</div>
 	                          	</li>
 	                          	<li class="row">
 	                          		<div class="col-sm-6 display-30 mb-2">
-		                          		<p class="pe-2 border-end" style="color: #aaa; display: inline;">징젱죵</p>
-		                          		<p class="ps-2" style="color: #aaa; display: inline;">010-1234-1324</p>
+		                          		<p id="recipient" class="pe-2 border-end" style="color: #aaa; display: inline;">${addrDefalut.recipient }</p>
+		                          		<p id="recipient_phone" class="ps-2" style="color: #aaa; display: inline;">${addrDefalut.recipient_phone }</p>
 	                          		</div>
 	                          	</li>
 	                          	<li class="row">
 	                          		<div class="quform-input col-sm-6">
-                                         <select id="itemOption1" class="form-control form-select" style="padding: 3px 12px;">
-									    	 <option value="1">부재 시 문앞에 놓아주세요</option>
-									    	 <option value="2">배송전에 미리 연락주세요</option>
-									    	 <option value="3">부재 시 경비실에 맡겨주세요</option>
-									    	 <option value="4">부재 시 전화주시거나 문자 남겨주세요</option>
+                                         <select id="itemOption1" class="form-control form-select" name="delivery_comment" style="padding: 3px 12px;">
+									    	 <option value="부재 시 문앞에 놓아주세요">부재 시 문앞에 놓아주세요</option>
+									    	 <option value="배송전에 미리 연락주세요">배송전에 미리 연락주세요</option>
+									    	 <option value="부재 시 경비실에 맡겨주세요">부재 시 경비실에 맡겨주세요</option>
+									    	 <option value="부재 시 전화주시거나 문자 남겨주세요">부재 시 전화주시거나 문자 남겨주세요</option>
 									    	 <option value="0">직접입력</option>
                                          </select>
                                      </div>
 	                          	</li>
 	                          </ul>
+	                          <input type="hidden" id="postCode" name="postal_code" value="${addrDefalut.postal_code }">
                           </div>	
                           
                           	<div class="mb-3 border-bottom">
 	                          	<h5 class="mb-2" >주문자</h5>
                           	</div>
-                   			<div class="pt-2 orderItem" style="margin-bottom: 55px;">
+                   			<div class="pt-2 orderItem" style="margin-bottom: 65px;">
                    				<div>
 		                          <ul class="ps-0 mb-0">
 		                          	<li class="row mb-3" style="align-items: center;">
 		                          		<div class="col-sm-2"><p class="mb-0" style="color: #aaa;">주문자</p></div>
 		                          		<div class="col-sm-3">
 			                          		<div class="quform-input">
-		                                   		<input class="form-control" type="text" name="pet_name">
+		                                   		<input class="form-control" type="text" name="order_name"
+		                                   		 value="${ordersInfo.memberVO.memberName }">
 		                               		</div>
 		                          		</div>
 		                          	</li>
@@ -146,7 +156,8 @@
 		                          		<div class="col-sm-2"><p class="mb-0" style="color: #aaa;">이메일</p></div>
 		                          		<div class="col-sm-3">
 			                          		<div class="quform-input">
-		                                   		<input class="form-control" type="text" name="pet_name">
+		                                   		<input class="form-control" type="text"
+		                                   		value="${ordersInfo.memberVO.memberEmail }">
 		                               		</div>
 		                          		</div>
 		                          	</li>
@@ -154,7 +165,8 @@
 		                          		<div class="col-sm-2"><p class="mb-0" style="color: #aaa;">전화번호</p></div>
 		                          		<div class="col-sm-3">
 			                          		<div class="quform-input">
-		                                   		<input class="form-control" type="text" name="pet_name">
+		                                   		<input class="form-control" type="text"
+		                                   		value="${ordersInfo.memberVO.memberTel }">
 		                               		</div>
 		                          		</div>
 		                          	</li>
@@ -162,72 +174,55 @@
 		                          </ul>
                    				</div>
                           	</div>
-                          
                         	
                        	  <div class="mb-3 border-bottom">
 	                          	<h5 class="mb-2" >주문상품</h5>
                           	</div>
-                          <div class="border rounded px-3 py-3 orderItem" style="margin-bottom: 55px;">
+                          	
+                          <c:forEach var="list" items="${ordersInfo.ordersDetails }">
+                          <div class="border rounded px-3 py-3 orderItem" style="margin-bottom: 20px;">
 	                          <div class="row">
 	                          	<div class="col-sm-12">
 	                          		<div style="display: flex; justify-content: space-between; align-items: center;">
-									    <h6 class="mb-0">유니콘스토어 <i class="fa-solid fa-store"></i></h6>
-									    <p class="mb-0 font-weight-600">배송</p>
+									    <h6 class="mb-0">${list.shopVO.product_name } <i class="fa-solid fa-store"></i></h6>
+									    <p class="mb-0 font-weight-600">배송비 : 
+									    <c:choose>
+									    	<c:when test="${list.delivery_price != 0 }">
+									    	<fmt:formatNumber value="${list.delivery_price}" type="number" />원
+									    	</c:when>
+									    	<c:otherwise>
+									    	무료
+									    	</c:otherwise>
+									    </c:choose>
+									    </p>
 	                          		</div>
 							    </div>
 							    
-							    
-							    <div class="row">
-							    <div class="line-title col-sm-12 mb-4"></div>
-	                              <div class="col-sm-1 mb-md-0">
-	                              	<div class="orderImage">
-	                                  <img class="rounded" src="/resources/new_assets/img/dog.jpg">
-	                              	</div>
-	                              </div>
-	                              <div class="col-sm-10">
-	                                  <p class="mb-0 font-weight-600">부드러운 슬림 카스테라 워싱 항균 옥수수솜 간절기/여름 이불세트</p>
-	                                  <p class="mb-0" style="color: #aaa;">색상: 오션블루 / 구성 및 사이즈: 슈퍼싱글 이불베개세트(SS이불+베개커버1P)</p>
-		                              	<p class="mb-0 pe-2 border-end" style="display: inline;">40,000원</p>
-		                              	<p class="mb-0 ps-2" style="color: #aaa; display: inline;">1개</p>
-	                              </div>
-	                            </div>  
-	                            
-							    <div class="row">
-							    	<div class="line-title col-sm-12 mb-4"></div>
-	                              <div class="col-sm-1 mb-4 mb-md-0">
-	                              	<div class="orderImage">
-	                                  <img class="rounded" src="/resources/new_assets/img/dog.jpg">
-	                              	</div>
-	                              </div>
-	                              <div class="col-sm-10">
-	                                  <p class="mb-0 font-weight-600">부드러운 슬림 카스테라 워싱 항균 옥수수솜 간절기/여름 이불세트</p>
-	                                  <p class="mb-0" style="color: #aaa;">색상: 오션블루 / 구성 및 사이즈: 슈퍼싱글 이불베개세트(SS이불+베개커버1P)</p>
-		                              	<p class="mb-0 pe-2 border-end" style="display: inline;">40,000원</p>
-		                              	<p class="mb-0 ps-2" style="color: #aaa; display: inline;">1개</p>
-	                              </div>
-	                            </div> 
-	                             
-							    <div class="row">
-							    	<div class="line-title col-sm-12 mb-4"></div>
-	                              <div class="col-sm-1 mb-4 mb-md-0">
-	                              	<div class="orderImage">
-	                                  <img class="rounded" src="/resources/new_assets/img/dog.jpg">
-	                              	</div>
-	                              </div>
-	                              <div class="col-sm-10">
-	                                  <p class="mb-0 font-weight-600">부드러운 슬림 카스테라 워싱 항균 옥수수솜 간절기/여름 이불세트</p>
-	                                  <p class="mb-0" style="color: #aaa;">색상: 오션블루 / 구성 및 사이즈: 슈퍼싱글 이불베개세트(SS이불+베개커버1P)</p>
-		                              	<p class="mb-0 pe-2 border-end" style="display: inline;">40,000원</p>
-		                              	<p class="mb-0 ps-2" style="color: #aaa; display: inline;">1개</p>
-	                              </div>
-	                            </div>  
+							    <c:forEach var="list2" items="${list.odersDetailOptions }">
+								    <div class="row">
+								    <div class="line-title col-sm-12 mb-4"></div>
+		                              <div class="col-sm-1 mb-md-0">
+		                              	<div class="orderImage">
+		                                  <img class="rounded" src="${list.shopVO.product_images[0].image_src }">
+		                              	</div>
+		                              </div>
+		                              <div class="col-sm-10">
+		                                  <p class="mb-0 font-weight-600">${list.shopVO.product_name }</p>
+		                                  <p class="mb-0" style="color: #aaa;">${list2.product_option }</p>
+			                              	<p class="mb-0 pe-2 border-end" style="display: inline;">
+			                              	<fmt:formatNumber value="${list2.option_price }" type="number" />원</p>
+			                              	<p class="mb-0 ps-2" style="color: #aaa; display: inline;">
+			                              	${list2.quantity }개</p>
+		                              </div>
+		                            </div>  
+							    </c:forEach>
 	                            
 	                          </div>
                           </div>
                           
+                          </c:forEach>	
                           
-                          
-                          <div class="row">
+                          <div class="row" style="margin-top: 65px;">
                           	<div class="col-sm-6">
                           	<h5 class="mb-3">결제방법</h5>
                    			<div class="border rounded px-3 py-3 orderItem mb-4">
@@ -263,11 +258,13 @@
 		                          <ul class="ps-0 mb-0">
 		                          	<li class="row">
 		                          		<div class="col-sm-4"><p class="mb-2">총 상품금액</p></div>
-		                          		<div class="col-sm-8" style="text-align: end;"><p class="mb-1">40,000원</p></div>
+		                          		<div class="col-sm-8" style="text-align: end;"><p class="mb-1">
+		                          		<fmt:formatNumber value="${ordersInfo.total_product_price }" type="number" />원</p></div>
 		                          	</li>
 		                          	<li class="row">
 		                          		<div class="col-sm-4"><p class="mb-2">총 배송비</p></div>
-		                          		<div class="col-sm-8" style="text-align: end;"><p class="mb-1">0원</p></div>
+		                          		<div class="col-sm-8" style="text-align: end;"><p class="mb-1">
+		                          		<fmt:formatNumber value="${ordersInfo.total_delivery_price }" type="number" />원</p></div>
 		                          	</li>
 		                          </ul>
 		                          
@@ -276,7 +273,8 @@
 		                          	<ul class="ps-0 mb-0">
 		                          		<li class="row">
 			                          		<div class="col-sm-4"><p class="mb-2">최종 결제금액</p></div>
-			                          		<div class="col-sm-8 font-weight-600" style="text-align: end; font-size: 1.2rem;"><p class="mb-1">40,000원</p></div>
+			                          		<div class="col-sm-8 font-weight-600" style="text-align: end; font-size: 1.2rem;"><p class="mb-1">
+			                          		<fmt:formatNumber value="${ordersInfo.total_price }" type="number" />원</p></div>
 		                          		</li>
 		                          	</ul>
 		                          </div>
@@ -285,8 +283,9 @@
                           	<button type="submit" class="checkoutBtn butn primary w-100"><span>
                           	결제하기</span></button>
                           	</div>
-                          	
                           </div>
+                          	<div id="addrInfoFormInput"></div>
+                          	</form>
                         </div>
                     </div>
 
@@ -318,7 +317,7 @@
                 </div>
                 
                 <div class="modal-content addressInputContent" style="display: none;">
-                <form id="saveAddressForm" method="post">
+                <form id="saveAddrForm" method="post">
                     <div class="modal-header">
                         <h4 class="modal-title" id="addressInputLabel">배송지 추가</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -369,9 +368,8 @@
                     </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="saveAddressBtn butn primary rounded w-100" type="submit"><span>저장하기</span></button>
+                        <button class="butn primary rounded w-100" type="submit"><span class="saveBtnText">저장하기</span></button>
                     </div>
-                    <input type="hidden" name="member_id" value="${member_id}">
                     </form>
                 </div>
                 <!-- /.modal-content -->
@@ -390,14 +388,23 @@
 <script>
 	$(document).ready(function () {
 		
+		// 배송지 선택 시 화면으로 정보 전달
+		$('.choiceContentBody').on('click', '.addrSbtn', function(){
+			//alert("ok");
+			
+			let addrId = $(this).data('id');
+			SelectAddrInfo(addrId);
+			
+		});
+		
 		// 주소변경하기 클릭 시 모달열기 + 정보가져와서 출력
 		$('.addrChange').on('click', function(){
 			addrModalOpen();
 			$('.choiceContent').show();
 			$('.addressInputContent').hide();
 			$('.addrModal').modal('show');
-			$('#saveAddressForm').find('input[type="checkbox"]').prop('checked', false);
-	    	$('#saveAddressForm').find('input:not([type="button"])').val('');
+			$('#saveAddrForm').find('input[type="checkbox"]').prop('checked', false);
+	    	$('#saveAddrForm').find('input:not([type="button"])').val('');
 		});
 		
 		// 배송지 수정 버튼 시 로직
@@ -405,24 +412,105 @@
 			//alert("ok");
 			
 			let addrId = $(this).data('id');
+			console.log("addrId : "+addrId);
+			
 			addrUBtn(addrId);
 			$('.choiceContent').hide();
 			$('.addressInputContent').show();
+		});
+		
+		// 배송지 수정하기
+		$('.addressInputContent').on('submit', '#updateAddrForm', function(e){
+			e.preventDefault();
 			
+			var formData = new FormData(this);
 			
+			 // 체크박스 상태 확인
+		    let isChecked = $('input[name="is_default_address"]').prop('checked');
+		    console.log(isChecked);
+
+		    // 체크박스의 상태에 따라 값 추가
+		    if (isChecked) {
+		        formData.set('is_default_address', 'true'); // 체크된 경우
+		    } else {
+		        formData.set('is_default_address', 'false'); // 체크되지 않은 경우
+		    }
+		    
+		    $.ajax({
+				url: '/orders/addressUpdate/'+$(this).data('addrid'),
+				type: 'POST',
+				data: formData,
+				contentType: false,
+				processData: false,
+				success: function(response) {
+					Swal.fire({
+			  			  title: '수정을 완료하였습니다.',
+			  			  text: "배송지를 선택하시기 바랍니다.",
+			  			  icon: 'success',
+			  			  confirmButtonColor: '#3085d6',
+			  			  customClass: {
+			  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			  			  }
+			 			}).then((result) => {
+			 			    if (result.isConfirmed) { 
+			 			    	$("#updateAddrForm").attr("id", "saveAddrForm");
+			 			    	$('#saveAddrForm').find('input[type="checkbox"]').prop('checked', false);
+			 			    	$('#saveAddrForm').find('input:not([type="button"])').val('');
+			 			    	$('.addrModal').modal('hide');
+			 			    }
+			 			});
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					
+				}
+			});
+		});
+		
+		// 배송지 삭제하기 
+		$('.choiceContentBody').on('click', '.addrDbtn', function(){
+			let addrId = $(this).data('id');
+			
+			$.ajax({
+				url: '/orders/addressDelete/'+addrId,
+				type: 'POST',
+				success: function() {
+					Swal.fire({
+			  			  title: '삭제를 완료하였습니다.',
+			  			  text: "배송지를 선택하시기 바랍니다.",
+			  			  icon: 'success',
+			  			  confirmButtonColor: '#3085d6',
+			  			  customClass: {
+			  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			  			  }
+			 			}).then((result) => {
+			 			    if (result.isConfirmed) { 
+			 			    	addrModalOpen();
+			 			    	$('.choiceContent').show();
+			 					$('.addressInputContent').hide();
+			 			    	
+			 			    }
+			 			});
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					
+				}
+			});
 			
 		});
 		
-		
 		// 배송지 추가 버튼 시 작성페이지 content 보이기
 		$('.addAddressBtn').on('click', function(){
+			$('#addressInputLabel').text('배송지 등록');
+			$('.saveBtnText').text('등록하기');
+			$('#saveAddrForm').find('input[type="checkbox"]').prop('checked', false);
+	    	$('#saveAddrForm').find('input:not([type="button"])').val('');
 			$('.choiceContent').hide();
 			$('.addressInputContent').show();
 			
 		});
 		
 		// 배송지 저장하기 버튼 시 로직 처리(ajax)
-		$('.modal-dialog').on('submit','#saveAddressForm', function(e){
+		$('.modal-dialog').on('submit','#saveAddrForm', function(e){
 			e.preventDefault();
 			
 			var formData = new FormData(this);
@@ -446,8 +534,8 @@
 				processData: false,
 				success: function(response) {
 					Swal.fire({
-			  			  title: '장바구니에 담았습니다.',
-			  			  text: "장바구니 페이지로 이동합니다.",
+			  			  title: '저정을 완료하였습니다.',
+			  			  text: "배송지를 선택하시기 바랍니다.",
 			  			  icon: 'success',
 			  			  confirmButtonColor: '#3085d6',
 			  			  customClass: {
@@ -455,8 +543,6 @@
 			  			  }
 			 			}).then((result) => {
 			 			    if (result.isConfirmed) { 
-			 			    	$('#saveAddressForm').find('input[type="checkbox"]').prop('checked', false);
-			 			    	$('#saveAddressForm').find('input:not([type="button"])').val('');
 			 			    	$('.addrModal').modal('hide');
 			 			    }
 			 			});
@@ -469,109 +555,36 @@
 		});
 		
 		
-		
-		// 페이지 로드 시 총 상품금액 계산
-		let totalPrice = 0; 
-		$('.product-subtotal').each(function() {
-			let subtotalPriceText = $(this).text().trim();
-			let subtotalPrice = parseInt(subtotalPriceText.replace(/[^0-9]/g, ''));
+		// 주문결제 페이지에서 결제하기 버튼 클릭 시 로직
+		$('#addrInfoForm').on('submit', function(e){
+			e.preventDefault();
 			
-			totalPrice += subtotalPrice;
-		});
-		
-		let formattedtotalPrice = totalPrice.toLocaleString() + "원";
-		$('.totalPrice').text(formattedtotalPrice);
-		
-		// 페이지 로드 시 배송비 계산
-		let totalDeliveryPrice = 0;
-		$('.dprice').each(function() {
-			let deliveryPrice = $(this).data('dprice');
+			//alert("ok");
 			
-			totalDeliveryPrice += deliveryPrice;
-		});
-		
-		let formattedtotalDeliveryPrice = totalDeliveryPrice.toLocaleString() + "원";
-		$('.totalDeliveryPrice').text(formattedtotalDeliveryPrice);
-		
-		
-		// 페이지 로드 시 결제금액 계산
-		let payPrice = totalPrice + totalDeliveryPrice;
-		let formattedpayPrice = payPrice.toLocaleString() + "원";
-		$('.payPrice').text(formattedpayPrice);
-		
-		
-		// 장바구니 비우기 클릭 시 로직
-		$('.emptyCart').on('click', function(){
-			$('.shop-cart tbody').empty();
-			totalPriceCnt();
-			emptyCart();
-		});
-		
-		
-		// 옵션 삭제 눌렀을 경우 td 없애기
-		$('.option-remove').on('click', function(){
-			let dcartid = $(this).data('dcartid');
-			$(this).closest('tr').remove();
-			totalPriceCnt();
-			removeOption(dcartid);
+			Checkout('${ordersInfo.order_id}');
+			
+			
 			
 		});
 		
-		// 상품 삭제 눌렀을 경우 상품관련 옵션 전부 없애기
-		$('.product-remove').on('click', function(){
-			pid = $(this).data('cartid');
-			$('.' + pid).remove(); // 클래스명이 `pid`인 요소들 제거
-			totalPriceCnt();
-			removeProduct(pid);
-		});
-		
-		// 수량 변경 로직
-		$('.itemCntSpan').on('click', function () {
-			
-			// cart_detail_id 가져오기
-			let dcartid = $(this).closest('tr').find('.option-remove').data('dcartid');
-			console.log("dcartid : "+dcartid);
-			
-			// 숫자가 표시된 요소 선택
-		    let countElement = $(this).siblings('.itemCnt'); 
-		    let currentCount = parseInt(countElement.text()); // 현재 숫자 값
-		    // 클래스에 따라 동작 분기
-		    if ($(this).hasClass('plusBtn')) {
-		        countElement.text(currentCount + 1); // 숫자 증가
-		        quantityChange(dcartid, 1);
-		    } else if ($(this).hasClass('minusBtn')) {
-		        if (currentCount > 1) { // 최소값 1로 제한
-		            countElement.text(currentCount - 1); // 숫자 감소
-		            quantityChange(dcartid, -1);
-		        }
-		    }
-		    
-		 	// 합계 계산
-		    let initPriceText = $(this).closest('tr').find('.price').text();
-		    let initPrice = parseInt(initPriceText.replace(/[^0-9]/g, ''));
-		    let Price = initPrice * parseInt(countElement.text());
-		    let formattedPrice = Price.toLocaleString() + "원";
-		    $(this).closest('tr').find('.product-subtotal').text(formattedPrice);
-		    
-		    totalPriceCnt();
-		});
 		
 		
-		// 장바구니 클릭 시 선택아이템(selectItems) -> 디비 저장
-		$('#ShopToCartForm').on('submit', function(e){
-			event.preventDefault();
-			shopToCart('${optionInfo[0].option_name}', '${optionInfo[0].option_name2}');
-			Swal.fire({
-  			  title: '장바구니에 담았습니다.',
-  			  text: "장바구니 페이지로 이동합니다.",
-  			  icon: 'success',
-  			  confirmButtonColor: '#3085d6',
-  			  customClass: {
-  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
-  			  }
- 			});
-			
-		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	});//readay
 	

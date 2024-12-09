@@ -278,10 +278,47 @@
 	</delete>
 	
 	
+	<!-- 올해 첫 주문Id가 있는지 확인하기 -->
+	<select id="checkOrderId" resultType="String">
+		select order_id 
+		from _orders 
+		order by order_id desc 
+		limit 1 
+	</select>
 	
 	
+	<!-- orders테이블에 임시저장 상태로 생성 -->
+	<insert id="insertOrders">
+		insert into _orders(order_id, member_id, total_product_price, total_delivery_price, total_price)  
+		values(#{order_id}, #{member_id}, #{total_product_price}, #{total_delivery_price}, 
+		#{total_price} ) 
+	</insert>
 	
+	<!-- orders_detail 테이블 저장 -->
+	<insert id="insertOrdersDetail" parameterType="list">
+		insert into _orders_detail(order_id, product_id, product_subprice, delivery_price) 
+		values 
+		<foreach collection="list" item="li" separator="," >
+		(#{li.order_id}, #{li.product_id}, #{li.product_subprice}, #{li.delivery_price})  
+		</foreach>
+	</insert>
 	
+	<!-- orders_detail_id 가져오기 -->
+	<select id="getOrderDid" resultType="OrdersDetailVO">
+		select order_detail_id 
+		from _orders o 
+		join _orders_detail d on o.order_id = d.order_id 
+		where o.status='임시저장' 
+	</select>
+	
+	<!-- orders_detail_option 테이블 저장(임시저장 상태) -->
+	<insert id="insertOrdersDetailOptions" parameterType="list">
+		insert into _orders_detail_option(order_detail_id, product_option, option_price, quantity) 
+		values 
+		<foreach collection="list" item="li" separator="," >
+		(#{li.order_detail_id}, #{li.product_option}, #{li.option_price}, #{li.quantity})  
+		</foreach>
+	</insert>
 	
 
 </mapper>

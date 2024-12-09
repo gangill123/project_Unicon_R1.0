@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Unicon.domain.CartVO;
 import com.Unicon.domain.OptionVO;
+import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ShopVO;
 import com.Unicon.service.ShopService;
 
@@ -156,7 +157,6 @@ public class ShopController {
 		
 	}
 	
-	
 	// 장바구니 비우기 클릭 시 ajax구현(디비 실시간 반영)
 	@PostMapping("/emptyCart")
 	@ResponseBody
@@ -166,6 +166,24 @@ public class ShopController {
 		
 		sService.emptyCart(member_id);
 	}
+	
+	
+	// 장바구니에서 구매하기 시 주문테이블에 저장
+	@PostMapping("/cartToCheckout")
+	@ResponseBody
+	public void cartToCheckout(OrdersVO vo) {
+		logger.debug("vo:{}",vo);
+		
+		sService.cartToCheckout(vo);
+		
+		
+		
+	}
+	
+	
+	
+	
+	
 	
 
 }

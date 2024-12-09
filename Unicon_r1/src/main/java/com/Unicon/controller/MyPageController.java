@@ -129,7 +129,7 @@ public class MyPageController {
 		logger.info("vo : {}",vo);
 		
 		if(vo.getPet_src() == null) {
-			
+			 
 			// 새로운 src 만들어서 저장
 			MultipartFile file = vo.getPet_file();
 			String uploadDir = servletContext.getRealPath("/uploads/");
