@@ -34,10 +34,6 @@ public class AdminStoreController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminStoreController.class);
 	
-	
-//	@Inject 
-//	private CategoryDataService cService;
-	
 	@Inject
 	private AdminStoreService aService;
 	
@@ -67,8 +63,6 @@ public class AdminStoreController {
         return ResponseEntity.ok("이미지 업로드 성공");
     }
 
-	
-	
 	public List<ImageVO> saveImage(ProductVO avo, HttpServletRequest req) {
 		logger.info("( •̀ ω •́ )✧ saveImage(ProductVO avo, HttpServletRequest req) 실행");
 		ServletContext context = req.getServletContext();
@@ -118,5 +112,16 @@ public class AdminStoreController {
 		return store_main_images;
 	}
 
+	
+	// 신규 상품 등록 목록
+	@RequestMapping( value = "/products/new" , method=RequestMethod.GET)
+	public String showNewProductList(Model model) {
+//		List<ProductVO> newProducts = aService.getNewProducts();
+//		
+//		
+//		model.addAttribute("newProducts", newProducts);
+		return "/store/admin/newProducts";
+	}
+	
 	
 }

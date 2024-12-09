@@ -40,5 +40,15 @@ public class AdminStoreDAO {
 		
 		
 	}
+	
+	public List<ProductVO> getNewProducts() {
+		logger.debug("( •̀ ω •́ )✧ getNewProducts() 실행");
+		
+		// 복지몰 슬라이드 이미지 받아오기.
+		List<ProductVO> list	= sqlSession.selectList(NAMESPACE + "getNewProducts");
+		return list;
+	}
+	
+	
 
 }
