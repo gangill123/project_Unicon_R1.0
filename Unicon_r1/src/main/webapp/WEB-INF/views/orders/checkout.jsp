@@ -55,7 +55,7 @@
 }
 
 </style>
-
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 </head>
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
@@ -148,7 +148,7 @@
 		                          		<div class="col-sm-3">
 			                          		<div class="quform-input">
 		                                   		<input class="form-control" type="text" name="order_name"
-		                                   		 value="${ordersInfo.memberVO.memberName }">
+		                                   		 value="${ordersInfo.memberVO.member_name }">
 		                               		</div>
 		                          		</div>
 		                          	</li>
@@ -157,7 +157,7 @@
 		                          		<div class="col-sm-3">
 			                          		<div class="quform-input">
 		                                   		<input class="form-control" type="text"
-		                                   		value="${ordersInfo.memberVO.memberEmail }">
+		                                   		value="${ordersInfo.memberVO.member_email }">
 		                               		</div>
 		                          		</div>
 		                          	</li>
@@ -166,7 +166,7 @@
 		                          		<div class="col-sm-3">
 			                          		<div class="quform-input">
 		                                   		<input class="form-control" type="text"
-		                                   		value="${ordersInfo.memberVO.memberTel }">
+		                                   		value="${ordersInfo.memberVO.member_tel }">
 		                               		</div>
 		                          		</div>
 		                          	</li>
@@ -368,7 +368,7 @@
                     </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="butn primary rounded w-100" type="submit"><span class="saveBtnText">저장하기</span></button>
+                        <button class="butn primary rounded w-100" onclick="requestPay()"><span class="saveBtnText">저장하기</span></button>
                     </div>
                     </form>
                 </div>
@@ -634,6 +634,53 @@
             }
         }).open();
     }
+	
+	
+	IMP.init('imp16704003'); // Iamport Key 초기화
+	
+	function requestPay() {
+        IMP.request_pay({
+            pg: "html5_inicis", // PG사 코드
+            pay_method: "card", // 결제수단 (card, trans, vbank 등)
+            merchant_uid: "order_" + new Date().getTime(), // 주문번호
+            name: "상품명: 결제 테스트",
+            amount: 10000, // 결제 금액
+            buyer_email: "test@example.com",
+            buyer_name: "홍길동",
+            buyer_tel: "010-1234-5678",
+            buyer_addr: "서울특별시 강남구 역삼동",
+            buyer_postcode: "123-456"
+        }, function (rsp) {
+            if (rsp.success) {
+                // 성공 시 백엔드로 결제 정보 전송
+                alert("결제가 완료되었습니다.");
+                processPayment(rsp);
+            } else {
+                // 실패 처리
+                alert("결제에 실패하였습니다. 에러: " + rsp.error_msg);
+            }
+        });
+    }
+
+    function processPayment(rsp) {
+        // 결제 정보 전송
+        fetch('/orders/complete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(rsp)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("서버 결제 검증 완료");
+            } else {
+                alert("서버 결제 검증 실패");
+            }
+        });
+    }
+	
+	
+	
 	
 </script>
 

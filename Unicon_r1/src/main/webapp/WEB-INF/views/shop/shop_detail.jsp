@@ -119,7 +119,7 @@
                             </h3>
                             <div class="bg-primary separator-line-horrizontal-full mb-2"></div>
                             <div style="display: flex; justify-content: space-between;">
-                            	<p class="font-weight-600" style="color: #575a7b;">판매자 : ${productInfo.memberVO.memberName}</p>
+                            	<p class="font-weight-600" style="color: #575a7b;">판매자 : ${productInfo.memberVO.member_name}</p>
                             	<p class="font-weight-600" style="color: #575a7b;">${productInfo.product_category_type} <i class="fa-solid fa-angle-right"></i>
                             	<a class="text-primary" href="#!"> ${productInfo.product_category_value}</a></p>
                             </div>
