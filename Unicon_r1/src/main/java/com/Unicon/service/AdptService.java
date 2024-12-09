@@ -65,6 +65,17 @@ public class AdptService {
 	}
 	
 	
+	public void deleteAnimal(String animal_id, String member_id) {
+		logger.debug("( •̀ ω •́ )✧ deleteAnimal(String animal_id, String member_id) 실행");
+		
+		aDao.deleteAnimal(animal_id, member_id);
+	}
+	
+	public void modifyAnimalStatus(Map<String, Object> statusData) {
+		logger.debug("( •̀ ω •́ )✧ modifyAnimalStatus(Map<String, Object> statusData) 실행");
+	
+		aDao.modifyAnimalStatus(statusData);
+	}
 	
 	/*========================= 메서드 =========================*/
 		

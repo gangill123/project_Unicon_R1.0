@@ -140,7 +140,7 @@
 <select id="checkAnimalId" parameterType="String" resultType="Integer">
 	select count(animal_id) 
 	 from _animal 
-	  where animal_id = #{animal_id} limit 1
+	  where animal_id = #{animal_id} and animal_status != 6 limit 1 
 </select>
 
 
@@ -213,6 +213,19 @@
 	</foreach> 
 	on duplicate key update 
 	  vaccine_check = values(vaccine_check) 
+</update>
+
+
+<update id="modifyAnimalStatus" parameterType="Map">
+	update _animal set animal_status = #{animal_status} 
+	 where animal_id = #{animal_id} and member_id = #{member_id}
+</update>
+
+
+
+<update id="deleteAnimal" parameterType="Map">
+	update _animal set animal_status = 6 
+	 where animal_id = #{animal_id} and member_id = #{member_id} 
 </update>
 
 

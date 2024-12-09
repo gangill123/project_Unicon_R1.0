@@ -271,9 +271,11 @@
 				dataType: 'json',
 				dataSrc: function(json) {
 					return json.map(function(item) {
-						const date = new Date(item.animal_regdate);
-						const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-						const formattedDate = date.toLocaleDateString('ko-KR', options);
+						const adate = new Date(item.animal_regdate);
+						const year = adate.getFullYear();
+						const month = String(adate.getMonth() + 1).padStart(2, '0');
+						const day = String(adate.getDay()).padStart(2, '0');
+						const formattedDate = year + '-' + month + '-' + day;
 						
 						item.animal_regdate = formattedDate;
 						
