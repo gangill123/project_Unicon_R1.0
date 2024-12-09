@@ -72,7 +72,8 @@ public class StoreRestController {
 		  try {
 		  
 		 
-			  List<ImageVO> images = saveImage(vo, req); logger.info("images :  "+ images);
+			  List<ImageVO> images = saveImage(vo, req); 
+			  logger.info("images :  "+ images);
 			  if (images == null || images.isEmpty()) { return new
 				  ResponseEntity<String>("( •̀ ω •́ )✧  이미지가 없음.",
 				  HttpStatus.INTERNAL_SERVER_ERROR); 
@@ -91,19 +92,6 @@ public class StoreRestController {
 	  }
 	 
 
-	@RequestMapping(value = "/products/create/content", method = RequestMethod.POST)
-	public ResponseEntity<String> productContent(ProductVO vo, HttpServletRequest req) {
-
-		try {
-
-			return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
-		} catch (Exception e) {
-			logger.info("오류 발생 ");
-			e.printStackTrace();
-			return new ResponseEntity<String>("( •̀ ω •́ )✧ 오류가 발생했습니다: " + e.getMessage(),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
 
 	/* =============== 이미지 저장 및 리스트 생성 =============== */
 	public List<ImageVO> saveImage(ProductVO avo, HttpServletRequest req) {
@@ -144,7 +132,7 @@ public class StoreRestController {
 			logger.info("( •̀ ω •́ )✧ modifiedPath : " + modifiedPath);
 			ImageVO ivo = new ImageVO();
 			ivo.setImage_sequence(i);
-			ivo.setImage_src(modifiedPath);
+			ivo.setImage_src(modifiedPath); 
 			ivo.setImage_type("prod");
 			logger.info("( •̀ ω •́ )✧ ivo : " + ivo);
 			product_images.add(ivo);
