@@ -26,6 +26,7 @@
 	<result property="invoice_number" column="invoice_number"/>
 	<result property="delivery_method" column="delivery_method"/>
 	<result property="payment_date" column="payment_date"/>
+	<result property="imp_uid" column="imp_uid"/>
 	
 	<association property="memberVO" resultMap="MemberResultMap" />
 	
@@ -99,6 +100,7 @@
 		join _products p on p.product_id = od.product_id 
 		join _image i on p.product_id = i.image_id 
 		join _orders_detail_option odo on odo.order_detail_id = od.order_detail_id 
+		where o.status = '임시저장' 
 	</select>
 
 

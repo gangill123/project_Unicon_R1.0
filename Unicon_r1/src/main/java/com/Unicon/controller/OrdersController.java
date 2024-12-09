@@ -112,10 +112,9 @@ public class OrdersController {
 	@PostMapping("/saveAddr/{order_id}")
 	@ResponseBody
 	public void saveAddr(@PathVariable("order_id") String order_id, OrdersVO vo) {
-		logger.debug("saveAddr() 호출");
-		logger.debug("vo :{}",vo);
+		logger.info("saveAddr() 호출");
+		logger.info("vo :{}",vo);
 	}
-	
 	
 	
 	
