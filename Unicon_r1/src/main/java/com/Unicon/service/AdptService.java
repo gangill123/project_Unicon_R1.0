@@ -3,6 +3,7 @@ package com.Unicon.service;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -123,12 +124,17 @@ public class AdptService {
 			String adptId = "";
 			StringBuilder asb = new StringBuilder();
 			MemberVO mvo = aDao.getMemberInfo(advo.getMember_id());
-			logger.debug("( •̀ ω •́ )✧ mvo : {}",mvo);
+			String[] RoadAddress = mvo.getRoad_address().split(" ");
+			String sido = RoadAddress[0];
+			String sigun = RoadAddress[1];
+			String year = Year.now().toString();
+			String[] cityName = {"서울", "인천", "부산", "대구", "광주", "대전", "울산", "세종특별자치시"};
+			List<String> koreaCity = new ArrayList<>(Arrays.asList(cityName));
 			
-			asb.append(adNamePre).append("-");
+			asb.append(adNamePre).append("-").append(sido).append("-").append(sigun).append("-").append(year).append("-");
 			
 			adptId = asb.toString();
-			
+			logger.debug("( •̀ ω •́ )✧ adptId : {}",adptId);
 			return null;
 		}
 		/*=============== 입양글id 생성 ===============*/
