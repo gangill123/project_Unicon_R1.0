@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Unicon.domain.AdptVO;
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.persistence.AdptDAO;
@@ -97,11 +98,11 @@ public class AdptRestController {
 	@GetMapping(value = "/animals/{animal_id}")
 	public ResponseEntity<AnimalVO> animalListOne(@PathVariable("animal_id")String animal_id) {
 		logger.debug("( •̀ ω •́ )✧ animalListOne() 실행");
-		int checkId = aDao.checkAnimalId(animal_id);
+		
+		int checkId = aService.checkAnimalId(animal_id);
 		if(checkId == 1) {
 			logger.debug("( •̀ ω •́ )✧ 존재하는 동물id 확인완료");
 			AnimalVO animalVO = aService.getAnimalListOne(animal_id);
-			logger.debug("( •̀ ω •́ )✧ animalVO : {}",animalVO);
 			return new ResponseEntity<AnimalVO>(animalVO,HttpStatus.OK);
 		} else {
 			logger.debug("( •̀ ω •́ )✧ 존재하지않는 동물id 입니다");
@@ -114,9 +115,6 @@ public class AdptRestController {
 	@PostMapping(value = "/animals/{animalId}/modification")
 	public ResponseEntity<Void> modifyAnimal(@ModelAttribute AnimalVO avo, HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행");
-		logger.debug("( •̀ ω •́ )✧ avo : {}",avo);
-		
-		// 동물정보에 등록된 아이디인지 검증절차 추가예정
 		
 		try {
 			
@@ -142,6 +140,7 @@ public class AdptRestController {
 
 	}
 
+	
 	@DeleteMapping(value = "/animals/{animal_id}/deletion")
 	public ResponseEntity<Void> deleteAnimal(
 			@PathVariable("animal_id") String animal_id, @RequestParam("member_id")String member_id) {
@@ -157,6 +156,7 @@ public class AdptRestController {
 		}
 	}
 	
+	
 	@PatchMapping(value = "/animals/{animal_id}/status")
 	public ResponseEntity<Void> modifyAnimalStatus(@RequestBody Map<String, Object> statusData) {
 		logger.debug("( •̀ ω •́ )✧ modifyAnimalStatus() 실행");
@@ -168,6 +168,15 @@ public class AdptRestController {
 			
 			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	
+	@PostMapping(value = "/writings/creation/{animal_id}")
+	public ResponseEntity<Void> registerAdptWriting(AdptVO advo) {
+		logger.debug("( •̀ ω •́ )✧ registerAdptWriting() 실행");
+		
+		aService.genAdptId(advo);
+		return null;
 	}
 
 	

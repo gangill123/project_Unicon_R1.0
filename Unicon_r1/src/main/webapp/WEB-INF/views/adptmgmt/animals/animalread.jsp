@@ -52,13 +52,6 @@
 			font-size: 1rem !important;
 		}
 		
-		thead th.a-second-column {
-			border-radius: 1rem 0 0 0;
-		}
-		
-		tfoot th.a-second-column {
-			border-radius: 0 0 0 1rem;
-		}
 	}
 	
 	@media(max-width:1200px) {
@@ -67,24 +60,8 @@
 		}
 	}
 	
-	thead th.a-first-column {
-		border-radius: 1rem 0 0 0;
-	}
-	
-	tfoot th.a-first-column {
-		border-radius: 0 0 0 1rem;
-	}
-	
-	thead th.a-six-column {
-		border-radius: 0 1rem 0 0;
-	}
-	
-	tfoot th.a-six-column {
-		border-radius: 0 0 1rem 0;
-	}
-	
 	.a-second-column i {
-		color: #006e60
+		color: #006e60;
 	}
 	
 	.dataTables_wrapper .dataTables_length select, .dataTables_wrapper .dataTables_filter input {
@@ -136,25 +113,16 @@
 		text-align: center;
 		color: white;
 		background: #006e60;
-		padding: 1.2rem 0.7rem !important;
 	}
 	
 	.table td, .table tr {
 		cursor: pointer;
-		background-color: transparent !important;
 	}
 	
 	th select {
 		border-radius: 0.7rem;
 	}
 	
-	table.dataTable {
-		background-image: url('/resources/admin/images/pawbrownopacity10.png');
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		overflow: hidden;
-	}
     /*=============== 테이블 css ===============*/
     
     

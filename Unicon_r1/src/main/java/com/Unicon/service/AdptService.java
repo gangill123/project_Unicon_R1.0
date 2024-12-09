@@ -22,9 +22,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Unicon.domain.AdptVO;
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.CheckImageVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.MemberVO;
 import com.Unicon.persistence.AdptDAO;
 
 
@@ -55,6 +57,12 @@ public class AdptService {
 		logger.debug("( •̀ ω •́ )✧ getAnimalListiOne() 실행");
 		
 		return aDao.getAnimalListOne(animal_id);
+	}
+	
+	public Integer checkAnimalId(String animal_id) {
+		logger.debug("( •̀ ω •́ )✧ checkAnimalId(String animId) 실행");
+		
+		return aDao.checkAnimalId(animal_id);
 	}
 	
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
@@ -104,6 +112,27 @@ public class AdptService {
 			return animalId;
 		}
 		/*=============== 동물id 생성 ===============*/
+		
+		
+		
+		/*=============== 입양글id 생성 ===============*/
+		public String genAdptId(AdptVO advo) {
+			logger.debug("( •̀ ω •́ )✧ genAdptId() 메서드 실행");
+			
+			String adNamePre = "ADPT";
+			String adptId = "";
+			StringBuilder asb = new StringBuilder();
+			MemberVO mvo = aDao.getMemberInfo(advo.getMember_id());
+			logger.debug("( •̀ ω •́ )✧ mvo : {}",mvo);
+			
+			asb.append(adNamePre).append("-");
+			
+			adptId = asb.toString();
+			
+			return null;
+		}
+		/*=============== 입양글id 생성 ===============*/
+		
 		
 		
 		/*=============== 이미지 저장, 리스트 생성 ===============*/

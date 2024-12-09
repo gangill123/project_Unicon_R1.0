@@ -13550,7 +13550,7 @@ dl {
             margin-left: 1rem;
             margin-right: 0; }
           .sidebar .nav .nav-item .nav-link .icon-bg .menu-icon {
-            color: #c78aff; } /* ( •̀ ω •́ )✧ 사이드바의 아이콘 메뉴색 */
+            color: #006e60 } /* ( •̀ ω •́ )✧ 사이드바의 아이콘 메뉴색 */
             .sidebar .nav .nav-item .nav-link .icon-bg .menu-icon:after, .sidebar .nav .nav-item .nav-link .icon-bg .menu-icon:before {
               font-size: 1rem;
               color: inherit; }
@@ -13603,19 +13603,19 @@ dl {
           left: 0;
           top: .5rem;
           bottom: 0;
-          background: #c78aff; /* ( •̀ ω •́ )✧ 사이드바 왼쪽의 선택바 색상 */
+          background: #006e60; /* ( •̀ ω •́ )✧ 사이드바 왼쪽의 선택바 색상 */
           height: 24px;
           width: 4px; }
           .rtl .sidebar .nav .nav-item.active > .nav-link:before {
             left: auto;
             right: 0; }
         .sidebar .nav .nav-item.active > .nav-link .menu-title {
-          color: #c78aff; /* ( •̀ ω •́ )✧ 사이드바 선택시 글자 색상 */
+          color: #006e60; /* ( •̀ ω •́ )✧ 사이드바 선택시 글자 색상 */
           font-family: "nunito-medium", sans-serif; }
         .sidebar .nav .nav-item.active > .nav-link i {
-          color: #c78aff; } /* ( •̀ ω •́ )✧ 사이드바 선택시 아이콘 색상 */
+          color: #006e60; } /* ( •̀ ω •́ )✧ 사이드바 선택시 아이콘 색상 */
       .sidebar .nav .nav-item:hover {
-        background: rgba(199,138,255,0.2); } /* ( •̀ ω •́ )✧ 사이드바 메뉴 마우스 올릴시 색상 */
+        background: rgba(133, 188, 66, 0.2); } /* ( •̀ ω •́ )✧ 사이드바 메뉴 마우스 올릴시 색상 */
       .sidebar .nav .nav-item.nav-profile .nav-link {
         height: auto;
         line-height: 1;
@@ -13707,7 +13707,7 @@ dl {
                 margin-right: 0;
                 margin-left: 12px; }
     .sidebar .nav:not(.sub-menu) > .nav-item:hover:not(.nav-category):not(.nav-profile) > .nav-link {
-      color: #c78aff; }
+      color: #006e60; } /* ( •̀ ω •́ )✧ 마우스 올릴시 메뉴 색깔 */
     .sidebar .nav.sub-menu {
       margin-bottom: 20px;
       margin-top: 0;
@@ -13738,10 +13738,10 @@ dl {
               right: 0;
               content: "\F04D"; }
           .sidebar .nav.sub-menu .nav-item .nav-link.active {
-            color: #c78aff; /* ( •̀ ω •́ )✧ 사이드 서브 메뉴 활성화 색상 */
+            color: #006e60; /* ( •̀ ω •́ )✧ 사이드 서브 메뉴 활성화 색상 */
             background: transparent; }
             .sidebar .nav.sub-menu .nav-item .nav-link.active:before {
-              color: #c78aff; } /* ( •̀ ω •́ )✧ 사이드 서브 메뉴 활성화 색상 */
+              color: #006e60; } /* ( •̀ ω •́ )✧ 사이드 서브 메뉴 활성화 색상 */
           .sidebar .nav.sub-menu .nav-item .nav-link:hover {
             color: #ddd; }
         .sidebar .nav.sub-menu .nav-item:hover {

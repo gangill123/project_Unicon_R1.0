@@ -16,6 +16,7 @@ import com.Unicon.domain.AnimalHealthVO;
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.AnimalVaccineVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.MemberVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -106,4 +107,10 @@ public class AdptDAO {
 		sqlSession.update(NAMESPACE+"modifyAnimalStatus", statusData);
 	}
 	
+	
+	public MemberVO getMemberInfo(String member_id) {
+		logger.debug("( •̀ ω •́ )✧ getMemberInfo(String member_id) 실행");
+		
+		return sqlSession.selectOne(NAMESPACE+"getMemberInfo", member_id);
+	}
 }
