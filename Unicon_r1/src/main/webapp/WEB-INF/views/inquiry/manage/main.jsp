@@ -176,7 +176,21 @@ td.istatus.기타_문의 {
     font-size: 14px; /* 텍스트 크기 */
 }
 
-    
+th {
+    cursor: pointer; /* 마우스를 올렸을 때 클릭 가능하게 손 모양 표시 */
+}
+
+th:hover {
+    background-color: #f1f1f1; /* 마우스를 올렸을 때 색상 변경 */
+}
+
+th.sort-asc::after {
+    content: ' ↑'; /* 오름차순 화살표 표시 */
+}
+
+th.sort-desc::after {
+    content: ' ↓'; /* 내림차순 화살표 표시 */
+}    
     
     </style>
     
@@ -489,7 +503,50 @@ loadPage(currentPage);
 </script>
     
        
-          
+<script>
+$(document).ready(function() {
+    var sortOrder = true; // true: 오름차순, false: 내림차순
+
+    // 테이블 헤더 클릭 시 정렬 기능
+    $('#inquiryTable th').on('click', function() {
+        var index = $(this).index(); // 클릭한 헤더의 인덱스
+        var rows = $('#inquiryTable tbody tr').get(); // 테이블의 모든 행 가져오기
+
+        // 기존 정렬 상태 초기화
+        $('#inquiryTable th').removeClass('sort-asc sort-desc');
+        
+        // 현재 클릭한 헤더에 정렬 표시
+        if (sortOrder) {
+            $(this).addClass('sort-asc');
+        } else {
+            $(this).addClass('sort-desc');
+        }
+
+        // 행 정렬
+        rows.sort(function(a, b) {
+            var cellA = $(a).children('td').eq(index).text();
+            var cellB = $(b).children('td').eq(index).text();
+
+            // 숫자일 경우
+            if ($.isNumeric(cellA) && $.isNumeric(cellB)) {
+                return sortOrder ? parseFloat(cellA) - parseFloat(cellB) : parseFloat(cellB) - parseFloat(cellA);
+            }
+
+            // 문자열일 경우
+            return sortOrder ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+        });
+
+        // 정렬된 행을 다시 테이블에 추가
+        $.each(rows, function(index, row) {
+            $('#inquiryTable tbody').append(row);
+        });
+
+        // 정렬 순서 토글
+        sortOrder = !sortOrder;
+    });
+});
+
+</script>
        
           
           
