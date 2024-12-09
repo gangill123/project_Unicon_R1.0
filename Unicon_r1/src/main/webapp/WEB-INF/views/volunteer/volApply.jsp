@@ -361,7 +361,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" name="voAgree" value="Y">
                         <label class="form-check-label">
-                            [선택] SMS/이메일 수신에 동의합니다.
+                            [선택] 진행 상태 변경 시 이메일 알림을 받습니다.
                         </label>
                     </div>
                 </div>
