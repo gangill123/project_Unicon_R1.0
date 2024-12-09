@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.Unicon.domain.AddressVO;
+import com.Unicon.domain.OrdersVO;
 
 @Repository("ordersDAO")
 public class OrdersDAO {
@@ -41,6 +42,29 @@ public class OrdersDAO {
 	public AddressVO getAddrToId(int address_id) {
 		return sqlSession.selectOne(NAMESPACE+".getAddrToId", address_id);
 	}
+	
+	// 배송지 수정하기
+	public void addressUpdate(AddressVO vo) {
+		sqlSession.update(NAMESPACE+".addressUpdate", vo);
+	}
+	
+	
+	// 배송지 정보 삭제
+	public void addressDelete(int address_id) {
+		sqlSession.delete(NAMESPACE+".addressDelete", address_id);
+	}
+	
+	// 기본배송정보 가져가기
+	public AddressVO getDefalutAddrInfo(String member_id) {
+		return sqlSession.selectOne(NAMESPACE+".getDefalutAddrInfo", member_id);
+	}
+	
+	// 주문정보 가져오기
+	public OrdersVO getOrdersInfo(String member_id) {
+		return sqlSession.selectOne(NAMESPACE+".getOrdersInfo", member_id);
+	}
+	
+	
 	
 	
 

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.Unicon.domain.CartDetailVO;
 import com.Unicon.domain.CartVO;
 import com.Unicon.domain.OptionVO;
+import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ShopVO;
 import com.Unicon.persistence.ShopDAO;
 
@@ -147,6 +148,18 @@ public class ShopService {
 		// cart와 cart_detail에서 정보 삭제하기
 		sdao.removeCartAndDetail(member_id, cartIds);
 	}
+	
+	
+	
+	// 장바구니에서 구매하기 시 주문테이블로 저장
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public void cartToCheckout(OrdersVO vo) {
+		sdao.cartToCheckout(vo);
+	}
+	
+	
+	
+	
 	
 	
 }

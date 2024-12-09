@@ -6,6 +6,103 @@
 <mapper namespace="com.Unicon.mapper.OrdersMapper">
 
 <!-- resultMap 작성란 -->
+<!-- OrdersResultMap -->
+<resultMap type="com.Unicon.domain.OrdersVO" id="OrdersResultMap">
+<id property="order_id" column="order_id"/>
+	<result property="member_id" column="member_id"/>
+	<result property="order_name" column="order_name"/>
+	<result property="pay_method" column="pay_method"/>
+	<result property="total_product_price" column="total_product_price"/>
+	<result property="total_delivery_price" column="total_delivery_price"/>
+	<result property="total_price" column="total_price"/>
+	<result property="address" column="address"/>
+	<result property="detail_address" column="detail_address"/>
+	<result property="postal_code" column="postal_code"/>
+	<result property="recipient_phone" column="recipient_phone"/>
+	<result property="payment_status" column="payment_status"/>
+	<result property="create_date" column="create_date"/>
+	<result property="update_date" column="update_date"/>
+	<result property="status" column="status"/>
+	<result property="invoice_number" column="invoice_number"/>
+	<result property="delivery_method" column="delivery_method"/>
+	<result property="payment_date" column="payment_date"/>
+	
+	<association property="memberVO" resultMap="MemberResultMap" />
+	
+	<collection property="ordersDetails" ofType="com.Unicon.domain.OrdersDetailVO" resultMap="OrdersDetailResultMap"/>
+</resultMap>
+
+<!-- OrdersDetailResultMap -->
+<resultMap type="com.Unicon.domain.OrdersDetailVO" id="OrdersDetailResultMap">
+<id property="order_detail_id" column="order_detail_id"/>
+	<result property="order_id" column="order_id"/>
+	<result property="product_id" column="product_id"/>
+	<result property="product_subprice" column="product_subprice"/>
+	<result property="delivery_price" column="delivery_price"/>
+	<result property="status" column="status"/>
+	
+	<association property="shopVO" resultMap="ShopResultMap" />
+	
+	<collection property="odersDetailOptions" ofType="com.Unicon.domain.OrdersDetailOptionVO" resultMap="OrdersDetailOptionResultMap"/>
+</resultMap>
+
+<!-- OrdersDetailOptionResultMap -->
+<resultMap type="com.Unicon.domain.OrdersDetailOptionVO" id="OrdersDetailOptionResultMap">
+<id property="order_detail_option_id" column="order_detail_option_id"/>
+	<result property="order_detail_id" column="order_detail_id"/>
+	<result property="product_option" column="product_option"/>
+	<result property="option_price" column="option_price"/>
+	<result property="quantity" column="quantity"/>
+	<result property="status" column="status"/>
+	<result property="dispatch_date" column="dispatch_date"/>
+	<result property="cancellation_request_date" column="cancellation_request_date"/>
+	<result property="return_request_date" column="return_request_date"/>
+</resultMap>
+
+
+<!-- MemberResultMap -->
+<resultMap type="com.Unicon.domain.MemberVO" id="MemberResultMap">
+	<result property="memberId" column="member_id"/>
+	<result property="memberName" column="member_name"/>
+	<result property="memberTel" column="member_tel"/>
+	<result property="memberEmail" column="member_email"/>
+</resultMap>
+
+<!-- ShopResultMap -->
+<resultMap type="com.Unicon.domain.ShopVO" id="ShopResultMap">
+<id property="product_id" column="product_id"/>
+	<result property="product_seller_id" column="product_seller_id"/>
+	<result property="product_name" column="product_name"/>
+	
+	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
+</resultMap>
+
+<!-- "ImageResultMap" -->
+<resultMap type="com.Unicon.domain.ImageVO" id="ImageResultMap">
+	<id property="image_id" column="image_id"/>
+	<id property="image_type" column="image_type"/>
+	<id property="image_sequence" column="image_sequence"/>
+	<result property="image_src" column="image_src"/>
+</resultMap>
+
+
+	<select id="getOrdersInfo" resultMap="OrdersResultMap" parameterType="String">
+		select o.*, od.*, odo.*, m.member_name, m.member_email, i.image_src, p.product_name, 
+		CONCAT( 
+        SUBSTRING(member_tel, 1, 3), '-',   
+        SUBSTRING(member_tel, 4, 4), '-',   
+        SUBSTRING(member_tel, 8)  
+   		 ) AS member_tel  
+		from _orders o 
+		join _orders_detail od on o.order_id = od.order_id 
+		join _member m on m.member_id = o.member_id 
+		join _products p on p.product_id = od.product_id 
+		join _image i on p.product_id = i.image_id 
+		join _orders_detail_option odo on odo.order_detail_id = od.order_detail_id 
+	</select>
+
+
+
 	
 	<!-- 기본배송지 있는 지 확인 -> address_id 가져옴 -->
 	<select id="checkDefaultAddr" resultType="int">
@@ -46,6 +143,40 @@
 		where address_id =#{address_id} 
 	</select>
 	
+	
+	<!-- 배송지 수정하기 -->
+	<update id="addressUpdate">
+		update _address
+		set is_default_address=#{is_default_address}, address_name=#{address_name}, postal_code=#{postal_code},  
+		road_address=#{road_address}, detail_address=#{detail_address}, extra_address=#{extra_address}, 
+		recipient=#{recipient}, recipient_phone=#{recipient_phone}, update_date=now() 
+		where address_id =#{address_id} 
+	</update>
+	
+	
+	<!-- 배송지 정보 삭제 -->
+	<delete id="addressDelete">
+		delete 
+		from _address 
+		where address_id =#{address_id} 
+	</delete>
+	
+	
+	<!-- 기본배송정보 가져가기 -->
+	<select id="getDefalutAddrInfo" resultType="AddressVO">
+		select address_id, member_id, is_default_address, address_name, postal_code, road_address, detail_address, 
+		extra_address, recipient, CONCAT( 
+        SUBSTRING(recipient_phone, 1, 3), '-',  
+        SUBSTRING(recipient_phone, 4, 4), '-',  
+        SUBSTRING(recipient_phone, 8) 
+   		 ) AS recipient_phone 
+		from _address 
+		where member_id = #{member_id} and is_default_address='true'  
+	</select>
+
+
+
+
 
 </mapper>
 

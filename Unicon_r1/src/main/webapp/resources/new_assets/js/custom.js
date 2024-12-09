@@ -1303,7 +1303,7 @@
 					let formattedPhone = (item.recipient_phone).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
 					
 					let modalContents = `
-					<div class="rounded mb-4" style="padding: 20px; background: white;">
+					<div class="addrInfo rounded mb-4" style="padding: 20px; background: white;">
                     	<div>
                 		<h5 style="display:inline;">${item.address_name}</h5>`
                 	if(item.is_default_address == 'true'){
@@ -1326,7 +1326,7 @@
                     		<button type="button" class="addrDbtn btn btn-outline-secondary" data-id="${item.address_id}">삭제</button>
                 		</div>
                 		<div class="col-sm-6 display-30 mb-2" style="text-align: end;">
-                    		<button class="selectAddr butn primary small rounded"><span>선택</span></button>
+                    		<button class="addrSbtn butn primary small rounded" data-id="${item.address_id}"><span>선택</span></button>
                 		</div>
                 	</div>
                 </div>`
@@ -1351,6 +1351,7 @@
 				//console.log(response);
 				
 				$('#addressInputLabel').text('배송지 수정');
+				$('.saveBtnText').text('수정하기');
 				$('input[name="address_name"]').val(response.address_name);
 				$('input[name="recipient"]').val(response.recipient);
 				$('input[name="recipient_phone"]').val(response.recipient_phone);
@@ -1361,8 +1362,12 @@
 				
 				if(response.is_default_address == 'true'){
 					$('input[name="is_default_address"]').prop('checked', true);
+				} else {
+					$('input[name="is_default_address"]').prop('checked', false);
 				}
 				
+				$("#saveAddrForm").attr("id", "updateAddrForm");
+				$("#updateAddrForm").attr("data-addrid", address_id);
 				
 			},
 			error: function(){
@@ -1371,8 +1376,210 @@
 		});
 	}
 	
+	// 배송지 선택 시 정보 화면으로 이동 출력
+	function SelectAddrInfo(address_id){
+		
+		$.ajax({
+			url: '/orders/getAddrToId/'+address_id,
+			type: 'POST',
+			success: function(response){
+				//alert("ok");
+				
+				$('#addrName').text(response.address_name);
+				let totalAddr = `<span id="address">${response.road_address}${response.extra_address}</span>
+	                          		, <span id="detail_address">${response.detail_address}</span>`;
+				$('#totalAddr').html(totalAddr)
+				$('#recipient').text(response.recipient);
+				let formattedPhone = (response.recipient_phone).replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+				$('#recipient_phone').text(formattedPhone);
+				$('#postCode').val(response.postal_code);
+				
+				if(response.is_default_address == 'true'){
+					$('.isDefault').show();
+				} else{
+					$('.isDefault').hide();
+				}
+				
+				$('.addrModal').modal('hide');
+				
+			},
+			error: function(){
+				
+			}
+		});
+	}
+	
+	// 상품구매하기 시 주문테이블에 저장
+	function CartToCheckout(){
+		
+		//total_product_price
+		let totalPriceText = $('.totalPrice').text().trim();
+		let totalPrice = parseInt(totalPriceText.replace(/,/g, '').replace(/[^0-9]/g, ''), 10);
+		let totalPriceInput = $('<input>')
+        .attr('type', 'hidden') // hidden 타입 설정
+        .attr('name', `total_product_price`) // 유니크한 name 설정
+        .val(totalPrice); // input 값 설정
+		
+		//total_delivery_price
+		let totalDeliveryPriceText = $('.totalDeliveryPrice').text().trim();
+		let totalDeliveryPrice = parseInt(totalDeliveryPriceText.replace(/,/g, '').replace(/[^0-9]/g, ''), 10);
+		let totalDeliveryPriceInput = $('<input>')
+		.attr('type', 'hidden') // hidden 타입 설정
+		.attr('name', `total_delivery_price`) // 유니크한 name 설정
+		.val(totalDeliveryPrice); // input 값 설정
+		
+		//total_price
+		let payPriceText = $('.payPrice').text().trim();
+		let payPrice = parseInt(payPriceText.replace(/,/g, '').replace(/[^0-9]/g, ''), 10);
+		let payPriceInput = $('<input>')
+		.attr('type', 'hidden') // hidden 타입 설정
+		.attr('name', `total_price`) // 유니크한 name 설정
+		.val(payPrice); // input 값 설정
+		
+		$('#CartToCheckoutFormInput').append(totalPriceInput, totalDeliveryPriceInput, payPriceInput);
+		
+		
+		products = $('.product');
+		
+		products.each(function(index){
+			
+			//product_id
+			let productId = $(this).data('prodid');
+		    let productIdInput = $('<input>')
+		        .attr('type', 'hidden') // hidden 타입 설정
+		        .attr('name', `ordersDetails[${index}].product_id`) // 유니크한 name 설정
+		        .val(productId); // input 값 설정
+		    
+		    //delivery_price
+		    let deliveryPrice = $(this).find('.dprice').data('dprice');
+		    let deliveryPriceInput = $('<input>')
+		        .attr('type', 'hidden') // hidden 타입 설정
+		        .attr('name', `ordersDetails[${index}].delivery_price`) // 유니크한 name 설정
+		        .val(deliveryPrice); // input 값 설정
+		    
+		    	
+		    let productSubprice = 0;
+		    
+		    	//옵션 반복(orders_detail_option)
+		    	let productOptions = $('.productOption'+index);
+		    	productOptions.each(function(index2){
+		    		
+		    		//product_option
+		    		let option = $(this).find('.option').text();
+		    		let optionInput = $('<input>')
+			        .attr('type', 'hidden') // hidden 타입 설정
+			        .attr('name', `ordersDetails[${index}].odersDetailOptions[${index2}].product_option`) // 유니크한 name 설정
+			        .val(option); // input 값 설정
+		    		
+		    		//option_price
+		    		let optionPriceText = $(this).find('.subPrice').text();
+		    		let optionPrice = parseInt(optionPriceText.replace(/,/g, '').replace(/[^0-9]/g, ''), 10);
+		    		let optionPriceInput = $('<input>')
+			        .attr('type', 'hidden') // hidden 타입 설정
+			        .attr('name', `ordersDetails[${index}].odersDetailOptions[${index2}].option_price`) // 유니크한 name 설정
+			        .val(optionPrice); // input 값 설정
+		    		
+		    		// 상품별 가격합
+		    		productSubprice += optionPrice;
+		    		
+		    		//quantity
+		    		let quantity = $(this).find('.itemCnt').text();
+		    		let quantityInput = $('<input>')
+			        .attr('type', 'hidden') // hidden 타입 설정
+			        .attr('name', `ordersDetails[${index}].odersDetailOptions[${index2}].quantity`) // 유니크한 name 설정
+			        .val(quantity); // input 값 설정
+		    		
+		    		$('#CartToCheckoutFormInput').append(optionInput, optionPriceInput, quantityInput);
+		    		
+		    	});
+		    
+		    	
+	    	//product_subprice
+		    let productSubpriceInput = $('<input>')
+		        .attr('type', 'hidden') // hidden 타입 설정
+		        .attr('name', `ordersDetails[${index}].product_subprice`) // 유니크한 name 설정
+		        .val(productSubprice); // input 값 설정	
+		    	
+		    
+		    // input 태그를 폼에 추가하거나 원하는 위치에 삽입
+		    $('#CartToCheckoutFormInput').append(productIdInput, deliveryPriceInput, productSubpriceInput);
+		});
+		
+		// FormData 객체 생성
+        let formData = new FormData($('#CartToCheckoutForm')[0]);
+		
+     	// AJAX 요청
+        $.ajax({
+            url: '/shop/cartToCheckout', // 서버의 URL
+            type: 'POST',
+            data: formData,
+            processData: false, // FormData 사용 시 false 설정
+            contentType: false, // FormData 사용 시 false 설정
+            success: function (response) {
+                $('#CartToCheckoutFormInput').empty();
+            },
+            error: function (xhr, status, error) {
+                console.error("Error:", error);
+            }
+        });
+	}
 	
 	
+	// 주문결제 페이지에서 결제하기 버튼 클릭 시 로직
+	function Checkout(address_id){
+		
+		//address
+		let address = $('#address').text();
+		let addressInput = $('<input>')
+        .attr('type', 'hidden') // hidden 타입 설정
+        .attr('name', `address`) // 유니크한 name 설정
+        .val(address); // input 값 설정
+		
+		//detail_address
+		let detailAddress = $('#detail_address').text();
+		let detailAddressInput = $('<input>')
+		.attr('type', 'hidden') // hidden 타입 설정
+		.attr('name', `detail_address`) // 유니크한 name 설정
+		.val(detailAddress); // input 값 설정
+		
+		//recipient
+		let recipient = $('#recipient').text();
+		let recipientInput = $('<input>')
+		.attr('type', 'hidden') // hidden 타입 설정
+		.attr('name', `recipient`) // 유니크한 name 설정
+		.val(recipient); // input 값 설정
+		
+		//recipient_phone
+		let recipientPhone = $('#recipient_phone').text();
+		let recipientPhoneInput = $('<input>')
+		.attr('type', 'hidden') // hidden 타입 설정
+		.attr('name', `recipient_phone`) // 유니크한 name 설정
+		.val(recipientPhone); // input 값 설정
+		
+		
+		$('#addrInfoFormInput').append(addressInput, detailAddressInput, recipientInput, recipientPhoneInput);
+		
+		// FormData 객체 생성
+        let formData = new FormData($('#addrInfoForm')[0]);
+		
+     	// AJAX 요청
+        $.ajax({
+            url: '/orders/saveAddr/'+address_id, // 서버의 URL
+            type: 'POST',
+            data: formData,
+            processData: false, // FormData 사용 시 false 설정
+            contentType: false, // FormData 사용 시 false 설정
+            success: function (response) {
+                //$('#addrInfoFormInput').empty();
+            	alert("ok");
+            },
+            error: function (xhr, status, error) {
+                console.error("Error:", error);
+            }
+        });
+		
+		
+	}
 	
 	
 	

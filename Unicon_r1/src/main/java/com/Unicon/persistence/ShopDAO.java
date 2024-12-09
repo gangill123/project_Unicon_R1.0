@@ -1,5 +1,6 @@
 package com.Unicon.persistence;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Repository;
 import com.Unicon.domain.CartDetailVO;
 import com.Unicon.domain.CartVO;
 import com.Unicon.domain.OptionVO;
+import com.Unicon.domain.OrdersDetailOptionVO;
+import com.Unicon.domain.OrdersDetailVO;
+import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ShopVO;
 
 @Repository("shopDAO")
@@ -140,7 +144,52 @@ public class ShopDAO {
 		sqlSession.delete(NAMESPACE+".removeCartDetail", cartIds);
 	}
 	
-	
+	// 장바구니에서 구매하기 시 주문테이블로 저장
+	public void cartToCheckout(OrdersVO vo) {
+		
+		// 0. order_id 있는지 없는지 확인하고 없으면 만들기
+        LocalDate today = LocalDate.now();
+        int year = today.getYear();
+        String order_id = "order-" +year+"000001";
+        
+        // 올해 첫 주문Id가 있는지 확인하기
+        String checkOrderId = sqlSession.selectOne(NAMESPACE+".checkOrderId");
+        
+        if(checkOrderId != null) {
+        	//있으면 order_id를 가장 최근 id에서 +1
+        	order_id = "order-"+(Integer.parseInt(checkOrderId.substring(6))+1);
+        }
+        
+        // orders - order_id set
+        vo.setOrder_id(order_id);
+		
+        // orders_detail - order_id set
+        for(OrdersDetailVO odvo :vo.getOrdersDetails()) {
+        	odvo.setOrder_id(order_id);
+        }
+        
+        // 1. orders테이블에 임시저장 상태로 생성
+ 		sqlSession.insert(NAMESPACE+".insertOrders", vo);
+		
+        // 2. orders_detail 테이블 저장
+        sqlSession.insert(NAMESPACE+".insertOrdersDetail", vo.getOrdersDetails());
+		
+        // 3. orders_detail_id 가져오기
+        List<OrdersDetailVO> odvo =	sqlSession.selectList(NAMESPACE+".getOrderDid");
+        
+        // 4. orders_detail_option - product_id set
+        for(int i =0; i<vo.getOrdersDetails().size();i++) {
+        	for(OrdersDetailOptionVO odovo : vo.getOrdersDetails().get(i).getOdersDetailOptions()) {
+        		odovo.setOrder_detail_id(odvo.get(i).getOrder_detail_id());
+        	}
+        	
+        }
+		
+		// 5. orders_detail_option 테이블 저장(임시저장 상태)
+		for(int i =0; i<vo.getOrdersDetails().size();i++) {
+			sqlSession.insert(NAMESPACE+".insertOrdersDetailOptions", vo.getOrdersDetails().get(i).getOdersDetailOptions());
+		}
+	}
 	
 	
 	

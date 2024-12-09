@@ -97,8 +97,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            	<c:forEach var="list" items="${cartAllInfo }">
-                            	<tr class="${list.cart_id }">
+                            	<c:forEach var="list" items="${cartAllInfo }" varStatus="st">
+                            	<tr class="${list.cart_id } product" data-prodid="${list.shopVO.product_id}">
                                     <td class="product-thumbnail text-start">
                                         <a href="/shop/shop_detail/${list.shopVO.product_id}" class="d-inline-block w-70px">
                                         <img src="${list.shopVO.product_images[0].image_src }" class="w-70px"></a>
@@ -124,16 +124,12 @@
                                 </tr>
                                 
                                 <c:forEach var="dlist" items="${list.cart_list }">
-                                	<tr class="${list.cart_id }">
+                                	<tr class="${list.cart_id } productOption${st.index}">
                                     <td class="product-thumbnail text-start"></td>
                                     <td class="text-start">
-                                        <a href="/shop/shop_detail/${list.shopVO.product_id}">${list.shopVO.product_name }</a>
-                                        <span class="text-uppercase d-block">
-                                        ${dlist.option_name} : ${dlist.option_value}
-                                        <c:if test="${!empty dlist.option_name2}">
-                                        	/ ${dlist.option_name2} : ${dlist.option_value2}
-                                        </c:if>
-                                        </span>
+                                        <span class="text-uppercase d-block option"
+                                        >${dlist.option_name} : ${dlist.option_value}<c:if test="${!empty dlist.option_name2}"
+                                        > / ${dlist.option_name2} : ${dlist.option_value2}</c:if></span>
                                     </td>
                                     <td class="price text-start" style="width: 10%;">
                                         <fmt:formatNumber value="${(list.shopVO.product_price + dlist.option_price)
@@ -147,7 +143,7 @@
 			                            	<span class="plusBtn itemCntSpan">+</span>
 			                            </div>
                                     </td>
-                                    <td class="product-subtotal text-start">
+                                    <td class="subPrice product-subtotal text-start">
                                     <fmt:formatNumber value="${(((list.shopVO.product_price + dlist.option_price)
                                     *(100 - list.shopVO.discount_rate)/100)*dlist.quantity/100)*100}"
 		                                 type="number" />원
@@ -190,8 +186,6 @@
                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
                                             <div class="card-body">
 
-                                                <form method="post">
-
                                                     <div class="row">
 
                                                         <div class="col-12">
@@ -206,8 +200,6 @@
 
                                                     <button type="button" class="butn small"><span>Apply Code</span></button>
 
-                                                </form>
-
                                             </div>
                                         </div>
                                     </div>
@@ -221,8 +213,6 @@
                                         </div>
                                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
                                             <div class="card-body">
-
-                                                <form method="post">
 
                                                     <div class="row">
 
@@ -253,8 +243,6 @@
                                                     </div>
 
                                                     <button type="button" class="butn small"><span>Update Totals</span></button>
-
-                                                </form>
 
                                             </div>
                                         </div>
@@ -289,7 +277,16 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <a class="butn primary medium float-end" href="#!"><span>상품 구매하기</span></a>
+                                <form id="CartToCheckoutForm">
+                                	<input type="hidden" name="member_id" value="${member_id}">
+                                	
+                                	<div id="CartToCheckoutFormInput"></div>
+                                
+	                                <button type="submit" class="butn primary float-end"><span>상품 구매하기</span></button>
+                                
+                                </form>
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -396,21 +393,22 @@
 		    totalPriceCnt();
 		});
 		
-		
-		// 장바구니 클릭 시 선택아이템(selectItems) -> 디비 저장
-		$('#ShopToCartForm').on('submit', function(e){
-			event.preventDefault();
-			shopToCart('${optionInfo[0].option_name}', '${optionInfo[0].option_name2}');
+		// 상품 구매하기 클릭 시 상품 주문/주문상세 테이블에 저장
+		$('#CartToCheckoutForm').on('submit', function(e){
+			e.preventDefault();
+			CartToCheckout();
 			Swal.fire({
-  			  title: '장바구니에 담았습니다.',
-  			  text: "장바구니 페이지로 이동합니다.",
-  			  icon: 'success',
-  			  confirmButtonColor: '#3085d6',
-  			  customClass: {
-  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
-  			  }
- 			});
-			
+	  			  title: '주문/결제로 이동합니다.',
+	  			  icon: 'success',
+	  			  confirmButtonColor: '#3085d6',
+	  			  customClass: {
+	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+	  			  }
+	 			}).then((result) => {
+	 			    if (result.isConfirmed) { 
+	 			        window.location.href = '/orders/checkout'; // 이동할 URL
+	 			    }
+	 			});
 		});
 		
 		
