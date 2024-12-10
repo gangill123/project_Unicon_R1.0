@@ -111,6 +111,32 @@ public class AdptRestController {
 		
 	}
 	
+	@GetMapping(value = "/animals/{animal_id}/check")
+	public ResponseEntity<AnimalVO> animalWritingOne(@PathVariable("animal_id")String animal_id) {
+		logger.debug("( •̀ ω •́ )✧ animalWritingOne() 실행");
+		
+		int checkId = aService.checkAnimalId(animal_id);
+		
+		if(checkId == 1) {
+			logger.debug("( •̀ ω •́ )✧ 존재하는 동물id 확인완료");
+			AnimalVO animalVO = aService.getAnimalListOne(animal_id);
+			int checkStatus = animalVO.getAnimal_status();
+			
+			if(checkStatus == 1) {
+				logger.debug("( •̀ ω •́ )✧ 대기중 상태인 동물입니다");
+				return new ResponseEntity<AnimalVO>(animalVO,HttpStatus.OK);
+			} else {
+				logger.debug("( •̀ ω •́ )✧ 이미 입양글이 작성되거나 종료된 동물입니다");
+				return new ResponseEntity<AnimalVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+				
+		} else {
+			logger.debug("( •̀ ω •́ )✧ 존재하지않는 동물id 입니다");
+			return new ResponseEntity<AnimalVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
 	
 	@PostMapping(value = "/animals/{animalId}/modification")
 	public ResponseEntity<Void> modifyAnimal(@ModelAttribute AnimalVO avo, HttpServletRequest req) {
@@ -160,6 +186,7 @@ public class AdptRestController {
 	@PatchMapping(value = "/animals/{animal_id}/status")
 	public ResponseEntity<Void> modifyAnimalStatus(@RequestBody Map<String, Object> statusData) {
 		logger.debug("( •̀ ω •́ )✧ modifyAnimalStatus() 실행");
+		
 		try {
 			aService.modifyAnimalStatus(statusData);
 			return new ResponseEntity<Void>(HttpStatus.OK);
@@ -172,11 +199,19 @@ public class AdptRestController {
 	
 	
 	@PostMapping(value = "/writings/creation/{animal_id}")
-	public ResponseEntity<Void> registerAdptWriting(AdptVO advo) {
+	public ResponseEntity<Void> registerAdptWriting(AdptVO advo, @RequestParam("animalStatus")int animalStatus) {
 		logger.debug("( •̀ ω •́ )✧ registerAdptWriting() 실행");
 		
-		aService.genAdptId(advo);
-		return null;
+		try {
+			advo.setAdpt_id(aService.genAdptId(advo));
+			aService.adptWritingInsert(advo, animalStatus);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 
 	

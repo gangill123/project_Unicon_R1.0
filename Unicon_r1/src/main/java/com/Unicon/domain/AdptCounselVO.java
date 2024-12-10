@@ -12,6 +12,8 @@ public class AdptCounselVO {
 	private String member_id;
 	private Timestamp counsel_subdate;
 	private Timestamp counsel_procdate;
-	private String counsel_status;
+	private int counsel_status;
+	private String counsel_status_value;
+	private String counsel_reason;
 
 }

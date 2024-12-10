@@ -497,7 +497,7 @@
 		border-color: #006e60;
 	}
 	
-	#a-close-btn1, #a-close-btn2, #a-close-cancel-btn1, #a-close-cancel-btn2 {
+	#a-close-btn1, #a-close-btn2, #a-close-cancel-btn1, #a-close-cancel-btn2, .a-writing-btn {
 		display: none;
 	}
 	/*=============== 버튼 css ===============*/
@@ -1088,13 +1088,13 @@
 		
 						data.forEach(function(item) {
 							if(item.category_code == 1000) {
-								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;｡:˚ ૮ ˶ ˆ ᴥ ˆ ˶ ა ˚ :｡</option>");
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +"</option>");
 							}
 							if(item.category_code == 2000) {
-								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;/ᐠ - ˕ -マ Ⳋ</option>");
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +"</option>");
 							}
 							if(item.category_code == 3000) {
-								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;ପ૮{˶• ༝ •˶}აଓ</option>");
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +"</option>");
 							}
 						});
 					},
@@ -1925,7 +1925,7 @@
 							$('#aRegNum').val(data.animal_regnum);
 							$('#aEtc').val(data.animal_etc);
 							
-							if($('#animal_status').val() == '5') {
+							if($('#animal_status').val() == 5) {
 								$('#a-close-btn1, #a-close-btn2').hide();
 								$('#a-close-cancel-btn1, #a-close-cancel-btn2').show();
 							} else {
@@ -1933,14 +1933,22 @@
 								$('#a-close-cancel-btn1, #a-close-cancel-btn2').hide();
 							}
 							
+							if($('#animal_status').val() == 1) {
+								$('.a-writing-btn').show();
+							} else {
+								$('.a-writing-btn').hide();
+							}
+							
 						},
 						error: function(error) {
 							console.error('데이터를 가져오는 데 실패했습니다:', error);
 							window.location.href = '/AM/animals/list';
+							alert('잘못된 접근입니다');
 						}
 					});
 				} else {
 					window.location.href = '/AM/animals/list';
+					alert('잘못된 접근입니다');
 				}
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/
 				

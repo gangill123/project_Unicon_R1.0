@@ -22,7 +22,7 @@
 	<result property="animal_regdate" column="animal_regdate"/>
 	<result property="animal_upddate" column="animal_upddate"/>
 	<result property="animal_status" column="animal_status"/>
-	<result property="status_value" column="status_value"/>
+	<result property="animal_status_value" column="animal_status_value"/>
 	<result property="animal_regnum" column="animal_regnum"/>
 	<result property="animal_act" column="animal_act"/>
 	<result property="act_value" column="act_value"/>
@@ -49,6 +49,9 @@
 	<result property="counsel_subdate" column="counsel_subdate"/>
 	<result property="counsel_procdate" column="counsel_procdate"/>
 	<result property="counsel_status" column="counsel_status"/>
+	<result property="counsel_status_value" column="counsel_status_value"/>
+	<result property="counsel_status" column="counsel_status"/>
+	<result property="counsel_reason" column="counsel_reason"/>
 </resultMap>
 
 <resultMap type="com.Unicon.domain.AdptMemberVO" id="MemberResultMap">
@@ -75,6 +78,9 @@
 	<result property="adpt_upddate" column="adpt_upddate"/>
 	<result property="adpt_intro" column="adpt_intro"/>
 	<result property="adpt_etc" column="adpt_etc"/>
+	<result property="adpt_status" column="adpt_status"/>
+	<result property="adpt_status_value" column="adpt_status_value"/>
+	<result property="adpt_reason" column="adpt_reason"/>
 </resultMap>
 
 <resultMap type="com.Unicon.domain.ImageVO" id="ImageResultMap">
@@ -111,7 +117,6 @@
 	  values (#{animal_id}, #{category_code}, #{category_etc_value}, #{animal_name}, #{animal_color}, #{animal_gender}, #{animal_neuter}, 
 	   #{animal_age}, #{animal_weight}, #{member_id}, #{animal_regnum}, #{animal_act}, #{animal_social}, #{animal_etc})
 </insert>
-
 <insert id="insertAnimalImages" parameterType="List">
 	insert into _image (image_id, image_type, image_sequence, image_src) 
 	 values 
@@ -119,7 +124,6 @@
 	   (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
 	  </foreach> 
 </insert>
-
 <insert id="insertAnimalHealths" parameterType="Map">
 	insert into _animal_health (animal_id, health, health_check) 
 	 values 
@@ -127,7 +131,6 @@
 	   (#{animal_id}, #{h.health}, #{h.health_check}) 
 	  </foreach> 
 </insert>
-
 <insert id="insertAnimalVaccines" parameterType="Map">
 	insert into _animal_vaccine (animal_id, vaccine, vaccine_check) 
 	 values 
@@ -148,7 +151,7 @@
 	select a.animal_id, a.category_etc_value, a.animal_name, date_format(a.animal_regdate, '%Y-%m-%d') as animal_regdate, 
 	 c.category_type, c.category_value, 
 	  m.member_name, 
-	   ac.common_value as status_value 
+	   ac.common_value as animal_status_value 
 	    from _animal a 
 	     join _category_data c on a.category_code = c.category_code 
 	      join _member m on a.member_id = m.member_id 
@@ -184,7 +187,6 @@
 	    animal_act = #{animal_act}, animal_social = #{animal_social}, animal_etc = #{animal_etc}, adpt_member = #{adpt_member} 
 	     where animal_id = #{animal_id} 
 </update>
-
 <insert id="modifyAnimalImages" parameterType="List">
 	insert into _image (image_id, image_type, image_sequence, image_src) 
 	 values 
@@ -194,7 +196,6 @@
 	 on duplicate key update 
 	   image_src = values(image_src) 
 </insert>
-
 <insert id="modifyAnimalHealths" parameterType="Map">
 	insert into _animal_health (animal_id, health, health_check) 
 	 values 
@@ -204,7 +205,6 @@
 	on duplicate key update 
 	  health_check = values(health_check) 
 </insert>
-
 <update id="modifyAnimalVaccines" parameterType="Map">
 	insert into _animal_vaccine (animal_id, vaccine, vaccine_check) 
 	 values 
@@ -234,6 +234,18 @@
 	 from _member 
 	  where member_id = #{member_id} 
 </select>
+
+
+
+<insert id="adptWritingInsert" parameterType="com.Unicon.domain.AdptVO">
+	insert into _adpt (adpt_id, animal_id, adpt_intro, adpt_etc) 
+	 values 
+	  (concat(#{adpt_id}, lpad(ifnull((select max(adpt_ai) from (select adpt_ai from _adpt) as tempAdpt), 0) + 1, 6, '0')), #{animal_id}, #{adpt_intro}, #{adpt_etc}) 
+</insert>
+<update id="writingAnimalStatus" parameterType="Map">
+	update _animal set animal_status = #{animal_status} 
+	 where animal_id = #{animal_id} 
+</update>
 
 
 </mapper>

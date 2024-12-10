@@ -512,9 +512,9 @@
 							<div class="col-12 grid-margin stretch-card">
 								<div class="card">
 									<div class="card-body">
-										<h4 class="card-title">입양 글 관리 - 입양 글 등록</h4>
+										<h4 class="card-title">입양 관리 - 입양 글 등록</h4>
 										
-										<form id="formAdptWriting" action="" method="post" enctype="multipart/form-data">
+										<form id="formAdptWriting" action="" method="post">
 										
 											<fieldset class="custom-a-fieldset mb-3">
 												<legend class="custom-a-legend">글 작성</legend>
@@ -523,12 +523,12 @@
 													<div class="col-12 col-xl-5 col-lg-8 col-md-6">
 														<label class="text-dark custom-label">동물 소개</label>
 														<textarea rows="12" wrap="soft" id="adpt_intro" name="adpt_intro" class="form-control custom-text" 
-															placeholder="최대 500자" maxlength="500"></textarea>
+															placeholder="최대 500자" maxlength="500" required></textarea>
 													</div>
 													<div class="col-12 col-xl-5 col-lg-8 col-md-6">
 														<label class="text-dark custom-label">기타사항</label>
 														<textarea rows="8" wrap="soft" id="adpt_etc" name="adpt_etc" class="form-control custom-text" 
-															placeholder="최대 200자" maxlength="200"></textarea>
+															placeholder="최대 200자" maxlength="200" required></textarea>
 													</div>
 												</div>
 												<div class="border-bottom my-5 custom-borderbm"></div>
@@ -547,17 +547,17 @@
 														</div>
 													</div>
 													<div class="form-group row justify-content-center">
-														<div class="col-12 col-xl-3 col-md-5 mb-3">
+														<div class="col-12 col-xl-2 col-md-3 mb-3">
 															<label for="petType" class="text-dark custom-label">동물 종류</label>
 															<select class="form-control custom-text" id="petType" disabled>
 																<option value="">--</option>
 															</select>
 														</div>
-														<div class="col-12 col-xl-3 col-md-7 mb-3">
+														<div class="col-12 col-xl-3 col-md-6 mb-3">
 															<label class="text-dark custom-label">세부 종류</label>
 															<input type="text" id="petTypeDetail" class="form-control custom-text" readonly/>
 														</div>
-														<div class="col-12 col-xl-4 col-md-7 mb-3">
+														<div class="col-12 col-xl-3 col-md-6 mb-3">
 															<label for="petTypeEtc" class="text-dark custom-label">기타 종류<span class="small">(선택)</span></label>
 															<input type="text" id="petTypeEtc" class="form-control custom-text" 
 																maxlength="30" readonly/>
@@ -716,13 +716,13 @@
 		
 						data.forEach(function(item) {
 							if(item.category_code == 1000) {
-								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;｡:˚ ૮ ˶ ˆ ᴥ ˆ ˶ ა ˚ :｡</option>");
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +"</option>");
 							}
 							if(item.category_code == 2000) {
-								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;/ᐠ - ˕ -マ Ⳋ</option>");
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +"</option>");
 							}
 							if(item.category_code == 3000) {
-								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;ପ૮{˶• ༝ •˶}აଓ</option>");
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +"</option>");
 							}
 						});
 					},
@@ -742,7 +742,7 @@
 				
 				if(regex.test(animalId)) {
 					$.ajax({
-						url: '/adptmgmt/animals/' + animalId,
+						url: '/adptmgmt/animals/' + animalId + "/check",
 						method: 'GET',
 						type: 'json',
 						success: function(data) {
@@ -781,10 +781,12 @@
 						error: function(error) {
 							console.error('데이터를 가져오는 데 실패했습니다:', error);
 							window.location.href = '/AM/animals/list';
+							alert('잘못된 접근입니다');
 						}
 					});
 				} else {
 					window.location.href = '/AM/animals/list';
+					alert('잘못된 접근입니다');
 				}
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/
 				
@@ -831,6 +833,7 @@
 				$('#formAdptWriting').on('submit', function(event) {
 					event.preventDefault();
 					var formData = new FormData(this);
+					formData.append('animalStatus', 2);
 					
 					$('#a-submit-btn1, #a-submit-btn2').prop('disabled', true);
 					Swal.fire({
@@ -860,7 +863,7 @@
 									confirmButtonText: '확인'
 									}).then(function(result){
 										if(result.isConfirmed){
-											location.reload();
+											location.href='/AM/animals/list';
 										}
 									});
 								},

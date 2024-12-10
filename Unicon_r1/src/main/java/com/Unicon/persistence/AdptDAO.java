@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.Unicon.domain.AdptVO;
 import com.Unicon.domain.AnimalHealthVO;
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.AnimalVaccineVO;
@@ -113,4 +114,17 @@ public class AdptDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+"getMemberInfo", member_id);
 	}
+	
+	
+	public void adptWritingInsert(AdptVO advo,int animalStatus) {
+		logger.debug("( •̀ ω •́ )✧ adptWritingInsert(AdptVO advo) 실행");
+		
+		Map<String,Object> adptParams = new HashMap<String, Object>();
+		adptParams.put("animal_status", animalStatus);
+		adptParams.put("animal_id", advo.getAnimal_id());
+		
+		sqlSession.insert(NAMESPACE+"adptWritingInsert", advo);
+		sqlSession.update(NAMESPACE+"writingAnimalStatus", adptParams);
+	}
+	
 }
