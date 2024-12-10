@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Unicon.domain.CartVO;
+import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ShopVO;
@@ -179,8 +180,36 @@ public class ShopController {
 		
 	}
 	
+	// 카테고리 대분류 선택 시 소분류 데이터 가져오기
+	@GetMapping("/makeCategoryValue/{category_code}")
+	@ResponseBody
+	public CategoryDataVO makeCategoryValue(@PathVariable("category_code") int category_code) {
+		logger.info("makeCategoryValue() 호출");
+		logger.info("category_code : {}",category_code);
+		
+		return sService.makeCategoryValue(category_code);
+		
+	}
 	
 	
+	
+	// 쇼핑몰 페이징 처리
+	@GetMapping("/shop_paging")
+	@ResponseBody
+	public List<ShopVO> shopPaging(int categoryType, String categoryValue) {
+		logger.info("shopPaging() 호출");
+		logger.info("categoryType : {}",categoryType);
+		logger.info("categoryValue : {}",categoryValue);
+		
+		
+		// categoryType이 0값일 때 -> 첫 로드 페이징
+		if(categoryType == 0) {
+			return sService.getProductAll();
+		} else {
+			return sService.shopPaging(categoryValue);
+		}
+		
+	}
 	
 	
 	

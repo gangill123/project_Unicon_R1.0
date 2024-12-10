@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.Unicon.domain.AddressVO;
 import com.Unicon.domain.OrdersVO;
 import com.Unicon.service.OrdersService;
+import com.Unicon.service.ShopService;
 
 @Controller
 @RequestMapping("/orders")
@@ -29,6 +30,8 @@ public class OrdersController {
 
 	@Autowired
 	private OrdersService oService;
+	@Autowired
+	private ShopService sService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(OrdersController.class);
 
@@ -45,8 +48,6 @@ public class OrdersController {
 		// 주문정보 가져오기
 		OrdersVO ordersInfo = oService.getOrdersInfoForPay(member_id);
 		model.addAttribute("ordersInfo", ordersInfo);
-		
-		
 		
 		return "/orders/checkout";
 	}
@@ -108,15 +109,40 @@ public class OrdersController {
 	}
 	
 	
-	// 주문결제 페이지에서 결제하기 버튼 클릭 시 로직
+	// 주문결제 페이지에서 결제하기 버튼 클릭 시 로직(결재 성공 후)
 	@PostMapping("/saveAddr/{order_id}")
 	@ResponseBody
-	public void saveAddr(@PathVariable("order_id") String order_id, OrdersVO vo) {
+	public void saveAddr(@PathVariable("order_id") String order_id, OrdersVO vo, 
+			HttpSession session) {
 		logger.info("saveAddr() 호출");
 		logger.info("vo :{}",vo);
 		
+		String member_id = (String)session.getAttribute("member_id");
+		
+		// orders 테이블에 주문정보 입력
 		oService.saveAddr(vo);
+		
+		// 장바구니 비우기
+		sService.emptyCart(member_id);
 	}
+	
+	
+	// 주문결제 후 주문확인 페이지
+	@GetMapping("/ordersCheck/{order_id}")
+	public String ordersCheck(@PathVariable("order_id") String order_id, Model model) {
+		logger.info("ordersCheck() 호출");
+		logger.info("order_id : {}", order_id);
+		
+		// 주문결제 정보 가져오기
+		OrdersVO checkoutOrderInfo = oService.getOrdersInfoAfterCheckout(order_id);
+		model.addAttribute("checkoutOrderInfo", checkoutOrderInfo);
+		
+		return "/orders/ordersCheck";
+	}
+	
+	
+	
+	
 	
 	
 	

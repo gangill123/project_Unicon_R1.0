@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.Unicon.domain.CartDetailVO;
 import com.Unicon.domain.CartVO;
+import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ShopVO;
@@ -155,8 +156,15 @@ public class ShopService {
 		sdao.cartToCheckout(vo);
 	}
 	
+	// 카테고리 대분류 선택 시 소분류 데이터 가져오기
+	public CategoryDataVO makeCategoryValue(int category_code) {
+		return sdao.makeCategoryValue(category_code);
+	}
 	
-	
+	// 상품 페이징 처리(첫 로딩시)
+	public List<ShopVO> shopPaging(String product_category_value){
+		return sdao.shopPaging(product_category_value);
+	}
 	
 	
 	

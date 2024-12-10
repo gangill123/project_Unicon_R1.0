@@ -40,7 +40,7 @@
 <!-- 아래는 예시 -->
 <!-- PAGE TITLE
         ================================================== -->
-        ${productAllInfo}
+        <%-- ${productAllInfo} --%>
         
         <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
             <div class="container">
@@ -74,7 +74,8 @@
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Electrical</button>
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" 
+                                                aria-expanded="true" aria-controls="collapseOne">강아지 사료</button>
                                             </h5>
                                         </div>
                                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
@@ -90,8 +91,9 @@
                                     <div class="card">
                                         <div class="card-header" id="headingTwo">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                  Watch
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                  강아지 간식
                                 </button>
                                             </h5>
                                         </div>
@@ -211,14 +213,31 @@
                     <!-- start right panel section -->
                     <div class="col-lg-9 ps-lg-1-9">
                         <div class="row">
-                            <div class="col-12">
-                                <div class="row g-0 align-items-center bg-light rounded p-3">
-                                    <div class="col-12 col-md-6 col-lg-7 mb-2 mb-md-0 text-center text-md-start">Showing 1–9 of 27 results</div>
-                                </div>
-                            </div>
-                        </div>
+                              <div class="col-lg-12 col-md-auto">
+                                  <div class="row">
+                                      <div class="col-auto my-2 my-md-0">
+                                      	<select id="categoryTypeSelector" class="form-control form-select" name="news_resion">
+                                              <option selected value="0">카테고리를 선택하세요</option>
+                                              <option value="5003">강아지 사료</option>
+                                              <option value="5000">강아지 간식</option>
+                                              <option value="5001">강아지 건강/관리용품</option>
+                                              <option value="5002">강아지 배변용품</option>
+                                              <option value="5004">강아지 장난감/훈련</option>
+                                              <option value="5005">고양이 간식</option>
+                                              <option value="5006">고양이 건강/관리용품</option>
+                                              <option value="5007">고양이 배변용품</option>
+                                           </select>
+                                      </div>
+                                      <div class="col-auto my-2 my-md-0" style="padding-left: 0;">
+                                      	<select id="categoryValueSelector" class="form-control form-select">
+                                              <option selected value="세부선택없음">카테고리를 먼저 선택해주세요</option>
+                                           </select>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
 
-                        <div class="row product-grid">
+                        <div class="row product-grid" id="data-grid">
                         
                         <c:forEach var="list" items="${productAllInfo}" varStatus="status">
                             <div class="col-xl-3 col-sm-6">
@@ -253,9 +272,21 @@
                             </div>
                         </c:forEach>
                         
-                            
-                            
                     </div>
+                    
+                    <div class="row mt-2-9 mt-lg-13">
+	                     <div class="col-12">
+	                         <div class="pagination text-small text-uppercase text-extra-dark-gray">
+                                    <ul id="pagination">
+                                        <li><a href="#!"><i class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i> Prev</a></li>
+                                        <li class="active"><a href="#!">1</a></li>
+                                        <li><a href="#!">2</a></li>
+                                        <li><a href="#!">3</a></li>
+                                        <li><a href="#!">Next <i class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i></a></li>
+                                    </ul>
+                                </div>
+	                     </div>
+               		</div>
                     <!-- end right panel section -->
 
                 </div>
@@ -288,7 +319,34 @@
 <script>
 	$(document).ready(function () {
 		
+		// 카테고리 대분류 선택 시 소분류 데이터 가져오기
+		$('#categoryTypeSelector').on('change',function(){
+			makeCategoryValue($(this).val(),'${param.categoryValue}');
+		});
+		
+		let categoryType = $('#categoryTypeSelector').val();
+		let categoryValue = $('#categoryValueSelector').val();
+		let currentPage = 1;
+		
+		if('${param.categoryType}' != ''){
+			categoryType = '${param.categoryType}';
+			$('#categoryTypeSelector').val('${param.categoryType}').trigger('change');
+			categoryValue = '${param.categoryValue}';
+			currentPage = parseInt('${param.currentPage}', 10);
+		}
+		
+		productPaging(categoryType, categoryValue, currentPage);
+		
 		//console.log('${productAllInfo}');
+		
+		// 상품페이지 페이징 처리
+		$('#categoryValueSelector').on('change', function(){
+			categoryType = $('#categoryTypeSelector').val();
+			categoryValue = $('#categoryValueSelector').val();
+			console.log(categoryValue);
+			currentPage = 1;
+			productPaging(categoryType, categoryValue, currentPage);
+		});
 		
 		
 	});

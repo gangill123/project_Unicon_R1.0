@@ -69,8 +69,7 @@
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
-	<%-- ${petAllInfo } --%>
-	${ordersInfos }
+	<%-- ${ordersInfos } --%>
 	
 	<section  style="padding-top: 50px;">
             <div class="container">
@@ -176,7 +175,8 @@
                         	
                         <c:forEach var="orders" items="${ordersInfos }">
                         <div style="margin-bottom: 40px;">
-                        <h5>주문(No.${orders.order_id })</h5>
+                        <h5 style="display: inline;">${orders.formatted_paydate }</h5>
+                        <p style="display: inline; color: #aaa;">(주문번호 : ${orders.order_id })</p>
                         <c:forEach var="ordersDetail" items="${orders.ordersDetails }">
                         
                        	  <div id="orderItems">

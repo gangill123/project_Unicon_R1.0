@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.Unicon.domain.CartDetailVO;
 import com.Unicon.domain.CartVO;
+import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersDetailOptionVO;
 import com.Unicon.domain.OrdersDetailVO;
@@ -172,10 +173,13 @@ public class ShopDAO {
         	odvo.setOrder_id(order_id);
         }
         
+        
+        // 현재 member_id와 임시저장 상태인 order_id 가져오기
+        String cancelorder_id = sqlSession.selectOne(NAMESPACE+".getOrderIdToMemberId", vo);
         //0-1. 기존에 임시저장된 orders/ordersDetail/ordersDetailOption 상태 '취소종료'로 변경
-        sqlSession.update(NAMESPACE+".updateOrdersToCancel");
-        sqlSession.update(NAMESPACE+".updateOrdersDetailToCancel");
-        sqlSession.update(NAMESPACE+".updateOrdersDetailOptionToCancel");
+        sqlSession.update(NAMESPACE+".updateOrdersToCancel", cancelorder_id);
+        sqlSession.update(NAMESPACE+".updateOrdersDetailToCancel", cancelorder_id);
+        sqlSession.update(NAMESPACE+".updateOrdersDetailOptionToCancel", cancelorder_id);
         
         // 1. orders테이블에 임시저장 상태로 생성
  		sqlSession.insert(NAMESPACE+".insertOrders", vo);
@@ -198,6 +202,16 @@ public class ShopDAO {
 		for(int i =0; i<vo.getOrdersDetails().size();i++) {
 			sqlSession.insert(NAMESPACE+".insertOrdersDetailOptions", vo.getOrdersDetails().get(i).getOrdersDetailOptions());
 		}
+	}
+	
+	// 카테고리 대분류 선택 시 소분류 데이터 가져오기
+	public CategoryDataVO makeCategoryValue(int category_code) {
+		return sqlSession.selectOne(NAMESPACE+".makeCategoryValue", category_code);
+	}
+	
+	// 상품 페이징 처리(첫 로딩시)
+	public List<ShopVO> shopPaging(String product_category_value){
+		return sqlSession.selectList(NAMESPACE+".shopPaging", product_category_value);
 	}
 	
 	

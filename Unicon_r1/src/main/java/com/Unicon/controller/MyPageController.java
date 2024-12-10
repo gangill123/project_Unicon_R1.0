@@ -187,8 +187,8 @@ public class MyPageController {
 		logger.info("order_detail_id : {}", order_detail_id);
 		
 		// order_detail_id에 따른 주문정보 가져오기
-		OrdersVO orderDeInfo = oService.getOrdersInfoToDetailId(order_detail_id);
-		model.addAttribute("orderDeInfo", orderDeInfo);
+		OrdersVO orderDetailInfo = oService.getOrdersInfoToDetailId(order_detail_id);
+		model.addAttribute("orderDetailInfo", orderDetailInfo);
 		
 		return "/mypage/orders_detail";
 	}

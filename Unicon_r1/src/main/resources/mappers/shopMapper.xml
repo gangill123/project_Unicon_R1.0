@@ -36,7 +36,6 @@
 	<result property="option_type" column="option_type"/>
 	
 	<association property="memberVO" resultMap="MemberResultMap" />
-	<association property="categoryDataVO" resultMap="CategoryDataResultMap" />
 	
 	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
 
@@ -108,6 +107,16 @@
 		from _products p 
 		join _image i on p.product_id = i.image_id 
 	</select>
+
+	<!-- 상품 페이징 처리(첫 로딩시) -->
+	<select id="shopPaging" resultMap="ShopResultMap" parameterType="String">
+		select p.*, i.* 
+		from _products p 
+		join _image i on p.product_id = i.image_id 
+		where p.product_category_value = #{product_category_value} 
+	</select>
+
+
 
 	<!-- 상세페이지 이동시 해당제품 상품정보 가져오기 -->
 	<select id="getProduct" resultMap="ShopResultMap" parameterType="String">
@@ -224,7 +233,7 @@
 		join _products p on c.product_id = p.product_id 
 		join _member m on p.product_seller_id = m.member_id 
 		join _image i on p.product_id = i.image_id 
-		where m.member_id = #{member_id} 
+		where c.member_id = #{member_id} 
 	</select>
 
 
@@ -286,27 +295,32 @@
 		limit 1 
 	</select>
 	
+	<!-- 현재 member_id와 임시저장 상태인 order_id 가져오기 -->
+	<select id="getOrderIdToMemberId" resultType="String">
+		select order_id  
+		from _orders 
+		where member_id= #{member_id} and status = '임시저장' 
+		limit 1 
+	</select>
+	
 	<!-- 0-1. 기존에 임시저장된 orders/ordersDetail/ordersDetailOption 상태 '취소종료'로 변경 -->
-	<update id="updateOrdersToCancel">
+	<update id="updateOrdersToCancel" parameterType="String">
 		update _orders 
 		set status = '취소종료' 
-		where status = '임시저장' 
+		where order_id = #{cancelorder_id} 
 	</update>
 	
-	<update id="updateOrdersDetailToCancel">
+	<update id="updateOrdersDetailToCancel" parameterType="String">
 		update _orders_detail 
 		set status = '취소종료' 
-		where status = '임시저장' 
+		where order_id = #{cancelorder_id} 
 	</update>
 	
-	<update id="updateOrdersDetailOptionToCancel">
+	<update id="updateOrdersDetailOptionToCancel" parameterType="String">
 		update _orders_detail_option  
 		set status = '취소종료' 
-		where status = '임시저장' 
+		where order_id = #{cancelorder_id} 
 	</update>
-	
-	
-	
 	
 	<!-- orders테이블에 임시저장 상태로 생성 -->
 	<insert id="insertOrders">
@@ -342,10 +356,18 @@
 	</insert>
 	
 
+	<!-- 카테고리 대분류 선택 시 소분류 데이터 가져오기 -->
+	<select id="makeCategoryValue" resultType="CategoryDataVO">
+		select category_value 
+		from _category_data 
+		where category_code =#{category_code} 
+	</select>
 	
-
-
-
+	
+	
+	
+	
+	
 </mapper>
 
 
