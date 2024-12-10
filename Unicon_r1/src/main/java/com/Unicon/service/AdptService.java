@@ -3,6 +3,8 @@ package com.Unicon.service;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,11 +62,13 @@ public class AdptService {
 		return aDao.getAnimalListOne(animal_id);
 	}
 	
+	
 	public Integer checkAnimalId(String animal_id) {
 		logger.debug("( •̀ ω •́ )✧ checkAnimalId(String animId) 실행");
 		
 		return aDao.checkAnimalId(animal_id);
 	}
+	
 	
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
 	public void modifyAnimal(AnimalVO avo) {
@@ -80,10 +84,19 @@ public class AdptService {
 		aDao.deleteAnimal(animal_id, member_id);
 	}
 	
+	
 	public void modifyAnimalStatus(Map<String, Object> statusData) {
 		logger.debug("( •̀ ω •́ )✧ modifyAnimalStatus(Map<String, Object> statusData) 실행");
 	
 		aDao.modifyAnimalStatus(statusData);
+	}
+	
+	
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public void adptWritingInsert(AdptVO advo, int animalStatus) {
+		logger.debug("( •̀ ω •́ )✧ adptWritingInsert(AdptVO advo) 실행");
+		
+		aDao.adptWritingInsert(advo, animalStatus);
 	}
 	
 	/*========================= 메서드 =========================*/
@@ -127,15 +140,15 @@ public class AdptService {
 			String[] RoadAddress = mvo.getRoad_address().split(" ");
 			String sido = RoadAddress[0];
 			String sigun = RoadAddress[1];
-			String year = Year.now().toString();
-			String[] cityName = {"서울", "인천", "부산", "대구", "광주", "대전", "울산", "세종특별자치시"};
-			List<String> koreaCity = new ArrayList<>(Arrays.asList(cityName));
+			LocalDate currentDate = LocalDate.now();
+			int year = currentDate.getYear();
+			int month = currentDate.getMonthValue();
 			
-			asb.append(adNamePre).append("-").append(sido).append("-").append(sigun).append("-").append(year).append("-");
+			asb.append(adNamePre).append("-").append(sido).append("-").append(sigun).append("-").append(year).append(month).append("-");
 			
 			adptId = asb.toString();
-			logger.debug("( •̀ ω •́ )✧ adptId : {}",adptId);
-			return null;
+			
+			return adptId;
 		}
 		/*=============== 입양글id 생성 ===============*/
 		

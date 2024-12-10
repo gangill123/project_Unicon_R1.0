@@ -1,7 +1,6 @@
 package com.Unicon.domain;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import lombok.Data;
 
@@ -15,5 +14,8 @@ public class AdptVO {
 	private Timestamp adpt_upddate;
 	private String adpt_intro;
 	private String adpt_etc;
+	private int adpt_status;
+	private String adpt_status_value;
+	private String adpt_reason;
 	
 } 

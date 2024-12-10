@@ -262,25 +262,25 @@
 							}
 						}
 						
-						switch(item.status_value) {
+						switch(item.animal_status_value) {
 							case '대기중': {
-								item.status_value = '<label class="badge badge-warning">대기중</label>';
+								item.animal_status_value = '<label class="badge badge-warning">대기중</label>';
 								break;
 							}
 							case '모집중': {
-								item.status_value = '<label class="badge badge-primary">모집중</label>';
+								item.animal_status_value = '<label class="badge badge-primary">모집중</label>';
 								break;
 							}
 							case '상담중': {
-								item.status_value = '<label class="badge badge-danger">상담중</label>';
+								item.animal_status_value = '<label class="badge badge-danger">상담중</label>';
 								break;
 							}
 							case '입양완료': {
-								item.status_value = '<label class="badge badge-success">입양완료</label>';
+								item.animal_status_value = '<label class="badge badge-success">입양완료</label>';
 								break;
 							}
 							case '종료': {
-								item.status_value = '<label class="badge badge-secondary">종료</label>';
+								item.animal_status_value = '<label class="badge badge-secondary">종료</label>';
 								break;
 							}
 						}
@@ -294,7 +294,7 @@
 				{ data: 'categoryDataVO.category_value' },
 				{ data: 'animal_name' },
 				{ data: 'animal_regdate' },
-				{ data: 'status_value' }
+				{ data: 'animal_status_value' }
 			],
 			/*=============== DataTable ajax ===============*/
 			"order": [[4, "desc"]],
