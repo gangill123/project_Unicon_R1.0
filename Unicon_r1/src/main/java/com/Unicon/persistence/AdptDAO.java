@@ -19,7 +19,6 @@ import com.Unicon.domain.AnimalVaccineVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.MemberVO;
 
-import lombok.extern.log4j.Log4j2;
 
 
 @Repository("AdptDAO")
@@ -125,6 +124,13 @@ public class AdptDAO {
 		
 		sqlSession.insert(NAMESPACE+"adptWritingInsert", advo);
 		sqlSession.update(NAMESPACE+"writingAnimalStatus", adptParams);
+	}
+	
+	
+	public List<AnimalVO> getWritingListAll() {
+		logger.debug("( •̀ ω •́ )✧ getWritingListAll() 실행");
+		
+		return sqlSession.selectList(NAMESPACE+"getWritingListAll");
 	}
 	
 }

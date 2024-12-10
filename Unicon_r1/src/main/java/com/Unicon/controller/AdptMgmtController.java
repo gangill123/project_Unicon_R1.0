@@ -45,7 +45,7 @@ public class AdptMgmtController {
 	
 	@GetMapping(value = "/animals/list")
 	public String animalViewAll() {
-		logger.debug("( •̀ ω •́ )✧ animalView() 실행");
+		logger.debug("( •̀ ω •́ )✧ animalViewAll() 실행");
 		return "/adptmgmt/animals/animalread";
 	}
 	
@@ -58,9 +58,19 @@ public class AdptMgmtController {
 	@GetMapping(value = "/writings/add/{animal_id}")
 	public String writingAdd() {
 		logger.debug("( •̀ ω •́ )✧ writingAdd() 실행");
-		
 		return "/adptmgmt/writings/writinginsert";
-		
+	}
+	
+	@GetMapping(value = "/writings/all")
+	public String writingViewAll() {
+		logger.debug("( •̀ ω •́ )✧ writingViewAll() 실행");
+		return "/adptmgmt/writings/writingread";
+	}
+	
+	@GetMapping(value = "/writings/{animal_id}")
+	public String writingViewOne() {
+		logger.debug("( •̀ ω •́ )✧ writingViewOne() 실행");
+		return "/adptmgmt/writings/writingupdate";
 	}
 	
 	
