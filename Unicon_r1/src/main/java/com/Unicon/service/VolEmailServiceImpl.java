@@ -11,7 +11,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 @Service
-public class volEmailServiceImpl implements volEmailService{
+public class VolEmailServiceImpl implements VolEmailService{
 	@Autowired
     private JavaMailSender mailSender;
     

@@ -3,6 +3,7 @@ package com.Unicon.persistence;
 import java.util.List;
 import java.util.Map;
 
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.NoticeVO;
 
 public interface NoticeDAO {
@@ -29,4 +30,7 @@ public interface NoticeDAO {
 	List<NoticeVO> selectDraftList(Map<String, Object> params) throws Exception;
     
 	NoticeVO selectDraft(Long noId) throws Exception;
+	
+	// 메일 구독자 조회
+    public List<MemberVO> getMailSubscribers() throws Exception;
 }

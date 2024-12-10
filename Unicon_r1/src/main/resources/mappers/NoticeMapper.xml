@@ -16,6 +16,15 @@
         )
     </insert>
     
+    <select id="getMailSubscribers" resultType="com.Unicon.domain.MemberVO">
+	    select 
+	        member_email as memberEmail, 
+	        member_name as memberName 
+	    from _member 
+	    where mail_subscription = 'yes'
+	    and member_email is not null
+	</select>
+    
     <select id="selectDraftList" resultType="NoticeVO">
 	    select *
 	    from _notice
