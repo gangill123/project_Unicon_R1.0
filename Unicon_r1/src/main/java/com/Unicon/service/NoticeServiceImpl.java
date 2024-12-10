@@ -13,6 +13,7 @@ import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,33 +51,21 @@ public class NoticeServiceImpl implements NoticeService {
 	@Transactional
 	public void registerNotice(NoticeVO noVO) throws Exception {
 	    try {
+	        // 1. 공지사항 등록 먼저 수행
 	        noDAO.insertNotice(noVO);
 	        
+	        // 2. 트랜잭션 완료 후 비동기 메일 발송을 위해 새로운 NoticeVO 객체 생성
+	        final NoticeVO savedNotice = noDAO.selectNotice(noVO.getNoId());
+	        
+	        // 3. 트랜잭션 외부에서 비동기로 메일 발송
 	        if (noVO.isNoEmail()) {
-	            List<MemberVO> subscribers = noDAO.getMailSubscribers();
-	            logger.info("메일 수신자 수: {}", subscribers.size());
-	            
-	            if (!subscribers.isEmpty()) {
-	                for (MemberVO member : subscribers) {
-	                    logger.info("메일 발송 처리 - 회원정보: {}", member);  // 회원 정보 전체 로깅
-	                    if (member != null && member.getMemberEmail() != null && !member.getMemberEmail().isEmpty()) {
-	                        try {
-	                            logger.info("메일 발송 시도 - 수신자: {}", member.getMemberEmail());
-	                            logger.info("메일 제목: [UNICORN] {}", noVO.getNoTitle());
-	                            logger.info("메일 본문 길이: {}", createMailContent(noVO).length());
-	                            sendNoticeMail(noVO, member);
-	                            logger.info("메일 발송 성공 - 수신자: {}", member.getMemberEmail());
-	                        } catch (Exception e) {
-	                        	logger.error("메일 발송 실패 - 수신자: {} - 원인: {}", 
-	                        		member.getMemberEmail(), e.getMessage());
-	                        }
-	                    } else {
-	                        logger.warn("유효하지 않은 회원 정보: {}", member);
-	                    }
+	            new Thread(() -> {
+	                try {
+	                    sendNoticeMailToSubscribers(savedNotice);
+	                } catch (Exception e) {
+	                    logger.error("메일 발송 중 오류 발생", e);
 	                }
-	            } else {
-	                logger.info("메일 수신 동의한 회원이 없습니다.");
-	            }
+	            }).start();
 	        }
 	        
 	    } catch (Exception e) {
@@ -84,66 +74,91 @@ public class NoticeServiceImpl implements NoticeService {
 	    }
 	}
     
-    private void sendNoticeMail(NoticeVO notice, MemberVO member) throws Exception {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        
-        // 수신자 설정
-        helper.setTo(member.getMemberEmail());
-        // 제목 설정
-        helper.setSubject("[UNICORN] " + notice.getNoTitle());
-        // 본문 설정 (HTML)
-        helper.setText(createMailContent(notice), true);
-        
-        mailSender.send(message);
+    @Async  // public 메서드로 변경하고 @Async 추가
+    public void sendNoticeMailToSubscribers(NoticeVO notice) {
+        try {
+            List<MemberVO> subscribers = noDAO.getMailSubscribers();
+            logger.info("메일 수신자 수: {}", subscribers.size());
+            
+            if (!subscribers.isEmpty()) {
+                for (MemberVO member : subscribers) {
+                    if (member != null && member.getMember_email() != null && !member.getMember_email().isEmpty()) {
+                        try {
+                            sendNoticeMail(notice, member);
+                            logger.info("메일 발송 성공 - 수신자: {}", member.getMember_email());
+                        } catch (Exception e) {
+                            logger.error("메일 발송 실패 - 수신자: {} - 원인: {}", 
+                                member.getMember_email(), e.getMessage());
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            logger.error("메일 발송 처리 중 오류 발생", e);
+        }
     }
     
-    private String createMailContent(NoticeVO notice) {
-        StringBuilder html = new StringBuilder();
-        html.append("<!DOCTYPE html>");
-        html.append("<html lang='ko'>");
-        html.append("<head>");
-        html.append("<meta charset='UTF-8'>");
-        html.append("<style>");
-        html.append("body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; margin: 0; padding: 0; }");
-        html.append(".container { max-width: 600px; margin: 0 auto; padding: 20px; }");
-        html.append(".header { background-color: #006e60; color: white; padding: 20px; text-align: center; }");
-        html.append(".content { padding: 20px; background: #fff; border: 1px solid #ddd; }");
-        html.append(".button { display: inline-block; padding: 10px 20px; background-color: #006e60; color: white; ");
-        html.append("text-decoration: none; border-radius: 5px; margin: 20px 0; }");
-        html.append(".footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }");
-        html.append("</style>");
-        html.append("</head>");
-        html.append("<body>");
-        html.append("<div class='container'>");
-        
-        // 헤더
-        html.append("<div class='header'>");
-        html.append("<h2>UNICORN 공지사항</h2>");
-        html.append("</div>");
-        
-        // 본문
-        html.append("<div class='content'>");
-        html.append("<h3>").append(notice.getNoTitle()).append("</h3>");
-        html.append(notice.getNoContent());
-        html.append("<div style='text-align: center;'>");
-        html.append("<a href='http://localhost:8088/notice/").append(notice.getNoId());
-        html.append("' class='button'>공지사항 확인하기</a>");
-        html.append("</div>");
-        html.append("</div>");
-        
-        // 푸터
-        html.append("<div class='footer'>");
-        html.append("<p>본 메일은 발신전용 메일입니다.</p>");
-        html.append("<p>© UNICORN. All Rights Reserved.</p>");
-        html.append("</div>");
-        
-        html.append("</div>");
-        html.append("</body>");
-        html.append("</html>");
-        
-        return html.toString();
-    }
+	@Async
+	private void sendNoticeMail(NoticeVO notice, MemberVO member) throws Exception {
+	    MimeMessage message = mailSender.createMimeMessage();
+	    MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+	    
+	    // 수신자 설정
+	    helper.setTo(member.getMember_email());
+	    // 발신자 설정
+	    helper.setFrom(new InternetAddress("kimxx54@gmail.com", "유니콘", "UTF-8"));
+	    // 제목 설정
+	    helper.setSubject("[UNICORN] " + notice.getNoTitle());
+	    // 본문 설정 (HTML)
+	    helper.setText(createMailContent(notice), true);
+	    
+	    mailSender.send(message);
+	}
+    
+	private String createMailContent(NoticeVO notice) {
+		StringBuilder html = new StringBuilder();
+	    
+		String content = notice.getNoContent();
+		content = content.replaceAll("src=\"/", "src=\"http://localhost:8088/");
+		
+		html.append("<!DOCTYPE html>");
+	    html.append("<html lang='ko'>");
+	    html.append("<head><meta charset='UTF-8'></head>");
+	    html.append("<body>");
+	    html.append("<div style='font-family: \"Malgun Gothic\", sans-serif; padding: 20px; text-align: center; max-width: 600px; margin: 0 auto;'>");
+	    
+	    // 헤더
+	    html.append("<h2 style='color: #86BC42;'>UNICORN 공지사항</h2>");
+	    html.append("<p>안녕하세요, 유니콘입니다.</p>");
+	    
+	    // 본문
+	    html.append("<div style='text-align: center; margin: 20px 0;'>");
+	    html.append("<h3>").append(notice.getNoTitle()).append("</h3>");
+	    html.append(content);
+	    html.append("</div>");
+	    
+	    // 버튼
+	    html.append("<div style='margin: 30px 0;'>");
+	    html.append("<a href='http://localhost:8088/notice/").append(notice.getNoId())
+	        .append("' style='background-color: #86BC42; color: white; padding: 12px 24px; text-decoration: none; ")
+	        .append("border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0, 110, 96, 0.2);'>");
+	    html.append("공지사항 확인하기</a>");
+	    html.append("</div>");
+	    
+	    // 구분선
+	    html.append("<hr style='border: none; border-top: 1px solid #eee; margin: 30px 0;'>");
+	    
+	    // 푸터
+	    html.append("<div style='color: #666; font-size: 12px;'>");
+	    html.append("<p>본 메일은 발신전용 메일입니다.</p>");
+	    html.append("<p style='margin-top: 10px;'>© UNICORN. All Rights Reserved.</p>");
+	    html.append("</div>");
+	    
+	    html.append("</div>");
+	    html.append("</body></html>");
+	    
+	    return html.toString();
+	}
     
     public List<NoticeVO> getDraftList() throws Exception {
         Map<String, Object> params = new HashMap<>();
