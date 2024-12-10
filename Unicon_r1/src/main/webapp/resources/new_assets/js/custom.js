@@ -1516,8 +1516,8 @@
 	}
 	
 	
-	// 주문결제 페이지에서 결제하기 버튼 클릭 시 로직
-	function Checkout(address_id, pay_method, imp_uid){
+	// 주문결제 페이지에서 결제하기 버튼 클릭 시 로직(결제 성공 시)
+	function Checkout(order_id, pay_method, imp_uid){
 		
 		//address
 		let address = $('#address').text();
@@ -1567,7 +1567,7 @@
 		
      	// AJAX 요청
         $.ajax({
-            url: '/orders/saveAddr/'+address_id, // 서버의 URL
+            url: '/orders/saveAddr/'+order_id, // 서버의 URL
             type: 'POST',
             data: formData,
             processData: false, // FormData 사용 시 false 설정
@@ -1575,7 +1575,7 @@
             success: function (response) {
             	Swal.fire({
   	  			  title: '결제가 완료되었습니다!',
-  	  			  text: "주문 상세 페이지로 이동합니다.",
+  	  			  text: "주문확인 페이지로 이동합니다.",
   	  			  icon: 'success',
   	  			  confirmButtonColor: '#3085d6',
   	  			  customClass: {
@@ -1583,7 +1583,7 @@
   	  			  }
   	 			}).then((result) => {
   	 			    if (result.isConfirmed) { 
-  	 			        window.location.href = '/mypage/orders_detail'; // 이동할 URL
+  	 			        window.location.href = `/orders/ordersCheck/${order_id}`; // 이동할 URL
   	 			    }
   	 			});
             },
@@ -1596,5 +1596,193 @@
 	}
 	
 	
+	// 쇼핑몰 대분류 클릭 시 소분류 만들기
+	function makeCategoryValue(categoryType, categoryValue){
+		$.ajax({
+			url: 'shop/makeCategoryValue/'+categoryType,
+			type: 'GET',
+			success: function(response){
+				let items = response.category_value.split(",");
+				console.log(items);
+				$('#categoryValueSelector').empty();
+				$('#categoryValueSelector').append(`<option disabled selected>소분류를 선택하세요</option>`);
+				$.each(items, function(index, item){
+					$('#categoryValueSelector').append(`<option value="${item}">${item}</option>`);
+				});
+				
+//					$('#categoryValueSelector').val(categoryValue);
+				
+			},
+			error: function(){
+				alert("error");
+			}
+		});
+		
+	}
 	
+	
+	
+	///// 상품페이지 페이징 처리/////
+	function productPaging(categoryType, categoryValue, currentPage){
+		
+		//최초 로딩(페이지 로딩시)
+		fetchData(categoryType, categoryValue, currentPage);
+		
+		//페이징 처리
+		let allData = []; // 전체 데이터를 저장
+		//let currentPage = 1; // 현재 페이지
+		let totalItems;
+		const itemsPerPage = 4; // 페이지당 카드 개수
+		const maxVisiblePages = 5;
+		let startPage = Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
+		
+		// 데이터 가져오기
+		function fetchData(categoryType, categoryValue, currentPage) {
+			let url;
+			
+			$.ajax({
+				url: '/shop/shop_paging', // 데이터를 가져올 API URL
+				type: 'GET',
+				data: {
+					categoryType: categoryType,
+					categoryValue: categoryValue
+				},
+				success: function (response) {
+					//alert("ok");
+					allData = response; // 데이터를 저장
+					console.log(allData);
+					renderPage(currentPage);
+					totalItems = allData.length;
+				},
+				error: function (err) {
+					console.error('데이터 로드 실패:', err);
+				}
+			});
+		}
+		
+		// 페이지 데이터 렌더링
+		function renderPage(page) {
+			const startIndex = (page - 1) * itemsPerPage;
+			const endIndex = startIndex + itemsPerPage;
+			const pageData = allData.slice(startIndex, endIndex); // 현재 페이지 데이터
+			
+			// 그리드에 데이터 렌더링
+			const $grid = $('#data-grid');
+			$grid.empty(); // 기존 데이터 삭제
+			pageData.forEach(item => {
+				
+				let formattedProductPrice = addCommas(item.product_price);
+				let discountedPrice = Math.floor((item.product_price*(100-item.discount_rate)/100)/100)*100;
+				
+				let card = `
+				<div class="col-xl-3 col-sm-6">
+                    <div class="product-details">
+                        <div class="product-img">`
+					
+					if(item.discount_rate != 0){
+						card +=`<div class="label-offer bg-red">Sale</div>`
+					}
+                        
+				card += `<img src="${item.product_images[0].image_src}" alt="...">
+                            <div class="product-cart">
+                                <a class="checkedTrue" href="/shop/shop_detail/${item.product_id }?categoryType=${categoryType}&categoryValue=${categoryValue}&currentPage=${currentPage}">
+                                <i class="fa-solid fa-magnifying-glass"></i></a>
+                                <a href="#!"><i class="fas fa-heart"></i></a>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <a class="checkedTrue" href="/shop/shop_detail/${item.product_id }?categoryType=${categoryType}&categoryValue=${categoryValue}&currentPage=${currentPage}" 
+                            style="margin-bottom: 0;">${item.product_name}</a>
+                            <p class="price text-center m-0">`
+					
+					if(item.discount_rate != 0){
+						card +=	`<span class="line-through me-2" style="font-size: 15px;">
+                		${formattedProductPrice}</span>
+                    	<span class="red">`+addCommas(discountedPrice)+`원</span>`
+					} else {
+						card += `<span>`+addCommas(item.product_price)+`원</span>`
+					}
+						
+				card +=  `</p>
+                        </div>
+                    </div>
+                </div>
+                    `;
+				$grid.append(card);
+			});
+			
+			renderPagination();
+		}
+		
+		// 페이지네이션 렌더링
+		function renderPagination() {
+			const totalPages = Math.ceil(allData.length / itemsPerPage);
+			const $pagination = $('#pagination');
+			$pagination.empty(); // 기존 페이지 버튼 삭제
+			
+			// Prev 버튼 추가
+			$pagination.append(
+				`<li class="${startPage === 1 ? 'disabled' : ''}">
+					<a href="#!" class="prev-page">
+						<i class="fas fa-long-arrow-alt-left me-1"></i> Prev
+					</a>
+				</li>`	   
+			);
+			
+			// 페이지 번호 추가
+			const endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
+			for (let i = startPage; i <= endPage; i++) {
+				$pagination.append(`
+					<li class="${i === currentPage ? 'active' : ''}">
+						<a href="#!" class="page-number">${i}</a>
+					</li>
+				`);
+			}
+			
+			// Next 버튼 추가
+			$pagination.append(
+				`<li class="${startPage + maxVisiblePages - 1 >= totalPages ? 'disabled' : ''}">
+					<a href="#!" class="next-page">
+					Next <i class="fas fa-long-arrow-alt-right ms-1"></i>
+					</a>
+				</li>`
+			);
+			
+		}
+		
+		// 이벤트 바인딩 - 페이지 버튼클릭
+		$('#pagination').on('click', '.page-number', function () {
+			const selectedPage = parseInt($(this).text(), 10);
+			currentPage = selectedPage;
+			renderPage(currentPage);
+		});
+		
+		// 이벤트 바인딩 - 이전 버튼클릭
+		$('#pagination').on('click', '.prev-page', function () {
+			if (startPage > 1) {
+				startPage -= maxVisiblePages;
+				currentPage = startPage + (maxVisiblePages -1);
+				renderPage(currentPage);
+			}
+		});
+		
+		// 이벤트 바인딩 - 다음 버튼클릭
+		$('#pagination').on('click', '.next-page', function () {
+			const totalPages = Math.ceil(totalItems / itemsPerPage);
+			if (startPage + maxVisiblePages - 1 < totalPages) {
+				startPage += maxVisiblePages;
+				currentPage = startPage;
+				renderPage(currentPage);
+			}
+		});
+		
+		
+	}
+	/////소식 페이징 처리 및 삭제처리/////
+	
+
+	// 정규식을 이용해 숫자 포맷팅
+	function addCommas(number) {
+	    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	

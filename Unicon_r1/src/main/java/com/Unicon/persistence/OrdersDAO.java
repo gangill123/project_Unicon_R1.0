@@ -86,7 +86,10 @@ public class OrdersDAO {
 		return sqlSession.selectOne(NAMESPACE+".getOrdersInfoToDetailId", order_detail_id);
 	}
 	
-	
+	// 결제 후 주문결제 정보 가져오기
+	public OrdersVO getOrdersInfoAfterCheckout(String order_id) {
+		return sqlSession.selectOne(NAMESPACE+".getOrdersInfoAfterCheckout", order_id);
+	}
 	
 	
 

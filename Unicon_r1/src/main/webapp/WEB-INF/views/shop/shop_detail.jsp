@@ -89,7 +89,8 @@
         ================================================== -->
         <section>
             <div class="container">
-
+				<div class="row" style="justify-content: center;">
+				<div class="col-lg-10">
                 <!-- Start Product Section -->
                 <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9">
                     <div class="col-lg-6 text-center mb-1-9 mb-lg-0">
@@ -162,27 +163,8 @@
                             <div class="row optionSelect">
                             
                             <c:choose>
-                            	<c:when test="${productInfo.option_type == '단독형'}">
+                            	<c:when test="${productInfo.option_type == '조합형'}">
                             		<div class="col-md-12">
-	                                    <div class="quform-element form-group">
-	                                        <div class="quform-input">
-	                                            <select id="SoleItemOption" class="form-control form-select" 
-	                                            style="padding: 6px 12px;">
-	                                                <option value="${optionInfo[0].option_name}" disabled selected>${optionInfo[0].option_name}</option>
-												    <c:forEach var="list" items="${optionInfoForSole}">
-												    	<option value="${list.option_value}">${list.option_value}
-												    	<c:if test="${list.option_price != 0}">
-												    	( +<fmt:formatNumber value="${list.option_price}" type="number" />원 )
-												    	</c:if>
-												    	</option>
-												    </c:forEach>
-	                                            </select>
-	                                        </div>
-	                                    </div>
-	                                </div>
-                            	</c:when>
-                            	<c:otherwise>
-	                            	<div class="col-md-12">
 	                                    <div class="quform-element form-group">
 	                                        <div class="quform-input">
 	                                            <select id="itemOption1" class="form-control form-select" 
@@ -205,6 +187,26 @@
 		                                    </div>
 		                                </div>
 		                            </div>
+                            	</c:when>
+                            	<c:otherwise>
+	                            	
+                            		<div class="col-md-12">
+	                                    <div class="quform-element form-group">
+	                                        <div class="quform-input">
+	                                            <select id="SoleItemOption" class="form-control form-select" 
+	                                            style="padding: 6px 12px;">
+	                                                <option value="${optionInfo[0].option_name}" disabled selected>${optionInfo[0].option_name}</option>
+												    <c:forEach var="list" items="${optionInfoForSole}">
+												    	<option value="${list.option_value}">${list.option_value}
+												    	<c:if test="${list.option_price != 0}">
+												    	( +<fmt:formatNumber value="${list.option_price}" type="number" />원 )
+												    	</c:if>
+												    	</option>
+												    </c:forEach>
+	                                            </select>
+	                                        </div>
+	                                    </div>
+	                                </div>
                             	</c:otherwise>
                             </c:choose>
                                 
@@ -227,19 +229,52 @@
 								<div id="ShopToCartFormInput"></div>
                             <div class="row mb-4">
                                 <div class="col-lg-6">
-                                    <button type="submit" class="cartBtn butn primary w-100"><span><i class="fas fa-shopping-cart me-1"></i> 장바구니</span></button>
+                                    <button class="butn text-uppercase w-100" type="button"
+                                    onclick="location.href='/shop?categoryType=${param.categoryType}&categoryValue=${param.categoryValue}&currentPage=${param.currentPage}'">
+                                    <span><i class="fa-solid fa-rotate-left"></i> 이전으로</span></button>
                                 </div>
                                 <div class="col-lg-6">
-                                    <button class="butn text-uppercase w-100"><span><i class="fa-regular fa-credit-card"></i> 바로구매</span></button>
+                                    <button type="submit" class="cartBtn butn primary w-100"><span><i class="fas fa-shopping-cart me-1"></i> 장바구니</span></button>
                                 </div>
                             </div>
 							</form>
                         </div>
                     </div>
                 </div>
-                <!-- End Product Section -->
-				
+                
+                <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9">
+                    <div class="col-12">
+                        <div class="horizontaltab tab-style2" style="display: block; width: 100%; margin: 0px;">
+                            <ul class="resp-tabs-list hor_1 text-start">
+                                <li class="resp-tab-item hor_1 resp-tab-active" aria-controls="hor_1_tab_item-0" role="tab">Description</li>
+                                <li class="resp-tab-item hor_1" aria-controls="hor_1_tab_item-1" role="tab">Additional Info</li>
+                                <li class="resp-tab-item hor_1" aria-controls="hor_1_tab_item-2" role="tab">Reviews (2)</li>
+                            </ul>
+                            <div class="resp-tabs-container hor_1">
 
+                                <h2 class="resp-accordion hor_1 resp-tab-active" role="tab" aria-controls="hor_1_tab_item-0" style="background: none;">
+                                <span class="resp-arrow"></span>상품정보</h2>
+                                <div class="resp-tab-content hor_1 resp-tab-content-active" 
+                                aria-labelledby="hor_1_tab_item-0" style="display:block">
+                                ${productInfo.product_content }
+                                </div>
+								
+                                <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-1"><span class="resp-arrow"></span>문의</h2><div class="resp-tab-content hor_1" aria-labelledby="hor_1_tab_item-1">
+
+                                </div>
+
+                                <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-2"><span class="resp-arrow"></span>리뷰</h2><div class="resp-tab-content hor_1" aria-labelledby="hor_1_tab_item-2">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- End Product Section -->
+				</div>
+			</div>
             </div>
         </section>
 

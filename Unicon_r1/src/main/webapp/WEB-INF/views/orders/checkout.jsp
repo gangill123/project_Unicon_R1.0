@@ -184,7 +184,7 @@
 	                          <div class="row">
 	                          	<div class="col-sm-12">
 	                          		<div style="display: flex; justify-content: space-between; align-items: center;">
-									    <h6 class="mb-0">${ordersInfo.memberVO.member_name } <i class="fa-solid fa-store"></i></h6>
+									    <h6 class="mb-0">${list.shopVO.product_seller_name } <i class="fa-solid fa-store"></i></h6>
 									    <p class="mb-0 font-weight-600">배송비 : 
 									    <c:choose>
 									    	<c:when test="${list.delivery_price != 0 }">
@@ -506,7 +506,7 @@
 				processData: false,
 				success: function(response) {
 					Swal.fire({
-			  			  title: '저정을 완료하였습니다.',
+			  			  title: '등록을 완료하였습니다.',
 			  			  text: "배송지를 선택하시기 바랍니다.",
 			  			  icon: 'success',
 			  			  confirmButtonColor: '#3085d6',

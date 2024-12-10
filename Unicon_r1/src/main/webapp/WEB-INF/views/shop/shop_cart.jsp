@@ -72,8 +72,8 @@
         <section>
             <div class="container">
 
-                <div class="row">
-
+                <div class="row" style="justify-content: center;">
+					<div class="col-lg-10">
                     <!-- Start Product Table -->
                     <div class="col-12 shop-cart-table">
                         <table class="table shop-cart text-center">
@@ -291,7 +291,7 @@
                         </div>
                     </div>
                     <!-- End Total Block Set -->
-
+				</div>
                 </div>
 
             </div>
