@@ -18,8 +18,8 @@
     
     <select id="getMailSubscribers" resultType="com.Unicon.domain.MemberVO">
 	    select 
-	        member_email as memberEmail, 
-	        member_name as memberName 
+	        member_email, 
+	        member_name
 	    from _member 
 	    where mail_subscription = 'yes'
 	    and member_email is not null
