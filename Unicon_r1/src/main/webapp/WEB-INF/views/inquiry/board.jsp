@@ -110,7 +110,7 @@ h2 {
 /* 글쓰기 버튼 스타일 */
 .write-btn-container {
     text-align: right; /* 오른쪽 정렬 */
-    margin: 20px 390px 20px 40px; /* 페이지 우측 공간과 상단 여백 설정 */
+    margin: 50px 300px 100px 80px; /* 페이지 우측 공간과 상단 여백 설정 */
 }
 
 .write-btn {
@@ -207,7 +207,6 @@ td.istatus {
     background-color: #2ecc71;
     color: white;
 }
-
 
 
 </style>
