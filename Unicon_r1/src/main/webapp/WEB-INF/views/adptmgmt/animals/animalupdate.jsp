@@ -481,9 +481,9 @@
 		border-color: #006e60;
 	}
 	
-	.btn-outline-custom-a:focus, .btn-outline-custom-a.focus {
-		/* box-shadow: 0 0 0 3px rgba(0, 110, 96, 0.5); */
-	}
+	/*.btn-outline-custom-a:focus, .btn-outline-custom-a.focus {
+		box-shadow: 0 0 0 3px rgba(0, 110, 96, 0.5);
+	}*/
 	
 	.btn-outline-custom-a.disabled, .btn-outline-custom-a:disabled {
 		color: #006e60;
@@ -497,7 +497,7 @@
 		border-color: #006e60;
 	}
 	
-	#a-close-btn1, #a-close-btn2, #a-close-cancel-btn1, #a-close-cancel-btn2, .a-writing-btn {
+	#a-close-btn1, #a-close-btn2, #a-close-cancel-btn1, #a-close-cancel-btn2, .a-writing-btn, .a-writing-modify-btn {
 		display: none;
 	}
 	/*=============== 버튼 css ===============*/
@@ -526,7 +526,7 @@
 							<div class="col-12 grid-margin stretch-card">
 								<div class="card">
 									<div class="card-body">
-										<h4 class="card-title">입양 동물 관리 - 정보 수정 및 삭제</h4>
+										<h4 class="card-title">입양 관리 - 정보 수정 및 삭제</h4>
 										
 										<form id="formAdptAnimal" action="" method="post" enctype="multipart/form-data">
 										
@@ -751,8 +751,11 @@
 														입양글 작성
 													</button>
 													<button type="button" 
-														class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-2" 
-														onclick="location.href='/AM/animals/list';">
+														class="btn btn-lg btn-rounded btn-primary custom-text mx-2 mb-2 a-writing-modify-btn">
+														입양글 수정
+													</button>
+													<button type="button" 
+														class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-2 a-list-move-btn"> 
 														목록이동
 													</button>
 												</div>
@@ -990,8 +993,8 @@
 														class="btn btn-lg btn-rounded btn-primary custom-text mx-2 mb-2 a-writing-btn">
 														입양글 작성
 													</button>
-													<button type="button" class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-2" 
-														onclick="location.href='/AM/animals/list';">
+													<button type="button" 
+														class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-2 a-list-move-btn">
 														목록이동
 													</button>
 												</div>
@@ -1935,8 +1938,10 @@
 							
 							if($('#animal_status').val() == 1) {
 								$('.a-writing-btn').show();
+								$('.a-writing-modify-btn').hide();
 							} else {
 								$('.a-writing-btn').hide();
+								$('.a-writing-modify-btn').show();
 							}
 							
 						},
@@ -2014,7 +2019,7 @@
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '작성',
+						confirmButtonText: '확인',
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
@@ -2022,8 +2027,47 @@
 						}	
 					});
 				});
-				/*=============== 입양글(create) 버튼 제어 ===============*/
 				
+				$('.a-writing-modify-btn').on('click', function() {
+					const animal_id = $('#animal_id').val();
+					
+					Swal.fire({
+						title: '입양글을 수정하시겠습니까?',
+						text: '입양글 수정 페이지로 이동합니다',
+						icon: 'info',
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '확인',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							location.href='/AM/writings/'+ animal_id;
+						}	
+					});
+				});
+				/*=============== 입양글(create) 버튼 제어 ===============*/
+
+				
+				
+				/*=============== 이동(move) 버튼 제어 ===============*/
+				$('.a-list-move-btn').on('click', function() {
+					Swal.fire({
+						title: '목록으로 이동하시겠습니까?',
+						text: '동물 목록 페이지로 이동합니다',
+						icon: 'info',
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '확인',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							location.href='/AM/animals/list';
+						}	
+					});
+				});
+				/*=============== 이동(move) 버튼 제어 ===============*/
 				
 				
 				

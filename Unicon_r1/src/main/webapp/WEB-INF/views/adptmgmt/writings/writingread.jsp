@@ -36,7 +36,7 @@
 
     /*=============== 테이블 css ===============*/
 	@media(max-width:650px) {
-		.a-first-column, .a-fifth-column {
+		.a-first-column, .a-six-column {
 			display: none;
 		}
 		
@@ -49,19 +49,31 @@
 			padding: 0.5rem 0 !important;
 		}
 		
-		.table td.a-six-column label {
+		.table td.a-seven-column label {
 			font-size: 0.7rem !important;
 		}
 		
 	}
 	
-	@media(max-width:1200px) {
-		.a-third-column {
+	@media(max-width:1600px) {
+		.a-fourth-column {
 			display: none;
 		}
 	}
 	
-	.a-second-column i {
+	@media(max-width:1440px){
+		.a-second-column {
+			display: none;
+		}
+	}
+	
+	@media(max-width:1280px){
+		.a-first-column {
+			display: none;
+		}
+	}
+	
+	.a-third-column i {
 		color: #006e60;
 	}
 	
@@ -99,7 +111,7 @@
 		margin-bottom: 0.5rem;
 	}
 	
-	.table td.a-six-column label {
+	.table td.a-seven-column label {
 		font-size: 1.1rem;
 	}
 		
@@ -156,10 +168,11 @@
 						<div class="col-12 grid-margin stretch-card">
 							<div class="card">
 								<div class="card-body">
-									<h4 class="card-title">입양 관리 - 동물 목록</h4>
+									<h4 class="card-title">입양 관리 - 입양 글 목록</h4>
 										<table id="animalTable" class="table table-hover col-12">
 											<thead>
 												<tr>
+													<th>입양글ID</th>
 													<th>동물ID</th>
 													<th>동물종류</th>
 													<th>세부종류</th>
@@ -172,6 +185,7 @@
 											</tbody>
 											<tfoot>
 												<tr>
+													<th></th>
 													<th></th>
 													<th>동물종류</th>
 													<th>세부종류</th>
@@ -235,18 +249,18 @@
 			"stateDuration": -1,
 			/*=============== DataTable ajax ===============*/
 			"ajax": {
-				url: '/adptmgmt/animals',
+				url: '/adptmgmt/writings',
 				type: 'GET',
 				dataType: 'json',
 				dataSrc: function(json) {
 					return json.map(function(item) {
-						const adate = new Date(item.animal_regdate);
+						const adate = new Date(item.adptVO.adpt_regdate);
 						const year = adate.getFullYear();
 						const month = String(adate.getMonth() + 1).padStart(2, '0');
 						const day = String(adate.getDay()).padStart(2, '0');
 						const formattedDate = year + '-' + month + '-' + day;
 						
-						item.animal_regdate = formattedDate;
+						item.adptVO.adpt_regdate = formattedDate;
 						
 						switch(item.categoryDataVO.category_type) {
 							case '개': {
@@ -263,25 +277,17 @@
 							}
 						}
 						
-						switch(item.animal_status_value) {
-							case '대기중': {
-								item.animal_status_value = '<label class="badge badge-warning">대기중</label>';
+						switch(item.adptVO.adpt_status_value) {
+							case '승인대기': {
+								item.adptVO.adpt_status_value = '<label class="badge badge-warning">승인대기</label>';
 								break;
 							}
-							case '모집중': {
-								item.animal_status_value = '<label class="badge badge-primary">모집중</label>';
+							case '승인': {
+								item.adptVO.adpt_status_value = '<label class="badge badge-primary">모집중</label>';
 								break;
 							}
-							case '상담중': {
-								item.animal_status_value = '<label class="badge badge-danger">상담중</label>';
-								break;
-							}
-							case '입양완료': {
-								item.animal_status_value = '<label class="badge badge-success">입양완료</label>';
-								break;
-							}
-							case '종료': {
-								item.animal_status_value = '<label class="badge badge-secondary">종료</label>';
+							case '승인취소': {
+								item.animal_status_value = '<label class="badge badge-danger">승인취소</label>';
 								break;
 							}
 						}
@@ -290,15 +296,16 @@
 				}
 			},
 			"columns": [
+				{ data: 'adptVO.adpt_id' },
 				{ data: 'animal_id' },
 				{ data: 'categoryDataVO.category_type' },
 				{ data: 'categoryDataVO.category_value' },
 				{ data: 'animal_name' },
-				{ data: 'animal_regdate' },
-				{ data: 'animal_status_value' }
+				{ data: 'adptVO.adpt_regdate' },
+				{ data: 'adptVO.adpt_status_value' }
 			],
 			/*=============== DataTable ajax ===============*/
-			"order": [[4, "desc"]],
+			"order": [[5, "desc"]],
 			"columnDefs": [
 			],
 			/*=============== DataTable 필터링 ===============*/
@@ -308,7 +315,7 @@
 				api.columns().every(function(index) {
 					var column = this;
 					  
-					if (index === 0 || index === 3 || index === 4) {
+					if (index === 0 || index == 1 || index === 4 || index === 5) {
 						return;
 					}
 					
@@ -342,7 +349,8 @@
 				$(this).find('td:eq(3)').addClass('a-fourth-column');
 				$(this).find('td:eq(4)').addClass('a-fifth-column');
 				$(this).find('td:eq(5)').addClass('a-six-column');
-				$(this).addClass('a-view-animal');
+				$(this).find('td:eq(6)').addClass('a-seven-column');
+				$(this).addClass('a-view-writing');
 			});
 			
 			$('#animalTable thead tr').each(function() {
@@ -352,6 +360,7 @@
 				$(this).find('th:eq(3)').addClass('a-fourth-column');
 				$(this).find('th:eq(4)').addClass('a-fifth-column');
 				$(this).find('th:eq(5)').addClass('a-six-column');
+				$(this).find('th:eq(6)').addClass('a-seven-column');
 			});
 			
 			$('#animalTable tfoot tr').each(function() {
@@ -361,6 +370,7 @@
 				$(this).find('th:eq(3)').addClass('a-fourth-column');
 				$(this).find('th:eq(4)').addClass('a-fifth-column');
 				$(this).find('th:eq(5)').addClass('a-six-column');
+				$(this).find('th:eq(6)').addClass('a-seven-column');
 			});
 		});
 		/*=============== DataTable 열마다 클래스 부여 ===============*/
@@ -369,9 +379,9 @@
 		
 		
 		/*=============== tr 선택 상세 조회 ===============*/
-		$('table').on('click', 'tr.a-view-animal', function() {
-			const animal_id = $(this).find('td:eq(0)').text();
-			window.location.href = '/AM/animals/list/' + animal_id;
+		$('table').on('click', 'tr.a-view-writing', function() {
+			const animal_id = $(this).find('td:eq(1)').text();
+			window.location.href = '/AM/writings/' + animal_id;
 		});
 		/*=============== tr 선택 상세 조회 ===============*/
 		

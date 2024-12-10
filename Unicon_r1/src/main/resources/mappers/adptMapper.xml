@@ -167,14 +167,16 @@
 	   c.category_value, c.category_code, c.category_type, c.category_parent, 
 	    i.image_id, i.image_type, i.image_sequence, i.image_src, 
 	     h.health, h.health_check, 
-	      v.vaccine, v.vaccine_check 
-		   from _animal a 
-		    join _category_data c on a.category_code = c.category_code 
-		     join _image i on a.animal_id = i.image_id 
-		      join _animal_health h on a.animal_id = h.animal_id 
-		       join _animal_vaccine v on a.animal_id = v.animal_id 
-		        where a.animal_id = #{animal_id} and a.animal_status != 6 
-		         order by i.image_sequence asc 
+	      v.vaccine, v.vaccine_check, 
+	       ad.*  
+		    from _animal a 
+		     join _category_data c on a.category_code = c.category_code 
+		      join _image i on a.animal_id = i.image_id 
+		       join _animal_health h on a.animal_id = h.animal_id 
+		        join _animal_vaccine v on a.animal_id = v.animal_id 
+		         join _adpt ad on a.animal_id = ad.animal_id 
+		          where a.animal_id = #{animal_id} and a.animal_status != 6 
+		           order by i.image_sequence asc 
 </select>
 
 
@@ -247,6 +249,16 @@
 	 where animal_id = #{animal_id} 
 </update>
 
+
+<select id="getWritingListAll" resultMap="AnimalResultMap">
+	select a.*, ad.*, m.*, cm.common_value as adpt_status_value, c.* 
+	 from _animal a 
+	  join _adpt ad on a.animal_id = ad.animal_id 
+	   join _member m on a.member_id = m.member_id 
+        join _category_data c on a.category_code = c.category_code 
+	     join _common cm on ad.adpt_status = cm.common_code 
+          where cm.common_column = 'adpt_status' and a.animal_status in (2, 3, 4) and ad.adpt_status != 4 
+</select>
 
 </mapper>
 

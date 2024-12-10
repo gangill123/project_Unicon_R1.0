@@ -99,6 +99,12 @@ public class AdptService {
 		aDao.adptWritingInsert(advo, animalStatus);
 	}
 	
+	
+	public List<AnimalVO> getWritingListAll() {
+		logger.debug("( •̀ ω •́ )✧ getWritingListAll() 실행");
+		
+		return aDao.getWritingListAll();
+	}
 	/*========================= 메서드 =========================*/
 		
 		/*=============== 동물id 생성 ===============*/
