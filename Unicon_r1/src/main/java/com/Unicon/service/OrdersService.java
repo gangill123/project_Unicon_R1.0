@@ -74,10 +74,28 @@ public class OrdersService {
 		return odao.getDefalutAddrInfo(member_id);
 	}
 	
+	// 주문정보 가져오기(결제용)
+	public OrdersVO getOrdersInfoForPay(String member_id) {
+		return odao.getOrdersInfoForPay(member_id);
+	}
+	
 	// 주문정보 가져오기
-	public OrdersVO getOrdersInfo(String member_id) {
+	public List<OrdersVO> getOrdersInfo(String member_id) {
 		return odao.getOrdersInfo(member_id);
 	}
+	
+	// 결제완료 시 주문정보 업데이트
+	public void saveAddr(OrdersVO vo) {
+		odao.saveAddr(vo);
+	}
+	
+	// order_detail_id에 따른 주문정보 가져오기
+	public OrdersVO getOrdersInfoToDetailId(int order_detail_id) {
+		return odao.getOrdersInfoToDetailId(order_detail_id);
+	}
+	
+	
+	
 	
 	
 }

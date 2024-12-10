@@ -382,20 +382,27 @@
 		// 장바구니 클릭 시 선택아이템(selectItems) -> 디비 저장
 		$('#ShopToCartForm').on('submit', function(e){
 			event.preventDefault();
-			shopToCart('${optionInfo[0].option_name}', '${optionInfo[0].option_name2}');
-			Swal.fire({
-  			  title: '장바구니에 담았습니다.',
-  			  text: "장바구니 페이지로 이동합니다.",
-  			  icon: 'success',
-  			  confirmButtonColor: '#3085d6',
-  			  customClass: {
-  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
-  			  }
- 			}).then((result) => {
- 			    if (result.isConfirmed) { 
- 			        window.location.href = '/shop/cart'; // 이동할 URL
- 			    }
- 			});
+			
+			let selectItemsLength = $('.selectItem').length;
+			
+			if(selectItemsLength < 1){
+				alert("상품을 선택해주세요");
+			} else {
+				shopToCart('${optionInfo[0].option_name}', '${optionInfo[0].option_name2}');
+				Swal.fire({
+	  			  title: '장바구니에 담았습니다.',
+	  			  text: "장바구니 페이지로 이동합니다.",
+	  			  icon: 'success',
+	  			  confirmButtonColor: '#3085d6',
+	  			  customClass: {
+	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+	  			  }
+	 			}).then((result) => {
+	 			    if (result.isConfirmed) { 
+	 			        window.location.href = '/shop/cart'; // 이동할 URL
+	 			    }
+	 			});
+			}
 			
 		});
 		

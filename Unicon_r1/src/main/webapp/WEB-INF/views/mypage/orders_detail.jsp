@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
@@ -68,8 +69,7 @@
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
-	<%-- ${petAllInfo } --%>
-	
+	${orderDeInfo }
 	<section  style="padding-top: 50px;">
             <div class="container">
             	<div class="line-title">
@@ -110,8 +110,17 @@
 	                          	<div class="line-title col-sm-12 mb-2">
 	                          		<div style="display: flex; justify-content: space-between; align-items: center;">
 		                          		<div>
-									        <h5 class="mb-0">유니콘스토어 <i class="fa-solid fa-store"></i></h5>
-									        <p class="mb-1">무료배송</p>
+									        <h5 class="mb-0">${orderDeInfo.ordersDetails[0].shopVO.memberVO.member_name } <i class="fa-solid fa-store"></i></h5>
+									        <c:choose>
+									        	<c:when test="${orderDeInfo.ordersDetails[0].delivery_price == 0 }">
+											        <p class="mb-1">무료배송</p>
+									        	</c:when>
+									        	<c:otherwise>
+											        <p class="mb-1">배송비 : <fmt:formatNumber value="${orderDeInfo.ordersDetails[0].delivery_price }" type="number" />원</p>
+									        	</c:otherwise>
+									        </c:choose>
+									        
+									        
 		                          		</div>
 		                          		<button type="button" class="btn btn-outline-secondary me-2" style="min-width: 150px;">문의하기</button>
 	                          		</div>

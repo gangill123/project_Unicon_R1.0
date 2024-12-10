@@ -14,7 +14,7 @@ public class OrdersDetailVO {
 	private int delivery_price;
 	private String status;
 
-	private List<OrdersDetailOptionVO> odersDetailOptions;
+	private List<OrdersDetailOptionVO> ordersDetailOptions;
 	
 	private ShopVO shopVO;
 }

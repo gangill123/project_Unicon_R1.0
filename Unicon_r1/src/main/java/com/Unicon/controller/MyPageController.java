@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Unicon.domain.CategoryDataVO;
+import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.PetVO;
 import com.Unicon.service.MypageService;
+import com.Unicon.service.OrdersService;
 
 @Controller
 @RequestMapping("/mypage")
@@ -32,6 +34,8 @@ public class MyPageController {
 	private MypageService myService;
 	@Autowired
 	private ServletContext servletContext;
+	@Autowired
+	private OrdersService oService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 
@@ -158,14 +162,34 @@ public class MyPageController {
 	
 	// 마이페이지 주문관리
 	@GetMapping("orders")
-	public String orderPage() {
+	public String orderPage(HttpSession session, Model model) {
+			
+		String member_id = (String)session.getAttribute("member_id");
+		// 주문정보 가져오기
+		List<OrdersVO> ordersInfos = oService.getOrdersInfo(member_id);
+		model.addAttribute("ordersInfos", ordersInfos);
+		
 		
 		return "/mypage/orders";
 	}
 	
 	// 마이페이지 주문관리 상세보기
 	@GetMapping("orders_detail")
-	public String orderDetailPage() {
+	public String orderDetailPageEx() {
+		return "/mypage/orders_detail";
+	}
+	
+	// 마이페이지 주문관리 상세보기
+	@GetMapping("orders_detail/{order_detail_id}")
+	public String orderDetailPage(@PathVariable("order_detail_id") int order_detail_id, Model model) {
+		
+		logger.info("orderDetailPage() 호출");
+		logger.info("order_detail_id : {}", order_detail_id);
+		
+		// order_detail_id에 따른 주문정보 가져오기
+		OrdersVO orderDeInfo = oService.getOrdersInfoToDetailId(order_detail_id);
+		model.addAttribute("orderDeInfo", orderDeInfo);
+		
 		return "/mypage/orders_detail";
 	}
 	

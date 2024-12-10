@@ -198,7 +198,7 @@
 	                          		</div>
 							    </div>
 							    
-							    <c:forEach var="list2" items="${list.odersDetailOptions }">
+							    <c:forEach var="list2" items="${list.ordersDetailOptions }">
 								    <div class="row">
 								    <div class="line-title col-sm-12 mb-4"></div>
 		                              <div class="col-sm-1 mb-md-0">

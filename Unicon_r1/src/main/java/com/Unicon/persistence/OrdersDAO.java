@@ -59,9 +59,31 @@ public class OrdersDAO {
 		return sqlSession.selectOne(NAMESPACE+".getDefalutAddrInfo", member_id);
 	}
 	
+	// 주문정보 가져오기(결제용)
+	public OrdersVO getOrdersInfoForPay(String member_id) {
+		return sqlSession.selectOne(NAMESPACE+".getOrdersInfoForPay", member_id);
+	}
+	
 	// 주문정보 가져오기
-	public OrdersVO getOrdersInfo(String member_id) {
-		return sqlSession.selectOne(NAMESPACE+".getOrdersInfo", member_id);
+	public List<OrdersVO> getOrdersInfo(String member_id) {
+		return sqlSession.selectList(NAMESPACE+".getOrdersInfo", member_id);
+	}
+	
+	
+	// 결제완료 시 주문정보 업데이트
+	public void saveAddr(OrdersVO vo) {
+		// oders 테이블 업데이트
+		sqlSession.update(NAMESPACE+".updateOrdersToPayCompl", vo);
+		// oders_detail 테이블 업데이트
+		sqlSession.update(NAMESPACE+".updateOrdersDetailToPayCompl", vo);
+		// oders_detail_option 테이블 업데이트
+		sqlSession.update(NAMESPACE+".updateOrdersDetailOptionToPayCompl", vo);
+	}
+	
+	
+	// order_detail_id에 따른 주문정보 가져오기
+	public OrdersVO getOrdersInfoToDetailId(int order_detail_id) {
+		return sqlSession.selectOne(NAMESPACE+".getOrdersInfoToDetailId", order_detail_id);
 	}
 	
 	
