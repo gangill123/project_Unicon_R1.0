@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +20,8 @@ import com.Unicon.domain.ShopVO;
 
 @Repository("shopDAO")
 public class ShopDAO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ShopDAO.class);
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -184,15 +188,15 @@ public class ShopDAO {
         
         // 4. orders_detail_option - product_id set
         for(int i =0; i<vo.getOrdersDetails().size();i++) {
-        	for(OrdersDetailOptionVO odovo : vo.getOrdersDetails().get(i).getOdersDetailOptions()) {
+        	for(OrdersDetailOptionVO odovo : vo.getOrdersDetails().get(i).getOrdersDetailOptions()) {
         		odovo.setOrder_detail_id(odvo.get(i).getOrder_detail_id());
+        		odovo.setOrder_id(order_id);
         	}
-        	
         }
 		
 		// 5. orders_detail_option 테이블 저장(임시저장 상태)
 		for(int i =0; i<vo.getOrdersDetails().size();i++) {
-			sqlSession.insert(NAMESPACE+".insertOrdersDetailOptions", vo.getOrdersDetails().get(i).getOdersDetailOptions());
+			sqlSession.insert(NAMESPACE+".insertOrdersDetailOptions", vo.getOrdersDetails().get(i).getOrdersDetailOptions());
 		}
 	}
 	

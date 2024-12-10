@@ -9,6 +9,7 @@ public class OrdersDetailOptionVO {
 
 	private int order_detail_option_id;
 	private int order_detail_id;
+	private String order_id;
 	private String product_option;
 	private int option_price;
 	private int quantity;

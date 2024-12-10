@@ -1147,13 +1147,8 @@
 	
 	/// 장바구니 클릭 시 디비 저장
 	function shopToCart(option_name, option_name2){
-		let selectItemsLength = $('.selectItem').length;
 		let selectItems = $('.selectItem');
 		
-		if(selectItemsLength < 1){
-			alert("상품을 선택해주세요");
-		} else {
-			
 			selectItems.each(function(index){
 				
 				//option_name
@@ -1196,9 +1191,6 @@
 			    .attr('name', `cart_list[${index}].option_price`) // 유니크한 name 설정
 			    .val(option_price); // input 값 설정
 			    
-			   // console.log(option_price);
-			    
-			    
 			    // input 태그를 폼에 추가하거나 원하는 위치에 삽입
 			    $('#ShopToCartFormInput').append(optionNameInput, optionName2Input,
 			    		optionValueInput, optionValue2Input, quantityInput, optionPriceInput);
@@ -1223,7 +1215,6 @@
 	                console.error("Error:", error);
 	            }
 	        });
-		}
 	}
 	
 	// 장바구니에서 수량 조절 시 ajax 구현(디비 실시간 반영)
@@ -1468,7 +1459,7 @@
 		    		let option = $(this).find('.option').text();
 		    		let optionInput = $('<input>')
 			        .attr('type', 'hidden') // hidden 타입 설정
-			        .attr('name', `ordersDetails[${index}].odersDetailOptions[${index2}].product_option`) // 유니크한 name 설정
+			        .attr('name', `ordersDetails[${index}].ordersDetailOptions[${index2}].product_option`) // 유니크한 name 설정
 			        .val(option); // input 값 설정
 		    		
 		    		//option_price
@@ -1476,7 +1467,7 @@
 		    		let optionPrice = parseInt(optionPriceText.replace(/,/g, '').replace(/[^0-9]/g, ''), 10);
 		    		let optionPriceInput = $('<input>')
 			        .attr('type', 'hidden') // hidden 타입 설정
-			        .attr('name', `ordersDetails[${index}].odersDetailOptions[${index2}].option_price`) // 유니크한 name 설정
+			        .attr('name', `ordersDetails[${index}].ordersDetailOptions[${index2}].option_price`) // 유니크한 name 설정
 			        .val(optionPrice); // input 값 설정
 		    		
 		    		// 상품별 가격합
@@ -1486,7 +1477,7 @@
 		    		let quantity = $(this).find('.itemCnt').text();
 		    		let quantityInput = $('<input>')
 			        .attr('type', 'hidden') // hidden 타입 설정
-			        .attr('name', `ordersDetails[${index}].odersDetailOptions[${index2}].quantity`) // 유니크한 name 설정
+			        .attr('name', `ordersDetails[${index}].ordersDetailOptions[${index2}].quantity`) // 유니크한 name 설정
 			        .val(quantity); // input 값 설정
 		    		
 		    		$('#CartToCheckoutFormInput').append(optionInput, optionPriceInput, quantityInput);

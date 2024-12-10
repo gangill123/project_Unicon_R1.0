@@ -19,13 +19,14 @@
 	<result property="detail_address" column="detail_address"/>
 	<result property="postal_code" column="postal_code"/>
 	<result property="recipient_phone" column="recipient_phone"/>
-	<result property="payment_status" column="payment_status"/>
 	<result property="create_date" column="create_date"/>
 	<result property="update_date" column="update_date"/>
 	<result property="status" column="status"/>
 	<result property="invoice_number" column="invoice_number"/>
 	<result property="delivery_method" column="delivery_method"/>
+	<result property="delivery_comment" column="delivery_comment"/>
 	<result property="payment_date" column="payment_date"/>
+	<result property="formatted_paydate" column="formatted_paydate"/>
 	<result property="imp_uid" column="imp_uid"/>
 	
 	<association property="memberVO" resultMap="MemberResultMap" />
@@ -44,13 +45,14 @@
 	
 	<association property="shopVO" resultMap="ShopResultMap" />
 	
-	<collection property="odersDetailOptions" ofType="com.Unicon.domain.OrdersDetailOptionVO" resultMap="OrdersDetailOptionResultMap"/>
+	<collection property="ordersDetailOptions" ofType="com.Unicon.domain.OrdersDetailOptionVO" resultMap="OrdersDetailOptionResultMap"/>
 </resultMap>
 
 <!-- OrdersDetailOptionResultMap -->
 <resultMap type="com.Unicon.domain.OrdersDetailOptionVO" id="OrdersDetailOptionResultMap">
 <id property="order_detail_option_id" column="order_detail_option_id"/>
 	<result property="order_detail_id" column="order_detail_id"/>
+	<result property="order_id" column="order_id"/>
 	<result property="product_option" column="product_option"/>
 	<result property="option_price" column="option_price"/>
 	<result property="quantity" column="quantity"/>
@@ -73,6 +75,7 @@
 <resultMap type="com.Unicon.domain.ShopVO" id="ShopResultMap">
 <id property="product_id" column="product_id"/>
 	<result property="product_seller_id" column="product_seller_id"/>
+	<result property="product_seller_name" column="product_seller_name"/>
 	<result property="product_name" column="product_name"/>
 	
 	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
@@ -86,8 +89,8 @@
 	<result property="image_src" column="image_src"/>
 </resultMap>
 
-
-	<select id="getOrdersInfo" resultMap="OrdersResultMap" parameterType="String">
+	<!-- 결제용 주문정보 가져오기, 임시저장 상태만 가져옴 -->
+	<select id="getOrdersInfoForPay" resultMap="OrdersResultMap" parameterType="String">
 		select o.*, od.*, odo.*, m.member_name, m.member_email, i.image_src, p.product_name, 
 		CONCAT( 
         SUBSTRING(member_tel, 1, 3), '-',   
@@ -100,7 +103,46 @@
 		join _products p on p.product_id = od.product_id 
 		join _image i on p.product_id = i.image_id 
 		join _orders_detail_option odo on odo.order_detail_id = od.order_detail_id 
-		where o.status = '임시저장' 
+		where o.status = '임시저장' and o.member_id=#{member_id} 
+	</select>
+	
+	<!-- member_id에 따른 주문정보 가져오기 -->
+	<select id="getOrdersInfo" resultMap="OrdersResultMap" parameterType="String">
+		select o.*, od.*, odo.*, m.member_name, m.member_email, i.image_src, p.product_name, 
+		CONCAT( 
+        SUBSTRING(member_tel, 1, 3), '-',   
+        SUBSTRING(member_tel, 4, 4), '-',   
+        SUBSTRING(member_tel, 8)  
+   		 ) AS member_tel, 
+   		DATE_FORMAT(o.payment_date, '%Y.%m.%d.') AS formatted_paydate  
+		from _orders o 
+		join _orders_detail od on o.order_id = od.order_id 
+		join _member m on m.member_id = o.member_id 
+		join _products p on p.product_id = od.product_id 
+		join _image i on p.product_id = i.image_id 
+		join _orders_detail_option odo on odo.order_detail_id = od.order_detail_id 
+		where o.member_id=#{member_id} and o.status not in ('취소종료', '임시저장') 
+		order by o.payment_date desc 
+	</select>
+	
+	
+	<!-- order_detail_id에 따른 주문정보 가져오기 -->
+	<select id="getOrdersInfoToDetailId" resultMap="OrdersResultMap" parameterType="int">
+		select o.*, od.*, odo.*, m.member_name, m.member_email, i.image_src, p.product_name, 
+		CONCAT( 
+        SUBSTRING(member_tel, 1, 3), '-',   
+        SUBSTRING(member_tel, 4, 4), '-',   
+        SUBSTRING(member_tel, 8)  
+   		 ) AS member_tel, 
+   		DATE_FORMAT(o.payment_date, '%Y.%m.%d.') AS formatted_paydate  
+		from _orders o 
+		join _orders_detail od on o.order_id = od.order_id 
+		join _member m on m.member_id = o.member_id 
+		join _products p on p.product_id = od.product_id 
+		join _image i on p.product_id = i.image_id 
+		join _orders_detail_option odo on odo.order_detail_id = od.order_detail_id 
+		where o.status not in ('취소종료', '임시저장') and od.order_detail_id = #{order_detail_id}
+		order by o.payment_date desc 
 	</select>
 
 
@@ -177,6 +219,34 @@
 	</select>
 
 
+	<!-- 결제완료 시 주문정보 업데이트 -->
+	<update id="updateOrdersToPayCompl">
+		update _orders 
+		set 
+		order_name=#{order_name}, pay_method=#{pay_method}, address=#{address}, detail_address=#{detail_address}, 
+		postal_code=#{postal_code}, recipient=#{recipient}, recipient_phone=#{recipient_phone}, status='결제완료', 
+		delivery_method='배송', delivery_comment=#{delivery_comment}, update_date=now(), payment_date=now(), 
+		imp_uid=#{imp_uid} 
+		where order_id =#{order_id} 
+	</update>
+	
+	<update id="updateOrdersDetailToPayCompl">
+		update _orders_detail 
+		set status = '결제완료' 
+		where order_id =#{order_id} 
+	</update>
+	
+	<update id="updateOrdersDetailOptionToPayCompl">
+		update _orders_detail_option 
+		set status = '결제완료' 
+		where order_id =#{order_id} 
+	</update>
+	
+	
+	
+	
+	
+	
 
 
 

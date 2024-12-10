@@ -172,11 +172,10 @@ public class ShopController {
 	@PostMapping("/cartToCheckout")
 	@ResponseBody
 	public void cartToCheckout(OrdersVO vo) {
+		logger.info("cartToCheckout() 호출");
 		logger.debug("vo:{}",vo);
 		
 		sService.cartToCheckout(vo);
-		
-		
 		
 	}
 	

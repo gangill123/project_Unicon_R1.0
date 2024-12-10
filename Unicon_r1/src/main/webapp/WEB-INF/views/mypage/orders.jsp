@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
@@ -69,6 +70,7 @@
 
 <!--====================================작성부=====================================-->
 	<%-- ${petAllInfo } --%>
+	${ordersInfos }
 	
 	<section  style="padding-top: 50px;">
             <div class="container">
@@ -111,14 +113,7 @@
                         
                         <div class="box-shadow-large px-3 pt-4 pb-1" style="margin-bottom: 40px;">
                         	<div class="process-steps-xs">
-                                <ul class="left-holder row mb-0" style="padding-left: 0;">
-                                    <li class="col-6 col-md-2">
-                                        <a href="#!"><div class="process-step-xs center-holder">
-                                            <div class="process-step-icon"><i class="fa-regular fa-hourglass-half"></i></div>
-                                            <h3>결제대기</h3>
-                                            <h3>1</h3>
-                                        </div></a>
-                                    </li>
+                                <ul class="left-holder row mb-0" style="padding-left: 0; justify-content: center;">
                                     <li class="col-6 col-md-2">
                                         <a href="#!"><div class="process-step-xs center-holder">
                                             <div class="process-step-icon"><i class="fa-regular fa-credit-card"></i></div>
@@ -179,27 +174,35 @@
                               </div>
                           </div>
                         	
+                        <c:forEach var="orders" items="${ordersInfos }">
+                        <div style="margin-bottom: 40px;">
+                        <h5>주문(No.${orders.order_id })</h5>
+                        <c:forEach var="ordersDetail" items="${orders.ordersDetails }">
+                        
                        	  <div id="orderItems">
                        	  
-                          <div class="border rounded ps-3 pe-4 py-3 orderItem mb-4">
+                          <div class="border rounded ps-3 pe-4 py-3 orderItem mb-1">
 	                          <div class="row">
 	                              <div class="col-sm-12 mb-4 mb-md-0" style="display: flex; justify-content: space-between;">
-	                              	  <h5 class="h6 font-weight-600 mb-4">구매확정완료</h5>
-	                              	  <a href="#!" class="readmore"><span>배송조회</span></a>
+	                              	  <h5 class="h6 font-weight-600 mb-4">${ordersDetail.status}</h5>
+	                              	  <c:if test="${ordersDetail.status == '배송완료' || '구매확정' }">
+		                              	  <a href="/orders/orders_detail/${ordersDetail.order_detail_id }" class="readmore"><span>배송조회</span></a>
+	                              	  </c:if>
 	                              </div>
 	                              <div class="col-sm-2 mb-4 mb-md-0">
 	                              	<div class="orderImage">
-	                                  <img class="rounded" src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg" alt="...">
+	                                  <img class="rounded" src="${ordersDetail.shopVO.product_images[0].image_src }" alt="...">
 	                              	</div>
 	                              </div>
 	                              <div class="col-sm-10">
-	                                  <p class="mb-0">주문일 : 2024.12.05.(월)</p>
-	                                  <p class="mb-0 font-weight-600">부드러운 슬림 카스테라 워싱 항균 옥수수솜 간절기/여름 이불세트</p>
-	                                  <p class="mb-0" style="color: #aaa;">색상: 오션블루 / 구성 및 사이즈: 슈퍼싱글 이불베개세트(SS이불+베개커버1P)</p>
+	                                  <p class="mb-0">주문일 : ${orders.formatted_paydate }</p>
+	                                  <p class="mb-0 font-weight-600">${ordersDetail.shopVO.product_name }</p>
+	                                  <p class="mb-0" style="color: #aaa;">${ordersDetail.ordersDetailOptions[0].product_option }
+	                                   외 ${ordersDetail.ordersDetailOptions.size() -1 }건</p>
 	                                  <div style="display:flex; justify-content: space-between; align-items: end;">
 	                                  	<div>
-		                                  <h5 class="mb-2">40,000원</h5>
-		                                  <a href="/mypage/orders_detail" class="readmore"><span>상세보기</span></a>
+		                                  <h5 class="mb-2"><fmt:formatNumber value="${ordersDetail.product_subprice }" type="number" />원</h5>
+		                                  <a href="/mypage/orders_detail/${ordersDetail.order_detail_id }" class="readmore"><span>상세보기</span></a>
 	                                  	</div>
 	                                  	<div>
 		                                  <button class="btn btn-outline-secondary me-2" style="min-width: 150px;">문의하기</button>
@@ -210,11 +213,10 @@
 	                          </div>
                           </div>
                           
-                        
-                        
-                        
                           </div>
-                        
+                          </c:forEach>
+                          </div>
+                        </c:forEach>
                         
                         
                         

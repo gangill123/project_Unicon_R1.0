@@ -10,6 +10,7 @@ public class ShopVO {
 
 	private String product_id;
 	private String product_seller_id;
+	private String product_seller_name;
 	private String product_category_type;
 	private String product_category_value;
 	private String product_keyword;

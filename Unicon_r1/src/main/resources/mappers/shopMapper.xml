@@ -334,10 +334,10 @@
 	
 	<!-- orders_detail_option 테이블 저장(임시저장 상태) -->
 	<insert id="insertOrdersDetailOptions" parameterType="list">
-		insert into _orders_detail_option(order_detail_id, product_option, option_price, quantity) 
+		insert into _orders_detail_option(order_id, order_detail_id, product_option, option_price, quantity) 
 		values 
 		<foreach collection="list" item="li" separator="," >
-		(#{li.order_detail_id}, #{li.product_option}, #{li.option_price}, #{li.quantity})  
+		(#{li.order_id}, #{li.order_detail_id}, #{li.product_option}, #{li.option_price}, #{li.quantity})  
 		</foreach>
 	</insert>
 	

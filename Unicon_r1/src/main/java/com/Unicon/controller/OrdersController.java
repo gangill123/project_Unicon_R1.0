@@ -43,7 +43,7 @@ public class OrdersController {
 		model.addAttribute("addrDefalut", addrDefalut);
 		
 		// 주문정보 가져오기
-		OrdersVO ordersInfo = oService.getOrdersInfo(member_id);
+		OrdersVO ordersInfo = oService.getOrdersInfoForPay(member_id);
 		model.addAttribute("ordersInfo", ordersInfo);
 		
 		
@@ -114,6 +114,8 @@ public class OrdersController {
 	public void saveAddr(@PathVariable("order_id") String order_id, OrdersVO vo) {
 		logger.info("saveAddr() 호출");
 		logger.info("vo :{}",vo);
+		
+		oService.saveAddr(vo);
 	}
 	
 	

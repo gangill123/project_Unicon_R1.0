@@ -20,7 +20,6 @@ public class OrdersVO {
 	private String postal_code;
 	private String recipient;
 	private String recipient_phone;
-	private String payment_status;
 	private String status;
 	private String invoice_number;
 	private String delivery_method;
@@ -28,6 +27,7 @@ public class OrdersVO {
 	private Timestamp create_date;
 	private Timestamp update_date;
 	private Timestamp payment_date;
+	private String formatted_paydate;
 	private String imp_uid;
 	
 	private List<OrdersDetailVO> ordersDetails;
