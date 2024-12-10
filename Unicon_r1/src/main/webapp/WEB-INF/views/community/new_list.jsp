@@ -35,19 +35,33 @@ z-index: 2000;
 
            <!-- Start links -->
            <div class="filtering col-sm-12 text-center">
-               <span data-filter='*' class="active">입양 후기</span>
-               <span data-filter='.business'>반려 이야기</span>
-               <span data-filter='.finance'>실종</span>
-               <span data-filter='.consulting'>임시 보호</span>
+               <span data-filter='*'><a href="/community/main">입양 후기</a></span>
+               <span data-filter='.business'><a href="/community/main2">반려 이야기</a></span>
+               <span data-filter='.finance'><a href="/community/main3">실종</a></span>
+               <span data-filter='.consulting'><a href="/community/main4">임시 보호</a></span>
            </div>
            <!-- End links -->
            
-           <select id="" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-		       <option value="">모든 지역</option>
-		       <option value="">서울</option>
-		       <option value="">부산</option>
-		       <option value="">인천</option>
-		   </select>
+           <select id="animalFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
+			   <option value="">모든 지역</option>
+			   <option value="">서울</option>
+			   <option value="">인천</option>
+			   <option value="">부산</option>
+			   <option value="">대구</option>
+			   <option value="">광주</option>
+			   <option value="">대전</option>
+			   <option value="">울산</option>
+			   <option value="">세종특별시</option>
+			   <option value="">경기</option>
+			   <option value="">강원특별자치도</option>
+			   <option value="">충북</option>
+			   <option value="">충남</option>
+			   <option value="">전북특별자치도</option>
+			   <option value="">전남</option>
+			   <option value="">경북</option>
+			   <option value="">경남</option>
+			   <option value="">제주특별자치도</option>
+			</select>
 		   
 		   <select id="" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
 		       <option value="">모든 동물</option>

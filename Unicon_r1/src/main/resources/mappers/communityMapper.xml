@@ -94,13 +94,53 @@
 
 <!-- resultMap 작성란 -->
 
-<!-- 전체 게시글 불러오기 -->
-<select id="getPostListAll" resultMap="PostResultMap">
+<!-- 입양후기 게시물 불러오기 -->
+<select id="getPostList01" resultMap="PostResultMap">
 	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
 	join _image i on p.post_id = i.image_id 
 	join _category_data ct on p.pet_code = ct.category_code 
 	join _jyp_member m on p.member_id = m.member_id 
 	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = 'post01' 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
+<!-- 전체 게시글 불러오기 -->
+
+<!-- 반려이야기 게시물 불러오기 -->
+<select id="getPostList02" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _jyp_member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = 'post02' 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
+<!-- 전체 게시글 불러오기 -->
+
+<!-- 실종 게시물 불러오기 -->
+<select id="getPostList03" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _jyp_member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = 'post03' 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
+<!-- 전체 게시글 불러오기 -->
+
+<!-- 임시보호 게시물 불러오기 -->
+<select id="getPostList04" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _jyp_member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = 'post04' 
 	group by p.post_id, i.image_sequence, i.image_src 
 	order by p.post_date desc 
 </select>

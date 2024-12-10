@@ -72,11 +72,71 @@ public class CommunityController {
 		return "community/insert";
 	}
 	
-	// 커뮤니티 - 전체 게시물 보는 사이트
+	// 커뮤니티 - 입양 후기 게시물 보는 사이트
 	// http://localhost:8088/community/main
 	@GetMapping("main")
 	public String template(Model model) {
-		List<PostVO> postList = communityService.getPostListAll();
+		List<PostVO> postList = communityService.getPostList01();
+		
+		/* 이것들 필요없어짐 바로 밑에 참조 */
+		/* List<CommentVO> commentList = communityService.getCommentListAll(); */
+		
+		model.addAttribute("postList", postList);
+		
+		/* model.addAttribute("commentList", commentList); */
+		
+		logger.info("--------postList---------{}",postList);
+		
+		/* logger.info("--------commentList---------{}",commentList); */
+		
+		return "community/new_list";
+	}
+	
+	// 커뮤니티 - 반려 이야기 게시물 보는 사이트
+	// http://localhost:8088/community/main2
+	@GetMapping("main2")
+	public String template2(Model model) {
+		List<PostVO> postList = communityService.getPostList02();
+		
+		/* 이것들 필요없어짐 바로 밑에 참조 */
+		/* List<CommentVO> commentList = communityService.getCommentListAll(); */
+		
+		model.addAttribute("postList", postList);
+		
+		/* model.addAttribute("commentList", commentList); */
+		
+		logger.info("--------postList---------{}",postList);
+		
+		/* logger.info("--------commentList---------{}",commentList); */
+		
+		return "community/new_list";
+	}
+	
+	// 커뮤니티 - 실종 게시물 보는 사이트
+	// http://localhost:8088/community/main3
+	@GetMapping("main3")
+	public String template3(Model model) {
+		List<PostVO> postList = communityService.getPostList03();
+		
+		/* 이것들 필요없어짐 바로 밑에 참조 */
+		/* List<CommentVO> commentList = communityService.getCommentListAll(); */
+		
+		model.addAttribute("postList", postList);
+		
+		/* model.addAttribute("commentList", commentList); */
+		
+		logger.info("--------postList---------{}",postList);
+		
+		/* logger.info("--------commentList---------{}",commentList); */
+		
+		return "community/new_list";
+	}
+	
+	// 커뮤니티 - 임시 보호 게시물 보는 사이트
+	// http://localhost:8088/community/main4
+	@GetMapping("main4")
+	public String template4(Model model) {
+		List<PostVO> postList = communityService.getPostList04();
 		
 		/* 이것들 필요없어짐 바로 밑에 참조 */
 		/* List<CommentVO> commentList = communityService.getCommentListAll(); */

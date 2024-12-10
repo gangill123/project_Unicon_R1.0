@@ -47,10 +47,28 @@ public class CommunityDAO {
 		
 	} // postInsert()
 	
-	// 전체 게시물 보기
-	public List<PostVO> getPostListAll(){
-		logger.info(" DAO - getPostListAll() 실행 ");
-		return sqlSession.selectList(NAMESPACE+"getPostListAll");
+	// 입양후기 게시물 보기
+	public List<PostVO> getPostList01(){
+		logger.info(" DAO - getPostList01() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getPostList01");
+	}
+	
+	// 반려이야기 게시물 보기
+	public List<PostVO> getPostList02(){
+		logger.info(" DAO - getPostList02() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getPostList02");
+	}
+	
+	// 실종 게시물 보기
+	public List<PostVO> getPostList03(){
+		logger.info(" DAO - getPostList03() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getPostList03");
+	}
+	
+	// 임시 보호 게시물 보기
+	public List<PostVO> getPostList04(){
+		logger.info(" DAO - getPostList04() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getPostList04");
 	}
 	
 	// 해당 게시물 보기
