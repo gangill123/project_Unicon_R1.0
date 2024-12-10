@@ -13,6 +13,23 @@
 	<result property="image_src" column="image_src"/>
 </resultMap>
 
+<resultMap type="com.Unicon.domain.AdminNoticeVO" id="AdminNoticeResultMap">
+    <id property="anoId" column="ano_id" />
+    <result property="anoBno" column="ano_bno" />
+    <result property="anoTitle" column="ano_title" />
+    <result property="anoContent" column="ano_content" />
+    <result property="anoWriter" column="ano_writer" />
+    <result property="anoRegdate" column="ano_regdate" />
+    <result property="anoModdate" column="ano_moddate" />
+    <result property="important" column="important" />
+    <result property="status" column="status" />
+    <result property="viewCount" column="view_count" />
+</resultMap>
+
+
+
+
+
 
 
 <select id="selectStoreMainImg" resultType="ImageVO">
@@ -23,18 +40,52 @@
 
 
 <update id="updateStoreImages" parameterType="List">
-    <foreach collection="list" item="li" separator=";">
-        UPDATE _image
-        SET 
-            image_type = #{li.image_type},
-            image_sequence = #{li.image_sequence},
-            image_src = #{li.image_src}
-        WHERE 
-            image_id = #{li.image_id}
-    </foreach>
+    UPDATE _image
+    SET 
+        image_type = CASE
+            <foreach collection="list" item="li">
+                WHEN image_id = #{li.image_id} AND image_sequence = #{li.image_sequence} THEN #{li.image_type}
+            </foreach>
+            ELSE image_type
+        END,
+        image_sequence = CASE
+            <foreach collection="list" item="li">
+                WHEN image_id = #{li.image_id} AND image_sequence = #{li.image_sequence} THEN #{li.image_sequence}
+            </foreach>
+            ELSE image_sequence
+        END,
+        image_src = CASE
+            <foreach collection="list" item="li">
+                WHEN image_id = #{li.image_id} AND image_sequence = #{li.image_sequence} THEN #{li.image_src}
+            </foreach>
+            ELSE image_src
+        END
+    WHERE (image_id, image_sequence) IN (
+        <foreach collection="list" item="li" separator=",">
+            (#{li.image_id}, #{li.image_sequence})
+        </foreach>
+    )
 </update>
 
 
 
+<select id="getNoticeList" resultMap="AdminNoticeResultMap">
+SELECT *
+FROM _admin_notice
+ORDER BY important desc, ano_regdate DESC;
+</select>
+
+<insert id="insertNotices">
+    INSERT INTO _admin_notice (ano_id, ano_bno, ano_title, ano_content,
+                                ano_writer, ano_regdate, ano_moddate, important, status, view_count) 
+    VALUES (NULL, NULL, #{anoTitle}, #{anoContent}, 'junghun87', NOW(), NOW(), #{important}, '게시중', 1)
+</insert>
+
+<select id="getNoticeById" resultMap="AdminNoticeResultMap">
+SELECT *
+FROM _admin_notice
+where ano_id = #{anoId}
+ORDER BY important desc, ano_regdate DESC;
+</select>
 
 </mapper>
