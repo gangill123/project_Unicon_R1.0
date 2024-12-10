@@ -26,7 +26,7 @@ public class VolunteerServiceImpl implements VolunteerService {
     private VolunteerDAO volDAO;
     
     @Inject 
-    private volEmailService volEmailService;
+    private VolEmailService volEmailService;
     
     @Inject
     @Qualifier("taskExecutor")

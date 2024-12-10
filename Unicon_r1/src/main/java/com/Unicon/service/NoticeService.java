@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.NoticeVO;
 
 public interface NoticeService {
@@ -31,5 +32,6 @@ public interface NoticeService {
     
     // 공지사항 삭제
     void deleteNotice(Long noId) throws Exception;
+    
 }
 

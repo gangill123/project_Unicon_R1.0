@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.NoticeVO;
 
 @Repository
@@ -98,5 +99,10 @@ public class NoticeDAOImpl implements NoticeDAO {
     @Override
     public NoticeVO selectDraft(Long noId) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".selectDraft", noId);
+    }
+    
+    @Override
+    public List<MemberVO> getMailSubscribers() throws Exception {
+        return sqlSession.selectList(NAMESPACE + ".getMailSubscribers");
     }
 }
