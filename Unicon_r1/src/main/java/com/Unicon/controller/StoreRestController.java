@@ -9,11 +9,13 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.Unicon.domain.AdminNoticeVO;
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.ProductVO;
+import com.Unicon.service.AdminStoreService;
 import com.Unicon.service.CategoryDataService;
 import com.Unicon.service.ProductService;
 
@@ -46,6 +50,9 @@ public class StoreRestController {
 
 	@Inject
 	private ProductService pService;
+	
+	@Inject
+	private AdminStoreService aService;
 
 	@RequestMapping(value = "/category/{value}", method = RequestMethod.GET)
 	public ResponseEntity<List<CategoryDataVO>> sscategoryDataGET(@PathVariable("value") String value) {
@@ -61,40 +68,103 @@ public class StoreRestController {
 	}
 
 	
-	  @RequestMapping(value = "/products/create", method = RequestMethod.POST)
-	  public ResponseEntity<String> createProduct(@ModelAttribute ProductVO vo, HttpServletRequest req) { 
-		  logger.info("vo :  "+ vo);
-		  logger.info(" req : "+ req.toString());
-		  for(int i = 0; i < vo.getOption().size(); i++) {
-			  logger.info("vo :  "+ vo.getOption().get(i));
-		  }
-		  
-		  try {
-		  
-		 
-			  List<ImageVO> images = saveImage(vo, req); 
-			  logger.info("images :  "+ images);
-			  if (images == null || images.isEmpty()) { return new
-				  ResponseEntity<String>("( •̀ ω •́ )✧  이미지가 없음.",
-				  HttpStatus.INTERNAL_SERVER_ERROR); 
-			  } // 이거 변환하는거는 건들지 않아도 됨.
-			  
-			  vo.setProduct_images(images);
-			  
-			  pService.productInsert(vo);
-			  return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
-		  
-		  } catch (Exception e) { logger.info("오류 발생 "); e.printStackTrace(); return
-			  new ResponseEntity<String>("( •̀ ω •́ )✧ 오류가 발생했습니다: " + e.getMessage(),
+    @RequestMapping(value = "/products/create", method = RequestMethod.POST)
+    public ResponseEntity<String> createProduct(@ModelAttribute ProductVO vo, HttpServletRequest req) { 
+	    logger.info("vo :  "+ vo);
+	    logger.info(" req : "+ req.toString());
+	    for(int i = 0; i < vo.getOption().size(); i++) {
+	  	    logger.info("vo :  "+ vo.getOption().get(i));
+	    }
+	  
+	    try {
+		  List<ImageVO> images = saveImage(vo, req,"create"); 
+		  logger.info("images :  "+ images);
+		  if (images == null || images.isEmpty()) { return new
+			  ResponseEntity<String>("( •̀ ω •́ )✧  이미지가 없음.",
 			  HttpStatus.INTERNAL_SERVER_ERROR); 
-			  } 
+		  } // 이거 변환하는거는 건들지 않아도 됨.
 		  
-	  }
-	 
+		  vo.setProduct_images(images);
+		  
+		  pService.productInsert(vo);
+		  return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
+	  
+	  } catch (Exception e) { logger.info("오류 발생 "); e.printStackTrace(); return
+		  new ResponseEntity<String>("( •̀ ω •́ )✧ 오류가 발생했습니다: " + e.getMessage(),
+		  HttpStatus.INTERNAL_SERVER_ERROR); 
+	  } 
+	  
+    }
+ 
+    // store/updateImg
+    @PostMapping("/updateImg")
+    public ResponseEntity<String> mainStoreImgUpdate(ProductVO avo,HttpServletRequest req) {
+        logger.info("mainStoreImgUpdate 실행 : {}", (Object) avo);
+        
+        // 문제점 1. 부분 업데이트 할려고 하는데. 못함 전부 다 시 넣어야 됨.
+        List<ImageVO> images = saveImage(avo, req, "mainImg"); 
+		logger.info("images :  "+ images);
+		
+		aService.updateMainImg(images);
 
+        return ResponseEntity.ok("이미지 업로드 성공");
+  	}
+    
+
+	// 신규 상품 등록 목록
+	@RequestMapping( value = "/products/new" , method=RequestMethod.GET)
+	public String showNewProductList(Model model) {
+//		List<ProductVO> newProducts = aService.getNewProducts();
+//		
+//		
+//		model.addAttribute("newProducts", newProducts);
+		return "/store/admin/newProducts";
+	}
+	
+	// 어드민 공지사랑 list 가져오기.
+	@RequestMapping( value="/admin/notices" , method =RequestMethod.GET )
+	public ResponseEntity<List<AdminNoticeVO>> noticeList() {
+		logger.info("/admin/notices 실행");
+		// 이거 나중에 session에 어떻게 저장하는지 물어보고 변경해야됨. 시큐리티 쓰는데 세션을 사용해야 하는건가?
+		// String member_id = (String) session.getAttribute("id");
+		List<AdminNoticeVO> list = aService.getNoticeList();
+		if(list != null) {
+			return new ResponseEntity<List<AdminNoticeVO>>(list,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<List<AdminNoticeVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	@RequestMapping( value="/admin/notices" , method =RequestMethod.POST )
+	public ResponseEntity<String> noticePOST(AdminNoticeVO vo) {
+		logger.info("/admin/notices 실행" + vo);
+		
+		// importantCh가 true일 경우 important를 1로 설정
+	    if (vo.isImportantCh()) {
+	    	vo.setImportant((byte) 1); // 중요 공지로 설정
+	    } else {
+	    	vo.setImportant((byte) 0); // 중요 공지가 아닐 경우 0으로 설정
+	    }
+		
+		
+	    int result = aService.insertNotices(vo); // insertNotices 메서드 호출
+
+	    if (result == 0) {
+	        // 삽입 실패 시
+	        return new ResponseEntity<String>("공지사항 등록에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+	    } else {
+	        // 삽입 성공 시
+	        return new ResponseEntity<String>("공지사항 등록 성공", HttpStatus.OK);
+	    }
+	}
+	
+	
+	  
+	  
 
 	/* =============== 이미지 저장 및 리스트 생성 =============== */
-	public List<ImageVO> saveImage(ProductVO avo, HttpServletRequest req) {
+	public List<ImageVO> saveImage(ProductVO avo, HttpServletRequest req,String action) {
 		logger.info("( •̀ ω •́ )✧ saveImage(ProductVO avo, HttpServletRequest req) 실행");
 		ServletContext context = req.getServletContext();
 		String saveDir = context.getRealPath("/uploads/");
@@ -131,9 +201,15 @@ public class StoreRestController {
 			
 			logger.info("( •̀ ω •́ )✧ modifiedPath : " + modifiedPath);
 			ImageVO ivo = new ImageVO();
+			
 			ivo.setImage_sequence(i);
 			ivo.setImage_src(modifiedPath); 
-			ivo.setImage_type("prod");
+			if(action.equals("mainImg")) {
+				ivo.setImage_type("storeMain");
+				ivo.setImage_id("store-main-img");
+			}else {
+				ivo.setImage_type("prod");
+			}
 			logger.info("( •̀ ω •́ )✧ ivo : " + ivo);
 			product_images.add(ivo);
 
@@ -150,8 +226,6 @@ public class StoreRestController {
 			if (file.isEmpty()) {
 				return ResponseEntity.badRequest().body("파일이 비어있습니다.");
 			}
-			logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
-			logger.info("( •̀ ω •́ )✧ 경로에 '\\uploads\\'가 없습니다.");
 			// 파일 확장자 검사
 			String originalFilename = file.getOriginalFilename();
 			String extension = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
