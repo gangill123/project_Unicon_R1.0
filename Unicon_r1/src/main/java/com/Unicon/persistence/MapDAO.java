@@ -1,29 +1,33 @@
 package com.Unicon.persistence;
 
 import com.Unicon.domain.MapVO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.sql.*;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class MapDAO {
     
-    // 데이터베이스 연결 정보
-    private String dbUrl = "jdbc:mysql://itwillbs.com:3306/teamproject1";
-    private String dbUser = "c6d2406t1";
-    private String dbPassword = "1234";
+    @Autowired
+    private DataSource dataSource;
 
     public List<MapVO> getAllAddresses() {
         List<MapVO> addressList = new ArrayList<>();
-        
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-             PreparedStatement pstmt = conn.prepareStatement("SELECT road_address, detail_address FROM member");
+        String sql = "SELECT road_address FROM _member";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                String roadAddress = rs.getString("road_address");
-                String jibunAddress = rs.getString("detail_address"); // 지번 주소가 detail_address라고 가정
-                addressList.add(new MapVO(roadAddress, jibunAddress));
+                addressList.add(new MapVO(rs.getString("road_address")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

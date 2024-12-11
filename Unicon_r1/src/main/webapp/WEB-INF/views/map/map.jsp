@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <title>Map</title>
     <script type="text/javascript">
+        var map, geocoder;
+
         function loadKakaoMap() {
             var mapContainer = document.getElementById('map');
             if (mapContainer) {
@@ -29,65 +31,14 @@
                         center: new kakao.maps.LatLng(37.5665, 126.9780),
                         level: 7
                     };
-                    var map = new kakao.maps.Map(container, options);
-                    
-                    var currentMarker = null;
-                    var geocoder = new kakao.maps.services.Geocoder();
-                    var locations = [];
-
-                    function addMarker(coords) {
-                        var marker = new kakao.maps.Marker({
-                            position: coords,
-                            map: map
-                        });
-                        kakao.maps.event.addListener(marker, 'click', function() {
-                            map.panTo(coords);
-                        });
-                        return marker;
-                    }
-
-                    function searchAddress(address, callback) {
-                        geocoder.addressSearch(address, function(result, status) {
-                            if (status === kakao.maps.services.Status.OK) {
-                                callback(new kakao.maps.LatLng(result[0].y, result[0].x));
-                            } else {
-                                console.error('Failed to geocode address:', address);
-                            }
-                        });
-                    }
-
-                    document.querySelectorAll('.list-group-item').forEach(function(item) {
-                        var address = item.querySelector('small:first-of-type').textContent;
-                        searchAddress(address, function(coords) {
-                            locations.push({
-                                element: item,
-                                name: item.querySelector('strong').textContent,
-                                address: address,
-                                coords: coords
-                            });
-                            addMarker(coords);
-                        });
-                    });
-
-                    document.getElementById('searchInput').addEventListener('input', function(e) {
-                        var searchTerm = e.target.value.toLowerCase();
-                        locations.forEach(function(location) {
-                            location.element.style.display =
-                                location.name.toLowerCase().includes(searchTerm) ||
-                                location.address.toLowerCase().includes(searchTerm) ? '' : 'none';
-                        });
-                    });
+                    map = new kakao.maps.Map(container, options);
+                    geocoder = new kakao.maps.services.Geocoder();
 
                     document.querySelectorAll('.list-group-item').forEach(function(item) {
                         item.addEventListener('click', function(e) {
                             e.preventDefault();
-                            var address = this.querySelector('small:first-of-type').textContent;
-
-                            searchAddress(address, function(coords) {
-                                map.panTo(coords);
-                                if (currentMarker) currentMarker.setMap(null);
-                                currentMarker = addMarker(coords);
-                            });
+                            var address = this.querySelector('strong').textContent;
+                            searchAddressAndAddMarker(address);
 
                             document.querySelectorAll('.list-group-item').forEach(function(el) {
                                 el.classList.remove('active');
@@ -95,8 +46,31 @@
                             this.classList.add('active');
                         });
                     });
+
+                    document.getElementById('searchInput').addEventListener('input', function(e) {
+                        var searchTerm = e.target.value.toLowerCase();
+                        document.querySelectorAll('.list-group-item').forEach(function(item) {
+                            var address = item.querySelector('strong').textContent.toLowerCase();
+                            item.style.display = address.includes(searchTerm) ? '' : 'none';
+                        });
+                    });
                 } else {
                     console.error('Map container not found after Kakao Maps SDK load');
+                }
+            });
+        }
+
+        function searchAddressAndAddMarker(address) {
+            geocoder.addressSearch(address, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
+                    map.setCenter(coords);
+                } else {
+                    console.error('Failed to geocode address:', address);
                 }
             });
         }
@@ -135,12 +109,14 @@
                     <div class="list-group" id="locationList">
                         <% 
                         List<MapVO> addresses = (List<MapVO>) request.getAttribute("addresses");
-                        if (addresses != null) {
+                        int currentPage = (Integer) request.getAttribute("currentPage");
+                        int totalPages = (Integer) request.getAttribute("totalPages");
+                        
+                        if (addresses != null && !addresses.isEmpty()) {
                             for (MapVO address : addresses) { 
                         %>
                         <a href="#" class="list-group-item list-group-item-action">
-                            <strong><%= address.getRoadAddress() %></strong> <!-- 도로명 주소 -->
-                            <small class="d-block text-muted"><%= address.getJibunAddress() %></small> <!-- 지번 주소 -->
+                            <strong><%= address.getRoad_address() %></strong>
                         </a>
                         <%
                             }
@@ -149,10 +125,26 @@
                         }
                         %>
                     </div>
+                    <nav aria-label="Page navigation" class="mt-3">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item <%= (currentPage == 1) ? "disabled" : "" %>">
+                                <a class="page-link" href="?page=<%= currentPage - 1 %>" <%= (currentPage == 1) ? "tabindex='-1' aria-disabled='true'" : "" %>>이전</a>
+                            </li>
+                            <% for (int i = 1; i <= totalPages; i++) { %>
+                            <li class="page-item <%= (i == currentPage) ? "active" : "" %>">
+                                <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                            </li>
+                            <% } %>
+                            <li class="page-item <%= (currentPage == totalPages) ? "disabled" : "" %>">
+                                <a class="page-link" href="?page=<%= currentPage + 1 %>" <%= (currentPage == totalPages) ? "tabindex='-1' aria-disabled='true'" : "" %>>다음</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
             <div class="col-md-8">
-                <div id="map" style="width:100%;height:600px;"></div>
+                <h4 class="mb-3">센터 위치</h4>
+                <div id="map" style="width:100%;height:850px;"></div>
             </div>
         </div>
     </div>
