@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -169,14 +170,11 @@ public class MyPageController {
 		List<OrdersVO> ordersInfos = oService.getOrdersInfo(member_id);
 		model.addAttribute("ordersInfos", ordersInfos);
 		
+		// 주문상태 갯수 가져오기
+		List<Integer> ordersCntInfo = oService.getOrdersCount(member_id);
+		model.addAttribute("ordersCntInfo", ordersCntInfo);
 		
 		return "/mypage/orders";
-	}
-	
-	// 마이페이지 주문관리 상세보기
-	@GetMapping("orders_detail")
-	public String orderDetailPageEx() {
-		return "/mypage/orders_detail";
 	}
 	
 	// 마이페이지 주문관리 상세보기
@@ -192,6 +190,28 @@ public class MyPageController {
 		
 		return "/mypage/orders_detail";
 	}
+	
+	
+	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기
+	@GetMapping("/getOrdersInfoToStatus/{orders_detail_status}")
+	@ResponseBody
+	public List<OrdersVO> getOrdersInfoToStatus(@PathVariable("orders_detail_status")
+			String orders_detail_status, @RequestParam Integer monthVal, HttpSession session){
+		
+		logger.info("getOrdersInfoToStatus() 호출");
+		logger.info("orders_detail_status: {}",orders_detail_status);
+		logger.info("monthVal :{}",monthVal);
+		
+		String member_id = (String)session.getAttribute("member_id");
+		
+		if(monthVal == 0) {
+			return oService.getOrdersInfoToStatus(orders_detail_status, member_id);
+		} else {
+			return oService.getOrdersInfoToStatusAndTime(orders_detail_status, member_id, monthVal);
+		}
+	}
+	
+	
 	
 	
 	

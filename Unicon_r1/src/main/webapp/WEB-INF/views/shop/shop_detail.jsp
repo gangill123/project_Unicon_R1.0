@@ -90,7 +90,7 @@
         <section>
             <div class="container">
 				<div class="row" style="justify-content: center;">
-				<div class="col-lg-10">
+				<div class="col-lg-11">
                 <!-- Start Product Section -->
                 <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9">
                     <div class="col-lg-6 text-center mb-1-9 mb-lg-0">
@@ -228,12 +228,12 @@
 								<input type="hidden" name="product_id" value="${productInfo.product_id }"> 
 								<div id="ShopToCartFormInput"></div>
                             <div class="row mb-4">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <button class="butn text-uppercase w-100" type="button"
                                     onclick="location.href='/shop?categoryType=${param.categoryType}&categoryValue=${param.categoryValue}&currentPage=${param.currentPage}'">
                                     <span><i class="fa-solid fa-rotate-left"></i> 이전으로</span></button>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-8">
                                     <button type="submit" class="cartBtn butn primary w-100"><span><i class="fas fa-shopping-cart me-1"></i> 장바구니</span></button>
                                 </div>
                             </div>

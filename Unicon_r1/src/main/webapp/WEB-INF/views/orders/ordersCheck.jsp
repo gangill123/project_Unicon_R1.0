@@ -107,7 +107,8 @@
 							  		
 	                              <div class="col-sm-12 border-top pt-3" style="display: flex; justify-content: space-between;">
 	                              	<div>
-	                              	  <h5 class="font-weight-600 mb-4" style="display: inline; color: #aaa;">${ordersDetailOption.status }</h5>
+	                              	  <h5 class="font-weight-600 mb-4" style="display: inline; color: #aaa;"
+	                              	  >${ordersDetailOption.orders_detail_option_status }</h5>
 	                              	</div>
 	                              </div>
 	                              <div class="col-sm-2" style="margin-bottom: 15px;">
@@ -219,7 +220,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4 order-1 order-lg-2 mt-5">
-                        <button class="butn primary w-100" onclick="location.href='/main';"><span>메인으로 이동하기</span></button>
+                        <button class="butn primary w-100" onclick="location.href='/shop';"><span>복지몰로 이동하기</span></button>
                     <!-- end right side section -->
 					</div>
                 </div>

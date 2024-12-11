@@ -73,7 +73,7 @@
             <div class="container">
 
                 <div class="row" style="justify-content: center;">
-					<div class="col-lg-10">
+					<div class="col-lg-11">
                     <!-- Start Product Table -->
                     <div class="col-12 shop-cart-table">
                         <table class="table shop-cart text-center">

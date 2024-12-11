@@ -312,13 +312,13 @@
 	
 	<update id="updateOrdersDetailToCancel" parameterType="String">
 		update _orders_detail 
-		set status = '취소종료' 
+		set orders_detail_status = '취소종료' 
 		where order_id = #{cancelorder_id} 
 	</update>
 	
 	<update id="updateOrdersDetailOptionToCancel" parameterType="String">
 		update _orders_detail_option  
-		set status = '취소종료' 
+		set orders_detail_option_status = '취소종료' 
 		where order_id = #{cancelorder_id} 
 	</update>
 	

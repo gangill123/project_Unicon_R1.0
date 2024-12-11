@@ -232,19 +232,9 @@
                                            </li>
                                         
                                         <li><a href="/admin/slide_manage">관리자페이지</a>
-                                            <ul>
-                                                <li><a href="/admin/slide_manage">슬라이드관리</a></li>
-                                                <li><a href="/admin/news_manage">소식관리</a></li>
-                                            </ul>
                                         </li>
                                         
                                         <li><a href="/shop">복지몰</a>
-                                            <ul>
-                                                <li><a href="#!">복지몰 홈</a></li>
-                                                <li><a href="#!">카테고리</a></li>
-                                                <li><a href="#!">베스트</a></li>
-                                                <li><a href="#!">기획전</a></li>
-                                            </ul>
                                         </li>
                                         
                                         

@@ -544,7 +544,7 @@
 			IMP.request_pay({
 				pg: 'html5_inicis',
 				pay_method: 'card',
-				merchant_uid: orderId,
+				merchant_uid: 'shop_' + new Date().getTime(),
 				name: ordersName,
 				amount: 100,
 				buyer_email: buyer_email,  /*필수 항목이라 "" 로 남겨둠*/
