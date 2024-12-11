@@ -2,6 +2,10 @@ package com.Unicon.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -133,8 +137,36 @@ public class MyPageController {
 	public String petUpdate(PetVO vo) {
 		logger.info("vo : {}",vo);
 		
-		if(vo.getPet_src() == null) {
+		if(vo.getPet_src().equals("")) {
 			 
+			/// 기존 파일 서버에서 삭제하기///
+			
+			// 프로젝트명 가져오기
+			String projectName = servletContext.getContextPath();
+			
+			// 삭제할 파일의 dir 계산
+			String deleteDir = servletContext.getRealPath("/"+projectName);
+			
+			// 기존 프로젝트 src 가져오기
+			int pet_id = vo.getPet_id();
+			String petSrc = myService.getPetSrc(pet_id);
+			logger.debug("petSrc : {}",petSrc);
+			
+			// 삭제파일 경로객체 만들기
+			String filePath = deleteDir+petSrc;
+			Path path = Paths.get(filePath);
+			
+			try {
+	            Files.delete(path); // 파일 삭제
+	            logger.debug("정상적으로 삭제되었습니다.");
+	        } catch (NoSuchFileException e) {
+	            System.out.println("파일을 찾을 수 없습니다: " + filePath);
+	        } catch (IOException e) {
+	            System.out.println("파일 삭제 중 오류 발생: " + e.getMessage());
+	        }
+			
+			/// 기존 파일 서버에서 삭제하기///
+			
 			// 새로운 src 만들어서 저장
 			MultipartFile file = vo.getPet_file();
 			String uploadDir = servletContext.getRealPath("/uploads/");
@@ -159,6 +191,17 @@ public class MyPageController {
 		return "redirect:/mypage/pet_view/"+vo.getPet_id();
 		
 	}
+	
+	// 펫 정보 삭제
+	@PostMapping("/pet_delete/{pet_id}")
+	@ResponseBody
+	public void petDelete(@PathVariable("pet_id") int pet_id) {
+		logger.info("pet_id : {}", pet_id);
+		myService.petDelete(pet_id);
+	}
+	
+	
+	
 	
 	
 	// 마이페이지 주문관리

@@ -45,6 +45,10 @@ public class MainController {
 		NewsVO newsInfo = nService.getNewsForMain();
 		model.addAttribute("newsInfo", newsInfo);
 		
+		
+		
+		
+		
 		return "/main/new_main";
 	}
 	

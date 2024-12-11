@@ -85,7 +85,7 @@
                       <form class="quform" action="/mypage/pet_update/+${petInfo.pet_id}" method="post" enctype="multipart/form-data" >
                         <div class="services-single-right">
                         	<div style="display: flex; justify-content:space-between; align-items: end; margin-bottom: 10px;">
-						        <h4 class="mb-0" style="display: inline-block;">유니콘 등록</h4>
+						        <h4 class="mb-0" style="display: inline-block;">유니콘 정보</h4>
 						        <button type="button" class="btn btn-secondary" onclick="location.href='/mypage';"
 						        ><span class="small">이전으로</span></button>
 							</div>
@@ -213,9 +213,15 @@
 						
 	               
                   	<div class="row" style="justify-content: center;">		
-	                    <div class="col-md-8">
+	                    <div class="col-md-4">
 	                        <div class="text-center">
-	                            <button class="butn primary w-100" type="submit"><span>등록하기</span></button>
+	                            <button class="butn primary w-100" type="submit"><span>수정하기</span></button>
+	                        </div>
+	                    </div>
+	                    <div class="col-md-4">
+	                        <div class="text-center">
+	                            <button class="deleteBtn butn w-100" type="button"
+	                            data-id="${petInfo.pet_id}"><span>삭제하기</span></button>
 	                        </div>
 	                    </div>
                   	</div>			
@@ -400,6 +406,62 @@ $(document).ready(function () {
 		}
 	});
 	/*=============== 이미지 미리보기 ===============*/
+	
+	
+	// 펫 정보 삭제하기 로직
+	$('.deleteBtn').on('click', function(){
+		let pet_id = $(this).data('id');
+		//console.log(pet_id);
+		
+		Swal.fire({
+  			  title: '정말 삭제하시겠습니까?',
+  			  text: "삭제 전 다시 한번 확인하시기 바랍니다.",
+  			  icon: 'warning',
+  			  showCancelButton: true,
+  			  confirmButtonColor: '#86bc42',
+  			  cancelButtonColor: '#aaa',
+  			  confirmButtonText: '삭제',
+  			  cancelButtonText: '취소',
+  			  customClass: {
+  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+ 			  }
+  			}).then((result) => {
+  				if (result.isConfirmed) {
+  					$.ajax({
+  						url: '/mypage/pet_delete/'+pet_id,
+  						type: 'POST',
+  						success: function(){
+  							//alert("ok");
+  							Swal.fire({
+  			  	  			  title: '삭제를 완료하였습니다!',
+  			  	  			  text: "등록하기를 통하여 재등록 가능합니다.",
+  			  	  			  icon: 'success',
+  			  	  			  confirmButtonColor: '#86bc42',
+  			  	  			  customClass: {
+  			  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+  			 			 	  }
+  			  				}).then(function(){
+  			  					window.location.href = "/mypage"; // 이동할 URL
+  			  				});
+  						},
+  						error: function(){
+  							alert("no");
+  						}
+  					});
+	  				
+  				}
+  			});
+		
+		
+		
+	});
+	
+	
+	
+	
+	
+	
+	
 	
 });//readay
 

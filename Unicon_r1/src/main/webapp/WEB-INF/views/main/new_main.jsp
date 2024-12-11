@@ -72,6 +72,12 @@
 
 }
 
+@media (min-width: 1400px){ .container {max-width: 1250px;} }
+
+.section-heading span{
+	font-size: 18px;
+}
+
 
 </style>
 
@@ -114,22 +120,22 @@
                     <div class="col-6 col-lg-3 mt-1-9">
                         <div class="counter-box black">
                             <h4 class="countup">1800</h4>
-                            <p class="m-0">Happy Clients</p></div>
+                            <p class="m-0">유니콘 입양공고</p></div>
                     </div>
                     <div class="col-6 col-lg-3 mt-1-9">
                         <div class="counter-box black">
                             <h4 class="countup">1300</h4>
-                            <p class="m-0">Projects Finished</p></div>
+                            <p class="m-0">유니콘 입양완료</p></div>
                     </div>
                     <div class="col-6 col-lg-3 mt-1-9">
                         <div class="counter-box black">
                             <h4 class="countup">1500</h4>
-                            <p class="m-0">Business Solutions</p></div>
+                            <p class="m-0">유니콘 커뮤니티</p></div>
                     </div>
                     <div class="col-6 col-lg-3 mt-1-9">
                         <div class="counter-box black">
                             <h4 class="countup">1100</h4>
-                            <p class="m-0">Effective Answers</p></div>
+                            <p class="m-0">유니콘 보호센터</p></div>
                     </div>
                 </div>
             </div>
@@ -139,7 +145,7 @@
         <section style="padding: 50px 0;"> 
             <div class="container">
                 <div class="section-heading" style="margin-bottom: 20px;"><span>안녕하세요!!</span>
-                    <h2>새로운 유니콘 소개</h2>
+                    <h2>유니콘 신규 입양공고</h2>
                 </div>
 				<div style="text-align: end; margin-bottom: 20px;">
 					<button type="submit" class="butn-style2 small" style="font-size: 0.7rem;">

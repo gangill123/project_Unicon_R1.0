@@ -31,6 +31,13 @@
 	margin-top: 0;
 }
 
+.services-single-menu li a {
+	font-size: 20px;
+}
+
+.services-single-menu li a:after {
+	height: 2px;
+}
 
 </style>
 

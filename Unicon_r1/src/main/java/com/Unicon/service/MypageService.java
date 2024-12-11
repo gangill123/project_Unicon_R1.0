@@ -46,5 +46,14 @@ public class MypageService {
 		mydao.petUpdate(vo);
 	}
 	
+	// 펫src 가져오기 (삭제용)
+	public String getPetSrc(int pet_id) {
+		return mydao.getPetSrc(pet_id);
+	}
+	
+	// 펫 정보 삭제
+	public void petDelete(int pet_id) {
+		mydao.petDelete(pet_id);
+	}
 	
 }

@@ -39,6 +39,20 @@
 		where pet_id = #{pet_id} 
 	</update>
 	
+	<!-- 펫src 가져오기 (삭제용) -->
+	<select id="getPetSrc" resultType="String">
+		select pet_src 
+		from _pet 
+		where pet_id = #{pet_id} 
+	</select>
+	
+	<!-- 펫 정보 삭제 -->
+	<delete id="petDelete"> 
+		delete from _pet 
+		where pet_id = #{pet_id}  
+	</delete>
+	
+	
 
 </mapper>
 

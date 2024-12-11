@@ -10,6 +10,7 @@
 
 .filtering span{
 	margin-right: 50px;
+	font-size: 18px;
 }
 
 .product-grid > [class*="col-"]{
@@ -163,6 +164,8 @@
 											    <option selected value="3">3개월 전</option>
 											    <option value="6">6개월 전</option>
 											    <option value="12">1년 전</option>
+											    <option value="24">2년 전</option>
+											    <option value="36">3년 전</option>
                                            </select>
                                       </div>
                                       <div class="col-auto my-2 my-md-0" style="padding-left: 0;">
