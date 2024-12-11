@@ -43,6 +43,12 @@ public class CommunityService {
 	} // postInsert()
 	
 	// 입양후기 게시물 보기
+	public List<PostVO> getPostList(String post_type){
+		logger.info(" Service - getPostList() 실행 ");
+		return communityDAO.getPostList(post_type);
+	}
+	
+	// 입양후기 게시물 보기
 	public List<PostVO> getPostList01(){
 		logger.info(" Service - getPostList01() 실행 ");
 		return communityDAO.getPostList01();

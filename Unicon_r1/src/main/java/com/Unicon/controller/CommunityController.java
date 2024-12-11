@@ -18,8 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -175,6 +177,12 @@ public class CommunityController {
 	@GetMapping("main06")
 	public String templateUpdate() {
 		return "community/new_update";
+	}
+
+	@GetMapping("readPostType/{post_type}")
+	@ResponseBody
+	public List<PostVO> readPostType (@PathVariable("post_type")String post_type){
+		return communityService.getPostList(post_type);
 	}
 	
 	

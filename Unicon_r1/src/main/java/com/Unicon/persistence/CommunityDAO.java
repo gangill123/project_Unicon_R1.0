@@ -47,6 +47,12 @@ public class CommunityDAO {
 		
 	} // postInsert()
 	
+	// 게시물 보기
+	public List<PostVO> getPostList(String post_type){
+		logger.info(" DAO - getPostList() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getPostList", post_type);
+	}
+	
 	// 입양후기 게시물 보기
 	public List<PostVO> getPostList01(){
 		logger.info(" DAO - getPostList01() 실행 ");
