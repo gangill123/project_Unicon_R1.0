@@ -78,12 +78,17 @@
                                                 aria-expanded="true" aria-controls="collapseOne">강아지 사료</button>
                                             </h5>
                                         </div>
-                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
                                             <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">Flash Lights</a></li>
-                                                    <li><a href="#!">Tool Organisers</a></li>
-                                                    <li><a href="#!">Safety Cables</a></li>
+                                                <ul class="mb-0 list-unstyled" data-type="5003">
+                                                    <li><a class="choice" href="#!">건식사료</a></li>
+                                                    <li><a class="choice" href="#!">동결건조 사료</a></li>
+                                                    <li><a class="choice" href="#!">분유/우유</a></li>
+                                                    <li><a class="choice" href="#!">분유/우유</a></li>
+                                                    <li><a class="choice" href="#!">소프트사료</a></li>
+                                                    <li><a class="choice" href="#!">습식사료</a></li>
+                                                    <li><a class="choice" href="#!">처방식/기능식사료</a></li>
+                                                    <li><a class="choice" href="#!">화식/생식사료</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -91,7 +96,7 @@
                                     <div class="card">
                                         <div class="card-header" id="headingTwo">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" 
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse"
                                                 data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                   강아지 간식
                                 </button>
@@ -99,114 +104,175 @@
                                         </div>
                                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
                                             <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">Women's Watch</a></li>
-                                                    <li><a href="#!">Men's Watch</a></li>
-                                                    <li><a href="#!">Kids Watch</a></li>
+                                                <ul class="mb-0 list-unstyled" data-type="5000">
+                                                    <li><a class="choice" href="#!">개껌</a></li>
+                                                    <li><a class="choice" href="#!">동결건조 간식</a></li>
+                                                    <li><a class="choice" href="#!">비스킷/스낵</a></li>
+                                                    <li><a class="choice" href="#!">빵/케이크</a></li>
+                                                    <li><a class="choice" href="#!">수제간식</a></li>
+                                                    <li><a class="choice" href="#!">육포/건조간식</a></li>
+                                                    <li><a class="choice" href="#!">음료</a></li>
+                                                    <li><a class="choice" href="#!">캔/파우치</a></li>
+                                                    <li><a class="choice" href="#!">통살/소시지</a></li>
+                                                    <li><a class="choice" href="#!">트릿/스틱</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="card">
                                         <div class="card-header" id="headingThree">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Accessories
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                  강아지 건강/관리용품
                                 </button>
                                             </h5>
                                         </div>
                                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion">
                                             <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">Drives &amp; Storage</a></li>
-                                                    <li><a href="#!">Networking Devices</a></li>
-                                                    <li><a href="#!">Software</a></li>
+                                                <ul class="mb-0 list-unstyled" data-type="5001">
+                                                    <li><a class="choice" href="#!">강아지 유산균</a></li>
+                                                    <li><a class="choice" href="#!">구강청결제</a></li>
+                                                    <li><a class="choice" href="#!">구강티슈</a></li>
+                                                    <li><a class="choice" href="#!">눈/귀 관리용품</a></li>
+                                                    <li><a class="choice" href="#!">영양제</a></li>
+                                                    <li><a class="choice" href="#!">치약</a></li>
+                                                    <li><a class="choice" href="#!">칫솔</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                    
+                                    
+                                    
                                     <div class="card">
                                         <div class="card-header" id="headingFour">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                  Clothes
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                  강아지 배변용품
                                 </button>
                                             </h5>
                                         </div>
                                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-bs-parent="#accordion">
                                             <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">T-Shirt</a></li>
-                                                    <li><a href="#!">Pants</a></li>
-                                                    <li><a href="#!">Saree</a></li>
-                                                    <li><a href="#!">Joggers</a></li>
+                                                <ul class="mb-0 list-unstyled" data-type="5002">
+                                                    <li><a class="choice" href="#!">기저귀/팬티</a></li>
+                                                    <li><a class="choice" href="#!">배변봉투/집게</a></li>
+                                                    <li><a class="choice" href="#!">배변유도제</a></li>
+                                                    <li><a class="choice" href="#!">배변판</a></li>
+                                                    <li><a class="choice" href="#!">배변패드</a></li>
+                                                    <li><a class="choice" href="#!">탈취제/소독제</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="card">
                                         <div class="card-header" id="headingFive">
                                             <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                  Mobile
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                  강아지 장난감/훈련
                                 </button>
                                             </h5>
                                         </div>
                                         <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-bs-parent="#accordion">
                                             <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">Intex</a></li>
-                                                    <li><a href="#!">Google</a></li>
-                                                    <li><a href="#!">Samsung</a></li>
-                                                    <li><a href="#!">Apple</a></li>
+                                                <ul class="mb-0 list-unstyled" data-type="5004">
+                                                    <li><a class="choice" href="#!">노즈워크</a></li>
+                                                    <li><a class="choice" href="#!">자동장난감</a></li>
+                                                    <li><a class="choice" href="#!">장난감/토이</a></li>
+                                                    <li><a class="choice" href="#!">훈련용품</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="widget">
-                                <div class="widget-title">
-                                    <h5>Popular Products</h5>
-                                </div>
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="flex-shrink-0">
-                                        <img src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumb-01.jpg" alt="...">
+                                    
+                                    <div class="card">
+                                        <div class="card-header" id="headingSix">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseSix" aria-expanded="false" 
+                                                aria-controls="collapseSix">
+                                  고양이 간식
+                                </button>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-bs-parent="#accordion">
+                                            <div class="card-body">
+                                                <ul class="mb-0 list-unstyled" data-type="5005">
+                                                    <li><a class="choice" href="#!">동결건조 간식</a></li>
+                                                    <li><a class="choice" href="#!">비스킷/스낵</a></li>
+                                                    <li><a class="choice" href="#!">빵/케이크</a></li>
+                                                    <li><a class="choice" href="#!">수제간식</a></li>
+                                                    <li><a class="choice" href="#!">육포/건조간식</a></li>
+                                                    <li><a class="choice" href="#!">음료</a></li>
+                                                    <li><a class="choice" href="#!">캔/파우치</a></li>
+                                                    <li><a class="choice" href="#!">캣닢/캣그라스</a></li>
+                                                    <li><a class="choice" href="#!">통살/소시지</a></li>
+                                                    <li><a class="choice" href="#!">트릿/스틱</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <a href="#!" class="mb-1 font-weight-600 text-extra-dark-gray">Echo Dot Speaker</a>
-                                        <span class="d-block">$15.00</span>
+                                    
+                                    <div class="card">
+                                        <div class="card-header" id="headingSeven">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseSeven" aria-expanded="false" 
+                                                aria-controls="collapseSeven">
+                                 고양이 건강/관리용품
+                                </button>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-bs-parent="#accordion">
+                                            <div class="card-body">
+                                                <ul class="mb-0 list-unstyled" data-type="5006">
+                                                    <li><a class="choice" href="#!">고양이 유산균</a></li>
+                                                    <li><a class="choice" href="#!">구강관리용품</a></li>
+                                                    <li><a class="choice" href="#!">눈/귀 관리용품</a></li>
+                                                    <li><a class="choice" href="#!">영양제</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="flex-shrink-0">
-                                        <img src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumb-02.jpg" alt="...">
+                                    
+                                    <div class="card">
+                                        <div class="card-header" id="headingEight">
+                                            <h5 class="mb-0">
+                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseEight" aria-expanded="false" 
+                                                aria-controls="collapseEight">
+                                 고양이 배변용품
+                                </button>
+                                            </h5>
+                                        </div>
+                                        <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-bs-parent="#accordion">
+                                            <div class="card-body">
+                                                <ul class="mb-0 list-unstyled" data-type="5007">
+                                                    <li><a class="choice" href="#!">거름망형화장실</a></li>
+                                                    <li><a class="choice" href="#!">매트/발판</a></li>
+                                                    <li><a class="choice" href="#!">배변패드</a></li>
+                                                    <li><a class="choice" href="#!">분변통/모래삽</a></li>
+                                                    <li><a class="choice" href="#!">응고형모래</a></li>
+                                                    <li><a class="choice" href="#!">자동화장실</a></li>
+                                                    <li><a class="choice" href="#!">탈취제/소독제</a></li>
+                                                    <li><a class="choice" href="#!">평판형화장실</a></li>
+                                                    <li><a class="choice" href="#!">후드형화장실</a></li>
+                                                    <li><a class="choice" href="#!">흡수형모래</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <a href="#!" class="mb-1 font-weight-600 text-extra-dark-gray">Steel Wall Clock</a>
-                                        <span class="d-block">$12.10</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <img src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumb-03.jpg" alt="...">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <a href="#!" class="mb-1 font-weight-600 text-extra-dark-gray">Sony Digital Device</a>
-                                        <span class="d-block">$10.20</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="widget">
-                                <div class="offer-banner bg-primary text-center d-none d-lg-block">
-                                    <a href="#!"><img src="${pageContext.request.contextPath }/resources/new_assets/img/shop/left-panel-banner.png" alt="..."></a>
+                                    
                                 </div>
                             </div>
 
                         </div>
-
                     </div>
                     <!-- end product grid left panel -->
 
@@ -319,9 +385,12 @@
 <script>
 	$(document).ready(function () {
 		
+		let checkCnt = 1;
+		
 		// 카테고리 대분류 선택 시 소분류 데이터 가져오기
 		$('#categoryTypeSelector').on('change',function(){
-			makeCategoryValue($(this).val(),'${param.categoryValue}');
+			checkCnt -= 1;
+			makeCategoryValue($(this).val(),'${param.categoryValue}', checkCnt);
 		});
 		
 		let categoryType = $('#categoryTypeSelector').val();
@@ -347,6 +416,38 @@
 			currentPage = 1;
 			productPaging(categoryType, categoryValue, currentPage);
 		});
+		
+		
+		// 사이드바 메뉴 선택 시 화면 페이징
+		$('.choice').on('click',function(){
+			//alert("ok");
+			
+			let choiceType = $(this).closest('ul').data('type');
+			let choiceValue = $(this).text();
+			console.log(choiceType);
+			console.log(choiceValue);
+			currentPage = 1;
+			productPaging(choiceType, choiceValue, currentPage);
+			
+		});
+		
+		
+		
+		//F5 클릭 시 최초 페이지로 이동
+		$(document).on('keydown', function (e) {
+	        // F5 키(새로고침) 감지
+	        if (e.which === 116) {
+	            e.preventDefault(); // 기본 새로고침 방지
+
+	            // 특정 로직 처리
+	            if (window.location.pathname === '/shop') {
+	                // 원하는 작업 실행
+	                location.href="/shop";
+	            } else {
+	                console.log('F5 detected on a different page.');
+	            }
+	        }
+	    });
 		
 		
 	});

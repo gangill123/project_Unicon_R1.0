@@ -1,6 +1,8 @@
 package com.Unicon.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,6 +100,36 @@ public class OrdersService {
 	public OrdersVO getOrdersInfoAfterCheckout(String order_id) {
 		return odao.getOrdersInfoAfterCheckout(order_id);
 	}
+	
+	// 주문상태 갯수 가져오기
+	public List<Integer> getOrdersCount(String member_id){
+		return odao.getOrdersCount(member_id);
+	}
+	
+	
+	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기
+	public List<OrdersVO> getOrdersInfoToStatus(String orders_detail_status, String member_id){
+		
+		Map<String, String> orderStatusMap = new HashMap<String, String>();
+		orderStatusMap.put("orders_detail_status",orders_detail_status);
+		orderStatusMap.put("member_id",member_id);
+		return odao.getOrdersInfoToStatus(orderStatusMap);
+	}
+	
+	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기 + 기간설정
+	public List<OrdersVO> getOrdersInfoToStatusAndTime(String orders_detail_status, String member_id,
+			Integer monthVal){
+		
+		Map<String, Object> orderStatusMap = new HashMap<String, Object>();
+		orderStatusMap.put("orders_detail_status",orders_detail_status);
+		orderStatusMap.put("member_id",member_id);
+		orderStatusMap.put("monthVal", monthVal);
+		
+		return odao.getOrdersInfoToStatusAndTime(orderStatusMap);
+	}
+	
+	
+	
 	
 	
 	

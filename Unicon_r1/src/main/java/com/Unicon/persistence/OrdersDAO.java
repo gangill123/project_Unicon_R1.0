@@ -1,6 +1,9 @@
 package com.Unicon.persistence;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +93,41 @@ public class OrdersDAO {
 	public OrdersVO getOrdersInfoAfterCheckout(String order_id) {
 		return sqlSession.selectOne(NAMESPACE+".getOrdersInfoAfterCheckout", order_id);
 	}
+	
+	// 주문상태 갯수 가져오기
+	public List<Integer> getOrdersCount(String member_id){
+		
+		List<String> orderStatus = new ArrayList<>();
+		orderStatus.add("결제완료");
+		orderStatus.add("배송준비중");
+		orderStatus.add("배송중");
+		orderStatus.add("배송완료");
+		orderStatus.add("구매확정");
+
+		Map<String, String> orderStatusMap = new HashMap<String, String>();
+		orderStatusMap.put("member_id", member_id);
+		
+		List<Integer> orderCnt = new ArrayList<Integer>();
+		
+		for(String status : orderStatus) {
+			orderStatusMap.put("status", status);
+			orderCnt.add(sqlSession.selectOne(NAMESPACE+".getOrdersCount", orderStatusMap));
+		}
+		
+		return orderCnt;
+	}
+	
+	
+	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기
+	public List<OrdersVO> getOrdersInfoToStatus(Map<String, String> orderStatusMap){
+		return sqlSession.selectList(NAMESPACE+".getOrdersInfoToStatus", orderStatusMap);
+	}
+	
+	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기 + 기간설정
+	public List<OrdersVO> getOrdersInfoToStatusAndTime(Map<String, Object> orderStatusMap){
+		return sqlSession.selectList(NAMESPACE+".getOrdersInfoToStatusAndTime", orderStatusMap);
+	}
+	
 	
 	
 

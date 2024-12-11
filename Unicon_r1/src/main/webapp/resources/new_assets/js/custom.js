@@ -1597,7 +1597,10 @@
 	
 	
 	// 쇼핑몰 대분류 클릭 시 소분류 만들기
-	function makeCategoryValue(categoryType, categoryValue){
+	function makeCategoryValue(categoryType, categoryValue, checkCnt){
+		
+		console.log(checkCnt);
+		
 		$.ajax({
 			url: 'shop/makeCategoryValue/'+categoryType,
 			type: 'GET',
@@ -1610,7 +1613,11 @@
 					$('#categoryValueSelector').append(`<option value="${item}">${item}</option>`);
 				});
 				
-//					$('#categoryValueSelector').val(categoryValue);
+				
+				if(categoryValue != '' && checkCnt == 0){
+					$('#categoryValueSelector').val(categoryValue);
+				}
+				
 				
 			},
 			error: function(){
@@ -1778,7 +1785,113 @@
 		
 		
 	}
-	/////소식 페이징 처리 및 삭제처리/////
+	/////쇼핑몰 페이징 처리 및 삭제처리/////
+	
+	
+	
+	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기
+	function getOrdersInfoToStatus(status, monthVal){
+		
+		$.ajax({
+			url: '/mypage/getOrdersInfoToStatus/'+status,
+			data: {
+				monthVal:monthVal
+			},
+			type: 'GET',
+			success: function(response){
+				console.log(response);
+				let orderItemsContent = $('#orderItemsContent');
+				
+				orderItemsContent.empty();
+				
+				$.each(response, function(index, orders){
+					
+					let content = `
+					<div class="orderItems[${index}]" style="margin-bottom: 50px;">
+                    <h5 style="display: inline;">${orders.formatted_paydate }</h5>
+                    <p style="display: inline; color: #aaa;">(주문번호 : ${orders.order_id })</p>`
+						
+					$.each(orders.ordersDetails, function(index, ordersDetail){
+						
+						let ordersDetailOptionsSize = ordersDetail.ordersDetailOptions.length - 1;
+						
+						content += `
+						<div class="border rounded ps-3 pe-4 py-3 orderItem mb-1">
+                          <div class="row">
+                              <div class="col-sm-12 mb-4 mb-md-0" style="display: flex; justify-content: space-between;">
+                              	  <h5 class="h6 font-weight-600 mb-4">${ordersDetail.orders_detail_status}</h5>`
+							
+						if(ordersDetail.orders_detail_status == '배송중' || 
+							ordersDetail.orders_detail_status == '배송완료'||
+							ordersDetail.orders_detail_status == '구매확정'){
+							content += `
+							<a href="/orders/orders_detail/${ordersDetail.order_detail_id }" class="readmore">
+							<span>배송조회</span></a>`	
+						}	
+						
+						content += `
+							</div>
+                              <div class="col-sm-2 mb-4 mb-md-0">
+                              	<div class="orderImage">
+                                  <img class="rounded" src="${ordersDetail.shopVO.product_images[0].image_src }" alt="...">
+                              	</div>
+                              </div>
+                              <div class="col-sm-10">
+                                  <p class="mb-0">주문일 : ${orders.formatted_paydate }</p>
+                                  <p class="mb-0 font-weight-600">${ordersDetail.shopVO.product_name }</p>
+                                  <p class="mb-0" style="color: #aaa;">${ordersDetail.ordersDetailOptions[0].product_option }
+                                   외 ${ordersDetailOptionsSize}건</p>
+                                  <div style="display:flex; justify-content: space-between; align-items: end;">
+                                  	<div>
+	                                  <h5 class="mb-2">`+addCommas(ordersDetail.product_subprice + ordersDetail.delivery_price)+`원</h5>
+	                                  <a href="/mypage/orders_detail/${ordersDetail.order_detail_id }" class="readmore"><span>상세보기</span></a>
+                                  	</div>
+                                  	<div>
+	                                  <button class="btn btn-outline-secondary me-2" style="min-width: 150px;"
+	                                  onclick="location.href='/mypage/orders_detail/${ordersDetail.order_detail_id }';">문의하기</button>`
+	                                 
+	               if(ordersDetail.orders_detail_status == '구매확정'){
+	            	   content += `<button class="btn btn-outline-success" style="min-width: 150px;"
+	            	   onclick="location.href='/mypage/orders_detail/${ordersDetail.order_detail_id }';">리뷰쓰기</button>`
+	               }
+					if(ordersDetail.orders_detail_status == '결제완료'){
+						content += `<button class="btn btn-outline-danger" style="min-width: 150px;"
+						onclick="location.href='/mypage/orders_detail/${ordersDetail.order_detail_id }';">취소신청</button>`
+					}
+	                                  
+						content += `</div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+						`	
+					});
+					content += `</div>`
+					orderItemsContent.append(content);
+				});
+				
+				
+				
+				
+				
+				
+			},
+			error: function(){
+				alert("no");
+			}
+		});
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	// 정규식을 이용해 숫자 포맷팅

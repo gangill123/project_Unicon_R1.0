@@ -69,7 +69,8 @@
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
-	<%-- ${ordersInfos } --%>
+<%-- 	${ordersInfos } --%>
+<%-- 	${ordersCntInfo } --%>
 	
 	<section  style="padding-top: 50px;">
             <div class="container">
@@ -114,35 +115,39 @@
                         	<div class="process-steps-xs">
                                 <ul class="left-holder row mb-0" style="padding-left: 0; justify-content: center;">
                                     <li class="col-6 col-md-2">
-                                        <a href="#!"><div class="process-step-xs center-holder">
+                                        <a class="ordersStatusCheck" href="#!"><div class="process-step-xs center-holder">
                                             <div class="process-step-icon"><i class="fa-regular fa-credit-card"></i></div>
                                             <h3>결제완료</h3>
-                                            <h3>1</h3>
+                                            <h3>${ordersCntInfo[0] }</h3>
                                         </div></a>
                                     </li>
                                     <li class="col-6 col-md-2">
-                                        <div class="process-step-xs center-holder">
+                                        <a class="ordersStatusCheck" href="#!"><div class="process-step-xs center-holder">
                                             <div class="process-step-icon"><i class="fa-solid fa-box-open"></i></div>
                                             <h3>배송준비중</h3>
-                                        </div>
+                                            <h3>${ordersCntInfo[1] }</h3>
+                                        </div></a>
                                     </li>
                                     <li class="col-6 col-md-2">
-                                        <div class="process-step-xs center-holder">
+                                        <a class="ordersStatusCheck" href="#!"><div class="process-step-xs center-holder">
                                             <div class="process-step-icon"><i class="fa-solid fa-truck-fast"></i></div>
                                             <h3>배송중</h3>
-                                        </div>
+                                            <h3>${ordersCntInfo[2] }</h3>
+                                        </div></a>
                                     </li>
                                     <li class="col-6 col-md-2">
-                                        <div class="process-step-xs center-holder">
+                                        <a class="ordersStatusCheck" href="#!"><div class="process-step-xs center-holder">
                                             <div class="process-step-icon"><i class="fa-solid fa-people-carry-box"></i></div>
                                             <h3>배송완료</h3>
-                                        </div>
+                                            <h3>${ordersCntInfo[3] }</h3>
+                                        </div></a>
                                     </li>
                                     <li class="col-6 col-md-2">
-                                        <div class="process-step-xs center-holder">
+                                        <a class="ordersStatusCheck" href="#!"><div class="process-step-xs center-holder">
                                             <div class="process-step-icon"><i class="fa-solid fa-check-to-slot"></i></div>
                                             <h3>구매확정</h3>
-                                        </div>
+                                            <h3>${ordersCntInfo[4] }</h3>
+                                        </div></a>
                                     </li>
                                 </ul>
                             </div>
@@ -152,29 +157,32 @@
                               <div class="col-12 col-md-auto">
                                   <div class="row justify-content-center">
                                       <div class="col-auto my-2 my-md-0">
-                                      	<select id="resionSelector" class="form-control form-select" name="news_resion">
-                                              <option value="전체">전체기간</option>
-											    <option value="1개월">1개월 전</option>
-											    <option value="3개월">3개월 전</option>
-											    <option value="6개월">6개월 전</option>
-											    <option value="1년">1년 전</option>
+                                      	<select id="timeSelector" class="form-control form-select" name="news_resion">
+                                              <option value="0">전체기간</option>
+											    <option value="1">1개월 전</option>
+											    <option selected value="3">3개월 전</option>
+											    <option value="6">6개월 전</option>
+											    <option value="12">1년 전</option>
                                            </select>
                                       </div>
                                       <div class="col-auto my-2 my-md-0" style="padding-left: 0;">
-                                      	<select id="filterSelector" class="form-control form-select">
-                                              <option value="0">정렬</option>
-                                              <option value="1">결제완료</option>
-                                              <option value="2">배송중</option>
-                                              <option value="3">배송완료</option>
-                                              <option value="4">구매확정</option>
+                                      	<select id="statusSelector" class="form-control form-select">
+                                              <option disabled selected value="0">정렬</option>
+                                              <option value="결제완료">결제완료</option>
+                                              <option value="배송준비중">배송준비중</option>
+                                              <option value="배송중">배송중</option>
+                                              <option value="배송완료">배송완료</option>
+                                              <option value="구매확정">구매확정</option>
                                            </select>
                                       </div>
                                   </div>
                               </div>
                           </div>
-                        	
+                          
+                        <div id ="orderItemsContent">
+                        
                         <c:forEach var="orders" items="${ordersInfos }">
-                        <div style="margin-bottom: 40px;">
+                        <div style="margin-bottom: 50px;">
                         <h5 style="display: inline;">${orders.formatted_paydate }</h5>
                         <p style="display: inline; color: #aaa;">(주문번호 : ${orders.order_id })</p>
                         <c:forEach var="ordersDetail" items="${orders.ordersDetails }">
@@ -184,8 +192,10 @@
                           <div class="border rounded ps-3 pe-4 py-3 orderItem mb-1">
 	                          <div class="row">
 	                              <div class="col-sm-12 mb-4 mb-md-0" style="display: flex; justify-content: space-between;">
-	                              	  <h5 class="h6 font-weight-600 mb-4">${ordersDetail.status}</h5>
-	                              	  <c:if test="${ordersDetail.status == '배송완료' || '구매확정' }">
+	                              	  <h5 class="h6 font-weight-600 mb-4">${ordersDetail.orders_detail_status}</h5>
+	                              	  <c:if test="${ordersDetail.orders_detail_status == '배송중' || 
+				                              	  ordersDetail.orders_detail_status == '배송완료' || 
+				                              	  ordersDetail.orders_detail_status =='구매확정' }">
 		                              	  <a href="/orders/orders_detail/${ordersDetail.order_detail_id }" class="readmore"><span>배송조회</span></a>
 	                              	  </c:if>
 	                              </div>
@@ -205,8 +215,16 @@
 		                                  <a href="/mypage/orders_detail/${ordersDetail.order_detail_id }" class="readmore"><span>상세보기</span></a>
 	                                  	</div>
 	                                  	<div>
-		                                  <button class="btn btn-outline-secondary me-2" style="min-width: 150px;">문의하기</button>
-		                                  <button class="btn btn-outline-success" style="min-width: 150px;">리뷰쓰기</button>
+		                                  <button class="btn btn-outline-secondary me-2" style="min-width: 150px;"
+		                                  onclick="location.href='/mypage/orders_detail/${ordersDetail.order_detail_id }';">문의하기</button>
+		                                  <c:if test="${ordersDetail.orders_detail_status == '구매확정' }">
+		                                  	<button class="btn btn-outline-success" style="min-width: 150px;"
+		                                  onclick="location.href='/mypage/orders_detail/${ordersDetail.order_detail_id }';">리뷰쓰기</button>
+		                                  </c:if>
+		                                  <c:if test="${ordersDetail.orders_detail_status == '결제완료' }">
+		                                  	<button class="btn btn-outline-danger" style="min-width: 150px;"
+		                                  	onclick="location.href='/mypage/orders_detail/${ordersDetail.order_detail_id }';">취소신청</button>
+		                                  </c:if>
 	                                  	</div>
 	                                  </div>
 	                              </div>
@@ -219,6 +237,7 @@
                         </c:forEach>
                         
                         
+                        </div>	
                         
                         	</div>
                         </div>
@@ -238,6 +257,34 @@
 
 <script>
 $(document).ready(function () {
+	
+	// 주문상태 클릭 시 화면 재구성
+	$('.ordersStatusCheck').on('click',function(){
+		//alert("ok");
+		$('#timeSelector').val(0);
+		status = $(this).find('h3:first').text();
+		monthVal = 0;
+		//console.log(status);
+		getOrdersInfoToStatus(status, monthVal);
+	});
+	
+	
+	// 시간필터 선택시 상태 필터값 초기화
+	$('#timeSelector').on('change',function(){
+		$('#statusSelector').val(0);
+	});
+	
+	// 시간필터 선택 후 상태필터 적용 시 화면 재구성
+	$('#statusSelector').on('change',function(){
+		
+		status = $(this).val();
+		monthVal = parseInt($('#timeSelector').val(), 10);
+	    
+		getOrdersInfoToStatus(status, monthVal);
+		
+		
+	});
+	
 	
 	
 	

@@ -12,7 +12,7 @@ public class OrdersDetailVO {
 	private String product_id;
 	private int product_subprice;
 	private int delivery_price;
-	private String status;
+	private String orders_detail_status;
 
 	private List<OrdersDetailOptionVO> ordersDetailOptions;
 	

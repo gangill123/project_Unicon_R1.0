@@ -13,7 +13,7 @@ public class OrdersDetailOptionVO {
 	private String product_option;
 	private int option_price;
 	private int quantity;
-	private String status;
+	private String orders_detail_option_status;
 	private Timestamp dispatch_date;
 	private Timestamp cancellation_request_date;
 	private Timestamp return_request_date;

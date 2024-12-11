@@ -127,9 +127,11 @@
 							    <c:forEach var="ordersDetailOption" items="${orderDetailInfo.ordersDetails[0].ordersDetailOptions }">
 	                              <div class="col-sm-12 border-top pt-3" style="display: flex; justify-content: space-between;">
 	                              	<div>
-	                              	  <h5 class="font-weight-600 mb-4" style="display: inline; color: #aaa;">${ordersDetailOption.status }</h5>
+	                              	  <h5 class="font-weight-600 mb-4" style="display: inline; color: #aaa;">${ordersDetailOption.orders_detail_option_status }</h5>
 	                              	</div>
-	                              	<c:if test="${orderDetailInfo.status == '배송완료' || '구매확정' }">
+	                              	<c:if test="${ordersDetailOption.orders_detail_option_status == '배송중' || 
+				                              	  ordersDetailOption.orders_detail_option_status == '배송완료' || 
+				                              	  ordersDetailOption.orders_detail_option_status =='구매확정' }">
 	                              	  <a href="#!" class="readmore"><span>배송조회</span></a>
 	                              	</c:if>
 	                              </div>
@@ -148,7 +150,12 @@
 	                                  ${ordersDetailOption.quantity }개</p>
 	                                  <div style="display:flex; justify-content: flex-end; align-items: end;">
 		                                  <button type="button" class="btn btn-outline-secondary me-2" style="min-width: 150px;">문의하기</button>
-		                                  <button type="button" class="btn btn-outline-success" style="min-width: 150px;">리뷰쓰기</button>
+	                                  	  <c:if test="${ordersDetailOption.orders_detail_option_status == '구매확정' }">
+		                                  	<button class="btn btn-outline-success" style="min-width: 150px;">리뷰쓰기</button>
+		                                  </c:if>
+		                                  <c:if test="${ordersDetailOption.orders_detail_option_status == '결제완료' }">
+		                                  	<button class="btn btn-outline-danger" style="min-width: 150px;">취소신청</button>
+		                                  </c:if>
 	                                  </div>
 	                              </div>
 	                              </c:forEach>
