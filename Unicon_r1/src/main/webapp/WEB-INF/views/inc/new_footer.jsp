@@ -338,6 +338,9 @@
 
     <!-- custom js -->
     <script src="${pageContext.request.contextPath }/resources/new_assets/js/custom.js"></script>
+    
+    <!-- jjj js -->
+    <script src="${pageContext.request.contextPath }/resources/new_assets/js/jjj.js"></script>
 
     <!-- quform plugins js -->
     <script src="${pageContext.request.contextPath }/resources/new_assets/quform/js/plugins.js"></script>

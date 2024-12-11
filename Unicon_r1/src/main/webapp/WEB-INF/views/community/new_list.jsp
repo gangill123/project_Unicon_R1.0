@@ -35,10 +35,10 @@ z-index: 2000;
 
            <!-- Start links -->
            <div class="filtering col-sm-12 text-center">
-               <span data-filter='*'><a href="/community/main">입양 후기</a></span>
-               <span data-filter='.business'><a href="/community/main2">반려 이야기</a></span>
-               <span data-filter='.finance'><a href="/community/main3">실종</a></span>
-               <span data-filter='.consulting'><a href="/community/main4">임시 보호</a></span>
+               <span data-type='post01' data-filter='*'>입양 후기</span>
+               <span data-type='post02' data-filter='.business'>반려 이야기</span>
+               <span data-type='post03' data-filter='.finance'>실종</span>
+               <span data-type='post04' data-filter='.consulting'>임시 보호</span>
            </div>
            <!-- End links -->
            
@@ -78,7 +78,7 @@ z-index: 2000;
        </div>
 
        <!-- start portfolio gallery -->
-       <div class="text-center row">
+       <div class="text-center row communityType">
 
 		   <c:forEach var="p" items="${postList }">
            <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
@@ -440,6 +440,15 @@ $(document).ready(function(){
 	
 	// 모달 열때마다 게시물id 초기화
 	var post_id = null;
+	
+	// 게시물 종류 클릭
+	$('.filtering span').on('click', function(){
+		let postType = $(this).data('type');
+		console.log(postType);
+		
+		readPostType(postType);
+	});
+	// 게시물 종류 클릭
 	
 	// 모달 여는 글자 클릭
 	$('.open-modal').on('click', function() {
