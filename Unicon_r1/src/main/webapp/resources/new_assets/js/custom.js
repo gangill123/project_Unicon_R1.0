@@ -748,7 +748,7 @@
 			return item.news_id;
 		});
 		
-		console.log("newsIds :"+newsIds);
+		//console.log("newsIds :"+newsIds);
 
 		const index = $.inArray(newsId, newsIds);
 		
@@ -766,6 +766,17 @@
 		let news_content_next = index < allData.length - 1 ? allData[index+1].news_content : allData[0].news_content;
 		let news_place_next = index < allData.length - 1 ? allData[index+1].news_place : allData[0].news_place;
 		let news_startdate_next = index < allData.length - 1 ? allData[index+1].news_startdate : allData[0].news_startdate;
+		
+		let news_startdate_date = new Date(news_startdate);
+		let news_enddate_date = new Date(news_enddate);
+		let news_startdate_next_date = new Date(news_startdate_next);
+		const days = ["일","월","화","수","목","금","토"];
+		let news_startdate_dayName = days[news_startdate_date.getDay()];
+		let news_enddate_dayName = days[news_enddate_date.getDay()];
+		let news_startdate_next_dayName = days[news_startdate_next_date.getDay()];
+		//console.log(news_startdate_dayName);
+		
+		
 		
 		if(news_content_next.length > 80){
 			news_content_next = news_content_next.substring(0, 80) + "...";
@@ -829,15 +840,15 @@
 	                        <h6 style="font-size: 1.3rem;"><i class="fa-solid fa-map-location-dot"></i> 행사장소</h6>
 	                        <p class="mb-0">${news_place}</p>
 	                    </div>
-	                    <div class="col-lg-5 text-center">
+	                    <div class="col-lg-6 text-center">
 	                        <h6 style="font-size: 1.3rem;"><i class="fa-solid fa-calendar-days"></i> 행사일</h6>`
 			
 			if(news_startdate == news_enddate){
 				modalContext += `
-					<p class="mb-0">${news_startdate}</p>`
+					<p class="mb-0">${news_startdate}(${news_startdate_dayName})</p>`
 			} else{
 				modalContext += `
-					<p class="mb-0">${news_startdate} ~ ${news_enddate}</p>`
+					<p class="mb-0">${news_startdate}(${news_startdate_dayName}) ~ ${news_enddate}(${news_enddate_dayName})</p>`
 			}
 		
 			modalContext += `
@@ -860,7 +871,7 @@
 	                            <div class="col-sm-8">
 	                                <h5 class="h6 font-weight-600 mb-2">${news_subject_next}</h5>
 	                                <div style="min-height: 150px; max-height: 150px; overflow: hidden;">
-	                               		<p>행사일 : ${news_startdate_next}
+	                               		<p>행사일 : ${news_startdate_next}(${news_startdate_next_dayName})
 	                               		<br>장소 : ${news_place_next}
 	                               		<br>${news_content_next}</p>
 	                                </div>
@@ -1799,7 +1810,7 @@
 			},
 			type: 'GET',
 			success: function(response){
-				console.log(response);
+				//console.log(response);
 				let orderItemsContent = $('#orderItemsContent');
 				
 				orderItemsContent.empty();
@@ -1869,12 +1880,6 @@
 					content += `</div>`
 					orderItemsContent.append(content);
 				});
-				
-				
-				
-				
-				
-				
 			},
 			error: function(){
 				alert("no");

@@ -44,6 +44,15 @@ public class MypageDAO {
 		sqlSession.update(NAMESPACE+".petUpdate", vo);
 	}
 	
+	// 펫src 가져오기 (삭제용)
+	public String getPetSrc(int pet_id) {
+		return sqlSession.selectOne(NAMESPACE+".getPetSrc", pet_id);
+	}
+	
+	// 펫 정보 삭제
+	public void petDelete(int pet_id) {
+		sqlSession.delete(NAMESPACE+".petDelete", pet_id);
+	}
 	
 	
 }
