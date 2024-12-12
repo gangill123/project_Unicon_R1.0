@@ -49,10 +49,10 @@ public class AdptService {
 	}
 	
 	
-	public List<AnimalVO> getAnimalListAll() {
+	public List<AnimalVO> getAnimalListAll(String member_id) {
 		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
 		
-		return aDao.getAnimalListAll();
+		return aDao.getAnimalListAll(member_id);
 	}
 	
 	

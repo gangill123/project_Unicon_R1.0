@@ -58,17 +58,17 @@ public class AdptDAO {
 	}
 	
 	
-	public List<AnimalVO> getAnimalListAll() {
+	public List<AnimalVO> getAnimalListAll(String member_id) {
 		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
 		
-		return sqlSession.selectList(NAMESPACE+"getAnimalListAll");
+		return sqlSession.selectList(NAMESPACE+"getAnimalListAll", member_id);
 	}
 	
 	
 	public AnimalVO getAnimalListOne(String animal_id) {
 		logger.debug("( •̀ ω •́ )✧ getAnimalListOne(String animal_id) 실행");
 		
-		return sqlSession.selectOne(NAMESPACE+"getAnimalListOne",animal_id);
+		return sqlSession.selectOne(NAMESPACE+"getAnimalListOne", animal_id);
 	}
 	
 	
