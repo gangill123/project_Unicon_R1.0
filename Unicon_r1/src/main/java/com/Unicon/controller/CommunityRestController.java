@@ -47,47 +47,6 @@ public class CommunityRestController {
 	private static final Logger logger = LoggerFactory.getLogger(CommunityRestController.class);
 	
 	
-//	// 커뮤니티 글 등록
-//	@RequestMapping(value = "",method = RequestMethod.POST)
-//	public ResponseEntity<String> insertPost(@RequestBody PostVO postVO, ImageVO imageVO, @Autowired ServletContext servletContext){
-//		
-//		logger.info(" 커뮤니티REST컨트롤러 - insertPost() 실행 ");
-//		logger.info("postVO : {}",postVO);
-//		
-//		MultipartFile file = postVO.getPost_file();
-//		String uploadDir = servletContext.getRealPath("/uploads/");
-//		
-//		try {
-//			// 경로 없을때 directory 생성
-//			File dir = new File(uploadDir);
-//			if (!dir.exists()) {
-//	            dir.mkdirs();
-//	        }
-//			
-//			String uniqueFileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-//			File uploadFile = new File(uploadDir + uniqueFileName);
-//			
-//			String image_src = "/uploads/" + uniqueFileName;
-//			imageVO.setImage_src(image_src);
-//			// 파일 저장
-//			file.transferTo(uploadFile);
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		ResponseEntity<String> respEntity = null;
-//		try {
-//			logger.info(" 커뮤니티Service postInsert() 호출 ");
-//			communityService.postInsert(postVO);
-//			respEntity = new ResponseEntity<String>("ADD_Success",HttpStatus.OK);
-//		} catch (Exception e) {
-//			respEntity = new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
-//		}
-//		
-//		return respEntity;
-//		
-//	} // insertPost()
-	
 	// 해당하는 게시물과 전체 댓글 들고 오기
 	@RequestMapping(value = "/getAll/{post_id}",method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getPostListOneAndCommentListAll(@PathVariable("post_id") String post_id,
@@ -97,12 +56,6 @@ public class CommunityRestController {
 		ResponseEntity<Map<String, Object>> result = null;
 		
 		String member_id = "test7";
-		
-//		boolean isPostLike = communityService.isPostLike(post_id, member_id);
-//		model.addAttribute("isPostLike", isPostLike);
-//		logger.info("post_id : {}",post_id);
-//		logger.info("member_id : {}",member_id);
-//		logger.info(" isPostLike : {}",isPostLike);
 		
 		try {
 			PostVO postList = communityService.getPostListOne(post_id);
@@ -119,16 +72,13 @@ public class CommunityRestController {
 			responseMap.put("isPostLike", isPostLike);
 			
 			// 댓글 좋아요 여부 확인 -> member_id : 로그인 세션
-			boolean isCommentLike = communityService.isCommentLike(commentList.get(0).getComment_id(), member_id);
-			
-			/* 삭제예정
-			Map<Integer, Boolean> testMap = new HashMap<Integer, Boolean>();
-			for(int i = 0; i <commentList.size(); i++) {
-				testMap.put(commentList.get(i).getComment_id(), communityService.isCommentLike(commentList.get(i).getComment_id(), member_id) );
+			boolean isCommentLike = false; 
+			if(!commentList.isEmpty()) {
+				isCommentLike = communityService.isCommentLike(commentList.get(0).getComment_id(), member_id);
+			}else {
+				model.addAttribute("isCommentLike", isCommentLike);
 			}
-			삭제예정 */
 			
-			model.addAttribute("isCommentLike", isCommentLike);
 			responseMap.put("isCommentLike", isCommentLike);
 			
 			logger.info("responseMap : {}",responseMap);
@@ -339,22 +289,6 @@ public class CommunityRestController {
 						.append("_")
 						.append(pImage.getOriginalFilename())
 						.toString());
-			
-			/*
-			int index = destinationImage.getPath().indexOf("\\uploads\\");
-
-			if (index != -1) {
-				String modifiedPath = destinationImage.getPath().substring(index);
-				ImageVO ivo = new ImageVO();
-				ivo.setImage_id(postVO.getPost_id());
-				ivo.setImage_sequence(i);
-				ivo.setImage_src(modifiedPath);
-				ivo.setImage_type(postVO.getPost_type());
-				postImages.add(i, ivo);
-			} else {
-				logger.info("경로에 '\\uploads\\'가 없습니다.");
-			}
-			*/
 			
 			String modifiedPath = destinationImage.getPath().replace("\\uploads\\", "/uploads/");
 	        int index = modifiedPath.indexOf("/uploads/");

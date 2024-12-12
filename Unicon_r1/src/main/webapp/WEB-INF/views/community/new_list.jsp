@@ -405,7 +405,7 @@ z-index: 2000;
                        <input type="hidden" id="selectPost"/>
                        <input id="commentContent" type="text" style="width: 100%; height: 36px; margin-bottom: 10px;" placeholder="댓글 달기...">
                        <button id="commentContentBtn" type="button" class="btn btn-outline-success"><!-- 댓글 --><i class="fas fa-paper-plane"></i></button>
-                       <button type="button" class="btn btn-outline-primary">수정</button>
+                       <button id="updatePost" type="button" class="btn btn-outline-primary">수정</button>
                        <button type="button" class="btn btn-outline-danger">신고</button>
                        <button id="deletePost" type="button" class="btn btn-outline-danger">삭제</button>
                        
@@ -443,6 +443,7 @@ $(document).ready(function(){
 	
 	// 게시물 종류 클릭
 	$('.filtering span').on('click', function(){
+		
 		let postType = $(this).data('type');
 		console.log(postType);
 		
@@ -451,34 +452,24 @@ $(document).ready(function(){
 	// 게시물 종류 클릭
 	
 	// 모달 여는 글자 클릭
-	$('.open-modal').on('click', function() {
-		
+	$('.communityType').on('click','.open-modal', function() {
 		
 		// 모달 열기 전에 댓글 초기화 시키기
 		$('.contentRecycle').empty();
 		
         // 클릭한 요소의 data-post-id 속성에서 게시물ID 가져오기
         post_id = $(this).data('post-id');
+        console.log(post_id);
         
         // 클릭한 요소의 게시물ID를 댓글 히든에 저장하기
         $('#selectPost').val(post_id);
         
-        // 확인용 콘솔 로그
-        // console.log(post_id);
-        
-//         // comment_id 댓글 아이디 값 가져오기
-//         var comment_id = $('.brnDelete').data('comment-id');
-//         console.log(comment_id);
-        
         $.ajax({
-        	url : '/community/getAll/' + post_id,
+        	url : '${pageContext.request.contextPath }/community/getAll/' + post_id,
         	method : 'GET',
         	dataType : 'json',
         	success : function(data){
         		
-//         		// comment_id 댓글 아이디 값 가져오기
-//                 var comment_id = $('.brnDelete').data('comment-id');
-//                 console.log(comment_id);
         		
         		// 기본 이미지로 초기화
         		$('#xzoom_magnific').attr('src', defaultImage1);
@@ -602,7 +593,7 @@ $(document).ready(function(){
         		        if (data.isPostLike == true) {
         		            // 좋아요 취소
         		            $.ajax({
-        		                url: '/community/postLikeDelete/' + post_id,
+        		                url: '${pageContext.request.contextPath }/community/postLikeDelete/' + post_id,
         		                type: 'POST',
         		                data: { member_id: $('#loginMemberId').val() },
         		                success: function(data) {
@@ -618,7 +609,7 @@ $(document).ready(function(){
         		        } else {
         		            // 좋아요 추가
         		            $.ajax({
-        		                url: '/community/postLikeInsert/' + post_id,
+        		                url: '${pageContext.request.contextPath }/community/postLikeInsert/' + post_id,
         		                type: 'POST',
         		                data: { member_id: $('#loginMemberId').val() },
         		                success: function(data) {
@@ -638,10 +629,6 @@ $(document).ready(function(){
         		// 게시물 좋아요 버튼 이벤트
         		togglePostLike();
         		
-        		
-        		
-        		
-        		
         		// 댓글 좋아요 버튼 클릭 이벤트 핸들러
         		function toggleCommentLike() {
         		    $('.commentLikeCheck').off('click').on('click', function() {
@@ -651,7 +638,7 @@ $(document).ready(function(){
         		        if (isCommentLike == true) {
         		            // 좋아요 취소
         		            $.ajax({
-        		                url: '/community/commentLikeDelete/' + comment_id,
+        		                url: '${pageContext.request.contextPath }/community/commentLikeDelete/' + comment_id,
         		                type: 'POST',
         		                data: { member_id: $('#loginMemberId').val() },
         		                success: function(data) {
@@ -668,7 +655,7 @@ $(document).ready(function(){
         		        } else {
         		            // 좋아요 추가
         		            $.ajax({
-        		                url: '/community/commentLikeInsert/' + comment_id,
+        		                url: '${pageContext.request.contextPath }/community/commentLikeInsert/' + comment_id,
         		                type: 'POST',
         		                data: { member_id: $('#loginMemberId').val() },
         		                success: function(data) {
@@ -688,9 +675,6 @@ $(document).ready(function(){
 
         		// 댓글 좋아요 버튼 이벤트
         		toggleCommentLike();
-        		
-        		
-        		
         		
         	},
         	error : function(){
@@ -715,7 +699,7 @@ $(document).ready(function(){
             }
         	
         	$.ajax({
-        		url : '/community/insertComment',
+        		url : '${pageContext.request.contextPath }/community/insertComment',
         		type : 'POST',
         		data : JSON.stringify(content),
         		contentType : "application/json",
@@ -737,7 +721,7 @@ $(document).ready(function(){
         	// 버튼에서 댓글 ID 가져오기
          	var comment_id = $(this).data('comment-id');
         	$.ajax({
-        		url : '/community/deleteComment/' + comment_id,
+        		url : '${pageContext.request.contextPath }/community/deleteComment/' + comment_id,
         		type : 'DELETE',
         		success : function(data){
         			alert('댓글이 삭제되었습니다.');
@@ -754,7 +738,7 @@ $(document).ready(function(){
      	$(document).on('click', '#deletePost', function(){
      		console.log(post_id);
      		$.ajax({
-     			url : '/community/deletePost/' + post_id,
+     			url : '${pageContext.request.contextPath }/community/deletePost/' + post_id,
      			type : 'DELETE',
      			success : function(data){
      				alert('게시물이 삭제되었습니다.');
@@ -766,6 +750,13 @@ $(document).ready(function(){
      		}); // $.ajax
      	}); // 게시물 삭제 클릭
      	// 게시물 삭제
+     	
+     	// 게시물 수정
+     	$(document).on('click', '#updatePost', function(){
+     		alert(post_id);
+     		window.location.href = '${pageContext.request.contextPath }/community/main03/' + post_id;
+     	}); // 게시물 수정 클릭
+     	// 게시물 수정
      	
     }); // 모달 여는 글자 클릭
     
