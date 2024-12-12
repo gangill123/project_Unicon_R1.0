@@ -37,8 +37,13 @@
 	
 	<association property="categoryDataVO" resultMap="CategoryResultMap"/>
 	
-	<collection property="option_id" ofType="com.Unicon.domain.OptionVO" />
 	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
+</resultMap>
+
+<resultMap type="com.Unicon.domain.CategoryDataVO" id="CategoryDataMap">
+	<id property="category_code" column="category_code"/>
+	<result property="category_type" column="category_type"/>
+	<result property="category_value" column="category_value"/>
 </resultMap>
 
 <resultMap type="com.Unicon.domain.ImageVO" id="ImageResultMap">
@@ -95,7 +100,7 @@
         #{manufacturer},
         #{product_origin},
         #{product_expiry},
-        '등록',
+        '승인대기',
         #{delivery_method},
         #{delivery_price},
         (SELECT address FROM member WHERE member_id = 'junghun87'),  -- 서브쿼리 추가 -> 이거 나중에는 'junghun87'이걸 member_id로 변경해야됨

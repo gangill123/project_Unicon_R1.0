@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="kr">
   <head>
@@ -15,10 +15,94 @@
     <link rel="stylesheet" href="/resources/admin/css/style.css">
     <link rel="shortcut icon" href="/resources/admin/images/favicon.png" />
 	
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+	// 쿠키를 설정하는 함수
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    // 쿠키를 가져오는 함수
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+	 var popups = [];
+    <c:forEach var="popup" items="${popups}">
+        popups.push('${popup.anoId}'); // 각 팝업의 anoTitle을 popups 배열에 추가
+    </c:forEach>
+	
+    $(document).ready(function() {
+    	// popups 배열을 반복하여 각 모달을 열기
+        // 모든 팝업에 대해 반복
+        <c:forEach var="popup" items="${popups}">
+            var popupId = '${popup.anoId}'; // 현재 팝업의 ID
+            var cookieValue = getCookie('hideModal-' + popupId);
+
+            if (!cookieValue) {
+                $('#myModal-' + popupId).modal('show'); // 쿠키가 없으면 모달 열기
+            }
+
+            $('#confirmBtn-' + popupId).on('click', function() {
+                // "확인" 버튼 클릭 시 쿠키에 저장
+                setCookie('hideModal-' + popupId, 'true', 1); // 1일 동안 유효
+                $('#myModal-' + popupId).modal('hide'); // 모달 닫기
+            });
+        </c:forEach>
+    	
+    	
+        let currentIndex = 0; // 현재 슬라이드 인덱스
+        const $slides = $('.slides');
+        const totalSlides = $('.slide').length;
+
+        function updateSlidePosition() {
+            $slides.css('transform', 'translateX(' + (-currentIndex * 100) + '%)');
+        }
+
+        $('#next').on('click', function() {
+            currentIndex = (currentIndex + 1) % totalSlides; // 다음 슬라이드로 이동
+            updateSlidePosition();
+        });
+
+        $('#prev').on('click', function() {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // 이전 슬라이드로 이동
+            updateSlidePosition();
+        });
+
+        // 자동 슬라이드 기능
+        setInterval(function() {
+            currentIndex = (currentIndex + 1) % totalSlides; // 다음 슬라이드로 이동
+            updateSlidePosition();
+        }, 3000); // 3초마다 슬라이드 전환
+        
+        
+        
+        
+        
+    });
+    </script>
 	<style type="text/css">
+	.modal-backdrop {
+    	background: transparent !important; /* 배경을 투명하게 설정 */
+	}
 	.store-notice {
 		color: black;
 		line-height: 42px;
+		position: relative;
+	    overflow: hidden;
+	    width: 100%; /* 슬라이드 너비를 100%로 설정 */
 	}
 	
 	.store-notice-left{
@@ -56,6 +140,28 @@
 	.store-flex span a {
 		color : gray;
 	}
+	
+	.slides {
+	    display: flex;
+	    transition: transform 0.5s ease;
+	}
+	
+	.slide {
+	   min-width: 100%; /* 슬라이드 하나의 너비를 100%로 설정 */
+	    box-sizing: border-box;
+	    display: flex; /* 내용이 중앙에 오도록 설정 */
+	    align-items: center; /* 수직 중앙 정렬 */
+	    justify-content: center; /* 수평 중앙 정렬 */
+	}
+	/* 모달 */
+	.modal-dialog {
+		left: -20%;
+    	top: 20%;
+	}
+	.modal-body {
+		padding: 0 !important;
+	}
+	/* 모달 */
 	</style>    
     
     
@@ -70,18 +176,35 @@
         <!-- partial:/WEB-INF/views/inc/admin_sidebar.jsp" -->
 		<%@ include file="/WEB-INF/views/inc/admin_sidebar_store.jsp"%>
         <!-- partial -->
+        <!-- 모달 -->
+        <!-- 페이드 -->
+<%-- 	<div class="modal fade" id="myModal-${popup.anoId}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-${popup.anoId}" aria-hidden="true"> --%>
+		<c:if test="${not empty popups}">
+		    <c:forEach var="popup" items="${popups}">
+		        <div class="modal" id="myModal-${popup.anoId}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-${popup.anoId}" aria-hidden="true">
+		            <div class="modal-dialog" role="document">
+		                <div class="modal-content" style="width: ${popup.popupWidth}; height: ${popup.popupHeight};">
+		                    <div class="modal-header">
+		                        <h5 class="modal-title" id="myModalLabel-${popup.anoId}">${popup.anoTitle}</h5>
+		                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                            <span aria-hidden="true">&times;</span>
+		                        </button>
+		                    </div>
+		                    <div class="modal-body">
+		                        <img style="width: 100%; height : 100%;" src="${popup.image_src}" alt="팝업이미지"> 
+		                    </div>
+		                    <div class="modal-footer">
+		                       	<div id="confirmBtn-${popup.anoId}">
+			                       	 오늘하루 안보기  <input type="checkbox" />
+		                       	</div>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </c:forEach>
+		</c:if>
         <div class="main-panel">
           <div style="padding: .8rem 2.875rem 0 2.875rem;" class="content-wrapper">
-<!--             <div class="row" id="proBanner">
-              <div class="col-12">
-				<span class="d-flex align-items-center purchase-popup">
-                  <p>Like what you see? Check out our premium version for more.</p>
-                  <a href="https://github.com/BootstrapDash/ConnectPlusAdmin-Free-Bootstrap-Admin-Template" target="_blank" class="btn ml-auto download-button">Download Free Version</a>
-                  <a href="http://www.bootstrapdash.com/demo/connect-plus/jquery/template/" target="_blank" class="btn purchase-button">Upgrade To Pro</a>
-                  <i class="mdi mdi-close" id="bannerClose"></i>
-                </span>
-              </div>
-            </div> -->
             <div class="d-xl-flex justify-content-between align-items-start">
             </div>
             <div class="row">
@@ -89,7 +212,15 @@
                 <div class="card">
                    <div style="padding: 1rem; display: flex" class="card-body text-center align-items-start justify-content-between">
                    		 <i class="mdi mdi-chevron-left store-notice-left"></i>
-                   		 <div class="store-notice" id="store-notices"><span>공지사항 내용 5개 슬라이드로 돌아가면서 보여줄 예정</span></div>
+                   		 <div class="store-notice" id="store-notices">
+                   		 	<div class="slides">
+						        <c:forEach var="notice" items="${notices}">
+						            <div class="slide">
+						                <span>${notice.anoTitle}</span>
+						            </div>
+						        </c:forEach>
+						    </div>
+                   		 </div>
                    		 <i class="mdi mdi-chevron-right store-notice-right"></i>
                    </div>
                 </div>

@@ -111,14 +111,19 @@ public class StoreRestController {
   	}
     
 
-	// 신규 상품 등록 목록
-	@RequestMapping( value = "/products/new" , method=RequestMethod.GET)
-	public String showNewProductList(Model model) {
-//		List<ProductVO> newProducts = aService.getNewProducts();
-//		
-//		
-//		model.addAttribute("newProducts", newProducts);
-		return "/store/admin/newProducts";
+	// 신규 상품 등록 목록 이거 데이터 테이블때문에 만듬 신규 상품 등록된것들 가져오는거임
+	@RequestMapping( value = "/admin/products/new" , method=RequestMethod.GET)
+	public ResponseEntity<List<ProductVO>> showNewProductList() {
+		List<ProductVO> newProducts = aService.getNewProducts();
+		
+		
+		logger.info("newProducts : " + newProducts);
+		
+		if(newProducts != null) {
+			return new ResponseEntity<List<ProductVO>>(newProducts,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<List<ProductVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	// 어드민 공지사랑 list 가져오기.
@@ -135,7 +140,7 @@ public class StoreRestController {
 		}
 	}
 	
-	
+	// 
 	@RequestMapping( value="/admin/notices" , method =RequestMethod.POST )
 	public ResponseEntity<String> noticePOST(AdminNoticeVO vo) {
 		logger.info("/admin/notices 실행" + vo);
@@ -158,7 +163,59 @@ public class StoreRestController {
 	        return new ResponseEntity<String>("공지사항 등록 성공", HttpStatus.OK);
 	    }
 	}
+	@RequestMapping( value="/admin/notices" , method =RequestMethod.PATCH )
+	public ResponseEntity<String> noticePATCH(@RequestBody AdminNoticeVO vo) {
+		logger.info("/admin/noticesPATCH 실행" + vo);
+		
+		// importantCh가 true일 경우 important를 1로 설정
+		if (vo.isImportantCh()) {
+			vo.setImportant((byte) 1); // 중요 공지로 설정
+		} else {
+			vo.setImportant((byte) 0); // 중요 공지가 아닐 경우 0으로 설정
+		}
+		
+		
+		int result = aService.updateNotices(vo); // insertNotices 메서드 호출
+		
+		if (result == 0) {
+			// 삽입 실패 시
+			return new ResponseEntity<String>("공지사항 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+			// 삽입 성공 시
+			return new ResponseEntity<String>("공지사항 수정 성공", HttpStatus.OK);
+		}
+	}
 	
+	 @PostMapping("/admin/popups")
+	 public ResponseEntity<String> createPopup(@ModelAttribute AdminNoticeVO popupVO, HttpServletRequest req) {
+		 // PopupVO에서 데이터 처리
+	        System.out.println("제목: " + popupVO.getTitle());
+	        System.out.println("게시 기간: " + popupVO.getDateInput());
+	        System.out.println("시작일: " + popupVO.getStart_date());
+	        System.out.println("종료일: " + popupVO.getEnd_date());
+	        System.out.println("팝업 너비: " + popupVO.getPopupWidth());
+	        System.out.println("팝업 높이: " + popupVO.getPopupHeight());
+	        
+	        ProductVO product = new ProductVO();
+
+		     // MultipartFile을 List<MultipartFile>로 변환
+		     List<MultipartFile> uploadImages = new ArrayList<>();
+		     if (popupVO.getUpload_images() != null && !popupVO.getUpload_images().isEmpty()) {
+		         uploadImages.addAll(popupVO.getUpload_images()); // 전체 리스트 추가
+		     }
+	
+		     product.setUpload_images(uploadImages); // MultipartFile 리스트 설정
+	        
+	        // MultipartFile을 List<MultipartFile>로 변환
+	        List<ImageVO> images = saveImage(product, req, "popupImg");
+	        popupVO.setPopup_images(images);
+	        
+	        int result = aService.insertPopup(popupVO);
+	        logger.info("( •̀ ω •́ )✧ result : " + result);
+	        
+	        // 성공적으로 처리되었다는 응답
+	        return ResponseEntity.status(HttpStatus.CREATED).body("팝업이 생성되었습니다."); // 201 Created
+	    }
 	
 	  
 	  
@@ -207,7 +264,9 @@ public class StoreRestController {
 			if(action.equals("mainImg")) {
 				ivo.setImage_type("storeMain");
 				ivo.setImage_id("store-main-img");
-			}else {
+			}else if(action.equals("popupImg")) {
+				ivo.setImage_type("popup");
+			} else {
 				ivo.setImage_type("prod");
 			}
 			logger.info("( •̀ ω •́ )✧ ivo : " + ivo);

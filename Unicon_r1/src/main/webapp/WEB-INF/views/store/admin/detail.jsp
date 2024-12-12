@@ -83,6 +83,7 @@
 	</style>    
     
     <script type="text/javascript">
+    var anoId = '${list.anoId}';
     $(document).ready(function() {
         $('.notice-btn button').on('click', function() {
         	// 모든 언더라인에서 selected 클래스 제거
@@ -93,8 +94,8 @@
             $(this).next('.underline').addClass('selected');
         });
         
-        $('#create-notice').click(function() {
-            window.location.href = '/store/admin/noticeForm'; // 예시 URL
+        $('#update-notice').click(function() {
+            window.location.href = '/store/admin/noticeUpdateForm/'+anoId; // 예시 URL
         });
 
         
@@ -144,8 +145,12 @@
                     		</div>
                     	</div>
                     	<div class="dropdown-divider"></div>
-                    	<div class="d-xl-flex justify-content-center align-items-start">${list.anoContent}</div>
+                    	<div class="d-xl-flex justify-content-center align-items-start" style="flex-direction: column;">${list.anoContent}</div>
                     </div>
+                    <%-- <c:if test="${sessionScope.member_id == 'admin'}">
+    					<button>수정</button>
+					</c:if> --%>
+    					<button style="float: right;" class="btn btn-primary btn-fw" id="update-notice">수정</button>
                   </div>
                 </div>
               </div>

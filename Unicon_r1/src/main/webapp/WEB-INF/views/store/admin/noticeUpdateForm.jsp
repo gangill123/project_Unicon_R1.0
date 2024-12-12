@@ -52,25 +52,6 @@
 	}
 	</style>    
     
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('.notice-btn button').on('click', function() {
-        	// 모든 언더라인에서 selected 클래스 제거
-            $('.underline').removeClass('selected');
-            console.log("실행");
-            console.log(this);
-            
-            // 클릭한 버튼의 다음 언더라인에 selected 클래스 추가
-            $(this).next('.underline').addClass('selected');
-        });
-        
-        $('#create-notice').click(function() {
-            window.location.href = '/create-notice'; // 예시 URL
-        });
-
-        
-    });
-    </script>
     
     
   </head>
@@ -96,14 +77,14 @@
                         <span style="margin-left: 8px;">중요 공지</span>
                     </div>
                     <div class="form-group">
-                    	<div class="">
-                       <input type="text" class="form-control" id="input-title" name="anoTitle" placeholder="제목">
+                    	<div >
+                       <input type="text" class="form-control" id="input-title" name="anoTitle" placeholder="제목" value="${list.anoTitle}" required="required">
                     	</div>
                     </div>
 					<div class="mb-3" style="display: flex; justify-content: center;">
                        <textarea id="noContent" name="noContent"></textarea>
                     </div>
-                    <button type="submit" id="submit" class="btn btn-primary mr-2">저장</button>
+                    <button type="submit" id="submit" class="btn btn-primary mr-2">수정</button>
                     <button class="btn btn-light">취소</button>
                     </form>
                   </div>
@@ -190,18 +171,42 @@
         
         $('#submit').click(function () {
         	event.preventDefault(); // 기본 폼 제출 방지
-        	var formData = new FormData($("#myForm")[0]); // jQuery 객체에서 DOM 요소로 변환
+        	
+        	 // 제목 값 가져오기
+            var title = $('#input-title').val().trim();
+            // 썸머노트 내용 가져오기
+            var content = $('#noContent').summernote('code').trim();
+	         // 중요 공지 체크 여부 가져오기
+            var important = $('input[name="importantCh"]').is(':checked'); // 체크박스의 상태
+        	 // 유효성 검사
+            if (title === '') {
+                alert('제목을 입력해 주세요.');
+                $('#input-title').focus();
+                return false;
+            }
 
+         	// 내용 유효성 검사: <p> 태그 안에 값이 있는지 확인
+            var hasContent = $('<div>').html(content).find('p').text().trim().length > 0;
+
+            if (!hasContent) {
+                alert('내용을 입력해 주세요.');
+                $('#noContent').summernote('focus'); // 썸머노트에 포커스 주기
+                return false;
+            }
+            
             var htmlContent = $('#noContent').summernote('code');
-            formData.append("anoContent", htmlContent); // FormData에 summernote 내용 추가
             
         	// AJAX 요청을 통해 데이터를 전송
             $.ajax({
                 url: '/store/admin/notices', // 데이터를 전송할 URL
-                type: 'POST',
-                data: formData,
-                processData: false, // jQuery가 데이터를 처리하지 않도록 설정
-                contentType: false, // jQuery가 콘텐츠 유형을 설정하지 않도록 설정
+                type: 'PATCH',
+                data: JSON.stringify({
+                    anoId: anoId, // VO의 필드
+                    anoTitle: title,
+                    anoContent: htmlContent,
+                    importantCh: important
+                }),
+                contentType: 'application/json', // JSON 형식으로 전송
                 success: function(response) {
                     // 성공 시 처리
                     console.log('성공:', response);
@@ -214,6 +219,24 @@
             });
             
         });
+     	// 서버에서 가져온 내용을 썸머노트에 설정
+     	var savedContent = '${list.anoContent.replace("'", "\\'").replace('"', '\\"')}';
+        $('#noContent').summernote('code', savedContent);
+        
+        
+     	var anoId = '${list.anoId}';
+     	var importantValue = '${list.important}';
+     	var importantNum = Number(importantValue);
+     	console.log(importantNum);
+     	if(importantNum) {
+     		 $('input[name="importantCh"]').prop('checked', true); // 체크박스 체크
+     	}
+     	
+     	
+        $('.btn-light').click(function () {
+	        window.history.back();
+        });
+        
     });
     </script>
   </body>
