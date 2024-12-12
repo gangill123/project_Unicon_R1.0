@@ -36,28 +36,34 @@ public class StoreController {
 	@Inject
 	private AdminStoreService aService;
 	
+	// 쇼핑몰 메인 페이지
 	@RequestMapping( value = "/main" , method=RequestMethod.GET)
-	public String main(HttpSession session, Model model) {
+	public String StoreMain(HttpSession session, Model model) {
 		logger.info("main 실행");
-		logger.info(" /store/main.jsp 뷰페이지 실행");
 		
-		String member_id = (String) session.getAttribute("id");
-		
-		if(member_id == "admin") {
-			List<ImageVO> list = aService.getAdminStoreImg();
-			logger.info("list : "+ list);
-			model.addAttribute("adminStoreImg", list);
-		}
-		
+		// 공지사항과 팝업 가져오기
+	    List<AdminNoticeVO> notices = aService.getNoticePreviewList(); // 공지사항 리스트
+	    List<AdminNoticeVO> popups = aService.getActivePopupList(); // 팝업 리스트
+	    
+	    // 모델에 데이터 담기
+	    model.addAttribute("notices", notices);
+	    model.addAttribute("popups", popups);
+	    logger.info("main 실행 : "+popups);
+	    
 		return "/store/main";
 	}
 	
-	
+	// 상품 조회 / 수정
 	@RequestMapping( value="/products/list" , method =RequestMethod.GET )
 	public void productsList() {
 		logger.info("products/list 실행");
+		
+		// 등록된 상품 List 가져가야됨.
 	}
 	
+	
+	
+	// 2차 카테고리 가져오기
 	@RequestMapping( value="/products/create" , method =RequestMethod.GET )
 	public void productsCreate(Model model) {
 		logger.info("/products/create 실행");
@@ -92,28 +98,94 @@ public class StoreController {
 		logger.info("/claim/blackConsumerGET 실행");
 	}
 	
+	
+	
+	/////////////////////////////어드민 /////////////////// ////////////////////////////////////////////// 
+	/////////////////////////////어드민 /////////////////// ////////////////////////////////////////////// 
+	/////////////////////////////어드민 /////////////////// ////////////////////////////////////////////// 
+	/////////////////////////////어드민 /////////////////// ////////////////////////////////////////////// 
+
+	
+	// 쇼핑몰 판매 관리자 페이지
+	@RequestMapping( value = "/admin/main" , method=RequestMethod.GET)
+	public String AdminMain(HttpSession session, Model model) {
+		logger.info("main 실행");
+		logger.info(" /store/main.jsp 뷰페이지 실행");
+		
+		String member_id = (String) session.getAttribute("id");
+		
+		if(member_id == "admin") {
+			List<ImageVO> list = aService.getAdminStoreImg();
+			logger.info("list : "+ list);
+			model.addAttribute("adminStoreImg", list);
+		}
+		return "/store/admin/main";
+	}
+	
+	
+	// 승인 해야되는 새로 등록된 상품 리스트
+	@RequestMapping(value ="/admin/product/newList" , method = RequestMethod.GET )
+	public void newProductList() {
+		logger.info("newProductList 실행");
+		
+		/* aService.getNewProducts(); */
+		
+	}
+	
+	
 	// 어드민 공지사항.
 	@RequestMapping( value="/admin/notice" , method =RequestMethod.GET )
 	public void notice(HttpSession session, Model model) {
 		logger.info("/admin/notice 실행");
 	}
-	
 	// 어드민 공지사항 생성
 	@GetMapping("/admin/noticeForm")
-     public void createNoticeForm() {
+	public void createNoticeForm() {
 		logger.info("/admin/createNoticeForm 실행");
-	 }
+	}
 	
+	// 어드민 공지사항 생성
+	@GetMapping("/admin/noticeUpdateForm/{ano_id}")
+	public String updateNoticeForm(@PathVariable("ano_id") int ano_id ,Model model ) {
+        // ano 변수를 사용하여 특정 공지사항에 대한 작업 수행
+		logger.info("공지사항 ID: " + ano_id);
 
+		AdminNoticeVO result = aService.getNoticeById(ano_id); // insertNotices 메서드 호출
+		logger.info("result : " + result);
+		
+		if (result == null) {
+			// result가 null인 경우 리다이렉트
+			return "redirect:/store/admin/notice"; // 적절한 리다이렉트 URL로 변경
+		}
+		model.addAttribute("list", result);
+		
+        return "/store/admin/noticeUpdateForm"; // 수정할 JSP 파일명
+    }
+	
+	// 공지사항 상세보기
 	@RequestMapping( value="/admin/notices/detail/{ano_id}" , method =RequestMethod.GET )
 	public String GetNoticeContent(@PathVariable("ano_id") int ano_id ,Model model ) {
 		// ano 변수를 사용하여 특정 공지사항에 대한 작업 수행
-	    logger.info("공지사항 ID: " + ano_id);
+		logger.info("공지사항 ID: " + ano_id);
 		
-	    AdminNoticeVO result = aService.getNoticeById(ano_id); // insertNotices 메서드 호출
-	    logger.info("result : " + result);
-	    model.addAttribute("list", result);
-	    return "/store/admin/detail";
+		AdminNoticeVO result = aService.getNoticeById(ano_id); // insertNotices 메서드 호출
+		logger.info("result : " + result);
+		
+		if (result == null) {
+			// result가 null인 경우 리다이렉트
+			return "redirect:/store/admin/notice"; // 적절한 리다이렉트 URL로 변경
+		}
+		model.addAttribute("list", result);
+		return "/store/admin/detail";
+	}
+	
+	
+	
+	// 어드민 팝업 공지사항.
+	@RequestMapping( value="/admin/popupForm" , method =RequestMethod.GET )
+	public String GetpopupForm() {
+		logger.info("/admin/popup 실행");
+		return "/store/admin/popupForm";
 	}
 	
 	

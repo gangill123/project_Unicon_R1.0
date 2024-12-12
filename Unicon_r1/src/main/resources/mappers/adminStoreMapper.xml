@@ -24,10 +24,54 @@
     <result property="important" column="important" />
     <result property="status" column="status" />
     <result property="viewCount" column="view_count" />
+    
+    <result property="start_date" column="start_date" />     <!-- 시작일 -->
+    <result property="end_date" column="end_date" />         <!-- 종료일 -->
+    <result property="popupWidth" column="popup_width" />   <!-- 팝업 너비 -->
+    <result property="popupHeight" column="popup_height" /> <!-- 팝업 높이 -->
+    
 </resultMap>
 
+<resultMap type="com.Unicon.domain.ProductVO" id="ProductResultMap">
+	<id property="product_id" column="product_id" />
+	<result property="product_seller_id" column="product_seller_id" />
+	<result property="product_category_type" column="product_category_type" />
+	<result property="product_category_value" column="product_category_value" />
+	<result property="product_keyword" column="product_keyword" />
+	<result property="product_name" column="product_name" />
+	<result property="product_price" column="product_price" />
+	<result property="start_date" column="start_date" />
+	<result property="end_date" column="end_date" />
+	<result property="discount_rate" column="discount_rate" />
+	<result property="product_stock" column="product_stock" />
+	<result property="product_content" column="product_content" />
+	<result property="brand" column="brand" />
+	<result property="manufacturer" column="manufacturer" />
+	<result property="product_origin" column="product_origin" />
+	<result property="product_expiry" column="product_expiry" />
+	<result property="product_status" column="product_status" />
+	<result property="delivery_method" column="delivery_method" />
+	<result property="delivery_company" column="delivery_company" />
+	<result property="delivery_price" column="delivery_price" />
+	<result property="address" column="address" />
+	<result property="create_date" column="create_date" />
+	<result property="update_date" column="update_date" />
+	<result property="approval_date" column="approval_date" />
+	
+	<result property="approval_id" column="approval_id" />
+	<result property="comments" column="comments" />
+	<result property="option_type" column="option_type" />
+	
+	<association property="categoryDataVO" resultMap="CategoryResultMap"/>
+	
+	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
+</resultMap>
 
-
+<resultMap type="com.Unicon.domain.CategoryDataVO" id="CategoryResultMap">
+	<id property="category_code" column="category_code"/>
+	<result property="category_type" column="category_type"/>
+	<result property="category_value" column="category_value"/>
+</resultMap>
 
 
 
@@ -70,9 +114,10 @@
 
 
 <select id="getNoticeList" resultMap="AdminNoticeResultMap">
-SELECT *
-FROM _admin_notice
-ORDER BY important desc, ano_regdate DESC;
+SELECT ano_id,ano_title,ano_regdate,important
+FROM _admin_notice 
+where ano_content IS NOT NULL
+ORDER BY important desc, ano_regdate DESC
 </select>
 
 <insert id="insertNotices">
@@ -81,11 +126,99 @@ ORDER BY important desc, ano_regdate DESC;
     VALUES (NULL, NULL, #{anoTitle}, #{anoContent}, 'junghun87', NOW(), NOW(), #{important}, '게시중', 1)
 </insert>
 
+<update id="updateNotices">
+    UPDATE _admin_notice
+    SET 
+        ano_title = #{anoTitle}, 
+        ano_content = #{anoContent}, 
+        ano_moddate = NOW(), 
+        important = #{important}, 
+        status = '게시중'
+    WHERE ano_id = #{anoId}
+</update>
+
 <select id="getNoticeById" resultMap="AdminNoticeResultMap">
 SELECT *
 FROM _admin_notice
-where ano_id = #{anoId}
-ORDER BY important desc, ano_regdate DESC;
+where ano_id = #{anoId} 
+ORDER BY important desc, ano_regdate DESC
 </select>
+
+<insert id="insertPopup" useGeneratedKeys="true" keyProperty="anoId">
+    INSERT INTO _admin_notice (
+        ano_id, 
+        ano_title, 
+        ano_writer, 
+        ano_regdate, 
+        ano_moddate, 
+        status, 
+        start_date, 
+        end_date, 
+        popup_width, 
+        popup_height
+    ) VALUES (
+        null, 
+        #{anoTitle}, 
+        'junghun87', -- 이거 memberID
+        now(), 
+         now(), 
+        "게시중", 
+        #{start_date}, 
+        #{end_date},
+        #{popupWidth}, 
+        #{popupHeight}
+    )
+</insert>
+
+
+
+<insert id="insertPopupImg" parameterType="List">
+	insert into _image (image_id, image_type, image_sequence, image_src) 
+	 values 
+	  <foreach collection="list" item="li" separator=","> 
+	   (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
+	  </foreach> 
+</insert>
+
+
+<select id="getNoticePreviewList" resultMap="AdminNoticeResultMap">
+	select ano_id,ano_title from _admin_notice 
+	where popup_width is null
+	ORDER BY ano_regdate DESC
+	LIMIT 5
+</select>
+
+<select id="getActivePopupList" resultMap="AdminNoticeResultMap">
+	SELECT 
+        a.ano_id,
+        a.ano_title,
+        a.start_date,
+        a.end_date,
+        a.popup_width,
+        a.popup_height,
+        i.image_src AS image_src -- 이미지 경로를 매핑
+    FROM 
+        _admin_notice a
+    LEFT JOIN 
+        _image i ON a.ano_id = i.image_id
+    WHERE 
+        a.status = '게시중'
+        AND a.ano_content IS NULL
+        AND NOW() BETWEEN a.start_date AND a.end_date
+</select>
+
+
+
+<!-- new product 리스트 -->
+<select id="getNewProducts" resultMap="ProductResultMap">
+select * from _products where product_status = '승인대기'
+
+</select>
+
+
+
+
+
+
 
 </mapper>

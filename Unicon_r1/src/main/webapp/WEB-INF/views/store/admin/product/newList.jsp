@@ -25,7 +25,9 @@
 	<script type="text/javascript">
 	// 클릭 이벤트 핸들러 함수 정의
    	function handleClick(anoId) {
-		window.location.href = '/store/admin/notices/detail/' + anoId;
+		
+		alert(anoId);
+		/* window.location.href = '/store/admin/notices/detail/' + anoId; */
 	}
 	
    	$(document).ready(function() {
@@ -53,14 +55,14 @@
 	
 	tr td:last-child {
 		display: flex;
-		justify-content: flex-end;
+		/* justify-content: flex-end; */
 		line-height: 2rem;
 	
 	}
 	
-	#noticeTable thead {
-        display: none; /* 헤더 숨기기 */
-    }
+/* 	#noticeTable thead { */
+/*         display: none; /* 헤더 숨기기 */ */
+/*     } */
 	
 	
 	#create-notice {
@@ -71,6 +73,37 @@
 		    clear: both;
     color: #333;
     margin: 1em;
+	}
+	
+	.myModal {
+	    position: absolute;
+        border: 1px solid;
+	    
+	    top: 82%;
+	    right: 0%;
+	    background: #ffffff;
+	}
+	
+	/* 미리보기 */
+	.myModal .preview {
+	    margin: 10px; /* 기본 스타일 */
+	    transition: background-color 0.3s; /* 부드러운 색상 전환 */
+	    cursor: pointer;
+	}
+	
+	.myModal .preview:hover {
+	    background-color: #f0f1f6; /* 호버 시 색상 변경 */
+	}
+	
+	/* 반려 */
+	.myModal .reject {
+	    margin: 10px; /* 기본 스타일 */
+	    transition: background-color 0.3s; /* 부드러운 색상 전환 */
+	    cursor: pointer;
+	}
+	
+	.myModal .reject:hover {
+	    background-color: #f0f1f6; /* 호버 시 색상 변경 */
 	}
 	</style>    
     
@@ -93,11 +126,18 @@
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">공지사항</h4>
-                    <table id="noticeTable" class="table table-hover col-12">
+                    <h4 class="card-title">신규 등록 상품</h4>
+                    <table id="Table" class="table table-hover col-12">
 	                    <thead>
 							<tr>
-								<th>전체보기</th>
+								<th>상품명</th>
+								<th>카테고리</th>
+								<th>가격</th>
+								<th>판매기간</th>
+								<th>브랜드,제조사,원산지</th>
+								<th>할인율</th>
+								<th>옵션</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -149,7 +189,7 @@
 	$(document).ready(function() {
 
     	/*=============== DataTable 라이브러리 ===============*/
-		var aTable = $('#noticeTable').DataTable({
+		var aTable = $('#Table').DataTable({
 			"autoWidth": false, 
 			"info": false,
 		    "paging": true,
@@ -168,17 +208,17 @@
 			"stateDuration": -1,
 			/*=============== DataTable ajax ===============*/
 			"ajax": {
-				url: '/store/admin/notices',
+				url: '/store/admin/products/new',
 				type: 'GET',
 				dataType: 'json',
 				dataSrc: function(json) {
 					return json.map(function(item) {
-						const date = new Date(item.anoRegdate);
+						const date = new Date(item.create_date);
 						const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 						const formattedDate = date.toLocaleDateString('ko-KR', options);
- 						item.anoRegdate = formattedDate;
-						
-						if(item.important === 1) {
+ 						item.create_date = formattedDate;
+ 						/*  */ 
+						/* if(item.important === 1) {
 							item.anoTitle = "<button class='item-button' onclick='handleClick(" + item.anoId + ")'>"
 										    + "<span class='badge'>중요</span>"
 										    + item.anoTitle 
@@ -187,15 +227,33 @@
 							item.anoTitle = "<button class='item-button' onclick='handleClick(" + item.anoId + ")'>"
 						    + item.anoTitle 
 						    + "</button>";
-						}
+						} */
+						
+						/* item.product_id = "<button class='item-button' onclick='handleClick(" + item.product_id + ")'>"
+										+ "<span>:</span>"
+									    + "</button>"; */
 						
 						return item;
 					});
 				}
 			},
+			
 			"columns": [
-	            { data: 'anoTitle' }, // 두 번째 열은 정렬 불가
-	            { data: 'anoRegdate'} // 세 번째 열은 정렬 불가
+	            { data: 'product_name' }, // 두 번째 열은 정렬 불가
+	            { data: 'product_category_type' }, // 두 번째 열은 정렬 불가
+	            { data: 'product_price' }, // 두 번째 열은 정렬 불가
+	            { data: 'end_date' }, // 두 번째 열은 정렬 불가
+	            { data: 'brand' }, // brand |manufacturer |product_origin 합쳐서
+	            { data: 'discount_rate' }, // 두 번째 열은 정렬 불가
+	            { data: 'option_type'}, // 세 번째 열은 정렬 불가
+	            { 
+	                data: 'product_id', // product_id 열
+	                render: function(data, type, row) {
+	                    return "<button class='item-button' onclick='handleClick(\"" + row.product_id + "\")'>" +
+	                    "<span>:</span>" +
+	                    "</button><div class='myModal'><div class='preview'>미리보기</div><div class='dropdown-divider'></div><div class='reject'>반려</div></div>";
+	                }
+	            }
 	        ],
 			/*=============== DataTable ajax ===============*/
 			
@@ -265,7 +323,7 @@
 // 		/*=============== tr 선택 상세 조회 ===============*/
 		
 		// #noticeTable 요소 앞에 콘텐츠 추가
-	    $("#noticeTable").before('<div class="custom-message">전체보기</div>');
+	    /* $("#noticeTable").before('<div class="custom-message">전체보기</div>'); */
 		// #noticeTable 요소 앞에 콘텐츠 추가
 		
 		

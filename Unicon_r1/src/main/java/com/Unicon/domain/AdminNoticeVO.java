@@ -1,6 +1,9 @@
 package com.Unicon.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -18,5 +21,16 @@ public class AdminNoticeVO {
     private boolean importantCh; // important 체크 vo용
     private String status;      // status
     private int viewCount;     // view_count
-
+    
+    private String title;           // 제목
+    private String dateInput;       // 게시 기간
+    private String start_date;       // 시작일
+    private String end_date;         // 종료일
+    private String popupWidth;      // 팝업 너비
+    private String popupHeight;     // 팝업 높이
+    
+    private String image_src;		// 이미지 경로
+	private List<ImageVO> popup_images;
+    private List<MultipartFile> upload_images; // 업로드 이미지
+    
 }

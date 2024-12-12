@@ -66,20 +66,45 @@ public class AdminStoreService {
 		return list;
 	}
 	
+	// 어드민 공지사항 List 목록
 	public List<AdminNoticeVO> getNoticeList() {
 		List<AdminNoticeVO> list = aDao.getNoticeList();
 		return list;
 	}
+	
+	// 어드민 공지사항 생성
 	public int insertNotices(AdminNoticeVO vo) {
 		int result = aDao.insertNotices(vo);
 		return result;
 	}
 	
+	
+	
+	// 특정 공지사항 자세히 보기
 	public AdminNoticeVO getNoticeById(int ano) {
 		return aDao.getNoticeById(ano);
 	}
+	// 어드민 공지사항 수정
+	public int updateNotices(AdminNoticeVO vo) {
+		int result = aDao.updateNotices(vo);
+		return result;
+	}
 	
-	 
+	// 팝업 생성
+	public int insertPopup(AdminNoticeVO vo) {
+		int result = aDao.insertPopup(vo);
+		return result;
+	}
+	// 공지사항 list 5개
+	public List<AdminNoticeVO> getNoticePreviewList() {
+		List<AdminNoticeVO> list = aDao.getNoticePreviewList();
+		return list;
+	}
+	// 활성화된 팝업창 
+	public List<AdminNoticeVO> getActivePopupList() {
+		List<AdminNoticeVO> list = aDao.getActivePopupList();
+		return list;
+	}
 
 
 }

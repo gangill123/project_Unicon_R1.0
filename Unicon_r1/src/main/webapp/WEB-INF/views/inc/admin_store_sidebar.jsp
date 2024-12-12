@@ -11,22 +11,25 @@
               </a>
                 <div class="collapse" id="product-basic">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="/admin/store/products/new">신규 상품 목록</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/store/products/create">전체 상품 목록</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/store/admin/products/new">신규 상품 목록</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/store/admin/products">전체 상품 목록</a></li>
                 </ul>
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/pages/icons/mdi">
+              <a class="nav-link" data-toggle="collapse" href="#notice-basic" aria-expanded="false" aria-controls="notice-basic">
                 <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">회원 관리</span>
+                <span class="menu-title">공지사항 관리</span>
+                 <i class="menu-arrow"></i>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/pages/icons/mdi">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">공지 사항</span>
-              </a>
+              <div class="collapse" id="notice-basic">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/store/admin/notice">공지사항</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/store/admin/popupForm">팝업</a></li>
+                </ul>
+              </div>
+              
+              
             </li>
 <!--             <li class="nav-item documentation-link">
               <a class="nav-link" href="http://www.bootstrapdash.com/demo/connect-plus-free/jquery/documentation/documentation" target="_blank">
