@@ -514,7 +514,7 @@
 									<div class="card-body">
 										<h4 class="card-title">입양 관리 - 입양 글 등록</h4>
 										
-										<form id="formAdptWriting" action="" method="post">
+										<form id="formModifyAdptWriting" action="" method="post">
 										
 											<fieldset class="custom-a-fieldset mb-3">
 												<legend class="custom-a-legend">글 작성</legend>
@@ -666,8 +666,14 @@
 													
 													
 												<div class="form-group row justify-content-center align-items-center mb-1">
-													<button type="submit" id="a-submit-btn1" class="btn btn-lg btn-rounded btn-custom-a custom-text mx-2 mb-1">수정하기</button>
-													<button type="button" id="a-reset-btn1" class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-1">초기화</button>
+													<button type="submit" id="a-submit-btn1" 
+														class="btn btn-lg btn-rounded btn-custom-a custom-text mx-2 mb-1">
+														수정하기
+													</button>
+													<button type="button" id="a-reset-btn1" 
+														class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-1">
+														초기화
+													</button>
 												</div>
 												<div class="form-group row justify-content-center align-items-center mb-1">
 													<button type="button" 
@@ -677,6 +683,10 @@
 													<button type="button" 
 														class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-1 a-list-move-btn"> 
 														목록이동
+													</button>
+													<button type="button" id="a-modify-delete-btn" 
+														class="btn btn-lg btn-rounded btn-danger custom-text mx-2 mb-2">
+														삭제
 													</button>
 												</div>
 											</fieldset>
@@ -714,7 +724,7 @@
 			$(function() {
 				
 				/*=============== 엔터키 제출 방지 ===============*/
-				$('#formAdptAnimal').on('keydown', function(event) {
+				$('#formModifyAdptWriting').on('keydown', function(event) {
 					if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
 						event.preventDefault();
 					}
@@ -860,6 +870,54 @@
 					});
 				});
 				/*=============== 입양글 목록 이동(move) 버튼 제어 ===============*/
+
+				
+				
+				/*=============== 입양글 삭제(delete) 버튼 제어 ===============*/
+				$('#a-modify-delete-btn').on('click',function(e) {
+					const member_id = $('#aRegUser').val();
+					
+					Swal.fire({
+						title: '삭제하시겠습니까?',
+						text: '입양글이 삭제됩니다!',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#fc5a5a',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '삭제',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$.ajax({
+								url: '/adptmgmt/writings/'+ animalId +'/deletion/?member_id=' + member_id,
+								method: "DELETE",
+								success: function() {
+									Swal.fire({
+										title:'삭제 되었습니다!',
+										icon:'success',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									}).then(function(result) {
+										if(result.isConfirmed) {
+											location.href="/AM/writings/all";
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '삭제에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
+				});
+				/*=============== 입양글 삭제(delete) 버튼 제어 ===============*/
 				
 				
 				
@@ -892,11 +950,11 @@
 
 				
 				
-				/*=============== 등록(submit) 버튼 제어 ===============*/
-				$('#formAdptWriting').on('submit', function(event) {
+				/*=============== 수정(submit) 버튼 제어 ===============*/
+				$('#formModifyAdptWriting').on('submit', function(event) {
 					event.preventDefault();
 					var formData = new FormData(this);
-					formData.append('animalStatus', 2);
+					formData.append('adpt_status', 1);
 					
 					$('#a-submit-btn1, #a-submit-btn2').prop('disabled', true);
 					Swal.fire({
@@ -911,7 +969,7 @@
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: '/adptmgmt/writings/modification/'+ animalId,
+								url: '/adptmgmt/writings/'+ animalId +'/modification',
 								type: 'POST',
 								data: formData,
 								contentType: false,
@@ -947,7 +1005,7 @@
 						}
 					});
 				});
-				/*=============== 등록(submit) 버튼 제어 ===============*/
+				/*=============== 수정(submit) 버튼 제어 ===============*/
 				
 				
 				

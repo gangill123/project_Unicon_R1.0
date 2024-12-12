@@ -40,37 +40,49 @@ public class AdptMgmtController {
 	@GetMapping(value = "/animals/creation")
 	public String animalAdd() {
 		logger.debug("( •̀ ω •́ )✧ animalAdd() 실행");
-		return "/adptmgmt/animals/animalinsert";
+		return "/adptmgmt/animals/animal_add";
 	}
 	
 	@GetMapping(value = "/animals/list")
 	public String animalViewAll() {
 		logger.debug("( •̀ ω •́ )✧ animalViewAll() 실행");
-		return "/adptmgmt/animals/animalread";
+		return "/adptmgmt/animals/animal_read";
 	}
 	
 	@GetMapping(value = "/animals/list/{animal_id}")
 	public String animalViewOne() {
 		logger.debug("( •̀ ω •́ )✧ animalViewOne() 실행");
-		return "/adptmgmt/animals/animalupdate";
+		return "/adptmgmt/animals/animal_update";
 	}
 	
 	@GetMapping(value = "/writings/add/{animal_id}")
 	public String writingAdd() {
 		logger.debug("( •̀ ω •́ )✧ writingAdd() 실행");
-		return "/adptmgmt/writings/writinginsert";
+		return "/adptmgmt/writings/writing_add";
 	}
 	
 	@GetMapping(value = "/writings/all")
 	public String writingViewAll() {
 		logger.debug("( •̀ ω •́ )✧ writingViewAll() 실행");
-		return "/adptmgmt/writings/writingread";
+		return "/adptmgmt/writings/writing_read";
 	}
 	
 	@GetMapping(value = "/writings/{animal_id}")
 	public String writingViewOne() {
 		logger.debug("( •̀ ω •́ )✧ writingViewOne() 실행");
-		return "/adptmgmt/writings/writingupdate";
+		return "/adptmgmt/writings/writing_update";
+	}
+	
+	@GetMapping(value = "/admin/animalwritings")
+	public String adminWritingViewAll() {
+		logger.debug("( •̀ ω •́ )✧ adminWritingViewAll() 실행");
+		return "/adptmgmt/admin/admin_writing";
+	}
+	
+	@GetMapping(value = "/admin/animalwritings/{animal_id}")
+	public String adminWritingViewOne() {
+		logger.debug("( •̀ ω •́ )✧ adminWritingViewOne() 실행");
+		return "/adptmgmt/admin/admin_writing_update";
 	}
 	
 	

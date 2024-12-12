@@ -528,7 +528,7 @@
 									<div class="card-body">
 										<h4 class="card-title">입양 관리 - 정보 수정 및 삭제</h4>
 										
-										<form id="formAdptAnimal" action="" method="post" enctype="multipart/form-data">
+										<form id="formModifyAdptAnimal" action="" method="post" enctype="multipart/form-data">
 										
 											<fieldset class="custom-a-fieldset mb-3">
 												<legend class="custom-a-legend">필수 정보</legend>
@@ -994,6 +994,10 @@
 														입양글 작성
 													</button>
 													<button type="button" 
+														class="btn btn-lg btn-rounded btn-primary custom-text mx-2 mb-2 a-writing-modify-btn">
+														입양글 수정
+													</button>
+													<button type="button" 
 														class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-2 a-list-move-btn">
 														목록이동
 													</button>
@@ -1071,7 +1075,7 @@
 				
 				
 				/*=============== 엔터키 제출 방지 ===============*/
-				$('#formAdptAnimal').on('keydown', function(event) {
+				$('#formModifyAdptAnimal').on('keydown', function(event) {
 					if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
 						event.preventDefault();
 					}
@@ -1845,7 +1849,7 @@
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/
 				let currentURL = window.location.pathname;
 				let lastSlashIndex = currentURL.lastIndexOf('/');
-				let animalId = currentURL.substring(lastSlashIndex+1);
+				const animalId = currentURL.substring(lastSlashIndex+1); // 전역 변수
 				const regex = /^ANIM-\w{6}$/;
 				
 				if(regex.test(animalId)) {
@@ -1961,7 +1965,6 @@
 								
 				/*=============== 삭제(delete) 버튼 제어 ===============*/
 				$('#a-delete-btn1, #a-delete-btn2').on('click',function(e) {
-					const animal_id = $('#animal_id').val();
 					const member_id = $('#aRegUser').val();
 					
 					Swal.fire({
@@ -1976,7 +1979,7 @@
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: "/adptmgmt/animals/"+ animal_id +"/deletion?member_id=" + member_id,
+								url: "/adptmgmt/animals/"+ animalId +"/deletion?member_id=" + member_id,
 								method: "DELETE",
 								success: function() {
 									Swal.fire({
@@ -2010,7 +2013,6 @@
 				
 				/*=============== 입양글(create) 버튼 제어 ===============*/
 				$('.a-writing-btn').on('click', function() {
-					const animal_id = $('#animal_id').val();
 					
 					Swal.fire({
 						title: '입양글을 작성하시겠습니까?',
@@ -2023,13 +2025,12 @@
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
-							location.href='/AM/writings/add/'+ animal_id;
+							location.href='/AM/writings/add/'+ animalId;
 						}	
 					});
 				});
 				
 				$('.a-writing-modify-btn').on('click', function() {
-					const animal_id = $('#animal_id').val();
 					
 					Swal.fire({
 						title: '입양글을 수정하시겠습니까?',
@@ -2042,7 +2043,7 @@
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
-							location.href='/AM/writings/'+ animal_id;
+							location.href='/AM/writings/'+ animalId;
 						}	
 					});
 				});
@@ -2073,7 +2074,6 @@
 				
 				/*=============== 종료(close) 버튼 제어 ===============*/
 				$('#a-close-btn1, #a-close-btn2').on('click', function() {
-					const animal_id = $('#animal_id').val();
 					const member_id = $('#aRegUser').val();
 					
 					Swal.fire({
@@ -2088,7 +2088,7 @@
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: "/adptmgmt/animals/"+ animal_id +"/status",
+								url: "/adptmgmt/animals/"+ animalId +"/status",
 								method: "PATCH",
 								contentType: "application/json",
 								data: JSON.stringify({ 
@@ -2123,7 +2123,6 @@
 				});
 				
 				$('#a-close-cancel-btn1, #a-close-cancel-btn2').on('click', function() {
-					const animal_id = $('#animal_id').val();
 					const member_id = $('#aRegUser').val();
 					
 					Swal.fire({
@@ -2138,11 +2137,11 @@
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: "/adptmgmt/animals/"+ animal_id +"/status",
+								url: "/adptmgmt/animals/"+ animalId +"/status",
 								method: "PATCH",
 								contentType: "application/json",
 								data: JSON.stringify({ 
-									"animal_id" : animal_id, 
+									"animal_id" : animalId, 
 									"member_id" : member_id, 
 									"animal_status" : 1 }),
 								success: function() {
@@ -2176,12 +2175,9 @@
 				
 				
 				/*=============== 제출(submit) 버튼 제어 ===============*/
-				$('#formAdptAnimal').on('submit', function(event) {
+				$('#formModifyAdptAnimal').on('submit', function(event) {
 					event.preventDefault();
 					var formData = new FormData(this);
-					let currentURL = window.location.pathname;
-					let lastSlashIndex = currentURL.lastIndexOf('/');
-					let animalId = currentURL.substring(lastSlashIndex+1);
 					const regex = /^ANIM-\w{6}$/;
 
 					if(!regex.test(animalId)) {
@@ -2249,10 +2245,6 @@
 				});
 				/*=============== 제출(submit) 버튼 제어 ===============*/
 
-				
-				
-				
-				
 				
 			});//DOM
 			

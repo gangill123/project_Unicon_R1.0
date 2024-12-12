@@ -105,6 +105,27 @@ public class AdptService {
 		
 		return aDao.getWritingListAll();
 	}
+	
+	
+	public void modifyWriting(AdptVO advo) {
+		logger.debug("( •̀ ω •́ )✧ modifyWriting(AdptVO advo) 실행");
+		
+		aDao.modifyWriting(advo);
+	}
+	
+	
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public void deleteWriting(AdptVO advo) {
+		logger.debug("( •̀ ω •́ )✧ deleteWriting(AdptVO advo) 실행");
+		
+		aDao.deleteWriting(advo);
+	}
+	
+	
+	
+	
+	
+	
 	/*========================= 메서드 =========================*/
 		
 		/*=============== 동물id 생성 ===============*/

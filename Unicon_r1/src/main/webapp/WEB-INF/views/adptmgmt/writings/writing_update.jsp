@@ -514,20 +514,32 @@
 									<div class="card-body">
 										<h4 class="card-title">입양 관리 - 입양 글 등록</h4>
 										
-										<form id="formAdptWriting" action="" method="post">
+										<form id="formModifyAdptWriting" action="" method="post">
 										
 											<fieldset class="custom-a-fieldset mb-3">
 												<legend class="custom-a-legend">글 작성</legend>
 												
 												<div class="form-group row justify-content-center">
-													<div class="col-12 col-xl-5 col-lg-8 col-md-6">
+														<div class="col-12 col-xl-4 col-lg-7 col-md-7 mb-3">
+															<label for="adpt_id" class="text-dark custom-label">입양글ID</label>
+															<input type="text" id="adpt_id" name="adpt_id" 
+																class="form-control custom-text" readonly/>
+														</div>
+														<div class="col-12 col-xl-4 col-lg-7 col-md-7 mb-3">
+															<label for="adpt_regdate" class="text-dark custom-label">등록일자</label>
+															<input type="text" id="adpt_regdate" class="form-control custom-text" readonly/>
+														</div>
+												</div>
+												
+												<div class="form-group row justify-content-center">
+													<div class="col-12 col-xl-4 col-lg-8 col-md-6">
 														<label class="text-dark custom-label">동물 소개</label>
-														<textarea rows="12" wrap="soft" id="adpt_intro" name="adpt_intro" class="form-control custom-text" 
+														<textarea rows="10" wrap="soft" id="adpt_intro" name="adpt_intro" class="form-control custom-text" 
 															placeholder="최대 500자" maxlength="500" required></textarea>
 													</div>
-													<div class="col-12 col-xl-5 col-lg-8 col-md-6">
+													<div class="col-12 col-xl-4 col-lg-8 col-md-6">
 														<label class="text-dark custom-label">기타사항</label>
-														<textarea rows="8" wrap="soft" id="adpt_etc" name="adpt_etc" class="form-control custom-text" 
+														<textarea rows="10" wrap="soft" id="adpt_etc" name="adpt_etc" class="form-control custom-text" 
 															placeholder="최대 200자" maxlength="200" required></textarea>
 													</div>
 												</div>
@@ -653,12 +665,28 @@
 												</fieldset>
 													
 													
-												<div class="form-group row d-flex justify-content-center align-items-center">
-													<button type="submit" id="a-submit-btn1" class="btn btn-lg btn-rounded btn-custom-a custom-text mr-2 mb-2">등록하기</button>
-													<button type="button" id="a-reset-btn1" class="btn btn-lg btn-rounded btn-light custom-text mb-2">초기화</button>
+												<div class="form-group row justify-content-center align-items-center mb-1">
+													<button type="submit" id="a-submit-btn1" 
+														class="btn btn-lg btn-rounded btn-custom-a custom-text mx-2 mb-1">
+														수정하기
+													</button>
+													<button type="button" id="a-reset-btn1" 
+														class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-1">
+														초기화
+													</button>
+												</div>
+												<div class="form-group row justify-content-center align-items-center mb-1">
 													<button type="button" 
-														class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-2 a-modify-btn"> 
+														class="btn btn-lg btn-rounded btn-success custom-text mx-2 mb-1 a-animal-modify-btn"> 
 														동물 정보 수정
+													</button>
+													<button type="button" 
+														class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-1 a-list-move-btn"> 
+														목록이동
+													</button>
+													<button type="button" id="a-modify-delete-btn" 
+														class="btn btn-lg btn-rounded btn-danger custom-text mx-2 mb-2">
+														삭제
 													</button>
 												</div>
 											</fieldset>
@@ -696,7 +724,7 @@
 			$(function() {
 				
 				/*=============== 엔터키 제출 방지 ===============*/
-				$('#formAdptAnimal').on('keydown', function(event) {
+				$('#formModifyAdptWriting').on('keydown', function(event) {
 					if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
 						event.preventDefault();
 					}
@@ -742,7 +770,7 @@
 				
 				if(regex.test(animalId)) {
 					$.ajax({
-						url: '/adptmgmt/animals/' + animalId + "/check",
+						url: '/adptmgmt/animals/' + animalId,
 						method: 'GET',
 						type: 'json',
 						success: function(data) {
@@ -752,6 +780,13 @@
 							const day = String(adate.getDay()).padStart(2, '0');
 							const formattedDate = year + '-' + month + '-' + day;
 							data.animal_regdate = formattedDate;
+							
+							const adDate = new Date(data.adptVO.adpt_regdate);
+							const adYear = adDate.getFullYear();
+							const adMonth = String(adDate.getMonth() + 1).padStart(2, '0');
+							const adDay = String(adDate.getDay()).padStart(2, '0');
+							const formattedAdDate = adYear + '-' + adMonth + '-' + adDay;
+							data.adptVO.adpt_regdate = formattedAdDate;
 							
 							$('#animal_id').val(data.animal_id);
 							$('#aRegDate').val(data.animal_regdate);
@@ -776,7 +811,10 @@
 									$('#plusIcon'+ i).hide();
 								}
 							}
-							
+							$('#adpt_intro').val(data.adptVO.adpt_intro);
+							$('#adpt_etc').val(data.adptVO.adpt_etc);
+							$('#adpt_id').val(data.adptVO.adpt_id);
+							$('#adpt_regdate').val(data.adptVO.adpt_regdate);
 						},
 						error: function(error) {
 							console.error('데이터를 가져오는 데 실패했습니다:', error);
@@ -792,11 +830,94 @@
 				
 				
 				
-				/*=============== 수정 이동(move) 버튼 제어 ===============*/
-				$('.a-modify-btn').on('click', function() {
-					location.href='/AM/animals/list/'+ animalId;
+				/*=============== 동물 정보 수정 이동(move) 버튼 제어 ===============*/
+				$('.a-animal-modify-btn').on('click', function() {
+					Swal.fire({
+						title: '페이지를 이동하시겠습니까?',
+						text: '동물 정보 수정 페이지로 이동합니다',
+						icon: 'info',
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '확인',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							location.href='/AM/animals/list/'+ animalId;
+						}	
+					});
+					
 				});
-				/*=============== 수정 이동(move) 버튼 제어 ===============*/
+				/*=============== 동물 정보 수정 이동(move) 버튼 제어 ===============*/
+				
+				
+				
+				/*=============== 입양글 목록 이동(move) 버튼 제어 ===============*/
+				$('.a-list-move-btn').on('click', function() {
+					Swal.fire({
+						title: '목록으로 이동하시겠습니까?',
+						text: '입양글 목록 페이지로 이동합니다',
+						icon: 'info',
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '확인',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							location.href='/AM/writings/all';
+						}	
+					});
+				});
+				/*=============== 입양글 목록 이동(move) 버튼 제어 ===============*/
+
+				
+				
+				/*=============== 입양글 삭제(delete) 버튼 제어 ===============*/
+				$('#a-modify-delete-btn').on('click',function(e) {
+					const member_id = $('#aRegUser').val();
+					
+					Swal.fire({
+						title: '삭제하시겠습니까?',
+						text: '입양글이 삭제됩니다!',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#fc5a5a',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '삭제',
+						cancelButtonText: '닫기'
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$.ajax({
+								url: '/adptmgmt/writings/'+ animalId +'/deletion/?member_id=' + member_id,
+								method: "DELETE",
+								success: function() {
+									Swal.fire({
+										title:'삭제 되었습니다!',
+										icon:'success',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									}).then(function(result) {
+										if(result.isConfirmed) {
+											location.href="/AM/writings/all";
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '삭제에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
+				});
+				/*=============== 입양글 삭제(delete) 버튼 제어 ===============*/
 				
 				
 				
@@ -829,26 +950,26 @@
 
 				
 				
-				/*=============== 등록(submit) 버튼 제어 ===============*/
-				$('#formAdptWriting').on('submit', function(event) {
+				/*=============== 수정(submit) 버튼 제어 ===============*/
+				$('#formModifyAdptWriting').on('submit', function(event) {
 					event.preventDefault();
 					var formData = new FormData(this);
-					formData.append('animalStatus', 2);
+					formData.append('adpt_status', 1);
 					
 					$('#a-submit-btn1, #a-submit-btn2').prop('disabled', true);
 					Swal.fire({
-						title: '등록하시겠습니까?',
-						text: '등록 내용을 확인해주세요!',
+						title: '수정하시겠습니까?',
+						text: '수정 내용을 확인해주세요!',
 						icon: 'info',
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '등록',
+						confirmButtonText: '수정',
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: '/adptmgmt/writings/creation/'+ animalId,
+								url: '/adptmgmt/writings/'+ animalId +'/modification',
 								type: 'POST',
 								data: formData,
 								contentType: false,
@@ -856,14 +977,14 @@
 								success: function(response) {
 									$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
 									Swal.fire({
-									title: '등록 완료',
-									text: '등록에 성공했습니다!',
+									title: '수정 완료',
+									text: '수정에 성공했습니다!',
 									icon: 'success',
 									confirmButtonColor: '#006e60',
 									confirmButtonText: '확인'
 									}).then(function(result){
 										if(result.isConfirmed){
-											location.href='/AM/animals/list';
+											location.href='/AM/writings/all';
 										}
 									});
 								},
@@ -884,7 +1005,7 @@
 						}
 					});
 				});
-				/*=============== 등록(submit) 버튼 제어 ===============*/
+				/*=============== 수정(submit) 버튼 제어 ===============*/
 				
 				
 				
