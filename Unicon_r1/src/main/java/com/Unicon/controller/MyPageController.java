@@ -203,9 +203,6 @@ public class MyPageController {
 	}
 	
 	
-	
-	
-	
 	// 마이페이지 주문관리
 	@GetMapping("orders")
 	public String orderPage(HttpSession session, Model model) {
@@ -278,6 +275,16 @@ public class MyPageController {
 		String member_id = (String)session.getAttribute("member_id");
 		return myService.getInterest(member_id);
 	}
+	
+	
+	// 마이페이지 관심상품 삭제 로직
+	@PostMapping("/delInItem/{interest_id}")
+	@ResponseBody
+	public void delInItem(@PathVariable("interest_id") int interest_id) {
+		logger.info("interest_id : {}",interest_id);
+		myService.delInItem(interest_id);
+	}
+	
 	
 	
 	

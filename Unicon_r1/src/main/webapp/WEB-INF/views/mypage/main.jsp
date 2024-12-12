@@ -168,11 +168,54 @@ $(document).ready(function () {
 	let id = 'myUni';
 	mypagePaging(id)
 	
+	// 탭 클릭 시 작동 로직
 	$('.filtering span').on('click', function(){
 		id = $(this).attr('id');
 		console.log(id);
 		$('.product-grid').empty();
 		mypagePaging(id);
+	});
+	
+	// 관심상품 삭제
+	$('.product-grid').on('click','.delInItem',function(){
+		//console.log($(this).data('id'));
+		
+		Swal.fire({
+			  title: '정말 삭제하시겠습니까?',
+			  text: "삭제 전 다시 한번 확인하시기 바랍니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#86bc42',
+			  cancelButtonColor: '#aaa',
+			  confirmButtonText: '삭제',
+			  cancelButtonText: '취소',
+			  customClass: {
+			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			  }
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						url: '/mypage/delInItem/'+$(this).data('id'),
+						type: 'POST',
+						success: function(){
+							//alert("ok");
+							Swal.fire({
+			  	  			  title: '삭제를 완료하였습니다!',
+			  	  			  icon: 'success',
+			  	  			  confirmButtonColor: '#86bc42',
+			  	  			  customClass: {
+			  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			 			 	  }
+			  				}).then(function(){
+			  					mypagePaging('inItem');
+			  				});
+						},
+						error: function(){
+							alert("no");
+						}
+					});
+				}
+			});
 	});
 	
 	

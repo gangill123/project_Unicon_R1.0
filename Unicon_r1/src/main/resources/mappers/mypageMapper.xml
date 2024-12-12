@@ -92,6 +92,14 @@
 		where interest.member_id = #{member_id} 
 	</select>
 	
+	<delete id="delInItem">
+		delete from _interest 
+		where interest_id = #{interest_id} 
+	</delete>
+	
+	
+	
+	
 	
 
 </mapper>

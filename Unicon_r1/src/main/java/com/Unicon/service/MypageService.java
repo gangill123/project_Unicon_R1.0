@@ -64,7 +64,10 @@ public class MypageService {
 	}
 	
 	
-	
+	// 마이페이지 관심상품 삭제 로직
+	public void delInItem(int interest_id) {
+		mydao.delInItem(interest_id);
+	}
 	
 	
 	
