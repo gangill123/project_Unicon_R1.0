@@ -268,32 +268,40 @@
 	
 	<!-- 연령대별 통계 -->
     <select id="selectAgeGroupStatistics" resultType="hashmap">
-        select 
-            case 
-                when timestampdiff(year, voBirth, curdate()) &lt; 19 then '청소년'
-                else '성인'
-            end as agegroup,
-            count(*) as count
-        from _volunteer_apply
-        where status != 'canceled'
-        group by 
-            case 
-                when timestampdiff(year, voBirth, curdate()) &lt; 19 then '청소년'
-                else '성인'
-            end
-    </select>
+	    select 
+	        case 
+	            when timestampdiff(year, voBirth, curdate()) between 10 and 19 then '10'
+	            when timestampdiff(year, voBirth, curdate()) between 20 and 29 then '20'
+	            when timestampdiff(year, voBirth, curdate()) between 30 and 39 then '30'
+	            when timestampdiff(year, voBirth, curdate()) between 40 and 49 then '40'
+	            when timestampdiff(year, voBirth, curdate()) between 50 and 59 then '50'
+	            when timestampdiff(year, voBirth, curdate()) &gt;= 60 then '60'
+	        end as agegroup,
+	        count(*) as count
+	    from _volunteer_apply
+	    where status != 'CANCELED'
+	    group by 
+	        case 
+	            when timestampdiff(year, voBirth, curdate()) between 10 and 19 then '10'
+	            when timestampdiff(year, voBirth, curdate()) between 20 and 29 then '20'
+	            when timestampdiff(year, voBirth, curdate()) between 30 and 39 then '30'
+	            when timestampdiff(year, voBirth, curdate()) between 40 and 49 then '40'
+	            when timestampdiff(year, voBirth, curdate()) between 50 and 59 then '50'
+	            when timestampdiff(year, voBirth, curdate()) &gt;= 60 then '60'
+	        end
+	    order by agegroup
+	</select>
 
     <!-- 요일별 신청 통계 -->
     <select id="selectWeekdayStatistics" resultType="hashmap">
-        select 
-            dayname(voRegDate) as weekday,
-            count(*) as count,
-            min(dayofweek(voRegDate)) as dayorder
-        from _volunteer_apply
-        where status != 'canceled'
-        group by dayname(voRegDate)
-        order by dayorder
-    </select>
+	    select 
+	        dayofweek(voRegDate) as weekday,
+	        count(*) as count
+	    from _volunteer_apply
+	    where status != 'CANCELED'
+	    group by dayofweek(voRegDate)
+	    order by weekday
+	</select>
 
     <!-- 프로그램별 신청자 통계 -->
     <select id="selectProgramStatistics" resultType="hashmap">
@@ -310,16 +318,16 @@
 
     <!-- 월별 신청 추이 -->
     <select id="selectMonthlyStatistics" resultType="hashmap">
-        select 
-            date_format(voRegDate, '%Y-%m') as month,
-            count(*) as count
-        from _volunteer_apply
-        where 
-            status != 'canceled'
-            and voRegDate &gt;= date_sub(now(), interval 12 month)
-        group by month
-        order by month
-    </select>
+	    select 
+	        month(voRegDate) as month,
+	        count(*) as count
+	    from _volunteer_apply
+	    where 
+	        status != 'CANCELED'
+	        and year(voRegDate) = year(curdate())
+	    group by month(voRegDate)
+	    order by month
+	</select>
 
     <!-- 봉사 경험 통계 -->
     <select id="selectExperienceStatistics" resultType="hashmap">

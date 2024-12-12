@@ -477,7 +477,7 @@
 		                                <i class="fas fa-plus"></i> 공고 등록
 		                            </button>
 		                        	<button class="btn btn-primary me-2" onclick="location.href='/volunteer/manage/volStatistics'">
-									    <i class="fas fa-chart-bar"></i> 현황보기
+									    <i class="fas fa-chart-bar"></i> 통계 현황
 									</button>
 		                        </div>
 		                    </div>

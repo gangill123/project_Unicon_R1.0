@@ -62,8 +62,45 @@
 	        border-radius: 5px 5px 0 0;
 	        transition: all 0.3s ease;
 	        font-size: 0.9rem;  /* 탭 글자 크기 축소 */
+	    	position: relative;
 	    }
 	
+	    .nav-tabs .nav-link:hover {
+		    background-color: #e9ecef;
+		    color: #495057;
+		    border: none;
+		}
+		
+		.nav-tabs .nav-link.active {
+		    color: #006e60;
+		    background-color: transparent;
+		    border-bottom: 2px solid #006e60;
+		}
+		
+		.nav-tabs .nav-link::after {
+		    content: '';
+		    position: absolute;
+		    bottom: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 2px;
+		    background-color: #006e60;
+		    transform: scaleX(0);
+		    transition: transform 0.3s ease;
+		}
+		
+		.nav-tabs .nav-link:hover::after {
+		    transform: scaleX(1);
+		}
+		
+		.nav-tabs .nav-link.active::after {
+		    transform: scaleX(1);
+		}
+		
+		.nav-tabs .nav-item {
+		    margin-bottom: -1px;
+		}
+	    
 	    /* 차트 컨테이너 크기 조절 */
 	    .charts-wrapper {
 	        position: relative;
@@ -214,41 +251,39 @@
 let charts = {};
 
 const chartConfigs = {
-    ageGroup: {
-        type: 'bar',
-        title: '연령대별 신청자 현황',
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { precision: 0 }
-                }
-            }
-        }
+	ageGroup: {
+	    type: 'bar',
+	    title: '연령대별 신청자 현황',
+	    options: {
+	        scales: {
+	            y: {
+	                beginAtZero: true,
+	                ticks: { precision: 0 }
+	            }
+	        },
+	        plugins: {
+	            legend: {
+	                display: false
+	            }
+	        }
+	    }
     },
     weekday: {
         type: 'line',
         title: '요일별 신청 현황',
-        formatData: (data) => {
-            const weekdayMap = {
-                'Sunday': '일요일',
-                'Monday': '월요일',
-                'Tuesday': '화요일',
-                'Wednesday': '수요일',
-                'Thursday': '목요일',
-                'Friday': '금요일',
-                'Saturday': '토요일'
-            };
-            return data.weekdayStats.map(item => ({
-                weekday: weekdayMap[item.weekday] || item.weekday,
-                count: item.count
-            }));
-        },
         options: {
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: { precision: 0 }
+                    ticks: { 
+                        precision: 0,
+                        stepSize: 1
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
         }
@@ -278,7 +313,15 @@ const chartConfigs = {
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: { precision: 0 }
+                    ticks: { 
+                        precision: 0,
+                        stepSize: 1
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
         }
@@ -300,25 +343,66 @@ const chartConfigs = {
 function getChartData(type, data) {
     try {
         switch (type) {
-            case 'ageGroup':
-                return {
-                    labels: data.ageGroupStats.map(item => item.agegroup),
-                    datasets: [{
-                        label: '신청자 수',
-                        data: data.ageGroupStats.map(item => item.count),
-                        backgroundColor: '#4e73df'
-                    }]
-                };
+        case 'ageGroup':
+            // 연령대별 기본 데이터 생성
+            var ageGroups = [
+                { agegroup: '10', label: '10대', count: 0 },
+                { agegroup: '20', label: '20대', count: 0 },
+                { agegroup: '30', label: '30대', count: 0 },
+                { agegroup: '40', label: '40대', count: 0 },
+                { agegroup: '50', label: '50대', count: 0 },
+                { agegroup: '60', label: '60대 이상', count: 0 }
+            ];
+            
+            // DB에서 가져온 데이터로 해당 연령대의 count 업데이트
+            data.ageGroupStats.forEach(function(stat) {
+                var group = ageGroups.find(function(g) {
+                    return g.agegroup === stat.agegroup;
+                });
+                if (group) {
+                    group.count = Number(stat.count);
+                }
+            });
+
+            return {
+                labels: ageGroups.map(function(g) { return g.label; }),
+                datasets: [{
+                    label: '신청자 수',
+                    data: ageGroups.map(function(g) { return g.count; }),
+                    backgroundColor: '#4e73df'
+                }]
+            };
             case 'weekday':
-                const weekdayData = chartConfigs[type].formatData(data);
+                // 요일별 기본 데이터 생성 (1:일요일 ~ 7:토요일)
+                var weekdays = [
+                    { weekday: 1, name: '일요일', count: 0 },
+                    { weekday: 2, name: '월요일', count: 0 },
+                    { weekday: 3, name: '화요일', count: 0 },
+                    { weekday: 4, name: '수요일', count: 0 },
+                    { weekday: 5, name: '목요일', count: 0 },
+                    { weekday: 6, name: '금요일', count: 0 },
+                    { weekday: 7, name: '토요일', count: 0 }
+                ];
+                
+                // DB에서 가져온 데이터로 해당 요일의 count 업데이트
+                data.weekdayStats.forEach(function(stat) {
+                    var idx = stat.weekday - 1;
+                    if (idx >= 0 && idx < 7) {
+                        weekdays[idx].count = Number(stat.count);
+                    }
+                });
+
                 return {
-                    labels: weekdayData.map(item => item.weekday),
+                    labels: weekdays.map(function(d) { return d.name; }),
                     datasets: [{
                         label: '신청 건수',
-                        data: weekdayData.map(item => item.count),
+                        data: weekdays.map(function(d) { return d.count; }),
                         borderColor: '#1cc88a',
+                        backgroundColor: '#1cc88a',
                         tension: 0.1,
-                        fill: false
+                        fill: false,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
                     }]
                 };
             case 'program':
@@ -331,14 +415,30 @@ function getChartData(type, data) {
                     }]
                 };
             case 'monthly':
+                // 1~12월 배열 생성
+                var months = Array.from({length: 12}, function(_, i) {
+                    return {
+                        month: i + 1,
+                        count: 0
+                    };
+                });
+                
+                // DB에서 가져온 데이터로 해당 월의 count 업데이트
+                data.monthlyStats.forEach(function(stat) {
+                    months[stat.month - 1].count = Number(stat.count);
+                });
+                
                 return {
-                    labels: data.monthlyStats.map(item => item.month),
+                    labels: months.map(function(m) { return m.month + '월'; }),
                     datasets: [{
                         label: '신청자 수',
-                        data: data.monthlyStats.map(item => item.count),
+                        data: months.map(function(m) { return m.count; }),
                         borderColor: '#858796',
+                        backgroundColor: '#858796',
                         tension: 0.1,
-                        fill: false
+                        fill: false,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
                     }]
                 };
             case 'experience':
