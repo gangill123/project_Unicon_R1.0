@@ -64,11 +64,12 @@
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-                <span class="menu-title">User Pages</span>
+                <span class="menu-title">관리자 페이지</span>
                 <i class="menu-arrow"></i>
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/AM/admin/animalwritings"> 입양글 관리 </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/pages/samples/blank-page"> Blank Page </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/pages/samples/login"> Login </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/pages/samples/register"> Register </a></li>
@@ -77,7 +78,7 @@
                 </ul>
               </div>
             </li>
-<!--             <li class="nav-item documentation-link">
+<!--            <li class="nav-item documentation-link">
               <a class="nav-link" href="http://www.bootstrapdash.com/demo/connect-plus-free/jquery/documentation/documentation" target="_blank">
                 <span class="icon-bg">
                   <i class="mdi mdi-file-document-box menu-icon"></i>
@@ -85,7 +86,7 @@
                 <span class="menu-title">Documentation</span>
               </a>
             </li> -->
-<!--             <li class="nav-item sidebar-user-actions">
+<!--            <li class="nav-item sidebar-user-actions">
               <div class="user-details">
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
@@ -108,8 +109,8 @@
                   <span class="menu-title">Settings</span>
                 </a>
               </div>
-            </li>
-            <li class="nav-item sidebar-user-actions">
+            </li> -->
+<!--             <li class="nav-item sidebar-user-actions">
               <div class="sidebar-user-menu">
                 <a href="#" class="nav-link"><i class="mdi mdi-speedometer menu-icon"></i>
                   <span class="menu-title">Take Tour</span></a>

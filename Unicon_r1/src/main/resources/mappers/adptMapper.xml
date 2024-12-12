@@ -240,13 +240,14 @@
 
 
 <insert id="adptWritingInsert" parameterType="com.Unicon.domain.AdptVO">
-	insert into _adpt (adpt_id, animal_id, adpt_intro, adpt_etc) 
+	insert into _adpt (adpt_id, animal_id, adpt_intro, adpt_etc, member_id) 
 	 values 
-	  (concat(#{adpt_id}, lpad(ifnull((select max(adpt_ai) from (select adpt_ai from _adpt) as tempAdpt), 0) + 1, 6, '0')), #{animal_id}, #{adpt_intro}, #{adpt_etc}) 
+	  (concat(#{adpt_id}, lpad(ifnull((select max(adpt_ai) from (select adpt_ai from _adpt) as tempAdpt), 0) + 1, 6, '0')), #{animal_id}, #{adpt_intro}, #{adpt_etc}, #{member_id}) 
 </insert>
 <update id="writingAnimalStatus" parameterType="Map">
-	update _animal set animal_status = #{animal_status} 
-	 where animal_id = #{animal_id} 
+	update _animal 
+	 set animal_status = #{animal_status} 
+	  where animal_id = #{animal_id} 
 </update>
 
 
@@ -259,6 +260,23 @@
 	     join _common cm on ad.adpt_status = cm.common_code 
           where cm.common_column = 'adpt_status' and a.animal_status in (2, 3, 4) and ad.adpt_status != 4 
 </select>
+
+
+<update id="modifyWriting" parameterType="com.Unicon.domain.AdptVO">
+	update _adpt 
+	 set adpt_intro = #{adpt_intro}, adpt_etc = #{adpt_etc}, adpt_status = #{adpt_status} 
+	  where animal_id = #{animal_id} and member_id = #{member_id} 
+</update>
+
+
+<update id="deleteWriting" parameterType="com.Unicon.domain.AdptVO">
+	update _adpt 
+	 set adpt_status = 4 
+	  where animal_id = #{animal_id} and member_id = #{member_id} 
+</update>
+
+
+
 
 </mapper>
 

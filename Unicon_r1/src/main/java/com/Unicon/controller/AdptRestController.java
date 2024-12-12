@@ -196,7 +196,7 @@ public class AdptRestController {
 	}
 	
 	
-	@PostMapping(value = "/writings/creation/{animal_id}")
+	@PostMapping(value = "/writings/{animal_id}/creation")
 	public ResponseEntity<Void> registerAdptWriting(AdptVO advo, @RequestParam("animalStatus")int animalStatus) {
 		logger.debug("( •̀ ω •́ )✧ registerAdptWriting() 실행");
 		
@@ -228,6 +228,38 @@ public class AdptRestController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
+	}
+	
+	
+	@PostMapping(value = "/writings/{animal_id}/modification")
+	public ResponseEntity<Void> modifyWriting(AdptVO advo) {
+		logger.debug("( •̀ ω •́ )✧ modifyWriting(AdptVO advo) 실행");
+		
+		try {
+			aService.modifyWriting(advo);
+			
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	@DeleteMapping(value = "/writings/{animal_id}/deletion")
+	public ResponseEntity<Void> deleteWriting(AdptVO advo) {
+		logger.debug("( •̀ ω •́ )✧ deleteWriting(AdptVO advo) 실행");
+		
+		try {
+			aService.deleteWriting(advo);
+			
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	

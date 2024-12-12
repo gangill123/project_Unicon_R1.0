@@ -133,4 +133,29 @@ public class AdptDAO {
 		return sqlSession.selectList(NAMESPACE+"getWritingListAll");
 	}
 	
+	
+	public void modifyWriting(AdptVO advo) {
+		logger.debug("( •̀ ω •́ )✧ modifyWriting(AdptVO advo) 실행");
+		
+		sqlSession.update(NAMESPACE+"modifyWriting", advo);
+	}
+	
+	
+	public void deleteWriting(AdptVO advo) {
+		logger.debug("( •̀ ω •́ )✧ deleteWriting(AdptVO advo) 실행");
+		
+		Map<String, Object> writingParams = new HashMap<String, Object>();
+		writingParams.put("animal_id", advo.getAnimal_id());
+		writingParams.put("member_id", advo.getMember_id());
+		writingParams.put("animal_status", 1);
+		
+		
+		sqlSession.update(NAMESPACE+"deleteWriting", advo);
+		sqlSession.update(NAMESPACE+"modifyAnimalStatus", writingParams);
+	}
+	
+	
+	
+	
+	
 }
