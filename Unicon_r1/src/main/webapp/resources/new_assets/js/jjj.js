@@ -29,20 +29,10 @@ function readPostType(postType){
 					
 					$('.communityType').append(postCard);
 			});
-			
-			
-	            
-	           
-			
-			
-			
-			
-			
-			
 		},
 		error : function(data){
 			alert('실패');
 		}
 		
 	});
-}
+} // function readPostType(postType)

@@ -34,20 +34,6 @@ import com.Unicon.service.CommunityService;
 @RequestMapping(value = "/community/*")
 public class CommunityController {
 	
-//	//템플릿 테스트
-//	@GetMapping("/shop")
-//	public String mainTest2() {
-//		
-//		return "main/template";
-//	}
-	
-//	//템플릿 테스트
-//	@GetMapping("/test")
-//	public String mainTest3() {
-//		
-//		return "main/test";
-//	}
-	
 	@Inject
 	private CommunityService communityService;
 	
@@ -80,16 +66,9 @@ public class CommunityController {
 	public String template(Model model) {
 		List<PostVO> postList = communityService.getPostList01();
 		
-		/* 이것들 필요없어짐 바로 밑에 참조 */
-		/* List<CommentVO> commentList = communityService.getCommentListAll(); */
-		
 		model.addAttribute("postList", postList);
 		
-		/* model.addAttribute("commentList", commentList); */
-		
 		logger.info("--------postList---------{}",postList);
-		
-		/* logger.info("--------commentList---------{}",commentList); */
 		
 		return "community/new_list";
 	}
@@ -100,16 +79,9 @@ public class CommunityController {
 	public String template2(Model model) {
 		List<PostVO> postList = communityService.getPostList02();
 		
-		/* 이것들 필요없어짐 바로 밑에 참조 */
-		/* List<CommentVO> commentList = communityService.getCommentListAll(); */
-		
 		model.addAttribute("postList", postList);
 		
-		/* model.addAttribute("commentList", commentList); */
-		
 		logger.info("--------postList---------{}",postList);
-		
-		/* logger.info("--------commentList---------{}",commentList); */
 		
 		return "community/new_list";
 	}
@@ -120,16 +92,9 @@ public class CommunityController {
 	public String template3(Model model) {
 		List<PostVO> postList = communityService.getPostList03();
 		
-		/* 이것들 필요없어짐 바로 밑에 참조 */
-		/* List<CommentVO> commentList = communityService.getCommentListAll(); */
-		
 		model.addAttribute("postList", postList);
 		
-		/* model.addAttribute("commentList", commentList); */
-		
 		logger.info("--------postList---------{}",postList);
-		
-		/* logger.info("--------commentList---------{}",commentList); */
 		
 		return "community/new_list";
 	}
@@ -140,24 +105,13 @@ public class CommunityController {
 	public String template4(Model model) {
 		List<PostVO> postList = communityService.getPostList04();
 		
-		/* 이것들 필요없어짐 바로 밑에 참조 */
-		/* List<CommentVO> commentList = communityService.getCommentListAll(); */
-		
 		model.addAttribute("postList", postList);
 		
-		/* model.addAttribute("commentList", commentList); */
-		
 		logger.info("--------postList---------{}",postList);
-		
-		/* logger.info("--------commentList---------{}",commentList); */
 		
 		return "community/new_list";
 	}
 	
-	// 여기다가 클릭시에 해당하는 게시물과 전체 댓글 들고 오는 거 만들거임
-	// restcontroller 참고
-	// 여기다가 클릭시에 해당하는 게시물과 전체 댓글 들고 오는 거 만들거임
-
 	// 커뮤니티 - 게시물 등록 사이트
 	// http://localhost:8088/community/main02
 	@GetMapping("main02")
@@ -174,108 +128,17 @@ public class CommunityController {
 	
 	// 커뮤니티 - 게시물 수정 사이트
 	// http://localhost:8088/community/main06
-	@GetMapping("main06")
+	@GetMapping("main03/{post_id}")
 	public String templateUpdate() {
 		return "community/new_update";
 	}
-
+	
+	// 게시물 종류별 불러오기
 	@GetMapping("readPostType/{post_type}")
 	@ResponseBody
 	public List<PostVO> readPostType (@PathVariable("post_type")String post_type){
 		return communityService.getPostList(post_type);
 	}
-	
-	
-	
-//	// 게시물 등록 및 이미지 파일 등록
-//	@PostMapping(value = "insert")
-//	public String communityInsert(PostVO postVO) {
-//		
-//		logger.info("postVO : {}",postVO.toString());
-//		
-//		ImageVO imageVO = new ImageVO();
-//		
-//		MultipartFile file1 = postVO.getImage_file1();
-//		MultipartFile file2 = postVO.getImage_file2();
-//		MultipartFile file3 = postVO.getImage_file3();
-//		MultipartFile file4 = postVO.getImage_file4();
-//		
-//		logger.info(" file1 : {}",file1);
-//		logger.info(" file2 : {}",file2);
-//		logger.info(" file3 : {}",file3);
-//		logger.info(" file4 : {}",file4);
-//		
-//		String uploadDir = servletContext.getRealPath("/uploads/");
-//		logger.info(" uploadDir : {}",uploadDir);
-//		
-//		try {
-//			// 경로가 없으면 디렉터리 생성
-//			File dir = new File(uploadDir);
-//			if(!dir.exists()) {
-//				dir.mkdirs();
-//			}
-//			
-//			String uniqueFileName1 = UUID.randomUUID() + "_" + file1.getOriginalFilename();
-//			File uploadFile1 = new File(uploadDir + uniqueFileName1);
-//			String uniqueFileName2 = UUID.randomUUID() + "_" + file2.getOriginalFilename();
-//			File uploadFile2 = new File(uploadDir + uniqueFileName2);
-//			String uniqueFileName3 = UUID.randomUUID() + "_" + file3.getOriginalFilename();
-//			File uploadFile3 = new File(uploadDir + uniqueFileName3);
-//			String uniqueFileName4 = UUID.randomUUID() + "_" + file4.getOriginalFilename();
-//			File uploadFile4 = new File(uploadDir + uniqueFileName4);
-//			
-//			// 파일 저장
-//			file1.transferTo(uploadFile1);
-//			file2.transferTo(uploadFile2);
-//			file3.transferTo(uploadFile3);
-//			file4.transferTo(uploadFile4);
-//			
-////			String image_src = "/uploads/" + uniqueFileName1 + ",/uploads/" + uniqueFileName2 + ",/uploads/" + uniqueFileName3 + ",/uploads/" + uniqueFileName4;
-//			List<String> image_src = new ArrayList<String>();
-//			image_src.add("/uploads/" + uniqueFileName1);
-//			image_src.add("/uploads/" + uniqueFileName2);
-//			image_src.add("/uploads/" + uniqueFileName3);
-//			image_src.add("/uploads/" + uniqueFileName4);
-//			logger.info(" 리스트 타입의 image_src : {}",image_src);
-//			
-////			imageVO.setImage_src(image_src);
-//			imageVO.setImage_src(image_src);
-//			
-//		}catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-////		imageVO.setImage_id(postVO.getPost_id());
-////		imageVO.setImage_type(postVO.getPost_type());
-////		if(file1 != null) {
-////			imageVO.setImage_sequence(1);
-////		}
-////		if(file2 != null) {
-////			imageVO.setImage_sequence(2);
-////		}
-////		if(file3 != null) {
-////			imageVO.setImage_sequence(3);
-////		}
-////		if(file4 != null) {
-////			imageVO.setImage_sequence(4);
-////		}
-//		
-//		// post_id 설정
-//		String post_id = postVO.getMember_id()+"0001";
-//		
-//		// 기존의 post_id 값 유무 체크(불러오기)
-//		String checkPostId = communityService.checkPostId(postVO.getMember_id());
-//		
-//		// 기존에 post_id가 있다면
-//		if(checkPostId != null) {
-//			post_id = Integer.parseInt(checkPostId) + 1;
-//		}
-//		
-//		logger.info(" imageVO : {}",imageVO);
-//		
-//		communityService.postInsert(postVO, imageVO);
-//		
-//		return "redirect:/community/new_insert";
-//	}
+
 	
 } //controller
