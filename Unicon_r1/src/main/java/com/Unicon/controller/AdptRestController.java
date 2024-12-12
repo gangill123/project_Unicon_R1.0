@@ -81,10 +81,14 @@ public class AdptRestController {
 	
 	
 	@GetMapping(value = "/animals")
-	public ResponseEntity<List<AnimalVO>> animalListAll() {
+	public ResponseEntity<List<AnimalVO>> animalListAll(HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ animalListAll() 실행");
 		
-		List<AnimalVO> animList = aService.getAnimalListAll();
+		req.getSession().setAttribute("member_id", "youreal00");
+		
+		String member_id = (String) req.getSession().getAttribute("member_id");
+		
+		List<AnimalVO> animList = aService.getAnimalListAll(member_id);
 		if(animList != null) {
 			return new ResponseEntity<List<AnimalVO>>(animList,HttpStatus.OK);
 		} else {
