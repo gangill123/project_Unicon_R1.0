@@ -27,5 +27,12 @@ public interface VolunteerDAO {
     VolunteerApplyVO selectVolunteerApply(Long voId) throws Exception;
     List<VolunteerApplyVO> selectVolunteerApplyList(Map<String, Object> params) throws Exception;
     int selectVolunteerApplyCount(Long volunteerId) throws Exception;
+    
+    // 봉사활동 차트 관련
+    public List<Map<String, Object>> selectAgeGroupStatistics();
+    public List<Map<String, Object>> selectWeekdayStatistics();
+    public List<Map<String, Object>> selectProgramStatistics();
+    public List<Map<String, Object>> selectMonthlyStatistics();
+    public Map<String, Integer> selectExperienceStatistics();
 }
 

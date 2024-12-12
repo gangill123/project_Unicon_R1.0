@@ -265,4 +265,69 @@
 	        and v.voRecruitStart &lt;= #{endDate}
 	    </if>
 	</select>
+	
+	<!-- 연령대별 통계 -->
+    <select id="selectAgeGroupStatistics" resultType="hashmap">
+        select 
+            case 
+                when timestampdiff(year, voBirth, curdate()) &lt; 19 then '청소년'
+                else '성인'
+            end as agegroup,
+            count(*) as count
+        from _volunteer_apply
+        where status != 'canceled'
+        group by 
+            case 
+                when timestampdiff(year, voBirth, curdate()) &lt; 19 then '청소년'
+                else '성인'
+            end
+    </select>
+
+    <!-- 요일별 신청 통계 -->
+    <select id="selectWeekdayStatistics" resultType="hashmap">
+        select 
+            dayname(voRegDate) as weekday,
+            count(*) as count,
+            min(dayofweek(voRegDate)) as dayorder
+        from _volunteer_apply
+        where status != 'canceled'
+        group by dayname(voRegDate)
+        order by dayorder
+    </select>
+
+    <!-- 프로그램별 신청자 통계 -->
+    <select id="selectProgramStatistics" resultType="hashmap">
+        select 
+            v.voTitle as programname,
+            count(va.voId) as applicantcount
+        from _volunteer v
+        left join _volunteer_apply va on v.voId = va.volunteerId
+        where va.status != 'canceled'
+        group by v.voId, v.voTitle
+        order by applicantcount desc
+        limit 10
+    </select>
+
+    <!-- 월별 신청 추이 -->
+    <select id="selectMonthlyStatistics" resultType="hashmap">
+        select 
+            date_format(voRegDate, '%Y-%m') as month,
+            count(*) as count
+        from _volunteer_apply
+        where 
+            status != 'canceled'
+            and voRegDate &gt;= date_sub(now(), interval 12 month)
+        group by month
+        order by month
+    </select>
+
+    <!-- 봉사 경험 통계 -->
+    <select id="selectExperienceStatistics" resultType="hashmap">
+        select 
+            sum(case when voExperience = 'Y' then 1 else 0 end) as experienced,
+            sum(case when voExperience = 'N' then 1 else 0 end) as inexperienced
+        from _volunteer_apply
+        where status != 'canceled'
+    </select>
+	
 </mapper>

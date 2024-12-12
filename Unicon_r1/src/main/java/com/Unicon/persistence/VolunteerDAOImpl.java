@@ -1,5 +1,6 @@
 package com.Unicon.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,5 +116,36 @@ public class VolunteerDAOImpl implements VolunteerDAO {
     @Override
     public int selectVolunteerApplyCount(Long volunteerId) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".selectVolunteerApplyCount", volunteerId);
+    }
+    
+    @Override
+    public List<Map<String, Object>> selectAgeGroupStatistics() {
+        return sqlSession.selectList(NAMESPACE + ".selectAgeGroupStatistics");
+    }
+
+    @Override
+    public List<Map<String, Object>> selectWeekdayStatistics() {
+        return sqlSession.selectList(NAMESPACE + ".selectWeekdayStatistics");
+    }
+
+    @Override
+    public List<Map<String, Object>> selectProgramStatistics() {
+        return sqlSession.selectList(NAMESPACE + ".selectProgramStatistics");
+    }
+
+    @Override
+    public List<Map<String, Object>> selectMonthlyStatistics() {
+        return sqlSession.selectList(NAMESPACE + ".selectMonthlyStatistics");
+    }
+
+    @Override
+    public Map<String, Integer> selectExperienceStatistics() {
+        Map<String, Object> result = sqlSession.selectOne(NAMESPACE + ".selectExperienceStatistics");
+        Map<String, Integer> converted = new HashMap<>();
+        if (result != null) {
+            converted.put("experienced", ((Number) result.get("experienced")).intValue());
+            converted.put("inexperienced", ((Number) result.get("inexperienced")).intValue());
+        }
+        return converted;
     }
 }
