@@ -304,41 +304,7 @@
                           </div>
 
                         <div class="row product-grid" id="data-grid">
-                        
-                        <c:forEach var="list" items="${productAllInfo}" varStatus="status">
-                            <div class="col-xl-3 col-sm-6">
-                                <div class="product-details">
-                                    <div class="product-img">
-                                    <c:if test="${list.discount_rate != 0 }">
-                                        <div class="label-offer bg-red">Sale</div>
-                                    </c:if>
-                                        <img src="${list.product_images[0].image_src}" alt="...">
-                                        <div class="product-cart">
-                                            <a href="/shop/shop_detail/${list.product_id}"><i class="fa-solid fa-magnifying-glass"></i></a>
-                                            <a href="#!"><i class="fas fa-heart"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="/shop/shop_detail/${list.product_id }" style="margin-bottom: 0;">${list.product_name}</a>
-                                        <p class="price text-center m-0">
-                                        <c:choose>
-                                        	<c:when test="${list.discount_rate != 0 }">
-                                        		<span class="line-through me-2" style="font-size: 15px;">
-                                        		<fmt:formatNumber value="${list.product_price}" type="number" /></span>
-                                            	<span class="red"><fmt:formatNumber 
-                                            	value="${(list.product_price*(100-list.discount_rate)/100)}" type="number" />원</span>
-                                        	</c:when>
-                                        	<c:otherwise>
-                                            	<span><fmt:formatNumber value="${list.product_price}" type="number" />원</span>
-                                        	</c:otherwise>
-                                        </c:choose>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
-                        
-                    </div>
+                    	</div>
                     
                     <div class="row mt-2-9 mt-lg-13">
 	                     <div class="col-12">
@@ -431,8 +397,6 @@
 			
 		});
 		
-		
-		
 		//F5 클릭 시 최초 페이지로 이동
 		$(document).on('keydown', function (e) {
 	        // F5 키(새로고침) 감지
@@ -448,6 +412,49 @@
 	            }
 	        }
 	    });
+		
+		
+		// 하트 눌렀을때 관심상품으로 등록하기
+		$('#data-grid').on('click', '.interest', function(){
+			//console.log($(this).data('id'));
+			
+			$.ajax({
+				url: '/shop/addInterest/'+$(this).data('id'),
+				type: 'POST',
+				success: function(response){
+					//console.log(response);
+					
+					if(response == 0){
+						Swal.fire({
+			    			  title: '관심상품 등록완료!',
+			    			  text: "마이페이지 관심상품에서 확인 가능합니다.",
+			    			  icon: 'success',
+			    			  confirmButtonColor: '#86bc42',
+			    			  customClass: {
+			    			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			    			  }
+			   			});
+					} else {
+						Swal.fire({
+			    			  title: '이미 등록된 관심상품',
+			    			  text: "마이페이지 관심상품에서 확인 가능합니다.",
+			    			  icon: 'warning',
+			    			  confirmButtonColor: '#86bc42',
+			    			  customClass: {
+			    			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			    			  }
+			   			});
+					}
+					
+				},
+				error: function(){
+					alert("no");
+				}
+			});
+		});
+		
+		
+		
 		
 		
 	});

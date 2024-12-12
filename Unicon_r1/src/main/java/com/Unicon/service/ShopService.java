@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.Unicon.domain.CartDetailVO;
 import com.Unicon.domain.CartVO;
 import com.Unicon.domain.CategoryDataVO;
+import com.Unicon.domain.InterestVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ShopVO;
@@ -167,6 +168,23 @@ public class ShopService {
 	}
 	
 	
+	// 이미 등록된 관심상품인지 확인
+	public InterestVO checkInterest(String product_id, String member_id) {
+		Map<String, String> addInterestMap = new HashMap<String, String>();
+		addInterestMap.put("product_id", product_id);
+		addInterestMap.put("member_id", member_id);
+		
+		return sdao.checkInterest(addInterestMap);
+	}
+	
+	// 하트 눌렀을때 관심상품으로 등록하기
+	public void addInterest(String product_id, String member_id) {
+		Map<String, String> addInterestMap = new HashMap<String, String>();
+		addInterestMap.put("product_id", product_id);
+		addInterestMap.put("member_id", member_id);
+		
+		sdao.addInterest(addInterestMap);
+	}
 	
 	
 	

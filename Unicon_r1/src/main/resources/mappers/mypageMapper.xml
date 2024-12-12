@@ -5,6 +5,36 @@
 
 <mapper namespace="com.Unicon.mapper.MypageMapper">
 
+
+<!-- InterestResultMap -->
+<resultMap type="com.Unicon.domain.InterestVO" id="InterestResultMap">
+<id property="interest_id" column="interest_id"/>
+	<result property="product_id" column="product_id"/>
+	<result property="member_id" column="member_id"/>
+	
+	<association property="shopVO" resultMap="ShopResultMap" />
+</resultMap>
+
+<!-- ShopResultMap -->
+<resultMap type="com.Unicon.domain.ShopVO" id="ShopResultMap">
+<id property="product_id" column="product_id"/>
+	<result property="product_seller_id" column="product_seller_id"/>
+	<result property="product_seller_name" column="product_seller_name"/>
+	<result property="product_name" column="product_name"/>
+	
+	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
+</resultMap>
+
+<!-- "ImageResultMap" -->
+<resultMap type="com.Unicon.domain.ImageVO" id="ImageResultMap">
+	<id property="image_id" column="image_id"/>
+	<id property="image_type" column="image_type"/>
+	<id property="image_sequence" column="image_sequence"/>
+	<result property="image_src" column="image_src"/>
+</resultMap>
+
+
+
 	<!-- 펫 카테고리 가져오기 -->
 	<select id="getPetType" resultType="CategoryDataVO">
 		select * 
@@ -51,6 +81,16 @@
 		delete from _pet 
 		where pet_id = #{pet_id}  
 	</delete>
+	
+	
+	<!-- 마이페이지 상단 탭(관심상품) 클릭 시 상품관련 정보 가져오기 -->
+	<select id="getInterest" resultMap="InterestResultMap" parameterType="String">
+		select interest.*, p.product_id, p.product_name, i.* 
+		from _interest interest 
+		join _products p on interest.product_id = p.product_id 
+		join _image i on p.product_id = i.image_id 
+		where interest.member_id = #{member_id} 
+	</select>
 	
 	
 

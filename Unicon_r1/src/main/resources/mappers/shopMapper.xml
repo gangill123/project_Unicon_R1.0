@@ -364,7 +364,19 @@
 	</select>
 	
 	
+	<!-- 이미 등록된 관심상품인지 확인 -->
+	<select id="checkInterest" resultType="InterestVO">
+		select * 
+		from _interest 
+		where member_id=#{member_id} and product_id=#{product_id} 
+	</select>
 	
+	
+	<!-- 하트 눌렀을때 관심상품으로 등록하기 -->
+	<insert id="addInterest" parameterType="map">
+		insert into _interest(product_id, member_id)  
+		values(#{product_id}, #{member_id}) 
+	</insert>
 	
 	
 	

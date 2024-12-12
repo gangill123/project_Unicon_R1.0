@@ -119,6 +119,11 @@ public class OrdersDAO {
 	
 	
 	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기
+	public List<OrdersVO> getOrdersInfoAll(String member_id){
+		return sqlSession.selectList(NAMESPACE+".getOrdersInfoAll", member_id);
+	}
+	
+	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기
 	public List<OrdersVO> getOrdersInfoToStatus(Map<String, String> orderStatusMap){
 		return sqlSession.selectList(NAMESPACE+".getOrdersInfoToStatus", orderStatusMap);
 	}

@@ -26,8 +26,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Unicon.domain.CategoryDataVO;
+import com.Unicon.domain.InterestVO;
 import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.PetVO;
+import com.Unicon.domain.ShopVO;
 import com.Unicon.service.MypageService;
 import com.Unicon.service.OrdersService;
 
@@ -234,6 +236,18 @@ public class MyPageController {
 		return "/mypage/orders_detail";
 	}
 	
+	// 마이페이지 주문관리 모든 주문정보 가져오기
+	@GetMapping("/getOrdersInfoToStatus/all")
+	@ResponseBody
+	public List<OrdersVO> getOrdersInfoAll(@RequestParam Integer monthVal, HttpSession session){
+		
+		logger.info("getOrdersInfoAll() 호출");
+		logger.info("monthVal :{}",monthVal);
+		
+		String member_id = (String)session.getAttribute("member_id");
+		
+		return oService.getOrdersInfoAll(member_id);
+	}
 	
 	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기
 	@GetMapping("/getOrdersInfoToStatus/{orders_detail_status}")
@@ -252,6 +266,17 @@ public class MyPageController {
 		} else {
 			return oService.getOrdersInfoToStatusAndTime(orders_detail_status, member_id, monthVal);
 		}
+	}
+	
+	
+	// 마이페이지 상단 탭(관심상품) 클릭 시 상품관련 정보 가져오기
+	@GetMapping("/getInterest")
+	@ResponseBody
+	public List<InterestVO> getInterest(HttpSession session){
+		
+		logger.info("getInterest() 호출");
+		String member_id = (String)session.getAttribute("member_id");
+		return myService.getInterest(member_id);
 	}
 	
 	
