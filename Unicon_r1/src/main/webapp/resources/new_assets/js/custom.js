@@ -442,8 +442,10 @@
 			let url
 			if(id === 'myUni'){
 				url = '/mypage/pet_filter/all';
-			} else{
+			} else if(id === 'inUni'){
 				url = '/mypage/pet_filter/all2';
+			} else {
+				url = '/mypage/getInterest';
 			}
 			
 			$.ajax({
@@ -471,10 +473,9 @@
 			const $grid = $('.product-grid');
 			$grid.empty(); // 기존 데이터 삭제
 			
-			let card
-			
 			if(id === 'myUni'){
-				card = `
+				
+				let card = `
 				<div class="col-lg-12" style="text-align: end; margin-top: 0;">
 	             	<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/mypage/pet_create'">유니콘 등록</button>
 	            </div>`;
@@ -482,7 +483,8 @@
 				pageData.forEach(item => {
 				card = `
 					<div class="col-sm-6 col-md-4 col-lg-3">
-	                        <a href="mypage/pet_view/${item.pet_id}"><div class="product-details">
+	                        <a href="mypage/pet_view/${item.pet_id}">
+	                        	<div class="product-details">
 	                            <div class="product-img" style="padding: 10px;">
 	                                <img src="${item.pet_src }" alt="...">
 	                            </div>
@@ -497,6 +499,32 @@
 				$grid.append(card);
 			});
 			
+			} else if(id === 'inUni'){
+				
+			} else {
+				pageData.forEach(item => {
+				let card = `
+					<div class="col-sm-6 col-md-4 col-lg-3">
+	                        	<div class="product-details">
+	                            <div class="product-img" style="padding: 10px;">
+	                                <img src="${item.shopVO.product_images[0].image_src }" alt="...">
+	                                <div class="product-cart">
+                                        <a href="#!"><i class="fas fa-plus"></i></a>
+                                        <a href="#!"><i class="fas fa-cart-plus"></i></a>
+                                        <a href="#!"><i class="fas fa-heart"></i></a>
+                                    </div>
+	                            </div>
+	                            <div class="product-info" style="padding: 0;">
+	                                <a href="/shop/shop_detail/${item.product_id}">${item.shopVO.product_name }</a>
+	                            </div>
+	                        </div>
+	                    </div>
+					`;
+				$grid.append(card);
+				});
+				
+				
+				
 			}
 			
 			renderPagination();
@@ -1705,7 +1733,7 @@
                             <div class="product-cart">
                                 <a class="checkedTrue" href="/shop/shop_detail/${item.product_id }?categoryType=${categoryType}&categoryValue=${categoryValue}&currentPage=${currentPage}">
                                 <i class="fa-solid fa-magnifying-glass"></i></a>
-                                <a href="#!"><i class="fas fa-heart"></i></a>
+                                <a class="interest" data-id="${item.product_id }" href="#!"><i class="fas fa-heart"></i></a>
                             </div>
                         </div>
                         <div class="product-info">
@@ -1885,12 +1913,33 @@
 				alert("no");
 			}
 		});
+	}
+	
+	// 마이페이지 상단 탭(관심상품) 클릭 시 상품관련 정보 가져오기 + 페이징
+	function interestPage(){
+		
+		$.ajax({
+			url: '/mypage/getInterest',
+			type: 'GET',
+			success: function(response){
+				console.log(response);
+				
+				let orderItemsContent = $('#orderItemsContent');
+				orderItemsContent.empty();
+				
+				
+				
+			},
+			error: function(){
+				
+			}
+		});
+		
+		
+		
 		
 		
 	}
-	
-	
-	
 	
 	
 	

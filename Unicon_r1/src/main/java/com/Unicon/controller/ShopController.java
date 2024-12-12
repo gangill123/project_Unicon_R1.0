@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Unicon.domain.CartVO;
 import com.Unicon.domain.CategoryDataVO;
+import com.Unicon.domain.InterestVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ShopVO;
@@ -208,8 +209,32 @@ public class ShopController {
 		} else {
 			return sService.shopPaging(categoryValue);
 		}
+	}
+	
+	
+	// 하트 눌렀을때 관심상품으로 등록하기
+	@PostMapping("/addInterest/{product_id}")
+	@ResponseBody
+	public Integer addInterest(@PathVariable("product_id") String product_id, 
+			HttpSession session) {
+		logger.info("product_id : {}",product_id);
+		
+		String member_id = (String)session.getAttribute("member_id");
+		
+		// 이미 등록된 관심상품인지 확인
+		InterestVO checkInterest = sService.checkInterest(product_id, member_id);
+		
+		if(checkInterest == null) {
+			sService.addInterest(product_id, member_id);
+			return 0;
+		} else {
+			return 1;
+		}
 		
 	}
+	
+	
+	
 	
 	
 	

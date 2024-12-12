@@ -105,9 +105,8 @@
                         <h4 style="margin-bottom: 40px;">주문배송관리</h4>
                         
                         <div class="filtering col-sm-12 text-center" style="margin-bottom: 40px;">
-	                        <span id="myUni" class="active">주문배송내역</span>
-	                        <span id="inUni">관심상품</span>
-	                        <span id="inItem">리뷰작성</span>
+	                        <span data-id="orders" class="active">주문배송내역</span>
+	                        <span data-id="review">리뷰작성</span>
 	                    </div>
                         
                         <div id="ordersContent">
@@ -271,7 +270,6 @@ $(document).ready(function () {
 		getOrdersInfoToStatus(status, monthVal);
 	});
 	
-	
 	// 시간필터 선택시 상태 필터값 초기화
 	$('#timeSelector').on('change',function(){
 		$('#statusSelector').val(0);
@@ -284,9 +282,28 @@ $(document).ready(function () {
 		monthVal = parseInt($('#timeSelector').val(), 10);
 	    
 		getOrdersInfoToStatus(status, monthVal);
+	});
+	
+	
+	// 마이페이지 상단 탭 클릭 시 화면 전환
+	$('.filtering span').on('click', function(){
+		//console.log($(this).data('id'));
+		let tapValue = $(this).data('id');
+		
+		if(tapValue == 'orders'){
+			//console.log(tapValue);
+			getOrdersInfoToStatus('all', 36);
+		}else {
+			console.log(tapValue);
+		}	
 		
 		
 	});
+	
+	
+	
+	
+	
 	
 	
 	

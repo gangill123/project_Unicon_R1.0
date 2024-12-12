@@ -106,6 +106,10 @@ public class OrdersService {
 		return odao.getOrdersCount(member_id);
 	}
 	
+	// 마이페이지 주문관리 모든 주문정보 가져오기
+	public List<OrdersVO> getOrdersInfoAll(String member_id){
+		return odao.getOrdersInfoAll(member_id);
+	}
 	
 	// 마이페이지 주문관리 주문상태에 따른 주문정보 가져오기
 	public List<OrdersVO> getOrdersInfoToStatus(String orders_detail_status, String member_id){

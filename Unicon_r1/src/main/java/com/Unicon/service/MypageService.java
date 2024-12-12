@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Unicon.domain.CategoryDataVO;
+import com.Unicon.domain.InterestVO;
 import com.Unicon.domain.NewsVO;
 import com.Unicon.domain.PetVO;
 import com.Unicon.persistence.MypageDAO;
@@ -55,5 +56,18 @@ public class MypageService {
 	public void petDelete(int pet_id) {
 		mydao.petDelete(pet_id);
 	}
+	
+	
+	// 마이페이지 상단 탭(관심상품) 클릭 시 상품관련 정보 가져오기
+	public List<InterestVO> getInterest(String member_id){
+		return mydao.getInterest(member_id);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

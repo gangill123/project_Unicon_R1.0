@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.Unicon.domain.CartDetailVO;
 import com.Unicon.domain.CartVO;
 import com.Unicon.domain.CategoryDataVO;
+import com.Unicon.domain.InterestVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersDetailOptionVO;
 import com.Unicon.domain.OrdersDetailVO;
@@ -213,6 +214,21 @@ public class ShopDAO {
 	public List<ShopVO> shopPaging(String product_category_value){
 		return sqlSession.selectList(NAMESPACE+".shopPaging", product_category_value);
 	}
+	
+	
+	// 이미 등록된 관심상품인지 확인
+	public InterestVO checkInterest(Map<String, String> addInterestMap) {
+		return sqlSession.selectOne(NAMESPACE+".checkInterest", addInterestMap);
+	}
+	
+	
+	// 하트 눌렀을때 관심상품으로 등록하기
+	public void addInterest(Map<String, String> addInterestMap) {
+		sqlSession.insert(NAMESPACE+".addInterest", addInterestMap);
+	}
+	
+	
+	
 	
 	
 	

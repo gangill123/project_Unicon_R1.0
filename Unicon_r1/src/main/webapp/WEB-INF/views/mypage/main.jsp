@@ -89,7 +89,7 @@
                             <div class="col-lg-9 text-lg-start">
                             	<div class="col-lg-10">
                                 <h4 style="margin-bottom: 0;">가나다라마바사</h4>
-                                <span>특별회원</span>
+                                <span><i class="fa-solid fa-medal"></i> 특별회원</span>
                                 
                                 <div class="row" style="text-align: center; margin-top: 20px;">
 	                                <div class="col">
