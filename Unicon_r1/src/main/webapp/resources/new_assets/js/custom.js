@@ -439,7 +439,7 @@
 			
 			//console.log(id);
 			// id값에 따른 url 설정
-			let url
+			let url;
 			if(id === 'myUni'){
 				url = '/mypage/pet_filter/all';
 			} else if(id === 'inUni'){
@@ -509,9 +509,8 @@
 	                            <div class="product-img" style="padding: 10px;">
 	                                <img src="${item.shopVO.product_images[0].image_src }" alt="...">
 	                                <div class="product-cart">
-                                        <a href="#!"><i class="fas fa-plus"></i></a>
-                                        <a href="#!"><i class="fas fa-cart-plus"></i></a>
-                                        <a href="#!"><i class="fas fa-heart"></i></a>
+                                        <a class="delInItem" data-id="${item.interest_id}" href="#!">
+                                        <i class="fa-regular fa-trash-can"></i></a>
                                     </div>
 	                            </div>
 	                            <div class="product-info" style="padding: 0;">
@@ -522,8 +521,6 @@
 					`;
 				$grid.append(card);
 				});
-				
-				
 				
 			}
 			

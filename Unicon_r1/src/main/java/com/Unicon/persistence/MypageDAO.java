@@ -60,7 +60,10 @@ public class MypageDAO {
 		return sqlSession.selectList(NAMESPACE+".getInterest", member_id);
 	}
 	
-	
+	// 마이페이지 관심상품 삭제 로직
+	public void delInItem(int interest_id) {
+		sqlSession.delete(NAMESPACE+".delInItem", interest_id);
+	}
 	
 	
 	
