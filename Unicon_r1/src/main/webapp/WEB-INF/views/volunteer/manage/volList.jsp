@@ -301,6 +301,17 @@
         color: #fff !important;
     }
 	
+	/* 현황보기 버튼 스타일 */
+	.btn-primary.me-2[onclick*="volStatistics"] {
+	    background-color: #424242 !important;
+	    border-color: #424242 !important;
+	}
+	
+	.btn-primary.me-2[onclick*="volStatistics"]:hover {
+	    background-color: #383838 !important;
+	    border-color: #383838 !important;
+	}
+	
 	/* 사유보기 버튼 스타일 */
 	.btn-outline-primary.active {
 	    background-color: #e7f1ff;
@@ -465,6 +476,9 @@
 		                            <button class="btn btn-primary" onclick="location.href='/volunteer/manage/volForm'">
 		                                <i class="fas fa-plus"></i> 공고 등록
 		                            </button>
+		                        	<button class="btn btn-primary me-2" onclick="location.href='/volunteer/manage/volStatistics'">
+									    <i class="fas fa-chart-bar"></i> 현황보기
+									</button>
 		                        </div>
 		                    </div>
 		
