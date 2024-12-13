@@ -325,6 +325,9 @@
 <update id="writingsStatusManager" parameterType="Map">
 	update _adpt 
 	set adpt_status = #{adpt_status} 
+	<if test="adpt_reason != null and adpt_reason != ''"> 
+	 , adpt_reason = #{adpt_reason} 
+	</if> 
 	where animal_id = #{animal_id} and adpt_id = #{adpt_id} 
 </update>
 
@@ -346,6 +349,26 @@
          left join _adpt ad on a.animal_id = ad.animal_id 
     where a.animal_status != 6 
      order by i.image_sequence asc 
+</select>
+
+
+<select id="forMainAdptData" resultMap="AnimalResultMap">
+	select a.animal_id, a.category_etc_value, a.animal_name, a.animal_color, a.animal_gender, 
+	 a.animal_neuter, a.animal_age, a.animal_weight, a.member_id, a.animal_regdate, a.animal_status, a.animal_regnum, 
+	  a.animal_act, a.animal_social, a.animal_etc, a.adpt_member, 
+	   c.category_value, c.category_code, c.category_type, c.category_parent, 
+	    i.image_id, i.image_type, i.image_sequence, i.image_src, 
+	     h.health, h.health_check, 
+	      v.vaccine, v.vaccine_check, 
+	       ad.*  
+    from _animal a 
+     join _category_data c on a.category_code = c.category_code 
+      join _image i on a.animal_id = i.image_id 
+       join _animal_health h on a.animal_id = h.animal_id 
+        join _animal_vaccine v on a.animal_id = v.animal_id 
+         join _adpt ad on a.animal_id = ad.animal_id 
+    where a.animal_status != 6 
+     order by ad.adpt_regdate desc 
 </select>
 
 

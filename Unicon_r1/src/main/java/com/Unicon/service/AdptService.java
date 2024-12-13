@@ -48,12 +48,21 @@ public class AdptService {
 		aDao.animalInsert(avo);
 	}
 	
+	/* forMain */
+	public List<AnimalVO> forMainAdptData() {
+		logger.debug("( •̀ ω •́ )✧ forMainAdptData() 실행");
+		
+		return aDao.forMainAdptData();
+	}
+	
 	
 	public List<AnimalVO> getAnimalListAll(String member_id) {
 		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
 		
 		return aDao.getAnimalListAll(member_id);
 	}
+	
+	
 	public List<AnimalVO> getAnimalListAll() {
 		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
 		
@@ -66,6 +75,7 @@ public class AdptService {
 		
 		return aDao.getAnimalListOne(animal_id);
 	}
+	
 	
 	public AnimalVO getAnimalWritingOne(String animal_id) {
 		logger.debug("( •̀ ω •́ )✧ getAnimalWritingOne() 실행");

@@ -836,6 +836,7 @@
 							$('#adpt_etc').val(data.adptVO.adpt_etc);
 							$('#adpt_id').val(data.adptVO.adpt_id);
 							$('#adpt_regdate').val(data.adptVO.adpt_regdate);
+							console.log(data);
 							switch(data.adptVO.adpt_status) {
 								case 1: {
 									$('#adptStatus').empty();
@@ -851,18 +852,19 @@
 									$('#adptStatus').empty();
 									$('#adptStatus').append('<label class="badge badge-danger">승인취소</label>');
 									$('#adptReasonDiv').show();
+									$('#adpt_reason').val(data.adptVO.adpt_reason);
 									break;
 								}
 							}
 						},
 						error: function(error) {
 							console.error('데이터를 가져오는 데 실패했습니다:', error);
-							window.location.href = '/AM/animals/list';
+							window.location.href = '/AM/manager/writings/total';
 							alert('잘못된 접근입니다');
 						}
 					});
 				} else {
-					window.location.href = '/AM/animals/list';
+					window.location.href = '/AM/manager/writings/total';
 					alert('잘못된 접근입니다');
 				}
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/

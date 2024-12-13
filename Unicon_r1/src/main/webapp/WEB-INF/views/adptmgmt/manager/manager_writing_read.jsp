@@ -277,17 +277,17 @@
 							}
 						}
 						
-						switch(item.adptVO.adpt_status_value) {
-							case '승인대기': {
+						switch(item.adptVO.adpt_status) {
+							case 1: {
 								item.adptVO.adpt_status_value = '<label class="badge badge-warning">승인대기</label>';
 								break;
 							}
-							case '승인': {
+							case 2: {
 								item.adptVO.adpt_status_value = '<label class="badge badge-primary">승인</label>';
 								break;
 							}
-							case '승인취소': {
-								item.animal_status_value = '<label class="badge badge-danger">승인취소</label>';
+							case 3: {
+								item.adptVO.adpt_status_value = '<label class="badge badge-danger">승인취소</label>';
 								break;
 							}
 						}

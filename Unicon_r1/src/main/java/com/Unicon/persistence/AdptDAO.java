@@ -178,6 +178,13 @@ public class AdptDAO {
 	}
 	
 	
+	public void writingsStatusManager(Map<String, Object> writingStatus) {
+		logger.debug("( •̀ ω •́ )✧ writingsStatusManager() 실행");
+		
+		sqlSession.update(NAMESPACE+"writingsStatusManager", writingStatus);
+	}
+	
+	
 	public List<AnimalVO> getAdptList() {
 		logger.debug("( •̀ ω •́ )✧ getAdptList() 실행");
 		
@@ -185,11 +192,12 @@ public class AdptDAO {
 	}
 	
 	
-	public void writingsStatusManager(Map<String, Object> writingStatus) {
-		logger.debug("( •̀ ω •́ )✧ writingsStatusManager() 실행");
+	public List<AnimalVO> forMainAdptData() {
+		logger.debug("( •̀ ω •́ )✧ getAdptList() 실행");
 		
-		sqlSession.update(NAMESPACE+"writingsStatusManager", writingStatus);
+		return sqlSession.selectList(NAMESPACE+"forMainAdptData");
 	}
+	
 	
 	
 	
