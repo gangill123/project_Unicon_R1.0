@@ -88,6 +88,7 @@
 
 <!--====================================작성부=====================================-->
 		<%-- ${slideInfo } --%>
+		<%-- ${shopInfo } --%>
 		<div class="container-fluid p-0">
             <div class="row slider-fade-shop">
                 <div class="owl-carousel owl-theme w-100">
@@ -254,6 +255,10 @@
                 <div class="section-heading"><span>축하해주세요!!</span>
                     <h2>유니콘 입양후기</h2>
                 </div>
+                <div style="text-align: end; margin-bottom: 20px;">
+					<button type="button" class="butn-style2 small" style="font-size: 0.7rem;">
+					<span>더보기</span></button>
+				</div>
                 <div class="service-grids owl-carousel owl-theme" id="service-grids">
                     <div class="service-block">
                         <div class="img-holder">
@@ -277,6 +282,40 @@
         </section>
 		
 		
+		<section style="padding: 50px 0;"> 
+            <div class="container">
+                <div class="section-heading" style="margin-bottom: 20px;"><span>Sale!! Sale!!</span>
+                    <h2>복지몰 Sale 아이템 소개</h2>
+                </div>
+				<div style="text-align: end; margin-bottom: 20px;">
+					<button type="submit" class="butn-style2 small" style="font-size: 0.7rem;"
+					onclick="location.href='/shop'"><span>더보기</span></button>
+				</div>
+                <div class="row mt-n1-9">
+                <c:forEach var="shop" items="${shopInfo }">
+                    <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="200ms">
+                        <div class="portfolio-style1">
+                        <div class="label-offer bg-red">${shop.discount_rate }% Sale</div>
+                            <img src="${shop.product_images[0].image_src }" class="border-radius-10" alt="...">
+                            <a href="/shop/shop_detail/${shop.product_id }" class="portfolio-text">
+                                <span class="display-31 font-weight-700 text-orange letter-spacing-2 
+                                text-uppercase d-block mb-2">${shop.product_category_value }</span>
+                                <h3 class="mb-0 h5">${shop.product_name }</h3>
+                            </a>
+                        </div>
+                    </div>
+                </c:forEach>
+                    
+                </div>
+            </div>
+        </section>
+		
+		<div class="section-clients bg-light-gray" style="margin-top: 60px;">
+            <div class="container">
+                <div class="owl-carousel owl-theme clients owl-loaded owl-drag" id="clients">
+                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1926px, 0px, 0px); transition: 0.9s; width: 4404px;"><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-02.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-03.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-04.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-05.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-06.png"></div></div><div class="owl-item" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-01.png"></div></div><div class="owl-item" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-02.png"></div></div><div class="owl-item active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-03.png"></div></div><div class="owl-item active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-04.png"></div></div><div class="owl-item active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-05.png"></div></div><div class="owl-item active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-06.png"></div></div><div class="owl-item cloned active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-01.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-02.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-03.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-04.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-05.png"></div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div><div class="owl-thumbs"></div></div>
+            </div>
+        </div>
 		
 		
 

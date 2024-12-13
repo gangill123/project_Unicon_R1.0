@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.Unicon.domain.AddressVO;
+import com.Unicon.domain.OrdersDetailVO;
 import com.Unicon.domain.OrdersVO;
 
 @Repository("ordersDAO")
@@ -133,7 +134,9 @@ public class OrdersDAO {
 		return sqlSession.selectList(NAMESPACE+".getOrdersInfoToStatusAndTime", orderStatusMap);
 	}
 	
-	
-	
+	// 마이페이지 리뷰작성 시 모달 로직(상품정보 가져오기)
+	public OrdersDetailVO ordersDetailForReview(int order_detail_option_id) {
+		return sqlSession.selectOne(NAMESPACE+".ordersDetailForReview", order_detail_option_id);
+	}
 
 }

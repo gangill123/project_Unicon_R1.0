@@ -17,5 +17,6 @@ public class OrdersDetailOptionVO {
 	private Timestamp dispatch_date;
 	private Timestamp cancellation_request_date;
 	private Timestamp return_request_date;
+	private int review_check;
 	
 }

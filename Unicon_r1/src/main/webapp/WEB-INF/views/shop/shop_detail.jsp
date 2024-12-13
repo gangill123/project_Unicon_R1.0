@@ -63,8 +63,9 @@
 <!-- 아래는 예시 -->
 <!-- PAGE TITLE
         ================================================== -->
-        <%-- ${productInfo}
-        ${optionInfo}
+<%--         ${productInfo} --%>
+<%--         ${reviewInfo } --%>
+       <%--  ${optionInfo}
         ${optionInfoForSole} --%>
         
         <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
@@ -133,7 +134,7 @@
                                     <i class="fas fa-star-half-alt"></i>
                                 </div>
                                 <div class="d-inline-block">
-                                    <a class="text-primary font-weight-700" href="#!">0000개 리뷰</a>
+                                    <a class="text-primary font-weight-700">${reviewInfo.size() }개 리뷰</a>
                                 </div>
                             </div>
 
@@ -242,34 +243,71 @@
                     </div>
                 </div>
                 
+                <!-- Start Product Description -->
                 <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9">
+
                     <div class="col-12">
-                        <div class="horizontaltab tab-style2" style="display: block; width: 100%; margin: 0px;">
+                        <div class="horizontaltab tab-style2">
                             <ul class="resp-tabs-list hor_1 text-start">
-                                <li class="resp-tab-item hor_1 resp-tab-active" aria-controls="hor_1_tab_item-0" role="tab">Description</li>
-                                <li class="resp-tab-item hor_1" aria-controls="hor_1_tab_item-1" role="tab">Additional Info</li>
-                                <li class="resp-tab-item hor_1" aria-controls="hor_1_tab_item-2" role="tab">Reviews (2)</li>
+                                <li>상품정보</li>
+                                <li>문의</li>
+                                <li>리뷰(${reviewInfo.size() })</li>
                             </ul>
                             <div class="resp-tabs-container hor_1">
 
-                                <h2 class="resp-accordion hor_1 resp-tab-active" role="tab" aria-controls="hor_1_tab_item-0" style="background: none;">
-                                <span class="resp-arrow"></span>상품정보</h2>
-                                <div class="resp-tab-content hor_1 resp-tab-content-active" 
-                                aria-labelledby="hor_1_tab_item-0" style="display:block">
-                                ${productInfo.product_content }
-                                </div>
-								
-                                <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-1"><span class="resp-arrow"></span>문의</h2><div class="resp-tab-content hor_1" aria-labelledby="hor_1_tab_item-1">
+                                <div>${productInfo.product_content }</div>
 
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-1-9 mb-lg-0">
+                                        </div>
+                                        <div class="col-lg-6 ps-lg-1-9">
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <h2 class="resp-accordion hor_1" role="tab" aria-controls="hor_1_tab_item-2"><span class="resp-arrow"></span>리뷰</h2><div class="resp-tab-content hor_1" aria-labelledby="hor_1_tab_item-2">
+
+
+                                <div>
+                                    <div class="row">
+                                        <div class="col-lg-12 order-lg-2 sm-margin-30px-bottom">
+                                            <div class="common-block" style="padding: 10px; border: none;">
+                                            
+                                            <c:forEach var="review" items="${reviewInfo }">
+                                                <div class="mb-1-9 pb-1-9 border-bottom">
+                                                    <div class="media mb-3 product-review">
+                                                        <img class="rounded-circle w-50px" src="${review.memberVO.member_image }" alt="...">
+                                                        <div class="media-body ms-3">
+                                                            <a href="#!" class="mb-1 font-weight-600 text-extra-dark-gray">${review.memberVO.member_name }</a>
+                                                            <span class="d-block text-primary small">${review.formatted_review_create_date }</span>
+                                                        </div>
+                                                        <span class="text-primary">
+                                                        <c:forEach var="i" begin="0" end="${review.review_rate -1 }">
+                                                            <i class="fas fa-star"></i>
+                                                        </c:forEach>
+                                                        <c:forEach var="i" begin="${review.review_rate }" end="4">
+                                                            <i class="fa-regular fa-star"></i>
+                                                        </c:forEach>
+                                                        </span>
+                                                    </div>
+                                                    <p class="mb-0">${review.review_content }</p>
+                                                </div>
+                                            </c:forEach>
+                                            
+                                            
+
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- End Product Description -->
+                
+                
                 
                 
                 <!-- End Product Section -->

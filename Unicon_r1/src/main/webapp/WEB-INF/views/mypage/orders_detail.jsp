@@ -46,11 +46,6 @@
 	object-fit: fill;
 }
 
-.orderItem:hover Img{
-    transform: scale(1.1); /* 10% 확대 */
-    transition: transform 0.5s ease;
-}
-
 .btn-outline-success{
 	color: #86bc42;
 	border-color: #86bc42;
@@ -140,21 +135,30 @@
 	                                  <img class="rounded" src="${orderDetailInfo.ordersDetails[0].shopVO.product_images[0].image_src }" alt="...">
 	                              	</div>
 	                              </div>
-	                              <div class="col-sm-10">
+	                              <div class="col-sm-10 mb-3">
 	                                  <p class="mb-0">주문일 : ${orderDetailInfo.formatted_paydate }</p>
-	                                  <p class="mb-0 font-weight-600">${orderDetailInfo.ordersDetails[0].shopVO.product_name }</p>
+	                                  <a href="/shop/shop_detail/${orderDetailInfo.ordersDetails[0].shopVO.product_id }">
+	                                  <p class="mb-0 font-weight-600">${orderDetailInfo.ordersDetails[0].shopVO.product_name }</p></a>
 	                                  <p class="mb-0" style="color: #aaa;">${ordersDetailOption.product_option }</p>
 		                              <p class="mb-0 pe-2 border-end" style="display: inline;">
 	                              	  <fmt:formatNumber value="${ordersDetailOption.option_price }" type="number" />원</p>
 	                              	  <p class="mb-0 ps-2" style="color: #aaa; display: inline;">
 	                                  ${ordersDetailOption.quantity }개</p>
 	                                  <div style="display:flex; justify-content: flex-end; align-items: end;">
-		                                  <button type="button" class="btn btn-outline-secondary me-2" style="min-width: 150px;">문의하기</button>
+		                                  <button type="button" class="btn btn-outline-secondary me-2" data-id="${orderDetailInfo.ordersDetails[0].shopVO.product_id }"
+		                                  style="min-width: 150px;">문의하기</button>
 	                                  	  <c:if test="${ordersDetailOption.orders_detail_option_status == '구매확정' }">
-		                                  	<button class="btn btn-outline-success" style="min-width: 150px;">리뷰쓰기</button>
+	                                  	  	<c:if test="${ordersDetailOption.review_check == 0 }">
+			                                  	<button class="reviewBtn btn btn-outline-success" data-id="${ordersDetailOption.order_detail_option_id }"
+			                                  	style="min-width: 150px;">리뷰쓰기</button>
+	                                  	  	</c:if>
+	                                  	  	<c:if test="${ordersDetailOption.review_check == 1 }">
+			                                  	<button class="reviewBtn btn btn-outline-success" disabled style="min-width: 150px;">리뷰 작성완료</button>
+	                                  	  	</c:if>
 		                                  </c:if>
 		                                  <c:if test="${ordersDetailOption.orders_detail_option_status == '결제완료' }">
-		                                  	<button class="btn btn-outline-danger" style="min-width: 150px;">취소신청</button>
+		                                  	<button class="cancelBtn btn btn-outline-danger" data-id="${ordersDetailOption.order_detail_option_id }"
+		                                  	style="min-width: 150px;">취소신청</button>
 		                                  </c:if>
 	                                  </div>
 	                              </div>
@@ -253,7 +257,13 @@
         </section>
 	
 	
-	
+		<!-- 리뷰 모달 -->
+        <div class="modal fade reviewModal" tabindex="-1" aria-labelledby="gridSystemModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="min-width: 650px;">
+                <div id="reviewModalContent" class="modal-content">
+                </div>
+            </div>
+        </div>
 	
 	
 
@@ -268,6 +278,16 @@ $(document).ready(function () {
 	//console.log(formattedTotalPrice);
 	
 	$('.product_total_price').text(formattedTotalPrice+'원');
+	
+	
+	// 리뷰작성 클릭 시 모달열기
+	$('.reviewBtn').on('click', function(){
+		let order_detail_option_id = $(this).data('id');
+		reviewModal(order_detail_option_id);
+		
+	});
+	
+	
 	
 });//readay
 </script>

@@ -26,5 +26,6 @@ public class MemberVO {
     private String inst_number;     // 사업자 등록번호
     private String approval_status; // 승인 상태
     private String petId;          // 반려동물 ID
+    private String member_rate;    // 회원등급
 
 }

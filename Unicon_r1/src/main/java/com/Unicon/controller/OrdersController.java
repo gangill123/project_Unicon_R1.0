@@ -124,6 +124,9 @@ public class OrdersController {
 		
 		// 장바구니 비우기
 		sService.emptyCart(member_id);
+		
+		// 장바구니 세션 변경
+		session.setAttribute("cartCount", 0);
 	}
 	
 	

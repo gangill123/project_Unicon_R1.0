@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.Unicon.domain.MainSlideVO;
 import com.Unicon.domain.NewsVO;
+import com.Unicon.domain.ShopVO;
+import com.Unicon.service.MainService;
 import com.Unicon.service.MainSlideService;
 import com.Unicon.service.NewsService;
+import com.Unicon.service.ShopService;
 
 @Controller
 @RequestMapping("/main")
@@ -28,6 +31,10 @@ public class MainController {
 	private MainSlideService msService;
 	@Autowired
 	private NewsService nService;
+	@Autowired
+	private MainService mainService;
+	@Autowired
+	private ShopService shopService;
 	
 	@GetMapping("")
 	public String main(Model model, HttpSession session) {
@@ -37,6 +44,8 @@ public class MainController {
 		// 임시 아이디 세션저장
 		session.setAttribute("member_id", "bini97");
 		
+		String member_id = (String)session.getAttribute("member_id");
+		
 		// 슬라이드 정보 가져오기
 		List<MainSlideVO> slideInfo = msService.getSlideForMain();
 		model.addAttribute("slideInfo", slideInfo);
@@ -45,6 +54,13 @@ public class MainController {
 		NewsVO newsInfo = nService.getNewsForMain();
 		model.addAttribute("newsInfo", newsInfo);
 		
+		// 장바구니 수량 가져와서 세션저장
+		int cartCount = mainService.getCartCount(member_id);
+		session.setAttribute("cartCount", cartCount);
+		
+		// 세일품목 정보 가져오기(4개)
+		List<ShopVO> shopInfo = shopService.getShopItemForMain();
+		model.addAttribute("shopInfo", shopInfo);
 		
 		
 		

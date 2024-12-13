@@ -63,8 +63,8 @@
 <!-- 아래는 예시 -->
 <!-- PAGE TITLE
         ================================================== -->
-        ${addrDefalut }
-        ${ordersInfo }
+        <%-- ${addrDefalut } --%>
+        <%-- ${ordersInfo } --%>
         <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
             <div class="container">
 

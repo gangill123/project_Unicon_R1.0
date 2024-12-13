@@ -18,6 +18,7 @@ import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersDetailOptionVO;
 import com.Unicon.domain.OrdersDetailVO;
 import com.Unicon.domain.OrdersVO;
+import com.Unicon.domain.ReviewVO;
 import com.Unicon.domain.ShopVO;
 
 @Repository("shopDAO")
@@ -227,9 +228,14 @@ public class ShopDAO {
 		sqlSession.insert(NAMESPACE+".addInterest", addInterestMap);
 	}
 	
+	// 리뷰정보 가져오기
+	public List<ReviewVO> getReview(String product_id){
+		return sqlSession.selectList(NAMESPACE+".getReview", product_id);
+	}
 	
-	
-	
-	
+	// 세일품목 정보 가져오기(4개)
+	public List<ShopVO> getShopItemForMain(){
+		return sqlSession.selectList(NAMESPACE+".getShopItemForMain");
+	}
 	
 }

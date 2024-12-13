@@ -8,8 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.InterestVO;
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.NewsVO;
+import com.Unicon.domain.OrdersDetailVO;
 import com.Unicon.domain.PetVO;
+import com.Unicon.domain.ReviewVO;
 
 @Repository("mypageDAO")
 public class MypageDAO {
@@ -65,9 +68,22 @@ public class MypageDAO {
 		sqlSession.delete(NAMESPACE+".delInItem", interest_id);
 	}
 	
+	// 마이페이지 리뷰 작성
+	public void reviewCreate(ReviewVO vo) {
+		// 리뷰 테이블에 저장
+		sqlSession.insert(NAMESPACE+".reviewCreate", vo);
+		
+		// 주문상세옵션 테이블 변경
+		sqlSession.update(NAMESPACE+".updateOrdersDetailOptionToReview", vo);
+	}
 	
-	
-	
-	
+	// 사용자 정보 가져오기
+	public MemberVO getMemberInfo(String member_id) {
+		return sqlSession.selectOne(NAMESPACE+".getMemberInfo", member_id);
+	}
+		
+		
+		
+		
 	
 }

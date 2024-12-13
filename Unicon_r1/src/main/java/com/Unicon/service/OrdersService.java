@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Unicon.domain.AddressVO;
+import com.Unicon.domain.OrdersDetailVO;
 import com.Unicon.domain.OrdersVO;
 import com.Unicon.persistence.OrdersDAO;
 
@@ -133,7 +134,10 @@ public class OrdersService {
 	}
 	
 	
-	
+	// 마이페이지 리뷰작성 시 모달 로직(상품정보 가져오기)
+	public OrdersDetailVO ordersDetailForReview(int order_detail_option_id) {
+		return odao.ordersDetailForReview(order_detail_option_id);
+	}
 	
 	
 	

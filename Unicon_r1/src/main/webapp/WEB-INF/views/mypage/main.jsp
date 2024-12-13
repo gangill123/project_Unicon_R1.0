@@ -46,7 +46,7 @@
 
 <!--====================================작성부=====================================-->
 	<%-- ${petAllInfo } --%>
-	
+	${memberInfo }
 	<section  style="padding-top: 50px;">
             <div class="container">
             	<div class="line-title">
@@ -82,14 +82,21 @@
                         <div class="row text-center" style="border-bottom: 1px solid #eee; padding-bottom: 20px;">
                             <div class="col-lg-3 mb-3 mb-lg-0">
                                 <div class="product-img" style="padding: 10px;">
-                                <img class="rounded-circle" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/product-01.jpg" alt="...">
+                                <img class="rounded-circle" src="${memberInfo.member_image }" alt="...">
                            		</div>
                             </div>
                             
                             <div class="col-lg-9 text-lg-start">
                             	<div class="col-lg-10">
-                                <h4 style="margin-bottom: 0;">가나다라마바사</h4>
-                                <span><i class="fa-solid fa-medal"></i> 특별회원</span>
+                                <h4 style="margin-bottom: 0;">${memberInfo.member_name }</h4>
+                                <c:choose>
+                                	<c:when test="${memberInfo.member_rate == '특별회원' }">
+                                		<span><i class="fa-solid fa-medal"></i> ${memberInfo.member_rate }</span>
+                                	</c:when>
+                                	<c:otherwise>
+                                		<span>${memberInfo.member_rate }</span>
+                                	</c:otherwise>	
+                                </c:choose>
                                 
                                 <div class="row" style="text-align: center; margin-top: 20px;">
 	                                <div class="col">
@@ -101,19 +108,19 @@
 	                                <div class="col">
 	                                	<div>
 		                                	<h5 style="margin-bottom: 0;">1</h5>
-		                                	<span>팔로워</span>
-	                                	</div>
-	                            	</div>
-	                                <div class="col">
-	                                	<div>
-		                                	<h5 style="margin-bottom: 0;">1</h5>
-		                                	<span>팔로잉</span>
-	                                	</div>
-	                            	</div>
-	                                <div class="col">
-	                                	<div>
-		                                	<h5 style="margin-bottom: 0;">1</h5>
 		                                	<span>게시물</span>
+	                                	</div>
+	                            	</div>
+	                                <div class="col">
+	                                	<div>
+		                                	<h5 style="margin-bottom: 0;">1</h5>
+		                                	<span>복지몰</span>
+	                                	</div>
+	                            	</div>
+	                                <div class="col">
+	                                	<div>
+		                                	<h5 style="margin-bottom: 0;">1</h5>
+		                                	<span>봉사활동</span>
 	                                	</div>
 	                            	</div>
                                 </div>

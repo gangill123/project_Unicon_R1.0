@@ -3,89 +3,91 @@
 
         <!-- FOOTER
         ================================================== -->
-        <footer>
+        <footer class="footer-style11">
             <div class="container">
                 <div class="row mt-n1-9">
 
-                    <div class="col-md-6 col-lg-4 mt-1-9">
-
-                        <img alt="footer-logo" src="${pageContext.request.contextPath }/resources/new_assets/img/logos/logo-footer.png">
-                        <p class="mt-4">Nemo enim enim voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequ magni dolores eos qui ratione voluptatem.</p>
-                        <div class="mt-1-9 footer-social-icons">
-                            <ul class="ps-0">
-                                <li><a href="#!"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-instagram"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-youtube"></i></a></li>
-                                <li><a href="#!"><i class="fab fa-linkedin-in"></i></a></li>
-                            </ul>
-                        </div>
-
+                    <div class="col-lg-5 mt-1-9">
+                        <img src="${pageContext.request.contextPath }/resources/new_assets/img/logos/logo-footer-dark.png" alt="footer-logo">
+                        <p class="py-4 w-sm-80">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci non numquam eius modi.</p>
+                        <ul class="social-icon-style6 ps-0">
+                            <li><a href="#!"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#!"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#!"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="#!"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="#!"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
                     </div>
 
-                    <div class="col-md-6 col-lg-4 mt-1-9">
-                        <h3 class="footer-title-style2 text-primary">Quick Links</h3>
-                        <div class="row">
-                            <div class="col-md-6 pe-lg-0">
-                                <ul class="footer-list mb-2 mb-md-0 ps-0">
-                                    <li><a href="#!">News</a></li>
-                                    <li><a href="#!">History</a></li>
-                                    <li><a href="#!">Community</a></li>
-                                    <li><a href="#!">Portfolio</a></li>
-                                    <li><a href="#!">Safety</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6 pe-lg-0">
-                                <ul class="footer-list ps-0">
-                                    <li><a href="#!">Construction</a></li>
-                                    <li><a href="#!">Case studies</a></li>
-                                    <li><a href="#!">Blog detail</a></li>
-                                    <li><a href="#!">Sales Services</a></li>
-                                    <li><a href="#!">Services detail</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="col-lg-3 mt-1-9">
+                        <h4 class="footer-title-style11">Quick Links</h4>
+                        <ul class="footer-list-style3 list-unstyled">
+                            <li><a href="#!">Home</a></li>
+                            <li><a href="#!">About Us</a></li>
+                            <li><a href="#!">Services</a></li>
+                            <li><a href="#!">Contact Us</a></li>
+                            <li><a href="#!">Services</a></li>
+                        </ul>
                     </div>
 
-                    <div class="col-md-6 col-lg-4 col-xl-3 offset-xl-1 mt-1-9">
-                        <h3 class="footer-title-style2 text-primary">Get in Touch</h3>
-                        <ul class="footer-list ps-0">
+                    <div class="col-lg-4 mt-1-9">
+                        <h4 class="footer-title-style11">Recent Posts</h4>
+                        <ul class="footer-post list-unstyled">
                             <li>
-                                <span class="d-inline-block align-top"><i class="fas fa-map-marker-alt text-primary"></i></span>
-                                <span class="d-inline-block w-85 align-top ps-2">74 Norava Street 542B, Great North Town 51 MT.</span>
+
+                                <div class="post-date">
+                                    <strong class="p-date">24</strong>
+                                    <span class="p-month">April</span>
+                                </div>
+                                <div class="post-info">
+                                    <h6 class="post-title"><a href="blog-single.html">A building with four walls and tomorrow inside.</a></h6>
+                                    <div class="post-meta">
+                                        <ul class="ps-0">
+                                            <li class="post-author"><i class="fa fa-user"></i>By Admin</li>
+                                            <li class="post-comment"><i class="fa fa-comments"></i> 28</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
                             </li>
                             <li>
-                                <span class="d-inline-block align-top"><i class="fas fa-mobile-alt text-primary"></i></span>
-                                <span class="d-inline-block w-85 align-top ps-2">(+44) 123 456 789</span>
-                            </li>
-                            <li>
-                                <span class="d-inline-block align-top"><i class="far fa-envelope text-primary"></i></span>
-                                <span class="d-inline-block w-85 align-top ps-2">addyour@emailhere</span>
-                            </li>
-                            <li>
-                                <span class="d-inline-block align-top"><i class="fas fa-globe text-primary"></i></span>
-                                <span class="d-inline-block w-85 align-top ps-2">www.yourwebsitehere.com</span>
+
+                                <div class="post-date">
+                                    <strong class="p-date">12</strong>
+                                    <span class="p-month">March</span>
+                                </div>
+                                <div class="post-info">
+                                    <h6 class="post-title"><a href="blog-single.html">New leader for  new vision and new direction.</a></h6>
+                                    <div class="post-meta">
+                                        <ul class="ps-0">
+                                            <li class="post-author"><i class="fa fa-user"></i>By Admin</li>
+                                            <li class="post-comment"><i class="fa fa-comments"></i> 78</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
                             </li>
                         </ul>
                     </div>
 
                 </div>
-
             </div>
+
             <div class="footer-bar">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
-                            <p>&copy; Copyright Crizal
-                                <span class="current-year"></span>. All Rights Reserved.</p>
-                        </div>
-                        <div class="col-md-6 text-center text-md-end">
-                            Design and Developed by: <a href="#!" class="text-light-gray">Chitrakoot Web</a>
+                        <div class="col-md-12 text-center">
+                            <p>© Copyright Unicorn
+                                <span class="current-year">2024</span>. All Rights Reserved.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
+        
+        
+        
+        
         
     <!-- start scroll to top -->
     <a href="#!" class="scroll-to-top"><i class="fas fa-angle-up" aria-hidden="true"></i></a>

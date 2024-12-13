@@ -58,7 +58,7 @@ header{ box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); transition: all 0.5s ease 0s;
 .attr-nav > ul > li{ float: none; display: inline-block; vertical-align: middle; }
 .attr-nav > ul > li > a{ color: #282b2d; display: block; padding: 21px 12px; position: relative; }
 .attr-nav > ul > li:last-child > a{ padding-right: 0; }
-.attr-nav > ul > li > a span.badge{ position: absolute; top: 50%; margin-top: -15px; right: 5px; font-size: 10px; padding: 2px 0 0 1px; width: 15px; height: 15px; color: #fff; border-radius: 15px; line-height: 12px; font-weight: 400; }
+.attr-nav > ul > li > a span.badge{ position: absolute; top: 50%; margin-top: -17px; right: 3px; font-size: 10px; padding: 2px 0 0 1px; width: 15px; height: 15px; color: #fff; border-radius: 15px; line-height: 12px; font-weight: 400; }
 .attr-nav > ul > li.dropdown ul.dropdown-menu{ position: absolute; border: none; border-radius: 0; padding: 0; background: #282b2d; min-width: 225px; margin: 10px 0 0 10px; -webkit-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); -ms-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); -moz-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); -webkit-transition: all .5s ease; -ms-transition: all .5s ease; -moz-transition: all .5s ease; -o-transition: all .5s ease; transition: all .5s ease; }
 
 .attr-nav ul.cart-list{ padding: 0; width: 250px; }

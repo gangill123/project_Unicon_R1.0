@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Unicon.mapper.MainMapper">
+
+	<!-- 장바구니 수량 가져와서 세션저장 -->	
+	<select id="getCartCount" resultType="int">
+		select count(*) 
+		from _cart 
+		where member_id = #{member_id} 
+	</select>
+
+
+</mapper>
+
+

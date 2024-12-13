@@ -1874,7 +1874,8 @@
                               </div>
                               <div class="col-sm-10">
                                   <p class="mb-0">주문일 : ${orders.formatted_paydate }</p>
-                                  <p class="mb-0 font-weight-600">${ordersDetail.shopVO.product_name }</p>
+                                  <a href="/shop/shop_detail/${ordersDetail.shopVO.product_id}">
+                                  <p class="mb-0 font-weight-600">${ordersDetail.shopVO.product_name }</p></a>
                                   <p class="mb-0" style="color: #aaa;">${ordersDetail.ordersDetailOptions[0].product_option }
                                    외 ${ordersDetailOptionsSize}건</p>
                                   <div style="display:flex; justify-content: space-between; align-items: end;">
@@ -1931,13 +1932,81 @@
 				
 			}
 		});
-		
-		
-		
-		
-		
 	}
 	
+	
+	//  마이페이지 리뷰작성 시 모달 로직
+	function reviewModal(order_detail_option_id){
+		$.ajax({
+			url:'/mypage/ordersDetailForReview/'+order_detail_option_id,
+			type: 'GET',
+			success: function(response){
+				console.log(response);
+				
+				let reviewModalContent = $('#reviewModalContent');
+				reviewModalContent.empty();
+				
+				let reviewModalContentBody = `
+				<div class="common-block" style="padding: 20px;">
+                         <div class="line-title" style="margin-bottom: 20px;">
+                             <h4 class="mb-0">리뷰 작성</h4>
+                             <p class="mb-0">솔직하고 자세한 리뷰 부탁드립니다.</p>
+                         </div>
+                         
+                         <div class="row">
+                              <div class="col-sm-2" style="margin-bottom: 20px;">
+                              	<div class="orderImage">
+                                  <img class="rounded" src="${response.shopVO.product_images[0].image_src}" alt="...">
+                              	</div>
+                              </div>
+                              <div class="col-sm-10" >
+                                  <p class="mb-0 display-30" style="color: #aaa;">${response.shopVO.memberVO.member_name}</p>
+                                  <p class="mb-0 font-weight-600">${response.shopVO.product_name}</p>
+                                  <p class="mb-0" style="color: #aaa;">${response.ordersDetailOptions[0].product_option}</p>
+                              </div>
+                         </div>
+                         
+                         <form id="reviewCreateForm" action="/mypage/reviewCreate" method="post">
+                             <div class="row">
+                                 <div class="col-sm-12">
+                                     <div class="form-group">
+                                         <select class="form-control form-select" name="review_rate">
+                                             <option selected="Ratings">평점</option>
+                                             <option value="5">5 점</option>
+                                             <option value="4">4 점</option>
+                                             <option value="3">3 점</option>
+                                             <option value="2">2 점</option>
+                                             <option value="1">1 점</option>
+                                         </select>
+                                     </div>
+                                 </div>
+
+                                 <div class="col-sm-12">
+                                     <div class="form-group">
+                                         <textarea id="message" class="form-control" name="review_content" rows="4" 
+                                         placeholder="솔직한 리뷰 부탁드려요"></textarea>
+                                     </div>
+                                 </div>
+                             </div>
+							 <input type="hidden" name="product_id" value="${response.shopVO.product_id }">
+							 <input type="hidden" name="order_detail_id" value="${response.order_detail_id }">
+							 <input type="hidden" name="order_detail_option_id" 
+							 value="${response.ordersDetailOptions[0].order_detail_option_id}">
+                             <button type="submit" class="butn primary w-100"><span>완료</span></button>
+
+                         </form>
+
+                     </div>
+                     `
+					reviewModalContent.append(reviewModalContentBody);
+					$('.reviewModal').modal('show');
+				
+			},
+			error: function(){
+				alert("no");
+			}
+		});
+	}//reviewModal()
 	
 	
 	

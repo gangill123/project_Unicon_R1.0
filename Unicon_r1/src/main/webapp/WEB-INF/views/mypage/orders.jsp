@@ -208,7 +208,8 @@
 	                              </div>
 	                              <div class="col-sm-10">
 	                                  <p class="mb-0">주문일 : ${orders.formatted_paydate }</p>
-	                                  <p class="mb-0 font-weight-600">${ordersDetail.shopVO.product_name }</p>
+	                                  <a href="/shop/shop_detail/${ordersDetail.shopVO.product_id }">
+	                                  <p class="mb-0 font-weight-600">${ordersDetail.shopVO.product_name }</p></a>
 	                                  <p class="mb-0" style="color: #aaa;">${ordersDetail.ordersDetailOptions[0].product_option }
 	                                   외 ${ordersDetail.ordersDetailOptions.size() -1 }건</p>
 	                                  <div style="display:flex; justify-content: space-between; align-items: end;">

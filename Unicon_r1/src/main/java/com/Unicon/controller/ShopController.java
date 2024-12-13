@@ -23,6 +23,7 @@ import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.InterestVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersVO;
+import com.Unicon.domain.ReviewVO;
 import com.Unicon.domain.ShopVO;
 import com.Unicon.service.ShopService;
 
@@ -62,6 +63,10 @@ public class ShopController {
 		// 옵션정보 가져오기(단독형 - 가격포함)
 		List<OptionVO> optionInfoForSole = sService.getOption1ForSole(product_id);
 		model.addAttribute("optionInfoForSole", optionInfoForSole);
+		
+		// 리뷰정보 가져오기
+		List<ReviewVO> reviewInfo = sService.getReview(product_id);
+		model.addAttribute("reviewInfo", reviewInfo);
 		
 		
 		return "/shop/shop_detail";
@@ -103,9 +108,13 @@ public class ShopController {
 	// 상품선택정보를 카트테이블에 저장
 	@PostMapping("/shopToCart")
 	@ResponseBody
-	public String shopToCart(@ModelAttribute CartVO vo) {
+	public String shopToCart(@ModelAttribute CartVO vo, HttpSession session) {
 		logger.info("shopToCart() 호출");
 		logger.info("vo:{}",vo);
+		
+		int cartCount = (int)session.getAttribute("cartCount");
+		session.setAttribute("cartCount", cartCount + 1);
+		
 		
 		sService.saveCart(vo);
 		
@@ -151,9 +160,12 @@ public class ShopController {
 	// 상품 삭제시 ajax구현(디비 실시간 반영)
 	@PostMapping("/removeProduct/{cart_id}")
 	@ResponseBody
-	public void removeProduct(@PathVariable("cart_id") int cart_id) {
+	public void removeProduct(@PathVariable("cart_id") int cart_id, HttpSession session) {
 		logger.info("removeProduct() 호출");
 		logger.info("cart_id:{}",cart_id);
+		
+		int cartCount = (int)session.getAttribute("cartCount");
+		session.setAttribute("cartCount", cartCount - 1);
 		
 		sService.removeProduct(cart_id);
 		
@@ -178,7 +190,6 @@ public class ShopController {
 		logger.debug("vo:{}",vo);
 		
 		sService.cartToCheckout(vo);
-		
 	}
 	
 	// 카테고리 대분류 선택 시 소분류 데이터 가져오기
@@ -191,8 +202,6 @@ public class ShopController {
 		return sService.makeCategoryValue(category_code);
 		
 	}
-	
-	
 	
 	// 쇼핑몰 페이징 처리
 	@GetMapping("/shop_paging")
