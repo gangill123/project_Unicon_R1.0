@@ -180,6 +180,27 @@ public class StoreController {
 	}
 	
 	
+	// 어드민 팝업 공지사항.
+	@RequestMapping( value="/admin/popup" , method =RequestMethod.GET )
+	public String GetPopup() {
+		logger.info("/admin/popup 실행");
+		return "/store/admin/popup";
+	}
+	
+	// 어드민 팝업 공지사항 디테일.
+	@RequestMapping( value="/admin/popup/{anoId}" , method =RequestMethod.GET )
+	public String GetPopupDetail(@PathVariable("anoId") int ano_id,Model model   ) {
+		logger.info("/admin/popup/{anoId} 실행"+ ano_id);
+		AdminNoticeVO result = aService.getPopupById(ano_id);
+		logger.info("result : " + result);
+		if (result == null) {
+			// result가 null인 경우 리다이렉트
+			return "redirect:/store/admin/popup"; // 적절한 리다이렉트 URL로 변경
+		}
+		model.addAttribute("list", result);
+		
+		return "/store/admin/popupDetail";
+	}
 	
 	// 어드민 팝업 공지사항.
 	@RequestMapping( value="/admin/popupForm" , method =RequestMethod.GET )

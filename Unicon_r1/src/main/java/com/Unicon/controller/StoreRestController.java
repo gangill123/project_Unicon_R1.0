@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -140,7 +141,7 @@ public class StoreRestController {
 		}
 	}
 	
-	// 
+	// 공지사항 생성
 	@RequestMapping( value="/admin/notices" , method =RequestMethod.POST )
 	public ResponseEntity<String> noticePOST(AdminNoticeVO vo) {
 		logger.info("/admin/notices 실행" + vo);
@@ -163,6 +164,7 @@ public class StoreRestController {
 	        return new ResponseEntity<String>("공지사항 등록 성공", HttpStatus.OK);
 	    }
 	}
+	// 특정 공지사항 수정
 	@RequestMapping( value="/admin/notices" , method =RequestMethod.PATCH )
 	public ResponseEntity<String> noticePATCH(@RequestBody AdminNoticeVO vo) {
 		logger.info("/admin/noticesPATCH 실행" + vo);
@@ -173,8 +175,6 @@ public class StoreRestController {
 		} else {
 			vo.setImportant((byte) 0); // 중요 공지가 아닐 경우 0으로 설정
 		}
-		
-		
 		int result = aService.updateNotices(vo); // insertNotices 메서드 호출
 		
 		if (result == 0) {
@@ -186,7 +186,52 @@ public class StoreRestController {
 		}
 	}
 	
-	 @PostMapping("/admin/popups")
+	// 팝업 목록 조회
+	@GetMapping("/admin/popups")
+	public ResponseEntity<List<AdminNoticeVO>> getPopupList() {
+		
+		List<AdminNoticeVO> list = aService.getPopupList(); 
+		logger.info("List  " + list);
+		if(list != null) {
+			return new ResponseEntity<List<AdminNoticeVO>>(list,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<List<AdminNoticeVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	// 특정 팝업 수정
+	@RequestMapping( value="/admin/popup/update" , method =RequestMethod.POST )
+	public ResponseEntity<String> updatePATCH(@ModelAttribute AdminNoticeVO popupVO,HttpServletRequest req) {
+		logger.info("/admin/noticesPATCH 실행" + popupVO);
+		
+		if(popupVO.getUpload_images() != null) {
+			ProductVO product = new ProductVO();
+			
+			// MultipartFile을 List<MultipartFile>로 변환
+			List<MultipartFile> uploadImages = new ArrayList<>();
+			if (popupVO.getUpload_images() != null && !popupVO.getUpload_images().isEmpty()) {
+				uploadImages.addAll(popupVO.getUpload_images()); // 전체 리스트 추가
+			}
+			
+			product.setUpload_images(uploadImages); // MultipartFile 리스트 설정
+			
+			// MultipartFile을 List<MultipartFile>로 변환
+			List<ImageVO> images = saveImage(product, req, "popupImg");
+			popupVO.setPopup_images(images);
+		}
+		int result = aService.updatePopup(popupVO);
+		
+		
+		if (result == 0) {
+			// 삽입 실패 시
+			return new ResponseEntity<String>("공지사항 수정에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+			// 삽입 성공 시
+			return new ResponseEntity<String>("공지사항 수정 성공", HttpStatus.OK);
+		}
+	}
+	// 팝업 생성
+	 @PostMapping("/admin/popup/create")
 	 public ResponseEntity<String> createPopup(@ModelAttribute AdminNoticeVO popupVO, HttpServletRequest req) {
 		 // PopupVO에서 데이터 처리
 	        System.out.println("제목: " + popupVO.getTitle());

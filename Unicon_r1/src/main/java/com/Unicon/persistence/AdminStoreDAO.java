@@ -106,6 +106,7 @@ public class AdminStoreDAO {
 		return list;
 		
 	}
+	// 활성화된 팝업 리스트 가져오기
 	public List<AdminNoticeVO> getActivePopupList() {
 		logger.debug("( •̀ ω •́ )✧ getActivePopupList() 실행");
 		
@@ -113,8 +114,53 @@ public class AdminStoreDAO {
 		List<AdminNoticeVO> list = sqlSession.selectList(NAMESPACE + "getActivePopupList");
 
 		return list;
-		
 	}
+	// 팝업 리스트 ALL
+	public List<AdminNoticeVO> getPopupList() {
+		logger.debug("( •̀ ω •́ )✧  getPopupList() 실행");
+		
+		// 활성화된 팝업 리스트 가져오기,조인된 팝업 이미지 가져오기
+		List<AdminNoticeVO> list = sqlSession.selectList(NAMESPACE + "getPopupList");
+		
+		return list;
+	}
+	// 특정 팝업  
+	public AdminNoticeVO getPopupById(int ano_id) {
+		logger.debug("( •̀ ω •́ )✧  getPopupById() 실행");
+		
+		// 활성화된 팝업 리스트 가져오기,조인된 팝업 이미지 가져오기
+		AdminNoticeVO list = sqlSession.selectOne(NAMESPACE + "getPopupById",ano_id);
+		
+		return list;
+	}
+	// 특정 팝업 수정 (이미지가 없을때)
+	public int updatePopup(AdminNoticeVO vo) {
+		logger.debug("( •̀ ω •́ )✧  updatePopup() 실행");
+		
+		// 활성화된 팝업 리스트 가져오기,조인된 팝업 이미지 가져오기
+		int list = sqlSession.update(NAMESPACE + "updatePopup",vo);
+		
+		return list;
+	}
+	// 특정 팝업 수정 (이미지가 있을때)
+	public int updatePopupAndImg(AdminNoticeVO vo) {
+		logger.debug("( •̀ ω •́ )✧  updatePopupAndImg() 실행");
+		
+		// 활성화된 팝업 리스트 가져오기,조인된 팝업 이미지 가져오기
+		int list = sqlSession.update(NAMESPACE + "updatePopup",vo);
+		if(list > 0 ) {
+			// 팝업 images insert
+			List<ImageVO> images = new ArrayList<ImageVO>(vo.getPopup_images());
+			for(ImageVO image : images) {
+				image.setImage_id(String.valueOf(vo.getAnoId()));
+			}
+			sqlSession.update(NAMESPACE + "popupImageUpdate",images);
+		}
+		
+		return list;
+	}
+	
+	
 	
 
 }
