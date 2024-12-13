@@ -92,10 +92,34 @@
 		where interest.member_id = #{member_id} 
 	</select>
 	
+	<!-- 관심상품 삭제 -->
 	<delete id="delInItem">
 		delete from _interest 
 		where interest_id = #{interest_id} 
 	</delete>
+	
+	
+	<!-- 마이페이지 리뷰 작성 -->
+	<insert id="reviewCreate">
+		insert into _review(member_id, product_id, order_detail_option_id, review_rate, review_content) 
+		values(#{member_id}, #{product_id}, #{order_detail_option_id}, #{review_rate}, #{review_content}) 
+	</insert>
+	
+	<!-- 주문상세옵션테이블 변경 -->
+	<update id="updateOrdersDetailOptionToReview">
+		update _orders_detail_option 
+		set review_check = 1 
+		where order_detail_option_id = #{order_detail_option_id} 
+	</update>
+	
+	
+	<!-- 사용자 정보 가져오기 -->
+	<select id="getMemberInfo" resultType="MemberVO">
+		select *
+		from _member 
+		where member_id = #{member_id} 
+	</select>
+	
 	
 	
 	

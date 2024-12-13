@@ -1,16 +1,22 @@
 package com.Unicon.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.InterestVO;
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.NewsVO;
+import com.Unicon.domain.OrdersDetailVO;
 import com.Unicon.domain.PetVO;
+import com.Unicon.domain.ReviewVO;
 import com.Unicon.persistence.MypageDAO;
 import com.Unicon.persistence.NewsDAO;
 
@@ -67,6 +73,18 @@ public class MypageService {
 	// 마이페이지 관심상품 삭제 로직
 	public void delInItem(int interest_id) {
 		mydao.delInItem(interest_id);
+	}
+	
+	
+	// 마이페이지 리뷰 작성 + 주문상세테이블 review 상태 변환
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public void reviewCreate(ReviewVO vo) {
+		mydao.reviewCreate(vo);
+	}
+	
+	// 사용자 정보 가져오기
+	public MemberVO getMemberInfo(String member_id) {
+		return mydao.getMemberInfo(member_id);
 	}
 	
 	

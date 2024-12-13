@@ -69,7 +69,7 @@ p {margin: 0 0 20px; }
 .media { display: -ms-flexbox;  display: flex; -ms-flex-align: start; align-items: flex-start; }
 .media-body { -ms-flex: 1; flex: 1; word-break: break-word; }
 @media (min-width: 1200px){ .container { max-width: 1170px; } }
-@media (min-width: 1400px){ .container {  max-width: 1320px;} }
+@media (min-width: 1400px){ .container { max-width: 1250px;} }
 _:-ms-lang(x), .container, _:-ms-lang(x), .container-fluid, _:-ms-lang(x), .container-lg, _:-ms-lang(x), .container-md, _:-ms-lang(x), .container-sm, _:-ms-lang(x), .container-xl, _:-ms-lang(x), .container-xxl { padding-right: 15px; padding-left: 15px; }
 _:-ms-lang(x), .row.g-0 { margin-right: 0; margin-left: 0; }
 _:-ms-lang(x), .row.g-0 > * { padding-right: 0; padding-left: 0; }

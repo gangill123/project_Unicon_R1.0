@@ -47,7 +47,7 @@
 <!-- 아래는 예시 -->
 <!-- PAGE TITLE
         ================================================== -->
-        ${cartAllInfo }
+        <%-- ${cartAllInfo } --%>
         
         <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
             <div class="container">
@@ -73,7 +73,7 @@
             <div class="container">
 
                 <div class="row" style="justify-content: center;">
-					<div class="col-lg-11">
+					<div class="col-lg-12">
                     <!-- Start Product Table -->
                     <div class="col-12 shop-cart-table">
                         <table class="table shop-cart text-center">

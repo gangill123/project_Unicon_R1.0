@@ -91,6 +91,7 @@
 <resultMap type="com.Unicon.domain.MemberVO" id="MemberResultMap">
 	<result property="member_id" column="member_id"/>
 	<result property="member_name" column="member_name"/>
+	<result property="member_image" column="member_image"/>
 </resultMap>
 
 <!-- "ImageResultMap" -->
@@ -99,6 +100,21 @@
 	<id property="image_type" column="image_type"/>
 	<id property="image_sequence" column="image_sequence"/>
 	<result property="image_src" column="image_src"/>
+</resultMap>
+
+<!-- "ReviewResultMap" -->
+<resultMap type="com.Unicon.domain.ReviewVO" id="ReviewResultMap">
+	<id property="review_id" column="review_id"/>
+	<result property="member_id" column="member_id"/>
+	<result property="product_id" column="product_id"/>
+	<result property="order_detail_option_id" column="order_detail_option_id"/>
+	<result property="review_rate" column="review_rate"/>
+	<result property="review_content" column="review_content"/>
+	<result property="review_create_date" column="review_create_date"/>
+	<result property="formatted_review_create_date" column="formatted_review_create_date"/>
+	
+	<association property="memberVO" resultMap="MemberResultMap" />
+	
 </resultMap>
 
 	<!-- shop 페이지 접속 시 모든 상품정보 가져오기 -->
@@ -116,14 +132,12 @@
 		where p.product_category_value = #{product_category_value} 
 	</select>
 
-
-
 	<!-- 상세페이지 이동시 해당제품 상품정보 가져오기 -->
 	<select id="getProduct" resultMap="ShopResultMap" parameterType="String">
 		select p.*, i.*, m.member_name 
-		from _products p 
-		join _image i on p.product_id = i.image_id 
-		join _member m on p.product_seller_id = m.member_id 
+		from _products p  
+		join _image i on p.product_id = i.image_id  
+		join _member m on p.product_seller_id = m.member_id  
 		where p.product_id = #{product_id} 
 	</select>
 	
@@ -377,6 +391,30 @@
 		insert into _interest(product_id, member_id)  
 		values(#{product_id}, #{member_id}) 
 	</insert>
+	
+	
+	<!-- 리뷰정보 가져오기 -->
+	<select id="getReview" resultMap="ReviewResultMap" parameterType="String">
+		select r.review_rate, r.review_content, 
+		DATE_FORMAT(r.review_create_date, '%Y.%m.%d.') AS formatted_review_create_date, 
+		m.member_name, m.member_image  
+		from _review r  
+		join _member m on r.member_id = m.member_id  
+		where r.product_id = #{product_id}  
+		order by r.review_create_date desc 
+	</select>
+	
+	
+	<!-- 세일품목 정보 가져오기(4개) -->
+	<select id="getShopItemForMain" resultMap="ShopResultMap">
+		select p.*, i.* 
+		from _products p 
+		join _image i on p.product_id = i.image_id 
+		order by discount_rate desc 
+		limit 4 
+	</select>
+	
+	
 	
 	
 	

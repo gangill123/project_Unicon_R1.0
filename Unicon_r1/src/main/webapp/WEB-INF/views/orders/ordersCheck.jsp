@@ -46,11 +46,6 @@
 	object-fit: fill;
 }
 
-.orderItem:hover Img{
-    transform: scale(1.1); /* 10% 확대 */
-    transition: transform 0.5s ease;
-}
-
 .btn-outline-success{
 	color: #86bc42;
 	border-color: #86bc42;

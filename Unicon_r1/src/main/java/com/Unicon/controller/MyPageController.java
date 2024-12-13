@@ -27,8 +27,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.InterestVO;
+import com.Unicon.domain.MemberVO;
+import com.Unicon.domain.OrdersDetailVO;
 import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.PetVO;
+import com.Unicon.domain.ReviewVO;
 import com.Unicon.domain.ShopVO;
 import com.Unicon.service.MypageService;
 import com.Unicon.service.OrdersService;
@@ -51,10 +54,16 @@ public class MyPageController {
 	public String Mypage(HttpSession session, Model model) {
 		logger.info("Mypage() 호출");
 		
-		// 반려동물 조회
 		String member_id = (String)session.getAttribute("member_id");
+		
+		// 사용자 정보 가져오기
+		MemberVO memberInfo = myService.getMemberInfo(member_id);
+		model.addAttribute("memberInfo", memberInfo);
+		
+		// 반려동물 조회
 		List<PetVO> petAllInfo = myService.getPetAll(member_id);
 		model.addAttribute("petAllInfo", petAllInfo);
+		
 			
 		return "/mypage/main";
 	}
@@ -286,6 +295,32 @@ public class MyPageController {
 	}
 	
 	
+	// 마이페이지 리뷰 작성
+	@PostMapping("/reviewCreate")
+	public String reviewCreate(ReviewVO vo, @RequestParam("order_detail_id") int order_detail_id, 
+			HttpSession session) {
+		logger.info("reviewCreate");
+		logger.info("vo : {}", vo);
+		
+		String member_id = (String)session.getAttribute("member_id");
+		vo.setMember_id(member_id);
+		
+		myService.reviewCreate(vo);
+		
+		return "redirect:/mypage/orders_detail/"+order_detail_id;
+	}
+	
+	// 마이페이지 리뷰작성 시 모달 로직
+	@GetMapping("/ordersDetailForReview/{order_detail_option_id}")
+	@ResponseBody
+	public OrdersDetailVO ordersDetailForReview(@PathVariable("order_detail_option_id") 
+			int order_detail_option_id) {
+		
+		logger.info("ordersDetailForReview() 호출");
+		logger.info("order_detail_option_id : {}",order_detail_option_id);
+		
+		return oService.ordersDetailForReview(order_detail_option_id);
+	}
 	
 	
 	

@@ -61,6 +61,7 @@
 	<result property="dispatch_date" column="dispatch_date"/>
 	<result property="cancellation_request_date" column="cancellation_request_date"/>
 	<result property="return_request_date" column="return_request_date"/>
+	<result property="review_check" column="review_check"/>
 </resultMap>
 
 
@@ -79,7 +80,10 @@
 	<result property="product_seller_name" column="product_seller_name"/>
 	<result property="product_name" column="product_name"/>
 	
+	<association property="memberVO" resultMap="MemberResultMap" />
+	
 	<collection property="product_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
+	
 </resultMap>
 
 <!-- "ImageResultMap" -->
@@ -88,6 +92,17 @@
 	<id property="image_type" column="image_type"/>
 	<id property="image_sequence" column="image_sequence"/>
 	<result property="image_src" column="image_src"/>
+</resultMap>
+
+<!-- "ReviewResultMap" -->
+<resultMap type="com.Unicon.domain.ReviewVO" id="ReviewResultMap">
+	<id property="review_id" column="review_id"/>
+	<result property="member_id" column="member_id"/>
+	<result property="product_id" column="product_id"/>
+	<result property="order_detail_option_id" column="order_detail_option_id"/>
+	<result property="review_rate" column="review_rate"/>
+	<result property="review_content" column="review_content"/>
+	<result property="review_create_date" column="review_create_date"/>
 </resultMap>
 
 	<!-- 결제용 주문정보 가져오기, 임시저장 상태만 가져옴 -->
@@ -107,7 +122,6 @@
         join _member sm on sm.member_id = p.product_seller_id
 		join _image i on p.product_id = i.image_id 
 		join _orders_detail_option odo on odo.order_detail_id = od.order_detail_id 
-		and o.payment_date >= DATE_SUB(CURDATE(), INTERVAL 3 MONTH) 
 		where o.status = '임시저장' and o.member_id=#{member_id} 
 	</select>
 	
@@ -154,9 +168,6 @@
 		order by o.payment_date desc 
 	</select>
 
-
-
-	
 	<!-- 기본배송지 있는 지 확인 -> address_id 가져옴 -->
 	<select id="checkDefaultAddr" resultType="int">
 		select address_id 
@@ -343,6 +354,18 @@
 		where o.member_id=#{member_id} and od.orders_detail_status = #{orders_detail_status} 
 		and o.payment_date >= DATE_SUB(CURDATE(), INTERVAL #{monthVal} MONTH) 
 		order by o.payment_date desc 
+	</select>
+
+
+	<!-- 마이페이지 리뷰작성 시 모달 로직(상품정보 가져오기) -->
+	<select id="ordersDetailForReview" resultMap="OrdersDetailResultMap" parameterType="int">
+		select od.*, odo.*, i.image_src, p.product_name, m.member_name 
+		from _orders_detail od 
+		join _products p on p.product_id = od.product_id 
+		join _image i on p.product_id = i.image_id 
+        join _member m on p.product_seller_id = m.member_id 
+		join _orders_detail_option odo on odo.order_detail_id = od.order_detail_id  
+		where odo.order_detail_option_id = #{order_detail_option_id} 
 	</select>
 
 

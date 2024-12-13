@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     
 <body>
 
@@ -219,7 +221,7 @@
                                         </li>
                                         <li><a href="/news">소식</a>
                                             <ul>
-                                                <li><a href="/news">지자체 행사소식</a></li>
+                                                <li><a href="/news">행사소식</a></li>
                                                 <li><a href="blog-grid-classic.html">Blog Grid Classic</a></li>
                                             </ul>
                                         </li>
@@ -237,31 +239,60 @@
                                         <li><a href="/shop">복지몰</a>
                                         </li>
                                         
-                                        
-                                        
-                                        <li></li>
                                     </ul>
                                     <!-- end menu area -->
 
-                                    <!-- start attribute navigation -->
-                                    <div class="attr-nav me-lg-0 ms-auto">
-                                        <ul>
-                                            <li class="dropdown me-3 me-lg-0">
-                                                <a href="/shop/cart"><i class="fas fa-shopping-cart"></i>
-                                                    <span class="badge bg-primary">3</span>
-                                                </a>
-                                            </li>
-                                            <li class="search"><a href="#!"><i class="fas fa-search"></i></a></li>
-                                            <li><a href="/mypage">
-			                                	<img src="${pageContext.request.contextPath }/resources/new_assets/img/slider01.jpg"
-			                                	 class="rounded-circle" style="width: 41px; height: 41px;">
-			                            	</a></li>
-                                            
-                                            <li class="d-none d-xl-inline-block" style="margin-left: 10px;">
-                                            <a href="contact.html" class="butn-style2 text-white small"><span>글쓰기</span></a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- end attribute navigation -->
+
+									
+									<c:choose>
+										<c:when test="${!empty member_id }">
+	                                    <div class="attr-nav me-lg-0 ms-auto">
+	                                        <ul>
+	                                            <li class="dropdown me-3 me-lg-0">
+	                                                <a href="/shop/cart"><i class="fa-solid fa-shield-dog"></i>
+	                                                    <span class="badge bg-primary">${cartCount }</span>
+	                                                </a>
+	                                            </li>
+	                                            <li class="dropdown me-3 me-lg-0">
+	                                                <a href="/shop/cart"><i class="fas fa-shopping-cart"></i>
+	                                                    <span class="badge bg-primary">${cartCount }</span>
+	                                                </a>
+	                                            </li>
+	                                            
+	                                            <li>
+		                                            <a href="/mypage">
+					                                	<img src="${pageContext.request.contextPath }/resources/new_assets/img/slider01.jpg"
+					                                	 class="rounded-circle" style="width: 41px; height: 41px;">
+					                            	</a>
+				                            	</li>
+	                                            
+	                                            <li class="d-none d-xl-inline-block" style="margin-left: 10px;">
+	                                            <a href="contact.html" class="butn-style2 text-white small"><span>글쓰기</span></a></li>
+	                                        </ul>
+	                                    </div>
+										</c:when>
+										<c:otherwise>
+										<div class="attr-nav me-lg-0 ms-auto">
+	                                        <ul>
+	                                            <li class="dropdown me-3 me-lg-0">
+	                                                <a href="/shop/cart" style="padding-right: 0;">
+	                                                    <p class="mb-0 pe-3 border-end" style="display: inline; font-size: 14px;">로그인</p>
+	                                                </a>
+	                                            </li>
+	                                            <li>
+		                                            <a href="/mypage" style="padding-right: 0;">
+					                                	<p class="mb-0 pe-3 border-end" style="display: inline; font-size: 14px;">회원가입</p>
+					                            	</a>
+				                            	</li>
+	                                            <li>
+		                                            <a href="/mypage" style="padding-right: 0;">
+					                                	<p class="mb-0" style="display: inline; font-size: 14px;">고객센터</p>
+					                            	</a>
+				                            	</li>
+	                                        </ul>
+	                                    </div>
+										</c:otherwise>
+									</c:choose>
 
                                 </nav>
                             </div>
