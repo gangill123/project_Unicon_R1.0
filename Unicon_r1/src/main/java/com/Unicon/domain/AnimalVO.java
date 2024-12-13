@@ -33,14 +33,16 @@ public class AnimalVO {
 	private String social_value;
 	private String animal_etc;
 	private String adpt_member;
+	private String animal_reason;
+	
 	private List<ImageVO> animal_images;
 	private List<MultipartFile> upload_images;
 	private List<AnimalHealthVO> animal_healths;
 	private List<AnimalVaccineVO> animal_vaccines;
 	private List<CheckImageVO> check_images;
+	private List<AdptCounselVO> adptCounselList;
 	
-	private AdptCounselVO adptCounselVO;
-	private AdptMemberVO adptMemberVO;
+	private MemberVO MemberVO;
 	private AnimalInterestVO animalInterestVO;
 	private AdptVO adptVO;
 	private CategoryDataVO categoryDataVO;

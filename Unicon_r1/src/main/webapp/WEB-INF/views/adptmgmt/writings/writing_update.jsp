@@ -118,6 +118,10 @@
 		display: none;
 		text-shadow: 0 0 0.5rem rgba(0, 110, 96, 0.5);
 	}
+	
+	#adptStatus label {
+		font-size: 1.5rem;
+	}
 	/*=============== 텍스트 css ===============*/
 	
 	
@@ -489,11 +493,19 @@
 	}
 	/*=============== 버튼 css ===============*/
 
+
 	/*=============== 바탕 css ===============*/
 	.card {
 		border-radius: 2rem;
 	}
 	/*=============== 바탕 css ===============*/
+	
+	
+	/*=============== textarea css ===============*/
+	#adptReasonDiv {
+		display: none;
+	}
+	/*=============== textarea css ===============*/
 	
 </style>
 </head>
@@ -512,7 +524,7 @@
 							<div class="col-12 grid-margin stretch-card">
 								<div class="card">
 									<div class="card-body">
-										<h4 class="card-title">입양 관리 - 입양 글 등록</h4>
+										<h4 class="card-title">입양 관리 - 입양글 수정 및 삭제</h4>
 										
 										<form id="formModifyAdptWriting" action="" method="post">
 										
@@ -525,9 +537,18 @@
 															<input type="text" id="adpt_id" name="adpt_id" 
 																class="form-control custom-text" readonly/>
 														</div>
-														<div class="col-12 col-xl-4 col-lg-7 col-md-7 mb-3">
+														<div class="col-12 col-xl-2 col-lg-7 col-md-7 mb-3">
 															<label for="adpt_regdate" class="text-dark custom-label">등록일자</label>
 															<input type="text" id="adpt_regdate" class="form-control custom-text" readonly/>
+														</div>
+														<div class="col-12 col-xl-2 col-lg-3 col-md-3 mb-3">
+															<label for="animal_status" class="text-dark custom-label">입양글 상태</label>
+															<div id="adptStatus"></div>
+														</div>
+														<div id="adptReasonDiv" class="col-12 col-xl-2 col-lg-5 col-md-4 mb-3">
+															<label for="adpt_reason" class="text-dark custom-label">취소 사유</label>
+															<textarea id="adpt_reason" rows="5" cols="" maxlength="50"
+																class="form-control custom-text" readonly></textarea>
 														</div>
 												</div>
 												
@@ -770,7 +791,7 @@
 				
 				if(regex.test(animalId)) {
 					$.ajax({
-						url: '/adptmgmt/animals/' + animalId,
+						url: '/adptmgmt/animals/'+ animalId +'/writing',
 						method: 'GET',
 						type: 'json',
 						success: function(data) {
@@ -815,6 +836,24 @@
 							$('#adpt_etc').val(data.adptVO.adpt_etc);
 							$('#adpt_id').val(data.adptVO.adpt_id);
 							$('#adpt_regdate').val(data.adptVO.adpt_regdate);
+							switch(data.adptVO.adpt_status) {
+								case 1: {
+									$('#adptStatus').empty();
+									$('#adptStatus').append('<label class="badge badge-warning">승인대기중</label>');
+									break;
+								}
+								case 2: {
+									$('#adptStatus').empty();
+									$('#adptStatus').append('<label class="badge badge-primary">승인</label>');
+									break;
+								}
+								case 3: {
+									$('#adptStatus').empty();
+									$('#adptStatus').append('<label class="badge badge-danger">승인취소</label>');
+									$('#adptReasonDiv').show();
+									break;
+								}
+							}
 						},
 						error: function(error) {
 							console.error('데이터를 가져오는 데 실패했습니다:', error);
@@ -836,6 +875,7 @@
 						title: '페이지를 이동하시겠습니까?',
 						text: '동물 정보 수정 페이지로 이동합니다',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -858,6 +898,7 @@
 						title: '목록으로 이동하시겠습니까?',
 						text: '입양글 목록 페이지로 이동합니다',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -875,12 +916,13 @@
 				
 				/*=============== 입양글 삭제(delete) 버튼 제어 ===============*/
 				$('#a-modify-delete-btn').on('click',function(e) {
-					const member_id = $('#aRegUser').val();
+					const adpt_id = $('#adpt_id').val();
 					
 					Swal.fire({
 						title: '삭제하시겠습니까?',
 						text: '입양글이 삭제됩니다!',
 						icon: 'warning',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#fc5a5a',
 						cancelButtonColor: '#aab2bd',
@@ -889,12 +931,13 @@
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: '/adptmgmt/writings/'+ animalId +'/deletion/?member_id=' + member_id,
+								url: '/adptmgmt/writings/'+ animalId +'/deletion?adpt_id='+ adpt_id,
 								method: "DELETE",
 								success: function() {
 									Swal.fire({
 										title:'삭제 되었습니다!',
 										icon:'success',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									}).then(function(result) {
@@ -909,6 +952,7 @@
 										title: '오류 발생',
 										text: '삭제에 실패했습니다. 다시 시도해 주세요.',
 										icon: 'error',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									});
@@ -928,6 +972,7 @@
 						title: '초기화하시겠습니까?',
 						text: '동물정보를 제외한 작성글이 초기화 됩니다!',
 						icon: 'warning',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -940,6 +985,7 @@
 							Swal.fire({
 								title:'초기화 되었습니다!',
 								icon:'success',
+								allowOutsideClick: false,
 								confirmButtonColor: '#006e60',
 								confirmButtonText: '확인'
 							});
@@ -961,6 +1007,7 @@
 						title: '수정하시겠습니까?',
 						text: '수정 내용을 확인해주세요!',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -980,6 +1027,7 @@
 									title: '수정 완료',
 									text: '수정에 성공했습니다!',
 									icon: 'success',
+									allowOutsideClick: false,
 									confirmButtonColor: '#006e60',
 									confirmButtonText: '확인'
 									}).then(function(result){
@@ -995,6 +1043,7 @@
 										title: '오류!',
 										text: '등록에 실패했습니다.',
 										icon: 'error',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									});

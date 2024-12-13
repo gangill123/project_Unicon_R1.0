@@ -118,6 +118,10 @@
 		display: none;
 		text-shadow: 0 0 0.5rem rgba(0, 110, 96, 0.5);
 	}
+	
+	#adptStatus label {
+		font-size: 1.5rem;
+	}
 	/*=============== 텍스트 css ===============*/
 	
 	
@@ -487,13 +491,26 @@
 		background-color: #006e60;
 		border-color: #006e60;
 	}
+	
+	#a-manager-writing-agree, #a-manager-writing-cancel {
+		display: none;
+	}
+	
 	/*=============== 버튼 css ===============*/
+
 
 	/*=============== 바탕 css ===============*/
 	.card {
 		border-radius: 2rem;
 	}
 	/*=============== 바탕 css ===============*/
+
+
+	/*=============== textarea css ===============*/
+	#adptReasonDiv {
+		display: none;
+	}
+	/*=============== textarea css ===============*/
 	
 </style>
 </head>
@@ -512,7 +529,7 @@
 							<div class="col-12 grid-margin stretch-card">
 								<div class="card">
 									<div class="card-body">
-										<h4 class="card-title">입양 관리 - 입양 글 등록</h4>
+										<h4 class="card-title">관리자 페이지 - 입양글 관리</h4>
 										
 										<form id="formModifyAdptWriting" action="" method="post">
 										
@@ -525,9 +542,18 @@
 															<input type="text" id="adpt_id" name="adpt_id" 
 																class="form-control custom-text" readonly/>
 														</div>
-														<div class="col-12 col-xl-4 col-lg-7 col-md-7 mb-3">
+														<div class="col-12 col-xl-2 col-lg-7 col-md-7 mb-3">
 															<label for="adpt_regdate" class="text-dark custom-label">등록일자</label>
 															<input type="text" id="adpt_regdate" class="form-control custom-text" readonly/>
+														</div>
+														<div class="col-12 col-xl-2 col-lg-3 col-md-3 mb-3">
+															<label for="adptStatus" class="text-dark custom-label">입양글 상태</label>
+															<div id="adptStatus"></div>
+														</div>
+														<div id="adptReasonDiv" class="col-12 col-xl-2 col-lg-5 col-md-4 mb-3">
+															<label for="adpt_reason" class="text-dark custom-label">취소 사유</label>
+															<textarea id="adpt_reason" rows="5" cols="" maxlength="50"
+																class="form-control custom-text" readonly></textarea>
 														</div>
 												</div>
 												
@@ -666,26 +692,22 @@
 													
 													
 												<div class="form-group row justify-content-center align-items-center mb-1">
-													<button type="submit" id="a-submit-btn1" 
-														class="btn btn-lg btn-rounded btn-custom-a custom-text mx-2 mb-1">
-														수정하기
+													<button type="button" id="a-manager-writing-agree" 
+														class="btn btn-lg btn-rounded btn-primary custom-text mx-2 mb-1">
+														입양글 승인
 													</button>
-													<button type="button" id="a-reset-btn1" 
+													<button type="button" id="a-manager-writing-cancel" 
 														class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-1">
-														초기화
+														입양글 승인 취소
 													</button>
 												</div>
 												<div class="form-group row justify-content-center align-items-center mb-1">
-													<button type="button" 
-														class="btn btn-lg btn-rounded btn-success custom-text mx-2 mb-1 a-animal-modify-btn"> 
-														동물 정보 수정
-													</button>
 													<button type="button" 
 														class="btn btn-lg btn-rounded btn-warning custom-text mx-2 mb-1 a-list-move-btn"> 
 														목록이동
 													</button>
 													<button type="button" id="a-modify-delete-btn" 
-														class="btn btn-lg btn-rounded btn-danger custom-text mx-2 mb-2">
+														class="btn btn-lg btn-rounded btn-danger custom-text mx-2 mb-1">
 														삭제
 													</button>
 												</div>
@@ -765,12 +787,12 @@
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/
 				let currentURL = window.location.pathname;
 				let lastSlashIndex = currentURL.lastIndexOf('/');
-				const animalId = currentURL.substring(lastSlashIndex+1);
+				const animalId = currentURL.substring(lastSlashIndex+1); // 전역 변수
 				const regex = /^ANIM-\w{6}$/;
 				
 				if(regex.test(animalId)) {
 					$.ajax({
-						url: '/adptmgmt/animals/' + animalId,
+						url: '/adptmgmt/animals/' + animalId +'/writing',
 						method: 'GET',
 						type: 'json',
 						success: function(data) {
@@ -815,41 +837,104 @@
 							$('#adpt_etc').val(data.adptVO.adpt_etc);
 							$('#adpt_id').val(data.adptVO.adpt_id);
 							$('#adpt_regdate').val(data.adptVO.adpt_regdate);
+							switch(data.adptVO.adpt_status) {
+								case 1: {
+									$('#adptStatus').empty();
+									$('#adptStatus').append('<label class="badge badge-warning">승인대기중</label>');
+									$('#a-manager-writing-agree').show();
+									$('#a-manager-writing-cancel').show();
+									break;
+								}
+								case 2: {
+									$('#adptStatus').empty();
+									$('#adptStatus').append('<label class="badge badge-primary">승인</label>');
+									$('#a-manager-writing-cancel').show();
+									break;
+								}
+								case 3: {
+									$('#adptStatus').empty();
+									$('#adptStatus').append('<label class="badge badge-danger">승인취소</label>');
+									$('#a-manager-writing-agree').show();
+									$('#adptReasonDiv').show();
+									break;
+								}
+							}
 						},
 						error: function(error) {
 							console.error('데이터를 가져오는 데 실패했습니다:', error);
-							window.location.href = '/AM/animals/list';
+							window.location.href = '/AM/manager/writings/total';
 							alert('잘못된 접근입니다');
 						}
 					});
 				} else {
-					window.location.href = '/AM/animals/list';
+					window.location.href = '/AM/manager/writings/total';
 					alert('잘못된 접근입니다');
 				}
 				/*=============== 동물 정보 가져오기 & 입력 ===============*/
 				
 				
 				
-				/*=============== 동물 정보 수정 이동(move) 버튼 제어 ===============*/
-				$('.a-animal-modify-btn').on('click', function() {
+				/*=============== 입양글 승인(agree) 버튼 제어 ===============*/
+				$('#a-manager-writing-agree').on('click', function() {
+					
 					Swal.fire({
-						title: '페이지를 이동하시겠습니까?',
-						text: '동물 정보 수정 페이지로 이동합니다',
+						title: '입양글을 승인하시겠습니까?',
+						text: '입양글이 사용자 페이지에 게시됩니다',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '확인',
+						confirmButtonText: '승인',
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
-							location.href='/AM/animals/list/'+ animalId;
-						}	
+							$.ajax({
+								url: '/adptmgmt/manager/writings/'+ animalId +'/status',
+								method: 'PATCH',
+								contentType: 'application/json',
+								data: JSON.stringify({ 
+									"adpt_id" : $('#adpt_id').val(), 
+									"animal_id" : animalId,
+									"adpt_status" : 2 }),
+								success: function() {
+									Swal.fire({
+										title: '입양글이 승인되었습니다',
+										icon: 'success',
+										allowOutsideClick: false,
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인',
+									}).then(function(result) {
+										if (result.isConfirmed) {
+											location.reload();
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '승인에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										allowOutsideClick: false,
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
 					});
+				});
+				/*=============== 입양글 승인(agree) 버튼 제어 ===============*/
+
+				
+				
+				/*=============== 입양글 승인 취소(cancel) 버튼 제어 ===============*/
+				$('#a-manager-writing-cancel').on('click', function() {
 					
 				});
-				/*=============== 동물 정보 수정 이동(move) 버튼 제어 ===============*/
-				
+				/*=============== 입양글 승인 취소(cancel) 버튼 제어 ===============*/
+
 				
 				
 				/*=============== 입양글 목록 이동(move) 버튼 제어 ===============*/
@@ -858,6 +943,7 @@
 						title: '목록으로 이동하시겠습니까?',
 						text: '입양글 목록 페이지로 이동합니다',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -865,7 +951,7 @@
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
-							location.href='/AM/writings/all';
+							location.href='/AM/manager/writings/total';
 						}	
 					});
 				});
@@ -875,12 +961,12 @@
 				
 				/*=============== 입양글 삭제(delete) 버튼 제어 ===============*/
 				$('#a-modify-delete-btn').on('click',function(e) {
-					const member_id = $('#aRegUser').val();
 					
 					Swal.fire({
 						title: '삭제하시겠습니까?',
 						text: '입양글이 삭제됩니다!',
 						icon: 'warning',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#fc5a5a',
 						cancelButtonColor: '#aab2bd',
@@ -889,17 +975,18 @@
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: '/adptmgmt/writings/'+ animalId +'/deletion/?member_id=' + member_id,
+								url: '/adptmgmt/writings/'+ animalId +'/deletion',
 								method: "DELETE",
 								success: function() {
 									Swal.fire({
 										title:'삭제 되었습니다!',
 										icon:'success',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									}).then(function(result) {
 										if(result.isConfirmed) {
-											location.href="/AM/writings/all";
+											location.href="/AM/manager/writings/total";
 										}
 									});
 								},
@@ -909,6 +996,7 @@
 										title: '오류 발생',
 										text: '삭제에 실패했습니다. 다시 시도해 주세요.',
 										icon: 'error',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									});
@@ -918,94 +1006,7 @@
 					});
 				});
 				/*=============== 입양글 삭제(delete) 버튼 제어 ===============*/
-				
-				
-				
-				/*=============== 초기화(reset) 버튼 제어 ===============*/
-				$('#a-reset-btn1, #a-reset-btn2').on('click',function(e) {
-					
-					Swal.fire({
-						title: '초기화하시겠습니까?',
-						text: '동물정보를 제외한 작성글이 초기화 됩니다!',
-						icon: 'warning',
-						showCancelButton: true,
-						confirmButtonColor: '#006e60',
-						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '초기화',
-						cancelButtonText: '닫기'
-					}).then(function(result) {
-						if (result.isConfirmed) {
-							$('#adpt_intro').val('');
-							$('#adpt_etc').val('');
-							Swal.fire({
-								title:'초기화 되었습니다!',
-								icon:'success',
-								confirmButtonColor: '#006e60',
-								confirmButtonText: '확인'
-							});
-						}
-					});
-				});
-				/*=============== 초기화(reset) 버튼 제어 ===============*/
 
-				
-				
-				/*=============== 수정(submit) 버튼 제어 ===============*/
-				$('#formModifyAdptWriting').on('submit', function(event) {
-					event.preventDefault();
-					var formData = new FormData(this);
-					formData.append('adpt_status', 1);
-					
-					$('#a-submit-btn1, #a-submit-btn2').prop('disabled', true);
-					Swal.fire({
-						title: '수정하시겠습니까?',
-						text: '수정 내용을 확인해주세요!',
-						icon: 'info',
-						showCancelButton: true,
-						confirmButtonColor: '#006e60',
-						cancelButtonColor: '#aab2bd',
-						confirmButtonText: '수정',
-						cancelButtonText: '닫기'
-					}).then(function(result) {
-						if (result.isConfirmed) {
-							$.ajax({
-								url: '/adptmgmt/writings/'+ animalId +'/modification',
-								type: 'POST',
-								data: formData,
-								contentType: false,
-								processData: false,
-								success: function(response) {
-									$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
-									Swal.fire({
-									title: '수정 완료',
-									text: '수정에 성공했습니다!',
-									icon: 'success',
-									confirmButtonColor: '#006e60',
-									confirmButtonText: '확인'
-									}).then(function(result){
-										if(result.isConfirmed){
-											location.href='/AM/writings/all';
-										}
-									});
-								},
-								error: function(jqXHR, textStatus, errorThrown) {
-									$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
-									console.error('등록 실패:', textStatus, errorThrown);
-									Swal.fire({
-										title: '오류!',
-										text: '등록에 실패했습니다.',
-										icon: 'error',
-										confirmButtonColor: '#006e60',
-										confirmButtonText: '확인'
-									});
-								}
-							});
-						} else {
-							$('#a-submit-btn1, #a-submit-btn2').prop('disabled', false);
-						}
-					});
-				});
-				/*=============== 수정(submit) 버튼 제어 ===============*/
 				
 				
 				

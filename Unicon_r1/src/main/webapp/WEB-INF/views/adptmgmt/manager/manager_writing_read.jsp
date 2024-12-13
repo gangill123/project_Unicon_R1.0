@@ -168,7 +168,7 @@
 						<div class="col-12 grid-margin stretch-card">
 							<div class="card">
 								<div class="card-body">
-									<h4 class="card-title">입양 관리 - 입양 글 목록</h4>
+									<h4 class="card-title">관리자 페이지 - 입양글 관리</h4>
 										<table id="animalTable" class="table table-hover col-12">
 											<thead>
 												<tr>
@@ -249,7 +249,7 @@
 			"stateDuration": -1,
 			/*=============== DataTable ajax ===============*/
 			"ajax": {
-				url: '/adptmgmt/writings',
+				url: '/adptmgmt/writings/manager',
 				type: 'GET',
 				dataType: 'json',
 				dataSrc: function(json) {
@@ -283,7 +283,7 @@
 								break;
 							}
 							case '승인': {
-								item.adptVO.adpt_status_value = '<label class="badge badge-primary">모집중</label>';
+								item.adptVO.adpt_status_value = '<label class="badge badge-primary">승인</label>';
 								break;
 							}
 							case '승인취소': {
@@ -300,7 +300,7 @@
 				{ data: 'animal_id' },
 				{ data: 'categoryDataVO.category_type' },
 				{ data: 'categoryDataVO.category_value' },
-				{ data: 'animal_name' },
+				{ data: 'memberVO.member_name' },
 				{ data: 'adptVO.adpt_regdate' },
 				{ data: 'adptVO.adpt_status_value' }
 			],
@@ -315,7 +315,7 @@
 				api.columns().every(function(index) {
 					var column = this;
 					  
-					if (index === 0 || index == 1 || index === 4 || index === 5) {
+					if (index === 0 || index == 1 || index === 5) {
 						return;
 					}
 					
@@ -381,7 +381,7 @@
 		/*=============== tr 선택 상세 조회 ===============*/
 		$('table').on('click', 'tr.a-view-writing', function() {
 			const animal_id = $(this).find('td:eq(1)').text();
-			window.location.href = '/AM/writings/' + animal_id;
+			window.location.href = '/AM/manager/writings/total/'+ animal_id;
 		});
 		/*=============== tr 선택 상세 조회 ===============*/
 		

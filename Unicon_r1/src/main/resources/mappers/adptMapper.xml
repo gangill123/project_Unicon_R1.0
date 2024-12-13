@@ -30,9 +30,9 @@
 	<result property="social_value" column="social_value"/>
 	<result property="animal_etc" column="animal_etc"/>
 	<result property="adpt_member" column="adpt_member"/>
+	<result property="animal_reason" column="animal_reason"/>
 	
-	<association property="adptCounselVO" resultMap="CounselResultMap"/>
-	<association property="adptMemberVO" resultMap="MemberResultMap"/>
+	<association property="memberVO" resultMap="MemberResultMap"/>
 	<association property="animalInterestVO" resultMap="InterestResultMap"/>
 	<association property="adptVO" resultMap="AdptResultMap"/>
 	<association property="categoryDataVO" resultMap="CategoryResultMap"/>
@@ -40,12 +40,13 @@
 	<collection property="animal_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
 	<collection property="animal_healths" ofType="com.Unicon.domain.AnimalHealthVO" resultMap="HealthResultMap"/>
 	<collection property="animal_vaccines" ofType="com.Unicon.domain.AnimalVaccineVO" resultMap="VaccineResultMap"/>
+	<collection property="adptCounselList" ofType="com.Unicon.domain.AdptCounselVO" resultMap="CounselResultMap"/>
 </resultMap>
 
 
 <resultMap type="com.Unicon.domain.AdptCounselVO" id="CounselResultMap">
 	<result property="animal_id" column="animal_id"/>
-	<result property="counsel_id" column="counsel_id"/>
+	<result property="member_id" column="member_id"/>
 	<result property="counsel_subdate" column="counsel_subdate"/>
 	<result property="counsel_procdate" column="counsel_procdate"/>
 	<result property="counsel_status" column="counsel_status"/>
@@ -54,14 +55,18 @@
 	<result property="counsel_reason" column="counsel_reason"/>
 </resultMap>
 
-<resultMap type="com.Unicon.domain.AdptMemberVO" id="MemberResultMap">
-	<result property="member_id" column="member_id"/>
+<resultMap type="com.Unicon.domain.MemberVO" id="MemberResultMap">
+	<id property="member_id" column="member_id"/>
+	<result property="member_pw" column="member_pw"/>
 	<result property="member_name" column="member_name"/>
+	<result property="member_nickname" column="member_nickname"/>
 	<result property="member_tel" column="member_tel"/>
-	<result property="road_address" column="road_address"/>
-	<result property="member_email" column="member_email"/>
-	<result property="member_birth" column="member_birth"/>
 	<result property="member_gender" column="member_gender"/>
+	<result property="member_birth" column="member_birth"/>
+	<result property="member_email" column="member_email"/>
+	<result property="member_image" column="member_image"/>
+	<result property="road_address" column="road_address"/>
+	<result property="detail_address" column="detail_address"/>
 </resultMap>
 
 <resultMap type="com.Unicon.domain.AnimalInterestVO" id="InterestResultMap">
@@ -114,26 +119,26 @@
 <insert id="insertAnimal" parameterType="com.Unicon.domain.AnimalVO">
 	insert into _animal (animal_id, category_code, category_etc_value, animal_name, animal_color, animal_gender, animal_neuter, animal_age, 
 	 animal_weight, member_id, animal_regnum, animal_act, animal_social, animal_etc) 
-	  values (#{animal_id}, #{category_code}, #{category_etc_value}, #{animal_name}, #{animal_color}, #{animal_gender}, #{animal_neuter}, 
-	   #{animal_age}, #{animal_weight}, #{member_id}, #{animal_regnum}, #{animal_act}, #{animal_social}, #{animal_etc})
+  	values (#{animal_id}, #{category_code}, #{category_etc_value}, #{animal_name}, #{animal_color}, #{animal_gender}, #{animal_neuter}, 
+   	 #{animal_age}, #{animal_weight}, #{member_id}, #{animal_regnum}, #{animal_act}, #{animal_social}, #{animal_etc})
 </insert>
 <insert id="insertAnimalImages" parameterType="List">
 	insert into _image (image_id, image_type, image_sequence, image_src) 
-	 values 
+	values 
 	  <foreach collection="list" item="li" separator=","> 
 	   (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
 	  </foreach> 
 </insert>
 <insert id="insertAnimalHealths" parameterType="Map">
 	insert into _animal_health (animal_id, health, health_check) 
-	 values 
+	values 
 	  <foreach collection="healths" item="h" separator=","> 
 	   (#{animal_id}, #{h.health}, #{h.health_check}) 
 	  </foreach> 
 </insert>
 <insert id="insertAnimalVaccines" parameterType="Map">
 	insert into _animal_vaccine (animal_id, vaccine, vaccine_check) 
-	 values 
+	values 
 	  <foreach collection="vaccines" item="v" separator=","> 
 	   (#{animal_id}, #{v.vaccine}, #{v.vaccine_check}) 
 	  </foreach> 
@@ -142,48 +147,83 @@
 
 <select id="checkAnimalId" parameterType="String" resultType="Integer">
 	select count(animal_id) 
-	 from _animal 
-	  where animal_id = #{animal_id} and animal_status != 6 limit 1 
+	from _animal 
+	where animal_id = #{animal_id} limit 1 
+</select>
+<select id="checkAnimalIdMemberId" parameterType="Map" resultType="Integer">
+	select count(animal_id) 
+	from _animal 
+	where animal_id = #{animal_id} and animal_status != 6 and member_id = #{member_id} limit 1 
 </select>
 
 
-<select id="getAnimalListAll" resultMap="AnimalResultMap">
+<select id="getAnimalListAllMember" resultMap="AnimalResultMap" parameterType="String">
 	select a.animal_id, a.category_etc_value, a.animal_name, date_format(a.animal_regdate, '%Y-%m-%d') as animal_regdate, 
 	 c.category_type, c.category_value, 
 	  m.member_name, 
 	   ac.common_value as animal_status_value 
-	    from _animal a 
-	     join _category_data c on a.category_code = c.category_code 
-	      join _member m on a.member_id = m.member_id 
-	       join _common ac on a.animal_status = ac.common_code 
-	        where ac.common_column = 'animal_status' and a.animal_status != 6
+    from _animal a 
+     join _category_data c on a.category_code = c.category_code 
+      join _member m on a.member_id = m.member_id 
+       join _common ac on a.animal_status = ac.common_code 
+    where ac.common_column = 'animal_status' and a.animal_status != 6 
+     and a.member_id = #{member_id} 
+</select>
+<select id="getAnimalListAll" resultMap="AnimalResultMap">
+	select a.animal_id, a.category_etc_value, a.animal_name, date_format(a.animal_regdate, '%Y-%m-%d') as animal_regdate, 
+	 c.category_type, c.category_value, 
+	  m.member_name, m.road_address, 
+	   ac.common_value as animal_status_value 
+    from _animal a 
+     join _category_data c on a.category_code = c.category_code 
+      join _member m on a.member_id = m.member_id 
+       join _common ac on a.animal_status = ac.common_code 
+    where ac.common_column = 'animal_status' and a.animal_status != 6 
 </select>
 
 
 <select id="getAnimalListOne" resultMap="AnimalResultMap" parameterType="String">
 	select a.animal_id, a.category_etc_value, a.animal_name, a.animal_color, a.animal_gender, 
 	 a.animal_neuter, a.animal_age, a.animal_weight, a.member_id, a.animal_regdate, a.animal_status, a.animal_regnum, 
-	  a.animal_act, a.animal_social, a.animal_etc, a.adpt_member, 
+	  a.animal_act, a.animal_social, a.animal_etc, a.adpt_member, a.animal_reason, 
+	   c.category_value, c.category_code, c.category_type, c.category_parent, 
+	    i.image_id, i.image_type, i.image_sequence, i.image_src, 
+	     h.health, h.health_check, 
+	      v.vaccine, v.vaccine_check 
+    from _animal a 
+     join _category_data c on a.category_code = c.category_code 
+      join _image i on a.animal_id = i.image_id 
+       join _animal_health h on a.animal_id = h.animal_id 
+        join _animal_vaccine v on a.animal_id = v.animal_id 
+         left join _adpt ad on a.animal_id = ad.animal_id 
+    where a.animal_id = #{animal_id} and a.animal_status != 6 
+     order by i.image_sequence asc 
+</select>
+
+<select id="getAnimalWritingOne" resultMap="AnimalResultMap" parameterType="String">
+	select a.animal_id, a.category_etc_value, a.animal_name, a.animal_color, a.animal_gender, 
+	 a.animal_neuter, a.animal_age, a.animal_weight, a.member_id, a.animal_regdate, a.animal_status, a.animal_regnum, 
+	  a.animal_act, a.animal_social, a.animal_etc, a.adpt_member, a.animal_reason, 
 	   c.category_value, c.category_code, c.category_type, c.category_parent, 
 	    i.image_id, i.image_type, i.image_sequence, i.image_src, 
 	     h.health, h.health_check, 
 	      v.vaccine, v.vaccine_check, 
 	       ad.*  
-		    from _animal a 
-		     join _category_data c on a.category_code = c.category_code 
-		      join _image i on a.animal_id = i.image_id 
-		       join _animal_health h on a.animal_id = h.animal_id 
-		        join _animal_vaccine v on a.animal_id = v.animal_id 
-		         join _adpt ad on a.animal_id = ad.animal_id 
-		          where a.animal_id = #{animal_id} and a.animal_status != 6 
-		           order by i.image_sequence asc 
+    from _animal a 
+     join _category_data c on a.category_code = c.category_code 
+      join _image i on a.animal_id = i.image_id 
+       join _animal_health h on a.animal_id = h.animal_id 
+        join _animal_vaccine v on a.animal_id = v.animal_id 
+         left join _adpt ad on a.animal_id = ad.animal_id 
+    where a.animal_id = #{animal_id} and a.animal_status != 6 and ad.adpt_status != 4 
+     order by i.image_sequence asc 
 </select>
 
 
 
 <update id="modifyAnimal" parameterType="com.Unicon.domain.AnimalVO">
-	update _animal set 
-	 category_code = #{category_code}, category_etc_value = #{category_etc_value}, animal_name = #{animal_name}, 
+	update _animal 
+	set category_code = #{category_code}, category_etc_value = #{category_etc_value}, animal_name = #{animal_name}, 
 	  animal_color = #{animal_color}, animal_gender = #{animal_gender}, animal_neuter = #{animal_neuter}, 
 	   animal_age = #{animal_age}, animal_weight = #{animal_weight}, animal_regnum = #{animal_regnum}, 
 	    animal_act = #{animal_act}, animal_social = #{animal_social}, animal_etc = #{animal_etc}, adpt_member = #{adpt_member} 
@@ -191,7 +231,7 @@
 </update>
 <insert id="modifyAnimalImages" parameterType="List">
 	insert into _image (image_id, image_type, image_sequence, image_src) 
-	 values 
+	values 
 	 <foreach collection="list" item="li" separator=","> 
 	  (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
 	 </foreach> 
@@ -200,7 +240,7 @@
 </insert>
 <insert id="modifyAnimalHealths" parameterType="Map">
 	insert into _animal_health (animal_id, health, health_check) 
-	 values 
+	values 
 	<foreach collection="healths" item="h" separator=","> 
 	 (#{animal_id}, #{h.health}, #{h.health_check}) 
 	</foreach> 
@@ -209,7 +249,7 @@
 </insert>
 <update id="modifyAnimalVaccines" parameterType="Map">
 	insert into _animal_vaccine (animal_id, vaccine, vaccine_check) 
-	 values 
+	values 
 	<foreach collection="vaccines" item="v" separator=","> 
 	 (#{animal_id}, #{v.vaccine}, #{v.vaccine_check}) 
 	</foreach> 
@@ -219,63 +259,94 @@
 
 
 <update id="modifyAnimalStatus" parameterType="Map">
-	update _animal set animal_status = #{animal_status} 
-	 where animal_id = #{animal_id} and member_id = #{member_id}
-</update>
-
-
-
-<update id="deleteAnimal" parameterType="Map">
-	update _animal set animal_status = 6 
-	 where animal_id = #{animal_id} and member_id = #{member_id} 
+	update _animal 
+	set animal_status = #{animal_status}, animal_reason = #{animal_reason} 
+	where animal_id = #{animal_id} 
 </update>
 
 
 <select id="getMemberInfo" parameterType="String" resultType="com.Unicon.domain.MemberVO">
 	select * 
-	 from _member 
-	  where member_id = #{member_id} 
+	from _member 
+	where member_id = #{member_id} 
 </select>
 
 
 
 <insert id="adptWritingInsert" parameterType="com.Unicon.domain.AdptVO">
 	insert into _adpt (adpt_id, animal_id, adpt_intro, adpt_etc, member_id) 
-	 values 
-	  (concat(#{adpt_id}, lpad(ifnull((select max(adpt_ai) from (select adpt_ai from _adpt) as tempAdpt), 0) + 1, 6, '0')), #{animal_id}, #{adpt_intro}, #{adpt_etc}, #{member_id}) 
+	values 
+	 (concat(#{adpt_id}, lpad(ifnull((select max(adpt_ai) from (select adpt_ai from _adpt) as tempAdpt), 0) + 1, 6, '0')), 
+	  #{animal_id}, #{adpt_intro}, #{adpt_etc}, #{member_id}) 
 </insert>
 <update id="writingAnimalStatus" parameterType="Map">
 	update _animal 
-	 set animal_status = #{animal_status} 
-	  where animal_id = #{animal_id} 
+	set animal_status = #{animal_status} 
+	where animal_id = #{animal_id} 
 </update>
 
 
-<select id="getWritingListAll" resultMap="AnimalResultMap">
+<select id="getWritingListAllMember" resultMap="AnimalResultMap" parameterType="String">
 	select a.*, ad.*, m.*, cm.common_value as adpt_status_value, c.* 
-	 from _animal a 
+	from _animal a 
 	  join _adpt ad on a.animal_id = ad.animal_id 
 	   join _member m on a.member_id = m.member_id 
         join _category_data c on a.category_code = c.category_code 
 	     join _common cm on ad.adpt_status = cm.common_code 
-          where cm.common_column = 'adpt_status' and a.animal_status in (2, 3, 4) and ad.adpt_status != 4 
+    where cm.common_column = 'adpt_status' and a.animal_status in (2, 3, 4) and ad.adpt_status != 4 
+     and ad.member_id = #{member_id} 
+</select>
+
+<select id="getWritingListAll" resultMap="AnimalResultMap">
+	select a.*, ad.*, m.*, cm.common_value as adpt_status_value, c.* 
+	from _animal a 
+	  join _adpt ad on a.animal_id = ad.animal_id 
+	   join _member m on a.member_id = m.member_id 
+        join _category_data c on a.category_code = c.category_code 
+	     join _common cm on ad.adpt_status = cm.common_code 
+    where cm.common_column = 'adpt_status' and a.animal_status in (2, 3, 4) and ad.adpt_status != 4 
 </select>
 
 
 <update id="modifyWriting" parameterType="com.Unicon.domain.AdptVO">
 	update _adpt 
-	 set adpt_intro = #{adpt_intro}, adpt_etc = #{adpt_etc}, adpt_status = #{adpt_status} 
-	  where animal_id = #{animal_id} and member_id = #{member_id} 
+	set adpt_intro = #{adpt_intro}, adpt_etc = #{adpt_etc}, adpt_status = #{adpt_status} 
+	where animal_id = #{animal_id} 
 </update>
 
 
 <update id="deleteWriting" parameterType="com.Unicon.domain.AdptVO">
 	update _adpt 
-	 set adpt_status = 4 
-	  where animal_id = #{animal_id} and member_id = #{member_id} 
+	set adpt_status = #{adpt_status} 
+	where animal_id = #{animal_id} and adpt_id = #{adpt_id} 
 </update>
 
 
+<update id="writingsStatusManager" parameterType="Map">
+	update _adpt 
+	set adpt_status = #{adpt_status} 
+	where animal_id = #{animal_id} and adpt_id = #{adpt_id} 
+</update>
+
+
+<select id="getAdptList" resultMap="AnimalResultMap">
+	select a.animal_id, a.category_etc_value, a.animal_name, a.animal_color, a.animal_gender, 
+	 a.animal_neuter, a.animal_age, a.animal_weight, a.member_id, a.animal_regdate, a.animal_status, a.animal_regnum, 
+	  a.animal_act, a.animal_social, a.animal_etc, a.adpt_member, 
+	   c.category_value, c.category_code, c.category_type, c.category_parent, 
+	    i.image_id, i.image_type, i.image_sequence, i.image_src, 
+	     h.health, h.health_check, 
+	      v.vaccine, v.vaccine_check, 
+	       ad.*  
+    from _animal a 
+     join _category_data c on a.category_code = c.category_code 
+      join _image i on a.animal_id = i.image_id 
+       join _animal_health h on a.animal_id = h.animal_id 
+        join _animal_vaccine v on a.animal_id = v.animal_id 
+         left join _adpt ad on a.animal_id = ad.animal_id 
+    where a.animal_status != 6 
+     order by i.image_sequence asc 
+</select>
 
 
 </mapper>
