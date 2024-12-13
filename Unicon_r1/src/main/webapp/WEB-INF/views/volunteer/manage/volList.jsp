@@ -898,8 +898,11 @@ function showVolunteerDetail(voId) {
                         '<td>' + (app.voAgree === 'Y' ? '동의' : '거부') + '</td>' +
                         '<td>' +
                             '<div class="action-buttons">' +
+                                '<button type="button" class="btn btn-sm btn-outline-primary" onclick="toggleReason(this, ' + app.voId + ')">' +
+                                    '<i class="fas fa-chevron-down"></i> 사유' +
+                                '</button>' +
                                 (app.status === 'PENDING' ? 
-                                    '<div class="btn-group me-2">' +
+                                    '<div class="btn-group ms-2">' +
                                         '<button type="button" class="btn btn-sm btn-success" onclick="approveApplication(' + app.voId + ')">' +
                                             '승인' +
                                         '</button>' +
@@ -907,9 +910,6 @@ function showVolunteerDetail(voId) {
                                             '거절' +
                                         '</button>' +
                                     '</div>' : '') +
-                                '<button type="button" class="btn btn-sm btn-outline-primary" onclick="toggleReason(this, ' + app.voId + ')">' +
-                                    '<i class="fas fa-chevron-down"></i> 사유' +
-                                '</button>' +
                             '</div>' +
                         '</td>' +
                     '</tr>';
