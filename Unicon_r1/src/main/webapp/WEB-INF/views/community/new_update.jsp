@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../inc/new_topHeader.jsp"%>
+<!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
 
@@ -35,293 +37,449 @@
 </style>
 
 </head>
-<%@ include file="../inc/new_header.jsp" %> <!-- header -->
+<%@ include file="../inc/new_header.jsp"%>
+<!-- header -->
 
 <!--====================================작성부=====================================-->
 
+${postList}
+
+
 <section class="bg-light" style="padding: 60px;">
-    <div class="container">
-    
-    	<div class="line-title">
-	        <h4 class="mb-0">커뮤니티</h4>
-	    </div>
+	<div class="container">
 
-        <div class="row justify-content-center">
+		<div class="line-title">
+			<h4 class="mb-0">커뮤니티</h4>
+		</div>
 
-            <!-- start form section -->
-            <div class="col-md-11 col-lg-9">
+		<div class="row justify-content-center">
 
-                <div class="border bg-white p-1-9 p-lg-2-3 p-xl-6 rounded">
+			<!-- start form section -->
+			<div class="col-md-11 col-lg-9">
 
-                    <div class="text-center mb-1-9">
-                       <h2 class="font-weight-600 mb-3">커뮤니티 게시물 수정</h2>
-                       <p class="mb-0">작성한 커뮤니티 게시물의 내용을 수정해주세요.</p>
-                    </div>
+				<div class="border bg-white p-1-9 p-lg-2-3 p-xl-6 rounded">
 
-                    <form id="formPost" class="quform" action="${contextPath }/community/insert" method="post" enctype="multipart/form-data" onclick="">
-                    	
-                    	<!-- 숨겨서 들고갈 값(세션) -->
-                    	<!-- member_id -->
-                    	<input id="member_id" name="member_id" type="hidden" value="test1">
-                    	<!-- 숨겨서 들고갈 값(세션) -->
-                    	
-                        <div class="quform-elements">
+					<div class="text-center mb-1-9">
+						<h2 class="font-weight-600 mb-3">커뮤니티 게시물 수정</h2>
+						<p class="mb-0">작성한 커뮤니티 게시물의 내용을 수정해주세요.</p>
+					</div>
 
-                            <div class="row">
+					<form id="formPost" class="quform"
+						action="" method="post"
+						enctype="multipart/form-data">
 
-                                <!-- Begin Select element -->
-                                <div class="col-md-3">
-                                    <div class="quform-element form-group">
-                                        <label for="post_type">게시글 종류 <span class="quform-required">*</span></label>
-                                        <div class="quform-input">
-                                            <select id="post_type" class="form-control form-select" name="post_type">
-                                                <option value="">게시글 종류</option>
-                                                <option value="post01">입양 후기</option>
-                                                <option value="post02">반려 이야기</option>
-                                                <option value="post03">실종</option>
-                                                <option value="post04">임시 보호</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Select element -->
-                                
-                                <!-- Begin Select element -->
-                                <div class="col-md-3">
-                                    <div class="quform-element form-group">
-                                        <label for="petType">동물 종류 <span class="quform-required">*</span></label>
-                                        <div class="quform-input">
-                                            <select id="petType" class="form-control form-select">
-                                                <option>동물 종류 선택</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Select element -->
-                                
-                                <!-- Begin Select element -->
-                                <div class="col-md-3">
-                                
-                                    <div class="quform-element form-group">
-                                        <label for="applyfor">동물 품종 <span class="quform-required">*</span></label>
-                                        <div class="quform-input">
-	                                        <div class="quform-input">
-	                                            <input id="searchInput" class="form-control" type="text" />
-	                                            <div id="dropdownList" class="dropdown-menu"></div>
-	                                        </div>
-                                        </div>
-                                    </div>
+						<!-- 숨겨서 들고갈 값(세션) -->
+						<!-- member_id -->
+						<input id="member_id" name="member_id" type="hidden" value="test1">
+						<!-- 숨겨서 들고갈 값(세션) -->
 
-                                </div>
-                                <!-- End Select element -->
-                                
-                                <!-- 숨겨서 들고갈 값 -->
-		                    	<!-- pet_code -->
-		                    	<input id="pet_code" name="pet_code" type="hidden">
-		                    	<!-- 숨겨서 들고갈 값 -->
-                                
-                                <!-- Begin Select element -->
-                                <div class="col-md-3">
-                                    <div class="quform-element form-group">
-                                        <label for="pet_etc_breed">기타 동물 품종</label>
-                                        <div class="quform-input">
-	                                        <div class="quform-input">
-	                                            <input id="pet_etc_breed" class="form-control" type="text" name="pet_etc_breed" placeholder="품종이 기타인 경우" readonly />
-	                                        </div>
-                                        </div>
-                                    </div>
+						<div class="quform-elements">
 
-                                </div>
-                                <!-- End Select element -->
-
-                                <!-- Begin Text input element -->
-                                <div class="col-md-6">
-                                    <div class="quform-element form-group">
-                                        <label for="post_title">글 제목</label>
-                                        <div class="quform-input">
-                                            <input id="post_title" class="form-control" type="text" name="post_title" placeholder="입력" />
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!-- End Text input element -->
-
-                                <!-- Begin Text input element -->
-                                <div class="col-md-6">
-                                    <div class="quform-element form-group">
-                                        <label for="location">거주 지역 (변경을 원하시면 마이페이지로)</label>
-                                        <div class="quform-input">
-                                            <input id="location" class="form-control" type="text" placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요." disabled="disabled" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Text input element -->
-
-                                <!-- Begin Text input element -->
-                                <div class="col-md-6" id="missing-info" style="display: none;">
-                                    <div class="quform-element form-group">
-                                        <label for="post_pet_place">실종(발견) 장소</label>
-                                        <div class="quform-input">
-                                            <input id="post_pet_place" class="form-control" type="text" name="post_pet_place" placeholder="입력" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Text input element -->
-
-                                <!-- Begin Text input element -->
-                                <div class="col-md-6" id="date-info" style="display: none;">
-                                    <div class="quform-element form-group">
-                                        <label for="post_pet_date">실종(발견) 일자</label>
-                                        <div class="quform-input">
-                                            <input id="post_pet_date" class="form-control" type="text" name="post_pet_date" placeholder="입력" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Text input element -->
-
-                                
-
-                                <!-- Begin Textarea element -->
-                                <div class="col-md-12">
-                                    <div class="quform-element form-group">
-                                        <label for="post_content">글 내용</label>
-                                        <div class="quform-input">
-                                            <textarea id="post_content" class="form-control" name="post_content" rows="4" placeholder="실종과 임시보호 게시글은 성별, 나이, 색상, 기타 특징 등 동물 정보를 상세히 적어주세요"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- End Textarea element -->
-                                
-                                
-                                <!-- Begin Select element -->
-								<div id="test12345" class="container">
-								    <div class="row">
-								        <!-- 첫 번째 이미지 업로드 및 미리보기 -->
-								        <div class="col-6 col-md-3 mb-3">
-								            <div class="quform-element form-group">
-								                <!-- Begin Upload element -->
-								                <div class="quform-input">
-								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-1" name="upload_images[0]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
-								                        <label for="image-input-1" style="cursor: pointer;">대표 이미지 <span class="quform-required">*</span></label>
-								                    </div>
-								                </div>
-								                <!-- End Upload element -->
-								            </div>
-								            <!-- Begin Preview element -->
-								            <div class="project-grid-img" data-input-id="image-input-1" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
-								                <i class="fa-solid fa-plus fa-2xl" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
-								                <img id="image-preview-1" alt="" style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
-								            </div>
-								            <!-- End Preview element -->
-								        </div>
+							<div class="row">
 								
-								        <!-- 두 번째 이미지 업로드 및 미리보기 -->
-								        <div class="col-6 col-md-3 mb-3">
-								            <div class="quform-element form-group">
-								                <!-- Begin Upload element -->
-								                <div class="quform-input">
-								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-2" name="upload_images[1]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
-								                        <label for="image-input-2" style="cursor: pointer;">이미지</label>
-								                    </div>
-								                </div>
-								                <!-- End Upload element -->
-								            </div>
-								            <!-- Begin Preview element -->
-								            <div class="project-grid-img" data-input-id="image-input-2" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
-								                <i class="fa-solid fa-plus fa-2xl" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
-								                <img id="image-preview-2" alt="" style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
-								            </div>
-								            <!-- End Preview element -->
-								        </div>
-								
-								        <!-- 세 번째 이미지 업로드 및 미리보기 -->
-								        <div class="col-6 col-md-3 mb-3">
-								            <div class="quform-element form-group">
-								                <!-- Begin Upload element -->
-								                <div class="quform-input">
-								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-3" name="upload_images[2]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
-								                        <label for="image-input-3" style="cursor: pointer;">이미지</label>
-								                    </div>
-								                </div>
-								                <!-- End Upload element -->
-								            </div>
-								            <!-- Begin Preview element -->
-								            <div class="project-grid-img" data-input-id="image-input-3" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
-								                <i class="fa-solid fa-plus fa-2xl" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
-								                <img id="image-preview-3" alt="" style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
-								            </div>
-								            <!-- End Preview element -->
-								        </div>
-								
-								        <!-- 네 번째 이미지 업로드 및 미리보기 -->
-								        <div class="col-6 col-md-3 mb-3">
-								            <div class="quform-element form-group">
-								                <!-- Begin Upload element -->
-								                <div class="quform-input">
-								                    <div class="custom-file">
-								                        <input class="custom-file-input" type="file" id="image-input-4" name="upload_images[3]" accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
-								                        <label for="image-input-4" style="cursor: pointer;">이미지</label>
-								                    </div>
-								                </div>
-								                <!-- End Upload element -->
-								            </div>
-								            <!-- Begin Preview element -->
-								            <div class="project-grid-img" data-input-id="image-input-4" style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
-								                <i class="fa-solid fa-plus fa-2xl" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
-								                <img id="image-preview-4" alt="" style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
-								            </div>
-								            <!-- End Preview element -->
-								        </div>
-								    </div>
+								<!-- 숨겨진 post_id 값 -->
+								<input id="post_id" type="hidden" value="${postList.post_id }">
+								<!-- 숨겨진 post_id 값 -->
+
+								<!-- Begin Select element -->
+								<div class="col-md-3">
+									<div class="quform-element form-group">
+										<label for="post_type">게시글 종류 <span
+											class="quform-required">*</span></label>
+										<div class="quform-input">
+											<select id="post_type" class="form-control form-select"
+												name="post_type">
+												<option value="">게시글 종류</option>
+												<option value="post01"
+													<c:if test="${postList.post_type == 'post01' }">selected="selected"</c:if>>입양
+													후기</option>
+												<option value="post02"
+													<c:if test="${postList.post_type == 'post02' }">selected="selected"</c:if>>반려
+													이야기</option>
+												<option value="post03"
+													<c:if test="${postList.post_type == 'post03' }">selected="selected"</c:if>>실종</option>
+												<option value="post04"
+													<c:if test="${postList.post_type == 'post04' }">selected="selected"</c:if>>임시
+													보호</option>
+											</select>
+										</div>
+									</div>
 								</div>
 								<!-- End Select element -->
-								
-								
 
-                                <!-- Begin Submit button -->
-                                <div class="col-md-6 offset-md-3 mt-4">
-                                    <div class="quform-submit-inner text-center">
-                                        <button id="btnCreate" class="butn w-100" type="submit"><span>글 수정하기</span></button>
-                                    </div>
-                                    <div class="quform-loading-wrap"><span class="quform-loading"></span></div>
-                                </div>
-                                <!-- End Submit button -->
+								<!-- Begin Select element -->
+								<div class="col-md-3">
+									<div class="quform-element form-group">
+										<label for="petType">동물 종류 <span
+											class="quform-required">*</span></label>
+										<div class="quform-input">
+											<select id="petType" class="form-control form-select">
+												<option>동물 종류 선택</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<!-- End Select element -->
 
-                            </div> <!-- <div class="row"> -->
-							
-                        </div> <!-- <div class="quform-elements"> -->
-                    </form>
+								<!-- 불러온 동물코드 숨기기 -->
+								<input type="hidden" id="categoryCode" value="${postList.pet_code }">
+								<!-- 불러온 동물코드 숨기기 -->
 
-                </div> <!-- <div class="border bg-white p-1-9 p-lg-2-3 p-xl-6 rounded"> -->
+								<!-- Begin Select element -->
+								<div class="col-md-3">
 
-            </div>
-            <!-- end form section -->
+									<div class="quform-element form-group">
+										<label for="applyfor">동물 품종 <span
+											class="quform-required">*</span></label>
+										<div class="quform-input">
+											<div class="quform-input">
+												<input value="${postList.categoryDataVO.category_value }" id="searchInput" class="form-control" type="text" />
+												<div id="dropdownList" class="dropdown-menu"></div>
+											</div>
+										</div>
+									</div>
 
-        </div> <!-- <div class="row justify-content-center"> -->
-    </div> <!-- <div class="container"> -->
+								</div>
+								<!-- End Select element -->
+
+								<!-- 숨겨서 들고갈 값 -->
+								<!-- pet_code -->
+								<input id="pet_code" name="pet_code" type="hidden">
+								<!-- 숨겨서 들고갈 값 -->
+
+								<!-- Begin Select element -->
+								<div class="col-md-3">
+									<div class="quform-element form-group">
+										<label for="pet_etc_breed">기타 동물 품종</label>
+										<div class="quform-input">
+											<div class="quform-input">
+												<input id="pet_etc_breed" class="form-control"
+													value="${postList.pet_etc_breed }" type="text"
+													name="pet_etc_breed" placeholder="품종이 기타인 경우" readonly />
+											</div>
+										</div>
+									</div>
+
+								</div>
+								<!-- End Select element -->
+
+								<!-- Begin Text input element -->
+								<div class="col-md-6">
+									<div class="quform-element form-group">
+										<label for="post_title">글 제목</label>
+										<div class="quform-input">
+											<input id="post_title" class="form-control" type="text"
+												value="${postList.post_title }" name="post_title"
+												placeholder="입력" />
+										</div>
+									</div>
+
+								</div>
+								<!-- End Text input element -->
+
+								<!-- Begin Text input element -->
+								<div class="col-md-6">
+									<div class="quform-element form-group">
+										<label for="location">거주 지역 (변경을 원하시면 마이페이지로)</label>
+										<div class="quform-input">
+											<input id="location" class="form-control" type="text"
+												placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요."
+												disabled="disabled" />
+										</div>
+									</div>
+								</div>
+								<!-- End Text input element -->
+
+								<!-- Begin Text input element -->
+								<div class="col-md-6" id="missing-info" style="display: none;">
+									<div class="quform-element form-group">
+										<label for="post_pet_place">실종(발견) 장소</label>
+										<div class="quform-input">
+											<input id="post_pet_place"
+												value="${postList.post_pet_place }" class="form-control"
+												type="text" name="post_pet_place" placeholder="입력" />
+										</div>
+									</div>
+								</div>
+								<!-- End Text input element -->
+
+								<!-- Begin Text input element -->
+								<div class="col-md-6" id="date-info" style="display: none;">
+									<div class="quform-element form-group">
+										<label for="post_pet_date">실종(발견) 일자</label>
+										<div class="quform-input">
+											<input id="post_pet_date" value="${postList.post_pet_date }"
+												class="form-control" type="text" name="post_pet_date"
+												placeholder="입력" />
+										</div>
+									</div>
+								</div>
+								<!-- End Text input element -->
+
+
+
+								<!-- Begin Textarea element -->
+								<div class="col-md-12">
+									<div class="quform-element form-group">
+										<label for="post_content">글 내용</label>
+										<div class="quform-input">
+											<textarea id="post_content" class="form-control"
+												name="post_content" rows="4"
+												placeholder="실종과 임시보호 게시글은 성별, 나이, 색상, 기타 특징 등 동물 정보를 상세히 적어주세요">${postList.post_content }</textarea>
+										</div>
+									</div>
+								</div>
+								<!-- End Textarea element -->
+
+
+								<!-- Begin Select element -->
+								<div id="test12345" class="container">
+									<div class="row">
+										<!-- 첫 번째 이미지 업로드 및 미리보기 -->
+										<div class="col-6 col-md-3 mb-3">
+											<div class="quform-element form-group">
+												<!-- Begin Upload element -->
+												<div class="quform-input">
+													<div class="custom-file">
+														<input class="custom-file-input image-input" type="file"
+															id="image-input0" name="upload_images[0]"
+															accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+														<label for="image-input0" style="cursor: pointer;">대표
+															이미지 <span class="quform-required">*</span>
+															<input type="hidden" value="${postList.post_images[0].image_src }" id="orgSrc0" name="check_images[0].orgSrc"/>
+															<input type="hidden" value="${postList.post_images[0].image_src }" id="tempSrc0"/>
+															<input type="hidden" id="changeCheck0" name="check_images[0].changeCheck"/>
+															<input type="hidden" id="moveSrc0" name="check_images[0].moveSrc"/>
+														</label>
+													</div>
+												</div>
+												<!-- End Upload element -->
+											</div>
+											<!-- Begin Preview element -->
+											<div class="project-grid-img" data-input-id="image-input0"
+												style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
+												<i class="fa-solid fa-plus fa-2xl"
+													style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
+													<c:choose>
+													<c:when test="${postList.post_images[0].image_src != '' }">
+												<img id="image-preview0" alt="" src="${postList.post_images[0].image_src }"
+													style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0;" />
+													</c:when>
+													<c:otherwise>
+													<img id="image-preview0" alt="" src=""
+													style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
+													</c:otherwise>
+													</c:choose>
+											</div>
+											<!-- End Preview element -->
+											<button type="button" id="image-delete0" 
+												class="btn btn-outline-danger btn-icon-text custom-a-btn-images image-delete"> 
+												<i class="fa-solid fa-trash-can"></i>
+											</button>
+										</div>
+
+										<!-- 두 번째 이미지 업로드 및 미리보기 -->
+										<div class="col-6 col-md-3 mb-3">
+											<div class="quform-element form-group">
+												<!-- Begin Upload element -->
+												<div class="quform-input">
+													<div class="custom-file">
+														<input class="custom-file-input image-input" type="file"
+															id="image-input1" name="upload_images[1]"
+															accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+														<label for="image-input1" style="cursor: pointer;">이미지
+															<input type="hidden" value="${postList.post_images[1].image_src }" id="orgSrc1" name="check_images[1].orgSrc"/>
+															<input type="hidden" value="${postList.post_images[1].image_src }" id="tempSrc1"/>
+															<input type="hidden" id="changeCheck1" name="check_images[1].changeCheck"/>
+															<input type="hidden" id="moveSrc1" name="check_images[1].moveSrc"/>
+														</label>
+													</div>
+												</div>
+												<!-- End Upload element -->
+											</div>
+											<!-- Begin Preview element -->
+											<div class="project-grid-img" data-input-id="image-input1"
+												style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
+												<i class="fa-solid fa-plus fa-2xl"
+													style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
+												<c:choose>
+													<c:when test="${postList.post_images[1].image_src != '' }">
+												<img id="image-preview1" alt="" src="${postList.post_images[1].image_src }"
+													style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0;" />
+													</c:when>
+													<c:otherwise>
+													<img id="image-preview1" alt="" src=""
+													style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
+													</c:otherwise>
+													</c:choose>
+											</div>
+											<!-- End Preview element -->
+											<button type="button" id="image-delete1" 
+												class="btn btn-outline-danger btn-icon-text custom-a-btn-images image-delete"> 
+												<i class="fa-solid fa-trash-can"></i>
+											</button>
+										</div>
+
+										<!-- 세 번째 이미지 업로드 및 미리보기 -->
+										<div class="col-6 col-md-3 mb-3">
+											<div class="quform-element form-group">
+												<!-- Begin Upload element -->
+												<div class="quform-input">
+													<div class="custom-file">
+														<input class="custom-file-input image-input" type="file"
+															id="image-input2" name="upload_images[2]"
+															accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+														<label for="image-input2" style="cursor: pointer;">이미지
+															<input type="hidden" value="${postList.post_images[2].image_src }" id="orgSrc2" name="check_images[2].orgSrc"/>
+															<input type="hidden" value="${postList.post_images[2].image_src }" id="tempSrc2"/>
+															<input type="hidden" id="changeCheck2" name="check_images[2].changeCheck"/>
+															<input type="hidden" id="moveSrc2" name="check_images[2].moveSrc"/>
+														</label>
+													</div>
+												</div>
+												<!-- End Upload element -->
+											</div>
+											<!-- Begin Preview element -->
+											<div class="project-grid-img" data-input-id="image-input2"
+												style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
+												<i class="fa-solid fa-plus fa-2xl"
+													style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
+												<c:choose>
+													<c:when test="${postList.post_images[2].image_src != '' }">
+												<img id="image-preview2" alt="" src="${postList.post_images[2].image_src }"
+													style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0;" />
+													</c:when>
+													<c:otherwise>
+													<img id="image-preview2" alt="" src=""
+													style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
+													</c:otherwise>
+													</c:choose>
+											</div>
+											<!-- End Preview element -->
+											<button type="button" id="image-delete2" 
+												class="btn btn-outline-danger btn-icon-text custom-a-btn-images image-delete"> 
+												<i class="fa-solid fa-trash-can"></i>
+											</button>
+										</div>
+
+										<!-- 네 번째 이미지 업로드 및 미리보기 -->
+										<div class="col-6 col-md-3 mb-3">
+											<div class="quform-element form-group">
+												<!-- Begin Upload element -->
+												<div class="quform-input">
+													<div class="custom-file">
+														<input class="custom-file-input image-input" type="file"
+															id="image-input3" name="upload_images[3]"
+															accept=".jpeg, .jpg, .png, .gif" style="display: none;" />
+														<label for="image-input3" style="cursor: pointer;">이미지
+															<input type="hidden" value="${postList.post_images[3].image_src }" id="orgSrc3" name="check_images[3].orgSrc"/>
+															<input type="hidden" value="${postList.post_images[3].image_src }" id="tempSrc3"/>
+															<input type="hidden" id="changeCheck3" name="check_images[3].changeCheck"/>
+															<input type="hidden" id="moveSrc3" name="check_images[3].moveSrc"/>
+														</label>
+													</div>
+												</div>
+												<!-- End Upload element -->
+											</div>
+											<!-- Begin Preview element -->
+											<div class="project-grid-img" data-input-id="image-input3"
+												style="width: 100%; height: 200px; overflow: hidden; position: relative; cursor: pointer; border: 2px solid #ccc; border-radius: 4px;">
+												<i class="fa-solid fa-plus fa-2xl"
+													style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
+												<c:choose>
+													<c:when test="${postList.post_images[3].image_src != '' }">
+												<img id="image-preview3" alt="" src="${postList.post_images[3].image_src }"
+													style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0;" />
+													</c:when>
+													<c:otherwise>
+													<img id="image-preview3" alt="" src=""
+													style="width: 100%; height: 100%; object-fit: fill; position: absolute; top: 0; left: 0; display: none;" />
+													</c:otherwise>
+													</c:choose>
+											</div>
+											<!-- End Preview element -->
+											<button type="button" id="image-delete3" 
+												class="btn btn-outline-danger btn-icon-text custom-a-btn-images image-delete"> 
+												<i class="fa-solid fa-trash-can"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<!-- End Select element -->
+
+
+
+								<!-- Begin Submit button -->
+								<div class="col-md-6 offset-md-3 mt-4">
+									<div class="quform-submit-inner text-center">
+										<button id="btnCreate" class="butn w-100" type="submit">
+											<span>글 수정하기</span>
+										</button>
+									</div>
+									<div class="quform-loading-wrap">
+										<span class="quform-loading"></span>
+									</div>
+								</div>
+								<!-- End Submit button -->
+
+							</div>
+							<!-- <div class="row"> -->
+
+						</div>
+						<!-- <div class="quform-elements"> -->
+					</form>
+
+				</div>
+				<!-- <div class="border bg-white p-1-9 p-lg-2-3 p-xl-6 rounded"> -->
+
+			</div>
+			<!-- end form section -->
+
+		</div>
+		<!-- <div class="row justify-content-center"> -->
+	</div>
+	<!-- <div class="container"> -->
 </section>
 
 <script>
 $(function() {
 	
 	// 실종(발견) 게시물 선택시 보여지는 필드
-	$(document).ready(function() {
-	    $('#post_type').change(function() {
-	        var selectedValue = $(this).val();
-	        if (selectedValue === 'post03' || selectedValue === 'post04') {
-	            $('#missing-info').show();
-	            $('#date-info').show();
-	        } else {
-	            $('#missing-info').hide();
-	            $('#date-info').hide();
-	        }
-	    });
-	});
+// 	$(document).ready(function() {
+// 	    $('#post_type').change(function() {
+// 	        var selectedValue = $(this).val();
+// 	        if (selectedValue === 'post03' || selectedValue === 'post04') {
+// 	            $('#missing-info').show();
+// 	            $('#date-info').show();
+// 	        } else {
+// 	            $('#missing-info').hide();
+// 	            $('#date-info').hide();
+// 	        }
+// 	    });
+// 	});
 	// 실종(발견) 게시물 선택시 보여지는 필드
 	
+	// 실종(발견) 게시물 선택시 보여지는 필드
+    function updatePostType() {
+        var selectedValue = $('#post_type').val();
+        if (selectedValue === 'post03' || selectedValue === 'post04') {
+            $('#missing-info').show();
+            $('#date-info').show();
+        } else {
+            $('#missing-info').hide();
+            $('#date-info').hide();
+        }
+    }
+
+    // 페이지 로드 시 필드 상태 업데이트
+    updatePostType();
+
+    // 선택 값 변경 시 필드 상태 업데이트
+    $('#post_type').change(function() {
+    	updatePostType();
+    });
+	 // 실종(발견) 게시물 선택시 보여지는 필드
+	    
 	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
     var memberId = $('#member_id').val();
 
@@ -331,160 +489,423 @@ $(function() {
 	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
 	
     // 이미지 미리보기
-	// 이미지 미리보기 영역 클릭 시 파일 선택창 열기
+    // 이미지 미리보기 영역 클릭 시 파일 선택창 열기
     $('.project-grid-img').on('click', function() {
         const inputId = $(this).data('input-id'); // data-input-id에서 파일 입력 ID 가져오기
         $('#' + inputId).click(); // 해당 파일 입력 요소 클릭
     });
+	
+	$('.image-input').on('change', function(e) {
+		const file = e.target.files[0];
+		const reader = new FileReader();
+		const targetId = e.target.id; // image-input0, image-input1, image-input2, image-input3
+		const idNumber = parseInt(targetId.charAt(targetId.length - 1), 10);
+		const imageInputId = '#image-input';
+		const previewId = '#image-preview';
+		const plusIconId = '#plusIcon';
+		const tempSrcId = '#tempSrc';
+		const changeCheckId = '#changeCheck';
+		const moveSrcId = '#moveSrc';
+		const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
+		
+		
+		if (file) { // 파일이 있는 경우
 
-    // 기존의 파일 입력 요소의 change 이벤트 처리
-    $('.custom-file-input').on('change', function(e) {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        const inputId = e.target.id;
-        const idNoNum = inputId.replace(/\d+/g, '');
-        const idNum = inputId.charAt(inputId.length - 1);
-        const previewId = '#image-preview-' + idNum;
-        const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
+			if(!fileTypeFilter.exec(file.name)) { // 파일이 있으나 유효하지 않은 파일인 경우
+				alert('허용되지 않는 파일 형식이 포함되어 있습니다.');
+				$(this).val('');
+				return;
+			}
 
-        if (file) {
-            if (fileTypeFilter.exec(file.name)) {
-                switch (idNum) {
-                    case '1': {
-                        reader.readAsDataURL(file);
-                        reader.onload = function(e) {
-                            $(previewId).attr('src', e.target.result).show();
-                        }
-                        break;
-                    }
-                    case '2': {
-                        if ($('#' + idNoNum + (idNum - 1)).val() == '') {
-                            const adataTransfer = new DataTransfer();
-                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-                            $('#' + idNoNum + idNum).val('');
-                            $('#image-preview-' + idNum).removeAttr('src');
-                            $('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
-                            $('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
-                        } else {
-                            reader.readAsDataURL(file);
-                            reader.onload = function(e) {
-                                $(previewId).attr('src', e.target.result).show();
-                            }
-                        }
-                        break;
-                    }
-                    case '3': {
-                        if ($('#' + idNoNum + (idNum - 2)).val() == '' && $('#' + idNoNum + (idNum - 1)).val() == '') {
-                            const adataTransfer = new DataTransfer();
-                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-                            $('#' + idNoNum + idNum).val('');
-                            $('#image-preview-' + idNum).removeAttr('src');
-                            $('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
-                            $('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
-                        } else if ($('#' + idNoNum + (idNum - 1)).val() == '') {
-                            const adataTransfer = new DataTransfer();
-                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-                            $('#' + idNoNum + idNum).val('');
-                            $('#image-preview-' + idNum).removeAttr('src');
-                            $('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
-                            $('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
-                        } else {
-                            reader.readAsDataURL(file);
-                            reader.onload = function(e) {
-                                $(previewId).attr('src', e.target.result).show();
-                            }
-                        }
-                        break;
-                    }
-                    case '4': {
-                        if ($('#' + idNoNum + (idNum - 3)).val() == '' && $('#' + idNoNum + (idNum - 2)).val() == '' && $('#' + idNoNum + (idNum - 1)).val() == '') {
-                            const adataTransfer = new DataTransfer();
-                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-                            $('#' + idNoNum + idNum).val('');
-                            $('#image-preview-' + idNum).removeAttr('src');
-                            $('#' + idNoNum + (idNum - 3))[0].files = adataTransfer.files;
-                            $('#' + idNoNum + (idNum - 3))[0].dispatchEvent(new Event('change'));
-                        } else if ($('#' + idNoNum + (idNum - 2)).val() == '' && $('#' + idNoNum + (idNum - 1)).val() == '') {
-                            const adataTransfer = new DataTransfer();
-                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-                            $('#' + idNoNum + idNum).val('');
-                            $('#image-preview-' + idNum).removeAttr('src');
-                            $('#' + idNoNum + (idNum - 2))[0].files = adataTransfer.files;
-                            $('#' + idNoNum + (idNum - 2))[0].dispatchEvent(new Event('change'));
-                        } else if ($('#' + idNoNum + (idNum - 1)).val() == '') {
-                            const adataTransfer = new DataTransfer();
-                            adataTransfer.items.add($('#' + idNoNum + idNum)[0].files[0]);
-                            $('#' + idNoNum + idNum).val('');
-                            $('#image-preview-' + idNum).removeAttr('src');
-                            $('#' + idNoNum + (idNum - 1))[0].files = adataTransfer.files;
-                            $('#' + idNoNum + (idNum - 1))[0].dispatchEvent(new Event('change'));
-                        } else {
-                            reader.readAsDataURL(file);
-                            reader.onload = function(e) {
-                                $(previewId).attr('src', e.target.result).show();
-                            }
-                        }
-                        break;
-                    }
-                    default: {
-                        console.error("잘못된 번호");
-                        break;
-                    }
-                }
-            } else {
-                alert('허용되지 않는 파일 형식이 포함되어 있습니다.');
-                $(this).val('');
-            }
-        } else {
-            if (idNum < 4) {
-                $(previewId).hide();
-                for (let i = parseInt(idNum, 10); i <= 4; i++) {
-                    if (i == idNum) {
-                        continue;
-                    } else if ($('#' + idNoNum + i).val() != '') {
-                        const adataTransfer = new DataTransfer();
-                        adataTransfer.items.add($('#' + idNoNum + i)[0].files[0]);
-                        $('#' + idNoNum + i).val('');
-                        $('#image-preview-' + i).hide();
-                        $('#image-preview-' + i).removeAttr('src');
-                        $('#' + idNoNum + (i - 1))[0].files = adataTransfer.files;
-                        $('#' + idNoNum + (i - 1))[0].dispatchEvent(new Event('change'));
-                    }
-                }
-            } else {
-                $(previewId).hide();
-                $(previewId).removeAttr('src');
-            }
-        }
-    });
+			switch(idNumber) { // 선택한 칸의 아이디 숫자
+				case 0: { // 1번째칸
+				 	reader.readAsDataURL(file); // 파일을 읽어서 그 내용을 Base64 인코딩된 데이터 URL 형식으로 변환
+					reader.onload = function(e) {
+						$(previewId + idNumber).attr('src', e.target.result).show();
+						$(plusIconId + idNumber).hide();
+						$(changeCheckId + idNumber).val(1);
+						$(tempSrcId + idNumber).val('');
+					}
+				break;
+				}
+				case 1: { // 2번째칸
+					if($(previewId + (idNumber - 1)).attr('src') == '') {
+						reader.readAsDataURL(file);
+						reader.onload = function(e) {
+							const aDataTransfer = new DataTransfer(); // 데이터 전송 객체
+							aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+							$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
+							$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
+							$(plusIconId + (idNumber - 1)).hide();
+							$(changeCheckId + (idNumber - 1)).val(1);
+							$(imageInputId + idNumber).val('');
+						}
+					} else {
+						reader.readAsDataURL(file);
+						reader.onload = function(e) {
+							$(previewId + idNumber).attr('src', e.target.result).show();
+							$(plusIconId + idNumber).hide();
+							$(changeCheckId + idNumber).val(1);
+							$(tempSrcId + idNumber).val('');
+						}
+					}
+				break;
+				}
+				case 2: { // 3번째칸
+					if($(previewId + (idNumber - 2)).attr('src') == '' 
+						&& $(previewId + (idNumber - 1)).attr('src') == '') {
+							reader.readAsDataURL(file);
+							reader.onload = function(e) {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+								$(imageInputId + (idNumber - 2))[0].files = aDataTransfer.files;
+								$(previewId + (idNumber - 2)).attr('src', e.target.result).show();
+								$(plusIconId + (idNumber - 2)).hide();
+								$(changeCheckId + (idNumber - 2)).val(1);
+								$(imageInputId + idNumber).val('');
+							}
+					} else if($(previewId + (idNumber - 1)).attr('src') == '') {
+						reader.readAsDataURL(file);
+						reader.onload = function(e) {
+							const aDataTransfer = new DataTransfer();
+							aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+							$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
+							$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
+							$(plusIconId + (idNumber - 1)).hide();
+							$(changeCheckId + (idNumber - 1)).val(1);
+							$(imageInputId + idNumber).val('');
+						}
+					} else {
+						reader.readAsDataURL(file);
+						reader.onload = function(e) {
+							$(previewId + idNumber).attr('src', e.target.result).show();
+							$(plusIconId + idNumber).hide();
+							$(changeCheckId + idNumber).val(1);
+							$(tempSrcId + idNumber).val('');
+						}
+					}
+				break;
+				}
+				case 3: { // 4번째칸
+					if($(previewId + (idNumber - 3)).attr('src') == '' 
+						&& $(previewId + (idNumber - 2)).attr('src') == '' 
+							&& $(previewId + (idNumber - 1)).attr('src') == '') {
+								reader.readAsDataURL(file);
+								reader.onload = function(e) {
+									const aDataTransfer = new DataTransfer();
+									aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+									$(imageInputId + (idNumber - 3))[0].files = aDataTransfer.files;
+									$(previewId + (idNumber - 3)).attr('src', e.target.result).show();
+									$(plusIconId + (idNumber - 3)).hide();
+									$(changeCheckId + (idNumber - 3)).val(1);
+									$(imageInputId + idNumber).val('');
+								}
+					} else if($(previewId + (idNumber - 2)).attr('src') == '' 
+						&& $(previewId + (idNumber - 1)).attr('src') == '') {
+							reader.readAsDataURL(file);
+							reader.onload = function(e) {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+								$(imageInputId + (idNumber - 2))[0].files = aDataTransfer.files;
+								$(previewId + (idNumber - 2)).attr('src', e.target.result).show();
+								$(plusIconId + (idNumber - 2)).hide();
+								$(changeCheckId + (idNumber - 2)).val(1);
+								$(imageInputId + idNumber).val('');
+							}
+					} else if($(previewId + (idNumber - 1)).attr('src') == '') {
+						reader.readAsDataURL(file);
+						reader.onload = function(e) {
+							const aDataTransfer = new DataTransfer();
+							aDataTransfer.items.add($(imageInputId + idNumber)[0].files[0]);
+							$(imageInputId + (idNumber - 1))[0].files = aDataTransfer.files;
+							$(previewId + (idNumber - 1)).attr('src', e.target.result).show();
+							$(plusIconId + (idNumber - 1)).hide();
+							$(changeCheckId + (idNumber - 1)).val(1);
+							$(imageInputId + idNumber).val('');
+						}
+					} else {
+						reader.readAsDataURL(file);
+						reader.onload = function(e) {
+							$(previewId + idNumber).attr('src', e.target.result).show();
+							$(plusIconId + idNumber).hide();
+							$(changeCheckId + idNumber).val(1);
+							$(tempSrcId + idNumber).val('');
+						}
+					}
+				break;
+				}
+				default: {
+					console.error("잘못된 번호");
+				break;
+				}
+			} // 파일이 있는 경우
+
+		} else { // 파일이 없는 경우(취소한 경우)
+			switch(idNumber) {
+				case 3: { // 4번째 칸
+					$(previewId + idNumber).attr('src',''); // removeAttr은 src 속성이 제거되어 attr('src') => undefined 반환
+					$(previewId + idNumber).hide();
+					$(plusIconId + idNumber).show();
+					$(changeCheckId + idNumber).val(1);
+					$(tempSrcId + idNumber).val('');
+				break;
+				}
+				case 2: { // 3번째 칸
+					if($(previewId + (idNumber + 1)).attr('src') != '') {
+						if($(imageInputId + (idNumber + 1)).val() != '') {
+							const aDataTransfer = new DataTransfer();
+							aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+							$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+							$(imageInputId + (idNumber + 1)).val('');
+						}
+						const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+						const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+						$(previewId + idNumber).attr('src', nextSrc);
+						$(previewId + idNumber).show();
+						$(moveSrcId + idNumber).val(nextTempSrc);
+						$(tempSrcId + idNumber).val(nextTempSrc);
+						$(changeCheckId + idNumber).val(1);
+						$(previewId + (idNumber + 1)).attr('src','');
+						$(previewId + (idNumber + 1)).hide();
+						$(plusIconId + (idNumber + 1)).show();
+						$(changeCheckId + (idNumber + 1)).val(1);
+						$(tempSrcId + (idNumber + 1)).val('');
+					} else {
+						$(previewId + idNumber).attr('src','');
+						$(previewId + idNumber).hide();
+						$(plusIconId + idNumber).show();
+						$(changeCheckId + idNumber).val(1);
+						$(moveSrcId + idNumber).val('');
+						$(tempSrcId + idNumber).val('');
+					}
+				break;
+				}
+				case 1: { // 2번째 칸
+					if($(previewId + (idNumber + 1)).attr('src') != ''
+						&& $(previewId + (idNumber + 2)).attr('src') != '') {
+							if($(imageInputId + (idNumber + 1)).val() != '') {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+								$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+								$(imageInputId + (idNumber + 1)).val('');
+							}
+							if($(imageInputId + (idNumber + 2)).val() != '') {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + (idNumber + 2))[0].files[0]);
+								$(imageInputId + (idNumber + 1))[0].files = aDataTransfer.files;
+								$(imageInputId + (idNumber + 2)).val('');
+							}
+							const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+							const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+							const nextSrc2 = $(previewId + (idNumber + 2)).attr('src');
+							const nextTempSrc2 = $(tempSrcId + (idNumber + 2)).val();
+							$(previewId + idNumber).attr('src', nextSrc);
+							$(previewId + idNumber).show();
+							$(moveSrcId + idNumber).val(nextTempSrc);
+							$(tempSrcId + idNumber).val(nextTempSrc);
+							$(changeCheckId + idNumber).val(1);
+							$(previewId + (idNumber + 1)).attr('src', nextSrc2);
+							$(previewId + (idNumber + 1)).show();
+							$(moveSrcId + (idNumber + 1)).val(nextTempSrc2);
+							$(tempSrcId + (idNumber + 1)).val(nextTempSrc2);
+							$(changeCheckId + (idNumber + 1)).val(1);
+							$(previewId + (idNumber + 2)).attr('src', '');
+							$(previewId + (idNumber + 2)).hide();
+							$(plusIconId + (idNumber + 2)).show();
+							$(changeCheckId + (idNumber + 2)).val(1);
+							$(tempSrcId + (idNumber + 2)).val('');
+					} else if($(previewId + (idNumber + 1)).attr('src') != '') {
+						if($(imageInputId + (idNumber + 1)).val() != '') {
+							const aDataTransfer = new DataTransfer();
+							aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+							$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+							$(imageInputId + (idNumber + 1)).val('');
+						}
+						const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+						const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+						$(previewId + idNumber).attr('src', nextSrc);
+						$(previewId + idNumber).show();
+						$(moveSrcId + idNumber).val(nextTempSrc);
+						$(tempSrcId + idNumber).val(nextTempSrc);
+						$(changeCheckId + idNumber).val(1);
+						$(previewId + (idNumber + 1)).attr('src', '');
+						$(previewId + (idNumber + 1)).hide();
+						$(plusIconId + (idNumber + 1)).show();
+						$(changeCheckId + (idNumber + 1)).val(1);
+						$(moveSrcId + (idNumber + 1)).val('');
+						$(tempSrcId + (idNumber + 1)).val('');
+					} else {
+						$(previewId + idNumber).attr('src', '');
+						$(previewId + idNumber).hide();
+						$(plusIconId + idNumber).show();
+						$(changeCheckId + idNumber).val(1);
+						$(moveSrcId + idNumber).val('');
+						$(tempSrcId + idNumber).val('');
+					}
+				break;
+				}
+				case 0:{ // 1번째 칸
+					if($(previewId + (idNumber + 1)).attr('src') != '' 
+						&& $(previewId + (idNumber + 2)).attr('src') != '' 
+							&& $(previewId + (idNumber + 3)).attr('src') != '') {
+							if($(imageInputId + (idNumber + 1)).val() != '') {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+								$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+								$(imageInputId + (idNumber + 1)).val('');
+							}
+							if($(imageInputId + (idNumber + 2)).val() != '') {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + (idNumber + 2))[0].files[0]);
+								$(imageInputId + (idNumber + 1))[0].files = aDataTransfer.files;
+								$(imageInputId + (idNumber + 2)).val('');
+							}
+							if($(imageInputId + (idNumber + 3)).val() != '') {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + (idNumber + 3))[0].files[0]);
+								$(imageInputId + (idNumber + 2))[0].files = aDataTransfer.files;
+								$(imageInputId + (idNumber + 3)).val('');
+							}
+							const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+							const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+							const nextSrc2 = $(previewId + (idNumber + 2)).attr('src');
+							const nextTempSrc2 = $(tempSrcId + (idNumber + 2)).val();
+							const nextSrc3 = $(previewId + (idNumber + 3)).attr('src');
+							const nextTempSrc3 = $(tempSrcId + (idNumber + 3)).val();
+							$(previewId + idNumber).attr('src', nextSrc);
+							$(previewId + idNumber).show();
+							$(moveSrcId + idNumber).val(nextTempSrc);
+							$(changeCheckId + idNumber).val(1);
+							$(previewId + (idNumber + 1)).attr('src', nextSrc2);
+							$(previewId + (idNumber + 1)).show();
+							$(moveSrcId + (idNumber + 1)).val(nextTempSrc2);
+							$(tempSrcId + (idNumber + 1)).val(nextTempSrc2);
+							$(changeCheckId + (idNumber + 1)).val(1);
+							$(previewId + (idNumber + 2)).attr('src', nextSrc3);
+							$(previewId + (idNumber + 2)).show();
+							$(moveSrcId + (idNumber + 2)).val(nextTempSrc3);
+							$(tempSrcId + (idNumber + 2)).val(nextTempSrc3);
+							$(changeCheckId + (idNumber + 2)).val(1);
+							$(previewId + (idNumber + 3)).attr('src', '');
+							$(previewId + (idNumber + 3)).hide();
+							$(plusIconId + (idNumber + 3)).show();
+							$(changeCheckId + (idNumber + 3)).val(1);
+							$(tempSrcId + (idNumber + 3)).val('');
+					} else if($(previewId + (idNumber + 1)).attr('src') != '' 
+						&& $(previewId + (idNumber + 2)).attr('src') != '') {
+							if($(imageInputId + (idNumber + 1)).val() != '') {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+								$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+								$(imageInputId + (idNumber + 1)).val('');
+							}
+							if($(imageInputId + (idNumber + 2)).val() != '') {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + (idNumber + 2))[0].files[0]);
+								$(imageInputId + (idNumber + 1))[0].files = aDataTransfer.files;
+								$(imageInputId + (idNumber + 2)).val('');
+							}
+							const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+							const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+							const nextSrc2 = $(previewId + (idNumber + 2)).attr('src');
+							const nextTempSrc2 = $(tempSrcId + (idNumber + 2)).val();
+							$(previewId + idNumber).attr('src', nextSrc);
+							$(previewId + idNumber).show();
+							$(moveSrcId + idNumber).val(nextTempSrc);
+							$(changeCheckId + idNumber).val(1);
+							$(previewId + (idNumber + 1)).attr('src', nextSrc2);
+							$(previewId + (idNumber + 1)).show();
+							$(moveSrcId + (idNumber + 1)).val(nextTempSrc2);
+							$(tempSrcId + (idNumber + 1)).val(nextTempSrc2);
+							$(changeCheckId + (idNumber + 1)).val(1);
+							$(previewId + (idNumber + 2)).attr('src', '');
+							$(previewId + (idNumber + 2)).hide();
+							$(plusIconId + (idNumber + 2)).show();
+							$(changeCheckId + (idNumber + 2)).val(1);
+							$(moveSrcId + (idNumber + 2)).val('');
+							$(tempSrcId + (idNumber + 2)).val('');
+					} else if($(previewId + (idNumber + 1)).attr('src') != '') {
+						if($(imageInputId + (idNumber + 1)).val() != '') {
+								const aDataTransfer = new DataTransfer();
+								aDataTransfer.items.add($(imageInputId + (idNumber + 1))[0].files[0]);
+								$(imageInputId + idNumber)[0].files = aDataTransfer.files;
+								$(imageInputId + (idNumber + 1)).val('');
+						}
+						const nextSrc = $(previewId + (idNumber + 1)).attr('src');
+						const nextTempSrc = $(tempSrcId + (idNumber + 1)).val();
+						$(previewId + idNumber).attr('src', nextSrc);
+						$(previewId + idNumber).show();
+						$(moveSrcId + idNumber).val(nextTempSrc);
+						$(changeCheckId + idNumber).val(1);
+						$(previewId + (idNumber + 1)).attr('src', '');
+						$(previewId + (idNumber + 1)).hide();
+						$(plusIconId + (idNumber + 1)).show();
+						$(changeCheckId + (idNumber + 1)).val(1);
+						$(moveSrcId + (idNumber + 1)).val('');
+						$(tempSrcId + (idNumber + 1)).val('');
+					} else {
+						$(previewId + idNumber).attr('src', '');
+						$(previewId + idNumber).hide();
+						$(plusIconId + idNumber).show();
+						$(changeCheckId + idNumber).val(1);
+						$(moveSrcId + idNumber).val('');
+						$(tempSrcId + idNumber).val('');
+					}
+				break;
+				}
+				default:{
+					console.log('잘못된 번호'+ idNumber);
+				break;
+				}
+			}
+			
+		}
+	});
 	// 이미지 미리보기 설정
+	
+	// 이미지 삭제 버튼
+	$('.image-delete').on('click', function(e) {
+		const targetId = e.currentTarget.id; // image-delete0, image-delete1, image-delete2, image-delete3
+		console.log('targetId : '+ targetId);
+		const idNumber = parseInt(targetId.charAt(targetId.length - 1), 10);
+		console.log('idNumber : '+ idNumber);
+		const imageInputId = '#image-input';
+		$(imageInputId + idNumber).val('');
+		$(imageInputId + idNumber).trigger('change');
+	});
+	// 이미지 삭제 버튼
     
  	// 동물 종류 리스트
- 	$('#petType').on('click', function() {
-		const $select = $('#petType');
-	
-		if ($select.find('option').length === 1) {
-			$.ajax({
-				url: '/petData/petType',
-				type: 'GET',
-				dataType: 'json',
-				success: function(data) {
-					$select.empty();
-					$select.append('<option value="">동물 종류 선택</option>');
-	
-					data.forEach(function(item) {
-						$select.append("<option value='" + item.category_code + "'>" + item.category_type + "</option>");
-					});
-				},
-				error: function(jqXHR, textStatus, errorThrown) {
-					console.error('AJAX 요청 실패:', textStatus, errorThrown);
-				}
+	const $select = $('#petType');
+
+	$.ajax({
+		url: '/petData/petType',
+		type: 'GET',
+		dataType: 'json',
+		success: function(data) {
+			$select.empty();
+			$select.append('<option value="">동물 종류 선택</option>');
+
+			data.forEach(function(item) {
+				$select.append("<option value='" + item.category_code + "'>" + item.category_type + "</option>");
 			});
+			
+			// 동물 종류 값 넣어주기
+			$select.val('${postList.categoryDataVO.category_parent}').trigger('change');
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.error('AJAX 요청 실패:', textStatus, errorThrown);
 		}
 	});
  	// 동물 종류 리스트
  	
+ 	// 동물 코드 불러오기
+	var oneCategoryCode = $('#categoryCode').val();
+ 	console.log(oneCategoryCode);
+ 	 	
  	// 동물 품종 리스트
+ 	const $categoryCode = $('#categoryCode');
+ 	
  	function petTypeDetailList(petType) {
 		$.ajax({
 			url: '/petData/petType/' + petType,
@@ -597,9 +1018,12 @@ $(function() {
 	});
 	// 드롭다운 클릭
 	
-	// 글 등록
+	// 글 수정
 	$('#formPost').on('submit', function(event) {
 		event.preventDefault();
+		
+		var post_id = $('#post_id').val();
+		
 		var formData = new FormData(this);
 		
 		if($('#post_type').val() == '') {
@@ -610,15 +1034,15 @@ $(function() {
 			alert('동물 품종을 선택해주세요!');
 			$('#pet_code').focus();
 			return;
-		} else if ($('#image-input-1').val() == '') {
+		} else if ($('#image-preview0').attr('src') == '') {
 			alert('대표 이미지를 입력해주세요!');
-			$('#image-input-1').focus();
+			$('#image-input1').focus();
 			return;
 		}
 		
 		Swal.fire({
-			title: '제출하시겠습니까?',
-			text: '제출 내용을 확인해주세요!',
+			title: '수정하시겠습니까?',
+			text: '수정 내용을 확인해주세요!',
 			icon: 'info',
 			showCancelButton: true,
 			confirmButtonColor: '#006e60',
@@ -628,15 +1052,15 @@ $(function() {
 		}).then(function(result) {
 			if (result.isConfirmed) {
 				$.ajax({
-					url: '/community/insert',
+					url: '/community/updatePost/'+post_id,
 					type: 'POST',
 					data: formData,
 					contentType: false,
 					processData: false,
 					success: function(response) {
 						Swal.fire({
-						title: '제출 완료',
-						text: '제출에 성공했습니다!',
+						title: '수정 완료',
+						text: '수정에 성공했습니다!',
 						icon: 'success',
 						confirmButtonColor: '#006e60',
 						confirmButtonText: '확인'
@@ -647,10 +1071,10 @@ $(function() {
 						});
 					},
 					error: function(jqXHR, textStatus, errorThrown) {
-						console.error('제출 실패:', textStatus, errorThrown);
+						console.error('수정 실패:', textStatus, errorThrown);
 						Swal.fire({
 							title: '오류!',
-							text: '제출에 실패했습니다.',
+							text: '수정에 실패했습니다.',
 							icon: 'error',
 							confirmButtonColor: '#006e60',
 							confirmButtonText: '확인'
@@ -660,7 +1084,7 @@ $(function() {
 			}
 		});
 	});
-	// 글 등록
+	// 글 수정
 	
 	
 // 	// 페이지 이동
@@ -690,4 +1114,5 @@ $(function() {
 
 <!--====================================작성부=====================================-->
 
-<%@ include file="../inc/new_footer.jsp" %> <!-- footer -->
+<%@ include file="../inc/new_footer.jsp"%>
+<!-- footer -->

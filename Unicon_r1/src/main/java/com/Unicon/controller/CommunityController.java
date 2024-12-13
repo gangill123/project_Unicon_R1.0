@@ -127,9 +127,14 @@ public class CommunityController {
 	}
 	
 	// 커뮤니티 - 게시물 수정 사이트
-	// http://localhost:8088/community/main06
+	// http://localhost:8088/community/main03
 	@GetMapping("main03/{post_id}")
-	public String templateUpdate() {
+	public String templateUpdate(@PathVariable("post_id")String post_id, Model model) {
+		logger.info("post_id는 : {}",post_id);
+		PostVO postList = communityService.getPostListOne(post_id);
+		model.addAttribute("postList", postList);
+		logger.info(" postList는 : {}",postList);
+		
 		return "community/new_update";
 	}
 	
