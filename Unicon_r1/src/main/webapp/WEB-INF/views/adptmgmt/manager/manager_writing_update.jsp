@@ -856,6 +856,7 @@
 									$('#adptStatus').append('<label class="badge badge-danger">승인취소</label>');
 									$('#a-manager-writing-agree').show();
 									$('#adptReasonDiv').show();
+									$('#adpt_reason').val(data.adptVO.adpt_reason);
 									break;
 								}
 							}
@@ -931,7 +932,63 @@
 				
 				/*=============== 입양글 승인 취소(cancel) 버튼 제어 ===============*/
 				$('#a-manager-writing-cancel').on('click', function() {
+					const adptId = $('#adpt_id').val();
 					
+					Swal.fire({
+						title: '승인을 취소하시겠습니까?',
+						text: '승인이 취소됩니다!',
+						input: 'text',
+						inputPlaceholder: '취소 사유를 입력해주세요',
+						icon: 'warning',
+						allowOutsideClick: false,
+						showCancelButton: true,
+						confirmButtonColor: '#000711',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '승인취소',
+						cancelButtonText: '닫기',
+						inputValidator: function(value) {
+							if (!value) {
+								return '취소 사유를 입력해주세요';
+							}
+						}
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							$.ajax({
+								url: '/adptmgmt/manager/writings/'+ animalId +'/status',
+								method: 'PATCH',
+								contentType: 'application/json',
+								data: JSON.stringify({ 
+									"animal_id" : animalId, 
+									"adpt_id" : adptId, 
+									"adpt_status" : 3, 
+									"adpt_reason" : result.value }),
+								success: function() {
+									Swal.fire({
+										title: '승인이 취소되었습니다',
+										icon: 'success',
+										allowOutsideClick: false,
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인',
+									}).then(function(result) {
+										if (result.isConfirmed) {
+											location.reload();
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '승인 취소에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										allowOutsideClick: false,
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
 				});
 				/*=============== 입양글 승인 취소(cancel) 버튼 제어 ===============*/
 
