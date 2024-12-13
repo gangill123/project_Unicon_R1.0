@@ -119,6 +119,7 @@
 		display: none;
 		text-shadow: 0 0 0.5rem rgba(0, 110, 96, 0.5);
 	}
+	
 	#animalStatus label {
 		font-size: 1.5rem;
 	}
@@ -509,6 +510,13 @@
 	}
 	/*=============== 바탕 css ===============*/
 	
+	
+	/*=============== textarea css ===============*/
+	#animalReasonDiv {
+		display: none;
+	}
+	/*=============== textarea css ===============*/
+	
 </style>
 </head>
 	<body>
@@ -526,7 +534,7 @@
 							<div class="col-12 grid-margin stretch-card">
 								<div class="card">
 									<div class="card-body">
-										<h4 class="card-title">입양 관리 - 정보 수정 및 삭제</h4>
+										<h4 class="card-title">입양 관리 - 동물 정보 수정 및 삭제</h4>
 										
 										<form id="formModifyAdptAnimal" action="" method="post" enctype="multipart/form-data">
 										
@@ -630,10 +638,15 @@
 														<input type="text" id="aRegUser" name="member_id" 
 															class="form-control custom-text" readonly/>
 													</div>
-													<div class="col-12 col-xl-2 col-lg-5 col-md-4 mb-3">
+													<div class="col-12 col-xl-2 col-lg-3 col-md-3 mb-3">
 														<label for="animal_status" class="text-dark custom-label">동물 상태</label>
 														<div id="animalStatus"></div>
 														<input type="hidden" id="animal_status"/>
+													</div>
+													<div id="animalReasonDiv" class="col-12 col-xl-2 col-lg-5 col-md-4 mb-3">
+														<label for="animal_reason" class="text-dark custom-label">종료 사유</label>
+														<textarea id="animal_reason" rows="5" cols="" maxlength="50"
+															class="form-control custom-text" readonly></textarea>
 													</div>
 												</div>
 												<div class="form-group row d-flex justify-content-center">
@@ -1852,9 +1865,9 @@
 				const animalId = currentURL.substring(lastSlashIndex+1); // 전역 변수
 				const regex = /^ANIM-\w{6}$/;
 				
-				if(regex.test(animalId)) {
+				if(regex.test(animalId)) { // 페이지 로드시 바로 실행
 					$.ajax({
-						url: '/adptmgmt/animals/' + animalId,
+						url: '/adptmgmt/animals/'+ animalId,
 						method: 'GET',
 						type: 'json',
 						success: function(data) {
@@ -1910,6 +1923,8 @@
 									$('#animalStatus').empty();
 									$('#animalStatus').append('<label class="badge badge-secondary">종료</label>');
 									$('#animal_status').val(data.animal_status);
+									$('#animalReasonDiv').show();
+									$('#animal_reason').val(data.animal_reason);
 									break;
 								}
 							}
@@ -1965,12 +1980,12 @@
 								
 				/*=============== 삭제(delete) 버튼 제어 ===============*/
 				$('#a-delete-btn1, #a-delete-btn2').on('click',function(e) {
-					const member_id = $('#aRegUser').val();
 					
 					Swal.fire({
 						title: '삭제하시겠습니까?',
 						text: '동물 정보가 삭제됩니다!',
 						icon: 'warning',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#fc5a5a',
 						cancelButtonColor: '#aab2bd',
@@ -1979,12 +1994,13 @@
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
-								url: "/adptmgmt/animals/"+ animalId +"/deletion?member_id=" + member_id,
+								url: '/adptmgmt/animals/'+ animalId +'/deletion',
 								method: "DELETE",
 								success: function() {
 									Swal.fire({
 										title:'삭제 되었습니다!',
 										icon:'success',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									}).then(function(result) {
@@ -1999,6 +2015,7 @@
 										title: '오류 발생',
 										text: '삭제에 실패했습니다. 다시 시도해 주세요.',
 										icon: 'error',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									});
@@ -2018,6 +2035,7 @@
 						title: '입양글을 작성하시겠습니까?',
 						text: '입양글 작성 페이지로 이동합니다',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -2036,6 +2054,7 @@
 						title: '입양글을 수정하시겠습니까?',
 						text: '입양글 수정 페이지로 이동합니다',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -2043,7 +2062,7 @@
 						cancelButtonText: '닫기'
 					}).then(function(result) {
 						if (result.isConfirmed) {
-							location.href='/AM/writings/'+ animalId;
+							location.href='/AM/writings/all/'+ animalId;
 						}	
 					});
 				});
@@ -2057,6 +2076,7 @@
 						title: '목록으로 이동하시겠습니까?',
 						text: '동물 목록 페이지로 이동합니다',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -2074,17 +2094,24 @@
 				
 				/*=============== 종료(close) 버튼 제어 ===============*/
 				$('#a-close-btn1, #a-close-btn2').on('click', function() {
-					const member_id = $('#aRegUser').val();
 					
 					Swal.fire({
 						title: '종료로 변경하시겠습니까?',
 						text: '동물 상태가 종료로 변경되고 입양글, 상담이 취소됩니다',
+						input: 'text',
+						inputPlaceholder: '종료 사유를 입력해주세요',
 						icon: 'question',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#000711',
 						cancelButtonColor: '#aab2bd',
 						confirmButtonText: '변경',
-						cancelButtonText: '닫기'
+						cancelButtonText: '닫기',
+						inputValidator: function(value) {
+							if (!value) {
+								return '종료 사유를 입력해주세요';
+							}
+						}
 					}).then(function(result) {
 						if (result.isConfirmed) {
 							$.ajax({
@@ -2092,13 +2119,14 @@
 								method: "PATCH",
 								contentType: "application/json",
 								data: JSON.stringify({ 
-									"animal_id" : animal_id, 
-									"member_id" : member_id, 
-									"animal_status" : 5 }),
+									"animal_id" : animalId, 
+									"animal_status" : 5,
+									"animal_reason" : result.value }),
 								success: function() {
 									Swal.fire({
 										title: '종료로 변경되었습니다',
 										icon: 'success',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인',
 									}).then(function(result) {
@@ -2113,6 +2141,7 @@
 										title: '오류 발생',
 										text: '변경에 실패했습니다. 다시 시도해 주세요.',
 										icon: 'error',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									});
@@ -2129,6 +2158,7 @@
 						title: '종료를 취소하시겠습니까?',
 						text: '동물 상태가 대기중으로 변경됩니다',
 						icon: 'warning',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#000711',
 						cancelButtonColor: '#aab2bd',
@@ -2142,12 +2172,12 @@
 								contentType: "application/json",
 								data: JSON.stringify({ 
 									"animal_id" : animalId, 
-									"member_id" : member_id, 
 									"animal_status" : 1 }),
 								success: function() {
 									Swal.fire({
 										title: '동물상태가 대기중으로 변경되었습니다',
 										icon: 'success',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인',
 									}).then(function(result) {
@@ -2162,6 +2192,7 @@
 										title: '오류 발생',
 										text: '변경에 실패했습니다. 다시 시도해 주세요.',
 										icon: 'error',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									});
@@ -2203,6 +2234,7 @@
 						title: '수정하시겠습니까?',
 						text: '수정 내용을 확인해주세요!',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -2221,6 +2253,7 @@
 									title: '수정 완료',
 									text: '수정에 성공했습니다!',
 									icon: 'success',
+									allowOutsideClick: false,
 									confirmButtonColor: '#006e60',
 									confirmButtonText: '확인'
 									}).then(function(result){
@@ -2235,6 +2268,7 @@
 										title: '오류!',
 										text: '수정에 실패했습니다.',
 										icon: 'error',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									});

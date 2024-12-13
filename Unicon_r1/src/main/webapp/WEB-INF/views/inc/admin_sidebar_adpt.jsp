@@ -69,7 +69,8 @@
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="/AM/admin/animalwritings"> 입양글 관리 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/AM/manager/animals/everything"> 입양동물 관리 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/AM/manager/writings/total"> 입양글 관리 </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/pages/samples/blank-page"> Blank Page </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/pages/samples/login"> Login </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/pages/samples/register"> Register </a></li>

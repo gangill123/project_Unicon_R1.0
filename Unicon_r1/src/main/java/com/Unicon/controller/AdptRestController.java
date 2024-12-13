@@ -39,6 +39,8 @@ public class AdptRestController {
 	private AdptDAO aDao;
 	private static final Logger logger = LoggerFactory.getLogger(AdptRestController.class);
 	
+	
+	/* ===== 보호소페이지 동물 등록 ===== */
 	@PostMapping(value = "/animals/creation")
 	public ResponseEntity<Void> registerAnimal(@ModelAttribute AnimalVO avo, HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ registerAnimal(AnimalVO avo, HttpServletRequest req) 실행");
@@ -68,6 +70,7 @@ public class AdptRestController {
 	}
 	
 	
+	/* ===== 보호소페이지 동물 이름 자동짓기 ===== */
 	@GetMapping(value = "/animals/autoname")
 	public ResponseEntity<Map<String, String>> animalAutoName(
 			@RequestParam("animal_act") int act, @RequestParam("animal_social") int social) {
@@ -80,13 +83,11 @@ public class AdptRestController {
 	}
 	
 	
+	/* ===== 보호소페이지 동물 목록 ===== */
 	@GetMapping(value = "/animals")
-	public ResponseEntity<List<AnimalVO>> animalListAll(HttpServletRequest req) {
-		logger.debug("( •̀ ω •́ )✧ animalListAll() 실행");
-		
-		req.getSession().setAttribute("member_id", "youreal00");
-		
-		String member_id = (String) req.getSession().getAttribute("member_id");
+	public ResponseEntity<List<AnimalVO>> animalListAllMember(HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ animalListAllMember() 실행");
+		String member_id = (String) req.getSession().getAttribute("member_id_test");
 		
 		List<AnimalVO> animList = aService.getAnimalListAll(member_id);
 		if(animList != null) {
@@ -95,38 +96,79 @@ public class AdptRestController {
 			return new ResponseEntity<List<AnimalVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
-	@GetMapping(value = "/animals/{animal_id}")
-	public ResponseEntity<AnimalVO> animalListOne(@PathVariable("animal_id")String animal_id) {
-		logger.debug("( •̀ ω •́ )✧ animalListOne() 실행");
+	/* ===== 보호소페이지 동물 목록(관리자) ===== */
+	@GetMapping(value = "/animals/manager")
+	public ResponseEntity<List<AnimalVO>> animalListAllManager(HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ animalListAllManager() 실행");
+		String manager_id = (String)req.getSession().getAttribute("manager_id_test");
 		
-		int checkId = aService.checkAnimalId(animal_id);
-		if(checkId == 1) {
-			logger.debug("( •̀ ω •́ )✧ 존재하는 동물id 확인완료");
-			AnimalVO animalVO = aService.getAnimalListOne(animal_id);
-			return new ResponseEntity<AnimalVO>(animalVO,HttpStatus.OK);
+		List<AnimalVO> animList = aService.getAnimalListAll();
+		if(animList != null) {
+			return new ResponseEntity<List<AnimalVO>>(animList,HttpStatus.OK);
 		} else {
-			logger.debug("( •̀ ω •́ )✧ 존재하지않는 동물id 입니다");
+			return new ResponseEntity<List<AnimalVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	/* ===== 보호소페이지 동물 정보 수정시 동물 조회(관리자 포함) ===== */
+	@GetMapping(value = "/animals/{animal_id}")
+	public ResponseEntity<AnimalVO> animalListOne(@PathVariable("animal_id")String animal_id,
+			HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ animalListOne() 실행");
+		String member_id = (String) req.getSession().getAttribute("member_id_test");
+		String manager_id = (String) req.getSession().getAttribute("manager_id_test");
+		
+		int checkId = aService.checkAnimalId(animal_id, member_id);
+		if(checkId == 1 || manager_id.equals("manager00")) {
+			logger.debug("( •̀ ω •́ )✧ 존재하는 동물id & 해당 동물의 회원 확인완료");
+			AnimalVO animalVO = aService.getAnimalListOne(animal_id);
+			return new ResponseEntity<AnimalVO>(animalVO, HttpStatus.OK);
+		} else {
+			logger.debug("( •̀ ω •́ )✧ 존재하지않는 동물id || 해당 동물의 회원이 아닙니다");
 			return new ResponseEntity<AnimalVO>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
 	
-	@GetMapping(value = "/animals/{animal_id}/check")
-	public ResponseEntity<AnimalVO> animalWritingOne(@PathVariable("animal_id")String animal_id) {
-		logger.debug("( •̀ ω •́ )✧ animalWritingOne() 실행");
+	/* ===== 보호소페이지 입양글 수정시 동물 정보 조회(관리자 포함) ===== */
+	@GetMapping(value = "/animals/{animal_id}/writing")
+	public ResponseEntity<AnimalVO> AnimalWritingOne(@PathVariable("animal_id")String animal_id,
+			HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ AnimalWritingOne() 실행");
+		String member_id = (String) req.getSession().getAttribute("member_id_test");
+		String manager_id = (String) req.getSession().getAttribute("manager_id_test");
 		
-		int checkId = aService.checkAnimalId(animal_id);
+		int checkId = aService.checkAnimalId(animal_id, member_id);
+		if(checkId == 1 || manager_id.equals("manager00")) {
+			logger.debug("( •̀ ω •́ )✧ 존재하는 동물id & 해당 동물의 회원 확인완료");
+			AnimalVO animalVO = aService.getAnimalWritingOne(animal_id);
+			return new ResponseEntity<AnimalVO>(animalVO, HttpStatus.OK);
+		} else {
+			logger.debug("( •̀ ω •́ )✧ 존재하지않는 동물id || 해당 동물의 회원이 아닙니다");
+			return new ResponseEntity<AnimalVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	
+	/* ===== 보호소페이지 동물 입양글 작성시 동물ID정보 & 회원정보 확인 ===== */
+	@GetMapping(value = "/animals/{animal_id}/check")
+	public ResponseEntity<AnimalVO> animalWritingOne(@PathVariable("animal_id")String animal_id,
+			HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ animalWritingOne() 실행");
+		String member_id = (String)req.getSession().getAttribute("member_id_test");
+		
+		int checkId = aService.checkAnimalId(animal_id, member_id);
 		
 		if(checkId == 1) {
-			logger.debug("( •̀ ω •́ )✧ 존재하는 동물id 확인완료");
+			logger.debug("( •̀ ω •́ )✧ 존재하는 동물id & 해당 동물의 회원 확인완료");
 			AnimalVO animalVO = aService.getAnimalListOne(animal_id);
 			int checkStatus = animalVO.getAnimal_status();
 			
 			if(checkStatus == 1) {
-				logger.debug("( •̀ ω •́ )✧ 대기중 상태인 동물입니다");
-				return new ResponseEntity<AnimalVO>(animalVO,HttpStatus.OK);
+				logger.debug("( •̀ ω •́ )✧ 대기중 상태인 동물입니다 정상처리");
+				return new ResponseEntity<AnimalVO>(animalVO, HttpStatus.OK);
 			} else {
 				logger.debug("( •̀ ω •́ )✧ 이미 입양글이 작성되거나 종료된 동물입니다");
 				return new ResponseEntity<AnimalVO>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -140,7 +182,8 @@ public class AdptRestController {
 	}
 	
 	
-	@PostMapping(value = "/animals/{animalId}/modification")
+	/* ===== 보호소페이지 동물 정보 수정(관리자 포함) ===== */
+	@PostMapping(value = "/animals/{animal_id}/modification")
 	public ResponseEntity<Void> modifyAnimal(@ModelAttribute AnimalVO avo, HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ modifyAnimal(AnimalVO avo, HttpServletRequest req) 실행");
 		
@@ -169,13 +212,13 @@ public class AdptRestController {
 	}
 
 	
+	/* ===== 보호소페이지 동물 정보 삭제(관리자 포함) ===== */
 	@DeleteMapping(value = "/animals/{animal_id}/deletion")
-	public ResponseEntity<Void> deleteAnimal(
-			@PathVariable("animal_id") String animal_id, @RequestParam("member_id")String member_id) {
+	public ResponseEntity<Void> deleteAnimal(@PathVariable("animal_id") String animal_id) {
 		logger.debug("( •̀ ω •́ )✧ deleteAnimal() 실행");
 		
 		try {
-			aService.deleteAnimal(animal_id, member_id);
+			aService.deleteAnimal(animal_id);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch(Exception e) {
 			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
@@ -185,6 +228,7 @@ public class AdptRestController {
 	}
 	
 	
+	/* ===== 보호소페이지 동물 상태 정보 수정(관리자 포함) ===== */
 	@PatchMapping(value = "/animals/{animal_id}/status")
 	public ResponseEntity<Void> modifyAnimalStatus(@RequestBody Map<String, Object> statusData) {
 		logger.debug("( •̀ ω •́ )✧ modifyAnimalStatus() 실행");
@@ -200,6 +244,7 @@ public class AdptRestController {
 	}
 	
 	
+	/* ===== 보호소페이지 입양글 등록 ===== */
 	@PostMapping(value = "/writings/{animal_id}/creation")
 	public ResponseEntity<Void> registerAdptWriting(AdptVO advo, @RequestParam("animalStatus")int animalStatus) {
 		logger.debug("( •̀ ω •́ )✧ registerAdptWriting() 실행");
@@ -217,9 +262,29 @@ public class AdptRestController {
 	}
 	
 	
+	/* ===== 보호소페이지 입양글 목록 ===== */
 	@GetMapping(value = "/writings")
-	public ResponseEntity<List<AnimalVO>> writingListAll() {
-		logger.debug("( •̀ ω •́ )✧ writingListAll() 실행");
+	public ResponseEntity<List<AnimalVO>> writingListAllMember(HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ writingListAllMember() 실행");
+		String member_id = (String)req.getSession().getAttribute("member_id_test");
+		
+		try {
+			
+			List<AnimalVO> writingList = aService.getWritingListAll(member_id);
+			
+			return new ResponseEntity<List<AnimalVO>>(writingList ,HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	/* ===== 보호소페이지 입양글 목록 (관리자) ===== */
+	@GetMapping(value = "/writings/manager")
+	public ResponseEntity<List<AnimalVO>> writingListAllManager(HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ writingListAllMember() 실행");
+		String manager_id = (String)req.getSession().getAttribute("manager_id_test");
 		
 		try {
 			
@@ -235,6 +300,7 @@ public class AdptRestController {
 	}
 	
 	
+	/* ===== 보호소페이지 입양글 수정 ===== */
 	@PostMapping(value = "/writings/{animal_id}/modification")
 	public ResponseEntity<Void> modifyWriting(AdptVO advo) {
 		logger.debug("( •̀ ω •́ )✧ modifyWriting(AdptVO advo) 실행");
@@ -251,9 +317,11 @@ public class AdptRestController {
 	}
 	
 	
+	/* ===== 보호소페이지 입양글 삭제 ===== */
 	@DeleteMapping(value = "/writings/{animal_id}/deletion")
 	public ResponseEntity<Void> deleteWriting(AdptVO advo) {
 		logger.debug("( •̀ ω •́ )✧ deleteWriting(AdptVO advo) 실행");
+		advo.setAdpt_status(4);
 		
 		try {
 			aService.deleteWriting(advo);
@@ -263,6 +331,38 @@ public class AdptRestController {
 			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
 			
 			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	/* ===== 보호소페이지 입양글 상태 변경 =====*/
+	@PatchMapping(value = "/manager/writings/{animal_id}/status")
+	public ResponseEntity<Void> writingsStatusManager(@RequestBody Map<String, Object> writingStatus) {
+		logger.debug("( •̀ ω •́ )✧ writingsStatusManager() 실행");
+		
+		try {
+			aService.writingsStatusManager(writingStatus);
+			
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch(Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	/* ===== 사용자 페이지 입양글 목록 ===== */
+	@GetMapping(value = "/adpt/list")
+	public ResponseEntity<List<AnimalVO>> adptListAll(HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ animalListAll() 실행");
+		
+		List<AnimalVO> adptList = aService.getAdptList();
+		
+		if(adptList != null) {
+			return new ResponseEntity<List<AnimalVO>>(adptList,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<List<AnimalVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

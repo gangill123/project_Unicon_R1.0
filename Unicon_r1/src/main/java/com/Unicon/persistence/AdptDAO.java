@@ -56,12 +56,26 @@ public class AdptDAO {
 		
 		return sqlSession.selectOne(NAMESPACE+"checkAnimalId", animal_id);
 	}
+	public Integer checkAnimalId(String animal_id, String member_id) {
+		logger.debug("( •̀ ω •́ )✧ checkAnimalId(String animId) 실행");
+		
+		Map<String,String> checkParams = new HashMap<String, String>();
+		checkParams.put("animal_id", animal_id);
+		checkParams.put("member_id", member_id);
+		
+		return sqlSession.selectOne(NAMESPACE+"checkAnimalIdMemberId", checkParams);
+	}
 	
 	
 	public List<AnimalVO> getAnimalListAll(String member_id) {
 		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
 		
-		return sqlSession.selectList(NAMESPACE+"getAnimalListAll", member_id);
+		return sqlSession.selectList(NAMESPACE+"getAnimalListAllMember", member_id);
+	}
+	public List<AnimalVO> getAnimalListAll() {
+		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
+		
+		return sqlSession.selectList(NAMESPACE+"getAnimalListAll");
 	}
 	
 	
@@ -69,6 +83,12 @@ public class AdptDAO {
 		logger.debug("( •̀ ω •́ )✧ getAnimalListOne(String animal_id) 실행");
 		
 		return sqlSession.selectOne(NAMESPACE+"getAnimalListOne", animal_id);
+	}
+	
+	public AnimalVO getAnimalWritingOne(String animal_id) {
+		logger.debug("( •̀ ω •́ )✧ getAnimalWritingOne(String animal_id) 실행");
+		
+		return sqlSession.selectOne(NAMESPACE+"getAnimalWritingOne", animal_id);
 	}
 	
 	
@@ -92,12 +112,12 @@ public class AdptDAO {
 		 
 	}
 	
-	public void deleteAnimal(String animal_id, String member_id) {
+	public void deleteAnimal(String animal_id) {
 		logger.debug("( •̀ ω •́ )✧ deleteAnimal(String animal_id, String member_id) 실행");
-		Map<String, String> animalParams = new HashMap<String, String>();
+		Map<String, Object> animalParams = new HashMap<String, Object>();
 		animalParams.put("animal_id", animal_id);
-		animalParams.put("member_id", member_id);
-		sqlSession.update(NAMESPACE+"deleteAnimal", animalParams);
+		animalParams.put("animal_status", 6);
+		sqlSession.update(NAMESPACE+"modifyAnimalStatus", animalParams);
 	}
 	
 	
@@ -127,6 +147,11 @@ public class AdptDAO {
 	}
 	
 	
+	public List<AnimalVO> getWritingListAll(String member_id) {
+		logger.debug("( •̀ ω •́ )✧ getWritingListAll() 실행");
+		
+		return sqlSession.selectList(NAMESPACE+"getWritingListAllMember", member_id);
+	}
 	public List<AnimalVO> getWritingListAll() {
 		logger.debug("( •̀ ω •́ )✧ getWritingListAll() 실행");
 		
@@ -146,15 +171,25 @@ public class AdptDAO {
 		
 		Map<String, Object> writingParams = new HashMap<String, Object>();
 		writingParams.put("animal_id", advo.getAnimal_id());
-		writingParams.put("member_id", advo.getMember_id());
 		writingParams.put("animal_status", 1);
-		
 		
 		sqlSession.update(NAMESPACE+"deleteWriting", advo);
 		sqlSession.update(NAMESPACE+"modifyAnimalStatus", writingParams);
 	}
 	
 	
+	public List<AnimalVO> getAdptList() {
+		logger.debug("( •̀ ω •́ )✧ getAdptList() 실행");
+		
+		return sqlSession.selectList(NAMESPACE+"getAdptList");
+	}
+	
+	
+	public void writingsStatusManager(Map<String, Object> writingStatus) {
+		logger.debug("( •̀ ω •́ )✧ writingsStatusManager() 실행");
+		
+		sqlSession.update(NAMESPACE+"writingsStatusManager", writingStatus);
+	}
 	
 	
 	

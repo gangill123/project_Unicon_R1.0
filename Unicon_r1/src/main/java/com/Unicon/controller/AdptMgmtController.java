@@ -3,6 +3,7 @@ package com.Unicon.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,8 +45,10 @@ public class AdptMgmtController {
 	}
 	
 	@GetMapping(value = "/animals/list")
-	public String animalViewAll() {
+	public String animalViewAll(HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ animalViewAll() 실행");
+		req.getSession().setAttribute("member_id_test", "youreal00");
+		
 		return "/adptmgmt/animals/animal_read";
 	}
 	
@@ -67,22 +70,36 @@ public class AdptMgmtController {
 		return "/adptmgmt/writings/writing_read";
 	}
 	
-	@GetMapping(value = "/writings/{animal_id}")
+	@GetMapping(value = "/writings/all/{animal_id}")
 	public String writingViewOne() {
 		logger.debug("( •̀ ω •́ )✧ writingViewOne() 실행");
 		return "/adptmgmt/writings/writing_update";
 	}
 	
-	@GetMapping(value = "/admin/animalwritings")
-	public String adminWritingViewAll() {
-		logger.debug("( •̀ ω •́ )✧ adminWritingViewAll() 실행");
-		return "/adptmgmt/admin/admin_writing";
+	@GetMapping(value = "/manager/animals/everything")
+	public String managerAnimalViewAll(HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ managerAnimalViewAll() 실행");
+		req.getSession().setAttribute("manager_id_test", "manager00");
+		
+		return "/adptmgmt/manager/manager_animal_read";
 	}
 	
-	@GetMapping(value = "/admin/animalwritings/{animal_id}")
-	public String adminWritingViewOne() {
-		logger.debug("( •̀ ω •́ )✧ adminWritingViewOne() 실행");
-		return "/adptmgmt/admin/admin_writing_update";
+	@GetMapping(value = "/manager/animals/everything/{animal_id}")
+	public String managerAnimalViewOne() {
+		logger.debug("( •̀ ω •́ )✧ managerAnimalViewOne() 실행");
+		return "/adptmgmt/manager/manager_animal_update";
+	}
+	
+	@GetMapping(value = "/manager/writings/total")
+	public String managerWritingViewAll() {
+		logger.debug("( •̀ ω •́ )✧ managerWritingViewAll() 실행");
+		return "/adptmgmt/manager/manager_writing_read";
+	}
+	
+	@GetMapping(value = "/manager/writings/total/{animal_id}")
+	public String managerWritingViewOne() {
+		logger.debug("( •̀ ω •́ )✧ managerWritingViewOne() 실행");
+		return "/adptmgmt/manager/manager_writing_update";
 	}
 	
 	

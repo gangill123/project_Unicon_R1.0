@@ -54,6 +54,11 @@ public class AdptService {
 		
 		return aDao.getAnimalListAll(member_id);
 	}
+	public List<AnimalVO> getAnimalListAll() {
+		logger.debug("( •̀ ω •́ )✧ getAnimalListAll() 실행");
+		
+		return aDao.getAnimalListAll();
+	}
 	
 	
 	public AnimalVO getAnimalListOne(String animal_id) {
@@ -62,11 +67,22 @@ public class AdptService {
 		return aDao.getAnimalListOne(animal_id);
 	}
 	
+	public AnimalVO getAnimalWritingOne(String animal_id) {
+		logger.debug("( •̀ ω •́ )✧ getAnimalWritingOne() 실행");
+		
+		return aDao.getAnimalWritingOne(animal_id);
+	}
+	
 	
 	public Integer checkAnimalId(String animal_id) {
 		logger.debug("( •̀ ω •́ )✧ checkAnimalId(String animId) 실행");
 		
 		return aDao.checkAnimalId(animal_id);
+	}
+	public Integer checkAnimalId(String animal_id, String member_id) {
+		logger.debug("( •̀ ω •́ )✧ checkAnimalId(String animId, String member_id) 실행");
+		
+		return aDao.checkAnimalId(animal_id, member_id);
 	}
 	
 	
@@ -78,10 +94,10 @@ public class AdptService {
 	}
 	
 	
-	public void deleteAnimal(String animal_id, String member_id) {
+	public void deleteAnimal(String animal_id) {
 		logger.debug("( •̀ ω •́ )✧ deleteAnimal(String animal_id, String member_id) 실행");
 		
-		aDao.deleteAnimal(animal_id, member_id);
+		aDao.deleteAnimal(animal_id);
 	}
 	
 	
@@ -100,6 +116,11 @@ public class AdptService {
 	}
 	
 	
+	public List<AnimalVO> getWritingListAll(String member_id) {
+		logger.debug("( •̀ ω •́ )✧ getWritingListAll() 실행");
+		
+		return aDao.getWritingListAll(member_id);
+	}
 	public List<AnimalVO> getWritingListAll() {
 		logger.debug("( •̀ ω •́ )✧ getWritingListAll() 실행");
 		
@@ -122,6 +143,18 @@ public class AdptService {
 	}
 	
 	
+	public List<AnimalVO> getAdptList() {
+		logger.debug("( •̀ ω •́ )✧ getAdptList() 실행");
+		
+		return aDao.getAdptList();
+	}
+	
+	
+	public void writingsStatusManager(Map<String, Object> writingStatus) {
+		logger.debug("( •̀ ω •́ )✧ writingsStatusManager() 실행");
+		
+		aDao.writingsStatusManager(writingStatus);
+	}
 	
 	
 	

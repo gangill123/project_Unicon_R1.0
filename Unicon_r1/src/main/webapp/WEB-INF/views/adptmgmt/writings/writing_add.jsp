@@ -807,6 +807,7 @@
 						title: '초기화하시겠습니까?',
 						text: '동물정보를 제외한 작성글이 초기화 됩니다!',
 						icon: 'warning',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -819,6 +820,7 @@
 							Swal.fire({
 								title:'초기화 되었습니다!',
 								icon:'success',
+								allowOutsideClick: false,
 								confirmButtonColor: '#006e60',
 								confirmButtonText: '확인'
 							});
@@ -840,6 +842,7 @@
 						title: '등록하시겠습니까?',
 						text: '등록 내용을 확인해주세요!',
 						icon: 'info',
+						allowOutsideClick: false,
 						showCancelButton: true,
 						confirmButtonColor: '#006e60',
 						cancelButtonColor: '#aab2bd',
@@ -859,6 +862,7 @@
 									title: '등록 완료',
 									text: '등록에 성공했습니다!',
 									icon: 'success',
+									allowOutsideClick: false,
 									confirmButtonColor: '#006e60',
 									confirmButtonText: '확인'
 									}).then(function(result){
@@ -874,6 +878,7 @@
 										title: '오류!',
 										text: '등록에 실패했습니다.',
 										icon: 'error',
+										allowOutsideClick: false,
 										confirmButtonColor: '#006e60',
 										confirmButtonText: '확인'
 									});
