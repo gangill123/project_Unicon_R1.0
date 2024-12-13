@@ -1,5 +1,6 @@
 package com.Unicon.persistence;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -158,6 +159,16 @@ public class CommunityDAO {
 		logger.info(" DAO - commentLikeDelete() 실행 ");
 		int result = sqlSession.delete(NAMESPACE+"commentLikeDelete", commentLikeInfo);
 		return result;
+	}
+	
+	// 게시물 수정
+	public void updatePost(PostVO postVO) {
+		logger.info(" updatePost() 실행 ");
+		
+		sqlSession.update(NAMESPACE+"updatePost", postVO);
+		
+		List<ImageVO> images = new ArrayList<ImageVO>(postVO.getPost_images());
+		sqlSession.insert(NAMESPACE+"updatePostImages", images);
 	}
 	
 	

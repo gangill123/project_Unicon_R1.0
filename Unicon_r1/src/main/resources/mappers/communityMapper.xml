@@ -41,6 +41,7 @@
 	<id property="category_code" column="category_code"/>
 	<result property="category_type" column="category_type"/>
 	<result property="category_value" column="category_value"/>
+	<result property="category_parent" column="category_parent"/>
 </resultMap>
 
 <resultMap id="ImageResultMap" type="com.Unicon.domain.ImageVO">
@@ -282,6 +283,23 @@
 </insert>
 <!-- 게시물 등록 -->
 
+<!-- 게시물 수정 -->
+<update id="updatePost" parameterType="com.Unicon.domain.PostVO">
+	update _post set 
+	post_title = #{post_title}, post_content = #{post_content}, post_type = #{post_type}, 
+	pet_code = #{pet_code}, pet_etc_breed = #{pet_etc_breed}, post_pet_place = #{post_pet_place}, post_pet_date = #{post_pet_date} 
+	where post_id = #{post_id} 
+</update>
+<insert id="updatePostImages" parameterType="List">
+	insert into _image (image_id, image_type, image_sequence, image_src) 
+	 values 
+	 <foreach collection="list" item="li" separator=","> 
+	  (#{li.image_id}, #{li.image_type}, #{li.image_sequence}, #{li.image_src}) 
+	 </foreach> 
+	 on duplicate key update 
+	   image_src = values(image_src) 
+</insert>
+<!-- 게시물 수정 -->
 
 
 

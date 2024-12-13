@@ -36,4 +36,7 @@ public class PostVO {
 	private JypMemberVO jypMemberVO;			// 임시 멤버 테이블
 	private CategoryDataVO categoryDataVO;		// 카테고리 테이블
 	
+	private List<CheckImageVO> check_images;
+	
+	
 }

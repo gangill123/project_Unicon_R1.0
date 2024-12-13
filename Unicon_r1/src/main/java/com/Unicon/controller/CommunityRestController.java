@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -240,6 +241,36 @@ public class CommunityRestController {
 			logger.info(" 오류 발생 : {}",e.getMessage());
 			return new ResponseEntity<String>(" 오류 발생 : "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+	
+	// 게시물 수정
+	@PostMapping(value = "/updatePost/{post_id}")
+	public ResponseEntity<Void> updatePost(@ModelAttribute PostVO postVO, HttpServletRequest req) {
+		logger.info(" updatePost() 실행");
+		logger.info(" postVO는 : {}",postVO);
+		
+		try {
+			
+			if (postVO == null) {
+				return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			}
+			
+			List<ImageVO> post_images = communityService.updateImage(postVO, req);
+			
+			if (post_images == null || post_images.isEmpty()) { 
+				return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR); 
+			}
+			
+			postVO.setPost_images(post_images);
+			communityService.updatePost(postVO);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			logger.info(" 오류 발생: {}",e.getMessage());
+			
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 	
 	
