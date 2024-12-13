@@ -25,7 +25,7 @@
               <div class="collapse" id="notice-basic">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="/store/admin/notice">공지사항</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/store/admin/popupForm">팝업</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/store/admin/popup">팝업</a></li>
                 </ul>
               </div>
               

@@ -144,6 +144,19 @@ where ano_id = #{anoId}
 ORDER BY important desc, ano_regdate DESC
 </select>
 
+<select id="getPopupById" resultMap="AdminNoticeResultMap">
+SELECT a.ano_id,
+        a.ano_title,
+        a.start_date,
+        a.end_date,
+        a.popup_width,
+        a.popup_height,
+        i.image_src
+FROM _admin_notice a
+left join _image i on a.ano_id = i.image_id
+where ano_id = #{anoId} 
+</select>
+
 <insert id="insertPopup" useGeneratedKeys="true" keyProperty="anoId">
     INSERT INTO _admin_notice (
         ano_id, 
@@ -207,13 +220,52 @@ ORDER BY important desc, ano_regdate DESC
         AND NOW() BETWEEN a.start_date AND a.end_date
 </select>
 
+<select id="getPopupList" resultMap="AdminNoticeResultMap">
+	SELECT 
+        ano_id,
+        ano_title,
+        start_date,
+        end_date,
+        popup_width,
+        popup_height
+    FROM 
+        _admin_notice
+    WHERE 
+        ano_content IS NULL
+</select>
+
 
 
 <!-- new product 리스트 -->
 <select id="getNewProducts" resultMap="ProductResultMap">
 select * from _products where product_status = '승인대기'
-
 </select>
+
+
+<!-- 팝업 update -->
+<update id="updatePopup">
+    UPDATE _admin_notice
+    SET 
+        ano_title = #{anoTitle}, 
+        ano_content = #{anoContent}, 
+        ano_moddate = NOW(),
+        popup_width = #{popupWidth},
+        popup_height = #{popupHeight},
+        start_date =  #{start_date}, 
+        end_date = #{end_date},
+        status = '게시중'
+    WHERE ano_id = #{anoId}
+</update>
+<!-- 팝업 update img -->
+<update id="popupImageUpdate">
+    UPDATE _admin_notice
+    SET 
+    	image_type = #{image_type},
+    	image_sequence = #{image_sequence},
+    	image_src = #{image_src}
+    WHERE image_id = #{image_id}
+</update>
+
 
 
 

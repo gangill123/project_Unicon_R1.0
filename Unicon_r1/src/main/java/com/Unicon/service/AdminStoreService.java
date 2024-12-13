@@ -78,8 +78,6 @@ public class AdminStoreService {
 		return result;
 	}
 	
-	
-	
 	// 특정 공지사항 자세히 보기
 	public AdminNoticeVO getNoticeById(int ano) {
 		return aDao.getNoticeById(ano);
@@ -105,6 +103,29 @@ public class AdminStoreService {
 		List<AdminNoticeVO> list = aDao.getActivePopupList();
 		return list;
 	}
+	
+	// 팝업창 목록
+	public List<AdminNoticeVO> getPopupList() {
+		List<AdminNoticeVO> list = aDao.getPopupList();
+		return list;
+	}
+	// 특정 팝업창 보기
+	public AdminNoticeVO getPopupById(int ano_id) {
+		AdminNoticeVO list = aDao.getPopupById(ano_id);
+		return list;
+	}
+	// 특정 팝업 수정
+	public int updatePopup(AdminNoticeVO vo) {
+		int list = 0;
+		if(vo.getPopup_images() == null) {
+			 list = aDao.updatePopup(vo);
+		}else {
+			 list = aDao.updatePopupAndImg(vo);
+		}
+		return list;
+	}
+	
+	
 
 
 }

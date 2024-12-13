@@ -195,15 +195,15 @@
 														<div class="form-group">
 															<label for="exampleInputTitle">제목</label> <input
 																type="text" class="form-control" style="width: 20rem" id="exampleInputTitle"
-																placeholder="제목을 입력하세요." name="title">
+																placeholder="제목을 입력하세요." value="${list.anoTitle}" name="title">
 														</div>
 														<div class="form-group">
 													        <label for="popupWidth">팝업 너비 (px)</label>
-													        <input type="number" class="form-control"  id="popupWidth" placeholder="너비를 입력하세요." name="popupWidth" min="100" />
+													        <input type="number" class="form-control" value="${list.popupWidth}" id="popupWidth" placeholder="너비를 입력하세요." name="popupWidth" min="100" />
 													    </div>
 													    <div class="form-group">
 													        <label for="popupHeight">팝업 높이 (px)</label>
-													        <input type="number" class="form-control" id="popupHeight" placeholder="높이를 입력하세요." name="popupHeight" min="100" />
+													        <input type="number" class="form-control" value="${list.popupHeight}" id="popupHeight" placeholder="높이를 입력하세요." name="popupHeight" min="100" />
 													    </div>
 														<div class="form-group">
 															<label for="exampleInputPassword4">게시 기간</label>
@@ -219,12 +219,13 @@
 														<div class="form-group">
 															<label>이미지 업로드</label> 
 															<div class="upload">
-																<input type="file" accept="image/*" id="image-input1" name="upload_images[0]" style="display: none" />
-																<input type="text" id="file-name" class="form-control" style="width: 20rem" disabled placeholder="Upload Image" />
-																<button class="file-upload-browse btn btn-primary" id="uploadButton" >upload</button>
-															</div>
+														    <input type="file" accept="image/*" id="image-input1" name="upload_images[0]" style="display: none" />
+														    <input type="text" id="file-name" class="form-control" style="width: 20rem; display: none" disabled placeholder="Upload Image" />
+														    <img id="image-preview" style="width: 300px; height: 300px;" src="${list.image_src}">
+														    <button class="file-upload-browse btn btn-primary" id="uploadButton">upload</button>
 														</div>
-														<button type="submit" class="btn btn-primary mr-2">제출</button>
+														</div>
+														<button type="submit" class="btn btn-primary mr-2">수정</button>
 														<button class="btn btn-light">초기화</button>
 													</form>
 												</div>
@@ -265,10 +266,13 @@
 
 
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					let start_date = "";
-					let end_date = "";
+	var modelStartDate = "${list.start_date}";
+	var modelEndDate = "${list.end_date}";
+	let ano_id = "${list.anoId}";
+	let start_date = modelStartDate;
+	let end_date = modelEndDate;
+		$(document).ready(function() {
+				$(".date-input").val(modelStartDate + (modelEndDate ? " - " + modelEndDate : ""));
 					// 오늘 날짜 설정
 					const today = new Date();
 
@@ -336,8 +340,9 @@
 					    	
 					    }
 
-					    // 이미지 업로드 유효성 검사
-					    if (fileName === "") {
+					 	// 이미지 업로드 유효성 검사
+					    const imagePreviewVisible = $('#image-preview').css('display') !== 'none'; // 이미지 미리보기 보이는지 확인
+					    if (!imagePreviewVisible && fileName === "") {
 					        alert("이미지를 업로드하세요."); // 경고 메시지
 					        isValid = false;
 					    }
@@ -357,6 +362,7 @@
 					    if (isValid) {
 					    	// FormData 객체 생성
 					        const formData = new FormData();
+					        formData.append("anoId", ano_id);
 					        formData.append("anoTitle", anoTitle);
 					        formData.append("dateInput", dateInput);
 					        formData.append("start_date", start_date);
@@ -372,14 +378,13 @@
 					        }
 					        
 					        $.ajax({
-					            url: '/store/admin/popup/create', // 서버 URL
+					            url: '/store/admin/popup/update', // 서버 URL
 					            method: 'POST',
 					            data: formData,
 					            processData: false, // jQuery가 데이터를 처리하지 않도록 설정
 					            contentType: false, // jQuery가 Content-Type을 설정하지 않도록 설정
 					            success: function(response) {
-				                    window.location.href = '/store/admin/notice'; // 예시 URL
-
+				                    window.location.href = '/store/admin/popup'; // 예시 URL
 					            },
 					            error: function(xhr, status, error) {
 					                // 오류 처리
@@ -391,8 +396,46 @@
 					});
 
 					$('#uploadButton').on('click', function() {
-			            event.preventDefault(); // 기본 동작 방지 (폼 제출 방지)
-			            $('#image-input1').click(); // 파일 입력 요소 클릭
+			            event.preventDefault(); // 기본 동작 방지 (폼 제출 방지)\
+			            // 파일 입력 요소 클릭
+			            $('#image-input1').click();
+			         	// 두 번째 input 필드의 display를 block으로 변경
+			            $('#file-name').css('display', 'block');
+			            $('#image-input1').on('change', function(e) {
+						    const file = e.target.files[0];
+						    const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
+
+						    // 파일이 선택되었는지 확인
+						    if (file) {
+						        // 파일 이름과 확장자 확인
+						        const fileName = file.name;
+						        if (!fileTypeFilter.test(fileName)) {
+						            alert("유효하지 않은 파일 형식입니다. 이미지 파일만 업로드할 수 있습니다."); // 경고 메시지
+						            $(this).val(''); // 파일 입력 초기화
+						            $('#file-name').css('display', 'none'); // 파일 이름 필드 숨김
+						            return; // 함수 종료
+						        }
+
+						        // 유효한 파일의 경우, 파일 이름을 텍스트 입력 필드에 설정
+						        $('#file-name').val(fileName); // 파일 이름을 텍스트 입력 필드에 설정
+						        $('#file-name').css('display', 'block'); // 파일 이름 필드 표시
+						    } else {
+						        // 파일이 선택되지 않은 경우, 이전 이미지를 보여줌
+						        // 이전 이미지가 있는 경우를 가정하고 처리
+						        const previousImageSrc = "${list.image_src}"; // 서버에서 이전 이미지의 경로를 가져온다고 가정
+						        if (previousImageSrc) {
+						            $('#image-preview').attr('src', previousImageSrc); // 이전 이미지 설정
+						            $('#image-preview').css('display', 'block'); // 이미지 보이기
+						        } else {
+						            // 이전 이미지가 없을 경우
+						            $('#image-preview').css('display', 'none'); // 이미지 숨김
+						        }
+						    }
+						});
+			            // 이미지 미리보기 img 태그의 display를 none으로 변경
+			            $('#image-preview').css('display', 'none');
+			            
+			           
 			        });
 					
 					
@@ -401,25 +444,7 @@
 				    });
 					
 					
-					$('#image-input1').on('change', function(e) {
-					    const file = e.target.files[0];
-					    const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
-
-					    // 파일이 선택되었는지 확인
-					    if (file) {
-					        // 파일 이름과 확장자 확인
-					        const fileName = file.name;
-					        if (!fileTypeFilter.test(fileName)) {
-					            alert("유효하지 않은 파일 형식입니다. 이미지 파일만 업로드할 수 있습니다."); // 경고 메시지
-					            $(this).val(''); // 파일 입력 초기화
-					            return; // 함수 종료
-					        }
-
-					        // 유효한 파일의 경우, 추가 작업을 여기에 수행할 수 있습니다.
-					        // 예를 들어, 파일 이름을 표시하는 등의 작업
-					        $('#file-name').val(fileName); // 파일 이름을 텍스트 입력 필드에 설정
-					    }
-					});
+					
 					
 					
 					 // 초기화 버튼 클릭 시 모든 입력 필드 초기화
