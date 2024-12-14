@@ -95,6 +95,24 @@
 
 <!-- resultMap 작성란 -->
 
+
+
+<!-- 메인페이지용 입양후기 게시물 불러오기 -->
+<select id="forMainCommunityData" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _jyp_member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = 'post01' 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc limit 3 
+</select>
+<!-- 메인페이지용 입양후기 게시물 불러오기 -->
+
+
+
+
 <!-- 전체 게시글 불러오기 -->
 <select id="getPostList" resultMap="PostResultMap" parameterType="String">
 	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
@@ -119,7 +137,7 @@
 	group by p.post_id, i.image_sequence, i.image_src 
 	order by p.post_date desc 
 </select>
-<!-- 전체 게시글 불러오기 -->
+<!-- 입양후기 게시물 불러오기 -->
 
 <!-- 반려이야기 게시물 불러오기 -->
 <select id="getPostList02" resultMap="PostResultMap">
@@ -300,7 +318,6 @@
 	   image_src = values(image_src) 
 </insert>
 <!-- 게시물 수정 -->
-
 
 
 </mapper>

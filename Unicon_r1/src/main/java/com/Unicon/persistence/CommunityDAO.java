@@ -29,6 +29,15 @@ public class CommunityDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommunityDAO.class);
 	
+	
+	// 메인페이지용 입양후기 게시물 보기
+	public List<PostVO> forMainCommunityData(){
+		logger.info(" DAO - forMainCommunityData() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"forMainCommunityData");
+	}
+	
+	
+	
 	// member_id로 기존의 post_id 값 유무 체크(불러오기)
 	public String checkPostId(String member_id) {
 		logger.info(" DAO - checkPostId() 실행 ");
