@@ -24,20 +24,43 @@
 	
 	<script type="text/javascript">
 	// 클릭 이벤트 핸들러 함수 정의
-   	function handleClick(anoId) {
-		
-		alert(anoId);
-		/* window.location.href = '/store/admin/notices/detail/' + anoId; */
-	}
-	
    	$(document).ready(function() {
    	    
    	    $('#create-notice').click(function() {
    	        window.location.href = '/store/admin/noticeForm'; // 예시 URL
    	    });
-
+   	    
+   		
    	    
    	});
+   
+   	function reject(product_id) {
+   		const comment = prompt('반려사유를 입력하세요.');
+	   	 if (comment !== null && comment.trim() !== '') {
+	         // 코멘트가 입력된 경우 처리
+	         console.log('Product ID:', product_id);
+	         console.log('코멘트:', comment);
+	
+	         // 여기서 코멘트를 서버로 전송하는 로직 추가
+	     } else {
+	         alert('반려사유를 입력하세요.'); // 입력이 비어있을 경우 경고
+	         
+	     }
+   	}
+   	function preview(product_id) {
+   		alert(product_id);
+   		window.location.href = '/store/admin/product/preview/'+product_id; // 예시 URL
+   		
+   	}
+	
+	function handleClick(product_id) {
+		if ($('#myModal'+product_id).css('display') === 'block') {
+	    	$('#myModal'+product_id).css('display', 'none'); // 이미 보이고 있으면 숨기기
+	    } else {
+			$('.myModal').css('display', 'none'); // 모든 myModal 숨기기
+	    	$('#myModal'+product_id).css('display', 'block'); // 보이지 않으면 보이게 설정
+	    }
+	}
 	</script>
 	<style type="text/css">
 	.item-button {
@@ -76,9 +99,9 @@
 	}
 	
 	.myModal {
+		display : none;
 	    position: absolute;
         border: 1px solid;
-	    
 	    top: 82%;
 	    right: 0%;
 	    background: #ffffff;
@@ -133,6 +156,7 @@
 								<th>상품명</th>
 								<th>카테고리</th>
 								<th>가격</th>
+								<th>등록일자</th>
 								<th>판매기간</th>
 								<th>브랜드,제조사,원산지</th>
 								<th>할인율</th>
@@ -213,26 +237,15 @@
 				dataType: 'json',
 				dataSrc: function(json) {
 					return json.map(function(item) {
-						const date = new Date(item.create_date);
+						const date = new Date(item.end_date);
 						const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 						const formattedDate = date.toLocaleDateString('ko-KR', options);
- 						item.create_date = formattedDate;
- 						/*  */ 
-						/* if(item.important === 1) {
-							item.anoTitle = "<button class='item-button' onclick='handleClick(" + item.anoId + ")'>"
-										    + "<span class='badge'>중요</span>"
-										    + item.anoTitle 
-										    + "</button>";
-						}else {
-							item.anoTitle = "<button class='item-button' onclick='handleClick(" + item.anoId + ")'>"
-						    + item.anoTitle 
-						    + "</button>";
-						} */
-						
-						/* item.product_id = "<button class='item-button' onclick='handleClick(" + item.product_id + ")'>"
-										+ "<span>:</span>"
-									    + "</button>"; */
-						
+ 						item.end_date = formattedDate;
+ 						// create_date 포맷팅
+ 						const createDate = new Date(item.create_date);
+ 						const formattedCreateDate = createDate.toLocaleDateString('ko-KR', options);
+ 						item.create_date = formattedCreateDate;
+						item.discount_rate = item.discount_rate+"%";
 						return item;
 					});
 				}
@@ -242,6 +255,7 @@
 	            { data: 'product_name' }, // 두 번째 열은 정렬 불가
 	            { data: 'product_category_type' }, // 두 번째 열은 정렬 불가
 	            { data: 'product_price' }, // 두 번째 열은 정렬 불가
+	            { data: 'create_date' }, // 두 번째 열은 정렬 불가
 	            { data: 'end_date' }, // 두 번째 열은 정렬 불가
 	            { data: 'brand' }, // brand |manufacturer |product_origin 합쳐서
 	            { data: 'discount_rate' }, // 두 번째 열은 정렬 불가
@@ -251,7 +265,9 @@
 	                render: function(data, type, row) {
 	                    return "<button class='item-button' onclick='handleClick(\"" + row.product_id + "\")'>" +
 	                    "<span>:</span>" +
-	                    "</button><div class='myModal'><div class='preview'>미리보기</div><div class='dropdown-divider'></div><div class='reject'>반려</div></div>";
+	                    "</button><div id='myModal"+row.product_id +"' class='myModal'>"+
+	                    "<div class='preview' onclick='preview(\""+row.product_id +"\")'>미리보기</div>"
+	                    +"<div class='dropdown-divider'></div><div class='reject' onclick='reject(\"" + row.product_id + "\")'>반려</div></div>";
 	                }
 	            }
 	        ],

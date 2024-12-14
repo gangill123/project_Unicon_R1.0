@@ -20,8 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.Unicon.domain.AdminNoticeVO;
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.OptionVO;
+import com.Unicon.domain.ShopVO;
 import com.Unicon.service.AdminStoreService;
 import com.Unicon.service.CategoryDataService;
+import com.Unicon.service.ShopService;
 
 @Controller
 @RequestMapping(value = "/store/*")
@@ -35,6 +38,9 @@ public class StoreController {
 	
 	@Inject
 	private AdminStoreService aService;
+	
+	@Inject 
+	private ShopService sService;
 	
 	// 쇼핑몰 메인 페이지
 	@RequestMapping( value = "/main" , method=RequestMethod.GET)
@@ -57,8 +63,6 @@ public class StoreController {
 	@RequestMapping( value="/products/list" , method =RequestMethod.GET )
 	public void productsList() {
 		logger.info("products/list 실행");
-		
-		// 등록된 상품 List 가져가야됨.
 	}
 	
 	
@@ -127,10 +131,32 @@ public class StoreController {
 	@RequestMapping(value ="/admin/product/newList" , method = RequestMethod.GET )
 	public void newProductList() {
 		logger.info("newProductList 실행");
-		
-		/* aService.getNewProducts(); */
-		
 	}
+	
+	
+	// 승인 해야되는 새로 등록된 상품 미리보기
+	@RequestMapping(value ="/admin/product/preview/{product_id}" , method = RequestMethod.GET )
+	public String previewProduct(@PathVariable("product_id") String product_id,Model model) {
+		logger.info("previewProduct 실행");
+		logger.debug("product_id : {}",product_id);
+		
+		// 상품정보 + 이미지정보
+		ShopVO productInfo = sService.getProduct(product_id);
+		model.addAttribute("productInfo", productInfo);
+		
+		// 옵션정보 가져오기(조합형 - 가격제외)
+		List<OptionVO> optionInfo = sService.getOption1(product_id);
+		model.addAttribute("optionInfo", optionInfo);
+		
+		// 옵션정보 가져오기(단독형 - 가격포함)
+		List<OptionVO> optionInfoForSole = sService.getOption1ForSole(product_id);
+		model.addAttribute("optionInfoForSole", optionInfoForSole);
+		
+		
+		return "/store/admin/product/preview";
+	}
+	
+	
 	
 	
 	// 어드민 공지사항.
