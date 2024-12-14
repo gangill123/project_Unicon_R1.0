@@ -167,9 +167,16 @@ public class AdptService {
 	}
 	
 	
+	/*=========== 사용자 페이지 입양하기 ===========*/
+	public List<AnimalVO> getAdptFilterView(String adptFilter) {
+		logger.debug("( •̀ ω •́ )✧ getAdptFilterView() 실행");
+		
+		return aDao.getAdptFilterView(adptFilter);
+	}
 	
 	
-	/*========================= 메서드 =========================*/
+	
+/*========================= 메서드 =========================*/
 		
 		/*=============== 동물id 생성 ===============*/
 		public String genAnimalId() {
@@ -516,6 +523,6 @@ public class AdptService {
 		}
 		/*=============== 자동이름짓기 ===============*/
 		
-	/*========================= 메서드 =========================*/
+/*========================= 메서드 =========================*/
 
 }

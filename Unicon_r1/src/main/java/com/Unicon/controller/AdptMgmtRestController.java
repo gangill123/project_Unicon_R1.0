@@ -31,13 +31,13 @@ import com.Unicon.service.AdptService;
 
 @RestController
 @RequestMapping("/adptmgmt/**")
-public class AdptRestController {
+public class AdptMgmtRestController {
 	
 	@Inject
 	private AdptService aService;
 	@Inject
 	private AdptDAO aDao;
-	private static final Logger logger = LoggerFactory.getLogger(AdptRestController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AdptMgmtRestController.class);
 	
 	
 	/* ===== 보호소페이지 동물 등록 ===== */
