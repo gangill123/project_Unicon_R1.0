@@ -963,13 +963,13 @@
 		
 						data.forEach(function(item) {
 							if(item.category_code == 1000) {
-								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;｡:˚ ૮ ˶ ˆ ᴥ ˆ ˶ ა ˚ :｡</option>");
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +"</option>");
 							}
 							if(item.category_code == 2000) {
-								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;/ᐠ - ˕ -マ Ⳋ</option>");
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +"</option>");
 							}
 							if(item.category_code == 3000) {
-								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +" &nbsp;ପ૮{˶• ༝ •˶}აଓ</option>");
+								$('#petType').append("<option value='" + item.category_code + "'>" + item.category_type +"</option>");
 							}
 						});
 					},
