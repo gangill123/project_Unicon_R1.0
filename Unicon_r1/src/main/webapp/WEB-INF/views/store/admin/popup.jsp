@@ -25,9 +25,14 @@
 	<script type="text/javascript">
 	// 클릭 이벤트 핸들러 함수 정의
    	function handleClick(anoId) {
-		$('.myModal').css('display', 'none');
-		// jQuery를 사용하여 myModal 요소 선택 (anoId를 이용하여 고유하게 선택)
-    	$('#myModal' + anoId).css('display', 'block'); // display를 block으로 설정
+		
+   		if ($('#myModal'+anoId).css('display') === 'block') {
+	    	$('#myModal'+anoId).css('display', 'none'); // 이미 보이고 있으면 숨기기
+	    } else {
+			$('.myModal').css('display', 'none'); // 모든 myModal 숨기기
+	    	$('#myModal'+anoId).css('display', 'block'); // 보이지 않으면 보이게 설정
+	    }
+   		
 	}
    	 function updatePopup(anoId) {
    	 	window.location.href = '/store/admin/popup/'+anoId; // 예시 URL
