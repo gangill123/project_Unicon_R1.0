@@ -145,6 +145,7 @@
 </insert>
 
 
+
 <select id="checkAnimalId" parameterType="String" resultType="Integer">
 	select count(animal_id) 
 	from _animal 
@@ -155,6 +156,7 @@
 	from _animal 
 	where animal_id = #{animal_id} and animal_status != 6 and member_id = #{member_id} limit 1 
 </select>
+
 
 
 <select id="getAnimalListAllMember" resultMap="AnimalResultMap" parameterType="String">
@@ -180,6 +182,7 @@
        join _common ac on a.animal_status = ac.common_code 
     where ac.common_column = 'animal_status' and a.animal_status != 6 
 </select>
+
 
 
 <select id="getAnimalListOne" resultMap="AnimalResultMap" parameterType="String">
@@ -257,10 +260,14 @@
 	  vaccine_check = values(vaccine_check) 
 </update>
 
-
 <update id="modifyAnimalStatus" parameterType="Map">
 	update _animal 
 	set animal_status = #{animal_status}, animal_reason = #{animal_reason} 
+	where animal_id = #{animal_id} 
+</update>
+<update id="animalStatusEnd" parameterType="Map">
+	update _adpt 
+	set adpt_status = #{adpt_status} 
 	where animal_id = #{animal_id} 
 </update>
 
@@ -284,6 +291,7 @@
 	set animal_status = #{animal_status} 
 	where animal_id = #{animal_id} 
 </update>
+
 
 
 <select id="getWritingListAllMember" resultMap="AnimalResultMap" parameterType="String">
@@ -369,6 +377,30 @@
          join _adpt ad on a.animal_id = ad.animal_id 
     where a.animal_status != 6 and ad.adpt_status = 2 
      order by ad.adpt_regdate desc 
+</select>
+
+
+
+<!-- 사용자 페이지 입양하기 -->
+<select id="getAdptFilterView" resultMap="AnimalResultMap" parameterType="String">
+	select a.*, c.*, i.*, h.*, v.*, ad.* 
+    from _animal a 
+     join _category_data c on a.category_code = c.category_code 
+      join _image i on a.animal_id = i.image_id 
+       join _animal_health h on a.animal_id = h.animal_id 
+        join _animal_vaccine v on a.animal_id = v.animal_id 
+         join _adpt ad on a.animal_id = ad.animal_id 
+    where a.animal_status != 6 and ad.adpt_status = 2 
+    <if test="adptFilter == 'dog'"> 
+     and floor(a.category_code/1000) = 1 
+    </if> 
+    <if test="adptFilter == 'cat'"> 
+     and floor(a.category_code/2000) = 1 
+    </if> 
+    <if test="adptFilter == 'etc'"> 
+     and floor(a.category_code/3000) = 1 
+    </if> 
+    order by ad.adpt_regdate desc 
 </select>
 
 

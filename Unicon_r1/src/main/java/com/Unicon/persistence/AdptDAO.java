@@ -125,6 +125,10 @@ public class AdptDAO {
 		logger.debug("( •̀ ω •́ )✧ modifyAnimalStatus(Map<String, Object> statusData) 실행");
 		
 		sqlSession.update(NAMESPACE+"modifyAnimalStatus", statusData);
+		if((int)statusData.get("animal_status") == 5) {
+			statusData.put("adpt_status", 4);
+			sqlSession.update(NAMESPACE+"animalStatusEnd", statusData);
+		}
 	}
 	
 	
@@ -199,6 +203,12 @@ public class AdptDAO {
 	}
 	
 	
-	
+	/*=========== 사용자 페이지 입양하기 ===========*/
+	public List<AnimalVO> getAdptFilterView(String adptFilter) {
+		logger.debug("( •̀ ω •́ )✧ getAdptFilterView() 실행");
+		Map<String, String> filterParams = new HashMap<String, String>();
+		filterParams.put("adptFilter", adptFilter);
+		return sqlSession.selectList(NAMESPACE+"getAdptFilterView", filterParams);
+	}
 	
 }
