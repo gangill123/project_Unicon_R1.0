@@ -528,7 +528,7 @@
 													<div class="col-12 col-xl-5 col-lg-8 col-md-6">
 														<label class="text-dark custom-label">기타사항</label>
 														<textarea rows="8" wrap="soft" id="adpt_etc" name="adpt_etc" class="form-control custom-text" 
-															placeholder="최대 200자" maxlength="200" required></textarea>
+															placeholder="최대 200자" maxlength="200"></textarea>
 													</div>
 												</div>
 												<div class="border-bottom my-5 custom-borderbm"></div>

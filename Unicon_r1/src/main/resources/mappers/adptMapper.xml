@@ -367,7 +367,7 @@
        join _animal_health h on a.animal_id = h.animal_id 
         join _animal_vaccine v on a.animal_id = v.animal_id 
          join _adpt ad on a.animal_id = ad.animal_id 
-    where a.animal_status != 6 
+    where a.animal_status != 6 and ad.adpt_status = 2 
      order by ad.adpt_regdate desc 
 </select>
 
