@@ -76,6 +76,8 @@ z-index: 2000;
 		   </select>
 
        </div>
+       
+<%--        ${postList } --%>
 
        <!-- start portfolio gallery -->
        <div class="text-center row communityType">
