@@ -207,6 +207,7 @@
 
 <script>
 $(document).ready(function () {
+	$('.navbar #slide').addClass('current');
 	
 	let resion = $('#resionSelector').val();
 	let filter = $('#filterSelector').val();

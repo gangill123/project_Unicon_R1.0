@@ -116,7 +116,6 @@
 									        	</c:otherwise>
 									        </c:choose>
 		                          		</div>
-		                          		<button type="button" class="btn btn-outline-secondary me-2" style="min-width: 150px;">문의하기</button>
 	                          		</div>
 							    </div>
 							    <c:forEach var="ordersDetailOption" items="${orderDetailInfo.ordersDetails[0].ordersDetailOptions }">
@@ -145,7 +144,7 @@
 	                              	  <p class="mb-0 ps-2" style="color: #aaa; display: inline;">
 	                                  ${ordersDetailOption.quantity }개</p>
 	                                  <div style="display:flex; justify-content: flex-end; align-items: end;">
-		                                  <button type="button" class="btn btn-outline-secondary me-2" data-id="${orderDetailInfo.ordersDetails[0].shopVO.product_id }"
+		                                  <button type="button" class="inquiryBtn btn btn-outline-secondary me-2" data-id="${ordersDetailOption.order_detail_option_id }"
 		                                  style="min-width: 150px;">문의하기</button>
 	                                  	  <c:if test="${ordersDetailOption.orders_detail_option_status == '구매확정' }">
 	                                  	  	<c:if test="${ordersDetailOption.review_check == 0 }">
@@ -248,9 +247,12 @@
                           	</div>
                           </div>
                         </div>
+                        <div class="row" style="justify-content: center;">
+		                    <div class="col-lg-4 order-1 order-lg-2 mt-5">
+		                        <button class="butn w-100" onclick="location.href='/mypage/orders';"><span>이전으로</span></button>
+							</div>
+                        </div>
                     </div>
-                    
-                    <!-- end right side section -->
 
                 </div>
             </div>
@@ -260,8 +262,20 @@
 		<!-- 리뷰 모달 -->
         <div class="modal fade reviewModal" tabindex="-1" aria-labelledby="gridSystemModalLabel" style="display: none;" aria-hidden="true">
             <div class="modal-dialog" role="document" style="min-width: 650px;">
+            	<form id="reviewCreateForm" action="/mypage/reviewCreate" method="post">
                 <div id="reviewModalContent" class="modal-content">
                 </div>
+                </form>
+            </div>
+        </div>
+        
+		<!-- 문의 모달 -->
+        <div class="modal fade inquiryModal" tabindex="-1" aria-labelledby="gridSystemModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="min-width: 650px;">
+            	<form id="inquiryCreateForm" action="/mypage/inquiryCreate" method="post">
+                <div id="inquiryModalContent" class="modal-content">
+                </div>
+                </form>
             </div>
         </div>
 	
@@ -284,7 +298,34 @@ $(document).ready(function () {
 	$('.reviewBtn').on('click', function(){
 		let order_detail_option_id = $(this).data('id');
 		reviewModal(order_detail_option_id);
-		
+	});
+	
+	// 리뷰 submit 시 알람 및 submit
+	$('#reviewCreateForm').on('submit',function(e){
+		e.preventDefault();
+		reviewAlert();
+	});
+	
+	
+	// 취소신청 클릭 시 알람창
+	$('.cancelBtn').on('click', function(){
+		let order_detail_option_id = $(this).data('id');
+		let order_detail_id = '${orderDetailInfo.ordersDetails[0].order_detail_id }';
+		cancelAlert(order_detail_id, order_detail_option_id);
+	});
+	
+	
+	// 문의하기 클릭 시 모달열기
+	$('.inquiryBtn').on('click', function(){
+		let order_detail_option_id = $(this).data('id');
+		//console.log(order_detail_option_id);
+		inquiryModal(order_detail_option_id);
+	});
+	
+	// 리뷰 submit 시 알람 및 submit
+	$('#inquiryCreateForm').on('submit',function(e){
+		e.preventDefault();
+		inquiryAlert();
 	});
 	
 	

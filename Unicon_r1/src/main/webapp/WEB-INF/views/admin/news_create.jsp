@@ -293,6 +293,8 @@
 
 <script>
 $(document).ready(function () {
+	$('.navbar #slide').addClass('current');
+	
     // 파일 선택 이벤트 처리
     $('.custom-file-input').on('change', function (event) {
         // 선택된 파일 이름 가져오기

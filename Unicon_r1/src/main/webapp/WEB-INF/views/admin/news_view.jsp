@@ -303,6 +303,7 @@
 
 <script>
 $(document).ready(function () {
+	$('.navbar #slide').addClass('current');
 	
 	// 페이지 로드 시 지역정보 입력
 	$('#news_resion').val('${newsInfo.news_resion}');

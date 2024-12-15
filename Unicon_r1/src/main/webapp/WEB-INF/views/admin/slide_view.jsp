@@ -326,7 +326,7 @@
 
 <script>
 $(document).ready(function () {
-	
+	$('.navbar #slide').addClass('current');
 	
 	console.log($('#silde_bg').data('src'));
 	

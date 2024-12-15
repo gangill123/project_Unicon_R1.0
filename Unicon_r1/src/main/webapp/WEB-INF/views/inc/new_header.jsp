@@ -49,7 +49,7 @@
 
                                     <!-- menu area -->
                                     <ul class="navbar-nav ms-5" id="nav" style="display: none;">
-                                        <li><a href="/main">홈</a>
+                                        <li id="home"><a href="/main">홈</a>
                                         </li>
                                         <li><a href="#!">Pages</a>
                                             <ul>
@@ -233,15 +233,14 @@
                                             </ul>
                                            </li>
                                         
-                                        <li><a href="/admin/slide_manage">관리자페이지</a>
+                                        <li id="slide"><a href="/admin/slide_manage">관리자페이지</a>
                                         </li>
                                         
-                                        <li><a href="/shop">복지몰</a>
+                                        <li id="shop"><a href="/shop">복지몰</a>
                                         </li>
                                         
                                     </ul>
                                     <!-- end menu area -->
-
 
 									
 									<c:choose>

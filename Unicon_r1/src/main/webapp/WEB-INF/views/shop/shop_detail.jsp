@@ -61,37 +61,17 @@
 
 <!--====================================작성부=====================================-->
 <!-- 아래는 예시 -->
-<!-- PAGE TITLE
-        ================================================== -->
 <%--         ${productInfo} --%>
-<%--         ${reviewInfo } --%>
+<%-- ${reviewInfo } --%>
        <%--  ${optionInfo}
         ${optionInfoForSole} --%>
         
-        <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-md-7">
-                        <h1>Shop Product Details</h1>
-                    </div>
-                    <div class="col-md-5">
-                        <ul class="text-md-end mt-3 mt-md-0 ps-0">
-                            <li><a href="home-1.html">Home</a></li>
-                            <li><a href="#!">Shop Product Details</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </section>
 
         <!-- PRODUCT DETAILS
         ================================================== -->
-        <section>
+        <section style="padding: 70px 0;">
             <div class="container">
 				<div class="row" style="justify-content: center;">
-				<div class="col-lg-11">
                 <!-- Start Product Section -->
                 <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9">
                     <div class="col-lg-6 text-center mb-1-9 mb-lg-0">
@@ -249,24 +229,12 @@
                     <div class="col-12">
                         <div class="horizontaltab tab-style2">
                             <ul class="resp-tabs-list hor_1 text-start">
-                                <li>상품정보</li>
-                                <li>문의</li>
-                                <li>리뷰(${reviewInfo.size() })</li>
+                                <li style="width: 150px; text-align: center;">상품정보</li>
+                                <li style="width: 150px; text-align: center;">리뷰(${reviewInfo.size() })</li>
                             </ul>
                             <div class="resp-tabs-container hor_1">
 
                                 <div>${productInfo.product_content }</div>
-
-                                <div>
-                                    <div class="row">
-                                        <div class="col-lg-6 mb-1-9 mb-lg-0">
-                                        </div>
-                                        <div class="col-lg-6 ps-lg-1-9">
-                                        </div>
-                                    </div>
-                                </div>
-
-
 
                                 <div>
                                     <div class="row">
@@ -275,7 +243,7 @@
                                             
                                             <c:forEach var="review" items="${reviewInfo }">
                                                 <div class="mb-1-9 pb-1-9 border-bottom">
-                                                    <div class="media mb-3 product-review">
+                                                    <div class="media mb-1 product-review">
                                                         <img class="rounded-circle w-50px" src="${review.memberVO.member_image }" alt="...">
                                                         <div class="media-body ms-3">
                                                             <a href="#!" class="mb-1 font-weight-600 text-extra-dark-gray">${review.memberVO.member_name }</a>
@@ -290,17 +258,17 @@
                                                         </c:forEach>
                                                         </span>
                                                     </div>
+                                                    <p class="mb-1" style="color: #aaa;">선택 : ${review.odoVO.product_option }</p>
                                                     <p class="mb-0">${review.review_content }</p>
                                                 </div>
                                             </c:forEach>
-                                            
-                                            
-
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
+                                
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -311,25 +279,10 @@
                 
                 
                 <!-- End Product Section -->
-				</div>
 			</div>
             </div>
         </section>
 
-        <!-- CLIENTS
-        ================================================== -->
-        <div class="section-clients bg-light-gray">
-            <div class="container">
-                <div class="owl-carousel owl-theme clients" id="clients">
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-01.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-02.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-03.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-04.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-05.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-06.png"></div>
-                </div>
-            </div>
-        </div>
 
 <!--====================================작성부=====================================-->
 
@@ -337,6 +290,7 @@
 
 <script>
 	$(document).ready(function () {
+		$('.navbar #shop').addClass('current');
 		
 		// 옵션 선택 시 옵션값 담는 배열 선언
 		let optionArray = [];
@@ -466,7 +420,7 @@
 	  			  title: '장바구니에 담았습니다.',
 	  			  text: "장바구니 페이지로 이동합니다.",
 	  			  icon: 'success',
-	  			  confirmButtonColor: '#3085d6',
+	  			  confirmButtonColor: '#86bc42',
 	  			  customClass: {
 	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 	  			  }

@@ -430,7 +430,7 @@
 		let allData = []; // 전체 데이터를 저장
 		let currentPage = 1; // 현재 페이지
 		let totalItems;
-		const itemsPerPage = 4; // 페이지당 카드 개수
+		const itemsPerPage = 8; // 페이지당 카드 개수
 		const maxVisiblePages = 5;
 		let startPage = Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
 		
@@ -1675,7 +1675,7 @@
 		let allData = []; // 전체 데이터를 저장
 		//let currentPage = 1; // 현재 페이지
 		let totalItems;
-		const itemsPerPage = 4; // 페이지당 카드 개수
+		const itemsPerPage = 8; // 페이지당 카드 개수
 		const maxVisiblePages = 5;
 		let startPage = Math.floor((currentPage - 1) / maxVisiblePages) * maxVisiblePages + 1;
 		
@@ -1951,7 +1951,7 @@
                          <div class="line-title" style="margin-bottom: 20px;">
                              <h4 class="mb-0">리뷰 작성</h4>
                              <p class="mb-0">솔직하고 자세한 리뷰 부탁드립니다.</p>
-                         </div>
+                         </div>	
                          
                          <div class="row">
                               <div class="col-sm-2" style="margin-bottom: 20px;">
@@ -1966,12 +1966,11 @@
                               </div>
                          </div>
                          
-                         <form id="reviewCreateForm" action="/mypage/reviewCreate" method="post">
                              <div class="row">
                                  <div class="col-sm-12">
                                      <div class="form-group">
                                          <select class="form-control form-select" name="review_rate">
-                                             <option selected="Ratings">평점</option>
+                                             <option selected disabled>평점</option>
                                              <option value="5">5 점</option>
                                              <option value="4">4 점</option>
                                              <option value="3">3 점</option>
@@ -1993,9 +1992,6 @@
 							 <input type="hidden" name="order_detail_option_id" 
 							 value="${response.ordersDetailOptions[0].order_detail_option_id}">
                              <button type="submit" class="butn primary w-100"><span>완료</span></button>
-
-                         </form>
-
                      </div>
                      `
 					reviewModalContent.append(reviewModalContentBody);
@@ -2008,8 +2004,200 @@
 		});
 	}//reviewModal()
 	
+	// 리뷰 등록 시 알람창
+	function reviewAlert(){
+		Swal.fire({
+			  title: '리뷰를 등록하시겠습니까?',
+			  text: "등록 전 다시 한번 확인하시기 바랍니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#86bc42',
+			  cancelButtonColor: '#aaa',
+			  confirmButtonText: '등록',
+			  cancelButtonText: '취소',
+			  customClass: {
+			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			  }
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire({
+	  	  			  title: '등록을 완료하였습니다!',
+	  	  			  icon: 'success',
+	  	  			  confirmButtonColor: '#86bc42',
+	  	  			  customClass: {
+	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+	 			 	  }
+	  				}).then(function(){
+	  					$('#reviewCreateForm').off('submit').submit();
+	  				});
+				}
+			});
+	}
+	
+	// 취소신청 클릭 시 알람창
+	function cancelAlert(order_detail_id, order_detail_option_id){
+		Swal.fire({
+			  title: '정말 취소하시겠습니까?',
+			  text: "취소할 상품과 옵션을 확인하시기 바랍니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#86bc42',
+			  cancelButtonColor: '#aaa',
+			  confirmButtonText: '취소',
+			  cancelButtonText: '닫기',
+			  customClass: {
+			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			  }
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						url: '/mypage/ordersCancel/'+order_detail_option_id,
+						type: 'POST',
+						success: function(){
+							//alert("ok");
+							Swal.fire({
+			  	  			  title: '취소를 완료하였습니다!',
+			  	  			  icon: 'success',
+			  	  			  confirmButtonColor: '#86bc42',
+			  	  			  customClass: {
+			  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			 			 	  }
+			  				}).then(function(){
+			  					window.location.href = "/mypage/orders_detail/"+order_detail_id; // 이동할 URL
+			  				});
+						},
+						error: function(){
+							alert("no");
+						}
+					});
+	  				
+				}
+			});
+	}
 	
 	
+	
+	//  마이페이지 문의작성 시 모달 로직
+	function inquiryModal(order_detail_option_id){
+		$.ajax({
+			url:'/mypage/ordersDetailForReview/'+order_detail_option_id,
+			type: 'GET',
+			success: function(response){
+				console.log(response);
+				
+				let inquiryModalContent = $('#inquiryModalContent');
+				inquiryModalContent.empty();
+				
+				let inquiryModalContentBody = `
+				<div class="common-block" style="padding: 20px;">
+                         <div class="line-title" style="margin-bottom: 20px;">
+                             <h4 class="mb-0">문의하기</h4>
+                             <p class="mb-0">문의 사항을 상세하게 작성 부탁드립니다.</p>
+                         </div>	
+                         
+                         <div class="row">
+                              <div class="col-sm-2" style="margin-bottom: 20px;">
+                              	<div class="orderImage">
+                                  <img class="rounded" src="${response.shopVO.product_images[0].image_src}" alt="...">
+                              	</div>
+                              </div>
+                              <div class="col-sm-10" >
+                                  <p class="mb-0 display-30" style="color: #aaa;">${response.shopVO.memberVO.member_name}</p>
+                                  <p class="mb-0 font-weight-600">${response.shopVO.product_name}</p>
+                                  <p class="mb-0" style="color: #aaa;">${response.ordersDetailOptions[0].product_option}</p>
+                              </div>
+                         </div>
+                         
+                             <div class="row">
+                                 <div class="col-sm-12">
+                                     <div class="form-group">
+                                         <select class="form-control form-select" name="inquiry_type">
+                                             <option selected disabled>문의유형</option>
+                                             <option value="상품">상품</option>
+                                             <option value="배송">배송</option>
+                                             <option value="교환">교환</option>
+                                             <option value="환불">환불</option>
+                                             <option value="기타">기타</option>
+                                         </select>
+                                     </div>
+                                 </div>
+
+                                 <div class="col-sm-12">
+                                     <div class="form-group">
+                                         <textarea id="message" class="form-control" name="inquiry_content" rows="4" 
+                                         ></textarea>
+                                     </div>
+                                 </div>
+                             </div>
+							 <input type="hidden" name="product_id" value="${response.shopVO.product_id }">
+							 <input type="hidden" name="order_detail_id" value="${response.order_detail_id }">
+							 <input type="hidden" name="order_detail_option_id" 
+							 value="${response.ordersDetailOptions[0].order_detail_option_id}">
+                             <button type="submit" class="butn primary w-100"><span>문의 등록</span></button>
+                     </div>
+                     `
+					inquiryModalContent.append(inquiryModalContentBody);
+					$('.inquiryModal').modal('show');
+				
+			},
+			error: function(){
+				alert("no");
+			}
+		});
+	}//reviewModal()
+	
+	
+	// 문의하기 등록 시 알람창
+	function inquiryAlert(){
+		Swal.fire({
+			  title: '문의를 등록하시겠습니까?',
+			  text: "문의유형과 문의내용을 확인하시기 바랍니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#86bc42',
+			  cancelButtonColor: '#aaa',
+			  confirmButtonText: '등록',
+			  cancelButtonText: '취소',
+			  customClass: {
+			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			  }
+			}).then((result) => {
+				if (result.isConfirmed) {
+					Swal.fire({
+	  	  			  title: '등록을 완료하였습니다!',
+	  	  			  icon: 'success',
+	  	  			  confirmButtonColor: '#86bc42',
+	  	  			  customClass: {
+	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+	 			 	  }
+	  				}).then(function(){
+	  					$('#inquiryCreateForm').off('submit').submit();
+	  				});
+				}
+			});
+	}
+	
+	
+	// 주문확인페이지에서 문의하기 클릭 시 마이페이지 주문상세로 이동
+	function inquiryCheck(order_detail_id){
+		Swal.fire({
+			  title: '마이페이지로 이동합니다.',
+			  text: "마이페이지 주문상세에서 문의 가능합니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#86bc42',
+			  cancelButtonColor: '#aaa',
+			  confirmButtonText: '이동',
+			  cancelButtonText: '취소',
+			  customClass: {
+			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+			  }
+			}).then((result) => {
+				if (result.isConfirmed) {
+					window.location.href = "/mypage/orders_detail/"+order_detail_id; // 이동할 URL
+				}
+			});
+	}
 	
 	
 	

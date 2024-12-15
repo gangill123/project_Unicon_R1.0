@@ -28,6 +28,20 @@
     object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
 }
 
+.portfolio-style1{
+ 	width: 100%;
+    aspect-ratio: 1 / 1; /* 원하는 가로:세로 비율 설정 */
+    overflow: hidden;    /* 이미지가 컨테이너를 벗어나지 않도록 */
+}
+
+.portfolio-style1 img{
+ 	width: 100%;
+    height: 100%;
+    object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+}
+
+
+
 .about2-text{
     width: 100%;
     aspect-ratio: 3.3 / 4; /* 원하는 가로:세로 비율 설정 */
@@ -72,11 +86,23 @@
 
 }
 
-@media (min-width: 1400px){ .container {max-width: 1250px;} }
-
 .section-heading span{
 	font-size: 18px;
 }
+
+.item{
+    width: 100%;
+    aspect-ratio: 276 / 60; /* 원하는 가로:세로 비율 설정 */
+    overflow: fill;    /* 이미지가 컨테이너를 벗어나지 않도록 */	
+}
+
+.item img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
+    border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
+}
+
 
 
 </style>
@@ -313,7 +339,7 @@
 		<div class="section-clients bg-light-gray" style="margin-top: 60px;">
             <div class="container">
                 <div class="owl-carousel owl-theme clients owl-loaded owl-drag" id="clients">
-                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1926px, 0px, 0px); transition: 0.9s; width: 4404px;"><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-02.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-03.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-04.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-05.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-06.png"></div></div><div class="owl-item" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-01.png"></div></div><div class="owl-item" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-02.png"></div></div><div class="owl-item active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-03.png"></div></div><div class="owl-item active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-04.png"></div></div><div class="owl-item active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-05.png"></div></div><div class="owl-item active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-06.png"></div></div><div class="owl-item cloned active" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-01.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-02.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-03.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-04.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-05.png"></div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div><div class="owl-thumbs"></div></div>
+                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1926px, 0px, 0px); transition: 0.9s; width: 4404px;"><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners1.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners2.png"></div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div><div class="owl-thumbs"></div></div>
             </div>
         </div>
 		
@@ -322,7 +348,11 @@
 <!--====================================작성부=====================================-->
 
 <!--====================================script 작성부=====================================-->
-
+<script>
+$(document).ready(function () {
+	$('.navbar #home').addClass('current');
+});
+</script>
 
 
 

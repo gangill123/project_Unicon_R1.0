@@ -70,7 +70,7 @@
             <div class="container">
                 <div class="row" style="justify-content: center;">
                     <!-- start right side section -->
-                    <div class="col-lg-10 order-1 order-lg-2 mb-1-9 mb-lg-0">
+                    <div class="col-lg-11 order-1 order-lg-2 mb-1-9 mb-lg-0">
                         <div class="services-single-right">
 	                        <div style="margin-bottom: 60px;">
 		                        <h4 class="mb-1">주문확인</h4>
@@ -120,7 +120,8 @@
 		                              <p class="mb-0 ps-2" style="color: #aaa; display: inline;">
 			                              	${ordersDetailOption.quantity }개</p>
 	                                  <div style="display:flex; justify-content: flex-end; align-items: end;">
-		                                  <button type="button" class="btn btn-outline-secondary me-2" style="min-width: 150px;">문의하기</button>
+		                                  <button type="button" class="inquiryCheckBtn btn btn-outline-secondary me-2" 
+		                                  data-id="${ordersDetail.order_detail_id }" style="min-width: 150px;">문의하기</button>
 	                                  </div>
 	                              </div>
 	                              
@@ -216,14 +217,10 @@
                     </div>
                     <div class="col-lg-4 order-1 order-lg-2 mt-5">
                         <button class="butn primary w-100" onclick="location.href='/shop';"><span>복지몰로 이동하기</span></button>
-                    <!-- end right side section -->
 					</div>
                 </div>
             </div>
         </section>
-	
-	
-	
 	
 	
 
@@ -232,6 +229,12 @@
 <script>
 $(document).ready(function () {
 	
+	// 문의하기 클릭 시 마이페이지 주문상세로 이동 시키기
+	$('.inquiryCheckBtn').on('click', function(){
+		let order_detail_id = $(this).data('id');
+		//console.log(order_detail_id);
+		inquiryCheck(order_detail_id);
+	});
 	
 	
 });//readay

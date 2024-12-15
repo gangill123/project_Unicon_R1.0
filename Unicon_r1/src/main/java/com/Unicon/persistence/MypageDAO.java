@@ -82,8 +82,5 @@ public class MypageDAO {
 		return sqlSession.selectOne(NAMESPACE+".getMemberInfo", member_id);
 	}
 		
-		
-		
-		
 	
 }

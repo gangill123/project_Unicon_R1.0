@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -80,7 +82,7 @@ public class ShopService {
 	
 	// 상세페이지에서 선택한 상품정보 cart, cart_detail 저장하기
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
-	public void saveCart(CartVO vo) {
+	public void saveCart(CartVO vo, HttpSession session) {
 		
 		// 1. 장바구니에 이미 저장된 product_id가 있는지 확인 -> cart_id 가져옴
 		if(sdao.getCartidToCheck(vo) != 0) {
@@ -91,7 +93,6 @@ public class ShopService {
 			}
 			
 			sdao.updateCart(vo);
-			
 			
 		} else {
 			//최신 카트번호 가져오기
@@ -110,6 +111,9 @@ public class ShopService {
 			
 			// cart 및 cart_detail 테이블에 저장
 			sdao.saveCart(vo);
+			
+			int cartCount = (int)session.getAttribute("cartCount");
+			session.setAttribute("cartCount", cartCount + 1);
 		}
 		
 	}
@@ -192,11 +196,14 @@ public class ShopService {
 		return sdao.getReview(product_id);
 	}
 	
-	
 	// 세일품목 정보 가져오기(4개)
 	public List<ShopVO> getShopItemForMain(){
 		return sdao.getShopItemForMain();
 	}
+	
+	
+	
+	
 	
 	
 	
