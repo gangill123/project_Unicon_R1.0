@@ -204,11 +204,10 @@ public class AdptDAO {
 	
 	
 	/*=========== 사용자 페이지 입양하기 ===========*/
-	public List<AnimalVO> getAdptFilterView(String adptFilter) {
+	public List<AnimalVO> getAdptFilterView(Map<String, Object> adptFilters) {
 		logger.debug("( •̀ ω •́ )✧ getAdptFilterView() 실행");
-		Map<String, String> filterParams = new HashMap<String, String>();
-		filterParams.put("adptFilter", adptFilter);
-		return sqlSession.selectList(NAMESPACE+"getAdptFilterView", filterParams);
+		
+		return sqlSession.selectList(NAMESPACE+"getAdptFilterView", adptFilters);
 	}
 	
 }
