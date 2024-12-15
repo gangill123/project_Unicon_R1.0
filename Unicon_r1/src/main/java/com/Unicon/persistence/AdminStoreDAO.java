@@ -23,10 +23,23 @@ public class AdminStoreDAO {
 
 	private static final String NAMESPACE = "com.Unicon.mapper.adminStoreMapper.";
 
+	// 새로 등록된 상품 갯수
+	public int getNewProductCount() {
+		Integer  getNewProductCount = sqlSession.selectOne(NAMESPACE + "getNewProductCount");
+		
+		// null 체크 후 기본값 반환
+	    return (getNewProductCount != null) ? getNewProductCount : 0;
+	}
+	
+	// 등록된 상품 갯수
+	public int getProductCount() {
+		int getProductCount = sqlSession.selectOne(NAMESPACE + "getProductCount");
+		return getProductCount;
+	}
+	
 	// 복지몰 메인 슬라이드 이미지 받아오기, 어드민 슬라이드 이미지 받아오기
 	public List<ImageVO> getAdminStoreImg() {
 		logger.debug("( •̀ ω •́ )✧ getAdminStoreImg() 실행");
-		
 		// 복지몰 슬라이드 이미지 받아오기.
 		List<ImageVO> list	= sqlSession.selectList(NAMESPACE + "selectStoreMainImg");
 		return list;
@@ -38,13 +51,32 @@ public class AdminStoreDAO {
 		logger.debug("( •̀ ω •́ )✧ updateMainImg() 실행" + list);
 		int result = sqlSession.update(NAMESPACE+"updateStoreImages", list);
 		logger.debug("( •̀ ω •́ )✧ updateMainImg() 실행" + result);
-		
 	}
 	
 	// 어드민 새로 등록된 상품 List (아직 mapper 작성 못함.)
 	public List<ProductVO> getNewProducts() {
 		logger.debug("( •̀ ω •́ )✧ getNewProducts() 실행");
 		List<ProductVO> list = sqlSession.selectList(NAMESPACE + "getNewProducts");
+		return list;
+	}
+	
+	// 새로 등록된 상품 반려 동작
+	public int rejectProduct(String prod_id) {
+		logger.debug("( •̀ ω •́ )✧ rejectProduct() 실행" + prod_id);
+		int result = sqlSession.update(NAMESPACE+"rejectProduct", prod_id);
+		return result;
+	}
+	// 새로 등록된 상품 반려 동작
+	public int approvalProduct(String prod_id) {
+		logger.debug("( •̀ ω •́ )✧ approvalProduct() 실행" + prod_id);
+		int result = sqlSession.update(NAMESPACE+"approvalProduct", prod_id);
+		return result;
+	}
+	
+	// 어드민 새로 등록된 상품 List (아직 mapper 작성 못함.)
+	public List<ProductVO> getProductList() {
+		logger.debug("( •̀ ω •́ )✧ getProductList() 실행");
+		List<ProductVO> list = sqlSession.selectList(NAMESPACE + "getProductList");
 		return list;
 	}
 	
