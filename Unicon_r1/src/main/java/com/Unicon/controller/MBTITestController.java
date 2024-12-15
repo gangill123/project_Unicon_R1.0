@@ -23,6 +23,7 @@ public class MBTITestController {
     private int currentQuestionIndex;
     private String mbtiResult; 
     private String petRecommendation;
+    private String petCharacteristics;
 
     public MBTITestController() {
         initializeQuestions();
@@ -88,6 +89,7 @@ public class MBTITestController {
                 recommendPet();
                 response.put("mbtiResult", getMBTIResult());
                 response.put("petRecommendation", getPetRecommendation());
+                response.put("petCharacteristics", getPetCharacteristics());
                 response.put("redirectToResult", true);
             }
             return ResponseEntity.ok(response);
@@ -101,17 +103,18 @@ public class MBTITestController {
     @GetMapping("/result")
     public String showResult(Model model) {
         if (mbtiResult == null) {
-            return "redirect:/mbti/result.jsp";
+            return "redirect:/mbti/start";
         }
         model.addAttribute("mbtiResult", getMBTIResult());
         model.addAttribute("petRecommendation", getPetRecommendation());
+        model.addAttribute("petCharacteristics", getPetCharacteristics());
         return "mbti/result";
     }
 
     public void processUserAnswer(int answer) {
         scores[currentQuestionIndex / 3] += answer - 3;
         currentQuestionIndex++;
-        logger.info("현재 질문 인�ек스: {}, 사용자가 입력한 답변: {}", currentQuestionIndex - 1, answer);
+        logger.info("현재 질문 인덱스: {}, 사용자가 입력한 답변: {}", currentQuestionIndex - 1, answer);
     }
 
     public String getCurrentQuestion() {
@@ -135,55 +138,75 @@ public class MBTITestController {
     public void recommendPet() {
         switch (mbtiResult) {
             case "ESTJ":
-            	petRecommendation = "(로트바일러, 아나톨리아 셰퍼드, 저먼 셰퍼드 )";
-            	break;
+                petRecommendation = "로트바일러, 아나톨리아 셰퍼드, 저먼 셰퍼드";
+                petCharacteristics = "충성스럽고 보호본능이 강하며, 지능이 높고 훈련이 쉽습니다. 활동적이고 경계심이 강한 편입니다.";
+                break;
             case "ESTP":
-            	petRecommendation = "(벨지안 셰퍼드, 불 테리어, 시베리안 허스키, 아메리칸 불리, 아메리칸 스태퍼드셔 테리어, 아메리칸 핏불 테리어, 오스트레일리안 캐틀독, 스노우 슈 )";
+                petRecommendation = "벨지안 셰퍼드, 불 테리어, 시베리안 허스키, 아메리칸 불리, 아메리칸 스태퍼드셔 테리어, 아메리칸 핏불 테리어, 오스트레일리안 캐틀독, 스노우 슈";
+                petCharacteristics = "에너지가 넘치고 독립적이며, 지능이 높습니다. 활동적이고 모험을 좋아하는 성격입니다.";
+                break;
             case "ENTJ":
-                petRecommendation = "(그레이트 데인, 바센지, 보더 콜리)";
+                petRecommendation = "그레이트 데인, 바센지, 보더 콜리";
+                petCharacteristics = "지능이 높고 리더십이 있으며, 훈련성이 뛰어납니다. 충성심이 강하고 주인에게 헌신적입니다.";
                 break;
             case "ENTP":
-                petRecommendation = "(데본 렉스, 사바나캣, 통키니즈, 바센지, 에어데일 테리어)";
+                petRecommendation = "데본 렉스, 사바나캣, 통키니즈, 바센지, 에어데일 테리어";
+                petCharacteristics = "호기심이 많고 지적이며, 활동적입니다. 독창적이고 창의적인 성격을 가졌습니다.";
                 break;
             case "ESFJ":
-            	 petRecommendation = "(믹스견, 그레이트 데인, 비숑 프리제, 시추, 요크셔 테리어, 케언 테리어, 포메라니안, 레그돌, 먼치킨, 셀커크 렉스, 아메리칸 쇼트헤어, 하바나 브라운)";
-                 break;
+                petRecommendation = "믹스견, 그레이트 데인, 비숑 프리제, 시추, 요크셔 테리어, 케언 테리어, 포메라니안, 레그돌, 먼치킨, 셀커크 렉스, 아메리칸 쇼트헤어, 하바나 브라운";
+                petCharacteristics = "사교적이고 친근한 성격이며, 사람들과의 교감을 좋아합니다. 충실하고 애정이 깊습니다.";
+                break;
             case "ESFP":
-            	petRecommendation = "(보스턴 테리어, 브리트니, 치와와, 푸들)";
+                petRecommendation = "보스턴 테리어, 브리트니, 치와와, 푸들";
+                petCharacteristics = "활발하고 명랑한 성격이며, 사람들과 잘 어울립니다. 놀기 좋아하고 에너지가 넘칩니다.";
                 break;
             case "ENFJ":
-            	petRecommendation = "(버니즈 마운틴 도그, 벨지안 셰퍼드, 복서, 아메리칸 스태퍼드셔 테리어)";
+                petRecommendation = "버니즈 마운틴 도그, 벨지안 셰퍼드, 복서, 아메리칸 스태퍼드셔 테리어";
+                petCharacteristics = "따뜻하고 친근한 성격이며, 가족을 사랑하고 보호하려는 본능이 강합니다.";
                 break;
             case "ENFP":
-                petRecommendation = "(사모예드견, 잉글리시 코커 스패니얼, 펨브록 웰시 코기, 프렌치 불도그, 싱가퓨라, 발리네즈)";
+                petRecommendation = "사모예드견, 잉글리시 코커 스패니얼, 펨브록 웰시 코기, 프렌치 불도그, 싱가퓨라, 발리네즈";
+                petCharacteristics = "밝고 긍정적인 성격이며, 사교적이고 활발합니다. 새로운 것을 좋아하고 적응력이 뛰어납니다.";
                 break;
             case "ISTJ":
-            	petRecommendation = "(보더 콜리, 불마스티프, 세인트 버나드)";
+                petRecommendation = "보더 콜리, 불마스티프, 세인트 버나드";
+                petCharacteristics = "신중하고 책임감이 강하며, 충성심이 깊습니다. 규칙적인 생활을 좋아하고 안정적입니다.";
                 break;
             case "ISFJ":
-            	petRecommendation = "(불도그, 세인트 버나드, 시추, 하바나 실크 독, 맹크스, 버만, 샴, 페르시안)";
+                petRecommendation = "불도그, 세인트 버나드, 시추, 하바나 실크 독, 맹크스, 버만, 샴, 페르시안";
+                petCharacteristics = "온순하고 충실하며, 가족을 사랑하는 마음이 깊습니다. 조용하고 안정적인 성격입니다.";
                 break;
             case "INTJ":
-            	petRecommendation = "(블랙 러시안 테리어, 시베리안 허스키, 오스트레일리언 셰퍼드, 페르시아 마스티프, 스핑크스, 하일랜드 폴드)";
+                petRecommendation = "블랙 러시안 테리어, 시베리안 허스키, 오스트레일리언 셰퍼드, 페르시아 마스티프, 스핑크스, 하일랜드 폴드";
+                petCharacteristics = "독립적이고 지적이며, 자신만의 공간을 중요시합니다. 훈련성이 높고 영리합니다.";
                 break;
             case "INFJ":
-                petRecommendation = "(니벨룽, 봄베이, 스코티시폴드, 터키시 앙고라, )";
+                petRecommendation = "니벨룽, 봄베이, 스코티시폴드, 터키시 앙고라";
+                petCharacteristics = "조용하고 신중하며, 깊은 유대관계를 형성합니다. 직관력이 뛰어나고 이해심이 깊습니다.";
                 break;
             case "ISTP":
-            	petRecommendation = "(샤트룩스)";
+                petRecommendation = "샤트룩스";
+                petCharacteristics = "독립적이고 영리하며, 적응력이 뛰어납니다. 조용하지만 활동적인 면도 있습니다.";
                 break;
             case "ISFP":
-            	petRecommendation = "(러시안 블루, 브리티쉬 롱헤어, 시베리안 포레스트, 재패니즈밥테일)";
+                petRecommendation = "러시안 블루, 브리티쉬 롱헤어, 시베리안 포레스트, 재패니즈밥테일";
+                petCharacteristics = "예술적 감각이 뛰어나고 조용한 성격입니다. 충실하며 주인과 깊은 유대관계를 형성합니다.";
                 break;
             case "INTP":
-            	 petRecommendation = "(푸들, 바셋 하운드, 메인쿤, 벵갈, 아비시니안)";
-                 break;
+                petRecommendation = "푸들, 바셋 하운드, 메인쿤, 벵갈, 아비시니안";
+                petCharacteristics = "지적 호기심이 많고 독립적입니다. 영리하고 문제해결 능력이 뛰어납니다.";
+                break;
             case "INFP":
-                petRecommendation = "(노르웨이 숲, 라가머핀, 브리티시 쇼트헤어, 소말리, 페르시안 친칠라)";
+                petRecommendation = "노르웨이 숲, 라가머핀, 브리티시 쇼트헤어, 소말리, 페르시안 친칠라";
+                petCharacteristics = "섬세하고 이해심이 많으며, 충실한 성격입니다. 조용하고 따뜻한 마음을 가졌습니다.";
                 break;
             default:
                 petRecommendation = "모든 종류의 반려동물과 잘 어울릴 수 있습니다.";
+                petCharacteristics = "당신의 성격은 다양한 반려동물과 조화.";
         }
+                
+
         logger.info("추천 반려동물 계산 완료: {}", petRecommendation);
     }
 
@@ -206,4 +229,8 @@ public class MBTITestController {
     public String getPetRecommendation() {
         return petRecommendation;
     }
+    public String getPetCharacteristics() {
+        return petCharacteristics;
+    }
+
 }
