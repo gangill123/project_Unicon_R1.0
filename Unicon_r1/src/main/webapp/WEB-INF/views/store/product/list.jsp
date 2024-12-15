@@ -223,6 +223,70 @@ pageEncoding="UTF-8"%>
             $('#endDate').attr('readonly', false); // 리드온리 해제
         });
         
+        
+        $('.search').click( function () {
+        	var productName = $('#productName').val().trim(); // 상품명
+        	var manufacturerName = $('#manufacturerName').val().trim(); // 상품명
+        	var brandName = $('#brandName').val().trim(); // 상품명
+        	var category = $('#category').val().trim(); // 상품명
+        	// 선택된 체크박스의 값을 배열로 가져오기
+            var selectedStatuses = "";
+        	
+            $('.status-checkbox:checked').each(function() {
+                selectedStatuses += $(this).val() + ","; // 값을 문자열로 추가하고 쉼표로 구분
+            });
+
+            // 마지막 쉼표 제거
+            if (selectedStatuses.length > 0) {
+                selectedStatuses = selectedStatuses.slice(0, -1);
+            } else {
+                alert("판매 선택을 체크해 주세요."); // 아무것도 체크되지 않으면 경고 메시지
+                return; // 함수 종료
+            }
+          
+            var start_date = $('#startDate').val();
+            var end_date = $('#endDate').val();
+            
+        	 // 날짜가 비어 있지 않다면 초를 추가
+            if (start_date) {
+                start_date += " 00:00:00"; // 자정으로 설정
+            }
+
+            if (end_date) {
+                end_date += " 23:59:59"; // 끝나는 날의 마지막 순간으로 설정
+            }
+         	// MySQL 쿼리에서 사용
+            
+        	var data = {
+        		  product_name: productName,
+        		  manufacturer: manufacturerName,
+        		  brand: brandName,
+                  product_category_type: category,
+                  selectedStatuses : selectedStatuses,
+                  start_date : start_date,
+                  end_date : end_date
+        	}
+        	
+        	$.ajax({
+        	    url: '/store/products/list', // 요청을 보낼 URL을 입력하세요.
+        	    type: 'POST', // 요청 방식 (POST)
+        	    contentType: 'application/json', // 요청 데이터의 타입
+        	    data: JSON.stringify(data), // data 객체를 JSON 문자열로 변환
+        	    success: function(response) {
+        	        console.log("응답:", response); // 성공적으로 응답을 받았을 때 처리
+        	        // 추가 처리 로직을 여기에 작성
+        	    },
+        	    error: function(xhr, status, error) {
+        	        console.error("요청 실패:", error); // 요청 실패 시 처리
+        	        // 에러 처리 로직을 여기에 작성
+        	    }
+        	});
+         	
+            
+        
+        
+        });
+        
     });
 </script>
   </head>
@@ -282,7 +346,10 @@ pageEncoding="UTF-8"%>
 								        <input type="checkbox" id="selectAll"> 전체
 								    </label>
 								    <label>
-								        <input type="checkbox" name="status" value="판매대기" class="status-checkbox"> 판매대기
+								        <input type="checkbox" name="status" value="승인대기" class="status-checkbox"> 승인대기
+								    </label>
+								    <label>
+								        <input type="checkbox" name="status" value="승인" class="status-checkbox"> 승인
 								    </label>
 								    <label>
 								        <input type="checkbox" name="status" value="판매중" class="status-checkbox"  checked> 판매중
@@ -291,16 +358,7 @@ pageEncoding="UTF-8"%>
 								        <input type="checkbox" name="status" value="품절" class="status-checkbox"> 품절
 								    </label>
 								    <label>
-								        <input type="checkbox" name="status" value="승인대기" class="status-checkbox"> 승인대기
-								    </label>
-								    <label>
 								        <input type="checkbox" name="status" value="판매중지" class="status-checkbox"> 판매중지
-								    </label>
-								    <label>
-								        <input type="checkbox" name="status" value="판매종료" class="status-checkbox"> 판매종료
-								    </label>
-								    <label>
-								        <input type="checkbox" name="status" value="판매금지" class="status-checkbox"> 판매금지
 								    </label>
 							    </div>
                             </div>
@@ -308,7 +366,7 @@ pageEncoding="UTF-8"%>
                             
                             <div class="col-lg-12" style="display: flex;padding: 0.5em 0;">
                            		<div style="width: 180px">
-    	                       		<h4 style="padding-left: 9px;padding-top: 9px">기간</h4>
+    	                       		<h4 style="padding-left: 9px;padding-top: 9px">기간(상품 등록일)</h4>
                             	</div>
 							    <div style="display: flex; margin-right: 0.5rem">
 							        <button class="store-btn" id="selete-today">오늘</button>
@@ -317,7 +375,6 @@ pageEncoding="UTF-8"%>
 								    <button class="store-btn" id="threeMonths">3개월</button>
 								    <button class="store-btn" id="sixMonths">6개월</button>
 								    <button class="store-btn" id="oneYear">1년</button>
-								    <button class="store-btn" id="all">전체</button>
 							    </div>
 							    <input type="date" id="startDate">
 							    <span style="line-height: 36px; margin: 0 0.5em	">~</span>
@@ -359,6 +416,7 @@ pageEncoding="UTF-8"%>
 	                              <select style="font-size: 12px">
 	                                <option selected>판매변경</option>
 	                                <option>판매중</option>
+	                                <option>품절</option>
 	                                <option>판매중지</option>
 	                              </select>
 	                              <spna style="line-height: 32px;">|</spna>
@@ -380,19 +438,20 @@ pageEncoding="UTF-8"%>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">판매상태</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">재고수량</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">판매가</th>
-							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">할인가</th>
-							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">판매자 할인</th>
+							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">옵션</th>
+							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">할인</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">기본 배송비</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">제조사명</th>
-							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">브랜드 명</th>
+							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">브랜드명</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">판매 시작일</th>
-							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">상품등록일</th>
-							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">최종수정일</th>
+							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">판매 종료일</th>
+							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">상품 등록일</th>
+							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">최종 수정일</th>
 							                </tr>
 							            </thead>
 							        </table>
 							        <div style="max-height: 400px; overflow-y: auto; height: 400px;">
-							            <table border="1" style="width: 100%; table-layout: fixed;">
+							            <table border="1" style="width: 100%; table-layout: fixed;" id="table_body">
 							                <tr style="height: 36px;">
 							                    <td style="width: 30px; padding:0px;"><input type="checkbox"></td>
 							                    <td style="width: 100px;">001</td>
@@ -400,11 +459,29 @@ pageEncoding="UTF-8"%>
 							                    <td style="width: 100px;">판매중</td>
 							                    <td style="width: 100px;">100</td>
 							                    <td style="width: 100px;">10,000원</td>
-							                    <td style="width: 100px;">9,000원</td>
+							                    <td style="width: 100px;"></td>
 							                    <td style="width: 100px;">10%</td>
 							                    <td style="width: 100px;">3,000원</td>
 							                    <td style="width: 100px;">제조사 A</td>
 							                    <td style="width: 100px;">브랜드 A</td>
+							                    <td style="width: 100px;">2024-01-01</td>
+							                    <td style="width: 100px;">2024-01-01</td>
+							                    <td style="width: 100px;">2023-12-01</td>
+							                    <td style="width: 100px;">2023-12-15</td>
+							                </tr>
+							                <tr style="height: 36px;background: #f0f1f6">
+							                    <td style="width: 30px; padding:0px;"><input type="checkbox"></td>
+							                    <td style="width: 100px;">001</td>
+							                    <td style="width: 300px;">상품 AASASDASDASDASDASDAS</td>
+							                    <td style="width: 100px;">판매중</td>
+							                    <td style="width: 100px;">100</td>
+							                    <td style="width: 100px;">10,000원</td>
+							                    <td style="width: 100px;"></td>
+							                    <td style="width: 100px;">10%</td>
+							                    <td style="width: 100px;">3,000원</td>
+							                    <td style="width: 100px;">제조사 A</td>
+							                    <td style="width: 100px;">브랜드 A</td>
+							                    <td style="width: 100px;">2024-01-01</td>
 							                    <td style="width: 100px;">2024-01-01</td>
 							                    <td style="width: 100px;">2023-12-01</td>
 							                    <td style="width: 100px;">2023-12-15</td>
