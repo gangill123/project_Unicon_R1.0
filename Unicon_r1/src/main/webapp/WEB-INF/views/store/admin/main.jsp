@@ -212,81 +212,6 @@
                 <div class="tab-content tab-transparent-content">
                   <div class="tab-pane fade show active" id="business-1" role="tabpanel" aria-labelledby="business-tab">
                     <div class="row">
-                      <div class="col-xl-4 col-lg-4 col-sm-12 grid-margin stretch-card">
-                        <div class="card">
-                          <div class="card-body ">
-                            <h5 class="mb-4 text-dark font-weight-bold">상품</h5>
-                            <div class="dropdown-divider"></div>
-                            <div class="store-flex">
-	                            <h5 class="text-dark font-weight-normal">신규 상품 등록</h5>
-	                            <span>
-	                            	<a href="/#">0</a> 건
-	                            </span>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="store-flex">
-	                            <h5 class="text-dark font-weight-normal">전체 상품 목록</h5>
-	                            <span>
-	                            	<a href="/#">0</a> 건
-	                            </span>
-                            </div>
-<!--                             <div class="dropdown-divider"></div> -->
-<!--                             <div class="store-flex"> -->
-<!-- 	                            <h5 class="text-dark font-weight-normal">배송 준비</h5> -->
-<!-- 	                            <span> -->
-<!-- 	                            	<a href="/#">0</a> 건 -->
-<!-- 	                            </span> -->
-<!--                             </div> -->
-                            <div class="dropdown-divider"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-4 col-lg-4 col-sm-12 grid-margin stretch-card">
-                        <div class="card">
-                          <div class="card-body ">
-                            <h5 class="mb-4 text-dark font-weight-bold">회원 승인</h5>
-                            <div class="dropdown-divider"></div>
-                            <div class="store-flex">
-	                            <h5 class="text-dark font-weight-normal">판매자 회원 목록</h5>
-	                            <span>
-	                            	<a href="/#">0</a> 건
-	                            </span>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="store-flex">
-	                            <h5 class="text-dark font-weight-normal">회원 가입신청 목록</h5>
-	                            <span>
-	                            	<a href="/#">0</a> 건
-	                            </span>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-xl-4 col-lg-4 col-sm-12 grid-margin stretch-card">
-                        <div class="card">
-                          <div class="card-body ">
-                          	<h5 class="mb-4 text-dark font-weight-bold">공지사항</h5>
-                            <div class="dropdown-divider"></div>
-                           	<div class="store-flex">
-	                            <h5 class="text-dark font-weight-normal">공지사항</h5>
-	                            <span>
-	                            	<a href="/#">0</a> 건
-	                            </span>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="store-flex">
-	                            <h5 class="text-dark font-weight-normal">팝업 관리</h5>
-	                            <span>
-	                            	<a href="/#">0</a> 건
-	                            </span>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
                       <div class="col-sm-8  grid-margin stretch-card">
                         <div class="card">
                           <div class="card-body">
@@ -308,13 +233,32 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-4  grid-margin stretch-card">
-                      	<div class="card">
-                          <div class="card-body">
-                            <div class="d-xl-flex  " style="flex-direction: column;">
-                              <h4 class="card-title" >지</h4>
-                              
+                      <div class="col-xl-4 col-lg-4 col-sm-12 grid-margin stretch-card">
+                        <div class="card">
+                          <div class="card-body ">
+                            <h5 class="mb-4 text-dark font-weight-bold">상품</h5>
+                            <div class="dropdown-divider"></div>
+                            <div class="store-flex">
+	                            <h5 class="text-dark font-weight-normal">신규 상품 등록</h5>
+	                            <span>
+	                            	<a href="/store/admin/product/newList">${newProductCount}</a> 건
+	                            </span>
                             </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="store-flex">
+	                            <h5 class="text-dark font-weight-normal">전체 상품 목록</h5>
+	                            <span>
+	                            	<a href="/store/admin/product/list">${ProductCount}</a> 건
+	                            </span>
+                            </div>
+<!--                             <div class="dropdown-divider"></div> -->
+<!--                             <div class="store-flex"> -->
+<!-- 	                            <h5 class="text-dark font-weight-normal">배송 준비</h5> -->
+<!-- 	                            <span> -->
+<!-- 	                            	<a href="/#">0</a> 건 -->
+<!-- 	                            </span> -->
+<!--                             </div> -->
+                            <div class="dropdown-divider"></div>
                           </div>
                         </div>
                       </div>

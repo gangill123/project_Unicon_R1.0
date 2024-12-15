@@ -26,6 +26,8 @@
 	// 클릭 이벤트 핸들러 함수 정의
    	$(document).ready(function() {
    	    
+   	    
+   	    
    	});
    
    	function reject(product_id) {
@@ -143,7 +145,7 @@
               <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">신규 등록 상품</h4>
+                    <h4 class="card-title">등록 상품</h4>
                     <table id="Table" class="table table-hover col-12">
 	                    <thead>
 							<tr>
@@ -213,7 +215,6 @@
 		    "lengthMenu": [10, 20, 50, 80], 
 		    "language": {
 				"lengthMenu": "표시 항목수 _MENU_",
-				 "emptyTable": "새로 등록된 상품이 없습니다.",
 				"search": "검색",
 				"paginate": {
 					next: "다음",
@@ -224,7 +225,7 @@
 			"stateDuration": -1,
 			/*=============== DataTable ajax ===============*/
 			"ajax": {
-				url: '/store/admin/products/new',
+				url: '/store/admin/products/list',
 				type: 'GET',
 				dataType: 'json',
 				dataSrc: function(json) {

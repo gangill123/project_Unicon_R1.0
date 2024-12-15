@@ -126,6 +126,46 @@ public class StoreRestController {
 			return new ResponseEntity<List<ProductVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	// 신규 상품 등록 반려 동작
+	@RequestMapping( value = "/admin/product/reject/{prod_id}" , method=RequestMethod.POST)
+	public ResponseEntity<String> rejectProduct(@PathVariable ("prod_id") String prod_id) {
+		logger.info("rejectProduct  : " + prod_id);
+		int result = aService.rejectProduct(prod_id);
+		if(result == 1) {
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	// 신규 상품 등록 승인 동작
+	@RequestMapping( value = "/admin/product/approval/{prod_id}" , method=RequestMethod.POST)
+	public ResponseEntity<String> approvalProduct(@PathVariable ("prod_id") String prod_id) {
+		logger.info("approvalProduct  : " + prod_id);
+		int result = aService.approvalProduct(prod_id);
+		if(result == 1) {
+			return new ResponseEntity<String>(HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	// 신규 상품 등록 목록 이거 데이터 테이블때문에 만듬 신규 상품 등록된것들 가져오는거임
+	@RequestMapping( value = "/admin/products/list" , method=RequestMethod.GET)
+	public ResponseEntity<List<ProductVO>> showProductList() {
+		
+		List<ProductVO> ProductList = aService.getProductList();
+		
+		
+		logger.info("newProducts : " + ProductList);
+		
+		if(ProductList != null) {
+			return new ResponseEntity<List<ProductVO>>(ProductList,HttpStatus.OK);
+		} else {
+			return new ResponseEntity<List<ProductVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
 	
 	// 어드민 공지사랑 list 가져오기.
 	@RequestMapping( value="/admin/notices" , method =RequestMethod.GET )

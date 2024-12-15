@@ -46,6 +46,18 @@ public class AdminStoreService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AdminStoreService.class);
 	
+	// 새로 등록된 상품 갯수
+	public int getNewProductCount() {
+		int getNewProductCount = aDao.getNewProductCount();
+		return getNewProductCount;
+	}
+	
+	// 등록된 상품 갯수
+	public int getProductCount() {
+		int getProductCount = aDao.getProductCount();
+		return getProductCount;
+	}
+	
 	// 복지목 메인 슬라이드 이미지 가져오기.
 	public List<ImageVO> getAdminStoreImg() {
 		logger.debug("( •̀ ω •́ )✧  getAdminStoreImg() 실행");
@@ -63,6 +75,24 @@ public class AdminStoreService {
 	// 새로운 상품 등록 글 가져오기.
 	public List<ProductVO> getNewProducts() {
 		List<ProductVO> list = aDao.getNewProducts();
+		return list;
+	}
+	
+	// 새로운 상품 등록 반려 동작
+	public int rejectProduct(String prod_id) {
+		logger.debug("( •̀ ω •́ )✧  rejectProduct(prod_id)s 실행");
+		int result = aDao.rejectProduct(prod_id);
+		return result;
+	}
+	// 새로운 상품 등록 승인 동작
+	public int approvalProduct(String prod_id) {
+		logger.debug("( •̀ ω •́ )✧  approvalProduct(prod_id)s 실행");
+		int result = aDao.approvalProduct(prod_id);
+		return result;
+	}
+	// 승인된 상품 등록 글 가져오기.
+	public List<ProductVO> getProductList() {
+		List<ProductVO> list = aDao.getProductList();
 		return list;
 	}
 	

@@ -25,6 +25,7 @@ import com.Unicon.domain.ShopVO;
 import com.Unicon.service.AdminStoreService;
 import com.Unicon.service.CategoryDataService;
 import com.Unicon.service.ShopService;
+import com.mysql.cj.xdevapi.Result;
 
 @Controller
 @RequestMapping(value = "/store/*")
@@ -116,13 +117,26 @@ public class StoreController {
 		logger.info("main 실행");
 		logger.info(" /store/main.jsp 뷰페이지 실행");
 		
-		String member_id = (String) session.getAttribute("id");
+		// 내일 member 로그인이랑 합쳐서 어드민 아니면 돌려보내기
+//		String member_id = (String) session.getAttribute("id");
 		
-		if(member_id == "admin") {
-			List<ImageVO> list = aService.getAdminStoreImg();
-			logger.info("list : "+ list);
-			model.addAttribute("adminStoreImg", list);
-		}
+		
+		// 복지몰 메인 슬라이드 이미지
+		List<ImageVO> list = aService.getAdminStoreImg();
+		logger.info("list : "+ list);
+		model.addAttribute("adminStoreImg", list);
+		
+		
+		// 신규 상품 등록 갯수
+		int newProductCount = aService.getNewProductCount();
+		model.addAttribute("newProductCount", newProductCount);
+		
+		// 전체 상품 목록 갯수
+		int ProductCount = aService.getProductCount();
+		model.addAttribute("ProductCount", ProductCount);
+		
+		
+		
 		return "/store/admin/main";
 	}
 	
@@ -154,6 +168,14 @@ public class StoreController {
 		
 		
 		return "/store/admin/product/preview";
+	}
+	
+	// 승인된 상품 리스트
+	@RequestMapping(value ="/admin/product/list" , method = RequestMethod.GET )
+	public String product() {
+		logger.info("product 실행");
+		
+		return "/store/admin/product/list";
 	}
 	
 	

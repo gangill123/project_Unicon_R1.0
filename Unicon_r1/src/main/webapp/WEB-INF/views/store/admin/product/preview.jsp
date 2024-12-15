@@ -53,11 +53,41 @@
 	line-height: 1;
 	cursor: pointer;
 }
+.approval-box {
+	position: fixed;
+    bottom: 0px;
+    background: #ffffff;
+    color: black;
+    z-index: 100;
+    width: 100%;
+    padding: 1rem;
+}
+.buttons {
+	text-align: center;
+	
+}
 
+.buttons button {
+	border: none;
+    width: 9rem;
+    height: 3rem;
+    margin: 0 2rem;
+}
+
+.reject {
+ 	background-color: #dbdedf;
+ 	color: gray;
+ 	
+}
+.approval {
+ 	background-color: #86bc42; 
+ 	color : #fff
+
+}
 </style>
 
 </head>
-<%@ include file="/WEB-INF/views/inc/new_header.jsp" %> <!-- header -->
+<%@ include file="/WEB-INF/views/inc/admin_new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
 <!-- 아래는 예시 -->
@@ -84,6 +114,12 @@
 
             </div>
         </section>
+        <div class="approval-box">
+        	<div class="buttons">
+        		<button class="reject">반려</button>
+        		<button class="approval">승인</button>
+        	</div>
+        </div>
 
         <!-- PRODUCT DETAILS
         ================================================== -->
@@ -299,7 +335,8 @@
 
 <script>
 	$(document).ready(function () {
-		
+		// 
+		prod_id = '${productInfo.product_id}';
 		// 옵션 선택 시 옵션값 담는 배열 선언
 		let optionArray = [];
 		
@@ -414,38 +451,55 @@
 		});
 		
 		
-		// 장바구니 클릭 시 선택아이템(selectItems) -> 디비 저장
-		$('#ShopToCartForm').on('submit', function(e){
-			event.preventDefault();
-			
-			let selectItemsLength = $('.selectItem').length;
-			
-			if(selectItemsLength < 1){
-				alert("상품을 선택해주세요");
-			} else {
-				shopToCart('${optionInfo[0].option_name}', '${optionInfo[0].option_name2}');
-				Swal.fire({
-	  			  title: '장바구니에 담았습니다.',
-	  			  text: "장바구니 페이지로 이동합니다.",
-	  			  icon: 'success',
-	  			  confirmButtonColor: '#3085d6',
-	  			  customClass: {
-	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
-	  			  }
-	 			}).then((result) => {
-	 			    if (result.isConfirmed) { 
-	 			        window.location.href = '/shop/cart'; // 이동할 URL
-	 			    }
-	 			});
-			}
-			
+		$('.reject').click(function () {
+		    // 확인 메시지
+		    if (confirm('반려 하겠습니까?')) {
+		        // AJAX 요청
+		        $.ajax({
+		            url: '/store/admin/product/reject/'+prod_id, // 요청을 보낼 URL
+		            type: 'POST', // 요청 방식 (GET, POST 등)
+		            success: function(response) {
+		                // 요청 성공 시 처리
+		                alert('반려가 완료되었습니다.');
+		                window.location.href = '/store/admin/product/newList'; 
+		            },
+		            error: function(xhr, status, error) {
+		                // 요청 실패 시 처리
+		                alert('반려 처리 중 오류가 발생했습니다.');
+		                console.error(error);
+		            }
+		        });
+		    }
 		});
+		$('.approval').click(function () {
+		    // 확인 메시지
+		    if (confirm('승인 하겠습니까?')) {
+		        // AJAX 요청
+		        $.ajax({
+		            url: '/store/admin/product/approval/'+prod_id, // 요청을 보낼 URL
+		            type: 'POST', // 요청 방식 (GET, POST 등)
+		            success: function(response) {
+		                // 요청 성공 시 처리
+		                alert('승인이 완료되었습니다.');
+		                window.location.href = '/store/admin/product/newList'; 
+		                // 예시 URL
+		            },
+		            error: function(xhr, status, error) {
+		                // 요청 실패 시 처리
+		                alert('반려 처리 중 오류가 발생했습니다.');
+		                console.error(error);
+		            }
+		        });
+		    }
+		});
+	});
 		
 		
 		
 		
 		
-	});//readay
+		
+//readay
 </script>
 
 

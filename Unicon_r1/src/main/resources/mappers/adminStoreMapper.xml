@@ -240,6 +240,19 @@ where ano_id = #{anoId}
 <select id="getNewProducts" resultMap="ProductResultMap">
 select * from _products where product_status = '승인대기'
 </select>
+<select id="getNewProductCount" resultType="Integer">
+    SELECT COUNT(*) FROM _products WHERE product_status = '승인대기'
+</select>
+
+<!-- 승인된 product 리스트 -->
+<select id="getProductList" resultMap="ProductResultMap">
+select * from _products where product_status = '승인'
+</select>
+
+<!-- 승인된 product 갯수 -->
+<select id="getProductCount" resultType="Integer">
+    SELECT COUNT(*) FROM _products WHERE product_status = '승인'
+</select>
 
 
 <!-- 팝업 update -->
@@ -264,6 +277,26 @@ select * from _products where product_status = '승인대기'
     	image_sequence = #{image_sequence},
     	image_src = #{image_src}
     WHERE image_id = #{image_id}
+</update>
+
+<!-- 새로 등록된 상품 반려 update -->
+<update id="rejectProduct">
+    UPDATE _products
+    SET 
+    	product_status = '승인 반려',
+    	update_date = now(),
+    	approval_id = 'junghun87'
+    WHERE product_id = #{product_id}
+</update>
+<!-- 새로 등록된 상품 승인 update -->
+<update id="approvalProduct">
+    UPDATE _products
+    SET 
+    	product_status = '승인',
+    	update_date = now(), 
+    	approval_date = now(),
+    	approval_id = 'junghun87'
+    WHERE product_id = #{product_id}
 </update>
 
 
