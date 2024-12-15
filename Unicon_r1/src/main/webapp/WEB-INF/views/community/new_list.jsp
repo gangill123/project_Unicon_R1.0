@@ -80,56 +80,41 @@ z-index: 2000;
        <!-- start portfolio gallery -->
        <div class="text-center row communityType">
 
-		   <c:forEach var="p" items="${postList }">
-           <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
-               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="${p.post_images[0].image_src}">
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <%-- <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
-                   </div>
-                   <div class="project-grid-overlay">
-                       <div class="w-100 px-3">
-                           <h4><a href="#!" class="open-modal" data-post-id="${p.post_id }" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>${p.jypMemberVO.member_nickname }</p>
-                           <%-- <input type="hidden" id="selectPost" value="${p.post_id}"/> --%>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           </c:forEach>
-<%--            <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>"> --%>
-<!--                <div class="project-grid"> -->
-<%--                    <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg"> --%>
-<!--                    </div> -->
-<!--                    <div class="project-grid-overlay"> -->
-<!--                        <div class="w-100 px-3"> -->
-<!--                            <h4><a href="#!">Investment Project</a></h4> -->
-<!--                            <p>Finance Plan</p> -->
-<!--                        </div> -->
-<!--                    </div> -->
-<!--                </div> -->
-<!--            </div> -->
+		   <%-- <c:forEach var="p" items="${postList}" varStatus="status"> --%>
+		   <c:forEach var="p" items="${postList}">
+		   <%-- <c:if test="${status.index < 8}"> <!-- 처음 8개만 표시 --> --%>
+			    <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
+			        <div class="project-grid" style="display: flex; flex-wrap: wrap;">
+			            <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;">
+			                <c:choose>
+			                    <c:when test="${not empty p.post_images}">
+			                        <c:forEach var="img" items="${p.post_images}">
+			                            <c:if test="${img.image_sequence == 0}">
+			                                <img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="${img.image_src}">
+			                            </c:if>
+			                        </c:forEach>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg">
+			                    </c:otherwise>
+			                </c:choose>
+			            </div>
+			            <div class="project-grid-overlay">
+			                <div class="w-100 px-3">
+			                    <h4><a href="#!" class="open-modal" data-post-id="${p.post_id}" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
+			                    <p>${p.jypMemberVO.member_nickname}</p>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    <%-- </c:if> --%>
+			</c:forEach>
 
-
-			<%-- <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
-               <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-                   <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;"><img style="width: 100%; height: 100%; object-fit: fill;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg">
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/087b6e0f-6c0d-4592-b587-943a0e54b71d_IMG_6835.jpeg"> -->
-                   <!-- <div class="project-grid-img"><img style="width: 306px; height: 306px;" alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <!-- <div class="project-grid-img"><img alt="..." src="/uploads/6a5e1528-ba86-40b0-b1ee-350c26e44a83_사진임.jpg"> -->
-                   <div class="project-grid-img"><img alt="..." src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg">
-                   </div>
-                   <div class="project-grid-overlay">
-                       <div class="w-100 px-3">
-                           <h4><a href="#!" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-                           <p>닉네임</p>
-                       </div>
-                   </div>
-               </div>
-           </div> --%>
            
+       <!-- 더보기 버튼 -->
+<!--        <div style="text-center"> -->
+<!-- 	   		<button class="btn btn-outline-success" id="loadMore" style="width: 50%; display: block;">더보기</button> -->
+<!--        </div> -->
            
        </div> <!-- <div class="portfolio-gallery-isotope text-center row"> -->
        <!-- end portfolio gallery -->
@@ -550,7 +535,7 @@ $(document).ready(function(){
                     $('#imgImg1').attr('src', defaultImage1);
                     $('#imgImg1').attr('xpreview', defaultImage1);
         		}
-        		if(data.postList.post_images[1] != null){
+        		if(data.postList.post_images[1].image_src != ''){
 	        		var aImg2 = data.postList.post_images[1].image_src;
 	        		$('#aImg2').attr('href', aImg2);
 	        		var imgImg2 = data.postList.post_images[1].image_src;
@@ -559,7 +544,7 @@ $(document).ready(function(){
         			$('#aImg2').attr('href', defaultImage2);
                     $('#imgImg2').attr('src', defaultImage2);
         		}
-        		if(data.postList.post_images[2] != null){
+        		if(data.postList.post_images[2].image_src != ''){
 	        		var aImg3 = data.postList.post_images[2].image_src;
 	        		$('#aImg3').attr('href', aImg3);
 	        		var imgImg3 = data.postList.post_images[2].image_src;
@@ -568,7 +553,7 @@ $(document).ready(function(){
         			$('#aImg3').attr('href', defaultImage3);
                     $('#imgImg3').attr('src', defaultImage3);
         		}
-        		if(data.postList.post_images[3] != null){
+        		if(data.postList.post_images[3].image_src != ''){
 	        		var aImg4 = data.postList.post_images[3].image_src;
 	        		$('#aImg4').attr('href', aImg4);
 	        		var imgImg4 = data.postList.post_images[3].image_src;
@@ -785,6 +770,8 @@ $(document).ready(function(){
         });
     }
  	// 댓글을 모달에 추가하는 함수
+ 	
+ 	
     
  
 }); // 돔레디

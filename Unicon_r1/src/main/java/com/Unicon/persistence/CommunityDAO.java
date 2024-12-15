@@ -119,8 +119,9 @@ public class CommunityDAO {
 		logger.info(" DAO - deletePost() 실행 ");
 		logger.info(" post_id {}",post_id);
 		int result = sqlSession.delete(NAMESPACE+"deletePostLike",post_id);
-		int result2 = sqlSession.delete(NAMESPACE+"deletePost", post_id);
-		return result + result2;
+		int result2 = sqlSession.delete(NAMESPACE+"deletePostComment", post_id);
+		int result3 = sqlSession.delete(NAMESPACE+"deletePost", post_id);
+		return result + result2 + result3;
 	}
 	
 	// 게시물 좋아요 확인
