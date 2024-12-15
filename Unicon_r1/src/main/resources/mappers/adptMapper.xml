@@ -382,25 +382,53 @@
 
 
 <!-- 사용자 페이지 입양하기 -->
-<select id="getAdptFilterView" resultMap="AnimalResultMap" parameterType="String">
-	select a.*, c.*, i.*, h.*, v.*, ad.* 
+<select id="getAdptFilterView" resultMap="AnimalResultMap" parameterType="Map">
+	select a.*, c.*, i.*, h.*, v.*, ad.*, m.* 
     from _animal a 
      join _category_data c on a.category_code = c.category_code 
       join _image i on a.animal_id = i.image_id 
        join _animal_health h on a.animal_id = h.animal_id 
         join _animal_vaccine v on a.animal_id = v.animal_id 
          join _adpt ad on a.animal_id = ad.animal_id 
+          join _member m on a.member_id = m.member_id  
     where a.animal_status != 6 and ad.adpt_status = 2 
-    <if test="adptFilter == 'dog'"> 
-     and floor(a.category_code/1000) = 1 
-    </if> 
-    <if test="adptFilter == 'cat'"> 
-     and floor(a.category_code/2000) = 1 
-    </if> 
-    <if test="adptFilter == 'etc'"> 
-     and floor(a.category_code/3000) = 1 
-    </if> 
-    order by ad.adpt_regdate desc 
+    <choose> 
+	    <when test="adptFilter == 'dog'"> 
+	     and floor(a.category_code/1000) = 1 
+	    </when> 
+	    <when test="adptFilter == 'cat'"> 
+	     and floor(a.category_code/2000) = 1 
+	    </when> 
+	    <when test="adptFilter == 'etc'"> 
+	     and floor(a.category_code/3000) = 1 
+	    </when> 
+    </choose>
+    
+	    <if test="category_code != ''">
+	     and a.category_code = #{category_code} 
+	    </if>
+	    <if test="location != ''">
+	     and ad.adpt_id like concat('ADPT-',#{location},'-%-______-______') 
+	    	<if test="location_detail != ''">
+	     	 and ad.adpt_id like concat('ADPT-', #{location}, '-', #{location_detail}, '-%') 
+	    	</if>
+	    </if>
+	    <if test="searchWord != ''">
+	     and (ad.adpt_id like concat('%', #{searchWord}, '%') 
+	     or a.animal_name like concat('%', #{searchWord}, '%'))  
+	    </if>
+	    
+    <choose>
+	    <when test="dateOption == 'latest'">
+	     order by ad.adpt_regdate desc 
+	    </when>
+	    <when test="dateOption == 'oldest'">
+	     order by ad.adpt_regdate asc 
+	    </when>
+	    <otherwise>
+	     order by ad.adpt_regdate desc 
+	    </otherwise>
+    </choose>
 </select>
 
 

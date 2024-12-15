@@ -117,6 +117,11 @@ public class AdptService {
 		aDao.modifyAnimalStatus(statusData);
 	}
 	
+	public MemberVO getMemberInfo(String member_id) {
+		logger.debug("( •̀ ω •́ )✧ getMemberInfo(String member_id) 실행");
+		
+		return aDao.getMemberInfo(member_id);
+	}
 	
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
 	public void adptWritingInsert(AdptVO advo, int animalStatus) {
@@ -168,10 +173,10 @@ public class AdptService {
 	
 	
 	/*=========== 사용자 페이지 입양하기 ===========*/
-	public List<AnimalVO> getAdptFilterView(String adptFilter) {
+	public List<AnimalVO> getAdptFilterView(Map<String, Object> adptFilters) {
 		logger.debug("( •̀ ω •́ )✧ getAdptFilterView() 실행");
 		
-		return aDao.getAdptFilterView(adptFilter);
+		return aDao.getAdptFilterView(adptFilters);
 	}
 	
 	

@@ -42,7 +42,7 @@ public class AnimalVO {
 	private List<CheckImageVO> check_images;
 	private List<AdptCounselVO> adptCounselList;
 	
-	private MemberVO MemberVO;
+	private MemberVO memberVO;
 	private AnimalInterestVO animalInterestVO;
 	private AdptVO adptVO;
 	private CategoryDataVO categoryDataVO;
