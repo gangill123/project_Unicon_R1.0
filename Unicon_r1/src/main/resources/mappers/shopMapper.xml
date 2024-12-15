@@ -114,7 +114,14 @@
 	<result property="formatted_review_create_date" column="formatted_review_create_date"/>
 	
 	<association property="memberVO" resultMap="MemberResultMap" />
+	<association property="odoVO" resultMap="OdoResultMap" />
 	
+</resultMap>
+
+<!-- OdoResultMap -->
+<resultMap type="com.Unicon.domain.OrdersDetailOptionVO" id="OdoResultMap">
+	<id property="order_detail_option_id" column="order_detail_option_id"/>
+	<result property="product_option" column="product_option"/>
 </resultMap>
 
 	<!-- shop 페이지 접속 시 모든 상품정보 가져오기 -->
@@ -397,9 +404,10 @@
 	<select id="getReview" resultMap="ReviewResultMap" parameterType="String">
 		select r.review_rate, r.review_content, 
 		DATE_FORMAT(r.review_create_date, '%Y.%m.%d.') AS formatted_review_create_date, 
-		m.member_name, m.member_image  
+		m.member_name, m.member_image, odo.product_option  
 		from _review r  
-		join _member m on r.member_id = m.member_id  
+		join _member m on r.member_id = m.member_id
+        join _orders_detail_option odo on odo.order_detail_option_id = r.order_detail_option_id
 		where r.product_id = #{product_id}  
 		order by r.review_create_date desc 
 	</select>
@@ -413,9 +421,6 @@
 		order by discount_rate desc 
 		limit 4 
 	</select>
-	
-	
-	
 	
 	
 </mapper>

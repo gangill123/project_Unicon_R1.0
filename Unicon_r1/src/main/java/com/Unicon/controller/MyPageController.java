@@ -64,6 +64,8 @@ public class MyPageController {
 		List<PetVO> petAllInfo = myService.getPetAll(member_id);
 		model.addAttribute("petAllInfo", petAllInfo);
 		
+		//게시물, 복지몰, 봉사활동 횟수 조회
+		
 			
 		return "/mypage/main";
 	}
@@ -322,6 +324,14 @@ public class MyPageController {
 		return oService.ordersDetailForReview(order_detail_option_id);
 	}
 	
+	
+	// 마이페이지 취소신청 클릭 시 로직
+	@PostMapping("/ordersCancel/{order_detail_option_id}")
+	@ResponseBody
+	public void ordersCancel(@PathVariable("order_detail_option_id") int order_detail_option_id) {
+		logger.info("order_detail_option_id : {}",order_detail_option_id);
+		oService.ordersCancel(order_detail_option_id);
+	}
 	
 	
 	

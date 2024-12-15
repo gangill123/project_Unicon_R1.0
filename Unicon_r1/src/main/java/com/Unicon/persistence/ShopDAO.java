@@ -238,4 +238,8 @@ public class ShopDAO {
 		return sqlSession.selectList(NAMESPACE+".getShopItemForMain");
 	}
 	
+	
+	
+	
+	
 }

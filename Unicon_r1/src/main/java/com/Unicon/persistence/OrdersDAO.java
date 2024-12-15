@@ -138,5 +138,10 @@ public class OrdersDAO {
 	public OrdersDetailVO ordersDetailForReview(int order_detail_option_id) {
 		return sqlSession.selectOne(NAMESPACE+".ordersDetailForReview", order_detail_option_id);
 	}
+	
+	// 마이페이지 취소신청 클릭 시 로직(옵션상태 취소로 변경)
+	public void ordersCancel(int order_detail_option_id) {
+		sqlSession.update(NAMESPACE+".ordersCancel", order_detail_option_id);
+	}
 
 }

@@ -112,11 +112,7 @@ public class ShopController {
 		logger.info("shopToCart() 호출");
 		logger.info("vo:{}",vo);
 		
-		int cartCount = (int)session.getAttribute("cartCount");
-		session.setAttribute("cartCount", cartCount + 1);
-		
-		
-		sService.saveCart(vo);
+		sService.saveCart(vo, session);
 		
 		return null;
 	}
@@ -177,6 +173,7 @@ public class ShopController {
 	public void emptyCart(HttpSession session) {
 		logger.info("emptyCart() 호출");
 		String member_id = (String)session.getAttribute("member_id");
+		session.setAttribute("cartCount", 0);
 		
 		sService.emptyCart(member_id);
 	}

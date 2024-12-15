@@ -283,7 +283,7 @@
                                   <div class="row">
                                       <div class="col-auto my-2 my-md-0">
                                       	<select id="categoryTypeSelector" class="form-control form-select" name="news_resion">
-                                              <option selected value="0">카테고리를 선택하세요</option>
+                                              <option selected value="0">카테고리 선택</option>
                                               <option value="5003">강아지 사료</option>
                                               <option value="5000">강아지 간식</option>
                                               <option value="5001">강아지 건강/관리용품</option>
@@ -350,6 +350,7 @@
 
 <script>
 	$(document).ready(function () {
+		$('.navbar #shop').addClass('current');
 		
 		let checkCnt = 1;
 		

@@ -61,28 +61,8 @@
 
 <!--====================================작성부=====================================-->
 <!-- 아래는 예시 -->
-<!-- PAGE TITLE
-        ================================================== -->
         <%-- ${addrDefalut } --%>
         <%-- ${ordersInfo } --%>
-        <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
-            <div class="container">
-
-                <div class="row" style="justify-content: center;">
-                <div class="col-lg-10">
-                    <div class="col-md-4">
-                        <h1>Shop Cart</h1>
-                    </div>
-                    <div class="col-md-12">
-                        <ul class="text-md-end mt-3 mt-md-0 ps-0">
-                            <li><a href="home-1.html">Home</a></li>
-                            <li><a href="#!">Shop Cart</a></li>
-                        </ul>
-                    </div>
-                </div>
- 				</div>
-            </div>
-        </section>
 
         <!-- SHOP CART
         ================================================== -->
@@ -91,7 +71,7 @@
 
                 <div class="row" style="justify-content: center;">
 
-					<div class="col-lg-10 order-1 order-lg-2 mb-1-9 mb-lg-0">
+					<div class="col-lg-11 order-1 order-lg-2 mb-1-9 mb-lg-0">
                         <div class="services-single-right">
 	                        <div style="margin-bottom: 70px;">
 		                        <h4 class="mb-1">주문/결제</h4>
@@ -279,8 +259,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="choiceContentBody modal-body bg-medium-light-gray">
-                    
-	                    
 	                    
                     </div>
                     <div class="modal-footer">

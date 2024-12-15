@@ -306,6 +306,7 @@
 
 <script>
 	$(document).ready(function () {
+		$('.navbar #shop').addClass('current');
 		
 		// 페이지 로드 시 총 상품금액 계산
 		let totalPrice = 0; 

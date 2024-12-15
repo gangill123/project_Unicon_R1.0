@@ -121,8 +121,11 @@
 	</select>
 	
 	
-	
-	
+	<!-- 마이페이지 문의하기 로직 -->
+	<insert id="inquiryCreate">
+		insert into _product_inquiry(member_id, product_id, order_detail_option_id, inquiry_type, inquiry_content) 
+		values(#{member_id}, #{product_id}, #{order_detail_option_id}, #{inquiry_type}, #{inquiry_content}) 
+	</insert>
 	
 	
 

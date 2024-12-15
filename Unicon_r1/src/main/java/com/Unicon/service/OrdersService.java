@@ -140,5 +140,16 @@ public class OrdersService {
 	}
 	
 	
+	// 마이페이지 취소신청 클릭 시 로직(옵션상태 취소로 변경)
+	public void ordersCancel(int order_detail_option_id) {
+		odao.ordersCancel(order_detail_option_id);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }

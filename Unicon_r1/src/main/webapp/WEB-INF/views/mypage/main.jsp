@@ -46,7 +46,7 @@
 
 <!--====================================작성부=====================================-->
 	<%-- ${petAllInfo } --%>
-	${memberInfo }
+<%-- 	${memberInfo } --%>
 	<section  style="padding-top: 50px;">
             <div class="container">
             	<div class="line-title">
@@ -100,8 +100,8 @@
                                 
                                 <div class="row" style="text-align: center; margin-top: 20px;">
 	                                <div class="col">
-	                                	<a href="#!"><div>
-		                                	<h5 style="margin-bottom: 0;">1</h5>
+	                                	<a id="unicorn" href="#!"><div>
+		                                	<h5 style="margin-bottom: 0;">${petAllInfo.size() }</h5>
 		                                	<span>유니콘</span>
 	                                	</div></a>
 	                            	</div>
@@ -112,10 +112,10 @@
 	                                	</div>
 	                            	</div>
 	                                <div class="col">
-	                                	<div>
+	                                	<a href="/mypage/orders"><div>
 		                                	<h5 style="margin-bottom: 0;">1</h5>
 		                                	<span>복지몰</span>
-	                                	</div>
+	                                	</div></a>
 	                            	</div>
 	                                <div class="col">
 	                                	<div>
@@ -132,7 +132,7 @@
                             </div>
                         </div>
                         
-                  <div class="row" style="margin-top: 30px;">
+                  <div class="row mb-3" style="margin-top: 30px;">
                     <!-- Start links -->
                     <div class="filtering col-sm-12 text-center">
                         <span id="myUni" class="active">나의 유니콘</span>
@@ -142,17 +142,17 @@
                     <!-- End links -->
                 </div>
                         
-                 <div class="row product-grid" style="min-height: 333.5px;">
+                 <div class="row product-grid mb-5" style="min-height: 333.5px;">
                  	
                 </div>
                 
-                <div class="row mt-1-9 mt-lg-6" style="margin-top: 0;">
-	                     <div class="col-12">
-	                         <div class="pagination text-small text-uppercase text-extra-dark-gray">
-	                             <ul id="pagination"></ul>
-	                         </div>
-	                     </div>
-               		</div>
+                <div class="row">
+                     <div class="col-12">
+                         <div class="pagination text-small text-uppercase text-extra-dark-gray">
+                             <ul id="pagination"></ul>
+                         </div>
+                     </div>
+          		</div>
                         
                         </div> <!-- common -->
                         </div>
@@ -225,7 +225,12 @@ $(document).ready(function () {
 			});
 	});
 	
-	
+	$('#unicorn').on('click',function(){
+		//alert("ok");
+		$('#inUni').removeClass('active');
+		$('#inItem').removeClass('active');
+		$('#myUni').addClass('active').trigger('click');
+	});
 	
 	
 	

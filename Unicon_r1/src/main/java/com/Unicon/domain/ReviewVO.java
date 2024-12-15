@@ -16,4 +16,5 @@ public class ReviewVO {
 	private String formatted_review_create_date;
 	
 	private MemberVO memberVO;
+	private OrdersDetailOptionVO odoVO;
 }

@@ -48,6 +48,13 @@
     <style>
 	.custom-swal-popup {
 	    top: -120px !important; /* 기본 위치보다 위로 이동 */
+    }
+	.attr-nav img:hover{
+		opacity: 0.7; /* 투명도 설정 */
+	    transition: opacity 0.3s ease; /* 부드러운 애니메이션 효과 */
+	}    
+	    
+	    
 	</style>
     
     

@@ -104,11 +104,6 @@
                         <div class="services-single-right">
                         <h4 style="margin-bottom: 40px;">주문배송관리</h4>
                         
-                        <div class="filtering col-sm-12 text-center" style="margin-bottom: 40px;">
-	                        <span data-id="orders" class="active">주문배송내역</span>
-	                        <span data-id="review">리뷰작성</span>
-	                    </div>
-                        
                         <div id="ordersContent">
                         
                         <div class="box-shadow-large px-3 pt-4 pb-1" style="margin-bottom: 40px;">

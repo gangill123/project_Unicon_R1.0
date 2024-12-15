@@ -178,7 +178,7 @@
 
 <script>
 $(document).ready(function () {
-	
+	$('.navbar #slide').addClass('current');
 	let currentPage = 1;
 	
 	if(!'${param.currentPage}' == ''){
