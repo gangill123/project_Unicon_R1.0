@@ -21,9 +21,11 @@ import com.Unicon.domain.AdminNoticeVO;
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.OptionVO;
+import com.Unicon.domain.ProductVO;
 import com.Unicon.domain.ShopVO;
 import com.Unicon.service.AdminStoreService;
 import com.Unicon.service.CategoryDataService;
+import com.Unicon.service.ProductService;
 import com.Unicon.service.ShopService;
 import com.mysql.cj.xdevapi.Result;
 
@@ -43,6 +45,9 @@ public class StoreController {
 	@Inject 
 	private ShopService sService;
 	
+	@Inject
+	private ProductService pService;
+	
 	// 쇼핑몰 메인 페이지
 	@RequestMapping( value = "/main" , method=RequestMethod.GET)
 	public String StoreMain(HttpSession session, Model model) {
@@ -60,16 +65,19 @@ public class StoreController {
 		return "/store/main";
 	}
 	
+	
+	
+	
 	// 상품 조회 / 수정
-	@RequestMapping( value="/products/list" , method =RequestMethod.GET )
-	public void productsList() {
+	@RequestMapping( value="/product/list" , method =RequestMethod.GET )
+	public void productsList(HttpSession session,Model model) {
 		logger.info("products/list 실행");
 	}
 	
 	
 	
 	// 2차 카테고리 가져오기
-	@RequestMapping( value="/products/create" , method =RequestMethod.GET )
+	@RequestMapping( value="/product/create" , method =RequestMethod.GET )
 	public void productsCreate(Model model) {
 		logger.info("/products/create 실행");
 		

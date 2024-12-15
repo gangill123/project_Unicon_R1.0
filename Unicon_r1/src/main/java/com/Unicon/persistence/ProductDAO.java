@@ -2,6 +2,7 @@ package com.Unicon.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -47,6 +48,11 @@ public class ProductDAO {
 			image.setImage_id(InsertedProductId);
 		}
 		sqlSession.insert(NAMESPACE + "insertProductImages", images);
+	}
+	
+	public List<ProductVO> getProductList(Map<String, Object> data) {
+		List<ProductVO> productList = sqlSession.selectList(NAMESPACE + "getProductList", data);
+		return productList; 
 	}
 
 }

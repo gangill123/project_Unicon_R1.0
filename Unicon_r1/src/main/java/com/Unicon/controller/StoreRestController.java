@@ -3,7 +3,9 @@ package com.Unicon.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -90,12 +92,54 @@ public class StoreRestController {
 		  pService.productInsert(vo);
 		  return new ResponseEntity<String>("( •̀ ω •́ )✧ 동물이 등록되었습니다", HttpStatus.OK);
 	  
-	  } catch (Exception e) { logger.info("오류 발생 "); e.printStackTrace(); return
+	  } catch (Exception e) {
+		  logger.info("오류 발생 "); e.printStackTrace(); return
 		  new ResponseEntity<String>("( •̀ ω •́ )✧ 오류가 발생했습니다: " + e.getMessage(),
 		  HttpStatus.INTERNAL_SERVER_ERROR); 
 	  } 
 	  
     }
+    
+    // 상품 조회 / 수정
+    @RequestMapping(value = "/products/list", method = RequestMethod.POST)
+	public ResponseEntity<List<ProductVO>> productListGET(@RequestBody Map<String, Object> data) {
+		logger.info("productListGET REST API 호출 ");
+
+
+		// 멤버 ID를 가져와서 그 유저가 올린 상품 목록을 볼 수 있게 해야됨,
+		// 지금 member랑 연동이 안되어 있으니깐 못함. 임의로 'junghun87' 사용
+		// String member_id = (String) session.getAttribute("id");
+		String member_id = "junghun87";
+		// Java 변수 추가
+		data.put("member_id", member_id);
+		
+		String statuses = (String) data.get("selectedStatuses"); // 문자열 가져오기
+        List<String> statusList = Arrays.asList(statuses.split(",")); // , 기준으로 나눠 리스트로 변환
+
+        // 변환된 리스트를 다시 data에 저장
+        data.put("selectedStatuses", statusList);
+		
+		logger.info("productListGET data :  "+ data);
+		
+		
+		List<ProductVO> productList =  pService.getProductList(data);
+		logger.info("productList"+productList);
+		
+		if (productList == null) {
+			return new ResponseEntity<List<ProductVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} else {
+			return new ResponseEntity<List<ProductVO>>(productList, HttpStatus.OK);
+		}
+	}
+    
+    
+    
+    
+    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////    
+    ////////////////////////////////////////////////////////////////////////////    
  
     // store/updateImg
     @PostMapping("/updateImg")

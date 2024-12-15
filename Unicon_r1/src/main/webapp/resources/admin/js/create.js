@@ -210,6 +210,7 @@
                     $(this).val(formattedValue);
                 }
                 data.product_price = value;
+                
             }
         });
         function formatNumber(num) {
@@ -1132,6 +1133,9 @@
             
             let valid = isValid();
             // FormData 객체 생성
+            if(!valid) {
+            	return;
+            }
             var formData = new FormData();
             
             // data 객체의 각 속성을 FormData에 추가
@@ -1161,29 +1165,27 @@
             
            
             console.log(...formData); // FormData의 내용을 확인하고 싶다면 콘솔에 출력
-            if(valid) {
-            	// AJAX 요청
-            	$.ajax({
-            		url: '/store/products/create', // 요청을 보낼 URL
-            		type: 'POST', // 요청 방식
-            		data: formData, // FormData 객체
-            		processData: false, // jQuery가 데이터를 처리하지 않도록 설정
-            		contentType: false, // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
-            		success: function(response) {
-            			// 성공적으로 응답을 받았을 때 처리
-            			console.log('응답:', response);
-            			alert('업로드가 성공적으로 완료되었습니다.');
-            			
-            		},
-            		error: function(xhr, status, error) {
-            			// 오류 발생 시 처리
-            			console.error('Error:', error);
-            			alert('업로드 중 오류가 발생했습니다.');
-            		}
-            	});
-            } else {
-            	alert('유효성 검사를 통과하지 못했습니다.');
-            }
+             
+        	// AJAX 요청
+        	$.ajax({
+        		url: '/store/products/create', // 요청을 보낼 URL
+        		type: 'POST', // 요청 방식
+        		data: formData, // FormData 객체
+        		processData: false, // jQuery가 데이터를 처리하지 않도록 설정
+        		contentType: false, // 콘텐츠 타입을 자동으로 설정하지 않도록 설정
+        		success: function(response) {
+        			// 성공적으로 응답을 받았을 때 처리
+        			console.log('응답:', response);
+        			alert('업로드가 성공적으로 완료되었습니다.');
+        			
+        		},
+        		error: function(xhr, status, error) {
+        			// 오류 발생 시 처리
+        			console.error('Error:', error);
+        			alert('업로드 중 오류가 발생했습니다.');
+        		}
+        	});
+            
         });
 		
         // 옵션내용 
@@ -1211,7 +1213,6 @@
             if(data.product_price == 0) {
             	alert("판매가가 0원입니다.");
             	return;
-            	
             }
             
             // 할인율 설정하고 입력을 안했을때.
@@ -1232,6 +1233,13 @@
             		return;
             	} 
             	optionDataPush();
+            }
+            var fileInput = $('#image-input1')[0];
+            console.log(fileInput);
+            // 파일이 선택되지 않은 경우
+            if (!fileInput.files.length) {
+                alert("이미지를 선택해 주세요."); // 경고 메시지
+                return; // 함수 종료
             }
             
             if($('#btn-delivery-on').hasClass('setting-active')) {
@@ -1260,11 +1268,11 @@
                     // 현재 .option-list 요소에서 옵션명 가져오기
                     var optionName = $(this).find('.option-item-name').text().trim(); // 옵션명
                     var optionValue = $(this).find('.option-item-value').text().trim(); // 옵션값
-
                  // 객체 생성 후 data 객체에 추가
                     data.option.push({
                         option_name: optionName,
                         option_value: optionValue,
+                        option_price: data.product_price,
                         option_stock : data.product_stock
                     });
                 });
