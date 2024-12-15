@@ -20,6 +20,7 @@ public class PostVO {
 	private String pet_etc_breed;		// 기타동물품종
 	private String post_pet_place;		// 실종/발견 장소
 	private String post_pet_date;		// 실종/발견 일자
+	private String post_resion;			// 거주지역
 	
 //	private MultipartFile image_file1;			// 이미지 파일1
 //	private MultipartFile image_file2;			// 이미지 파일2

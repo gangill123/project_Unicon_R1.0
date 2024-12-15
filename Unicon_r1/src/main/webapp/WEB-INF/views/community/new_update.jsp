@@ -42,7 +42,7 @@
 
 <!--====================================작성부=====================================-->
 
-${postList}
+<%-- ${postList} --%>
 
 
 <section class="bg-light" style="padding: 60px;">
@@ -180,11 +180,27 @@ ${postList}
 								<!-- Begin Text input element -->
 								<div class="col-md-6">
 									<div class="quform-element form-group">
-										<label for="location">거주 지역 (변경을 원하시면 마이페이지로)</label>
+										<label for="resion">거주 지역</label>
 										<div class="quform-input">
-											<input id="location" class="form-control" type="text"
-												placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요."
-												disabled="disabled" />
+											<select id="post_resion" class="form-control form-select" name="post_resion">
+											   <option value="서울" <c:if test="${postList.post_resion == '서울' }">selected="selected"</c:if>>서울</option>
+											   <option value="인천" <c:if test="${postList.post_resion == '인천' }">selected="selected"</c:if>>인천</option>
+											   <option value="부산" <c:if test="${postList.post_resion == '부산' }">selected="selected"</c:if>>부산</option>
+											   <option value="대구" <c:if test="${postList.post_resion == '대구' }">selected="selected"</c:if>>대구</option>
+											   <option value="광주" <c:if test="${postList.post_resion == '광주' }">selected="selected"</c:if>>광주</option>
+											   <option value="대전" <c:if test="${postList.post_resion == '대전' }">selected="selected"</c:if>>대전</option>
+											   <option value="울산" <c:if test="${postList.post_resion == '울산' }">selected="selected"</c:if>>울산</option>
+											   <option value="세종특별시" <c:if test="${postList.post_resion == '세종특별시' }">selected="selected"</c:if>>세종특별시</option>
+											   <option value="경기" <c:if test="${postList.post_resion == '경기' }">selected="selected"</c:if>>경기</option>
+											   <option value="강원특별자치도" <c:if test="${postList.post_resion == '강원특별자치도' }">selected="selected"</c:if>>강원특별자치도</option>
+											   <option value="충북" <c:if test="${postList.post_resion == '충북' }">selected="selected"</c:if>>충북</option>
+											   <option value="충남" <c:if test="${postList.post_resion == '충남' }">selected="selected"</c:if>>충남</option>
+											   <option value="전북특별자치도" <c:if test="${postList.post_resion == '전북특별자치도' }">selected="selected"</c:if>>전북특별자치도</option>
+											   <option value="전남" <c:if test="${postList.post_resion == '전남' }">selected="selected"</c:if>>전남</option>
+											   <option value="경북" <c:if test="${postList.post_resion == '경북' }">selected="selected"</c:if>>경북</option>
+											   <option value="경남" <c:if test="${postList.post_resion == '경남' }">selected="selected"</c:if>>경남</option>
+											   <option value="제주특별자치도" <c:if test="${postList.post_resion == '제주특별자치도' }">selected="selected"</c:if>>제주특별자치도</option>
+                                            </select>
 										</div>
 									</div>
 								</div>
@@ -483,9 +499,9 @@ $(function() {
 	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
     var memberId = $('#member_id').val();
 
-    if (memberId === "test1") {
-        $('#location').val("경주시");
-    }
+//     if (memberId === "test1") {
+//         $('#location').val("경주시");
+//     }
 	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
 	
     // 이미지 미리보기
