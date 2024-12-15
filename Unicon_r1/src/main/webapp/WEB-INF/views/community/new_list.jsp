@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
 <!-- 추가 템플릿 css/js 작성란 -->
@@ -35,57 +36,59 @@ z-index: 2000;
 
            <!-- Start links -->
            <div class="filtering col-sm-12 text-center">
-               <span data-type='post01' data-filter='*'>입양 후기</span>
+               <span data-type='post01' data-filter='*' class="active">입양 후기</span>
                <span data-type='post02' data-filter='.business'>반려 이야기</span>
                <span data-type='post03' data-filter='.finance'>실종</span>
                <span data-type='post04' data-filter='.consulting'>임시 보호</span>
            </div>
            <!-- End links -->
            
-           <select id="animalFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-			   <option value="">모든 지역</option>
-			   <option value="">서울</option>
-			   <option value="">인천</option>
-			   <option value="">부산</option>
-			   <option value="">대구</option>
-			   <option value="">광주</option>
-			   <option value="">대전</option>
-			   <option value="">울산</option>
-			   <option value="">세종특별시</option>
-			   <option value="">경기</option>
-			   <option value="">강원특별자치도</option>
-			   <option value="">충북</option>
-			   <option value="">충남</option>
-			   <option value="">전북특별자치도</option>
-			   <option value="">전남</option>
-			   <option value="">경북</option>
-			   <option value="">경남</option>
-			   <option value="">제주특별자치도</option>
+           <select id="resionFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
+			   <option value="모든 지역">모든 지역</option>
+			   <option value="서울">서울</option>
+			   <option value="인천">인천</option>
+			   <option value="부산">부산</option>
+			   <option value="대구">대구</option>
+			   <option value="광주">광주</option>
+			   <option value="대전">대전</option>
+			   <option value="울산">울산</option>
+			   <option value="세종특별시">세종특별시</option>
+			   <option value="경기">경기</option>
+			   <option value="강원특별자치도">강원특별자치도</option>
+			   <option value="충북">충북</option>
+			   <option value="충남">충남</option>
+			   <option value="전북특별자치도">전북특별자치도</option>
+			   <option value="전남">전남</option>
+			   <option value="경북">경북</option>
+			   <option value="경남">경남</option>
+			   <option value="제주특별자치도">제주특별자치도</option>
 			</select>
 		   
-		   <select id="" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-		       <option value="">모든 동물</option>
-		       <option value="">개</option>
-		       <option value="">고양이</option>
-		       <option value="">기타</option>
+		   <select id="animalFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
+		       <option value="모든 동물">모든 동물</option>
+		       <option value="개">개</option>
+		       <option value="고양이">고양이</option>
+		       <option value="기타">기타</option>
 		   </select>
 		   
-		   <select id="" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-		       <option value="">최신순</option>
-		       <option value="">좋아요순</option>
+		   <select id="sortFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
+		       <option value="최신순">최신순</option>
+		       <option value="좋아요순">좋아요순</option>
 		   </select>
+		   
+           <button class="btn btn-outline-success" id="search" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 75px;">검색</button>
 
        </div>
        
 <%--        ${postList } --%>
 
        <!-- start portfolio gallery -->
-       <div class="text-center row communityType">
+       <div class="text-center row communityType" id="postListList">
 
 		   <%-- <c:forEach var="p" items="${postList}" varStatus="status"> --%>
-		   <c:forEach var="p" items="${postList}">
+		   <c:forEach var="p" items="${postList}" varStatus="status">
 		   <%-- <c:if test="${status.index < 8}"> <!-- 처음 8개만 표시 --> --%>
-			    <div class="col-lg-3 col-md-6 items finance mt-3" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
+			    <div class="col-lg-3 col-md-6 items finance mt-3 post-item ${status.index >= 8 ? 'd-none' : ''}" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
 			        <div class="project-grid" style="display: flex; flex-wrap: wrap;">
 			            <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;">
 			                <c:choose>
@@ -111,6 +114,13 @@ z-index: 2000;
 			    </div>
 			    <%-- </c:if> --%>
 			</c:forEach>
+			
+			
+			<c:if test="${fn:length(postList) > 8}">
+	            <div class="text-center mt-4">
+	                <button class="btn btn-outline-success" id="loadMoreOngoing">더보기</button>
+	            </div>
+	        </c:if>
 
            
        <!-- 더보기 버튼 -->
@@ -425,8 +435,41 @@ $(document).ready(function(){
 	var defaultImage3 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg';
 	var defaultImage4 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg';
 	
+	
+	
+	
+	
+	$('#search').on('click',function(){
+		let resionFilter = $('#resionFilter').val();
+		let animalFilter = $('#animalFilter').val();
+		let sortFilter = $('#sortFilter').val();
+		let postType = $('.filtering .active').data('type');
+		console.log(resionFilter);
+		console.log(animalFilter);
+		console.log(sortFilter);
+		console.log(postType);
+	});
+	
+	
+	
+	
+	
+	
 	// 모달 열때마다 게시물id 초기화
 	var post_id = null;
+	
+	// 더보기 버튼 제어
+	$('#loadMoreOngoing').on('click', function() {
+	    const hiddenItems = $('#postListList .post-item.d-none');
+	    const itemsToShow = hiddenItems.slice(0, 8);
+	    
+	    itemsToShow.removeClass('d-none');
+	    
+	    if (hiddenItems.length <= 8) {
+	        $(this).hide();
+	    }
+	});
+	// 더보기 버튼 제어
 	
 	// 게시물 종류 클릭
 	$('.filtering span').on('click', function(){
@@ -435,6 +478,11 @@ $(document).ready(function(){
 		console.log(postType);
 		
 		readPostType(postType);
+		
+		// 필터 초기화
+		$('#resionFilter').val('모든 지역');
+		$('#animalFilter').val('모든 동물');
+		$('#sortFilter').val('최신순');
 	});
 	// 게시물 종류 클릭
 	
@@ -477,19 +525,21 @@ $(document).ready(function(){
         		console.log(data.commentList);
         		
         		// 모달 게시물 헤더 부분
-        		if(data.postList.post_type == 'post01'){
-        			var exampleModalLabel = '입양 후기 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
-            		$('#exampleModalLabel').html(exampleModalLabel);
-        		} else if(data.postList.post_type == 'post02'){
-        			var exampleModalLabel = '반려 이야기 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
-            		$('#exampleModalLabel').html(exampleModalLabel);
-        		} else if(data.postList.post_type == 'post03'){
-        			var exampleModalLabel = '실종 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
-            		$('#exampleModalLabel').html(exampleModalLabel);
-        		} else{
-        			var exampleModalLabel = '임시보호 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
-            		$('#exampleModalLabel').html(exampleModalLabel);
-        		}
+//         		if(data.postList.post_type == 'post01'){
+//         			var exampleModalLabel = '입양 후기 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
+//             		$('#exampleModalLabel').html(exampleModalLabel);
+//         		} else if(data.postList.post_type == 'post02'){
+//         			var exampleModalLabel = '반려 이야기 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
+//             		$('#exampleModalLabel').html(exampleModalLabel);
+//         		} else if(data.postList.post_type == 'post03'){
+//         			var exampleModalLabel = '실종 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
+//             		$('#exampleModalLabel').html(exampleModalLabel);
+//         		} else{
+//         			var exampleModalLabel = '임시보호 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
+//             		$('#exampleModalLabel').html(exampleModalLabel);
+//         		}
+        		var exampleModalLabel = data.postList.post_resion+' / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
+        		$('#exampleModalLabel').html(exampleModalLabel);
         		// 모달 게시물 작성자 프로필 이미지 부분
          		var postMemberImg = data.postList.jypMemberVO.member_image;
          		$('#postMemberImg').attr('src', postMemberImg);
@@ -723,25 +773,67 @@ $(document).ready(function(){
      	
      	// 게시물 삭제
      	$(document).on('click', '#deletePost', function(){
-     		console.log(post_id);
-     		$.ajax({
-     			url : '${pageContext.request.contextPath }/community/deletePost/' + post_id,
-     			type : 'DELETE',
-     			success : function(data){
-     				alert('게시물이 삭제되었습니다.');
-     				location.reload();
-     			},
-     			error : function(){
-     				alert('게시물 삭제에 실패했습니다.');
-     			}
-     		}); // $.ajax
+     		Swal.fire({
+    			title: '삭제하시겠습니까?',
+    			text: '게시물이 바로 삭제됩니다!',
+    			icon: 'info',
+    			showCancelButton: true,
+    			confirmButtonColor: '#006e60',
+    			cancelButtonColor: '#aab2bd',
+    			confirmButtonText: '삭제',
+    			cancelButtonText: '닫기'
+    		}).then(function(result) {
+    			if (result.isConfirmed) {
+    				$.ajax({
+    					url: '${pageContext.request.contextPath }/community/deletePost/' + post_id,
+    					type: 'DELETE',
+    					contentType: false,
+    					processData: false,
+    					success: function(response) {
+    						Swal.fire({
+    						title: '삭제 완료',
+    						text: '게시물이 삭제되었습니다!',
+    						icon: 'success',
+    						confirmButtonColor: '#006e60',
+    						confirmButtonText: '확인'
+    						}).then(function(result){
+    							if(result.isConfirmed){
+    								location.reload();
+    							}
+    						});
+    					},
+    					error: function(jqXHR, textStatus, errorThrown) {
+    						console.error('삭제 실패:', textStatus, errorThrown);
+    						Swal.fire({
+    							title: '오류!',
+    							text: '삭제에 실패했습니다.',
+    							icon: 'error',
+    							confirmButtonColor: '#006e60',
+    							confirmButtonText: '확인'
+    						});
+    					}
+    				});
+    			}
+    		});
      	}); // 게시물 삭제 클릭
      	// 게시물 삭제
      	
      	// 게시물 수정
      	$(document).on('click', '#updatePost', function(){
-     		alert(post_id);
-     		window.location.href = '${pageContext.request.contextPath }/community/main03/' + post_id;
+     		Swal.fire({
+    			title: '수정하시겠습니까?',
+    			text: '확인 버튼을 누르면 이동합니다!',
+    			icon: 'info',
+    			showCancelButton: true,
+    			confirmButtonColor: '#006e60',
+    			cancelButtonColor: '#aab2bd',
+    			confirmButtonText: '확인',
+    			cancelButtonText: '취소'
+    		}).then(function(result) {
+    			if (result.isConfirmed) {
+    				window.location.href = '${pageContext.request.contextPath }/community/main03/' + post_id;
+    			}
+    		});
      	}); // 게시물 수정 클릭
      	// 게시물 수정
      	

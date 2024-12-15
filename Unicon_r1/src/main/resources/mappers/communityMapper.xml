@@ -18,6 +18,7 @@
 	<result property="pet_etc_breed" column="pet_etc_breed"/>
 	<result property="post_pet_place" column="post_pet_place"/>
 	<result property="post_pet_date" column="post_pet_date"/>
+	<result property="post_resion" column="post_resion"/>
 	<!-- <result property="post_like_count" column="post_like_count"/> -->
 	
 	<association property="jypMemberVO" resultMap="JypMemberResultMap" />
@@ -295,8 +296,8 @@
 <!-- 게시물 등록 -->
 <!-- post_id, 이미지 구조 변경 필요 -->
 <insert id="postInsert">
-	insert into _post (post_id, member_id, post_title, post_content, post_date, post_type, pet_code, pet_etc_breed, post_pet_place, post_pet_date) 
-	values (#{post_id}, #{member_id}, #{post_title}, #{post_content}, now(), #{post_type}, #{pet_code}, #{pet_etc_breed}, #{post_pet_place}, #{post_pet_date}) 
+	insert into _post (post_id, post_resion, member_id, post_title, post_content, post_date, post_type, pet_code, pet_etc_breed, post_pet_place, post_pet_date) 
+	values (#{post_id}, #{post_resion}, #{member_id}, #{post_title}, #{post_content}, now(), #{post_type}, #{pet_code}, #{pet_etc_breed}, #{post_pet_place}, #{post_pet_date}) 
 </insert>
 
 
@@ -312,7 +313,7 @@
 <!-- 게시물 수정 -->
 <update id="updatePost" parameterType="com.Unicon.domain.PostVO">
 	update _post set 
-	post_title = #{post_title}, post_content = #{post_content}, post_type = #{post_type}, 
+	post_title = #{post_title}, post_content = #{post_content}, post_type = #{post_type}, post_resion = #{post_resion}, 
 	pet_code = #{pet_code}, pet_etc_breed = #{pet_etc_breed}, post_pet_place = #{post_pet_place}, post_pet_date = #{post_pet_date} 
 	where post_id = #{post_id} 
 </update>

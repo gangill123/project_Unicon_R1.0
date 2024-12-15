@@ -62,7 +62,7 @@
                     	
                     	<!-- 숨겨서 들고갈 값(세션) -->
                     	<!-- member_id -->
-                    	<input id="member_id" name="member_id" type="hidden" value="test1">
+                    	<input id="member_id" name="member_id" type="hidden" value="test3">
                     	<!-- 숨겨서 들고갈 값(세션) -->
                     	
                         <div class="quform-elements">
@@ -149,10 +149,32 @@
                                 <!-- Begin Text input element -->
                                 <div class="col-md-6">
                                     <div class="quform-element form-group">
-                                        <label for="location">거주 지역 (변경을 원하시면 마이페이지로)</label>
+                                        <label for="resion">거주 지역</label>
                                         <div class="quform-input">
-                                            <input id="location" class="form-control" type="text" placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요." disabled="disabled" />
+                                            <select id="post_resion" class="form-control form-select" name="post_resion">
+                                               <option value="">거주지역을 선택해주세요.</option>
+											   <option value="서울">서울</option>
+											   <option value="인천">인천</option>
+											   <option value="부산">부산</option>
+											   <option value="대구">대구</option>
+											   <option value="광주">광주</option>
+											   <option value="대전">대전</option>
+											   <option value="울산">울산</option>
+											   <option value="세종특별시">세종특별시</option>
+											   <option value="경기">경기</option>
+											   <option value="강원특별자치도">강원특별자치도</option>
+											   <option value="충북">충북</option>
+											   <option value="충남">충남</option>
+											   <option value="전북특별자치도">전북특별자치도</option>
+											   <option value="전남">전남</option>
+											   <option value="경북">경북</option>
+											   <option value="경남">경남</option>
+											   <option value="제주특별자치도">제주특별자치도</option>
+                                            </select>
                                         </div>
+<!--                                         <div class="quform-input"> -->
+<!--                                             <input id="location" class="form-control" type="se" placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요."/> -->
+<!--                                         </div> -->
                                     </div>
                                 </div>
                                 <!-- End Text input element -->
@@ -325,9 +347,9 @@ $(function() {
 	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
     var memberId = $('#member_id').val();
 
-    if (memberId === "test1") {
-        $('#location').val("경주시");
-    }
+//     if (memberId === "test3") {
+//         $('#location').val("인천");
+//     }
 	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
 	
     // 이미지 미리보기
@@ -609,6 +631,10 @@ $(function() {
 		} else if($('#pet_code').val() == '') {
 			alert('동물 품종을 선택해주세요!');
 			$('#pet_code').focus();
+			return;
+		} else if($('#post_resion').val() == '') {
+			alert('거주 지역을 선택해주세요!');
+			$('#post_resion').focus();
 			return;
 		} else if ($('#image-input-1').val() == '') {
 			alert('대표 이미지를 입력해주세요!');
