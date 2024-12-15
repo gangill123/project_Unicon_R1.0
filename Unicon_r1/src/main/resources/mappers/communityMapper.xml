@@ -230,6 +230,14 @@
 	delete from _post_like 
 	where post_id = #{post_id} 
 </delete>
+<delete id="deletePostComment">
+	delete from _comment 
+	where post_id = #{post_id} 
+</delete>
+<!-- <delete id="deletePostCommentLike"> -->
+<!-- 	delete from _comment_like  -->
+<!-- 	where comment_id = #{comment_id}  -->
+<!-- </delete> -->
 <!-- 게시물 삭제 -->
 
 <!-- 게시물 좋아요 확인 -->
