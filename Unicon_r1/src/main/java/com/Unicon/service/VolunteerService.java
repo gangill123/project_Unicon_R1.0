@@ -3,7 +3,6 @@ package com.Unicon.service;
 import java.util.List;
 import java.util.Map;
 
-import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.VolunteerApplyVO;
 import com.Unicon.domain.VolunteerVO;
 
@@ -12,10 +11,7 @@ public interface VolunteerService {
     void registerVolunteer(VolunteerVO volunteer) throws Exception;
     void updateVolunteer(VolunteerVO volunteer) throws Exception;
     void deleteVolunteer(Long voId) throws Exception;
-
-	VolunteerVO getVolunteer(Long voId) throws Exception;
-    VolunteerVO getVolunteer(Long voId, String member_Id) throws Exception;
-    
+    VolunteerVO getVolunteer(Long voId) throws Exception;
     Map<String, Object> getVolunteerList(int page, int size, String status, String keyword, 
                                        String startDate, String endDate) throws Exception;
     List<VolunteerVO> getOngoingVolunteers() throws Exception;

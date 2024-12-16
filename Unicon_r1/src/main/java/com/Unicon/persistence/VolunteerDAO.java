@@ -3,7 +3,6 @@ package com.Unicon.persistence;
 import java.util.List;
 import java.util.Map;
 
-import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.VolunteerApplyVO;
 import com.Unicon.domain.VolunteerVO;
 
@@ -14,8 +13,6 @@ public interface VolunteerDAO {
     void updateVolunteerStatus(Map<String, Object> params) throws Exception;
     public void updateRecruitStatus(Map<String, Object> params) throws Exception;
     VolunteerVO selectVolunteer(Long voId) throws Exception;
-    VolunteerVO fetchVolunteer(Long voId, String memberId) throws Exception;
-    
     List<VolunteerVO> getAllVolunteers(Map<String, Object> params) throws Exception;
     List<VolunteerVO> getOngoingVolunteers(Map<String, Object> params) throws Exception;
     List<VolunteerVO> getClosedVolunteers(Map<String, Object> params) throws Exception;
@@ -38,4 +35,3 @@ public interface VolunteerDAO {
     public List<Map<String, Object>> selectMonthlyStatistics();
     public Map<String, Integer> selectExperienceStatistics();
 }
-

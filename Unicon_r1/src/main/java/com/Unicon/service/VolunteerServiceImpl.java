@@ -6,16 +6,13 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.VolunteerApplyVO;
 import com.Unicon.domain.VolunteerVO;
 import com.Unicon.persistence.VolunteerDAO;
@@ -82,11 +79,6 @@ public class VolunteerServiceImpl implements VolunteerService {
             throw new RuntimeException("존재하지 않는 봉사활동입니다.");
         }
         return volunteer;
-    }
-    
-    @Override
-    public VolunteerVO getVolunteer(Long voId, String memberId) throws Exception {
-        return volDAO.fetchVolunteer(voId, memberId);
     }
     
     @Override

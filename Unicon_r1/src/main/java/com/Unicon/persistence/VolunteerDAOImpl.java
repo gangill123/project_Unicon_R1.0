@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.VolunteerApplyVO;
 import com.Unicon.domain.VolunteerVO;
 
@@ -48,14 +47,6 @@ public class VolunteerDAOImpl implements VolunteerDAO {
     @Override
     public VolunteerVO selectVolunteer(Long voId) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".selectVolunteer", voId);
-    }
-    
-    @Override
-    public VolunteerVO fetchVolunteer(Long voId, String memberId) throws Exception {
-        Map<String, Object> params = new HashMap<>();
-        params.put("voId", voId);
-        params.put("memberId", memberId);
-        return sqlSession.selectOne(NAMESPACE + ".fetchVolunteerInfo", params);
     }
     
     @Override

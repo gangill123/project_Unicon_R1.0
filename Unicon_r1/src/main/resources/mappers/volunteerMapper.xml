@@ -73,15 +73,6 @@
 	    set recruitStatus = 'OPEN'
 	    where voId = #{voId}
 	</update>
-	
-	<select id="fetchVolunteer" parameterType="map" resultType="VolunteerVO">
-        select v.*, m.*
-        from _volunteer v
-        join _member m 
-        on v.member_id = m.member_id
-        where v.vo_id = #{voId} 
-        and m.member_id = #{member_id}
-    </select>
     
     <!-- 봉사활동 단일 조회 -->
     <select id="selectVolunteer" resultType="VolunteerVO">
@@ -106,7 +97,7 @@
 	         where volunteerId = v.voId and status != 'CANCELED') as applicationCount
 	    from _volunteer v
 	    where v.voId = #{voId}
-	</select>
+</select>
 
     <!-- 봉사활동 목록 조회 -->
     <!-- 봉사활동 전체 목록 조회 -->
