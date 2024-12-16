@@ -1,45 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:beans="http://www.springframework.org/schema/beans"
+   xmlns:security="http://www.springframework.org/schema/security"
+   xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- Custom JWT Authentication Filter 빈 등록 -->
+    <beans:bean id="jwtAuthenticationFilter" class="com.Unicon.security.JwtAuthenticationFilter">
+        <beans:property name="jwtTokenUtil" ref="jwtTokenUtil"/>
+        <beans:property name="customUserDetailsService" ref="customUserDetailsService"/>
+    </beans:bean>
 
-	<!-- 로그인 성공시 처리하는 객체 -->
-	<beans:bean id="customLoginSuccess" class="com.Unicon.security.CustomLoginSuccessHandler"/>
+    <!-- 시큐리티 설정 -->
+    <security:http>
+        <!-- 공용 경로 허용 -->
+        <security:intercept-url pattern="/*" access="permitAll"/>
+        <security:intercept-url pattern="/login" access="permitAll"/>
+        <security:intercept-url pattern="/main" access="permitAll"/>
+        <security:intercept-url pattern="/register/mType" access="permitAll"/>
+        <security:intercept-url pattern="/register/mRegister4" access="permitAll"/>
+        <security:intercept-url pattern="/register/mRegister5" access="permitAll"/>
+        <security:intercept-url pattern="/register/sRegister" access="permitAll"/>
+        <security:intercept-url pattern="/register/mRegister6" access="permitAll"/>
+        <security:intercept-url pattern="/register/iRegister" access="permitAll"/>
+        <security:intercept-url pattern="/login/customLogin" access="permitAll"/>
+        <security:intercept-url pattern="/api/kakao/login" access="permitAll"/>
+        <security:intercept-url pattern="/api/naver/login" access="permitAll"/>
+        <security:intercept-url pattern="/resources/**" access="permitAll"/> <!-- 정적 리소스 허용 -->
 
-  	<!-- BCryptPasswordEncoder 빈 정의 -->
+        <!-- 인증된 사용자만 접근 가능 -->
+<!--         <security:intercept-url pattern="/main" access="hasRole('ROLE_MEMBER')"/>
+        <security:intercept-url pattern="/admin/**" access="hasRole('ROLE_MEMBER')"/> -->
+        
+<!--         JWT로 인증된 사용자만 접근 가능한 경로 설정 인증된 사용자가 필요함?
+   		<security:intercept-url pattern="/community/**" access="hasRole('ROLE_MEMBER')"/>
+    	<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/> -->
+        
+
+        <!-- 모든 요청 기본 정책 -->
+        <security:intercept-url pattern="/**" access="denyAll"/>
+
+        <!-- 로그인 설정 -->
+        <security:form-login login-page="/login/customLogin" 
+                             username-parameter="member_id"
+                             password-parameter="member_pw" 
+                             authentication-success-handler-ref="customLoginSuccess"/>
+
+        <!-- 로그아웃 설정 -->
+        <security:logout logout-url="/customLogout" invalidate-session="true"/>
+
+        <!-- CSRF 비활성화 (테스트 환경) -->
+        <security:csrf disabled="true"/>
+
+        <!-- JWT 필터 등록: 'before' 속성으로 필터 순서 설정 (뭔말이여..?)-->
+        <security:custom-filter ref="jwtAuthenticationFilter" before="FORM_LOGIN_FILTER"/>
+
+    </security:http>
+
+    <!-- 시큐리티 인증관리 설정 -->
+    <security:authentication-manager alias="authenticationManager">
+        <!-- DaoAuthenticationProvider 설정 -->
+        <security:authentication-provider user-service-ref="customUserDetailsService">
+            <security:password-encoder ref="bcryptPasswordEncoder"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <!-- CustomUserDetailsService 빈 정의 -->
+    <beans:bean id="customUserDetailsService" class="com.Unicon.service.CustomUserDetailsService"/>
+
+    <!-- JWT Token Util 빈 등록 -->
+    <beans:bean id="jwtTokenUtil" class="com.Unicon.security.JwtTokenUtil"/>
+    
     <beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-
-
- 	<!-- 시큐리티 설정 -->
-	<security:http>
-		<security:intercept-url pattern="/login/mLogin" access="hasRole('ROLE_MEMBER')"/>
-		<!-- 카카오 로그인 API -->
-		<security:intercept-url pattern="/api/kakao/login" access="permitAll"/>
-		<!-- 네이버 로그인 API -->
-		<security:intercept-url pattern="/api/naver/login" access="permitAll"/>
-		
-		<!-- 시큐리티 기본 로그인 페이지 -->
-		<security:form-login login-page="/login/customLogin" 
-		                     authentication-success-handler-ref="customLoginSuccess"/>
-		                     
-		<!-- 로그아웃 -->
-		<security:logout logout-url="/customLogout" invalidate-session="true"/>
+    
+	<beans:bean id="customLoginSuccess" class="com.Unicon.security.CustomLoginSuccessHandler">
+	    <beans:constructor-arg ref="jwtTokenUtil"/>
+	</beans:bean>
 	
-	</security:http> 
- 	<!-- 시큐리티 인증관리 설정 -->
- 	<security:authentication-manager>
- 		<security:authentication-provider>
- 			
-		 	<!-- 1층에서 방문자 기록 (사용자 정보 저장체크) -->
- 		 	<security:user-service>
-		 		<security:user name="member" password="{noop}1234" authorities="ROLE_MEMBER"/>
-		 	</security:user-service> 
-		 	
-		 		</security:authentication-provider>
-		 	</security:authentication-manager>
- 
-</beans:beans>
+    
+    
+
+</beans>
