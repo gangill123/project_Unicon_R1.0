@@ -446,6 +446,16 @@
 	where animal_id = #{animal_id} and member_id = #{member_id} limit 1 
 </select>
 
+<!-- 상담 신청 목록 -->
+<!-- 
+<select id="">
+	select adc.animal_id, adc.member_id, adc.counsel_subdate, 
+	 adc.counsel_procdate, adc.counsel_status, adc.counsel_reason 
+	  ad.adpt_id, 
+	   a.animal_name, 
+	    m.member_name, m.member_id, m.member_gender, m.member_tel, m.member_birth, m.member_email, m.road_address, m.detail_address, 
+	     c.category_code, 
+</select> -->
 
 </mapper>
 
