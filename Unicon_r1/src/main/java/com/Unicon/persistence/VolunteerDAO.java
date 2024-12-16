@@ -14,6 +14,8 @@ public interface VolunteerDAO {
     void updateVolunteerStatus(Map<String, Object> params) throws Exception;
     public void updateRecruitStatus(Map<String, Object> params) throws Exception;
     VolunteerVO selectVolunteer(Long voId) throws Exception;
+    VolunteerVO fetchVolunteer(Long voId, String memberId) throws Exception;
+    
     List<VolunteerVO> getAllVolunteers(Map<String, Object> params) throws Exception;
     List<VolunteerVO> getOngoingVolunteers(Map<String, Object> params) throws Exception;
     List<VolunteerVO> getClosedVolunteers(Map<String, Object> params) throws Exception;
@@ -35,11 +37,5 @@ public interface VolunteerDAO {
     public List<Map<String, Object>> selectProgramStatistics();
     public List<Map<String, Object>> selectMonthlyStatistics();
     public Map<String, Integer> selectExperienceStatistics();
-    
-    // 로그인 관련
-    MemberVO login(MemberVO member);
-    
-    // 로그인 상태 확인
-    boolean isLoggedIn(MemberVO member);
 }
 

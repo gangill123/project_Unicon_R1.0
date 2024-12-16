@@ -36,38 +36,6 @@ public class VolunteerServiceImpl implements VolunteerService {
     private ThreadPoolTaskExecutor taskExecutor;
     
     @Override
-    public MemberVO loginProcess(MemberVO member) {
-        // 로그인 시도 기록
-        recordLoginAttempt(member);
-
-        // 계정 잠금 여부 확인
-        if (isAccountLocked(member.getMember_id())) {
-            return null;
-        }
-
-        // 실제 로그인 시도
-        return volDAO.login(member);
-    }
-
-    @Override
-    public boolean validateUserLogin(MemberVO member) {
-        // 로그인 성공 여부 확인
-        MemberVO foundUser = volDAO.login(member);
-        return foundUser != null;
-    }
-
-    @Override
-    public void recordLoginAttempt(MemberVO user) {
-        
-    }
-
-    @Override
-    public boolean isAccountLocked(String userId) {
-       
-        return false;
-    }
-    
-    @Override
     @Transactional
     public void registerVolunteer(VolunteerVO volunteer) throws Exception {
         try {
@@ -114,6 +82,11 @@ public class VolunteerServiceImpl implements VolunteerService {
             throw new RuntimeException("존재하지 않는 봉사활동입니다.");
         }
         return volunteer;
+    }
+    
+    @Override
+    public VolunteerVO getVolunteer(Long voId, String memberId) throws Exception {
+        return volDAO.fetchVolunteer(voId, memberId);
     }
     
     @Override

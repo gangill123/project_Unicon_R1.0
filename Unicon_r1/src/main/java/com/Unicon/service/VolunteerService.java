@@ -12,7 +12,10 @@ public interface VolunteerService {
     void registerVolunteer(VolunteerVO volunteer) throws Exception;
     void updateVolunteer(VolunteerVO volunteer) throws Exception;
     void deleteVolunteer(Long voId) throws Exception;
-    VolunteerVO getVolunteer(Long voId) throws Exception;
+
+	VolunteerVO getVolunteer(Long voId) throws Exception;
+    VolunteerVO getVolunteer(Long voId, String member_Id) throws Exception;
+    
     Map<String, Object> getVolunteerList(int page, int size, String status, String keyword, 
                                        String startDate, String endDate) throws Exception;
     List<VolunteerVO> getOngoingVolunteers() throws Exception;
@@ -30,14 +33,4 @@ public interface VolunteerService {
     List<VolunteerApplyVO> getMyApplications(String userId) throws Exception;
     Map<String, Object> getApplicationList(Long volunteerId, String status) throws Exception;
     List<VolunteerVO> getDraftList() throws Exception;
-    
-    // 로그인 처리
-    MemberVO loginProcess(MemberVO member);
-    
-    // 로그인 상태 확인
-    boolean validateUserLogin(MemberVO member);
-    
-    // 추가적인 로그인 관련 비즈니스 로직 메서드들
-    void recordLoginAttempt(MemberVO user);
-    boolean isAccountLocked(String userId);
 }
