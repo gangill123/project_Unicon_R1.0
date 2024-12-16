@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.OptionVO;
+import com.Unicon.domain.OrdersDetailVO;
+import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ProductVO;
 
 @Repository("productDAO")
@@ -83,5 +85,12 @@ public class ProductDAO {
 	public int updatePrice(Map<String, Object> data) {
 		int productList = sqlSession.update(NAMESPACE + "updatePrice", data);
 		return productList; 
+	}
+	
+	// 주문통합검색 /  통합 검색 데이터 테이블 요청
+	public List<OrdersVO> getOrder(String member_id) {
+		List<OrdersVO> list = sqlSession.selectList(NAMESPACE + "getOrdersWithDetails", member_id);
+		
+		return list; 
 	}
 }

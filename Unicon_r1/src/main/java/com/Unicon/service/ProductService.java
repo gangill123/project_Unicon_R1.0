@@ -25,6 +25,7 @@ import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.CheckImageVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.OptionVO;
+import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ProductVO;
 import com.Unicon.persistence.AdptDAO;
 import com.Unicon.persistence.ProductDAO;
@@ -78,6 +79,11 @@ public class ProductService {
 	public int updatePrice(Map<String, Object> data) {
 		int result = pDao.updatePrice(data);
 		return result;
+	}
+	// 주문통합 검색 / 통합 검색 데이터 테이블 요청
+	public List<OrdersVO> getOrder(String member_id) {
+		List<OrdersVO> list = pDao.getOrder(member_id);
+		return list;
 	}
 	
 

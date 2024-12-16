@@ -845,10 +845,10 @@ pageEncoding="UTF-8"%>
 								      <option>품절</option>
 								      <option>판매중지</option>
 								  </select>
-	                              <span style="line-height: 32px;">|</span>
 	                              <button id="changeSalesPeriodButton" class="store-btn">판매기간 변경</button>
-								  <button id="changeStockQuantityButton" class="store-btn">재고수량 변경</button>
 								  <button id="changePriceButton" class="store-btn">판매가 변경</button>
+								  <span style="line-height: 32px;">|</span>
+								  <button id="changeStockQuantityButton" class="store-btn">재고수량 변경</button>
 	                            </div>
 	                           	<div>
 	                           		<button class="store-btn" id="update-btn" style="padding: 8px">수정 변경</button>

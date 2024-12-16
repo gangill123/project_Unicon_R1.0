@@ -35,6 +35,7 @@ import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.OptionVO;
+import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ProductVO;
 import com.Unicon.service.AdminStoreService;
 import com.Unicon.service.CategoryDataService;
@@ -204,6 +205,25 @@ public class StoreRestController {
     		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
     	} else {
     		return new ResponseEntity<String>("성공적", HttpStatus.OK);
+    	}
+    }
+    
+    // 주문통합검색 / 통합 검색 데이터 테이블 요청
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    public ResponseEntity<List<OrdersVO>> orderGET(HttpSession session) {
+    	logger.info("orderGET REST API 호출 : ");
+    	
+    	// 세션에 member_id를 받아와서
+    	// String member_id = (String)session.getAttribute("member_id");
+    	 String member_id = "mingan2";
+    	List<OrdersVO> list =  pService.getOrder(member_id); 
+    	logger.info("list"+list);
+    	
+    	// 이거 반환하는 값 수정해야됨.
+    	if (list == null) {
+    		return new ResponseEntity<List<OrdersVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<List<OrdersVO>>(list, HttpStatus.OK);
     	}
     }
     
