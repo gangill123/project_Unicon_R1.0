@@ -1407,7 +1407,6 @@
 				
 				$('#a-image-input-multi').on('change', function(e) {
 					const aImagefiles = e.target.files;
-					const reader = new FileReader();
 					const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
 					let validaImagefiles = true;
 					
@@ -1425,11 +1424,23 @@
 						if(validaImagefiles) {
 				            for (let i = 0; i < aImagefiles.length; i++) {
 				                    const fileInput = $('#image-input' + i)[0];
+				                    const inputPreview = $('#image-preview' + i);
+				                    const inputPlus = $('#plusIcon' + i);
+				                    const inputChangeCheck = $('#changeCheck' + i);
+				                    const inputTempSrc = $('#tempSrc' + i);
 				                    const dataTransfer = new DataTransfer();
 				                    
 				                    dataTransfer.items.add(aImagefiles[i]);
 				                    fileInput.files = dataTransfer.files;
-				                    fileInput.dispatchEvent(new Event('change'));
+				                    
+									const reader = new FileReader();
+									reader.readAsDataURL(aImagefiles[i]);
+				                    reader.onload = function(e) {
+				                    	inputPreview.attr('src', e.target.result).show();
+				                    	inputPlus.hide();
+				                    	inputChangeCheck.val(1);
+				                    	inputTempSrc.val('');
+				                    }
 				            }
 						} else {
 							alert('허용되지 않는 파일 형식이 포함되어 있습니다.');

@@ -188,6 +188,13 @@ public class AdptService {
 	}
 	
 	
+	/*=========== 사용자 페이지 상담신청 확인 ===========*/
+	public boolean counselCheckMember(Map<String, String> counselCheckParams) {
+		logger.debug("( •̀ ω •́ )✧ counselCheckMember() 실행");
+		
+		return aDao.counselCheckMember(counselCheckParams);
+	}
+	
 	
 	
 /*========================= 메서드 =========================*/

@@ -395,6 +395,21 @@
 			
 		$modalBody.append(modalContext);
 		
+		$.ajax({
+			url: '/adpt/counsel/check',
+			method: 'GET',
+			data: {
+				'animal_id': animal_id
+			},
+			success: function(resp) {
+				if(resp) {
+					$('#adptCounselbtn').text('신청중').prop('disabled', true);
+				}
+			},
+			error: function(error) {
+				console.error('요청 실패:', error);
+			}
+		});
 		
 		const actGaugeDivs = document.querySelectorAll('.actGauge div');
 		

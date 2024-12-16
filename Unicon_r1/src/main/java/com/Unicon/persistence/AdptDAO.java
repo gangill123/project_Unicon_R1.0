@@ -217,5 +217,13 @@ public class AdptDAO {
 	}
 	
 	
+	/*=========== 사용자 페이지 상담신청 확인 ===========*/
+	public boolean counselCheckMember(Map<String, String> counselCheckParams) {
+		logger.debug("( •̀ ω •́ )✧ counselCheckMember() 실행");
+		
+		Integer counselCount = sqlSession.selectOne(NAMESPACE+"counselCheckMember", counselCheckParams);
+		logger.debug("( •̀ ω •́ )✧ counselCount : {}",counselCount);
+		return counselCount > 0 && counselCount != null;
+	}
 	
 }
