@@ -13,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.Unicon.domain.AdptVO;
-import com.Unicon.domain.AnimalHealthVO;
 import com.Unicon.domain.AnimalVO;
-import com.Unicon.domain.AnimalVaccineVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.MemberVO;
 
