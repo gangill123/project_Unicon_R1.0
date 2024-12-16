@@ -1116,12 +1116,12 @@ window.goToPage = function(page) {
     if (startDate) params.append('startDate', startDate);
     if (endDate) params.append('endDate', endDate);
     
-    window.location.href = '/volunteer/manage?' + params.toString(); 
+    window.location.href = '/volunteer/manage/voList?' + params.toString(); 
 };
 
 // 검색 초기화
 window.resetSearch = function() {
-    window.location.href = '/volunteer/manage?page=1&size=10';
+    window.location.href = '/volunteer/manage/voList?page=1&size=10';
 };
 
 </script>

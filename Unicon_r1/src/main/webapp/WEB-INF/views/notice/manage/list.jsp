@@ -586,12 +586,12 @@
         if (startDate) params.append('startDate', startDate);
         if (endDate) params.append('endDate', endDate);
         
-        window.location.href = '/notice/manage?' + params.toString();
+        window.location.href = '/notice/manage/noList?' + params.toString();
     };
 
     // 검색 초기화
     window.resetSearch = function() {
-        window.location.href = '/notice/manage?page=1&size=10';
+        window.location.href = '/notice/manage/noList?page=1&size=10';
     };
 
  	// 공지사항 삭제

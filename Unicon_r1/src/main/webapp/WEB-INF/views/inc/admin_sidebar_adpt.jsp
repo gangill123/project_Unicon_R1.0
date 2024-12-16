@@ -9,6 +9,7 @@
                 <span class="menu-title">메인페이지</span>
               </a>
             </li>
+            
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#adoption-mgmt" aria-expanded="false" aria-controls="adoption-mgmt">
                 <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
@@ -23,44 +24,36 @@
                 </ul>
               </div>
             </li>
+            
             <li class="nav-item">
-              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <span class="icon-bg"><i class="mdi mdi-crosshairs-gps menu-icon"></i></span>
-                <span class="menu-title">UI Elements</span>
+              <a class="nav-link" data-toggle="collapse" href="#notice" aria-expanded="false" aria-controls="notice">
+                <span class="icon-bg"><i class="mdi mdi-bullhorn"></i></span>
+                <span class="menu-title">공지사항 관리</span>
                 <i class="menu-arrow"></i>
               </a>
-              <div class="collapse" id="ui-basic">
+              <div class="collapse" id="notice">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="/pages/ui-features/buttons">Buttons</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/pages/ui-features/dropdowns">Dropdowns</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/pages/ui-features/typography">Typography</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/notice/manage/form">공지사항 등록</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/notice/manage/noList">공지사항 목록</a></li>
                 </ul>
               </div>
             </li>
+            
             <li class="nav-item">
-              <a class="nav-link" href="/pages/icons/mdi">
-                <span class="icon-bg"><i class="mdi mdi-contacts menu-icon"></i></span>
-                <span class="menu-title">Icons</span>
-              </a>
+              <a class="nav-link" data-toggle="collapse" href="#volunteer" aria-expanded="false" aria-controls="volunteer">	
+                <span class="icon-bg"><i class="mdi mdi-thumb-up-outline"></i></span>
+                <span class="menu-title">봉사활동 관리</span>
+                <i class="menu-arrow"></i>
+              </a>  
+              <div class="collapse" id="volunteer">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/volForm">봉사활동 등록</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/voList">봉사활동 목록</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/volStatistics">봉사활동 통계</a></li>
+                </ul>
+              </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/pages/forms/basic_elements">
-                <span class="icon-bg"><i class="mdi mdi-format-list-bulleted menu-icon"></i></span>
-                <span class="menu-title">Forms</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/pages/charts/chartjs">
-                <span class="icon-bg"><i class="mdi mdi-chart-bar menu-icon"></i></span>
-                <span class="menu-title">Charts</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/pages/tables/basic-table">
-                <span class="icon-bg"><i class="mdi mdi-table-large menu-icon"></i></span>
-                <span class="menu-title">Tables</span>
-              </a>
-            </li>
+            
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
@@ -71,11 +64,11 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="/AM/manager/animals/everything"> 입양동물 관리 </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/AM/manager/writings/total"> 입양글 관리 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/pages/samples/blank-page"> Blank Page </a></li>
+                  <!-- <li class="nav-item"> <a class="nav-link" href="/pages/samples/blank-page"> Blank Page </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/pages/samples/login"> Login </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/pages/samples/register"> Register </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/pages/samples/error-404"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/pages/samples/error-500"> 500 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/pages/samples/error-500"> 500 </a></li> -->
                 </ul>
               </div>
             </li>

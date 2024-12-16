@@ -183,9 +183,9 @@ public class VolunteerController {
     }
     
     // ======= 관리자 뷰 매핑 =======
-    // http://localhost:8088/volunteer/manage
+    // http://localhost:8088/volunteer/manage/voList
     
-    @GetMapping("/manage")
+    @GetMapping("/manage/voList")
     public String adminList(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,

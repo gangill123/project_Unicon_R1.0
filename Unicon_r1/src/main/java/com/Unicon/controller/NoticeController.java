@@ -92,10 +92,10 @@ public class NoticeController {
     }
     
     // ======= 관리자 뷰 매핑 =======
-    // http://localhost:8088/notice/manage
+    // http://localhost:8088/notice/manage/noList
     
     // 관리자 공지사항 목록
-    @GetMapping("/manage")
+    @GetMapping("/manage/noList")
     public String adminList(
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
@@ -263,7 +263,7 @@ public class NoticeController {
             }
             
             logger.info("공지사항 저장 완료");
-            return ResponseEntity.ok().body("/notice/manage");
+            return ResponseEntity.ok().body("/notice/manage/noList");
             
         } catch (Exception e) {
             logger.error("공지사항 저장 중 오류 발생", e);
@@ -308,7 +308,7 @@ public class NoticeController {
                 fileService.saveFile(thumbnailFile);
             }
             
-            return "redirect:/notice/manage";
+            return "redirect:/notice/manage/noList";
             
         } catch (Exception e) {
             logger.error("공지사항 저장 실패", e);

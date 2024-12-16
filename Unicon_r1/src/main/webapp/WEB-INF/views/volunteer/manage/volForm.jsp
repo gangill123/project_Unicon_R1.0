@@ -571,7 +571,7 @@
                         confirmButtonText: '확인'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location.href = '/volunteer/manage';
+                            window.location.href = '/volunteer/manage/voList';
                         }
                     });
                 },
