@@ -38,7 +38,9 @@
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
 
 <!--====================================작성부=====================================-->
-
+<c:if test="${empty userId}">
+	<c:redirect url="/main"/>
+</c:if>
 <section class="bg-light" style="padding: 60px;">
     <div class="container">
     
@@ -62,7 +64,7 @@
                     	
                     	<!-- 숨겨서 들고갈 값(세션) -->
                     	<!-- member_id -->
-                    	<input id="member_id" name="member_id" type="hidden" value="bini97">
+                    	<input id="member_id" name="member_id" type="text" value="${userId }">
                     	<!-- 숨겨서 들고갈 값(세션) -->
                     	
                         <div class="quform-elements">
@@ -345,7 +347,7 @@ $(function() {
 	// 실종(발견) 게시물 선택시 보여지는 필드
 	
 	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
-    var memberId = $('#member_id').val();
+    // var memberId = $('#member_id').val();
 
 //     if (memberId === "test3") {
 //         $('#location').val("인천");
