@@ -17,21 +17,21 @@
 
 <style>
 	.product-details:hover {
-	    opacity: 0.7; /* 투명도 설정 */
-	    transition: opacity 0.3s ease; /* 부드러운 애니메이션 효과 */
+	    opacity: 0.7; 
+	    transition: opacity 0.3s ease; 
 	}
 	
 	.product-img {
 	    width: 100%;
-	    aspect-ratio: 1 / 1; /* 원하는 가로:세로 비율 설정 */
-	    overflow: hidden;    /* 이미지가 컨테이너를 벗어나지 않도록 */
+	    aspect-ratio: 1 / 1; 
+	    overflow: hidden;    
 	}
 	
 	.product-img img {
 	    width: 100%;
 	    height: 100%;
-	    object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
-	    border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
+	    object-fit: fill;   
+	    border-radius: 0.75rem; 
 	}
 	
 	.filtering span{
@@ -61,13 +61,12 @@
 	    color: #333;
 	}
 	
-	/* 추가적인 구체성을 위한 스타일 */
 	div.application-card div.card-header h5.mb-0.fs-6 {
 	    font-weight: 700 !important;
 	}
 	
 	.row.g-4 {
-	    margin: -12px; /* 간격 조정 */
+	    margin: -12px;
 	}
 	
 	.row.g-4 > [class*="col-"] {
@@ -168,6 +167,14 @@
 	    width: 24px;
 	}
 	
+	.services-single-menu li a {
+    	color: #575a7b !important; 
+    }
+
+	.services-single-menu li.active a {
+		color: #86bc42 !important; 
+	}	
+		
 	/* 버튼 스타일 */
 	.btn-detail, .cancel-btn {
 	    border: none;
@@ -322,10 +329,10 @@
                     <div class="services-single-left-box">
                         <div class="services-single-menu mb-1-9">
                             <ul class="m-0 list-unstyled">
-                                <li><a href="#!">프로필 관리</a></li>
+                                <li><a href="/mypage">프로필 관리</a></li>
                                 <li><a href="#!">커뮤니티 관리</a></li>
-                                <li><a href="#!">주문 관리</a></li>
-                                <li class="active"><a href="#!">봉사활동 관리</a></li>
+                                <li><a href="/mypage/orders">주문 관리</a></li>
+                                <li class="active"><a href="/volunteer/mylist">봉사활동 관리</a></li>
                             </ul>
                         </div>
                     </div>

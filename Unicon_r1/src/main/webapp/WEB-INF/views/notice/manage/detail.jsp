@@ -22,6 +22,11 @@
     <!-- End layout styles -->
     
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/admin/images/favicon.png" />
+    
+    <!-- SweetAlert2 CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+	<!-- SweetAlert2 JS -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
 
 <style>
 	/* 기본 카드 스타일 */
@@ -222,6 +227,23 @@
 	    color: white;
 	}
 	
+	/* SweetAlert2 커스텀 스타일 */
+	.swal2-popup .swal2-actions {
+	    justify-content: center;
+	}
+	
+	.swal2-popup .swal2-confirm {
+	    background-color: #86bc42 !important;
+	}
+	
+	.swal2-popup .swal2-cancel {
+	    background-color: #aaa !important;
+	}
+	
+	.swal2-popup {
+	    font-size: 0.9rem !important;
+	}
+	
 	/* 반응형 처리를 위한 미디어 쿼리 */
 	@media screen and (min-width: 768px) {
 	    .d-flex h5 {
@@ -288,7 +310,7 @@
                                     <!-- 3행: 버튼 영역 -->
                                     <div class="card-footer bg-white">
 									    <div class="d-flex justify-content-between align-items-center">
-									        <a href="/notice/manage" class="btn btn-secondary">목록으로</a>
+									        <a href="/notice/manage/noList" class="btn btn-secondary">목록으로</a>
 									        <div>
 									            <!-- 이전글/다음글 네비게이션 -->
 									            <div class="btn-group me-2">
@@ -351,30 +373,60 @@
 
     <script>
     function confirmDelete(noId) {
-        if(confirm('정말 삭제하시겠습니까?')) {
-            const token = $("meta[name='_csrf']").attr("content");
-            const header = $("meta[name='_csrf_header']").attr("content");
-            
-            $.ajax({
-                url: '/notice/api/delete/' + noId,
-                type: 'POST',
-                beforeSend: function(xhr) {
-                    if(token && header) {
-                        xhr.setRequestHeader(header, token);
+        Swal.fire({
+            title: '삭제 확인',
+            text: '정말 삭제하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: '삭제',
+            cancelButtonText: '취소',
+            reverseButtons: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
+
+                $.ajax({
+                    url: '/notice/api/delete/' + noId,
+                    type: 'POST',
+                    beforeSend: function(xhr) {
+                        if (token && header) {
+                            xhr.setRequestHeader(header, token);
+                        }
+                    },
+                    success: function() {
+                        Swal.fire({
+                            title: '삭제 완료',
+                            text: '성공적으로 삭제되었습니다.',
+                            icon: 'success',
+                            confirmButtonText: '확인'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = '/notice/manage/noList';
+                            }
+                        });
+                    },
+                    error: function(xhr) {
+                        console.error('Error:', xhr);
+                        var errorMsg = xhr.responseText || '서버 오류가 발생했습니다.';
+                        Swal.fire({
+                            title: '삭제 실패',
+                            text: errorMsg,
+                            icon: 'error',
+                            confirmButtonText: '확인'
+                        });
                     }
-                },
-                success: function() {
-                    alert('삭제되었습니다.');
-                    window.location.href = '/notice/manage';
-                },
-                error: function(xhr) {
-                    console.error('Error:', xhr);
-                    const errorMsg = xhr.responseText || '서버 오류가 발생했습니다.';
-                    alert('삭제 실패: ' + errorMsg);
-                }
-            });
-        }
+                });
+            }
+        });
     }
+
+    // 버튼 클릭 이벤트 리스너
+    document.getElementById('confirmDelete').addEventListener('click', function(event) {
+        event.preventDefault();
+        var noId = this.dataset.noId; 
+        confirmDelete(noId);
+    });
     </script>
 </body>
 </html>

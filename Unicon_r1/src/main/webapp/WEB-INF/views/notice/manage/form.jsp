@@ -451,7 +451,7 @@
                 <div class="text-right">
 			        <div class="row">
 			            <div class="col-6">
-			                <button type="button" class="btn btn-secondary w-100" onclick="location.href='/notice/manage'">취소</button>
+			                <button type="button" class="btn btn-secondary w-100" onclick="location.href='/notice/manage/noList'">취소</button>
 			            </div>
 			            <div class="col-6">
 			                <button type="submit" id="submitBtn" class="btn btn-primary w-100">저장</button>
@@ -800,7 +800,7 @@ $(document).ready(function() {
                     confirmButtonText: '확인'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '/notice/manage';
+                        window.location.href = '/notice/manage/noList';
                     }
                 });
             },

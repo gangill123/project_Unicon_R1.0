@@ -244,6 +244,10 @@
 
 <div class="container-xxl py-5">
     <div class="container">
+    	<div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h1 class="mb-3">봉사활동 공고</h1>
+            <p>유니콘과 함께하는 따뜻한 나눔의 여정을 알려드립니다</p>
+        </div>
 
         <!-- 공고 내역 탭 -->
         <ul class="nav nav-tabs mb-4" id="volunteerTabs" role="tablist">
