@@ -352,8 +352,8 @@
 				text: "삭제 후에는 복구할 수 없습니다.",
 				icon: 'warning',
 				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
+				confirmButtonColor: '#86bc42',
+				cancelButtonColor: '#aaa',
 				confirmButtonText: '삭제',
 				cancelButtonText: '취소',
 				customClass: {
@@ -369,6 +369,7 @@
 								title: '삭제가 완료되었습니다!',
 								text: "신규등록을 통해 재등록이 가능합니다.",
 								icon: 'success',
+								confirmButtonColor: '#86bc42',
 								customClass: {
 									popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 								}
@@ -1613,7 +1614,7 @@
   	  			  title: '결제가 완료되었습니다!',
   	  			  text: "주문확인 페이지로 이동합니다.",
   	  			  icon: 'success',
-  	  			  confirmButtonColor: '#3085d6',
+  	  			  confirmButtonColor: '#86bc42',
   	  			  customClass: {
   	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
   	  			  }
