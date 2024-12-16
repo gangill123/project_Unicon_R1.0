@@ -401,7 +401,7 @@
 			Swal.fire({
 	  			  title: '주문페이지로 이동합니다.',
 	  			  icon: 'success',
-	  			  confirmButtonColor: '#3085d6',
+	  			  confirmButtonColor: '#86bc42',
 	  			  customClass: {
 	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 	  			  }

@@ -397,7 +397,7 @@
 			  			  title: '수정을 완료하였습니다.',
 			  			  text: "배송지를 선택하시기 바랍니다.",
 			  			  icon: 'success',
-			  			  confirmButtonColor: '#3085d6',
+			  			  confirmButtonColor: '#86bc42',
 			  			  customClass: {
 			  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 			  			  }
@@ -428,7 +428,7 @@
 			  			  title: '삭제를 완료하였습니다.',
 			  			  text: "배송지를 선택하시기 바랍니다.",
 			  			  icon: 'success',
-			  			  confirmButtonColor: '#3085d6',
+			  			  confirmButtonColor: '#86bc42',
 			  			  customClass: {
 			  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 			  			  }
@@ -487,7 +487,7 @@
 			  			  title: '등록을 완료하였습니다.',
 			  			  text: "배송지를 선택하시기 바랍니다.",
 			  			  icon: 'success',
-			  			  confirmButtonColor: '#3085d6',
+			  			  confirmButtonColor: '#86bc42',
 			  			  customClass: {
 			  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 			  			  }
