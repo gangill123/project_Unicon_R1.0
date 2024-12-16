@@ -64,6 +64,73 @@
     <result property="option_value2" column="option_value2"/> <!-- 추가 옵션 값 -->
 </resultMap>
 
+<resultMap id="OrdersDetailMap" type="OrdersDetailVO">
+    <id property="order_detail_id" column="order_detail_id"/>
+    <result property="order_id" column="order_id"/>
+    <result property="product_id" column="product_id"/>
+    <result property="product_subprice" column="product_subprice"/>
+    <result property="delivery_price" column="delivery_price"/>
+    <result property="orders_detail_status" column="orders_detail_status"/>
+    
+    <!-- ShopVO 객체 매핑 -->
+    <association property="shopVO" javaType="ShopVO" resultMap="ShopResultMap"/>
+    
+    <!-- OrdersDetailOptionVO 리스트 매핑 -->
+    <collection property="ordersDetailOptions" ofType="OrdersDetailOptionVO" resultMap="OrdersDetailOptionMap"/>
+
+</resultMap>
+<resultMap id="OrdersDetailOptionMap" type="com.Unicon.domain.OrdersDetailOptionVO">
+    <id property="order_detail_option_id" column="order_detail_option_id"/>
+    <result property="order_detail_id" column="order_detail_id"/>
+    <result property="order_id" column="order_id"/>
+    <result property="product_option" column="product_option"/>
+    <result property="option_price" column="option_price"/>
+    <result property="quantity" column="quantity"/>
+    <result property="orders_detail_option_status" column="orders_detail_option_status"/>
+    <result property="dispatch_date" column="dispatch_date"/>
+    <result property="cancellation_request_date" column="cancellation_request_date"/>
+    <result property="return_request_date" column="return_request_date"/>
+    <result property="review_check" column="review_check"/>
+</resultMap>
+
+<resultMap id="ShopResultMap" type="ShopVO">
+    <id property="shop_id" column="shop_id"/>
+    <result property="shop_name" column="shop_name"/>
+    <result property="shop_location" column="shop_location"/>
+    <result property="shop_status" column="shop_status"/>
+</resultMap>
+
+<resultMap id="OrdersMap" type="OrdersVO">
+    <!-- 주 키를 매핑 -->
+    <id property="order_id" column="order_id"/>
+    <result property="member_id" column="member_id"/>
+    <result property="order_name" column="order_name"/>
+    <result property="pay_method" column="pay_method"/>
+    <result property="total_product_price" column="total_product_price"/>
+    <result property="total_delivery_price" column="total_delivery_price"/>
+    <result property="total_price" column="total_price"/>
+    <result property="address" column="address"/>
+    <result property="detail_address" column="detail_address"/>
+    <result property="postal_code" column="postal_code"/>
+    <result property="recipient" column="recipient"/>
+    <result property="recipient_phone" column="recipient_phone"/>
+    <result property="status" column="status"/>
+    <result property="invoice_number" column="invoice_number"/>
+    <result property="delivery_method" column="delivery_method"/>
+    <result property="delivery_comment" column="delivery_comment"/>
+    <result property="create_date" column="create_date"/>
+    <result property="update_date" column="update_date"/>
+    <result property="payment_date" column="payment_date"/>
+    <result property="formatted_paydate" column="formatted_paydate"/>
+    <result property="imp_uid" column="imp_uid"/>
+    
+    <!-- MemberVO 객체 매핑 -->
+    <association property="memberVO" javaType="MemberVO" />
+    <!-- OrdersDetailVO 리스트를 매핑 -->
+    <collection property="ordersDetails" ofType="OrdersDetailVO" resultMap="OrdersDetailMap"/>
+    
+</resultMap>
+
 
 <insert id="insertProduct" parameterType="com.Unicon.domain.ProductVO">
     INSERT INTO _products (
@@ -84,7 +151,7 @@
         product_origin,
         product_expiry,
         product_status,
-        delivery_method,
+        delivery_company,
         delivery_price,
         address,
         create_date,
@@ -112,7 +179,7 @@
         #{product_origin},
         #{product_expiry},
         '승인대기',
-        #{delivery_method},
+        #{delivery_company},
         #{delivery_price},
         (SELECT address FROM member WHERE member_id = 'junghun87'),  -- 서브쿼리 추가 -> 이거 나중에는 'junghun87'이걸 member_id로 변경해야됨
         NOW(),
@@ -223,6 +290,20 @@
 	where 
 		product_id = #{currentProductId}
 </update>
+
+<select id="getOrdersWithDetails" resultMap="OrdersMap">
+SELECT 
+   	   o.*
+FROM 
+    _products p
+INNER JOIN 
+    _orders_detail d ON d.product_id = p.product_id
+INNER JOIN 
+    _orders o ON o.order_id = d.order_id
+WHERE 
+    p.product_seller_id = #{member_id}
+    AND o.status NOT IN ('취소종료', '취소')
+</select>
 
 
 

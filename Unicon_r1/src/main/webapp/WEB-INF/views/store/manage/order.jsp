@@ -76,7 +76,7 @@
 	}
 	
 	thead th:nth-child(7) {
-		border-radius: 0 1rem 0 0;
+		/* border-radius: 0 1rem 0 0; */
 	}
 	
 	tfoot th:nth-child(7) {
@@ -106,14 +106,12 @@
 	.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
 		background: #006e60;
 		border: #006e60;
-		border-radius: 3rem;
 		color: white !important;
 	}
 	
 	.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
 		background: #006e60;
 		border: #006e60;
-		border-radius: 3rem;
 	}
 	
 	.dataTables_length label, .dataTables_filter label {
@@ -126,22 +124,23 @@
 	}
 		
 	.table td {
-		font-size: 1.2rem;
+		font-size: 13px;
 		text-align: center;
 		padding: 0.7rem 0.5rem !important;
 	}
 	
 	.table th {
-		font-size: 1.2rem;
+	    border: 1px solid  #eee !important;
+		font-size: 14px;
 		text-align: center;
-		color: white;
-		background: #006e60;
+		color: #555555;
+   		background: #f9f9f9;
 		padding: 1.2rem 0.7rem !important;
 	}
 	
 	.table td, .table tr {
 		cursor: pointer;
-		background-color: transparent !important;
+		
 	}
 	
 	th select {
@@ -187,7 +186,8 @@
 	.search-select-box {
 		display: flex;
 		margin-bottom: 0.4rem;
-		gap: 6rem;
+		gap: 0rem;
+   	 max-width: 53rem;
 	}
     
     .search-select-box > div:first-child {
@@ -220,6 +220,12 @@
 	    font-size: 14px;
 	    transition: border 0.1s;	
 	}
+	
+	.detail {
+	
+	
+	
+	}
     
     
     
@@ -243,7 +249,7 @@
 									<h4 class="card-title">주문통합검색</h4>
 											<div class="search-box">
 												<div>조회기간</div>
-												<div>
+												<div style="width: 100%;"> 
 													<!-- 조건 select 박스로 -->
 													<div class="search-select-box">
 														<div>
@@ -252,22 +258,23 @@
 																<option value="shipping_date">발송처리일</option>
 															</select>
 														</div>
-														<div>
+														<div class="detail">
 															<span>상세조건</span>
 															<select id="select-value-detail">
 																<option value="all" selected="selected">전체</option>
-																<option value="recipient">수취인명</option>
 																<option value="order_name">구매자명</option>
-																<option value="order_phone">구매자연락처</option>
 																<option value="order_member_id">구매자ID</option>
+																<option value="recipient">수취인명</option>
+																<option value="recipient_phone">구매자연락처</option>
 															</select>
+															<input type="text" name="detailValue" disabled="disabled">
 														</div>
 													</div>
 													
 													<!-- 여긴 버튼으로 기간 선택하는 곳. -->
 													<div class="display-flex">
 														<div class="btn-box" >
-													        <button class="order-btn active" id="today">오늘</button>
+													        <button class="order-btn" id="today">오늘</button>
 														    <button class="order-btn" id="oneWeek">1주일</button>
 														    <button class="order-btn" id="oneMonth">1개월</button>
 														    <button class="order-btn" id="threeMonths">3개월</button>
@@ -281,32 +288,22 @@
 											    </div>
 											</div>
 										
-										<table id="animalTable" class="table table-hover col-12">
+										<table id="orderTable" class="table table-hover col-12">
 											<thead>
 												<tr>
 													<th>상품주문번호</th>
-													<th>주문번호</th>
-													<th>상품명</th>
-													<th>주문일시</th>
-													<th>주문상태</th>
-													<th>주문상태</th>
+													<th>구매자</th>
+													<th>가격</th>
+													<th>주소</th>
+													<th>수취인</th>
+													<th>수취인 전화번호</th>
 													<th>상태</th>
+													<th>상세 주문</th>
 												</tr>
 											</thead>
 											<tbody>
 											</tbody>
 											<!-- 셀렉트 박스내용들인가봄 -->
-											<tfoot>
-												<tr>
-													<th></th>
-													<th>동물종류</th>
-													<th>세부종류</th>
-													<th>세부종류</th>
-													<th></th>
-													<th></th>
-													<th>상태</th>
-												</tr>
-											</tfoot>
 										</table>
 								</div>
 							</div>
@@ -343,7 +340,7 @@
     $(function() {
     	
     	/*=============== DataTable 라이브러리 ===============*/
-		var aTable = $('#animalTable').DataTable({
+		var aTable = $('#orderTable').DataTable({
 			"autoWidth": false, 
 			"info": false,
 		    "paging": true,
@@ -360,69 +357,48 @@
 			"stateDuration": -1,
 			/*=============== DataTable ajax ===============*/
 			"ajax": {
-				url: '/adptmgmt/animals',
+				url: '/store/orders',
 				type: 'GET',
 				dataType: 'json',
 				dataSrc: function(json) {
 					return json.map(function(item) {
-						const date = new Date(item.animal_regdate);
+						console.log(item);
+						/* const date = new Date(item.animal_regdate);
 						const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 						const formattedDate = date.toLocaleDateString('ko-KR', options);
 						
-						item.animal_regdate = formattedDate;
+						item.animal_regdate = formattedDate; */
 						
-						switch(item.categoryDataVO.category_type) {
-							case '개': {
-								item.categoryDataVO.category_type = '개<i class="fa-solid fa-dog"></i>';
-								break;
-							}
-							case '고양이': {
-								item.categoryDataVO.category_type = '고양이<i class="fa-solid fa-cat"></i>';
-								break;
-							}
-							case '기타': {
-								item.categoryDataVO.category_type = '기타<i class="fa-solid fa-dove"></i>';
-								break;
-							}
-						}
-						
-						switch(item.status_value) {
-							case '대기중': {
-								item.status_value = '<label class="badge badge-warning">대기중</label>';
-								break;
-							}
-							case '모집중': {
-								item.status_value = '<label class="badge badge-primary">모집중</label>';
-								break;
-							}
-							case '상담중': {
-								item.status_value = '<label class="badge badge-danger">상담중</label>';
-								break;
-							}
-							case '입양완료': {
-								item.status_value = '<label class="badge badge-success">입양완료</label>';
-								break;
-							}
-							case '종료': {
-								item.status_value = '<label class="badge badge-secondary">종료</label>';
-								break;
-							}
-						}
+						item.address = "("+item.postal_code+") " +item.address + " "+item.detail_address;
+						item.total_product_price = item.total_product_price +"원";
 						return item;
 					});
 				}
 			},
 			"columns": [
-				{ data: 'animal_id' },
-				{ data: 'categoryDataVO.category_type' },
-				{ data: 'categoryDataVO.category_value' },
-				{ data: 'categoryDataVO.category_value' },
-				{ data: 'animal_name' },
-				{ data: 'animal_regdate' },
-				{ data: 'status_value' }
+				{ data: 'order_id' },
+				{ data: 'order_name' },
+				{ data: 'total_product_price' },
+				{ data: 'address' },
+				{ data: 'recipient' },
+				{ data: 'recipient_phone' },
+				{ data: 'status' },
+				{ 
+	                data: 'anoId', // product_id 열
+	                render: function(data, type, row) {
+	                    return "<button class='item-button' onclick='handleClick(\"" + row.anoId + "\")'>" +
+	                        "<span>:</span>" +
+	                        "</button>" +
+	                        "<div id='myModal" + row.anoId + "' class='myModal'>" + // 클래스 이름에 anoId 추가
+	                            "<div class='update' onclick='updatePopup(" + row.anoId + ")'>수정</div>" +
+	                            "<div class='dropdown-divider'></div>" +
+	                            "<div class='delete' onclick='deletePopup(" + row.anoId + ")'>삭제</div>" +
+	                        "</div>";
+	                }
+	            }
 			],
 			/*=============== DataTable ajax ===============*/
-			"order": [[4, "desc"]],
+			"order": [[0, "desc"]],
 			"columnDefs": [
 			],
 			/*=============== DataTable 필터링 ===============*/
@@ -436,7 +412,7 @@
 						return;
 					}
 					
-					var select = $('<select><option value=""></option></select>')
+					/* var select = $('<select><option value=""></option></select>')
 									.appendTo($(column.footer()).empty())
 									.on('change', function() {
 										var val = $.fn.dataTable.util.escapeRegex($(this).val());
@@ -447,14 +423,14 @@
 						var textValue = typeof d === 'string' ? d : $(d).text();
 						textValue = textValue.replace(/<[^>]*>/g, ''); 
 						select.append('<option value="' + textValue + '">' + textValue + '</option>');
-					});
+					}); */
 				});
 			}
 			/*=============== DataTable 필터링 ===============*/
 		});
 		
 		/*=============== DataTable 열마다 클래스 부여 ===============*/
-		aTable.on('draw', function() {
+		/* aTable.on('draw', function() {
 			$('#animalTable tbody').find('td').each(function() {
 				$(this).html($(this).html());
 			});
@@ -486,17 +462,17 @@
 				$(this).find('th:eq(4)').addClass('a-fifth-column');
 				$(this).find('th:eq(5)').addClass('a-six-column');
 			});
-		});
+		}); */
 		/*=============== DataTable 열마다 클래스 부여 ===============*/
 		/*=============== DataTable 라이브러리 ===============*/
 		
 		
 		
 		/*=============== tr 선택 상세 조회 ===============*/
-		$('table').on('click', 'tr.a-view-animal', function() {
+		/* $('table').on('click', 'tr.a-view-animal', function() {
 			const animal_id = $(this).find('td:eq(0)').text();
 			window.location.href = '/AM/animals/list/' + animal_id;
-		});
+		}); */
 		/*=============== tr 선택 상세 조회 ===============*/
 		
 		
@@ -507,7 +483,7 @@
         const today = new Date();
         const formattedToday = today.toISOString().split('T')[0];
         const oneYearAgo = new Date(today);
-        oneYearAgo.setDate(today.getDate() -0 );
+        oneYearAgo.setDate(today.getDate() - 30 );
         const formattedOneYearAgo = oneYearAgo.toISOString().split('T')[0];
 
         // 시작일과 종료일 필드 설정

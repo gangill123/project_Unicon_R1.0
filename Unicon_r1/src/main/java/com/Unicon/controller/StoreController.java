@@ -73,9 +73,6 @@ public class StoreController {
 	public void productsList(HttpSession session,Model model) {
 		logger.info("products/list 실행");
 	}
-	
-	
-	
 	// 2차 카테고리 가져오기
 	@RequestMapping( value="/product/create" , method =RequestMethod.GET )
 	public void productsCreate(Model model) {
@@ -87,12 +84,12 @@ public class StoreController {
 		model.addAttribute("CategoryDataList", CategoryDataList);
 	}
 	
+	
 	@RequestMapping( value="/manage/order" , method =RequestMethod.GET )
 	public void orderGET() {
 		logger.info("/manage/order 실행");
-		
-		
 	}
+	
 	@RequestMapping( value="/sale/delivery" , method =RequestMethod.GET )
 	public void deliveryGET() {
 		logger.info("/sale/delivery 실행");
@@ -102,10 +99,7 @@ public class StoreController {
 	public void deliverySituationGET() {
 		logger.info("/sale/deliverySituation 실행");
 	}
-	@RequestMapping( value="/claim/cancel" , method =RequestMethod.GET )
-	public void claimCancelGET() {
-		logger.info("/claim/cancel 실행");
-	}
+	
 	@RequestMapping( value="/claim/blackConsumer" , method =RequestMethod.GET )
 	public void blackConsumerGET() {
 		logger.info("/claim/blackConsumerGET 실행");
