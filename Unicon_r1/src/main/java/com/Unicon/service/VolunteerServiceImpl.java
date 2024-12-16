@@ -6,13 +6,16 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.VolunteerApplyVO;
 import com.Unicon.domain.VolunteerVO;
 import com.Unicon.persistence.VolunteerDAO;
@@ -31,6 +34,38 @@ public class VolunteerServiceImpl implements VolunteerService {
     @Inject
     @Qualifier("taskExecutor")
     private ThreadPoolTaskExecutor taskExecutor;
+    
+    @Override
+    public MemberVO loginProcess(MemberVO member) {
+        // 로그인 시도 기록
+        recordLoginAttempt(member);
+
+        // 계정 잠금 여부 확인
+        if (isAccountLocked(member.getMember_id())) {
+            return null;
+        }
+
+        // 실제 로그인 시도
+        return volDAO.login(member);
+    }
+
+    @Override
+    public boolean validateUserLogin(MemberVO member) {
+        // 로그인 성공 여부 확인
+        MemberVO foundUser = volDAO.login(member);
+        return foundUser != null;
+    }
+
+    @Override
+    public void recordLoginAttempt(MemberVO user) {
+        
+    }
+
+    @Override
+    public boolean isAccountLocked(String userId) {
+       
+        return false;
+    }
     
     @Override
     @Transactional

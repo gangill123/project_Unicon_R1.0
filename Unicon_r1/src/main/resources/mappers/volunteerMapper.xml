@@ -16,6 +16,23 @@
         )
     </insert>
     
+    <select id="login" parameterType="com.Unicon.domain.MemberVO" resultType="com.Unicon.domain.MemberVO">
+        select * 
+        from _member 
+        where member_id = #{member_id} 
+        and member_pw = #{member_pw}
+    </select>
+
+    <select id="isLoggedIn" parameterType="com.Unicon.domain.MemberVO" resultType="boolean">
+        select 
+        	case when count(*) > 0 
+        	then 'true' 
+        	else 'false' end 
+        from _member 
+        where member_id = #{member_id} 
+        and member_pw = #{member_pw}
+    </select>
+    
     <!-- 봉사활동 가이드 -->
     <update id="updateGuide" parameterType="VolunteerVO">
 	    update _volunteer_guide
