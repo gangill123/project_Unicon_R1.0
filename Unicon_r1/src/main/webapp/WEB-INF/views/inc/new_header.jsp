@@ -53,7 +53,7 @@
                                         </li>
                                         <li><a href="#!">입양</a>
                                         </li>
-                                        <li><a href="#!">커뮤니티</a>
+                                        <li><a href="/community/main">커뮤니티</a>
                                         </li>
                                         
                                         <li id="shop"><a href="/shop">복지몰</a>
@@ -99,7 +99,7 @@
 				                            	</li>
 	                                            
 	                                            <li class="d-none d-xl-inline-block" style="margin-left: 10px;">
-	                                            <a href="contact.html" class="butn-style2 text-white small"><span>글쓰기</span></a></li>
+	                                            <a href="/community/insert" class="butn-style2 text-white small"><span>글쓰기</span></a></li>
 	                                        </ul>
 	                                    </div>
 										</c:when>

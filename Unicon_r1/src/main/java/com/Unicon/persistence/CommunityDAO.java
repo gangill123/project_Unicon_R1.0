@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.Unicon.domain.CommentLikeVO;
 import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.PostLikeVO;
 import com.Unicon.domain.PostVO;
 
@@ -37,6 +38,18 @@ public class CommunityDAO {
 	}
 	
 	
+	
+	// 반려동물 정보 보기
+	public List<MemberVO> getPet(String member_id){
+		logger.info(" DAO - getPet() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getPet", member_id);
+	}
+	
+	// 해당하는 반려동물 정보 보기
+	public List<MemberVO> getPetInfo(int pet_id){
+		logger.info(" DAO - getPetInfo() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getPetInfo", pet_id);
+	}
 	
 	// member_id로 기존의 post_id 값 유무 체크(불러오기)
 	public String checkPostId(String member_id) {

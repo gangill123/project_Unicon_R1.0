@@ -24,12 +24,12 @@ z-index: 2000;
    <div class="container">
        <div class="section-heading">
            <h2>유니콘 커뮤니티</h2>
-           <p class="w-md-75 w-lg-55">Business consectetur adipisicing elit eiusmod tempor incididunt ut labore et dolore magna aliqua quis nostrud exercitation consequat.</p>
+           <p style="font-size: 24px;" class="w-md-75 w-lg-55">새로운 유니콘들과의 이야기 공간 입니다 ~~ !!</p>
        </div>
    </div>
    
    <!-- 로그인된 아이디 -->
-   <input type="text" id="loginMemberId" value="${userId }">
+   <input type="hidden" id="loginMemberId" value="${userId }">
    
    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">Launch modal</button> -->
 
@@ -164,7 +164,7 @@ z-index: 2000;
 
                    </div>
                    
-                   <div class="col-lg-7 ps-lg-2-3">
+                   <div id="postButton" class="col-lg-7 ps-lg-2-3">
                        <div class="product-detail" style="overflow-y: auto; max-height: 470px;">
                            <div class="media">
                                 
@@ -184,12 +184,12 @@ z-index: 2000;
                            <p id="postContent">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
                            <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
                            
-                           <div style="margin-bottom: 20px;">
-                       			<select id="" name="" class="form-control form-select" style="width: 120px; height: 28px;">
-                       				<option value="">최신순</option>
-                       				<option value="">좋아요순</option>
-                       			</select>
-                       		</div>
+<!--                            <div style="margin-bottom: 20px;"> -->
+<!--                        			<select id="" name="" class="form-control form-select" style="width: 120px; height: 28px;"> -->
+<!--                        				<option value="">최신순</option> -->
+<!--                        				<option value="">좋아요순</option> -->
+<!--                        			</select> -->
+<!--                        		</div> -->
                            
                            <div class="contentRecycle">
                            	   
@@ -206,8 +206,9 @@ z-index: 2000;
                        <input type="hidden" id="selectPost"/>
                        <input id="commentContent" type="text" style="width: 100%; height: 36px; margin-bottom: 10px;" placeholder="댓글 달기...">
                        <button id="commentContentBtn" type="button" class="btn btn-outline-success"><!-- 댓글 --><i class="fas fa-paper-plane"></i></button>
+                       
                        <button id="updatePost" type="button" class="btn btn-outline-primary">수정</button>
-                       <button type="button" class="btn btn-outline-danger">신고</button>
+                       <!-- <button type="button" class="btn btn-outline-danger">신고</button> -->
                        <button id="deletePost" type="button" class="btn btn-outline-danger">삭제</button>
                        
                    </div> <!-- <div class="col-lg-7 ps-lg-2-3"> -->
@@ -280,7 +281,6 @@ $(document).ready(function(){
 	// 모달 여는 글자 클릭
 	$('.communityType').on('click','.open-modal', function() {
 		
-		
 		// 모달 열기 전에 댓글 초기화 시키기
 		$('.contentRecycle').empty();
 		
@@ -301,10 +301,20 @@ $(document).ready(function(){
         		let memberId = data.postList.member_id;
         		console.log(memberId);
                 $('#postMemberLink').data('member-id', memberId);  // data-member-id를 업데이트
-            	$('#postMemberLink').attr('href', '/community/main04/' + memberId);  // 링크의 href 업데이트
+            	$('#postMemberLink').attr('href', '/community/profile/' + memberId);  // 링크의 href 업데이트
             	
              	// 댓글 주인 프로필 이미지 눌렀을때 이동하기
             	// 맨 아래에 있음
+            	
+            	// 게시물 수정, 삭제 버튼 제어
+        		var loginId = $('#loginMemberId').val();
+        		if(memberId != loginId){
+        			$('#updatePost').attr('style', 'display:none;');
+        			$('#deletePost').attr('style', 'display:none;');
+        		}else{
+        			$('#updatePost').attr('style', '');
+        			$('#deletePost').attr('style', '');
+        		}
         		
         		// 기본 이미지로 초기화
         		$('#xzoom_magnific').attr('src', defaultImage1);
@@ -387,7 +397,7 @@ $(document).ready(function(){
                     $('#imgImg1').attr('src', defaultImage1);
                     $('#imgImg1').attr('xpreview', defaultImage1);
         		}
-        		if(data.postList.post_images[1] != null || data.postList.post_images[1].image_src != ''){
+        		if(data.postList.post_images[1] != null && data.postList.post_images[1].image_src != ''){
 	        		var aImg2 = data.postList.post_images[1].image_src;
 	        		$('#aImg2').attr('href', aImg2);
 	        		var imgImg2 = data.postList.post_images[1].image_src;
@@ -396,7 +406,7 @@ $(document).ready(function(){
         			$('#aImg2').remove();
         			$('#imgImg2').remove();
         		}
-        		if(data.postList.post_images[2] != null || data.postList.post_images[2].image_src != ''){
+        		if(data.postList.post_images[2] != null && data.postList.post_images[2].image_src != ''){
 	        		var aImg3 = data.postList.post_images[2].image_src;
 	        		$('#aImg3').attr('href', aImg3);
 	        		var imgImg3 = data.postList.post_images[2].image_src;
@@ -405,7 +415,7 @@ $(document).ready(function(){
         			$('#aImg3').remove();
         			$('#imgImg3').remove();
         		}
-        		if(data.postList.post_images[3] != null || data.postList.post_images[3].image_src != ''){
+        		if(data.postList.post_images[3] != null && data.postList.post_images[3].image_src != ''){
 	        		var aImg4 = data.postList.post_images[3].image_src;
 	        		$('#aImg4').attr('href', aImg4);
 	        		var imgImg4 = data.postList.post_images[3].image_src;
@@ -520,54 +530,110 @@ $(document).ready(function(){
         	
         }); // $.ajax 
         
-        // 댓글 등록
-        $('#commentContentBtn').on('click', function(){
-        	var content = {
-        		'post_id':$('#selectPost').val(),
-        		'member_id':$('#loginMemberId').val(),
-        		'comment_content':$('#commentContent').val()
-        	};
-        	
-        	// 댓글 내용이 비어있는지 확인
-            if (!content.comment_content) {
-                alert('댓글을 적어주세요.');
-                // 실행 중단
-                return;
-            }
-        	
-        	$.ajax({
-        		url : '${pageContext.request.contextPath }/community/insertComment',
-        		type : 'POST',
-        		data : JSON.stringify(content),
-        		contentType : "application/json",
-        		success : function(data){
-        			console.log('댓글 등록 응답 : ',data);
-        			alert('댓글이 등록되었습니다.');
-        			$('#commentContent').val('');
-        			addCommentsToModal(data);
-        		},
-        		error : function(){
-        			alert('댓글 등록에 실패했습니다.');
-        		}
-        	}); // $.ajax
-        }); // 댓글 등록 클릭
-        // 댓글 등록
+     // 댓글 등록
+       $('#commentContentBtn').on('click', function(){
+       	var content = {
+       		'post_id':$('#selectPost').val(),
+       		'member_id':$('#loginMemberId').val(),
+       		'comment_content':$('#commentContent').val()
+       	};
+       	
+       	// 댓글 내용이 비어있는지 확인
+           if (!content.comment_content) {
+               alert('댓글을 적어주세요.');
+               // 실행 중단
+               return;
+           }
+       	
+           Swal.fire({
+   			title: '등록하시겠습니까?',
+   			text: '댓글이 등록됩니다!',
+   			icon: 'info',
+   			showCancelButton: true,
+   			confirmButtonColor: '#006e60',
+   			cancelButtonColor: '#aab2bd',
+   			confirmButtonText: '등록',
+   			cancelButtonText: '닫기'
+   		}).then(function(result) {
+   			if (result.isConfirmed) {
+   				$.ajax({
+   	        		url : '${pageContext.request.contextPath }/community/insertComment',
+   	        		type : 'POST',
+   	        		data : JSON.stringify(content),
+   	        		contentType : "application/json",
+   	        		success: function(response) {
+   	        			Swal.fire({
+       						title: '등록 완료',
+       						text: '댓글이 등록되었습니다!',
+       						icon: 'success',
+       						confirmButtonColor: '#006e60',
+       						confirmButtonText: '확인'
+       						}).then(function(data){
+       							console.log('댓글 등록 응답 : ',data);
+       							$("#commentContent").val('');
+        	        			addCommentsToModal(data);
+       						});
+   	        		},
+   	        		error: function(jqXHR, textStatus, errorThrown) {
+   						console.error('등록 실패:', textStatus, errorThrown);
+   						Swal.fire({
+   							title: '오류!',
+   							text: '등록에 실패했습니다.',
+   							icon: 'error',
+   							confirmButtonColor: '#006e60',
+   							confirmButtonText: '확인'
+   						});
+   					}
+   	        	}); // $.ajax
+   			}
+   		});
+       	
+       }); // 댓글 등록 클릭
+       // 댓글 등록
         
         // 댓글 삭제
         $(document).on('click', '.btnDelete', function(){
         	// 버튼에서 댓글 ID 가져오기
          	var comment_id = $(this).data('comment-id');
-        	$.ajax({
-        		url : '${pageContext.request.contextPath }/community/deleteComment/' + comment_id,
-        		type : 'DELETE',
-        		success : function(data){
-        			alert('댓글이 삭제되었습니다.');
-        			addCommentsToModal(data);
-        		},
-        		error : function(){
-        			alert('댓글 삭제에 실패했습니다.');
-        		}
-        	}); // $.ajax
+        	
+         	Swal.fire({
+    			title: '삭제하시겠습니까?',
+    			text: '댓글이 삭제됩니다!',
+    			icon: 'info',
+    			showCancelButton: true,
+    			confirmButtonColor: '#006e60',
+    			cancelButtonColor: '#aab2bd',
+    			confirmButtonText: '삭제',
+    			cancelButtonText: '닫기'
+    		}).then(function(result) {
+    			if (result.isConfirmed) {
+    				$.ajax({
+    	        		url : '${pageContext.request.contextPath }/community/deleteComment/' + comment_id,
+    	        		type : 'DELETE',
+    	        		success: function(response) {
+    	        			Swal.fire({
+        						title: '삭제 완료',
+        						text: '댓글이 삭제되었습니다!',
+        						icon: 'success',
+        						confirmButtonColor: '#006e60',
+        						confirmButtonText: '확인'
+        						}).then(function(data){
+        							addCommentsToModal(data);
+        						});
+    	        		},
+    	        		error: function(jqXHR, textStatus, errorThrown) {
+    						console.error('삭제 실패:', textStatus, errorThrown);
+    						Swal.fire({
+    							title: '오류!',
+    							text: '삭제에 실패했습니다.',
+    							icon: 'error',
+    							confirmButtonColor: '#006e60',
+    							confirmButtonText: '확인'
+    						});
+    					}
+    	        	}); // $.ajax
+    			}
+    		});
         }); // 댓글 삭제 클릭
      	// 댓글 삭제
      	
@@ -631,7 +697,7 @@ $(document).ready(function(){
     			cancelButtonText: '취소'
     		}).then(function(result) {
     			if (result.isConfirmed) {
-    				window.location.href = '${pageContext.request.contextPath }/community/main03/' + post_id;
+    				window.location.href = '${pageContext.request.contextPath }/community/update/' + post_id;
     			}
     		});
      	}); // 게시물 수정 클릭
@@ -641,31 +707,35 @@ $(document).ready(function(){
     
  	// 댓글을 모달에 추가하는 함수
     function addCommentsToModal(commentList) {
-        // 댓글 목록을 반복하여 모달에 추가
-        $.each(commentList, function(index, comments) {
-            $('.contentRecycle').append(
-                '<div class="media" style="margin-bottom: 30px;">' +
-                	'<a class="postMemberLink" data-member-id="'+comments.memberVO.member_id+'" href="/community/main04/'+comments.memberVO.member_id+'">'+
-                    '<img src="' + comments.memberVO.member_image + '" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">' +
-                    '</a>'+
-                    '<div class="media-body">' +
-                        '<div class="container" style="display: flex; flex-direction: column; padding: 0px;">' +
-                            '<div class="top-section" style="display: flex; width: 100%;">' + // grid-template-columns 제거
-                                '<div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">' + comments.memberVO.member_nickname + '</h4></div>' +
-                                '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">' + comments.comment_date + '</div>' +
-                                '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 ' + (comments.comment_likes.length > 0 ? comments.comment_likes[0].comment_like_count : 0) + '개</div>' +
-                                '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart commentLikeCheck" data-comment-id="'+comments.comment_id+'"></i></div>' +
-                            '</div>' +
-                            '<div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">' +
-                                '<div class="box" style="text-align: left;">' + comments.comment_content + '<button type="button" style="margin-left: 5px; color: grey;" class="btn btn-link btnDelete" data-comment-id="'+comments.comment_id+'">삭제</button></div>' +
-                            '</div>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>'
-            );
-            
-        });
-    }
+	    let loginMemberId2 = $('#loginMemberId').val();
+	    // 댓글 목록을 반복하여 모달에 추가
+	    $.each(commentList, function(index, comments) {
+	        // 기본 HTML 구조
+	        let commentHTML = 
+	            '<div class="media" style="margin-bottom: 30px;">' +
+	                '<a class="postMemberLink" data-member-id="'+comments.memberVO.member_id+'" href="/community/profile/'+comments.memberVO.member_id+'">'+
+	                    '<img src="' + comments.memberVO.member_image + '" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">' +
+	                '</a>' +
+	                '<div class="media-body">' +
+	                    '<div class="container" style="display: flex; flex-direction: column; padding: 0px;">' +
+	                        '<div class="top-section" style="display: flex; width: 100%;">' +
+	                            '<div class="box" style="display: flex; width: 60%; text-align: left;"><h4 class="mt-0 mb-2 h5">' + comments.memberVO.member_nickname + '</h4></div>' +
+	                            '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 40%; text-align: center;">' + comments.comment_date + '</div>' +
+	                        '</div>' +
+	                        '<div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">' +
+	                            '<div class="box" style="text-align: left;">' + comments.comment_content;
+	
+	        // 조건에 따라 삭제 버튼 추가
+	        if (comments.member_id === loginMemberId2) {
+	            commentHTML += '<button type="button" style="margin-left: 5px; color: grey;" class="btn btn-link btnDelete" data-comment-id="'+comments.comment_id+'">삭제</button>';
+	        }
+	
+	        commentHTML += '</div></div></div></div></div>';
+	
+	        // 동적으로 HTML 추가
+	        $('.contentRecycle').append(commentHTML);
+	    });
+	}
  	// 댓글을 모달에 추가하는 함수
  	
  	

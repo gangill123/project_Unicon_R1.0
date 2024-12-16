@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.PostVO;
 import com.Unicon.service.CommunityService;
 
@@ -44,6 +45,24 @@ public class CommunityController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
 	
+	
+	// 커뮤니티 - 마이페이지 프로필 게시물 보는 사이트
+	// http://localhost:8088/community/mypage/profile
+//	@GetMapping("mypage/profile/{memberId}")
+//	public String templateProfileMyPage(Model model, @PathVariable("memberId")String member_id, HttpSession session) {
+//		List<PostVO> postList = communityService.getProfilePostList01(member_id);
+//		model.addAttribute("postList", postList);
+//		logger.info("--------postList---------{}",postList);
+//		
+//		List<MemberVO> getPet = communityService.getPet(member_id);
+//		model.addAttribute("getPet", getPet);
+//		logger.info("getPet는 : {}",getPet);
+//		
+//		String userId = (String)session.getAttribute("member_id");
+//		model.addAttribute("userId", userId);
+//		
+//		return "community/main";
+//	}
 	
 	// 커뮤니티 - 입양 후기 게시물 보는 사이트
 	// http://localhost:8088/community/main
@@ -63,18 +82,19 @@ public class CommunityController {
 	}
 	
 	// 커뮤니티 - 프로필 게시물 보는 사이트
-	// http://localhost:8088/community/main04
-	@GetMapping("main04/{member_id}")
-	public String templateProfile(Model model, @PathVariable("member_id")String member_id, HttpSession session) {
+	// http://localhost:8088/community/profile
+	@GetMapping("profile/{memberId}")
+	public String templateProfile(Model model, @PathVariable("memberId")String member_id, HttpSession session) {
 		List<PostVO> postList = communityService.getProfilePostList01(member_id);
-		
 		model.addAttribute("postList", postList);
+		logger.info("--------postList---------{}",postList);
+		
+		List<MemberVO> getPet = communityService.getPet(member_id);
+		model.addAttribute("getPet", getPet);
+		logger.info("getPet는 : {}",getPet);
 		
 		String userId = (String)session.getAttribute("member_id");
-		
 		model.addAttribute("userId", userId);
-		
-		logger.info("--------postList---------{}",postList);
 		
 		return "community/new_profile";
 	}
@@ -131,8 +151,8 @@ public class CommunityController {
 	}
 	
 	// 커뮤니티 - 게시물 등록 사이트
-	// http://localhost:8088/community/main02
-	@GetMapping("main02")
+	// http://localhost:8088/community/insert
+	@GetMapping("insert")
 	public String templateInsert(Model model, HttpSession session) {
 		String userId = (String)session.getAttribute("member_id");
 		
@@ -141,8 +161,8 @@ public class CommunityController {
 	}
 	
 	// 커뮤니티 - 게시물 수정 사이트
-	// http://localhost:8088/community/main03
-	@GetMapping("main03/{post_id}")
+	// http://localhost:8088/community/update
+	@GetMapping("update/{post_id}")
 	public String templateUpdate(@PathVariable("post_id")String post_id, Model model, HttpSession session) {
 		logger.info("post_id는 : {}",post_id);
 		PostVO postList = communityService.getPostListOne(post_id);

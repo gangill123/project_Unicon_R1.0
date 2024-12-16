@@ -36,6 +36,8 @@
 	<result property="road_address" column="road_address"/>
 	<result property="member_nickname" column="member_nickname"/>
 	<result property="member_image" column="member_image"/>
+	
+	<collection property="member_pets" ofType="com.Unicon.domain.PetVO" resultMap="PetResultMap"></collection>
 </resultMap>
 
 <resultMap id="CategoryDataResultMap" type="com.Unicon.domain.CategoryDataVO">
@@ -80,17 +82,20 @@
 	<result property="to_member_id" column="to_member_id"/>
 </resultMap>
 
-<resultMap id="MyPetResultMap" type="com.Unicon.domain.MyPetVO">
+<resultMap id="PetResultMap" type="com.Unicon.domain.PetVO">
 	<id property="pet_id" column="pet_id"/>
+	<result property="member_id" column="member_id"/>
+	<result property="pet_src" column="pet_src"/>
 	<result property="pet_name" column="pet_name"/>
+	<result property="pet_gender" column="pet_gender"/>
+	<result property="pet_color" column="pet_color"/>
+	<result property="pet_type" column="pet_type"/>
 	<result property="pet_code" column="pet_code"/>
 	<result property="pet_etc_breed" column="pet_etc_breed"/>
-	<result property="pet_gender" column="pet_gender"/>
-	<result property="pet_neuter" column="pet_neuter"/>
-	<result property="pet_date" column="pet_date"/>
-	<result property="pet_birth" column="pet_birth"/>
-	<result property="pet_color" column="pet_color"/>
-	<result property="pet_content" column="pet_content"/>
+	<result property="pet_birthdate" column="pet_birthdate"/>
+	<result property="pet_adopdate" column="pet_adopdate"/>
+	
+	<association property="categoryDataVO" resultMap="CategoryDataResultMap" />
 </resultMap>
 <!-- 일단 대기 -->
 
@@ -113,6 +118,25 @@
 
 
 
+<!-- 반려동물 정보 불러오기 -->
+<select id="getPet" resultMap="MemberResultMap">
+	select p.*, m.member_id, m.member_name, m.member_nickname, c.* 
+	from _pet p 
+	join _member m on p.member_id = m.member_id 
+    join _category_data c on p.pet_code = c.category_code 
+	where m.member_id = #{member_id} 
+</select>
+<!-- 반려동물 정보 불러오기 -->
+
+<!-- 해당하는 반려동물 정보 불러오기 -->
+<select id="getPetInfo" resultMap="MemberResultMap">
+	select p.*, m.member_id, m.member_name, m.member_nickname, c.* 
+	from _pet p 
+	join _member m on p.member_id = m.member_id 
+    join _category_data c on p.pet_code = c.category_code 
+	where p.pet_id = #{pet_id} 
+</select>
+<!-- 해당하는 반려동물 정보 불러오기 -->
 
 <!-- 전체 게시글 불러오기 -->
 <select id="getPostList" resultMap="PostResultMap" parameterType="String">

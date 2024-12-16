@@ -26,6 +26,7 @@ import com.Unicon.domain.CheckImageVO;
 import com.Unicon.domain.CommentLikeVO;
 import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.PostLikeVO;
 import com.Unicon.domain.PostVO;
 import com.Unicon.persistence.CommunityDAO;
@@ -48,6 +49,18 @@ public class CommunityService {
 	}
 	
 	
+	
+	// 반려동물 정보 보기
+	public List<MemberVO> getPet(String member_id){
+		logger.info(" Service - getPet() 실행 ");
+		return communityDAO.getPet(member_id);
+	}
+	
+	// 해당하는 반려동물 정보 보기
+	public List<MemberVO> getPetInfo(int pet_id){
+		logger.info(" Service - getPetInfo() 실행 ");
+		return communityDAO.getPetInfo(pet_id);
+	}
 	
 	// 모든 지역 X & 모든 동물 O 불러오기
 	public List<PostVO> getSearchList01(String post_type, String post_resion){
