@@ -62,7 +62,7 @@
                     	
                     	<!-- 숨겨서 들고갈 값(세션) -->
                     	<!-- member_id -->
-                    	<input id="member_id" name="member_id" type="hidden" value="test3">
+                    	<input id="member_id" name="member_id" type="hidden" value="bini97">
                     	<!-- 숨겨서 들고갈 값(세션) -->
                     	
                         <div class="quform-elements">

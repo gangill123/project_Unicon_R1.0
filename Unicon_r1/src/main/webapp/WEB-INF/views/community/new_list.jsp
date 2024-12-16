@@ -28,7 +28,9 @@ z-index: 2000;
        </div>
    </div>
    
-   <input type="hidden" id="loginMemberId" value="test7">
+   <!-- 로그인된 아이디 -->
+   <input type="hidden" id="loginMemberId" value="junghun87">
+   
    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">Launch modal</button>
 
    <div class="container">
@@ -65,16 +67,16 @@ z-index: 2000;
 			</select>
 		   
 		   <select id="animalFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-		       <option value="모든 동물">모든 동물</option>
-		       <option value="개">개</option>
-		       <option value="고양이">고양이</option>
-		       <option value="기타">기타</option>
+		       <option value="0">모든 동물</option>
+		       <option value=1000>개</option>
+		       <option value=2000>고양이</option>
+		       <option value=3000>기타</option>
 		   </select>
 		   
-		   <select id="sortFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-		       <option value="최신순">최신순</option>
-		       <option value="좋아요순">좋아요순</option>
-		   </select>
+<!-- 		   <select id="sortFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;"> -->
+<!-- 		       <option value="최신순">최신순</option> -->
+<!-- 		       <option value="좋아요순">좋아요순</option> -->
+<!-- 		   </select> -->
 		   
            <button class="btn btn-outline-success" id="search" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 75px;">검색</button>
 
@@ -106,8 +108,8 @@ z-index: 2000;
 			            </div>
 			            <div class="project-grid-overlay">
 			                <div class="w-100 px-3">
-			                    <h4><a href="#!" class="open-modal" data-post-id="${p.post_id}" data-bs-toggle="modal" data-bs-target="#jjjModal">상세 보기</a></h4>
-			                    <p>${p.jypMemberVO.member_nickname}</p>
+			                    <h4><a href="#!" class="open-modal" data-post-id="${p.post_id}" data-bs-toggle="modal" data-bs-target="#jjjModal">게시물 보기</a></h4>
+			                    <p>${p.memberVO.member_nickname}</p>
 			                </div>
 			            </div>
 			        </div>
@@ -115,19 +117,11 @@ z-index: 2000;
 			    <%-- </c:if> --%>
 			</c:forEach>
 			
-			
 			<c:if test="${fn:length(postList) > 8}">
 	            <div class="text-center mt-4">
 	                <button class="btn btn-outline-success" id="loadMoreOngoing">더보기</button>
 	            </div>
 	        </c:if>
-
-           
-       <!-- 더보기 버튼 -->
-<!--        <div style="text-center"> -->
-<!-- 	   		<button class="btn btn-outline-success" id="loadMore" style="width: 50%; display: block;">더보기</button> -->
-<!--        </div> -->
-           
        </div> <!-- <div class="portfolio-gallery-isotope text-center row"> -->
        <!-- end portfolio gallery -->
 
@@ -197,199 +191,8 @@ z-index: 2000;
                        		</div>
                            
                            <div class="contentRecycle">
-                           	   <!-- 
-	                           <div class="media" style="margin-bottom: 30px;">
-	                                <img id="commentMemberImg" src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">
-	                                <div class="media-body">
-	                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
-										    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
-										        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 id="commentMemberNick" class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
-										        <div id="commentDate" class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
-										        <div id="commentLikeCount" class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
-										        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
-										    </div>
-										    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
-										        <div id="commentContent" class="box" style="text-align: left;">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.<button type="button" style="margin-left: 5px; color: grey;" class="btn btn-link">삭제</button></div>
-										    </div>
-										</div>
-	                                </div>
-	                            </div>
-	                             -->
+                           	   
                             </div> <!-- <div class="contentRecycle"> -->
-                            
-                            
-                            <!-- 
-                            <div class="media" style="margin-bottom: 30px;">
-                                <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
-                                <div class="media-body">
-                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
-									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
-									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
-									    </div>
-									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
-									        <div class="box" style="text-align: left;">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</div>
-									    </div>
-									</div>
-                                </div>
-                            </div>
-                             -->
-                            
-                            
-<!--                             <div class="media" style="margin-bottom: 30px;"> -->
-<%--                                 <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="..."> --%>
-<!--                                 <div class="media-body"> -->
-<!--                                     <h4 class="mt-0 mb-2 h5">징젱종잉 1</h4> -->
-<!--                                     Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore. -->
-<!--                                 </div> -->
-<!--                                 <div class="datetime" style="margin-left: 15px;">1998-07-11 00:00</div> -->
-<!--                                 <div class="likecount" style="margin-left: 15px;">좋아요 711개</div> -->
-<!--                                 <div class="like" style="margin-left: 15px;"><i class="fa-solid fa-heart"></i></div> -->
-<!--                             </div> -->
-                            
-                            
-                            <!-- 
-                            <div class="media" style="margin-bottom: 30px;">
-                                <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
-                                <div class="media-body">
-                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
-									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
-									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
-									    </div>
-									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
-									        <div class="box" style="text-align: left;">괜찮으신가요ㅜㅜㅜㅜㅜ</div>
-									    </div>
-									</div>
-                                </div>
-                            </div>
-                            
-                            
-                            <div class="media" style="margin-bottom: 30px;">
-                                <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
-                                <div class="media-body">
-                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
-									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
-									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
-									    </div>
-									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
-									        <div class="box" style="text-align: left;">괜찮으신가요ㅜㅜㅜㅜㅜ<button type="button" style="margin-left: 10px;" class="btn btn-secondary btn-sm">삭제</button></div>
-									    </div>
-									</div>
-                                </div>
-                            </div>
-                            
-                            
-                            <div class="media" style="margin-bottom: 30px;">
-                                <img src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%;" alt="...">
-                                <div class="media-body">
-                                    <div class="container" style="display: flex; flex-direction: column; padding: 0px;">
-									    <div class="top-section" style="display: flex; width: 100% grid-template-columns: repeat(4, 1fr);">
-									        <div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">징젱종잉 1</h4></div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">1998-07-11 00:00</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 711개</div>
-									        <div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart"></i></div>
-									    </div>
-									    <div class="bottom-section" style="display: flex; justify-content: flex-start; align-items: center;">
-									        <div class="box" style="text-align: left;">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</div>
-									    </div>
-									</div>
-                                </div>
-                            </div>
-                             -->
-                           
-                           
-                           <!-- 일단 안씀 -->
-                           
-<!--                            <p class="rating-text"><span>SKU:</span> <span class="text-primary">290397</span></p> -->
-<!--                            <p>Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p> -->
-
-<!--                            <div class="mb-4"> -->
-
-<!--                                <div class="d-inline-block me-3 pe-3 border-end border-color-extra-medium-gray"> -->
-<!--                                    <i class="fas fa-star"></i> -->
-<!--                                    <i class="fas fa-star"></i> -->
-<!--                                    <i class="fas fa-star"></i> -->
-<!--                                    <i class="fas fa-star"></i> -->
-<!--                                    <i class="fas fa-star-half-alt"></i> -->
-<!--                                </div> -->
-
-<!--                                <div class="d-inline-block"> -->
-<!--                                    <a class="text-primary" href="#!">Write a review</a> -->
-<!--                                </div> -->
-
-<!--                            </div> -->
-<!--                            <div class="mb-4"> -->
-<!--                                <span class="me-3 display-25 font-weight-600 offer-price">$499.00</span> -->
-<!--                                <span class="display-25 font-weight-700 text-primary">$299.00</span> -->
-<!--                            </div> -->
-
-<!--                            <div class="row"> -->
-<!--                                <div class="col-4 col-md-2 col-lg-2"> -->
-<!--                                    <label>Size:</label> -->
-
-<!--                                    <select class="mb-4"> -->
-<!--                                        <option value="S">S</option> -->
-<!--                                        <option value="M">M</option> -->
-<!--                                        <option value="L">L</option> -->
-<!--                                        <option value="XL">XL</option> -->
-<!--                                    </select> -->
-
-<!--                                </div> -->
-<!--                                <div class="col-6 col-md-2 col-lg-3"> -->
-<!--                                    <div class="product-color"> -->
-<!--                                        <label>Color:</label> -->
-<!--                                        <select class="mb-4"> -->
-<!--                                            <option value="Red">Black</option> -->
-<!--                                            <option value="Black">Red</option> -->
-<!--                                            <option value="Beige">Beige</option> -->
-<!--                                            <option value="White">White</option> -->
-<!--                                        </select> -->
-<!--                                    </div> -->
-<!--                                </div> -->
-<!--                            </div> -->
-<!--                            <div class="row"> -->
-<!--                                <div class="col-4 col-lg-2"> -->
-<!--                                    <label>Qty:</label> -->
-<!--                                    <input type="text" class="form-control mb-4" value="1" placeholder="1"> -->
-<!--                                </div> -->
-
-<!--                            </div> -->
-
-<!--                            <div class="row mb-4"> -->
-<!--                                <div class="col-lg-12"> -->
-<!--                                    <button class="butn primary me-2 mb-2 mb-md-0"><span><i class="fas fa-shopping-cart me-1"></i> Add to Cart</span></button> -->
-<!--                                    <button class="butn text-uppercase"><span><i class="fas fa-heart me-1"></i> Add to wishlist</span></button> -->
-<!--                                </div> -->
-<!--                            </div> -->
-
-<!--                            <div class="row"> -->
-
-<!--                                <div class="col-lg-7"> -->
-
-<!--                                    <label>Share on:</label> -->
-<!--                                    <ul class="social-icon-style3 ps-0"> -->
-<!--                                        <li><a href="#!"><i class="fab fa-facebook-f"></i></a></li> -->
-<!--                                        <li><a href="#!"><i class="fab fa-twitter"></i></a></li> -->
-<!--                                        <li><a href="#!"><i class="fab fa-instagram"></i></a></li> -->
-<!--                                        <li><a href="#!"><i class="fab fa-youtube"></i></a></li> -->
-<!--                                        <li><a href="#!"><i class="fab fa-linkedin-in"></i></a></li> -->
-<!--                                    </ul> -->
-
-<!--                                </div> -->
-
-<!--                            </div> -->
-                           
-                           <!-- 일단 안씀 -->
-                           
-                           
                            
                        </div> <!-- <div class="product-detail"> -->
                        
@@ -407,12 +210,6 @@ z-index: 2000;
                        <button id="deletePost" type="button" class="btn btn-outline-danger">삭제</button>
                        
                    </div> <!-- <div class="col-lg-7 ps-lg-2-3"> -->
-                   
-                   
-                   
-                       
-                       
-                       
                        
                </div> <!-- <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9"> -->
             </div> <!-- <div class="modal-body"> -->
@@ -442,12 +239,14 @@ $(document).ready(function(){
 	$('#search').on('click',function(){
 		let resionFilter = $('#resionFilter').val();
 		let animalFilter = $('#animalFilter').val();
-		let sortFilter = $('#sortFilter').val();
+// 		let sortFilter = $('#sortFilter').val();
 		let postType = $('.filtering .active').data('type');
 		console.log(resionFilter);
 		console.log(animalFilter);
-		console.log(sortFilter);
+// 		console.log(sortFilter);
 		console.log(postType);
+		
+		readPostType02(postType, resionFilter, animalFilter);
 	});
 	
 	
@@ -481,8 +280,8 @@ $(document).ready(function(){
 		
 		// 필터 초기화
 		$('#resionFilter').val('모든 지역');
-		$('#animalFilter').val('모든 동물');
-		$('#sortFilter').val('최신순');
+		$('#animalFilter').val(0);
+// 		$('#sortFilter').val('최신순');
 	});
 	// 게시물 종류 클릭
 	
@@ -541,10 +340,10 @@ $(document).ready(function(){
         		var exampleModalLabel = data.postList.post_resion+' / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
         		$('#exampleModalLabel').html(exampleModalLabel);
         		// 모달 게시물 작성자 프로필 이미지 부분
-         		var postMemberImg = data.postList.jypMemberVO.member_image;
+         		var postMemberImg = data.postList.memberVO.member_image;
          		$('#postMemberImg').attr('src', postMemberImg);
         		// 모달 게시물 작성자 닉네임 부분
-        		var postMemberNick = data.postList.jypMemberVO.member_nickname;
+        		var postMemberNick = data.postList.memberVO.member_nickname;
         		$('#postMemberNick').html(postMemberNick);
         		// 모달 게시물 제목 부분
         		var postTitle = data.postList.post_title;
@@ -845,11 +644,11 @@ $(document).ready(function(){
         $.each(commentList, function(index, comments) {
             $('.contentRecycle').append(
                 '<div class="media" style="margin-bottom: 30px;">' +
-                    '<img src="' + comments.jypMemberVO.member_image + '" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">' +
+                    '<img src="' + comments.memberVO.member_image + '" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">' +
                     '<div class="media-body">' +
                         '<div class="container" style="display: flex; flex-direction: column; padding: 0px;">' +
                             '<div class="top-section" style="display: flex; width: 100%;">' + // grid-template-columns 제거
-                                '<div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">' + comments.jypMemberVO.member_nickname + '</h4></div>' +
+                                '<div class="box" style="display: flex; width: 45%; text-align: left;"><h4 class="mt-0 mb-2 h5">' + comments.memberVO.member_nickname + '</h4></div>' +
                                 '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 30%; text-align: center;">' + comments.comment_date + '</div>' +
                                 '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 20%; text-align: center;">좋아요 ' + (comments.comment_likes.length > 0 ? comments.comment_likes[0].comment_like_count : 0) + '개</div>' +
                                 '<div class="box" style="display: flex; justify-content: center; align-items: center; width: 5%; text-align: right;"><i class="fa-solid fa-heart commentLikeCheck" data-comment-id="'+comments.comment_id+'"></i></div>' +

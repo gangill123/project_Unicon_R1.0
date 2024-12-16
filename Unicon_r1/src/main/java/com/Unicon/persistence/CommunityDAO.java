@@ -63,6 +63,20 @@ public class CommunityDAO {
 		return sqlSession.selectList(NAMESPACE+"getPostList", post_type);
 	}
 	
+	public List<PostVO> getProfilePostList(String post_type, String member_id){
+		logger.info(" DAO - getProfilePostList() 실행 ");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("post_type", post_type);
+		params.put("member_id", member_id);
+		return sqlSession.selectList(NAMESPACE+"getProfilePostList", params);
+	}
+	
+	// 프로필 게시물 보기
+	public List<PostVO> getProfilePostList01(String member_id){
+		logger.info(" DAO - getProfilePostList01() 실행 ");
+		return sqlSession.selectList(NAMESPACE+"getProfilePostList01",member_id);
+	}
+	
 	// 입양후기 게시물 보기
 	public List<PostVO> getPostList01(){
 		logger.info(" DAO - getPostList01() 실행 ");
@@ -179,6 +193,34 @@ public class CommunityDAO {
 		
 		List<ImageVO> images = new ArrayList<ImageVO>(postVO.getPost_images());
 		sqlSession.insert(NAMESPACE+"updatePostImages", images);
+	}
+	
+	// 모든 지역 X & 모든 동물 O 불러오기
+	public List<PostVO> getSearchList01(String post_type, String post_resion){
+		logger.info(" DAO - getSearchList01() 실행 ");
+		Map<String, Object> params = new HashMap<>();
+		params.put("post_type", post_type);
+		params.put("post_resion", post_resion);
+		return sqlSession.selectList(NAMESPACE+"getSearchList01", params);
+	}
+	
+	// 모든 지역 X & 모든 동물 O 불러오기
+	public List<PostVO> getSearchList02(String post_type, int category_parent){
+		logger.info(" DAO - getSearchList02() 실행 ");
+		Map<String, Object> params = new HashMap<>();
+		params.put("post_type", post_type);
+		params.put("category_parent", category_parent);
+		return sqlSession.selectList(NAMESPACE+"getSearchList02", params);
+	}
+		
+	// 모든 지역 X & 모든 동물 O 불러오기
+	public List<PostVO> getSearchList03(String post_type, String post_resion, int category_parent){
+		logger.info(" DAO - getSearchList03() 실행 ");
+		Map<String, Object> params = new HashMap<>();
+		params.put("post_type", post_type);
+		params.put("post_resion", post_resion);
+		params.put("category_parent", category_parent);
+		return sqlSession.selectList(NAMESPACE+"getSearchList03", params);
 	}
 	
 	
