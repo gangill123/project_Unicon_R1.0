@@ -72,7 +72,7 @@ public class AdptController {
 	public ResponseEntity<?> counselCheck(HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ counselCheck() 실행");
 		
-		String member_id = (String)req.getSession().getAttribute("member_id_test");
+		String member_id = (String)req.getSession().getAttribute("member_id");
 		
 		if(member_id == null) {
 			logger.debug("( •̀ ω •́ )✧ 회원 ID가 없습니다 - 로그인 필요");
@@ -115,7 +115,7 @@ public class AdptController {
 	public boolean counselCheck(@RequestParam Map<String,String> counselCheckParams, HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ counselCheck() 실행");
 		
-		String member_id = (String)req.getSession().getAttribute("member_id_test");
+		String member_id = (String)req.getSession().getAttribute("member_id");
 		counselCheckParams.put("member_id", member_id);
 		
 		return aService.counselCheckMember(counselCheckParams);

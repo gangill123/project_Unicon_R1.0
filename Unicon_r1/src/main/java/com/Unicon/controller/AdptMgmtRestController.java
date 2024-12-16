@@ -87,8 +87,8 @@ public class AdptMgmtRestController {
 	@GetMapping(value = "/animals")
 	public ResponseEntity<List<AnimalVO>> animalListAllMember(HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ animalListAllMember() 실행");
-		String member_id = (String) req.getSession().getAttribute("member_id_test");
-		
+		String member_id = (String) req.getSession().getAttribute("member_id");
+		logger.debug("( •̀ ω •́ )✧ member_id : {}",member_id);
 		List<AnimalVO> animList = aService.getAnimalListAll(member_id);
 		if(animList != null) {
 			return new ResponseEntity<List<AnimalVO>>(animList,HttpStatus.OK);
@@ -100,7 +100,7 @@ public class AdptMgmtRestController {
 	@GetMapping(value = "/animals/manager")
 	public ResponseEntity<List<AnimalVO>> animalListAllManager(HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ animalListAllManager() 실행");
-		String manager_id = (String)req.getSession().getAttribute("manager_id_test");
+		String member_id = (String)req.getSession().getAttribute("member_id");
 		
 		List<AnimalVO> animList = aService.getAnimalListAll();
 		if(animList != null) {
@@ -116,11 +116,10 @@ public class AdptMgmtRestController {
 	public ResponseEntity<AnimalVO> animalListOne(@PathVariable("animal_id")String animal_id,
 			HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ animalListOne() 실행");
-		String member_id = (String) req.getSession().getAttribute("member_id_test");
-		String manager_id = (String) req.getSession().getAttribute("manager_id_test");
+		String member_id = (String) req.getSession().getAttribute("member_id");
 		
 		int checkId = aService.checkAnimalId(animal_id, member_id);
-		if(checkId == 1 || manager_id.equals("manager00")) {
+		if(checkId == 1) {
 			logger.debug("( •̀ ω •́ )✧ 존재하는 동물id & 해당 동물의 회원 확인완료");
 			AnimalVO animalVO = aService.getAnimalListOne(animal_id);
 			return new ResponseEntity<AnimalVO>(animalVO, HttpStatus.OK);
@@ -136,11 +135,10 @@ public class AdptMgmtRestController {
 	public ResponseEntity<AnimalVO> AnimalWritingOne(@PathVariable("animal_id")String animal_id,
 			HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ AnimalWritingOne() 실행");
-		String member_id = (String) req.getSession().getAttribute("member_id_test");
-		String manager_id = (String) req.getSession().getAttribute("manager_id_test");
+		String member_id = (String) req.getSession().getAttribute("member_id");
 		
 		int checkId = aService.checkAnimalId(animal_id, member_id);
-		if(checkId == 1 || manager_id.equals("manager00")) {
+		if(checkId == 1) {
 			logger.debug("( •̀ ω •́ )✧ 존재하는 동물id & 해당 동물의 회원 확인완료");
 			AnimalVO animalVO = aService.getAnimalWritingOne(animal_id);
 			return new ResponseEntity<AnimalVO>(animalVO, HttpStatus.OK);
@@ -157,7 +155,7 @@ public class AdptMgmtRestController {
 	public ResponseEntity<AnimalVO> animalWritingOne(@PathVariable("animal_id")String animal_id,
 			HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ animalWritingOne() 실행");
-		String member_id = (String)req.getSession().getAttribute("member_id_test");
+		String member_id = (String)req.getSession().getAttribute("member_id");
 		
 		int checkId = aService.checkAnimalId(animal_id, member_id);
 		
@@ -266,8 +264,8 @@ public class AdptMgmtRestController {
 	@GetMapping(value = "/writings")
 	public ResponseEntity<List<AnimalVO>> writingListAllMember(HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ writingListAllMember() 실행");
-		String member_id = (String)req.getSession().getAttribute("member_id_test");
-		
+		String member_id = (String)req.getSession().getAttribute("member_id");
+		logger.debug("( •̀ ω •́ )✧ member_id : {}",member_id);
 		try {
 			
 			List<AnimalVO> writingList = aService.getWritingListAll(member_id);
@@ -284,7 +282,7 @@ public class AdptMgmtRestController {
 	@GetMapping(value = "/writings/manager")
 	public ResponseEntity<List<AnimalVO>> writingListAllManager(HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ writingListAllMember() 실행");
-		String manager_id = (String)req.getSession().getAttribute("manager_id_test");
+		String member_id = (String)req.getSession().getAttribute("member_id");
 		
 		try {
 			

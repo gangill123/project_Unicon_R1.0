@@ -37,9 +37,8 @@ public class AdptMgmtController {
 	}
 	
 	@GetMapping(value = "/animals/list")
-	public String animalViewAll(HttpServletRequest req) {
+	public String animalViewAll() {
 		logger.debug("( •̀ ω •́ )✧ animalViewAll() 실행");
-		req.getSession().setAttribute("member_id_test", "youreal00");
 		
 		return "/adptmgmt/animals/animal_read";
 	}
@@ -48,6 +47,12 @@ public class AdptMgmtController {
 	public String animalViewOne() {
 		logger.debug("( •̀ ω •́ )✧ animalViewOne() 실행");
 		return "/adptmgmt/animals/animal_update";
+	}
+	
+	@GetMapping(value = "/counsel/people")
+	public String adptCounselViewAll() {
+		logger.debug("( •̀ ω •́ )✧ adptCounselViewAll() 실행");
+		return "/adptmgmt/animals/counsel_read";
 	}
 	
 	@GetMapping(value = "/writings/add/{animal_id}")
@@ -69,9 +74,8 @@ public class AdptMgmtController {
 	}
 	
 	@GetMapping(value = "/manager/animals/everything")
-	public String managerAnimalViewAll(HttpServletRequest req) {
+	public String managerAnimalViewAll() {
 		logger.debug("( •̀ ω •́ )✧ managerAnimalViewAll() 실행");
-		req.getSession().setAttribute("manager_id_test", "manager00");
 		
 		return "/adptmgmt/manager/manager_animal_read";
 	}
