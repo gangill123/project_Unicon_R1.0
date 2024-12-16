@@ -52,7 +52,25 @@
 	.attr-nav img:hover{
 		opacity: 0.7; /* 투명도 설정 */
 	    transition: opacity 0.3s ease; /* 부드러운 애니메이션 효과 */
+	}   
+	
+	.navbar-nav li{
+		margin-left: 15px;
+	}
+	
+	
+	.navbar-nav li a{
+		font-size: 17px;
+	} 
+	    
+	.services-single-menu li a {
+	font-size: 20px;
+	}
+	
+	.services-single-menu li a:after {
+		height: 2px;
 	}    
+	    
 	    
 	    
 	</style>

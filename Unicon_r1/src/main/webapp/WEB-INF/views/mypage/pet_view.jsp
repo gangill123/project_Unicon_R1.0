@@ -70,6 +70,7 @@
                                     <li class="active"><a href="/mypage">프로필 관리</a></li>
                                     <li><a href="#!">커뮤니티 관리</a></li>
                                     <li><a href="#!">주문 관리</a></li>
+                                    <li><a href="#!">봉사활동 관리</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -293,7 +294,7 @@ $(document).ready(function () {
   			  confirmButtonText: '수정',
   			  cancelButtonText: '취소',
   			  customClass: {
-  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
+  			        popup:'custom-swal-popup' // 사용자 정의 클래스 추가
  			  }
   			}).then((result) => {
   				if (result.isConfirmed) {

@@ -369,8 +369,8 @@ $(document).ready(function () {
   			  text: "수정 전 정보를 다시 한번 확인하시기 바랍니다.",
   			  icon: 'warning',
   			  showCancelButton: true,
-  			  confirmButtonColor: '#3085d6',
-  			  cancelButtonColor: '#d33',
+  			  confirmButtonColor: '#86bc42',
+  			  cancelButtonColor: '#aaa',
   			  confirmButtonText: '수정',
   			  cancelButtonText: '취소',
   			  customClass: {
@@ -382,6 +382,7 @@ $(document).ready(function () {
 	  	  			  title: '수정이 완료되었습니다!',
 	  	  			  text: "수정하기를 통하여 재수정 가능합니다.",
 	  	  			  icon: 'success',
+	  	  			  confirmButtonColor: '#86bc42',
 	  	  			  customClass: {
 	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 	 			 	  }

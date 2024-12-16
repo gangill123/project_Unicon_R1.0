@@ -12,9 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.Unicon.domain.AdptVO;
+import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.MainSlideVO;
 import com.Unicon.domain.NewsVO;
 import com.Unicon.domain.ShopVO;
+import com.Unicon.service.AdptService;
 import com.Unicon.service.MainService;
 import com.Unicon.service.MainSlideService;
 import com.Unicon.service.NewsService;
@@ -35,6 +38,8 @@ public class MainController {
 	private MainService mainService;
 	@Autowired
 	private ShopService shopService;
+	@Autowired
+	private AdptService adptService;
 	
 	@GetMapping("")
 	public String main(Model model, HttpSession session) {
@@ -42,7 +47,7 @@ public class MainController {
 		logger.debug("main() 호출");
 		
 		// 임시 아이디 세션저장
-		session.setAttribute("member_id", "bini97");
+		//session.setAttribute("member_id", "bini97");
 		
 		String member_id = (String)session.getAttribute("member_id");
 		
@@ -62,7 +67,13 @@ public class MainController {
 		List<ShopVO> shopInfo = shopService.getShopItemForMain();
 		model.addAttribute("shopInfo", shopInfo);
 		
+		// 공고수, 입양완료 수, 유니콘 가입자수, 보호센터 수 가져오기
+		List<Integer> unicornInfo = mainService.getUnicornInfo();
+		model.addAttribute("unicornInfo", unicornInfo);
 		
+		// 최신 입양공고 가져오기
+		List<AnimalVO> adptInfo =	adptService.forMainAdptData();
+		model.addAttribute("adptInfo", adptInfo);
 		
 		
 		return "/main/new_main";

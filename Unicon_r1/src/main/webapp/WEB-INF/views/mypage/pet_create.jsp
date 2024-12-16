@@ -70,6 +70,7 @@
                                     <li class="active"><a href="/mypage">프로필 관리</a></li>
                                     <li><a href="#!">커뮤니티 관리</a></li>
                                     <li><a href="#!">주문 관리</a></li>
+                                    <li><a href="#!">봉사활동 관리</a></li>
                                 </ul>
                             </div>
                         </div>

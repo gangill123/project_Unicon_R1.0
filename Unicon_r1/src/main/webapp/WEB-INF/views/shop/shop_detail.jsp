@@ -246,7 +246,7 @@
                                                     <div class="media mb-1 product-review">
                                                         <img class="rounded-circle w-50px" src="${review.memberVO.member_image }" alt="...">
                                                         <div class="media-body ms-3">
-                                                            <a href="#!" class="mb-1 font-weight-600 text-extra-dark-gray">${review.memberVO.member_name }</a>
+                                                            <a class="mb-1 font-weight-600 text-extra-dark-gray">${review.memberVO.member_nickname }</a>
                                                             <span class="d-block text-primary small">${review.formatted_review_create_date }</span>
                                                         </div>
                                                         <span class="text-primary">
