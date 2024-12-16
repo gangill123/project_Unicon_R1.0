@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,31 +44,18 @@ public class CommunityController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
 	
-	// http://localhost:8088/community/listAll
-	@GetMapping("listAll")
-	public String readCommunityAll() {
-		
-		logger.info(" community 메인페이지(전체 글) 실행 ");
-		
-		return "community/community";
-	}
-	
-	// http://localhost:8088/community/insert
-	@GetMapping("insert")
-	public String insertCommunity() {
-		
-		logger.info(" community 등록페이지 실행 ");
-		
-		return "community/insert";
-	}
 	
 	// 커뮤니티 - 입양 후기 게시물 보는 사이트
 	// http://localhost:8088/community/main
 	@GetMapping("main")
-	public String template(Model model) {
+	public String template(Model model, HttpSession session) {
 		List<PostVO> postList = communityService.getPostList01();
 		
 		model.addAttribute("postList", postList);
+		
+		String userId = (String)session.getAttribute("member_id");
+		
+		model.addAttribute("userId", userId);
 		
 		logger.info("--------postList---------{}",postList);
 		
@@ -77,10 +65,14 @@ public class CommunityController {
 	// 커뮤니티 - 프로필 게시물 보는 사이트
 	// http://localhost:8088/community/main04
 	@GetMapping("main04/{member_id}")
-	public String templateProfile(Model model, @PathVariable("member_id")String member_id) {
+	public String templateProfile(Model model, @PathVariable("member_id")String member_id, HttpSession session) {
 		List<PostVO> postList = communityService.getProfilePostList01(member_id);
 		
 		model.addAttribute("postList", postList);
+		
+		String userId = (String)session.getAttribute("member_id");
+		
+		model.addAttribute("userId", userId);
 		
 		logger.info("--------postList---------{}",postList);
 		
@@ -90,10 +82,14 @@ public class CommunityController {
 	// 커뮤니티 - 반려 이야기 게시물 보는 사이트
 	// http://localhost:8088/community/main2
 	@GetMapping("main2")
-	public String template2(Model model) {
+	public String template2(Model model, HttpSession session) {
 		List<PostVO> postList = communityService.getPostList02();
 		
 		model.addAttribute("postList", postList);
+		
+		String userId = (String)session.getAttribute("member_id");
+		
+		model.addAttribute("userId", userId);
 		
 		logger.info("--------postList---------{}",postList);
 		
@@ -103,10 +99,14 @@ public class CommunityController {
 	// 커뮤니티 - 실종 게시물 보는 사이트
 	// http://localhost:8088/community/main3
 	@GetMapping("main3")
-	public String template3(Model model) {
+	public String template3(Model model, HttpSession session) {
 		List<PostVO> postList = communityService.getPostList03();
 		
 		model.addAttribute("postList", postList);
+		
+		String userId = (String)session.getAttribute("member_id");
+		
+		model.addAttribute("userId", userId);
 		
 		logger.info("--------postList---------{}",postList);
 		
@@ -116,10 +116,14 @@ public class CommunityController {
 	// 커뮤니티 - 임시 보호 게시물 보는 사이트
 	// http://localhost:8088/community/main4
 	@GetMapping("main4")
-	public String template4(Model model) {
+	public String template4(Model model, HttpSession session) {
 		List<PostVO> postList = communityService.getPostList04();
 		
 		model.addAttribute("postList", postList);
+		
+		String userId = (String)session.getAttribute("member_id");
+		
+		model.addAttribute("userId", userId);
 		
 		logger.info("--------postList---------{}",postList);
 		
@@ -129,18 +133,23 @@ public class CommunityController {
 	// 커뮤니티 - 게시물 등록 사이트
 	// http://localhost:8088/community/main02
 	@GetMapping("main02")
-	public String templateInsert() {
+	public String templateInsert(Model model, HttpSession session) {
+		String userId = (String)session.getAttribute("member_id");
+		
+		model.addAttribute("userId", userId);
 		return "community/new_insert";
 	}
 	
 	// 커뮤니티 - 게시물 수정 사이트
 	// http://localhost:8088/community/main03
 	@GetMapping("main03/{post_id}")
-	public String templateUpdate(@PathVariable("post_id")String post_id, Model model) {
+	public String templateUpdate(@PathVariable("post_id")String post_id, Model model, HttpSession session) {
 		logger.info("post_id는 : {}",post_id);
 		PostVO postList = communityService.getPostListOne(post_id);
 		model.addAttribute("postList", postList);
 		logger.info(" postList는 : {}",postList);
+		String userId = (String)session.getAttribute("member_id");
+		model.addAttribute("userId", userId);
 		
 		return "community/new_update";
 	}
@@ -152,7 +161,7 @@ public class CommunityController {
 		return communityService.getPostList(post_type);
 	}
 	
-	// 프로플 게시물 종류별 전체, 상태별 불러오기
+	// 프로필 게시물 종류별 전체, 상태별 불러오기
 	@GetMapping("readProfilePostType/{postType}")
 	@ResponseBody
 	public List<PostVO> readProfilePostType(@PathVariable("postType")String post_type, @RequestParam("profileId")String member_id){

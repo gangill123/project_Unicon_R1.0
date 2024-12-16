@@ -26,10 +26,10 @@ z-index: 2000;
            <h2>"젱종" 님의 프로필에 오신걸 환영해요 !!</h2>
            
            <!-- 누구페이지인지 숨겨가는 값 -->
-           <input id="profileId" type="hidden" value="${postList[0].member_id }">
+           <input id="profileId" type="text" value="${postList[0].member_id }">
            
            <!-- 로그인된 아이디 -->
-   		   <input type="hidden" id="loginMemberId" value="junghun87">
+   		   <input type="text" id="loginMemberId" value="${userId }">
            
            <button type="button" style="margin-left: 5px; color: black;" class="btn btn-light">팔로워 : 117 명</button>
            <button type="button" style="margin-left: 5px; color: black;" class="btn btn-light">팔로잉 : 117 명</button>

@@ -29,7 +29,7 @@ z-index: 2000;
    </div>
    
    <!-- 로그인된 아이디 -->
-   <input type="hidden" id="loginMemberId" value="junghun87">
+   <input type="text" id="loginMemberId" value="${userId }">
    
    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">Launch modal</button> -->
 
