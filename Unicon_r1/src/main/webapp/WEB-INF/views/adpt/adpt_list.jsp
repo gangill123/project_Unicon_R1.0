@@ -92,6 +92,32 @@
 	background-color: #e0e0e0;
 }
 
+.readpre {
+	font-weight: 700;
+	transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	-webkit-transition: all 0.3s ease;
+	-ms-transition: all 0.3s ease;
+	-o-transition: all 0.3s ease; 
+}
+
+.readpre:before {
+	content: '\f104';
+	font-size: 16px;
+	vertical-align: top;
+	font-family: Font Awesome\ 5 Free;
+	padding-left: 8px;
+	vertical-align: middle; 
+}
+
+.readpre:hover {
+	color: #86bc42; 
+}
+
+.adpt_image_sub {
+	cursor: pointer;
+}
+
 </style>
 
 
@@ -147,7 +173,7 @@
         
         <!-- 모달2 -->
 	<div class="modal fade" id="exampleModal3" tabindex="-1" 
-		aria-labelledby="exampleModalLabel" aria-hidden="true" style="top: 20px;">
+		aria-labelledby="exampleModalLabel" data-bs-focus="false" aria-hidden="true" style="top: 20px;">
 	    <div class="modal-dialog" style="max-width: 1200px;">
 	        <div class="modal-content">
 	            <div class="modal-header">
@@ -296,6 +322,115 @@ $(document).ready(function () {
 		
 		adptModalProcess(nextAdptId);
 	});
+	
+	// 이전 소식 상세보기 시 모달 내용 교체
+	$('.modal-content').on('click', '.readpre', function(){
+		let nextAdptId = $(this).data('next-adpt-id');
+		
+		adptModalProcess(nextAdptId);
+	});
+	
+	/*===== 이미지 교체 =====*/
+	$('.modal-content').on('click', '.adpt_image_sub', function(){
+		var imageSubSrc = $(this).attr('src');
+		var imageMainSrc = $('#adpt_image0').attr('src');
+
+		$('#adpt_image0').attr('src', imageSubSrc);
+		$(this).attr('src', imageMainSrc);
+	});
+	/*===== 이미지 교체 =====*/
+	
+
+	/*===== 상담신청버튼 =====*/
+	$('.modal-content').on('click', '#adptCounselbtn', function() {
+		
+		$.ajax({
+			url:'/adpt/counsel',
+			method:'POST',
+			success: function(resp) {
+				
+				const gender_text = resp.member_gender == 'female' ? '여자' : '남자';
+				const member_info = 
+					'<div class="text-start">' +
+				    '아이디 : <u style="text-underline-offset: 0.3em;"><span style="color:#86bc42;">' + resp.member_id + '</span></u> <br>' +
+				    '전화번호 : <u style="text-underline-offset: 0.3em;"><span style="color:#86bc42;"> ' + resp.member_tel + '</span></u> <br>' +
+				    '성별 : <u style="text-underline-offset: 0.3em;"><span style="color:#86bc42;">' + gender_text + '</span></u> <br>' +
+				    '이름 : <u style="text-underline-offset: 0.3em;"><span style="color:#86bc42;">' + resp.member_name + '</span></u> <br>' +
+				    '생년월일 : <u style="text-underline-offset: 0.3em;"><span style="color:#86bc42;">' + resp.member_birth + '</span></u> <br>' +
+				    '이메일 : <u style="text-underline-offset: 0.3em;"><span style="color:#86bc42;">' + resp.member_email + '</span></u> <br>' +
+				    '주소 : <u style="text-underline-offset: 0.3em;"><span style="color:#86bc42;">' + resp.road_address + ' ' + resp.detail_address + '</span></u> <br>' + '<br>' +
+				    '<b>신청 정보가 맞다면 <span style="color:#86bc42;">"신청합니다"</span>를 입력해주세요!</b>' +
+				    '</div>';
+				
+				Swal.fire({
+					title: '상담신청을 하시겠습니까?',
+					html: member_info,
+					input: 'text',
+					inputPlaceholder: '"신청합니다"를 입력해주세요',
+					allowOutsideClick: false,
+					showCancelButton: true,
+					confirmButtonColor: '#86bc42',
+					cancelButtonColor: '#aab2bd',
+					confirmButtonText: '신청',
+					cancelButtonText: '닫기',
+					inputValidator: function(value) {
+						if (!value || value != '신청합니다') {
+							return '"신청합니다"를 입력해주세요';
+						}
+					}
+				}).then(function(result) {
+					if (result.isConfirmed) {
+						console.log(resp.member_id);
+						console.log($('#animal_id').val());
+						$.ajax({
+							url: '/adpt/counsel/submit',
+							method: 'POST',
+							contentType: 'application/json',
+							data: JSON.stringify({ 
+								"member_id" : resp.member_id, 
+								"animal_id" : $('#animal_id').val() }),
+							success: function() {
+								Swal.fire({
+									title: '신청이 완료되었습니다',
+									icon: 'success',
+									allowOutsideClick: false,
+									confirmButtonColor: '#86bc42',
+									confirmButtonText: '확인',
+								}).then(function(result) {
+									if (result.isConfirmed) {
+										location.reload();
+									}
+								});
+							},
+							error: function(xhr, status, error) {
+								console.error("AJAX 오류:", status, error);
+								Swal.fire({
+									title: '오류 발생',
+									text: '상담 신청에 실패했습니다. 다시 시도해 주세요.',
+									icon: 'error',
+									allowOutsideClick: false,
+									confirmButtonColor: '#86bc42',
+									confirmButtonText: '확인'
+								});
+							}
+						});
+					}
+				});
+			},
+			error: function () {
+				Swal.fire({
+					title: '로그인이 필요합니다!',
+					text: '로그인을 해주세요',
+					icon: 'warning',
+					allowOutsideClick: false,
+					confirmButtonColor: '#86bc42',
+					confirmButtonText: '확인'
+				});
+			}
+		});
+	});
+	/*===== 상담신청버튼 =====*/
+	
 	
 }); //jquery
 

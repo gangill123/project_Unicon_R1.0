@@ -180,6 +180,15 @@ public class AdptService {
 	}
 	
 	
+	/*=========== 사용자 페이지 상담신청 ===========*/
+	public void counselSubmit(Map<String, String> counselParams) {
+		logger.debug("( •̀ ω •́ )✧ counselSubmit() 실행");
+		
+		aDao.counselSubmit(counselParams);
+	}
+	
+	
+	
 	
 /*========================= 메서드 =========================*/
 		
