@@ -447,14 +447,19 @@
 </select>
 
 <!-- 상담 신청 목록 -->
-<!-- 
-<select id="">
-	select adc.animal_id, adc.member_id, adc.counsel_subdate, 
-	 adc.counsel_procdate, adc.counsel_status, adc.counsel_reason 
+<!-- <select id="getCounselList">
+	select adc.animal_id, adc.member_id, adc.counsel_subdate, adc.counsel_procdate, 
+	 a.animal_name, 
 	  ad.adpt_id, 
-	   a.animal_name, 
-	    m.member_name, m.member_id, m.member_gender, m.member_tel, m.member_birth, m.member_email, m.road_address, m.detail_address, 
-	     c.category_code, 
+	   cd.category_value, cd.category_type, 
+	    m.member_name, m.member_birth, m.member_tel, m.member_email, m.road_address, m.detail_address 
+	from _adpt_counsel adc 
+	 join _animal a on adc.animal_id = a.animal_id 
+	  join _member m on adc.member_id = m.member_id 
+	   join _adpt ad on adc.animal_id = ad.animal_id 
+	    join _category_data cd on a.category_code = cd.category_code 
+	where ad.adpt_status = 2 and a.animal_status not in (1, 4, 5, 6) 
+	and a.member_id = #{member_id} 
 </select> -->
 
 </mapper>
