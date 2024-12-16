@@ -30,5 +30,7 @@ public class MemberVO {
     private String is_cosign; // 위탁여부
     private String inst_name; //  기관명 
     private String member_type; //  기관명 
+    private String member_rate; //  기관명 
+    
 
 }
