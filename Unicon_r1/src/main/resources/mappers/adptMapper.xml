@@ -432,13 +432,20 @@
 </select>
 
 
-<!-- 
-<update id="counselSubmit">
+<!-- 상담신청 -->
+<insert id="counselSubmit" parameterType="Map">
+	insert into _adpt_counsel(animal_id, member_id) 
+	values(#{animal_id}, #{member_id}) 
+</insert>
 
 
+<!-- 신청확인 -->
+<select id="counselCheckMember" parameterType="Map" resultType="int">
+	select count(member_id) 
+	from _adpt_counsel 
+	where animal_id = #{animal_id} and member_id = #{member_id} limit 1 
+</select>
 
-</update>
- -->
 
 </mapper>
 

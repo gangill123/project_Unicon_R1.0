@@ -398,7 +398,7 @@ $(document).ready(function () {
 									confirmButtonText: '확인',
 								}).then(function(result) {
 									if (result.isConfirmed) {
-										location.reload();
+										$('#adptCounselbtn').text('신청중').prop('disabled', true);
 									}
 								});
 							},

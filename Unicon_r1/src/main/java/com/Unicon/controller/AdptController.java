@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Unicon.domain.AnimalVO;
@@ -90,6 +91,7 @@ public class AdptController {
 		
 	}
 	
+	
 	@PostMapping("/counsel/submit")
 	@ResponseBody
 	public ResponseEntity<Void> counselSubmit(@RequestBody Map<String, String> counselParams, HttpServletRequest req) {
@@ -106,5 +108,21 @@ public class AdptController {
 		}
 		
 	}
+	
+	
+	@GetMapping("/counsel/check")
+	@ResponseBody
+	public boolean counselCheck(@RequestParam Map<String,String> counselCheckParams, HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ counselCheck() 실행");
+		
+		String member_id = (String)req.getSession().getAttribute("member_id_test");
+		counselCheckParams.put("member_id", member_id);
+		
+		return aService.counselCheckMember(counselCheckParams);
+	}
+	
+	
+	
+	
 	
 }
