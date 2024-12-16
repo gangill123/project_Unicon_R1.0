@@ -9,6 +9,12 @@
 .xzoom-source{
 z-index: 2000;
 }
+
+#xzoom_magnific{
+	aspect-ratio: 1/1;
+	width: 100%;
+	height: 100%;
+}
 </style>
 </head>
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
@@ -68,9 +74,9 @@ z-index: 2000;
        </div>
    </div>
    
-   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">게시물 모달</button>
-   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#followModal">팔로워 모달</button>
-   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#followModal">팔로잉 모달</button>
+<!--    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">게시물 모달</button> -->
+<!--    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#followModal">팔로워 모달</button> -->
+<!--    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#followModal">팔로잉 모달</button> -->
 
    <div class="container">
        <div class="row">
@@ -84,6 +90,7 @@ z-index: 2000;
            </div>
            <!-- End links -->
            
+           <!-- 
            <select id="resionFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
 			   <option value="모든 지역">모든 지역</option>
 			   <option value="서울">서울</option>
@@ -112,12 +119,14 @@ z-index: 2000;
 		       <option value=3000>기타</option>
 		   </select>
 		   
+		    -->
+		   
 <!-- 		   <select id="sortFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;"> -->
 <!-- 		       <option value="최신순">최신순</option> -->
 <!-- 		       <option value="좋아요순">좋아요순</option> -->
 <!-- 		   </select> -->
 		   
-           <button class="btn btn-outline-success" id="search" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 75px;">검색</button>
+           <!-- <button class="btn btn-outline-success" id="search" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 75px;">검색</button> -->
 
        </div>
        
@@ -209,7 +218,11 @@ z-index: 2000;
                    <div class="col-lg-7 ps-lg-2-3">
                        <div class="product-detail" style="overflow-y: auto; max-height: 470px;">
                            <div class="media">
+                           
+                           		<a id="postMemberLink" data-member-id="" href="">
                                 <img id="postMemberImg" src="${pageContext.request.contextPath }/resources/assets/images/avatar-01.jpg" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">
+                                </a>
+                                
                                 <div class="media-body">
                                     <h4 id="postMemberNick" class="mt-0 mb-2 h4">징젱종잉123</h4>
                                     <!-- <h6 class="mt-0 mb-2 h6">1998-07-11 00:00 좋아요 711개 <i class="fa-regular fa-heart"></i></h6> -->
@@ -559,6 +572,14 @@ $(document).ready(function(){
         	dataType : 'json',
         	success : function(data){
         		
+        		// 게시물 주인 프로필 이미지 눌렀을때 이동하기
+        		let memberId = data.postList.member_id;
+        		console.log(memberId);
+                $('#postMemberLink').data('member-id', memberId);  // data-member-id를 업데이트
+            	$('#postMemberLink').attr('href', '/community/main04/' + memberId);  // 링크의 href 업데이트
+            	
+            	// 댓글 주인 프로필 이미지 눌렀을때 이동하기
+            	// 맨 아래에 있음
         		
         		// 기본 이미지로 초기화
         		$('#xzoom_magnific').attr('src', defaultImage1);
@@ -641,32 +662,32 @@ $(document).ready(function(){
                     $('#imgImg1').attr('src', defaultImage1);
                     $('#imgImg1').attr('xpreview', defaultImage1);
         		}
-        		if(data.postList.post_images[1].image_src != ''){
+        		if(data.postList.post_images[1] != null || data.postList.post_images[1].image_src != ''){
 	        		var aImg2 = data.postList.post_images[1].image_src;
 	        		$('#aImg2').attr('href', aImg2);
 	        		var imgImg2 = data.postList.post_images[1].image_src;
 	        		$('#imgImg2').attr('src', imgImg2);
-        		}else{
-        			$('#aImg2').attr('href', defaultImage2);
-                    $('#imgImg2').attr('src', defaultImage2);
+        		}if(data.postList.post_images[1] == null || data.postList.post_images[1].image_src == ''){
+        			$('#aImg2').remove();
+        			$('#imgImg2').remove();
         		}
-        		if(data.postList.post_images[2].image_src != ''){
+        		if(data.postList.post_images[2] != null || data.postList.post_images[2].image_src != ''){
 	        		var aImg3 = data.postList.post_images[2].image_src;
 	        		$('#aImg3').attr('href', aImg3);
 	        		var imgImg3 = data.postList.post_images[2].image_src;
 	        		$('#imgImg3').attr('src', imgImg3);
-        		}else{
-        			$('#aImg3').attr('href', defaultImage3);
-                    $('#imgImg3').attr('src', defaultImage3);
+        		}if(data.postList.post_images[2] == null || data.postList.post_images[2].image_src == ''){
+        			$('#aImg3').remove();
+        			$('#imgImg3').remove();
         		}
-        		if(data.postList.post_images[3].image_src != ''){
+        		if(data.postList.post_images[3] != null || data.postList.post_images[3].image_src != ''){
 	        		var aImg4 = data.postList.post_images[3].image_src;
 	        		$('#aImg4').attr('href', aImg4);
 	        		var imgImg4 = data.postList.post_images[3].image_src;
 	        		$('#imgImg4').attr('src', imgImg4);
-        		}else{
-        			$('#aImg4').attr('href', defaultImage4);
-                    $('#imgImg4').attr('src', defaultImage4);
+        		}if(data.postList.post_images[3] == null || data.postList.post_images[3].image_src == ''){
+        			$('#aImg4').remove();
+        			$('#imgImg4').remove();
         		}
         		
         		// 댓글 목록
@@ -899,7 +920,9 @@ $(document).ready(function(){
         $.each(commentList, function(index, comments) {
             $('.contentRecycle').append(
                 '<div class="media" style="margin-bottom: 30px;">' +
+                	'<a class="postMemberLink" data-member-id="'+comments.memberVO.member_id+'" href="/community/main04/'+comments.memberVO.member_id+'">'+
                     '<img src="' + comments.memberVO.member_image + '" class="me-3" style="border-radius: 50%; width: 60px; height: 60px;" alt="...">' +
+                    '</a>'+
                     '<div class="media-body">' +
                         '<div class="container" style="display: flex; flex-direction: column; padding: 0px;">' +
                             '<div class="top-section" style="display: flex; width: 100%;">' + // grid-template-columns 제거

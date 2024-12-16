@@ -56,7 +56,7 @@ public class CommunityRestController {
 		
 		ResponseEntity<Map<String, Object>> result = null;
 		
-		String member_id = "test7";
+		String member_id = "junghun87";
 		
 		try {
 			PostVO postList = communityService.getPostListOne(post_id);
@@ -64,6 +64,7 @@ public class CommunityRestController {
 			
 			Map<String, Object> responseMap = new HashMap<>();
 			responseMap.put("postList", postList);
+			logger.info(" postList : {}",postList);
 			responseMap.put("commentList", commentList);
 			logger.info(" commentList : {}",commentList);
 			
