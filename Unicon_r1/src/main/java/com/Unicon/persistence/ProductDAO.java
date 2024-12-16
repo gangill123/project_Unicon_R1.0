@@ -50,9 +50,38 @@ public class ProductDAO {
 		sqlSession.insert(NAMESPACE + "insertProductImages", images);
 	}
 	
+	// 상품 조회 / 수정 , 상품 리스트
 	public List<ProductVO> getProductList(Map<String, Object> data) {
 		List<ProductVO> productList = sqlSession.selectList(NAMESPACE + "getProductList", data);
 		return productList; 
 	}
-
+	
+	// 상품 조회 / 수정, 선택한 상품의 옵션 자세히 보기.
+	public List<OptionVO> getOptionDetails(String product_id) {
+		List<OptionVO> optionList = sqlSession.selectList(NAMESPACE + "getOptionDetails", product_id);
+		return optionList; 
+	}
+	// 상품 조회/ 수정, 상품 상태 변경
+	public int updateStatus(Map<String, Object> data) {
+		int productList = sqlSession.update(NAMESPACE + "updateStatus", data);
+		return productList; 
+	}
+	
+	// 상품 조회/ 수정, 판매 시작 시간, 판매 종료 시간 업데이트
+	public int updateDate(Map<String, Object> data) {
+		int productList = sqlSession.update(NAMESPACE + "updateDate", data);
+		return productList; 
+	}
+	
+	// 상품 조회/ 수정, 판매 시작 시간, 판매 종료 시간 업데이트
+	public int updateStock(Map<String, Object> data) {
+		int productList = sqlSession.update(NAMESPACE + "updateStock", data);
+		return productList; 
+	}
+	
+	// 상품 조회/ 판매가 수정
+	public int updatePrice(Map<String, Object> data) {
+		int productList = sqlSession.update(NAMESPACE + "updatePrice", data);
+		return productList; 
+	}
 }

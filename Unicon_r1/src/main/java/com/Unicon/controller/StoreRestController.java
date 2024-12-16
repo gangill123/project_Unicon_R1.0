@@ -132,6 +132,81 @@ public class StoreRestController {
 		}
 	}
     
+    // 상품 조회 / 수정 , 옵션값 가져오기
+    @RequestMapping(value = "/products/optionDetails/{product_id}", method = RequestMethod.GET)
+    public ResponseEntity<List<OptionVO>> optionDetailsGET(@PathVariable("product_id")String product_id) {
+    	logger.info("optionDetailsGET REST API 호출 : "+ product_id);
+    	
+    	List<OptionVO> optionList =  pService.getOptionDetails(product_id);
+    	logger.info("optionList"+optionList);
+    	
+    	if (optionList == null) {
+    		return new ResponseEntity<List<OptionVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<List<OptionVO>>(optionList, HttpStatus.OK);
+    	}
+    }
+    
+    // 상품 조회 / 수정 , 옵션 판매 상태 변경
+    @RequestMapping(value = "/products/updateStatus", method = RequestMethod.POST)
+    public ResponseEntity<String> updateStatusPOST(@RequestBody Map<String, Object> data) {
+    	logger.info("updateStatusPOST REST API 호출 : "+ data);
+    	
+    	int result =  pService.updateStatus(data);
+    	logger.info("optionList"+result);
+    	
+    	if (result <= 0) {
+    		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<String>("성공적", HttpStatus.OK);
+    	}
+    }
+    
+    // 상품 조회 / 수정 , 판메 시작날짜 , 판매 종료
+    @RequestMapping(value = "/products/updateDate", method = RequestMethod.POST)
+    public ResponseEntity<String> updateDatePOST(@RequestBody Map<String, Object> data) {
+    	logger.info("updateStatusPOST REST API 호출 : "+ data);
+    	
+    	int result =  pService.updateDate(data);
+    	logger.info("result"+result);
+    	
+    	if (result <= 0) {
+    		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<String>("성공적", HttpStatus.OK);
+    	}
+    }
+    
+    // 상품 조회 / 수정 , 판메 시작날짜 , 판매 종료
+    @RequestMapping(value = "/products/updateStock", method = RequestMethod.POST)
+    public ResponseEntity<String> updateStockPOST(@RequestBody Map<String, Object> data) {
+    	logger.info("updateStatusPOST REST API 호출 : "+ data);
+    	
+    	int result =  pService.updateStock(data);
+    	logger.info("result"+result);
+    	
+    	if (result <= 0) {
+    		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<String>("성공적", HttpStatus.OK);
+    	}
+    }
+    
+    // 상품 조회 / 수정 , 판메 시작날짜 , 판매 종료
+    @RequestMapping(value = "/products/updatePrice", method = RequestMethod.POST)
+    public ResponseEntity<String> updatePricePOST(@RequestBody Map<String, Object> data) {
+    	logger.info("updatePricePOST REST API 호출 : "+ data);
+    	
+    	int result =  pService.updatePrice(data);
+    	logger.info("result"+result);
+    	
+    	if (result <= 0) {
+    		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<String>("성공적", HttpStatus.OK);
+    	}
+    }
+    
     
     
     

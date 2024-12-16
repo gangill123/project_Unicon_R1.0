@@ -19,5 +19,4 @@ public class OptionVO {
 	private int option_stock;
 	private String option_name2;
 	private String option_value2;
-	// 날짜도 추가 해야될거 같은데 다음에 함.
 }

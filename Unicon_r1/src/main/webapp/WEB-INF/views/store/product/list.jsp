@@ -71,7 +71,7 @@ pageEncoding="UTF-8"%>
       }
       input[type="checkbox"] {
         transform: scale(1.5);
-        margin: 0 0.2rem 0 0.8rem;
+        margin: 0 0.2rem 0 0.5rem;
         cursor: pointer;
       }
       .store-btn {
@@ -273,20 +273,445 @@ pageEncoding="UTF-8"%>
         	    contentType: 'application/json', // 요청 데이터의 타입
         	    data: JSON.stringify(data), // data 객체를 JSON 문자열로 변환
         	    success: function(response) {
-        	        console.log("응답:", response); // 성공적으로 응답을 받았을 때 처리
-        	        // 추가 처리 로직을 여기에 작성
+        	     	// 응답에서 데이터 갯수만큼 반복
+					// 날짜 포맷팅 함수 (forEach 밖에서 정의)
+			        function formatDate(dateString) {
+			            const date = new Date(dateString);
+			            const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+			            return date.toLocaleDateString('ko-KR', options);
+			        }
+        	        
+        	        response.forEach(function(item) {
+        	        	// 날짜 포맷팅
+        	            const startDate = formatDate(item.start_date);
+        	            const endDate = formatDate(item.end_date);
+        	            const createDate = formatDate(item.create_date);
+        	            const updateDate = formatDate(item.update_date);
+        	            
+        	            // 각 아이템에 대해 처리
+        	            var row = '<tr style="height: 36px;cursor: pointer;" class="product-row" data-product-id="' + item.product_id + '">' +
+        	                '<td style="width: 30px; padding:0px;"><input class="item-checkbox" type="checkbox"></td>' +
+        	                '<td style="width: 100px;">' + item.product_id + '</td>' +
+        	                '<td style="width: 300px;">' + item.product_name + '</td>' +
+        	                '<td style="width: 100px;">' + item.product_status + '</td>' +
+        	                '<td style="width: 100px;">' + item.option_type + '</td>' +
+        	                '<td style="width: 100px;">' + item.product_stock + '</td>' +
+        	                '<td style="width: 100px;">' + item.product_price + '원</td>' +
+        	                '<td style="width: 100px;">' + item.discount_rate + '%</td>' +
+        	                '<td style="width: 100px;">' + item.delivery_price + '원</td>' +
+        	                '<td style="width: 100px;">' + item.manufacturer + '</td>' +
+        	                '<td style="width: 100px;">' + item.brand + '</td>' +
+        	                '<td style="width: 100px;">' + startDate + '</td>' +
+        	                '<td style="width: 100px;">' + endDate + '</td>' +
+        	                '<td style="width: 100px;">' + createDate + '</td>' +
+        	                '<td style="width: 100px;">' + updateDate + '</td>' +
+        	                '</tr>';
+        	                
+        	            $('#table_body').append(row); // id가 table_body인 요소에 행 추가
+        	        });
+        	    	// 테이블 행 클릭 이벤트 등록
+                    $('.product-row').on('click', function(event) {
+                        // 체크박스가 클릭된 경우에는 이벤트 취소
+                        if ($(event.target).is('.product-checkbox')) {
+                            return; // 체크박스를 클릭했으면 아무것도 하지 않음
+                        }
+
+                        var productId = $(this).data('product-id'); // 클릭한 행의 product_id 가져오기
+                        
+                        var $clickedRow = $(this); // 클릭한 행을 저장
+                        var productName = $(this).find('td:nth-child(3)').text(); // 클릭한 행에서 상품명 가져오기
+                        var productStatus = $(this).find('td:nth-child(4)').text(); // 클릭한 행에서 상품명 가져오기
+                        
+                     	// 이미 열려 있는 데이터 행이 있는지 확인
+                        if ($clickedRow.next('.header-row').length > 0) {
+                            // 이미 열려 있으면 닫기
+                            $clickedRow.next('.header-row').remove(); // 헤더 행 제거
+                            $clickedRow.nextAll('.data-row' + productId).remove(); 
+                            return; // 추가 처리 없이 종료
+                        }
+                        
+                        
+					    $.ajax({
+					        url: '/store/products/optionDetails/'+productId, // 요청을 보낼 URL
+					        type: 'GET', // 요청 방식 (GET)
+					        contentType: 'application/json', // 요청 데이터의 타입
+					        success: function(response) {
+					         	// 클릭한 행 다음에 헤더를 추가
+					            
+					            
+					            response.forEach(function(item){
+					            	// 옵션2와 옵션값2가 null일 경우 공백으로 설정
+					                item.option_name2 = item.option_name2 ? item.option_name2 : '';
+					                item.option_value2 = item.option_value2 ? item.option_value2 : '';
+					                var dataRows = '<tr class="data-row' + productId + '" style="height: 36px; background:#e7e7e7;">' +
+					                    '<td style="width: 30px; padding:0px;"><input class="product-checkbox" type="checkbox"></td>' + // 체크박스 위치
+					                    '<td style="width: 100px;">' + productId + '</td>' + // 상품 번호
+					                    '<td style="width: 300px;">' + productName + '</td>' + // 상품명
+					                    '<td style="width: 100px;">' + productStatus + '</td>' + // 판매 상태 - 예시로 "판매중"으로 고정
+					                    '<td style="width: 100px;">' + item.option_name + '</td>' + // 옵션1
+					                    '<td style="width: 100px;">' + item.option_value + '</td>' + // 옵션값1
+					                    '<td style="width: 100px;">' + item.option_name2 + '</td>' + // 옵션2 (null이면 공백)
+					                    '<td style="width: 100px;">' + item.option_value2 + '</td>' + // 옵션값2 (null이면 공백)
+					                    '<td style="width: 100px;">' + item.option_stock + '</td>' + // 재고수량
+					                    '<td style="width: 100px;">+ ' + item.option_price + '원</td>' + // 판매가
+					                    '</tr>';
+					                // 클릭한 tr 다음에 새로운 데이터 행 추가
+					                $clickedRow.after(dataRows); // 클릭한 행의 다음에 데이터 행 추가
+					            });
+					            var headerRow = '<tr class="header-row" style="height: 36px; background: #a9a9a9">' +
+				                '<td style="width: 30px; padding:0px;"></td>' +
+				                '<td style="width: 100px;">상품번호</td>' +
+				                '<td style="width: 300px;">상품명</td>' +
+				                '<td style="width: 100px;">상태</td>' +
+				                '<td style="width: 100px;">옵션1</td>' +
+				                '<td style="width: 100px;">옵션값1</td>' +
+				                '<td style="width: 100px;">옵션2</td>' +
+				                '<td style="width: 100px;">옵션값2</td>' +
+				                '<td style="width: 100px;">재고수량</td>' +
+				                '<td style="width: 100px;">판매가</td>' +
+				                '</tr>';
+
+			                $clickedRow.after(headerRow); // 클릭한 행의 다음에 데이터 행 추가
+					            
+					        },
+					        error: function(xhr, status, error) {
+					            console.error("요청 실패:", error); // 요청 실패 시 처리
+					            // 에러 처리 로직을 여기에 작성
+					        }
+					    });
+                        // 추가적인 처리 로직 작성
+                    });
         	    },
         	    error: function(xhr, status, error) {
         	        console.error("요청 실패:", error); // 요청 실패 시 처리
         	        // 에러 처리 로직을 여기에 작성
         	    }
         	});
-         	
-            
-        
-        
         });
         
+     	// 선택 삭제 버튼 클릭 이벤트 등록
+        $('.store-btn.select-delete').on('click', function() {
+            // 체크된 체크박스 선택
+            var checkedCheckboxes = $('.product-checkbox:checked'); 
+
+            // 체크된 체크박스가 0개일 경우 경고
+            if (checkedCheckboxes.length === 0) {
+                alert('하나 이상의 상품을 선택해야 합니다.');
+                return;
+            }
+
+            // 하나의 체크박스가 체크된 경우 처리 로직 작성
+            var productId = checkedCheckboxes.closest('tr').find('td:nth-child(2)').text(); // 상품 번호 가져오기
+            console.log('삭제할 상품 ID:', productId);
+            
+        });
+     	
+        // 셀렉트 박스의 change 이벤트 등록
+		$('#productStatus').on('change', function() {
+		    // 체크된 체크박스가 있는지 확인
+		    var checkedCount = $('.item-checkbox:checked').length;
+		
+		    if (checkedCount === 0) {
+		        // 체크박스가 선택되지 않은 경우
+		        alert('체크박스를 선택해야 합니다.');
+		        // 셀렉트 박스 값을 "판매변경"으로 되돌리기
+		        $(this).val('판매변경');
+		    } 
+		});
+        
+        
+		$('#update-btn').on('click', function() {
+			// 체크된 체크박스 가져오기
+	        var checkedRows = $('.item-checkbox:checked');
+
+	        // 체크된 줄이 없을 경우 경고
+	        if (checkedRows.length === 0) {
+	            alert('하나 이상의 상품을 선택해야 합니다.');
+	            return;
+	        }
+
+	        // 체크된 줄의 판매 상태와 셀렉트 박스의 값 가져오기
+	        var currentStatus = "";
+	        var currentProductId = "";
+	        var productStatus = $('#productStatus').val(); // 선택된 셀렉트 박스의 값
+
+	        checkedRows.each(function() {
+	            var productRow = $(this).closest('tr'); // 체크박스가 있는 행
+	            currentProductId = productRow.find('td:nth-child(2)').text(); // 판매 상태가 있는 열의 인덱스
+	            currentStatus = productRow.find('td:nth-child(4)').text(); // 판매 상태가 있는 열의 인덱스
+	        });
+	        
+	        console.log("productStatus : "+ productStatus);
+	        
+	        if(productStatus == "판매변경") {
+	        	alert("변경할 상태를 선택하세요.");
+	        	return;
+	        }
+	        
+	        // selectedStatuses의 값이 "승인대기"인 경우 경고
+	        if (currentStatus== "승인대기") {
+	            alert("승인대기 중입니다.");
+	            return;
+	        }
+	        
+	     	// AJAX 요청
+	        var data = {
+	            currentProductId: currentProductId,
+	            productStatus: productStatus
+	        };
+	     	
+	        $.ajax({
+	            url: '/store/products/updateStatus', // 요청을 보낼 URL
+	            type: 'POST', // 요청 방식
+	            contentType: 'application/json', // 요청 데이터의 타입
+	            data: JSON.stringify(data), // data 객체를 JSON 문자열로 변환
+	            success: function(response) {
+	                console.log("응답:", response); // 성공적으로 응답을 받았을 때 처리
+	                alert("상태가 성공적으로 업데이트되었습니다.");
+	             	// 페이지 새로 고침
+	                location.reload();
+	            },
+	            error: function(xhr, status, error) {
+	                console.error("요청 실패:", error); // 요청 실패 시 처리
+	                alert("상태 업데이트 중 오류가 발생했습니다.");
+	            }
+	        });
+	    });
+		
+		//changeSalesPeriodButton
+		$('#changeSalesPeriodButton').click(function () {
+			// 체크된 체크박스가 있는지 확인
+		    var checkedCount = $('.item-checkbox:checked').length;
+		    if (checkedCount === 0) {
+		        // 체크박스가 선택되지 않은 경우
+		        alert('체크박스를 선택해야 합니다.');
+		    }
+		    // 체크된 체크박스 가져오기
+		    var checkedRows = $('.item-checkbox:checked');
+			// 체크된 줄이 없을 경우 경고
+	        if (checkedRows.length === 0) {
+	            alert('하나 이상의 상품을 선택해야 합니다.');
+	            return;
+	        }
+			
+			var currentProductId ="";
+			var start_date = "";
+			var end_date = "";
+	        checkedRows.each(function() {
+	            var productRow = $(this).closest('tr'); // 체크박스가 있는 행
+	            currentProductId = productRow.find('td:nth-child(2)').text(); // 판매 상태가 있는 열의 인덱스
+	            start_date = productRow.find('td:nth-child(12)').text(); // 판매 상태가 있는 열의 인덱스
+	            end_date = productRow.find('td:nth-child(13)').text(); // 판매 상태가 있는 열의 인덱스
+	        });
+	        
+	    	// 프롬프트로 날짜 입력 받기
+	        var newStartDate = prompt("새로운 시작일을 입력하세요 (형식: YYYYMMDD):");
+	        var newEndDate = prompt("새로운 종료일을 입력하세요 (형식: YYYYMMDD):");
+	        
+	     	// 날짜 유효성 검사 함수
+	        function isValidDate(dateString) {
+	            // YYYYMMDD 형식의 정규 표현식
+	            var regex = /^(20[0-2][0-9])(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$/;
+	            return regex.test(dateString);
+	        }
+
+	        // 오늘 날짜 구하기
+	        var today = new Date();
+	        var todayString = today.toISOString().slice(0, 10).replace(/-/g, ''); // YYYYMMDD 형식으로 변환
+
+	        // 시작일 유효성 검사
+	        if (!isValidDate(newStartDate)) {
+	            alert("시작일의 형식이 잘못되었습니다. YYYYMMDD 형식으로 입력하세요.");
+	            return;
+	        }
+
+	        // 종료일 유효성 검사
+	        if (!isValidDate(newEndDate)) {
+	            alert("종료일의 형식이 잘못되었습니다. YYYYMMDD 형식으로 입력하세요.");
+	            return;
+	        }
+
+	        // 오늘 날짜보다 이전인지 검사
+	        if (newStartDate < todayString) {
+	            alert("시작일은 오늘 날짜보다 이전일 수 없습니다.");
+	            return;
+	        }
+
+	        if (newEndDate < todayString) {
+	            alert("종료일은 오늘 날짜보다 이전일 수 없습니다.");
+	            return;
+	        }
+
+	        // 종료일이 시작일보다 이전인지 검사
+	        if (newEndDate <= newStartDate) {
+	            alert("종료일은 시작일보다 이후여야 합니다.");
+	            return;
+	        }
+
+	    	 // 날짜 포맷팅 함수 (시분초 포함)
+	        function formatDateWithTime(dateString, isStartDate) {
+	            var formattedDate = dateString.substring(0, 4) + '-' + dateString.substring(4, 6) + '-' + dateString.substring(6, 8);
+	            return formattedDate + (isStartDate ? ' 00:00:00' : ' 23:59:59');
+	        }
+
+	        // 날짜가 유효하다면 추가 처리
+	        console.log("상품 ID:", currentProductId);
+	        console.log("새로운 시작일:", formatDateWithTime(newStartDate, true)); // 시작일: 시분초 00:00:00
+	        console.log("새로운 종료일:", formatDateWithTime(newEndDate, false)); // 종료일: 시분초 23:59:59
+
+	        // 여기에 서버 요청 또는 추가 처리 로직을 작성
+	        
+	        var data = {
+                currentProductId: currentProductId,
+                newStartDate: formatDateWithTime(newStartDate, true), // 시작일 포맷팅
+                newEndDate: formatDateWithTime(newEndDate, false) // 종료일 포맷팅
+            };
+	        
+	        // AJAX 요청 예시
+	        $.ajax({
+	            url: '/store/products/updateDate', // 서버 API 엔드포인트 URL
+	            type: 'POST',
+	            contentType: 'application/json',
+	            data: JSON.stringify(data),
+	            success: function(response) {
+	                // 요청 성공 시 처리
+	                console.log("성공:", response);
+	            	// 페이지 새로 고침
+	                location.reload();
+	            },
+	            error: function(xhr, status, error) {
+	                // 요청 실패 시 처리
+	                console.error("오류:", error);
+	            }
+	        });
+		});
+
+		$('#changeStockQuantityButton').click( function () {
+			// 체크된 체크박스가 있는지 확인
+		    var checkedCount = $('.product-checkbox:checked').length;
+		    if (checkedCount === 0) {
+		        // 체크박스가 선택되지 않은 경우
+		        alert('체크박스를 선택해야 합니다.');
+		    }
+		    
+			// 체크된 체크박스 가져오기
+		    var checkedRows = $('.product-checkbox:checked');
+			// 체크된 줄이 없을 경우 경고
+	        if (checkedRows.length === 0) {
+	            alert('하나 이상의 상품을 선택해야 합니다.');
+	            return;
+	        }
+			
+	        var currentProductId ="";
+			var productName ="";
+			var option_price = "";
+	        checkedRows.each(function() {
+	            var productRow = $(this).closest('tr'); // 체크박스가 있는 행q
+	            currentProductId = productRow.find('td:nth-child(2)').text(); // 판매 상태가 있는 열의 인덱스
+	            productName = productRow.find('td:nth-child(6)').text(); // 판매 상태가 있는 열의 인덱스
+	        	 // option_price에서 +와 원 제거
+	            option_price = productRow.find('td:nth-child(10)').text(); // 가격이 있는 열의 인덱스
+	            option_price = option_price.replace(/^\+/g, '').replace(/원$/g, '').trim(); // + 제거 및 원 제거 후 공백 제거
+	        });
+	        
+	        var newStock = prompt("변경할 재고수량을 입력하세요.");
+			
+	     	// 입력값이 숫자인지 유효성 검사
+	        if (newStock === null || isNaN(newStock) || newStock.trim() === "" || Number(newStock) < 0) {
+	            alert("유효한 재고수량을 입력하세요. (0 이상의 숫자여야 합니다.)");
+	            return; // 함수 종료
+	        }
+		    // 숫자로 변환
+		    newStock = Number(newStock);
+		    
+		    console.log(option_price);
+		    	
+		    var data = {
+                currentProductId: currentProductId,
+                newStock: newStock, 
+                option_value : productName,
+                option_price : option_price
+            };
+		    
+		 	// AJAX 요청
+		    $.ajax({
+		        url: '/store/products/updateStock', // 요청할 URL
+		        type: 'POST', // HTTP 메서드
+		        contentType: 'application/json', // 요청 데이터 타입
+		        data: JSON.stringify(data), // 데이터를 JSON 형식으로 변환
+		        success: function(response) {
+		            // 요청 성공 시 처리할 로직
+		            alert('재고가 성공적으로 업데이트되었습니다.');
+		         	// 페이지 새로 고침
+	                location.reload();
+		        },
+		        error: function(xhr, status, error) {
+		            // 요청 실패 시 처리할 로직
+		            alert('재고 업데이트에 실패했습니다. 오류: ' + error);
+		            console.error(xhr); // 오류 로그
+		        }
+		    });
+		});
+		$('#changePriceButton').click( function () {
+			// 체크된 체크박스가 있는지 확인
+		    var checkedCount = $('.item-checkbox:checked').length;
+		    if (checkedCount === 0) {
+		        // 체크박스가 선택되지 않은 경우
+		        alert('체크박스를 선택해야 합니다.');
+		    }
+		    
+			// 체크된 체크박스 가져오기
+		    var checkedRows = $('.item-checkbox:checked');
+			// 체크된 줄이 없을 경우 경고
+	        if (checkedRows.length === 0) {
+	            alert('하나 이상의 상품을 선택해야 합니다.');
+	            return;
+	        }
+			
+	        var currentProductId ="";
+	        checkedRows.each(function() {
+	            var productRow = $(this).closest('tr'); // 체크박스가 있는 행q
+	            currentProductId = productRow.find('td:nth-child(2)').text(); // 판매 상태가 있는 열의 인덱스
+	        });
+	        
+	        var product_price = prompt("변경할 판매가를 입력하세요.");
+			
+	  		// 입력값이 숫자인지 유효성 검사
+	        if (product_price === null || isNaN(product_price) || product_price.trim() === "" || Number(product_price) < 0) {
+	            alert("유효한 판매가를 입력하세요. (0 이상의 숫자여야 합니다.)");
+	            return; // 함수 종료
+	        }
+
+		    // 숫자로 변환
+		    product_price = Number(product_price);
+		    
+		    console.log(product_price);
+		    	
+		    var data = {
+                currentProductId: currentProductId,
+                product_price : product_price
+            };
+		    
+		 	// AJAX 요청
+		    $.ajax({
+		        url: '/store/products/updatePrice', // 요청할 URL
+		        type: 'POST', // HTTP 메서드
+		        contentType: 'application/json', // 요청 데이터 타입
+		        data: JSON.stringify(data), // 데이터를 JSON 형식으로 변환
+		        success: function(response) {
+		            // 요청 성공 시 처리할 로직
+		            alert('판매가를 성공적으로 업데이트되었습니다.');
+		         	// 페이지 새로 고침
+	                location.reload();
+		        },
+		        error: function(xhr, status, error) {
+		            // 요청 실패 시 처리할 로직
+		            alert('판매가를  업데이트에 실패했습니다. 오류: ' + error);
+		            console.error(xhr); // 오류 로그
+		        }
+		    });
+		});
+		
     });
 </script>
   </head>
@@ -375,6 +800,7 @@ pageEncoding="UTF-8"%>
 								    <button class="store-btn" id="threeMonths">3개월</button>
 								    <button class="store-btn" id="sixMonths">6개월</button>
 								    <button class="store-btn" id="oneYear">1년</button>
+								    <button class="store-btn" id="all">전체</button>
 							    </div>
 							    <input type="date" id="startDate">
 							    <span style="line-height: 36px; margin: 0 0.5em	">~</span>
@@ -411,20 +837,21 @@ pageEncoding="UTF-8"%>
                             </h4>
                             <div style="display: flex; justify-content: space-between;">
 	                            <div class="btns-flex">
-	                              <button class="store-btn" style="padding: 8px">선택 삭제</button>
-	                              <spna style="line-height: 32px;">|</spna>
-	                              <select style="font-size: 12px">
-	                                <option selected>판매변경</option>
-	                                <option>판매중</option>
-	                                <option>품절</option>
-	                                <option>판매중지</option>
-	                              </select>
-	                              <spna style="line-height: 32px;">|</spna>
-	                              <button class="store-btn">판매가 변경</button>
-	                              <button class="store-btn">판매기간 변경</button>
+	                              <button class="store-btn select-delete" style="padding: 8px" >선택 삭제</button>
+	                              <span style="line-height: 32px;">|</span>
+	                              <select id="productStatus" style="font-size: 12px">
+								      <option selected>판매변경</option>
+								      <option>판매중</option>
+								      <option>품절</option>
+								      <option>판매중지</option>
+								  </select>
+	                              <span style="line-height: 32px;">|</span>
+	                              <button id="changeSalesPeriodButton" class="store-btn">판매기간 변경</button>
+								  <button id="changeStockQuantityButton" class="store-btn">재고수량 변경</button>
+								  <button id="changePriceButton" class="store-btn">판매가 변경</button>
 	                            </div>
 	                           	<div>
-	                           		<button class="store-btn" style="padding: 8px">수정 변경</button>
+	                           		<button class="store-btn" id="update-btn" style="padding: 8px">수정 변경</button>
 	                           	</div>
                             </div>
                             <div style="width: 100%; overflow-x: auto; border: 1px solid #ccc; padding: 0;">
@@ -432,13 +859,13 @@ pageEncoding="UTF-8"%>
 							        <table border="1" style="width: 100%; table-layout: auto;">
 							            <thead>
 							                <tr style="font-size : 13px" >
-							                    <th style="width: 30px; padding:7px 0px 0px;background:#f8f9fd"><input type="checkbox"></th>
+							                    <th style="width: 30px; padding:7px 0px 0px;background:#f8f9fd"></th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">상품번호</th>
 							                    <th style="width: 300px;padding-left: 8px;background:#f8f9fd">상품명</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">판매상태</th>
+							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">옵션</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">재고수량</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">판매가</th>
-							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">옵션</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">할인</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">기본 배송비</th>
 							                    <th style="width: 100px;padding-left: 8px;background:#f8f9fd">제조사명</th>
@@ -450,59 +877,8 @@ pageEncoding="UTF-8"%>
 							                </tr>
 							            </thead>
 							        </table>
-							        <div style="max-height: 400px; overflow-y: auto; height: 400px;">
+							        <div style="max-height: 400px; overflow-y: auto; height: 400px;color : #3d3d3d;font-size: 13px">
 							            <table border="1" style="width: 100%; table-layout: fixed;" id="table_body">
-							                <tr style="height: 36px;">
-							                    <td style="width: 30px; padding:0px;"><input type="checkbox"></td>
-							                    <td style="width: 100px;">001</td>
-							                    <td style="width: 300px;">상품 AASASDASDASDASDASDAS</td>
-							                    <td style="width: 100px;">판매중</td>
-							                    <td style="width: 100px;">100</td>
-							                    <td style="width: 100px;">10,000원</td>
-							                    <td style="width: 100px;"></td>
-							                    <td style="width: 100px;">10%</td>
-							                    <td style="width: 100px;">3,000원</td>
-							                    <td style="width: 100px;">제조사 A</td>
-							                    <td style="width: 100px;">브랜드 A</td>
-							                    <td style="width: 100px;">2024-01-01</td>
-							                    <td style="width: 100px;">2024-01-01</td>
-							                    <td style="width: 100px;">2023-12-01</td>
-							                    <td style="width: 100px;">2023-12-15</td>
-							                </tr>
-							                <tr style="height: 36px;background: #f0f1f6">
-							                    <td style="width: 30px; padding:0px;"><input type="checkbox"></td>
-							                    <td style="width: 100px;">001</td>
-							                    <td style="width: 300px;">상품 AASASDASDASDASDASDAS</td>
-							                    <td style="width: 100px;">판매중</td>
-							                    <td style="width: 100px;">100</td>
-							                    <td style="width: 100px;">10,000원</td>
-							                    <td style="width: 100px;"></td>
-							                    <td style="width: 100px;">10%</td>
-							                    <td style="width: 100px;">3,000원</td>
-							                    <td style="width: 100px;">제조사 A</td>
-							                    <td style="width: 100px;">브랜드 A</td>
-							                    <td style="width: 100px;">2024-01-01</td>
-							                    <td style="width: 100px;">2024-01-01</td>
-							                    <td style="width: 100px;">2023-12-01</td>
-							                    <td style="width: 100px;">2023-12-15</td>
-							                </tr>
-							                <tr style="height: 36px;">
-							                    <td style="width: 30px; padding:0px;"><input type="checkbox"></td>
-							                    <td style="width: 100px;">002</td>
-							                    <td style="width: 300px;">상품 B</td>
-							                    <td style="width: 100px;">판매중</td>
-							                    <td style="width: 100px;">200</td>
-							                    <td style="width: 100px;">20,000원</td>
-							                    <td style="width: 100px;">18,000원</td>
-							                    <td style="width: 100px;">10%</td>
-							                    <td style="width: 100px;">3,000원</td>
-							                    <td style="width: 100px;">제조사 B</td>
-							                    <td style="width: 100px;">브랜드 B</td>
-							                    <td style="width: 100px;">2024-02-01</td>
-							                    <td style="width: 100px;">2023-12-02</td>
-							                    <td style="width: 100px;">2023-12-16</td>
-							                </tr>
-							                <!-- 추가 행을 여기에 추가할 수 있습니다 -->
 							            </table>
 							        </div>
 							    </div>

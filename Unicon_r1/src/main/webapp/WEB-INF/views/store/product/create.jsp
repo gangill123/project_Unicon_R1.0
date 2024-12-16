@@ -287,7 +287,8 @@
 				                  <div style="padding : 1.0rem 2.0rem;">
 				                  	<div style="display: flex; justify-content: space-between;">
 				                  		<div style="display: flex;align-items: center;">
-						                    <h4 class="card-title" style="margin-bottom: 0">옵션 </h4>
+						                    <h4 class="card-title" style="margin-bottom: 0">옵션 
+						                     <i class="icon-must" aria-label="필수항목"></i></h4>
 				                  		</div>
 					                    <button onclick="closeBox(this,'option')" style="border: none;background: transparent;font-size: 2.1rem;">
 					                    	<i class="mdi mdi-chevron-down"></i>
@@ -300,8 +301,7 @@
 										    <label >선택형</label>
 										    <div>
 										        <div class="store-input-container">
-										            <button id="option-set-on" class="btn-setting-on setting-inactive">설정함</button>
-										            <button id="option-set-off" class="btn-setting-off setting-active">설정안함</button>
+										            <button id="option-set-on" class="btn-setting-on setting-active">설정함</button>
 										        </div>
 										    </div>
 										</div>
@@ -645,17 +645,6 @@
 				                  	</div>
 				                    <div class="dropdown-divider"></div>
 				                    <div class="closeBox-delivery">
-					                    <div class="display-f">
-										    <label>배송방법</label>
-										    <div>
-									        	<div class="store-input-container">
-						                    		<!-- TODO 버튼 2개로 제어  -->
-						                    		<button id="btn-delivery-on" class="btn-setting-on setting-active">배송</button>
-										            <button id="btn-delivery-off" class="btn-setting-off setting-inactive">배송안함</button>
-					                    		</div>
-										    </div>
-			                    		</div>
-					                    <div class="dropdown-divider"></div>
 					                    <div class="display-f">
 										    <label>택배사</label>
 										    <div>
