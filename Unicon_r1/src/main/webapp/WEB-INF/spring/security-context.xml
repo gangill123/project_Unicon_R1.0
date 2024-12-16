@@ -16,18 +16,6 @@
     <security:http>
         <!-- 공용 경로 허용 -->
         <security:intercept-url pattern="/*" access="permitAll"/>
-        <security:intercept-url pattern="/login" access="permitAll"/>
-        <security:intercept-url pattern="/main" access="permitAll"/>
-        <security:intercept-url pattern="/register/mType" access="permitAll"/>
-        <security:intercept-url pattern="/register/mRegister4" access="permitAll"/>
-        <security:intercept-url pattern="/register/mRegister5" access="permitAll"/>
-        <security:intercept-url pattern="/register/sRegister" access="permitAll"/>
-        <security:intercept-url pattern="/register/mRegister6" access="permitAll"/>
-        <security:intercept-url pattern="/register/iRegister" access="permitAll"/>
-        <security:intercept-url pattern="/login/customLogin" access="permitAll"/>
-        <security:intercept-url pattern="/api/kakao/login" access="permitAll"/>
-        <security:intercept-url pattern="/api/naver/login" access="permitAll"/>
-        <security:intercept-url pattern="/resources/**" access="permitAll"/> <!-- 정적 리소스 허용 -->
 
         <!-- 인증된 사용자만 접근 가능 -->
 <!--         <security:intercept-url pattern="/main" access="hasRole('ROLE_MEMBER')"/>
@@ -39,7 +27,7 @@
         
 
         <!-- 모든 요청 기본 정책 -->
-        <security:intercept-url pattern="/**" access="denyAll"/>
+        <!-- <security:intercept-url pattern="/**" access="denyAll"/> -->
 
         <!-- 로그인 설정 -->
         <security:form-login login-page="/login/customLogin" 
