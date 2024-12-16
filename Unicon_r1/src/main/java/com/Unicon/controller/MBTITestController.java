@@ -1,21 +1,28 @@
 package com.Unicon.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.Unicon.domain.PetAdoptionVO;
+import com.Unicon.service.PetAdoptionService;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 @RequestMapping("/mbti")
 public class MBTITestController {
+	 @Autowired
+	    private PetAdoptionService petAdoptionService;
     private static final Logger logger = LoggerFactory.getLogger(MBTITestController.class);
 
     private List<String> questions;
@@ -99,7 +106,6 @@ public class MBTITestController {
                     .body("답변 처리 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
-
     @GetMapping("/result")
     public String showResult(Model model) {
         if (mbtiResult == null) {
@@ -108,8 +114,29 @@ public class MBTITestController {
         model.addAttribute("mbtiResult", getMBTIResult());
         model.addAttribute("petRecommendation", getPetRecommendation());
         model.addAttribute("petCharacteristics", getPetCharacteristics());
+
+        // 추천 동물 목록 로그 출력
+        List<String> recommendedPets = Arrays.asList(getPetRecommendation().split(", "));
+        logger.info("추천 동물 목록: {}", recommendedPets);
+
+        // DAO 호출 결과 로그 출력
+        List<PetAdoptionVO> matchingAdoptions = petAdoptionService.findByAnimalTypes(recommendedPets);
+        logger.info("매칭된 입양글 수: {}", matchingAdoptions.size());
+        
+        model.addAttribute("matchingAdoptions", matchingAdoptions);
         return "mbti/result";
     }
+    
+    @GetMapping("/adoption/detail/{adpt_ai}")
+    public String showAdoptionDetail(@PathVariable("adpt_ai") int adpt_ai, Model model) {
+        PetAdoptionVO adoption = petAdoptionService.getAdoptionByAdptAi(adpt_ai);
+        model.addAttribute("adoption", adoption);
+        return "adoption/detail";
+    }
+
+
+    
+    
 
     public void processUserAnswer(int answer) {
         scores[currentQuestionIndex / 3] += answer - 3;
@@ -142,7 +169,7 @@ public class MBTITestController {
                 petCharacteristics = "충성스럽고 보호본능이 강하며, 지능이 높고 훈련이 쉽습니다. 활동적이고 경계심이 강한 편입니다.";
                 break;
             case "ESTP":
-                petRecommendation = "벨지안 셰퍼드, 불 테리어, 시베리안 허스키, 아메리칸 불리, 아메리칸 스태퍼드셔 테리어, 아메리칸 핏불 테리어, 오스트레일리안 캐틀독, 스노우 슈";
+                petRecommendation = "벨지안 셰퍼드, 불 테리어, 시베리안 허스키, 아메리칸 불리, 아메리칸 스태퍼드셔 테리어, 아메리칸 핏불 테리어, 오스트레일리안 캐틀독, 스노우 슈, 말티즈";
                 petCharacteristics = "에너지가 넘치고 독립적이며, 지능이 높습니다. 활동적이고 모험을 좋아하는 성격입니다.";
                 break;
             case "ENTJ":

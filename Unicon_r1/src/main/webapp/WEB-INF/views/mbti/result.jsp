@@ -4,8 +4,6 @@
 <!-- 추가 템플릿 css/js 작성란 -->
 <title>MBTI 테스트 결과</title>
 <style>
-  
-
     h1 {
         color: #333;
         text-align: center;
@@ -52,6 +50,29 @@
     .text-center {
         text-align: center;
     }
+    .matching-adoptions {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+    }
+    .adoption-card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .adoption-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+    .adoption-card h3 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
 </style>
 </head>
 <%@ include file="../inc/new_header.jsp" %>
@@ -73,6 +94,22 @@
                         <div class="pet-info">
                             <h2>🐾 추천 반려동물 특징</h2>
                             <p>${petCharacteristics}</p>
+                        </div>
+                        
+                        <div class="matching-adoptions">
+                            <h2>추천 반려동물 입양 정보</h2>
+                            <div class="row">
+                                <c:forEach items="${matchingAdoptions}" var="adoption">
+                                    <div class="col-md-4">
+                                        <div class="adoption-card">
+                                            <img src="${adoption.imageUrl}" alt="입양동물 이미지">
+                                            <h3>${adoption.title}</h3>
+                                            <p>${adoption.content}</p>
+                                            <a href="/adoption/detail/${adoption.adpt_ai}" class="btn">자세히 보기</a>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
                         </div>
                         
                         <div class="text-center">
