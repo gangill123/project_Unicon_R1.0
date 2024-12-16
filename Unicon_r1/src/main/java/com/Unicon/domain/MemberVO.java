@@ -1,5 +1,7 @@
 package com.Unicon.domain;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -31,6 +33,8 @@ public class MemberVO {
     private String inst_name; //  기관명 
     private String member_type; //  기관명 
     private String member_rate; //  기관명 
+    
+    private List<PetVO> member_pets;  // 반려동물 테이블 (PetVO)
     
 
 }

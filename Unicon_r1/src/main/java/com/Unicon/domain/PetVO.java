@@ -22,4 +22,6 @@ public class PetVO {
 	private Date pet_birthdate;
 	private Date pet_adopdate;
 	
+	private CategoryDataVO categoryDataVO;	// 카테고리 테이블
+	
 }

@@ -75,7 +75,7 @@
 
 						<!-- 숨겨서 들고갈 값(세션) -->
 						<!-- member_id -->
-						<input id="member_id" name="member_id" type="text" value="${userId }">
+						<input id="member_id" name="member_id" type="hidden" value="${userId }">
 						<!-- 숨겨서 들고갈 값(세션) -->
 
 						<div class="quform-elements">

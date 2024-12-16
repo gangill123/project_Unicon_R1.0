@@ -12,6 +12,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +34,7 @@ import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.CommentLikeVO;
 import com.Unicon.domain.CommentVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.PostLikeVO;
 import com.Unicon.domain.PostVO;
 import com.Unicon.service.CommunityService;
@@ -48,15 +50,36 @@ public class CommunityRestController {
 	private static final Logger logger = LoggerFactory.getLogger(CommunityRestController.class);
 	
 	
+	// 해당하는 반려동물 정보 들고 오기
+	@RequestMapping(value = "/getPetInfo/{pet_id}",method = RequestMethod.GET)
+	public ResponseEntity<Map<String, Object>> getPetInfo(@PathVariable("pet_id")int pet_id){
+		logger.info(" getPetInfo() 실행 ");
+		
+		ResponseEntity<Map<String, Object>> result = null;
+		
+		try {
+			List<MemberVO> getPetInfo = communityService.getPetInfo(pet_id);
+			Map<String, Object> responseMap = new HashMap<String, Object>();
+			responseMap.put("getPetInfo", getPetInfo);
+			logger.info("responseMap : {}",responseMap);
+			result = new ResponseEntity<>(responseMap, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return result;
+	}
+	
 	// 해당하는 게시물과 전체 댓글 들고 오기
 	@RequestMapping(value = "/getAll/{post_id}",method = RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> getPostListOneAndCommentListAll(@PathVariable("post_id") String post_id,
-			Model model/* , @RequestParam("comment_id")int comment_id */){
+			Model model, HttpSession session/* , @RequestParam("comment_id")int comment_id */){
 		logger.info(" getPostListOneAndCommentListAll() 실행 ");
 		
 		ResponseEntity<Map<String, Object>> result = null;
 		
-		String member_id = "junghun87";
+		String member_id = (String)session.getAttribute("member_id");
 		
 		try {
 			PostVO postList = communityService.getPostListOne(post_id);
