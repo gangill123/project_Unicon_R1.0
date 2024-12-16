@@ -295,7 +295,7 @@
                         </div>
 	                </div>
 					<div class="row mt-3">
-	                    <div class="col-xl-5 col-lg-12 d-flex">
+	                    <div class="col-xl-6 col-lg-12 d-flex">
 							<h6 class="col-3">활동성</h6>
 							<div class="actGauge col-7">
 								<div class="empty"></div>
@@ -306,7 +306,7 @@
 							</div>
 							<div class="col-2 text-center"><h6 style="color:#86bc42;">${animal_act == 0 ? '' : animal_act}</h6></div>
 						</div>
-						<div class="col-xl-5 col-lg-12 d-flex">
+						<div class="col-xl-6 col-lg-12 d-flex">
 							<h6 class="col-3">사회성</h6>
 							<div class="socialGauge col-7">
 								<div class="empty"></div>
@@ -320,7 +320,7 @@
 	                    </div>
 	                </div>
 	                <div class="row">
-	                	<div class="col-xl-11 col-lg-12 mt-1">
+	                	<div class="col-xl-12 col-lg-12 mt-1">
 							<table class="table table-bordered text-center mb-0">
 								<thead>
 									<tr>
@@ -340,7 +340,7 @@
 								</tbody>
 							</table>
 	                	</div>
-						<div class="col-xl-11 col-lg-12 mt-1">
+						<div class="col-xl-12 col-lg-12 mt-1">
 							<table class="table table-bordered text-center mb-0">
 								<thead>
 									<tr>
