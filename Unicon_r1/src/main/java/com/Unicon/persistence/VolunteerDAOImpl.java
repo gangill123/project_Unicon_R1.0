@@ -25,20 +25,6 @@ public class VolunteerDAOImpl implements VolunteerDAO {
     
     private static final String NAMESPACE = "com.Unicon.mapper.VolunteerMapper";
     
-    
-    @Override
-    public MemberVO login(MemberVO member) {
-        
-        return sqlSession.selectOne("org.unicorn.service.LoginService.login", member);
-    }
-
-    @Override
-    public boolean isLoggedIn(MemberVO member) {
-        
-        return sqlSession.selectOne("org.unicorn.service.LoginService.isLoggedIn", member);
-    }
-    
-    
     @Override
     public void insertVolunteer(VolunteerVO volunteer) throws Exception {
         sqlSession.insert(NAMESPACE + ".insertVolunteer", volunteer);
@@ -62,6 +48,14 @@ public class VolunteerDAOImpl implements VolunteerDAO {
     @Override
     public VolunteerVO selectVolunteer(Long voId) throws Exception {
         return sqlSession.selectOne(NAMESPACE + ".selectVolunteer", voId);
+    }
+    
+    @Override
+    public VolunteerVO fetchVolunteer(Long voId, String memberId) throws Exception {
+        Map<String, Object> params = new HashMap<>();
+        params.put("voId", voId);
+        params.put("memberId", memberId);
+        return sqlSession.selectOne(NAMESPACE + ".fetchVolunteerInfo", params);
     }
     
     @Override

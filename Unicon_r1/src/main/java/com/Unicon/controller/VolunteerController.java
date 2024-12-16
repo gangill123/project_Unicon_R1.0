@@ -46,18 +46,28 @@ public class VolunteerController {
     // http://localhost:8088/volunteer
     // http://localhost:8088/volunteer/mylist
     
-    @GetMapping("/manage/volForm")
+    @GetMapping("/manage/volForm/{voId}")
     public String volunteerForm(
-            @RequestParam(value = "voId", required = false) Long voId,
-            Model model) throws Exception {
-        
-        if (voId != null) {
-            // 수정인 경우, 기존 데이터 조회
-            VolunteerVO volunteer = volService.getVolunteer(voId);
-            model.addAttribute("volunteer", volunteer);
+            @PathVariable("voId") Long voId,
+            HttpSession session,
+            Model model,
+            RedirectAttributes rttr) {
+        MemberVO loginMember = (MemberVO) session.getAttribute("member");
+
+        if (loginMember == null) {
+            rttr.addFlashAttribute("msg", "로그인이 필요합니다.");
+            return "redirect:/login/customLogin";
         }
-        
-        return "volunteer/manage/volForm";
+
+        try {
+            VolunteerVO volunteerInfo = volService.getVolunteer(voId, loginMember.getMember_id());
+            model.addAttribute("volunteer", volunteerInfo);
+        } catch (Exception e) {
+            rttr.addFlashAttribute("msg", "봉사활동 정보를 가져오는 중 오류가 발생했습니다.");
+            return "redirect:/volunteer/apply";
+        }
+
+        return "volunteer/volForm";
     }
     
     @GetMapping("/manage/volGuideForm")
@@ -67,24 +77,6 @@ public class VolunteerController {
         return "volunteer/manage/volGuideForm";
     }
     
-    @GetMapping("/checkLogin")
-    @ResponseBody
-    public boolean checkLoginStatus(HttpSession session) {
-        // 세션에서 로그인 상태 확인 
-        return session.getAttribute("user") != null;
-    }
-    
-    @PostMapping("/customLogin")
-    public String login(MemberVO member, HttpSession session, RedirectAttributes rttr) {
-        MemberVO loginMember = volService.loginProcess(member);
-        if (loginMember != null) {
-            session.setAttribute("member", loginMember);
-            return "redirect:/volunteer/apply/${volunteer.voId}";
-        } else {
-            rttr.addFlashAttribute("msg", "로그인 실패");
-            return "redirect:/login/customLogin";
-        }
-    }
     
     @GetMapping("")
     public String userList(Model model) throws Exception {
@@ -99,25 +91,13 @@ public class VolunteerController {
         return "volunteer/volList";
     }
     
-    @GetMapping("/apply/{voId}")
-    public String applicationForm(@PathVariable Long voId, Model model) throws Exception {
-        VolunteerVO volunteer = volService.getVolunteer(voId);
-        model.addAttribute("volunteer", volunteer);
-        return "volunteer/volApply";
-    }
-    
 	/*
-	 * @PostMapping("/apply")
-	 * 
-	 * @ResponseBody public ResponseEntity<?> submitApplication(@ModelAttribute
-	 * VolunteerApplyVO apply) { try { volService.submitApplication(apply); return
-	 * ResponseEntity.ok().build(); } catch (Exception e) {
-	 * logger.error("봉사활동 신청 실패", e); return
-	 * ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	 * .body(e.getMessage()); } }
+	 * @GetMapping("/apply/{voId}") public String applicationForm(@PathVariable Long
+	 * voId, Model model) throws Exception { VolunteerVO volunteer =
+	 * volService.getVolunteer(voId); model.addAttribute("volunteer", volunteer);
+	 * return "volunteer/volApply"; }
 	 */
     
-	/* ============================================================================================== */
     @PostMapping("/apply")
     @ResponseBody
     public ResponseEntity<?> submitApplication(@ModelAttribute VolunteerApplyVO apply) {
