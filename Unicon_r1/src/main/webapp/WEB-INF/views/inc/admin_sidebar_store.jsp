@@ -11,7 +11,7 @@
               </a>
                 <div class="collapse" id="product-basic">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="/store/product/list">상품 조회 /수정</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/store/product/list">상품 조회 / 수정</a></li>
                   <li class="nav-item"> <a class="nav-link" href="/store/product/create">상품 등록</a></li>
                 </ul>
               </div>

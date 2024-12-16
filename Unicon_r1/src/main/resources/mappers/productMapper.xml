@@ -53,6 +53,17 @@
 	<result property="image_src" column="image_src"/>
 </resultMap>
 
+<resultMap type="OptionVO" id="OptionResultMap">
+    <id property="option_id" column="option_id"/>        <!-- 기본 키 -->
+    <result property="product_id" column="product_id"/>  <!-- 상품 ID -->
+    <result property="option_name" column="option_name"/>  <!-- 옵션 이름 -->
+    <result property="option_value" column="option_value"/> <!-- 옵션 값 -->
+    <result property="option_price" column="option_price"/> <!-- 옵션 가격 -->
+    <result property="option_stock" column="option_stock"/> <!-- 옵션 재고 -->
+    <result property="option_name2" column="option_name2"/> <!-- 추가 옵션 이름 -->
+    <result property="option_value2" column="option_value2"/> <!-- 추가 옵션 값 -->
+</resultMap>
+
 
 <insert id="insertProduct" parameterType="com.Unicon.domain.ProductVO">
     INSERT INTO _products (
@@ -172,8 +183,49 @@
             <foreach collection="selectedStatuses" item="status" open="(" separator="," close=")">
                 #{status}
             </foreach>
-         AND create_date BETWEEN #{start_date} AND #{end_date}
+         <!-- 동적 조건: create_date 범위 검색 -->
+        <if test="start_date != '' and end_date != ''">
+            AND create_date BETWEEN #{start_date} AND #{end_date}
+        </if>
 </select>
+
+<!-- product option 리스트-->
+<select id="getOptionDetails" resultMap="OptionResultMap">
+	select * from _option where product_id = #{product_id}
+</select>
+
+<!-- updateDate 판매 시작,종료 날짜 업데이트 -->
+<update id="updateDate" >
+	update _products
+	set 
+		start_date = #{newStartDate},
+		end_date = #{newEndDate}
+	where 
+		product_id = #{currentProductId}
+</update>
+
+<!-- updateDate 판매 시작,종료 날짜 업데이트 -->
+<update id="updateStock" >
+	update _option
+	set 
+		option_stock = #{newStock}
+	where 
+		product_id = #{currentProductId} and 
+		option_value = #{option_value} and
+		option_price = #{option_price} 
+</update>
+
+<!-- updatePrice 판매가 업데이트 -->
+<update id="updatePrice" >
+	update _products
+	set 
+		product_price = #{product_price}
+	where 
+		product_id = #{currentProductId}
+</update>
+
+
+
 
 
 </mapper>
