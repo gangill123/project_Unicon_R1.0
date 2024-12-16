@@ -202,6 +202,7 @@
 		let adpt_etc = allData[index].adptVO.adpt_etc;
 		let animal_act = allData[index].animal_act;
 		let animal_social = allData[index].animal_social;
+		let animal_id = allData[index].animal_id;
 		let animal_vaccine0 = allData[index].animal_vaccines[0].vaccine;
 		let animal_vaccine1 = allData[index].animal_vaccines[1].vaccine;
 		let animal_vaccine2 = allData[index].animal_vaccines[2].vaccine;
@@ -268,10 +269,14 @@
 					<img class="adpt_image_sub mx-1" id="adpt_image3" onerror="this.onerror=null; this.src='/uploads/defaultAdpt.jpg';"
 						src="${animal_image_src3}" >
 	            </div>
+	            <div class="d-flex justify-content-center mt-5">
+	            	<button type="button" id="adptCounselbtn" class="butn-style3 white-hover col-8">입양 상담 신청</button>
+	            </div>
 	            <!-- product left end -->
 	        </div>
 	        <div class="col-lg-7 ps-lg-2-3">
 	            <div class="product-detail">
+	            <input id="animal_id" type="hidden" value="${animal_id}" />
 	                <h4 class="mb-2">${adpt_id}<span class="label-sale bg-${statusColor} 
 	                text-white text-uppercase display-30">${statusText}</span>`
 	                
@@ -279,21 +284,18 @@
 	                <p class="rating-text"><span>이름 :</span> <span class="text-primary">${animal_name}</span
 	                ><span>  /  보호소 :</span> <span class="text-primary">${member_name}</span></p>
 	                <div class="row">
-	                	<div class="col-7">
+	                	<div class="col-6">
                     		<h6>소개</h6>
                     	</div>
-                        <div class="col-5">
-                    		<h6>기타사항</h6>
-                    	</div>
-                        <div class="col-7 scroll-hide" style="min-height:200px; max-height:200px; overflow-y: auto;">
+                        <div class="col-12 scroll-hide" style="min-height:120px; max-height:120px; overflow-y: auto;">
                         	<span>${adpt_intro}</span>
-                        </div>
-                        <div class="col-5 scroll-hide" style="min-height:200px; max-height:200px; overflow-y: auto;">
-                        	<span>${adpt_etc}</span>
+                        	<br/>
+							<h6 class="mt-2">기타사항</h6>
+							<span>${adpt_etc}</span>
                         </div>
 	                </div>
-					<div class="row" style="margin-top: 30px;">
-	                    <div class="col-xl-6 col-lg-12 d-flex">
+					<div class="row mt-3">
+	                    <div class="col-xl-5 col-lg-12 d-flex">
 							<h6 class="col-3">활동성</h6>
 							<div class="actGauge col-7">
 								<div class="empty"></div>
@@ -304,7 +306,7 @@
 							</div>
 							<div class="col-2 text-center"><h6 style="color:#86bc42;">${animal_act == 0 ? '' : animal_act}</h6></div>
 						</div>
-						<div class="col-xl-6 col-lg-12 d-flex">
+						<div class="col-xl-5 col-lg-12 d-flex">
 							<h6 class="col-3">사회성</h6>
 							<div class="socialGauge col-7">
 								<div class="empty"></div>
@@ -318,8 +320,8 @@
 	                    </div>
 	                </div>
 	                <div class="row">
-	                	<div class="col-xl-11 col-lg-12 mt-3">
-							<table class="table table-bordered text-center">
+	                	<div class="col-xl-11 col-lg-12 mt-1">
+							<table class="table table-bordered text-center mb-0">
 								<thead>
 									<tr>
 										<th>${animal_vaccine0}</th>
@@ -338,8 +340,8 @@
 								</tbody>
 							</table>
 	                	</div>
-						<div class="col-xl-11 col-lg-12 mt-3">
-							<table class="table table-bordered text-center">
+						<div class="col-xl-11 col-lg-12 mt-1">
+							<table class="table table-bordered text-center mb-0">
 								<thead>
 									<tr>
 										<th>${animal_health0}</th>
@@ -361,7 +363,7 @@
 							</table>
 						</div>
 	                </div>
-	                <div class="row" style="margin-top: 40px;">
+	                <div class="row mt-2">
 	                    <div class="col-12">
 	                        <div class="inner-title">
 	                            <h6 style="margin-bottom: 10px;">다음 글 알아보기</h6>
@@ -381,7 +383,8 @@
 	                               		<br>보호소 : ${member_name_next}
 	                               		<br>${adpt_intro_next}</p>
 	                                </div>
-	                                <a href="#!" class="readmore" data-next-adpt-id="${index < allData.length - 1 ? allData[index+1].adptVO.adpt_id : allData[0].adptVO.adpt_id}"><span>다음 글 보기</span></a>
+	                                ${index > 0 ? `<a href="#!" class="readpre" data-next-adpt-id="${allData[index-1].adptVO.adpt_id}"><span>이전 글 보기</span></a>` : ''}
+	                                <a href="#!" class="readmore" style="float: right;" data-next-adpt-id="${index < allData.length - 1 ? allData[index+1].adptVO.adpt_id : allData[0].adptVO.adpt_id}"><span>다음 글 보기</span></a>
 	                            </div>
 	                        </div>
 	                    </div>

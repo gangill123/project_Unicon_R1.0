@@ -210,4 +210,14 @@ public class AdptDAO {
 		return sqlSession.selectList(NAMESPACE+"getAdptFilterView", adptFilters);
 	}
 	
+	
+	/*=========== 사용자 페이지 상담신청 ===========*/
+	public void counselSubmit(Map<String, String> counselParams) {
+		logger.debug("( •̀ ω •́ )✧ counselSubmit() 실행");
+		
+		sqlSession.insert(NAMESPACE+"counselSubmit", counselParams);
+	}
+	
+	
+	
 }
