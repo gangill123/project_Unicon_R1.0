@@ -60,7 +60,7 @@
 }
 
 .about-style2 .about2-text span{
-	-webkit-text-fill-color: #eee !important;
+	-webkit-text-fill-color: #568a35 !important;
 	font-size: 100px;
 	left: 0px;
 	bottom: -15px;
@@ -88,20 +88,34 @@
 
 .section-heading span{
 	font-size: 18px;
+	font-weight: 550;
 }
 
-.item{
+.bottom-owl .item{
     width: 100%;
     aspect-ratio: 276 / 60; /* 원하는 가로:세로 비율 설정 */
     overflow: fill;    /* 이미지가 컨테이너를 벗어나지 않도록 */	
 }
 
-.item img{
+.bottom-owl .item img{
     width: 100%;
     height: 100%;
     object-fit: fill;   /* 이미지를 컨테이너에 맞추되 비율 유지 */
     border-radius: 0.75rem; /* 기존 rounded-3 스타일 유지 */
 }
+
+@media screen and (max-width: 575px) {
+	.slider-fade-shop .item {
+		height: 300px;
+	}
+}
+
+.portfolio-style1 a.portfolio-text{
+	padding: 20px 10px 20px 15px;
+}
+
+
+
 
 
 
@@ -115,6 +129,8 @@
 <!--====================================작성부=====================================-->
 		<%-- ${slideInfo } --%>
 		<%-- ${shopInfo } --%>
+<%-- 		${unicornInfo } --%>
+<%-- ${adptInfo } --%>
 		<div class="container-fluid p-0">
             <div class="row slider-fade-shop">
                 <div class="owl-carousel owl-theme w-100">
@@ -146,22 +162,22 @@
                 <div class="row position-relative mt-n1-9">
                     <div class="col-6 col-lg-3 mt-1-9">
                         <div class="counter-box black">
-                            <h4 class="countup">1800</h4>
+                            <h4 class="countup">${unicornInfo[0] }</h4>
                             <p class="m-0">유니콘 입양공고</p></div>
                     </div>
                     <div class="col-6 col-lg-3 mt-1-9">
                         <div class="counter-box black">
-                            <h4 class="countup">1300</h4>
+                            <h4 class="countup">${unicornInfo[1] }</h4>
                             <p class="m-0">유니콘 입양완료</p></div>
                     </div>
                     <div class="col-6 col-lg-3 mt-1-9">
                         <div class="counter-box black">
-                            <h4 class="countup">1500</h4>
+                            <h4 class="countup">${unicornInfo[2] }</h4>
                             <p class="m-0">유니콘 커뮤니티</p></div>
                     </div>
                     <div class="col-6 col-lg-3 mt-1-9">
                         <div class="counter-box black">
-                            <h4 class="countup">1100</h4>
+                            <h4 class="countup">${unicornInfo[3] }</h4>
                             <p class="m-0">유니콘 보호센터</p></div>
                     </div>
                 </div>
@@ -175,51 +191,38 @@
                     <h2>유니콘 신규 입양공고</h2>
                 </div>
 				<div style="text-align: end; margin-bottom: 20px;">
-					<button type="submit" class="butn-style2 small" style="font-size: 0.7rem;">
+					<button class="butn-style2 small" style="font-size: 0.7rem;" onclick="location.href='/adpt';">
 					<span>더보기</span></button>
 				</div>
                 <div class="row mt-n1-9">
+                <c:forEach var="adptInfo" items="${adptInfo }" varStatus="status" end="3">
                     <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="100ms">
                         <div class="portfolio-style1">
-                        	<div class="label-offer bg-red"><i class="fa-solid fa-dog"></i> Sale</div>
-                            <img src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-01.jpg" class="border-radius-10" alt="...">
-                            <a href="#!" class="portfolio-text" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-                                <span class="display-31 font-weight-700 text-orange letter-spacing-2 text-uppercase d-block mb-2">Business</span>
-                                <h3 class="mb-0 h5">Business Consultation</h3>
-                            </a>
-                            
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="200ms" data-src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-02.jpg" data-sub-html="<h4 class='text-white'>Finance Strategy #02</h4><p>Finance</p>">
-                        <div class="portfolio-style1">
-                            <img src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-02.jpg" class="border-radius-10" alt="...">
-                            <a href="#!" class="portfolio-text">
-                                <span class="display-31 font-weight-700 text-orange letter-spacing-2 text-uppercase d-block mb-2">Finance</span>
-                                <h3 class="mb-0 h5">Finance Strategy</h3>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="300ms" data-src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-03.jpg" data-sub-html="<h4 class='text-white'>Digital Marketing #03</h4><p>Marketing</p>">
-                        <div class="portfolio-style1">
-                            <img src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-03.jpg" class="border-radius-10" alt="...">
-                            <a href="#!" class="portfolio-text">
-                                <span class="display-31 font-weight-700 text-orange letter-spacing-2 text-uppercase d-block mb-2">Marketing</span>
-                                <h3 class="mb-0 h5">Digital Marketing</h3>
+                        	<div class="label-offer" style="background: #568a35;">
+                        	<c:choose>
+                        		<c:when test="${adptInfo.categoryDataVO.category_type == '개' }">
+		                        	<i class="fa-solid fa-dog"></i>&nbsp;&nbsp;${adptInfo.categoryDataVO.category_value }
+                        		</c:when>
+                        		<c:when test="${adptInfo.categoryDataVO.category_type == '고양이' }">
+                        			<i class="fa-solid fa-cat"></i>&nbsp;&nbsp;${adptInfo.categoryDataVO.category_value }
+                        		</c:when>
+                        		<c:otherwise>
+                        			${adptInfo.categoryDataVO.category_value }
+                        		</c:otherwise>
+                        	</c:choose>
+                            </div><img src="${adptInfo.animal_images[0].image_src }" class="border-radius-10" alt="...">
+                            <a href="/adpt" class="portfolio-text">
+                                <h3 class="mb-2 h5">${adptInfo.animal_name }</h3>
+                                <span class="display-33 font-weight-700 text-orange letter-spacing-2 text-uppercase d-block mb-0">
+                                ${adptInfo.adptVO.adpt_id }</span>
                             </a>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="400ms" data-src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-04.jpg" data-sub-html="<h4 class='text-white'>Enterprise Loan #04</h4><p>Business</p>">
-                        <div class="portfolio-style1">
-                            <img src="${pageContext.request.contextPath }/resources/new_assets/img/projects/portfolio-04.jpg" class="border-radius-10" alt="...">
-                            <a href="#!" class="portfolio-text">
-                                <span class="display-31 font-weight-700 text-orange letter-spacing-2 text-uppercase d-block mb-2">Business</span>
-                                <h3 class="mb-0 h5">Enterprise Loan</h3>
-                            </a>
-                        </div>
-                    </div>
+                
+                </c:forEach>
+                    
                 </div>
             </div>
-
         </section>
         
         
@@ -286,6 +289,7 @@
 					<span>더보기</span></button>
 				</div>
                 <div class="service-grids owl-carousel owl-theme" id="service-grids">
+                
                     <div class="service-block">
                         <div class="img-holder">
                             <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
@@ -303,6 +307,25 @@
                             <a class="read-more" href="#!">상세보기</a>
                         </div>
                     </div>
+                    
+                    <div class="service-block">
+                        <div class="img-holder">
+                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
+                        </div>
+                        <div class="details">
+                            <div class="number alt-font" style="aspect-ratio: 1/1; overflow: hidden;">
+                            	<img style="width: 100%; height: 100%; object-fit:fill;" alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
+                            </div>
+                            <h4 style="color: #5c636a;">슈퍼스타징젱죵</h4>
+                            <div class="testmonial-single mx-auto w-lg-85">
+                                 <p>Exercitation ullamco laboris nisiut aliqu exeaea commo.</p>
+                             </div>
+                            
+                            <!-- <p><i class="fa-solid fa-quote-left" style="color: #86bc42;"></i>  나의 입양베이비를 입양한 후기를 전달하겠슴</p> -->
+                            <a class="read-more" href="#!">상세보기</a>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -318,8 +341,8 @@
 					onclick="location.href='/shop'"><span>더보기</span></button>
 				</div>
                 <div class="row mt-n1-9">
-                <c:forEach var="shop" items="${shopInfo }">
-                    <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="200ms">
+                <c:forEach var="shop" items="${shopInfo }" varStatus="status" end="3"> 
+                    <div class="col-md-6 col-lg-3 mt-1-9 wow fadeIn" data-wow-delay="${status.index*150 + 100 }ms">
                         <div class="portfolio-style1">
                         <div class="label-offer bg-red">${shop.discount_rate }% Sale</div>
                             <img src="${shop.product_images[0].image_src }" class="border-radius-10" alt="...">
@@ -339,7 +362,7 @@
 		<div class="section-clients bg-light-gray" style="margin-top: 60px;">
             <div class="container">
                 <div class="owl-carousel owl-theme clients owl-loaded owl-drag" id="clients">
-                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1926px, 0px, 0px); transition: 0.9s; width: 4404px;"><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners1.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners2.png"></div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div><div class="owl-thumbs"></div></div>
+                <div class="bottom-owl owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1926px, 0px, 0px); transition: 0.9s; width: 4404px;"><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners1.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners2.png"></div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div><div class="owl-thumbs"></div></div>
             </div>
         </div>
 		

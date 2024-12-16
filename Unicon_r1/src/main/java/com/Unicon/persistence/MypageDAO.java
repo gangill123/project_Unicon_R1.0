@@ -1,5 +1,6 @@
 package com.Unicon.persistence;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -82,5 +83,31 @@ public class MypageDAO {
 		return sqlSession.selectOne(NAMESPACE+".getMemberInfo", member_id);
 	}
 		
+	
+	//게시물, 복지몰, 봉사활동 횟수 조회
+	public List<Integer> profileInfo(String member_id) {
+		
+		List<Integer> profileInfo = new ArrayList<Integer>();
+		
+		// 게시물 횟수 조회
+		Integer postCntForProfile = sqlSession.selectOne(NAMESPACE+".getPostCntForProfile", member_id);
+		profileInfo.add(postCntForProfile);
+		
+		// 복지몰 횟수 조회
+		Integer orderCntForProfile = sqlSession.selectOne(NAMESPACE+"getorderCntForProfile", member_id);
+		profileInfo.add(orderCntForProfile);
+		
+		// 봉사활동 횟수 조회
+		Integer volCntForProfile = sqlSession.selectOne(NAMESPACE+".getVolCntForProfile", member_id);
+		
+		
+		
+		return null;
+	}
+	
+	
+	
+	
+	
 	
 }

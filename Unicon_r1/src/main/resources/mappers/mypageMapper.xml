@@ -127,6 +127,28 @@
 		values(#{member_id}, #{product_id}, #{order_detail_option_id}, #{inquiry_type}, #{inquiry_content}) 
 	</insert>
 	
+
+	<!-- 게시물 횟수 조회 -->
+	<select id="getPostCntForProfile" resultType="int">
+		select count(*) 
+		from _post 
+		where member_id = #{member_id} 
+	</select>
+
+
+	<!-- 복지몰 횟수 조회 -->
+	<select id="getorderCntForProfile" resultType="int">
+		select count(*) 
+		from _orders 
+		where member_id = #{member_id} 
+		and status not in ('취소종료', '취소', '환불', '반품', '구매확정') 
+	</select>
+
+	<!-- 봉사활동 횟수 조회 -->
+	<select id="getVolCntForProfile">
+	
+	</select>
+	
 	
 
 </mapper>

@@ -91,6 +91,7 @@
 <resultMap type="com.Unicon.domain.MemberVO" id="MemberResultMap">
 	<result property="member_id" column="member_id"/>
 	<result property="member_name" column="member_name"/>
+	<result property="member_nickname" column="member_nickname"/>
 	<result property="member_image" column="member_image"/>
 </resultMap>
 
@@ -404,7 +405,7 @@
 	<select id="getReview" resultMap="ReviewResultMap" parameterType="String">
 		select r.review_rate, r.review_content, 
 		DATE_FORMAT(r.review_create_date, '%Y.%m.%d.') AS formatted_review_create_date, 
-		m.member_name, m.member_image, odo.product_option  
+		m.member_name, m.member_image, m.member_nickname, odo.product_option  
 		from _review r  
 		join _member m on r.member_id = m.member_id
         join _orders_detail_option odo on odo.order_detail_option_id = r.order_detail_option_id
@@ -419,7 +420,7 @@
 		from _products p 
 		join _image i on p.product_id = i.image_id 
 		order by discount_rate desc 
-		limit 4 
+		limit 20
 	</select>
 	
 	

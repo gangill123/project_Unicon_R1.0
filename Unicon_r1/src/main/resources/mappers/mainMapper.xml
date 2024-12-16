@@ -11,6 +11,33 @@
 		from _cart 
 		where member_id = #{member_id} 
 	</select>
+	
+	<!-- 입양 공고수 가져오기 -->
+	<select id="getAdptCnt" resultType="int">
+		select count(*) 
+		from _adpt 
+	</select>
+	
+	<!-- 입양완료 동물 수 가져오기 -->
+	<select id="getAnimalCnt" resultType="int">
+		select count(*) 
+		from _animal 
+	</select>
+	
+	<!-- 게시물 수 가져오기 -->
+	<select id="getPostCnt" resultType="int">
+		select count(*) 
+		from _post 
+	</select>
+	
+	<!-- 센터 수 가져오기 -->
+	<select id="getCenterCnt" resultType="int">
+		select count(*) 
+		from _member 
+	</select>
+	
+	
+	
 
 
 </mapper>
