@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PetAdoption">
+    <resultMap id="PetAdoptionResult" type="com.Unicon.domain.PetAdoptionVO">
+        <id property="adpt_ai" column="adpt_ai"/>
+        <result property="adpt_id" column="adpt_id"/>
+        <result property="animal_id" column="animal_id"/>
+        <result property="adpt_intro" column="adpt_intro"/>
+        <result property="adpt_etc" column="adpt_etc"/>
+        <result property="adpt_status" column="adpt_status"/>
+        <result property="categroy_value" column="category_value"/>
+        <result property="category_code" column="category_code"/>
+    </resultMap>
+
+    <select id="findByAnimalTypes" parameterType="java.util.List" resultMap="PetAdoptionResult">
+        SELECT a.adpt_ai, 
+               a.adpt_id,
+               a.animal_id,
+               a.adpt_intro,
+               a.adpt_etc,
+               a.adpt_status,
+               cd.category_value,
+               an.category_code
+        FROM _adpt a
+        INNER JOIN _animal an ON a.animal_id = an.animal_id
+        INNER JOIN _category_data cd ON an.category_code = cd.category_code
+        WHERE cd.category_value IN 
+        <foreach item="type" collection="list" open="(" separator="," close=")">
+            #{type}
+        </foreach>
+    </select>
+    <select id="getAdoptionByAdptAi" parameterType="int" resultType="com.Unicon.domain.PetAdoptionVO">
+        SELECT * FROM _adpt WHERE adpt_ai = #{adpt_ai}
+    </select>
+</mapper>
