@@ -293,13 +293,9 @@
 		                                    <fmt:formatDate value="${volunteer.voEndDate}" pattern="yyyy.MM.dd"/>
 		                                </p>
 		                            </div>
-									
-									<button class="btn btn-primary w-100" 
-									        data-member-id="${member.member_id}" 
-									        onclick="checkLoginAndApply('${member.member_id}')">
-									    신청하기
-									</button>
-		                            
+		                            <button class="btn btn-primary w-100" onclick="location.href='/volunteer/apply/${volunteer.voId}'">
+		                                신청하기
+		                            </button>
 		                        </div>
 		                    </div>
 		                </div>
@@ -362,31 +358,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-function checkLoginAndApply(member_id) {
-    $.ajax({
-        url: '/login/checkLogin',  
-        type: 'GET',
-        success: function(response) {
-            if (response === true) {
-                window.location.href = '/volunteer/apply/' + voId;
-            } else {
-                window.location.href = '/login/customLogin';
-            }
-        },
-        error: function() {
-            window.location.href = '/login/customLogin';
-        }
-    });
-}
-
-// 각 신청하기 버튼에 이벤트 리스너 추가
-document.querySelectorAll('.btn-primary').forEach(button => {
-    button.addEventListener('click', function() {
-        const voId = this.getAttribute('data-vo-id');  
-        checkLoginAndApply(voId);
-    });
-});
-
 document.getElementById('loadMoreOngoing').addEventListener('click', function() {
     const hiddenItems = document.querySelectorAll('#ongoingList .volunteer-item.d-none');
     const itemsToShow = Array.from(hiddenItems).slice(0, 6);

@@ -265,7 +265,7 @@
 			</div>
 
             <form id="applicationForm" action="/volunteer/apply" method="post">
-                <input type="hidden" name="memberId" value="${member.member_id}">
+                <input type="hidden" name="volunteerId" value="${volunteer.voId}">
                 
                 <!-- 신청자 정보 -->
                 <div class="form-section">

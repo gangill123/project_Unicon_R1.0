@@ -46,28 +46,18 @@ public class VolunteerController {
     // http://localhost:8088/volunteer
     // http://localhost:8088/volunteer/mylist
     
-    @GetMapping("/manage/volForm/{voId}")
+    @GetMapping("/manage/volForm")
     public String volunteerForm(
-            @PathVariable("voId") Long voId,
-            HttpSession session,
-            Model model,
-            RedirectAttributes rttr) {
-        MemberVO loginMember = (MemberVO) session.getAttribute("member");
-
-        if (loginMember == null) {
-            rttr.addFlashAttribute("msg", "로그인이 필요합니다.");
-            return "redirect:/login/customLogin";
+            @RequestParam(value = "voId", required = false) Long voId,
+            Model model) throws Exception {
+        
+        if (voId != null) {
+            // 수정인 경우, 기존 데이터 조회
+            VolunteerVO volunteer = volService.getVolunteer(voId);
+            model.addAttribute("volunteer", volunteer);
         }
-
-        try {
-            VolunteerVO volunteerInfo = volService.getVolunteer(voId, loginMember.getMember_id());
-            model.addAttribute("volunteer", volunteerInfo);
-        } catch (Exception e) {
-            rttr.addFlashAttribute("msg", "봉사활동 정보를 가져오는 중 오류가 발생했습니다.");
-            return "redirect:/volunteer/apply";
-        }
-
-        return "volunteer/volForm";
+        
+        return "volunteer/manage/volForm";
     }
     
     @GetMapping("/manage/volGuideForm")
@@ -76,7 +66,6 @@ public class VolunteerController {
         model.addAttribute("guide", guide);
         return "volunteer/manage/volGuideForm";
     }
-    
     
     @GetMapping("")
     public String userList(Model model) throws Exception {
@@ -91,13 +80,25 @@ public class VolunteerController {
         return "volunteer/volList";
     }
     
+    @GetMapping("/apply/{voId}")
+    public String applicationForm(@PathVariable Long voId, Model model) throws Exception {
+        VolunteerVO volunteer = volService.getVolunteer(voId);
+        model.addAttribute("volunteer", volunteer);
+        return "volunteer/volApply";
+    }
+    
 	/*
-	 * @GetMapping("/apply/{voId}") public String applicationForm(@PathVariable Long
-	 * voId, Model model) throws Exception { VolunteerVO volunteer =
-	 * volService.getVolunteer(voId); model.addAttribute("volunteer", volunteer);
-	 * return "volunteer/volApply"; }
+	 * @PostMapping("/apply")
+	 * 
+	 * @ResponseBody public ResponseEntity<?> submitApplication(@ModelAttribute
+	 * VolunteerApplyVO apply) { try { volService.submitApplication(apply); return
+	 * ResponseEntity.ok().build(); } catch (Exception e) {
+	 * logger.error("봉사활동 신청 실패", e); return
+	 * ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	 * .body(e.getMessage()); } }
 	 */
     
+	/* ============================================================================================== */
     @PostMapping("/apply")
     @ResponseBody
     public ResponseEntity<?> submitApplication(@ModelAttribute VolunteerApplyVO apply) {
