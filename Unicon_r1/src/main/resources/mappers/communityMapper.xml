@@ -21,7 +21,7 @@
 	<result property="post_resion" column="post_resion"/>
 	<!-- <result property="post_like_count" column="post_like_count"/> -->
 	
-	<association property="jypMemberVO" resultMap="JypMemberResultMap" />
+	<association property="memberVO" resultMap="MemberResultMap" />
 	<association property="categoryDataVO" resultMap="CategoryDataResultMap" />
 	
 	<collection property="post_images" ofType="com.Unicon.domain.ImageVO" resultMap="ImageResultMap"/>
@@ -30,7 +30,7 @@
 
 </resultMap>
 
-<resultMap id="JypMemberResultMap" type="com.Unicon.domain.JypMemberVO">
+<resultMap id="MemberResultMap" type="com.Unicon.domain.MemberVO">
 	<id property="member_id" column="member_id"/>
 	<result property="member_name" column="member_name"/>
 	<result property="road_address" column="road_address"/>
@@ -58,7 +58,7 @@
 	<result property="member_id" column="member_id"/>
 	<result property="comment_content" column="comment_content"/>
 	<result property="comment_date" column="comment_date"/>
-	<association property="jypMemberVO" resultMap="JypMemberResultMap" />
+	<association property="memberVO" resultMap="MemberResultMap" />
 	<collection property="comment_likes" ofType="com.Unicon.domain.CommentLikeVO" resultMap="CommentLikeResultMap"></collection>
 </resultMap>
 
@@ -103,11 +103,11 @@
 	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
 	join _image i on p.post_id = i.image_id 
 	join _category_data ct on p.pet_code = ct.category_code 
-	join _jyp_member m on p.member_id = m.member_id 
+	join _member m on p.member_id = m.member_id 
 	left join _post_like pl on p.post_id = pl.post_id 
 	where p.post_type = 'post01' 
 	group by p.post_id, i.image_sequence, i.image_src 
-	order by p.post_date desc limit 3 
+	order by p.post_date desc 
 </select>
 <!-- 메인페이지용 입양후기 게시물 불러오기 -->
 
@@ -119,7 +119,7 @@
 	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
 	join _image i on p.post_id = i.image_id 
 	join _category_data ct on p.pet_code = ct.category_code 
-	join _jyp_member m on p.member_id = m.member_id 
+	join _member m on p.member_id = m.member_id 
 	left join _post_like pl on p.post_id = pl.post_id 
 	where p.post_type = #{post_type} 
 	group by p.post_id, i.image_sequence, i.image_src 
@@ -127,12 +127,40 @@
 </select>
 <!-- 전체 게시글 불러오기 -->
 
+<!-- 프로필 게시글 종류별 불러오기 -->
+<select id="getProfilePostList" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = #{post_type} 
+	and p.member_id = #{member_id} 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
+<!-- 프로필 게시글 종류별 불러오기 -->
+
+<!-- 프로필 게시물 불러오기 -->
+<select id="getProfilePostList01" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = 'post01' 
+	and p.member_id = #{member_id} 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
+<!-- 프로필 게시물 불러오기 -->
+
 <!-- 입양후기 게시물 불러오기 -->
 <select id="getPostList01" resultMap="PostResultMap">
 	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
 	join _image i on p.post_id = i.image_id 
 	join _category_data ct on p.pet_code = ct.category_code 
-	join _jyp_member m on p.member_id = m.member_id 
+	join _member m on p.member_id = m.member_id 
 	left join _post_like pl on p.post_id = pl.post_id 
 	where p.post_type = 'post01' 
 	group by p.post_id, i.image_sequence, i.image_src 
@@ -145,7 +173,7 @@
 	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
 	join _image i on p.post_id = i.image_id 
 	join _category_data ct on p.pet_code = ct.category_code 
-	join _jyp_member m on p.member_id = m.member_id 
+	join _member m on p.member_id = m.member_id 
 	left join _post_like pl on p.post_id = pl.post_id 
 	where p.post_type = 'post02' 
 	group by p.post_id, i.image_sequence, i.image_src 
@@ -158,7 +186,7 @@
 	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
 	join _image i on p.post_id = i.image_id 
 	join _category_data ct on p.pet_code = ct.category_code 
-	join _jyp_member m on p.member_id = m.member_id 
+	join _member m on p.member_id = m.member_id 
 	left join _post_like pl on p.post_id = pl.post_id 
 	where p.post_type = 'post03' 
 	group by p.post_id, i.image_sequence, i.image_src 
@@ -171,7 +199,7 @@
 	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
 	join _image i on p.post_id = i.image_id 
 	join _category_data ct on p.pet_code = ct.category_code 
-	join _jyp_member m on p.member_id = m.member_id 
+	join _member m on p.member_id = m.member_id 
 	left join _post_like pl on p.post_id = pl.post_id 
 	where p.post_type = 'post04' 
 	group by p.post_id, i.image_sequence, i.image_src 
@@ -184,7 +212,7 @@
 	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
 	join _image i on p.post_id = i.image_id 
 	join _category_data ct on p.pet_code = ct.category_code 
-	join _jyp_member m on p.member_id = m.member_id 
+	join _member m on p.member_id = m.member_id 
 	left join _post_like pl on p.post_id = pl.post_id 
 	where p.post_id = #{p.post_id} 
 	group by p.post_id, i.image_sequence, i.image_src 
@@ -195,7 +223,7 @@
 <!-- 해당 게시글의 전체 댓글 불러오기 -->
 <select id="getCommentListAll" resultMap="CommentResultMap">
 	select cm.*, m.*, count(cl.member_id) as comment_like_count from _comment cm 
-	join _jyp_member m on cm.member_id = m.member_id 
+	join _member m on cm.member_id = m.member_id 
 	join _post p on cm.post_id = p.post_id 
 	left join _comment_like cl on cm.comment_id = cl.comment_id 
 	where p.post_id = #{p.post_id} 
@@ -327,6 +355,49 @@
 	   image_src = values(image_src) 
 </insert>
 <!-- 게시물 수정 -->
+
+<!-- 모든 지역 X & 모든 동물 O 불러오기 -->
+<select id="getSearchList01" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = #{post_type} 
+	and p.post_resion = #{post_resion} 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
+<!-- 모든 지역 X & 모든 동물 O 불러오기 -->
+
+<!-- 모든 지역 O & 모든 동물 X 불러오기 -->
+<select id="getSearchList02" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = #{post_type} 
+	and ct.category_parent = #{category_parent} 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
+<!-- 모든 지역 O & 모든 동물 X 불러오기 -->
+
+<!-- 모든 지역 X & 모든 동물 X 불러오기 -->
+<select id="getSearchList03" resultMap="PostResultMap">
+	select p.*, ct.*, m.*, i.image_sequence, i.image_src, count(pl.member_id) as post_like_count from _post p 
+	join _image i on p.post_id = i.image_id 
+	join _category_data ct on p.pet_code = ct.category_code 
+	join _member m on p.member_id = m.member_id 
+	left join _post_like pl on p.post_id = pl.post_id 
+	where p.post_type = #{post_type} 
+	and p.post_resion = #{post_resion} 
+	and ct.category_parent = #{category_parent} 
+	group by p.post_id, i.image_sequence, i.image_src 
+	order by p.post_date desc 
+</select>
+<!-- 모든 지역 O & 모든 동물 X 불러오기 -->
 
 
 </mapper>

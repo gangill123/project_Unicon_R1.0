@@ -16,6 +16,7 @@ public class CommentVO {
 	
 	private List<CommentLikeVO> comment_likes;		// 댓글 좋아요 테이블
 	
-	private JypMemberVO jypMemberVO;			// 임시 멤버 테이블
+//	private JypMemberVO jypMemberVO;			// 임시 멤버 테이블
+	private MemberVO memberVO;			// 멤버 테이블
 	
 }

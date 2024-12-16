@@ -49,6 +49,24 @@ public class CommunityService {
 	
 	
 	
+	// 모든 지역 X & 모든 동물 O 불러오기
+	public List<PostVO> getSearchList01(String post_type, String post_resion){
+		logger.info(" Service - getSearchList01() 실행 ");
+		return communityDAO.getSearchList01(post_type, post_resion);
+	}
+	
+	// 모든 지역 O & 모든 동물 X 불러오기
+	public List<PostVO> getSearchList02(String post_type, int category_parent){
+		logger.info(" Service - getSearchList02() 실행 ");
+		return communityDAO.getSearchList02(post_type, category_parent);
+	}
+	
+	// 모든 지역 X & 모든 동물 X 불러오기
+	public List<PostVO> getSearchList03(String post_type, String post_resion, int category_parent){
+		logger.info(" Service - getSearchList03() 실행 ");
+		return communityDAO.getSearchList03(post_type, post_resion, category_parent);
+	}
+	
 	// member_id로 기존의 post_id 값 유무 체크(불러오기)
 	public String checkPostId(String member_id) {
 		logger.info(" Service - checkPostId() 실행 ");
@@ -66,6 +84,18 @@ public class CommunityService {
 	public List<PostVO> getPostList(String post_type){
 		logger.info(" Service - getPostList() 실행 ");
 		return communityDAO.getPostList(post_type);
+	}
+	
+	// 프로필 게시물 종류별 보기
+	public List<PostVO> getProfilePostList(String post_type, String member_id){
+		logger.info(" Service - getProfilePostList() 실행 ");
+		return communityDAO.getProfilePostList(post_type, member_id);
+	}
+	
+	// 입양후기 게시물 보기
+	public List<PostVO> getProfilePostList01(String member_id){
+		logger.info(" Service - getProfilePostList01() 실행 ");
+		return communityDAO.getProfilePostList01(member_id);
 	}
 	
 	// 입양후기 게시물 보기

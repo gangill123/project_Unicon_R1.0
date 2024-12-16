@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -73,6 +74,19 @@ public class CommunityController {
 		return "community/new_list";
 	}
 	
+	// 커뮤니티 - 프로필 게시물 보는 사이트
+	// http://localhost:8088/community/main04
+	@GetMapping("main04/{member_id}")
+	public String templateProfile(Model model, @PathVariable("member_id")String member_id) {
+		List<PostVO> postList = communityService.getProfilePostList01(member_id);
+		
+		model.addAttribute("postList", postList);
+		
+		logger.info("--------postList---------{}",postList);
+		
+		return "community/new_profile";
+	}
+	
 	// 커뮤니티 - 반려 이야기 게시물 보는 사이트
 	// http://localhost:8088/community/main2
 	@GetMapping("main2")
@@ -119,13 +133,6 @@ public class CommunityController {
 		return "community/new_insert";
 	}
 	
-	// 커뮤니티 - 프로필 게시물 보는 사이트
-	// http://localhost:8088/community/main04
-	@GetMapping("main04")
-	public String templateProfile() {
-		return "community/new_profile";
-	}
-	
 	// 커뮤니티 - 게시물 수정 사이트
 	// http://localhost:8088/community/main03
 	@GetMapping("main03/{post_id}")
@@ -138,12 +145,48 @@ public class CommunityController {
 		return "community/new_update";
 	}
 	
-	// 게시물 종류별 불러오기
+	// 게시물 종류별 전체, 상태별 불러오기
 	@GetMapping("readPostType/{post_type}")
 	@ResponseBody
 	public List<PostVO> readPostType (@PathVariable("post_type")String post_type){
 		return communityService.getPostList(post_type);
 	}
+	
+	// 프로플 게시물 종류별 전체, 상태별 불러오기
+	@GetMapping("readProfilePostType/{postType}")
+	@ResponseBody
+	public List<PostVO> readProfilePostType(@PathVariable("postType")String post_type, @RequestParam("profileId")String member_id){
+		logger.info("post_type는 : {}",post_type);
+		logger.info("member_id는 : {}",member_id);
+		return communityService.getProfilePostList(post_type, member_id);
+	}
+	
+	// 게시물 종류별 전체, 상태별 불러오기
+	@GetMapping("readPostType02/{post_type}")
+	@ResponseBody
+	public List<PostVO> readPostType02 (@PathVariable("post_type")String post_type,
+			@RequestParam("resionFilter") String post_resion, @RequestParam("animalFilter") int category_parent){
+		logger.info("post_resion는 : {}",post_resion);
+		logger.info("category_parent는 : {}",category_parent);
+		
+		List<PostVO> searchPostList = null;
+		
+		if(post_resion.equals("모든 지역") && category_parent == 0) {
+			searchPostList = communityService.getPostList(post_type);
+		}
+		if(!post_resion.equals("모든 지역") && category_parent == 0) {
+			searchPostList = communityService.getSearchList01(post_type, post_resion);
+		}
+		if(post_resion.equals("모든 지역") && category_parent != 0) {
+			searchPostList = communityService.getSearchList02(post_type, category_parent);
+		}
+		if(!post_resion.equals("모든 지역") && category_parent != 0) {
+			searchPostList = communityService.getSearchList03(post_type, post_resion, category_parent);
+		}
+		
+		return searchPostList;
+	}
+	
 
 	
 } //controller
