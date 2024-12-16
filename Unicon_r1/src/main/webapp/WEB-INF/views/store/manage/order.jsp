@@ -392,6 +392,7 @@
 	                        "<div id='myModal" + row.anoId + "' class='myModal'>" + // 클래스 이름에 anoId 추가
 	                            "<div class='update' onclick='updatePopup(" + row.anoId + ")'>수정</div>" +
 	                            "<div class='dropdown-divider'></div>" +
+	             
 	                            "<div class='delete' onclick='deletePopup(" + row.anoId + ")'>삭제</div>" +
 	                        "</div>";
 	                }
