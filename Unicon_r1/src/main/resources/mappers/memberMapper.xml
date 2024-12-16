@@ -18,14 +18,47 @@
         insert into _member (member_id, member_pw, member_name, member_nickname, 
                                   member_tel, member_gender, member_birth, member_email,
                                   mail_subscription, road_address, postal_code,
-                                  detail_address, extra_address, signup_date)
+                                  detail_address, extra_address, signup_date, approval_status, member_type)
                                   
-        values                   (#{memberId}, #{memberPw}, #{memberName}, #{memberNickname}, 
-                                  #{memberTel}, #{memberGender}, #{memberBirth}, #{memberEmail}, 
-                                  #{mailSubscription}, #{roadAddress},#{postalCode},#{detailAddress}, #{extraAddress}, now())
+        values                   (#{member_id}, #{member_pw}, #{member_name}, #{member_nickname}, 
+                                  #{member_tel}, #{member_gender}, #{member_birth}, #{member_email}, 
+                                  #{mail_subscription}, #{road_address},#{postal_code},#{detail_address}, #{extra_address}, now(), "완료", "member")
     </insert>
 
+<!-- 보호센터 회원 가입 -->
+    <insert id="insertInstMember" parameterType="com.Unicon.domain.MemberVO">
+        insert into _member (member_id, member_pw, member_name, member_nickname, 
+                                  member_tel, member_birth, member_email, member_image, 
+                                  mail_subscription, road_address, postal_code,
+                                  detail_address, extra_address, signup_date, inst_name, is_cosign, inst_type, local_name, inst_number, approval_status, member_type)
+                                  
+        values                   (#{member_id}, #{member_pw}, #{member_name}, #{member_nickname}, 
+                                  #{member_tel}, #{member_birth}, #{member_email},#{member_image},
+                                  #{mail_subscription}, #{road_address},#{postal_code},#{detail_address}, #{extra_address}, now(), #{inst_name}, #{is_cosign}, #{inst_type}, #{local_name}, 
+                                  #{inst_number}, "대기", "shop")
+    </insert>
+    
+    
+<!-- 쇼핑몰 관리자 회원 가입 -->
+    <insert id="insertShopMember" parameterType="com.Unicon.domain.MemberVO">
+        insert into _member (member_id, member_pw, member_name, member_nickname, 
+                                  member_tel, member_birth, member_email,
+                                  mail_subscription, road_address, postal_code,
+                                  detail_address, extra_address, signup_date, inst_name,inst_number, approval_status, member_image, member_type)
+                                  
+        values                   (#{member_id}, #{member_pw}, #{member_name}, #{member_nickname}, 
+                                  #{member_tel}, #{member_birth}, #{member_email},
+                                  #{mail_subscription}, #{road_address},#{postal_code},#{detail_address}, #{extra_address}, now(), #{inst_name}, #{inst_number}, "대기", #{member_image}, "inst")
+    </insert>   
+    
+    
 
+<!-- 사용자 정보 조회 -->
+<select id="getMemberByUsername" parameterType="java.lang.String" resultType="com.Unicon.domain.MemberVO">
+    SELECT *
+    FROM _member
+    WHERE member_id = #{member_id}
+</select>
 
 </mapper>
 

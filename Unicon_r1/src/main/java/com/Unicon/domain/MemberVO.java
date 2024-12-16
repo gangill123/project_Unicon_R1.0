@@ -16,16 +16,19 @@ public class MemberVO {
     private String signup_date;     // 가입일
     private String approval_date;   // 승인일
     private String member_image;  // 이미지
+    private String inst_image;  // 이미지
     private Integer permission_id;  // 권한 ID
     private String mail_subscription; // 메일 수신 여부
     private String road_address;    // 도로명 주소
-    private String jibunAddress;   // 지번 주소
     private String postal_code;     // 우편번호
     private String detail_address;  // 상세 주소
     private String extra_address;   // 참고 항목
     private String inst_number;     // 사업자 등록번호
+    private String inst_type; // 기관유형
     private String approval_status; // 승인 상태
-    private String petId;          // 반려동물 ID
-    private String member_rate;    // 회원등급
+    private String local_name; // 기관유형
+    private String is_cosign; // 위탁여부
+    private String inst_name; //  기관명 
+    private String member_type; //  기관명 
 
 }

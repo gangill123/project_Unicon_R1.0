@@ -53,18 +53,18 @@
 		          <div class="line-title">
 		            <h2>로그인</h2>
 		          </div>
-		          <form method="post">
+		          <form method="post" action="/login">
 		            <div class="row">
 		              <div class="col-sm-12">
 		                <div class="form-group">
 		                  <label>아이디</label>
-		                  <input type="text" class="form-control" name="name" placeholder="Your id here">
+		                  <input type="text" class="form-control" name="member_id" placeholder="Your id here">
 		                </div>
 		              </div>
 		              <div class="col-sm-12">
 		                <div class="form-group">
 		                  <label>비밀번호 </label>
-		                  <input type="password" class="form-control" name="password" placeholder="Your password here">
+		                  <input type="password" class="form-control" name="member_pw" placeholder="Your password here">
 		                </div>
 		              </div>
 		            </div>
@@ -79,7 +79,7 @@
 		                <a href="forgot-password.html" class="m-link-muted">비밀번호 찾기</a>
 		              </div>
 		            </div>
-		            <button type="button" class="butn primary w-100 mt-4"><span>로그인</span></button>
+		            <button type="submit" class="butn primary w-100 mt-4"><span>로그인</span></button>
 		            <div class="text-center text-small mt-4">
 		            </div>
 					<button id="kakao-login-btn">

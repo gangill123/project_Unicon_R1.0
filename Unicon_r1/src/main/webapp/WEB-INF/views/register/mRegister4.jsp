@@ -152,7 +152,7 @@
                             <div class="row mb-3" id="font_size">
                               <label for="memberId" class="col-sm-2 col-form-label" id="fst" style="padding-top:29px; ">아이디<span id=ico>*</span></label>
                               <div class="col-sm-6 id_bell_f" id="sst" style="padding-top: 19px;">
-                                <input type="text" name="memberId" class="form-control inpt_id" id="submit_check_id" placeholder="6자 이상의 영문 혹은 영문과 숫자를 조합">
+                                <input type="text" name="member_id" class="form-control inpt_id" id="submit_check_id" placeholder="6자 이상의 영문 혹은 영문과 숫자를 조합">
                                 <button type="button" id="idjungbok" class="btn btn-outline-primary">중복확인</button>
                                 <p class="txt_guide">
                                   <span class="id_txt_case1 id_bell_s ">6자 이상의 영문 혹은 영문과 숫자를 조합</span>
@@ -164,7 +164,7 @@
                             <div class="row mb-3" id="font_size">
                               <label for="memberpw" class="col-sm-2 col-form-label" id="fst">비밀번호<span id=ico>*</span></label>
                               <div class="col-sm-6 pw_bell_f" id="sst">
-                                <input type="password" name="memberPw" class="form-control inpt_pw check_pw"  id="submit_check_pw"  placeholder="비밀번호를 입력해주세요">
+                                <input type="password" name="member_pw" class="form-control inpt_pw check_pw"  id="submit_check_pw"  placeholder="비밀번호를 입력해주세요">
                                 <p class="txt_guide">
                                   <span class="pw_txt_case1 pw_bell_s ">10자 이상 입력</span>
                                   <span class="pw_txt_case2 pw_bell_t ">영문/숫자/특수문자 (- 제외) 조합해주세요</span>
@@ -186,21 +186,21 @@
                               <div class="row mb-3" id="font_size">
                                 <label for="member_name" class="col-sm-2 col-form-label" id="fst">이름<span id=ico>*</span></label>
                                 <div class="col-sm-6" id="sst">
-                                  <input type="text" name="memberName" class="form-control"  id="submit_check_name" placeholder="이름을 입력해주세요">
+                                  <input type="text" name="member_name" class="form-control"  id="submit_check_name" placeholder="이름을 입력해주세요">
                                 </div>
                               </div>
 
                               <div class="row mb-3" id="font_size">
                                 <label for="memberNickname" class="col-sm-2 col-form-label" id="fst">닉네임<span id=ico>*</span></label>
                                 <div class="col-sm-6" id="sst">
-                                  <input type="text" name="memberNickname" class="form-control"  id="submit_check_nickname" placeholder="이름을 입력해주세요">
+                                  <input type="text" name="member_nickname" class="form-control"  id="submit_check_nickname" placeholder="이름을 입력해주세요">
                                 </div>
                               </div>
 
                               <div class="row mb-3" id="font_size">
                                 <label for="memberemail" class="col-sm-2 col-form-label" id="fst">이메일<span id=ico>*</span></label>
                                 <div class="col-sm-6" id="sst">
-                                  <input type="email" name="memberEmail" class="form-control inpt_email"  id="submit_check_email" placeholder="예:ksmfou98@inu.ac.kr">
+                                  <input type="email" name="member_email" class="form-control inpt_email"  id="submit_check_email" placeholder="예:ksmfou98@inu.ac.kr">
                                   <button type="button" id="emailjungbok"class="btn btn-outline-primary">중복확인</button>
                                 </div>
                               </div>
@@ -208,7 +208,7 @@
                               <div class="row mb-3" id="font_size">
                                 <label for="phonenumber" class="col-sm-2 col-form-label" id="fst">휴대폰<span id=ico>*</span></label>
                                 <div class="col-sm-6" id="sst">
-                                  <input type="text" name="memberTel" class="form-control"  id="submit_check_phone" placeholder="숫자만 입력해주세요">
+                                  <input type="text" name="member_tel" class="form-control"  id="submit_check_phone" placeholder="숫자만 입력해주세요">
                                 </div>
                               </div>
 
@@ -216,18 +216,18 @@
 							    <div class="row mb-3" id="font_size">
 							        <label for="memberaddress" class="col-sm-2 col-form-label" id="fst">주소<span id="ico">*</span></label>
 							        <div class="col-sm-6 juso_search" id="sst">
-							            <input type="text" class="form-control" name="postalCode" id="postal_code" placeholder="우편번호" style="margin-bottom: 5px; width: 200px; margin-right: 10px;">
+							            <input type="text" class="form-control" name="postal_code" id="postal_code" placeholder="우편번호" style="margin-bottom: 5px; width: 200px; margin-right: 10px;">
 							            <input type="button" class="form-control" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="margin-bottom: 5px; width: 120px;">
-							            <input type="text" class="form-control" name="roadAddress" id="road_address" placeholder="주소" style="margin-bottom: 5px;">
-							            <input type="text" class="form-control" name="detailAddress" id="detail_address" placeholder="상세주소" style="margin-bottom: 5px;">
-							            <input type="text" class="form-control" name="extraAddress" id="extra_address" placeholder="참고항목" style="margin-bottom: 5px;">
+							            <input type="text" class="form-control" name="road_address" id="road_address" placeholder="주소" style="margin-bottom: 5px;">
+							            <input type="text" class="form-control" name="detail_address" id="detail_address" placeholder="상세주소" style="margin-bottom: 5px;">
+							            <input type="text" class="form-control" name="extra_address" id="extra_address" placeholder="참고항목" style="margin-bottom: 5px;">
 							        </div>
 							    </div>
 
                               <div class="row mb-3" id="font_size">
                                 <label for="memberbirth" class="col-sm-2 col-form-label" id="fst">생일<span id=ico>*</span></label>
                                 <div class="col-sm-6" id="sst">
-                                  <input type="DATE" name="memberBirth" class="form-control inpt_birth"  id="submit_check_birth">                                
+                                  <input type="DATE" name="member_birth" class="form-control inpt_birth"  id="submit_check_birth">                                
                                 </div>
                               </div>	                              
                                                            
@@ -236,11 +236,11 @@
 							      <label for="emailReceive" class="col-sm-2 col-form-label" id="fst">메일 수신 여부<span id="ico">*</span></label>
 							      <div class="col-sm-6" id="sst">
 							          <div class="form-check form-check-inline">
-							              <input class="form-check-input" type="radio" name="mailSubscription" id="receiveYes" value="yes" required>
+							              <input class="form-check-input" type="radio" name="mail_subscription" id="receiveYes" value="yes" required>
 							              <label class="form-check-label" for="receiveYes">예</label>
 							          </div>
 							          <div class="form-check form-check-inline">
-							              <input class="form-check-input" type="radio" name="mailSubscription" id="receiveNo" value="no" required>
+							              <input class="form-check-input" type="radio" name="mail_subscription" id="receiveNo" value="no" required>
 							              <label class="form-check-label" for="receiveNo">아니오</label>
 							          </div>
 							      </div>
@@ -251,15 +251,15 @@
 							    <label for="gender" class="col-sm-2 col-form-label" id="fst">성별<span id="ico">*</span></label>
 							    <div class="col-sm-6" id="sst">
 							        <div class="form-check form-check-inline">
-							            <input class="form-check-input" type="radio" name="memberGender" id="male" value="male" required>
+							            <input class="form-check-input" type="radio" name="member_gender" id="male" value="male" required>
 							            <label class="form-check-label" for="male">남성</label>
 							        </div>
 							        <div class="form-check form-check-inline">
-							            <input class="form-check-input" type="radio" name="memberGender" id="female" value="female" required>
+							            <input class="form-check-input" type="radio" name="member_gender" id="female" value="female" required>
 							            <label class="form-check-label" for="female">여성</label>
 							        </div>
 							        <div class="form-check form-check-inline">
-							            <input class="form-check-input" type="radio" name="memberGender" id="notSelected" value="notSelected" required>
+							            <input class="form-check-input" type="radio" name="member_gender" id="notSelected" value="notSelected" required>
 							            <label class="form-check-label" for="notSelected">기타</label>
 							        </div>
 							    </div>
