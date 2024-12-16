@@ -26,7 +26,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.VolunteerApplyVO;
 import com.Unicon.domain.VolunteerVO;
 import com.Unicon.service.VolunteerService;
@@ -63,6 +65,25 @@ public class VolunteerController {
     	VolunteerVO guide = volService.getVolunteerInfo();
         model.addAttribute("guide", guide);
         return "volunteer/manage/volGuideForm";
+    }
+    
+    @GetMapping("/checkLogin")
+    @ResponseBody
+    public boolean checkLoginStatus(HttpSession session) {
+        // 세션에서 로그인 상태 확인 
+        return session.getAttribute("user") != null;
+    }
+    
+    @PostMapping("/customLogin")
+    public String login(MemberVO member, HttpSession session, RedirectAttributes rttr) {
+        MemberVO loginMember = volService.loginProcess(member);
+        if (loginMember != null) {
+            session.setAttribute("member", loginMember);
+            return "redirect:/volunteer/apply/${volunteer.voId}";
+        } else {
+            rttr.addFlashAttribute("msg", "로그인 실패");
+            return "redirect:/login/customLogin";
+        }
     }
     
     @GetMapping("")

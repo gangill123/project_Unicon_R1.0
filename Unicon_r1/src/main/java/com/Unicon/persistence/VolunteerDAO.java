@@ -3,6 +3,7 @@ package com.Unicon.persistence;
 import java.util.List;
 import java.util.Map;
 
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.VolunteerApplyVO;
 import com.Unicon.domain.VolunteerVO;
 
@@ -34,5 +35,11 @@ public interface VolunteerDAO {
     public List<Map<String, Object>> selectProgramStatistics();
     public List<Map<String, Object>> selectMonthlyStatistics();
     public Map<String, Integer> selectExperienceStatistics();
+    
+    // 로그인 관련
+    MemberVO login(MemberVO member);
+    
+    // 로그인 상태 확인
+    boolean isLoggedIn(MemberVO member);
 }
 

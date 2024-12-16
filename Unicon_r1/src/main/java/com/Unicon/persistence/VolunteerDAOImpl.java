@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.Unicon.domain.MemberVO;
 import com.Unicon.domain.VolunteerApplyVO;
 import com.Unicon.domain.VolunteerVO;
 
@@ -23,6 +24,20 @@ public class VolunteerDAOImpl implements VolunteerDAO {
     private SqlSession sqlSession;
     
     private static final String NAMESPACE = "com.Unicon.mapper.VolunteerMapper";
+    
+    
+    @Override
+    public MemberVO login(MemberVO member) {
+        
+        return sqlSession.selectOne("org.unicorn.service.LoginService.login", member);
+    }
+
+    @Override
+    public boolean isLoggedIn(MemberVO member) {
+        
+        return sqlSession.selectOne("org.unicorn.service.LoginService.isLoggedIn", member);
+    }
+    
     
     @Override
     public void insertVolunteer(VolunteerVO volunteer) throws Exception {
