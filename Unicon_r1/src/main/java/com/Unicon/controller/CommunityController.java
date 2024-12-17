@@ -48,21 +48,22 @@ public class CommunityController {
 	
 	// 커뮤니티 - 마이페이지 프로필 게시물 보는 사이트
 	// http://localhost:8088/community/mypage/profile
-//	@GetMapping("mypage/profile/{memberId}")
-//	public String templateProfileMyPage(Model model, @PathVariable("memberId")String member_id, HttpSession session) {
-//		List<PostVO> postList = communityService.getProfilePostList01(member_id);
-//		model.addAttribute("postList", postList);
-//		logger.info("--------postList---------{}",postList);
-//		
-//		List<MemberVO> getPet = communityService.getPet(member_id);
-//		model.addAttribute("getPet", getPet);
-//		logger.info("getPet는 : {}",getPet);
-//		
-//		String userId = (String)session.getAttribute("member_id");
-//		model.addAttribute("userId", userId);
-//		
-//		return "community/main";
-//	}
+	@GetMapping("mypage/profile")
+	public String templateProfileMyPage(Model model, HttpSession session) {
+		
+		String member_id = (String)session.getAttribute("member_id");
+		model.addAttribute("member_id",member_id);
+		
+		List<PostVO> postList = communityService.getProfilePostList01(member_id);
+		model.addAttribute("postList", postList);
+		logger.info("--------postList---------{}",postList);
+		
+		List<MemberVO> getPet = communityService.getPet(member_id);
+		model.addAttribute("getPet", getPet);
+		logger.info("getPet는 : {}",getPet);
+		
+		return "community/mypage";
+	}
 	
 	// 커뮤니티 - 입양 후기 게시물 보는 사이트
 	// http://localhost:8088/community/main
