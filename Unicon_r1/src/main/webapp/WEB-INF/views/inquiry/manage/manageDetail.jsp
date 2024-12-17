@@ -21,27 +21,23 @@
 /* 모달 배경 */
 .modal {
     display: none;  /* 기본적으로 숨김 */
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
+    position: fixed; /* 화면에 고정 */
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* 배경 반투명 */
-    display: flex;
 
+    overflow: hidden; /* 모달 안에서 스크롤 방지 */
 }
 
 /* 모달 내용 */
 .modal-content {
-    position: relative;
-    width: 100px;          /* 가로 너비 축소 */
-    max-width: 80%;        /* 화면 크기에 따라 최대 너비 설정 */
-    padding: 15px;         /* 내부 여백 */
-    background-color: white;
-    border-radius: 10px;   /* 모서리 둥글게 */
+    background-color: white; /* 모달 배경색 */
+    padding: 20px; /* 내부 여백 */
+    border-radius: 10px; /* 모서리 둥글게 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
-    text-align: center;    /* 텍스트 중앙 정렬 */
+    max-width: 500px; /* 모달 최대 너비 */
+    width: 90%; /* 화면에 맞게 조정 */
+
 }
 /* 닫기 버튼 */
 .close-btn {
@@ -98,11 +94,7 @@ textarea {
     font-size: 1.8rem;
     font-weight: bold;
 }
-.modal-content {
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f8f9fa;
-}
+
 .modal .close-btn {
     font-size: 30px;
     color: #333;
