@@ -266,7 +266,8 @@ public class AdptService {
 		/*=============== 이미지 저장, 리스트 생성 ===============*/
 		public List<ImageVO> saveImage(AnimalVO avo, HttpServletRequest req) {
 			logger.debug("( •̀ ω •́ )✧ saveImage(AnimalVO avo, HttpServletRequest req) 메서드 실행");
-			String saveDir = servletContext.getRealPath("/uploads/");
+			ServletContext context = req.getServletContext();
+			String saveDir = context.getRealPath("/uploads/");
 			List<MultipartFile> uploadImages = avo.getUpload_images();
 			List<ImageVO> animalImages = new ArrayList<ImageVO>();
 			
@@ -296,15 +297,14 @@ public class AdptService {
 				}
 				
 				asb.setLength(0);
-				
-				int index = destinationImage.getPath().indexOf("\\uploads\\");
-				String indexStr = "\\uploads\\";
-				String indexSubStr = destinationImage.getPath().substring(index + indexStr.length());
-				String modifiedPath = asb.append("/uploads/").append(indexSubStr).toString();
+				String modifiedPath = destinationImage.getPath().replace("\\uploads\\", "/uploads/");
+		        int index = modifiedPath.indexOf("/uploads/");
+		        String finalPath = modifiedPath.substring(index);
+		        
 				ImageVO ivo = new ImageVO();
 				ivo.setImage_id(avo.getAnimal_id());
 				ivo.setImage_sequence(i);
-				ivo.setImage_src(modifiedPath);
+				ivo.setImage_src(finalPath);
 				ivo.setImage_type(avo.getAIMAGETYPE());
 				animalImages.add(ivo);
 				
@@ -319,8 +319,8 @@ public class AdptService {
 		public List<ImageVO> modifyImage(AnimalVO avo, HttpServletRequest req) {
 			logger.debug("( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행");
 			// 경로 설정 //
-			
-			String saveDir = servletContext.getRealPath("/uploads/");
+			ServletContext context = req.getServletContext();
+			String saveDir = context.getRealPath("/uploads/");
 			// 뷰페이지에서 전달된 데이터 처리(MultipartFile, 이미지 파일 변경 상태확인(CheckImage)) //
 			List<MultipartFile> uploadImageList = new ArrayList<MultipartFile>(avo.getUpload_images());
 			List<CheckImageVO> checkImageList = new ArrayList<CheckImageVO>(avo.getCheck_images());
@@ -390,15 +390,14 @@ public class AdptService {
 					asb.setLength(0);
 					
 					// 이미지 파일 저장 후 이미지 파일 정보를 ImageVO객체에 저장
-					int index = destinationImage.getPath().indexOf("\\uploads\\");
-					String indexStr = "\\uploads\\";
-					String indexSubStr = destinationImage.getPath().substring(index + indexStr.length());
-					String modifiedPath = asb.append("/uploads/").append(indexSubStr).toString();
-					
+					String modifiedPath = destinationImage.getPath().replace("\\uploads\\", "/uploads/");
+			        int index = modifiedPath.indexOf("/uploads/");
+			        String finalPath = modifiedPath.substring(index);
+			        
 					ImageVO ivo = new ImageVO();
 					ivo.setImage_id(avo.getAnimal_id());
 					ivo.setImage_sequence(i);
-					ivo.setImage_src(modifiedPath);
+					ivo.setImage_src(finalPath);
 					ivo.setImage_type(avo.getAIMAGETYPE());
 					imageList.add(ivo);
 					
