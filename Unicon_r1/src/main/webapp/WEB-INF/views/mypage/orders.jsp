@@ -210,7 +210,7 @@
 	                                   외 ${ordersDetail.ordersDetailOptions.size() -1 }건</p>
 	                                  <div style="display:flex; justify-content: space-between; align-items: end;">
 	                                  	<div>
-		                                  <h5 class="mb-2"><fmt:formatNumber value="${ordersDetail.product_subprice }" type="number" />원</h5>
+		                                  <h5 class="mb-2"><fmt:formatNumber value="${ordersDetail.product_subprice + ordersDetail.delivery_price }" type="number" />원</h5>
 		                                  <a href="/mypage/orders_detail/${ordersDetail.order_detail_id }" class="readmore"><span>상세보기</span></a>
 	                                  	</div>
 	                                  	<div>

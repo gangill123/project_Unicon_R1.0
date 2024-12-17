@@ -100,7 +100,7 @@
 	                                            
 	                                            <li>
 		                                            <a href="/mypage">
-					                                	<img src="${memberImage}" class="rounded-circle" style="width: 41px; height: 41px;">
+					                                	<img src="${memberImage}" class="rounded-circle" style="width: 43px; height: 43px;">
 					                            	</a>
 				                            	</li>
 	                                            

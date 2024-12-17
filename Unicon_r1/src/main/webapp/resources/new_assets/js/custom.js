@@ -61,7 +61,7 @@
 				<div class="col-xl-3 col-sm-6">
 					<div class="product-details">
 						<div class="product-img">
-							<div class="label-offer bg-${today > endDate ? 'red' : 'primary'}">
+							<div class="label-offer bg-${today > endDate ? 'black' : 'info'}">
 							${today > endDate ? '개시종료' : '개시중'}</div>
 							<img src="${item.news_src }" alt="..." class="image rounded-3">
 							<div class="product-cart">
