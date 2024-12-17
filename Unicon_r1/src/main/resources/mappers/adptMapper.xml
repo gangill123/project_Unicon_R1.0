@@ -376,7 +376,7 @@
         join _animal_vaccine v on a.animal_id = v.animal_id 
          join _adpt ad on a.animal_id = ad.animal_id 
     where a.animal_status != 6 and ad.adpt_status = 2 
-     order by ad.adpt_regdate desc 
+     order by ad.adpt_regdate desc limit 400 
 </select>
 
 
@@ -447,20 +447,18 @@
 </select>
 
 <!-- 상담 신청 목록 -->
-<!-- <select id="getCounselList">
-	select adc.animal_id, adc.member_id, adc.counsel_subdate, adc.counsel_procdate, 
+<select id="getCounselList" parameterType="Map" resultMap="AnimalResultMap">
+	select adc.animal_id, adc.member_id, adc.counsel_subdate, adc.counsel_procdate, adc.counsel_status, 
 	 a.animal_name, 
 	  ad.adpt_id, 
-	   cd.category_value, cd.category_type, 
-	    m.member_name, m.member_birth, m.member_tel, m.member_email, m.road_address, m.detail_address 
+	   cd.category_value, cd.category_type 
 	from _adpt_counsel adc 
 	 join _animal a on adc.animal_id = a.animal_id 
-	  join _member m on adc.member_id = m.member_id 
 	   join _adpt ad on adc.animal_id = ad.animal_id 
 	    join _category_data cd on a.category_code = cd.category_code 
 	where ad.adpt_status = 2 and a.animal_status not in (1, 4, 5, 6) 
 	and a.member_id = #{member_id} 
-</select> -->
+</select>
 
 </mapper>
 

@@ -243,7 +243,7 @@
 						const adate = new Date(item.animal_regdate);
 						const year = adate.getFullYear();
 						const month = String(adate.getMonth() + 1).padStart(2, '0');
-						const day = String(adate.getDay()).padStart(2, '0');
+						const day = String(adate.getDate()).padStart(2, '0');
 						const formattedDate = year + '-' + month + '-' + day;
 						
 						item.animal_regdate = formattedDate;

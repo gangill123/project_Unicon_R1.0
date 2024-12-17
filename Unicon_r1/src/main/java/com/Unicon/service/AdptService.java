@@ -196,6 +196,13 @@ public class AdptService {
 	}
 	
 	
+	/*=========== 보호소 페이지 상담 신청 목록 ===========*/
+	public List<AnimalVO> getCounselList(Map<String, String> counselMemberParams) {
+		logger.debug("( •̀ ω •́ )✧ getCounselList() 실행");
+		
+		return aDao.getCounselList(counselMemberParams);
+	}
+	
 	
 /*========================= 메서드 =========================*/
 		

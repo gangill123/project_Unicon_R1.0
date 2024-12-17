@@ -60,6 +60,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         // 로그인 성공 후 모든 사용자를 /main으로 이동
         response.sendRedirect("/main");
+       
     }
 
 
