@@ -87,6 +87,7 @@
 </section>
 
 <script>
+	$('.navbar #adpt').addClass('current');
     document.getElementById('mbtiForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(this);
@@ -126,6 +127,8 @@
             alert('오류가 발생했습니다: ' + error.message);
         });
     });
+    
+    
 </script>
 
 <%@ include file="../inc/new_footer.jsp" %>
