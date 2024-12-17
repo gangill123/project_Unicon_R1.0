@@ -47,8 +47,6 @@
 <c:if test="${userId != postList.member_id}">
 	<c:redirect url="/main"/>
 </c:if>
-<%-- ${postList} --%>
-
 
 <section class="bg-light" style="padding: 60px;">
 	<div class="container">
@@ -237,8 +235,6 @@
 								</div>
 								<!-- End Text input element -->
 
-
-
 								<!-- Begin Textarea element -->
 								<div class="col-md-12">
 									<div class="quform-element form-group">
@@ -251,7 +247,6 @@
 									</div>
 								</div>
 								<!-- End Textarea element -->
-
 
 								<!-- Begin Select element -->
 								<div id="test12345" class="container">
@@ -428,8 +423,6 @@
 								</div>
 								<!-- End Select element -->
 
-
-
 								<!-- Begin Submit button -->
 								<div class="col-md-6 offset-md-3 mt-4">
 									<div class="quform-submit-inner text-center">
@@ -466,21 +459,6 @@
 $(function() {
 	
 	// 실종(발견) 게시물 선택시 보여지는 필드
-// 	$(document).ready(function() {
-// 	    $('#post_type').change(function() {
-// 	        var selectedValue = $(this).val();
-// 	        if (selectedValue === 'post03' || selectedValue === 'post04') {
-// 	            $('#missing-info').show();
-// 	            $('#date-info').show();
-// 	        } else {
-// 	            $('#missing-info').hide();
-// 	            $('#date-info').hide();
-// 	        }
-// 	    });
-// 	});
-	// 실종(발견) 게시물 선택시 보여지는 필드
-	
-	// 실종(발견) 게시물 선택시 보여지는 필드
     function updatePostType() {
         var selectedValue = $('#post_type').val();
         if (selectedValue === 'post03' || selectedValue === 'post04') {
@@ -491,6 +469,7 @@ $(function() {
             $('#date-info').hide();
         }
     }
+ 	// 실종(발견) 게시물 선택시 보여지는 필드
 
     // 페이지 로드 시 필드 상태 업데이트
     updatePostType();
@@ -501,14 +480,6 @@ $(function() {
     });
 	 // 실종(발견) 게시물 선택시 보여지는 필드
 	    
-	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
-    // var memberId = $('#member_id').val();
-
-//     if (memberId === "test1") {
-//         $('#location').val("경주시");
-//     }
-	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
-	
     // 이미지 미리보기
     // 이미지 미리보기 영역 클릭 시 파일 선택창 열기
     $('.project-grid-img').on('click', function() {
@@ -528,7 +499,6 @@ $(function() {
 		const changeCheckId = '#changeCheck';
 		const moveSrcId = '#moveSrc';
 		const fileTypeFilter = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.webp|\.svg|\.heic|\.ico|\.raw)$/i;
-		
 		
 		if (file) { // 파일이 있는 경우
 
@@ -875,7 +845,7 @@ $(function() {
 				break;
 				}
 				default:{
-					console.log('잘못된 번호'+ idNumber);
+					// console.log('잘못된 번호'+ idNumber);
 				break;
 				}
 			}
@@ -887,9 +857,9 @@ $(function() {
 	// 이미지 삭제 버튼
 	$('.image-delete').on('click', function(e) {
 		const targetId = e.currentTarget.id; // image-delete0, image-delete1, image-delete2, image-delete3
-		console.log('targetId : '+ targetId);
+		// console.log('targetId : '+ targetId);
 		const idNumber = parseInt(targetId.charAt(targetId.length - 1), 10);
-		console.log('idNumber : '+ idNumber);
+		// console.log('idNumber : '+ idNumber);
 		const imageInputId = '#image-input';
 		$(imageInputId + idNumber).val('');
 		$(imageInputId + idNumber).trigger('change');
@@ -922,7 +892,7 @@ $(function() {
  	
  	// 동물 코드 불러오기
 	var oneCategoryCode = $('#categoryCode').val();
- 	console.log(oneCategoryCode);
+ 	// console.log(oneCategoryCode);
  	 	
  	// 동물 품종 리스트
  	const $categoryCode = $('#categoryCode');
@@ -986,11 +956,6 @@ $(function() {
 		});
 	});
 	
-// 	$(document).click(function(event) {
-// 		if (!$(event.target).closest('.dropdown').length) {
-// 			$('#dropdownList').removeClass('show');
-// 		}
-// 	});
  	// 동물 품종 클릭 이벤트 수정
 	$(document).click(function(event) {
 	    if (!$(event.target).closest('.dropdown').length && !$(event.target).is('#searchInput')) {
@@ -998,7 +963,6 @@ $(function() {
 	    }
 	});
  	// 동물 품종 리스트
- 	
  	
  	// 엔터키 제출 방지
 	$('#formPost').on('keydown', function(event) {
@@ -1018,7 +982,7 @@ $(function() {
 	    var selectedValue = $(this).data("value");
 	 	// 선택된 품종의 이름 가져오기
 	    var selectedText = $(this).text();
-	    console.log("선택된 값: " + selectedValue);
+	    // console.log("선택된 값: " + selectedValue);
 	    // 선택된 값을 임시의 히든 input에 설정 (숫자 값으로 설정)
 	    $("#pet_code").val(selectedValue);
 	    // 선택된 품종의 이름을 input에 보여주기
@@ -1106,29 +1070,6 @@ $(function() {
 		});
 	});
 	// 글 수정
-	
-	
-// 	// 페이지 이동
-//     $('#formPost').on('submit', function(event) {
-//         event.preventDefault(); // 기본 폼 제출 방지
-
-//         // AJAX 요청
-//         $.ajax({
-//             type: "POST",
-//             url: "/community/insert",
-//             data: $(this).serialize(), // URL 인코딩된 데이터 전송
-//             success: function(response) {
-//                 alert(response); // 성공 메시지 표시
-//                 window.location.href = "/community/main"; // 페이지 이동
-//             },
-//             error: function(xhr) {
-//                 alert(xhr.responseText); // 실패 메시지 표시
-//                 console.log(xhr);
-//             }
-//         });
-//     });
-// 	// 페이지 이동
-    
     
 }); // 돔레디
 </script>

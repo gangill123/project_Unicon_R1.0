@@ -10,7 +10,7 @@ function readPostType(postType) {
         url: '/community/readPostType/' + postType,
         type: 'GET',
         success: function(data) {
-            console.log(data);
+            // console.log(data);
 
             // 게시물 추가
             data.forEach(function(p, index) {
@@ -90,7 +90,7 @@ function readPostType02(postType, resionFilter, animalFilter) {
 //        	sortFilter:sortFilter,
         },
         success: function(data) {
-            console.log(data);
+            // console.log(data);
 
             // 게시물 추가
             data.forEach(function(p, index) {
@@ -168,7 +168,7 @@ function readProfilePostType(postType, profileId) {
         	profileId:profileId
         },
         success: function(data) {
-            console.log(data);
+            // console.log(data);
 
             // 게시물 추가
             data.forEach(function(p, index) {
