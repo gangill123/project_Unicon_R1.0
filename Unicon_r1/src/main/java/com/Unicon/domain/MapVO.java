@@ -1,26 +1,26 @@
 package com.Unicon.domain;
 
+import lombok.Data;
+
+@Data
 public class MapVO {
-    private String road_address; // 도로명 주소
-    // 지번 주소
+    private int id;
+    private String member_id;
+    private String road_address;
+    private double latitude;
+    private double longitude;
+    private String member_type;
 
     // 기본 생성자
     public MapVO() {}
 
-    // 매개변수가 있는 생성자
-    public MapVO(String road_address) {
-        this.road_address = road_address; // 필드에 올바른 값을 할당
-        // 필드에 올바른 값을 할당
+    // 모든 필드를 포함하는 생성자
+    public MapVO(int id, String member_id, String road_address, double latitude, double longitude, String member_type) {
+        this.id = id;
+        this.member_id = member_id;
+        this.road_address = road_address;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.member_type = member_type;
     }
-
-    // Getter 및 Setter
-    public String getRoad_address() {
-        return road_address; // 올바른 필드 반환
-    }
-
-    public void setRoad_address(String road_address) {
-        this.road_address = road_address; // 올바른 필드에 값 설정
-    }
-
-  
 }

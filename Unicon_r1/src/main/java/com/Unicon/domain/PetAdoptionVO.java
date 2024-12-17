@@ -1,7 +1,5 @@
 package com.Unicon.domain;
-
 import lombok.Data;
-
 @Data
 public class PetAdoptionVO {
     private int adpt_ai;
@@ -15,7 +13,7 @@ public class PetAdoptionVO {
     private int adpt_status;
     private String member_id;
     private String category_code;
-    private String imageUrl;
+    private String image_src;
     private String title;
     private String content;
     
