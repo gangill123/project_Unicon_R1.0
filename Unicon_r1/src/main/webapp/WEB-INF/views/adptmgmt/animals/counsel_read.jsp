@@ -264,6 +264,7 @@
 			<div id="counselModal" class="counsel-modal">
 				<div class="counsel-modal-content">
 				<div class="modal-header">
+					<h3>신청자 정보</h3>
 					<button type="button" class="close counselModalClose" aria-label="Close">
 						&times;
 					</button>
@@ -271,23 +272,46 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-12">
-								<div class="form-group row justify-content-center">
-									<div class="col-12 col-xl-4 col-lg-6 col-md-6 mb-3">
-										<label for="aName" class="text-dark custom-label">신청자 이름</label>
+								<div class="form-group row justify-content-center mb-1">
+									<div class="col-12 col-xl-3 col-lg-6 col-md-6 mb-2">
+										<label for="aName" class="text-dark custom-label">이름</label>
 										<div class="input-group">
 											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
 											/>
 										</div>
 									</div>
-									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-3">
-										<label for="aName" class="text-dark custom-label">신청자 성별</label>
+									<div class="col-12 col-xl-3 col-lg-6 col-md-6 mb-2">
+										<label for="aName" class="text-dark custom-label">성별</label>
 										<div class="input-group">
 											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
 											/>
 										</div>
 									</div>
-									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-3">
-										<label for="aName" class="text-dark custom-label">신청자 생년월일</label>
+									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-2">
+										<label for="aName" class="text-dark custom-label">생년월일</label>
+										<div class="input-group">
+											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
+											/>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row justify-content-center mb-1">
+									<div class="col-12 col-xl-12 col-lg-6 col-md-6 mb-2">
+										<label for="aName" class="text-dark custom-label">주소</label>
+										<div class="input-group">
+											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
+											/>
+										</div>
+									</div>
+									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-2">
+										<label for="aName" class="text-dark custom-label">전화번호</label>
+										<div class="input-group">
+											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
+											/>
+										</div>
+									</div>
+									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-2">
+										<label for="aName" class="text-dark custom-label">이메일</label>
 										<div class="input-group">
 											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
 											/>
