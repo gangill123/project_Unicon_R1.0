@@ -163,7 +163,7 @@
     VALUES (
         (SELECT CONCAT('prod-', YEAR(CURRENT_DATE), '-', LPAD(IFNULL(MAX(SUBSTRING(product_id, -4)), 0) + 1, 4, '0'))
          FROM (SELECT product_id FROM _products WHERE product_id LIKE CONCAT('prod-', YEAR(CURRENT_DATE), '%')) AS temp),
-        'junghun87',
+        #{product_seller_id},
         #{product_category_type},
         #{product_category_value},
         #{product_keyword},

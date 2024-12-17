@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -58,6 +59,9 @@ public class StoreRestController {
 	
 	@Inject
 	private AdminStoreService aService;
+	
+	@Autowired
+	private ServletContext servletContext;
 
 	@RequestMapping(value = "/category/{value}", method = RequestMethod.GET)
 	public ResponseEntity<List<CategoryDataVO>> sscategoryDataGET(@PathVariable("value") String value) {
@@ -74,13 +78,14 @@ public class StoreRestController {
 
 	
     @RequestMapping(value = "/products/create", method = RequestMethod.POST)
-    public ResponseEntity<String> createProduct(@ModelAttribute ProductVO vo, HttpServletRequest req) { 
+    public ResponseEntity<String> createProduct(@ModelAttribute ProductVO vo, HttpServletRequest req, HttpSession session) { 
 	    logger.info("vo :  "+ vo);
 	    logger.info(" req : "+ req.toString());
 	    for(int i = 0; i < vo.getOption().size(); i++) {
 	  	    logger.info("vo :  "+ vo.getOption().get(i));
 	    }
-	  
+	    String member_id = (String)session.getAttribute("member_id");
+	    vo.setProduct_seller_id(member_id);
 	    try {
 		  List<ImageVO> images = saveImage(vo, req,"create"); 
 		  logger.info("images :  "+ images);
