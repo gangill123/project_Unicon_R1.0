@@ -19,8 +19,8 @@ public class PetVO {
 	private int pet_code;
 	private String pet_etc_breed;
 	private MultipartFile pet_file;
-	private Date pet_birthdate;
-	private Date pet_adopdate;
+	private String pet_birthdate;
+	private String pet_adopdate;
 	
 	private CategoryDataVO categoryDataVO;	// 카테고리 테이블
 	
