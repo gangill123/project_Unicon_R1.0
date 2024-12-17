@@ -262,6 +262,23 @@ public class StoreRestController {
     	}
     }
     
+    // 발송관리/배송현황 / 송장번호 업데이트
+    @RequestMapping(value = "/updateInvoiceNumber", method = RequestMethod.POST)
+    public ResponseEntity<String> updateInvoiceNumberPOST(@RequestBody OrdersVO vo) {
+    	logger.info("updateInvoiceNumber REST API 호출 : ");
+    	
+    	
+    	int result =  pService.updateInvoiceNumber(vo); 
+    	logger.info("result : "+result);
+    	
+    	// 이거 반환하는 값 수정해야됨.
+    	if (result == 0) {
+    		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<String>("성공적", HttpStatus.OK);
+    	}
+    }
+    
     
     
     

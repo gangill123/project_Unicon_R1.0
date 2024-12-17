@@ -90,6 +90,11 @@ public class ProductService {
 		List<Map<String, Object>> list = pDao.getOrderDetail(id);
 		return list;
 	}
+	// 발송관리/배송현황 / 송장번호 업데이트
+	public int updateInvoiceNumber(OrdersVO vo) {
+		int result = pDao.updateInvoiceNumber(vo);
+		return result;
+	}
 	
 
 }

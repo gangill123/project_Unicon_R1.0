@@ -297,10 +297,35 @@ table.dataTable {
 	width: 50%; /* 셀의 너비에 맞게 */
 	height: 24px; /* 셀의 높이에 맞게 */
 	box-sizing: border-box; /* padding, border 포함 */
-	border: none; /* 테두리 제거 */
 	font-size: inherit; /* 셀의 폰트 크기 상속 */
 	text-align: center; /* 텍스트 가운데 정렬 */
 	padding: 0; /* 여백 제거 */
+	border: none;
+}
+.edited-cell {
+    border: 2px solid #cfd6f8 !important; /* 강조된 테두리 색상 */
+    transition: border 0.3s ease; /* 부드러운 전환 효과 */
+}
+.row-updated {
+    background-color: #fffae6 !important; /* 연한 노랑 배경 */
+    transition: background-color 0.5s ease;
+}
+.save-btn {
+    background-color: #d6d6d6; /* 비활성화 상태: 회색 */
+    color: #9e9e9e;
+    cursor: not-allowed;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.save-btn:enabled {
+    cursor: pointer; /* 활성화 상태: 클릭 가능 */
+}
+
+.tracking-number-cell {
+    cursor: pointer; /* 마우스 커서 포인터 */
 }
 </style>
 
@@ -312,37 +337,30 @@ table.dataTable {
         $(".c-modal").removeClass("show");
     }
     function handleClick(id) {
-        // 모달 열기 (페이드 효과 추가)
-        $(".c-modal").addClass("show");
-    	// 모달 열리고 요청 보내면 됨
-		$.ajax({
-            url: "/store/manage/"+id, // 테스트용 API
-            type: "GET",
-            success: function(response) {
-            	console.log(response);
+    	// 클릭된 버튼이 속한 행을 찾음
+        var $row = $(event.target).closest('tr'); // 현재 버튼이 속한 tr 찾기
+        var thirdCellValue = $row.find('td').eq(2).text().trim(); // 3번째 셀(인덱스 2)의 값 가져오기
 
-                // 기존 내용을 비우기
-                $(".detail-text").html(""); // 또는 .empty()
-            	response.forEach(function(item) {
-            	    $(".detail-text").append(
-            	        "<div style='display:flex;'>" +
-            	        "<img src='" + item.image_src + "' alt='Product Image' style='max-width: 140px; display: block; margin-top: 10px;'>" +
-            	        "<div style='margin-top: 1rem;margin-left: 4rem;'>"+
-            	        "<p>" + item.product_option + "</p>" +
-            	        "<p><strong>수량:</strong> " + item.quantity + " 개</p>" +
-            	        "</div>"+
-            	        "</div>"
-            	    );
-            	});
-            },
-            error: function(xhr, status, error) {
-                // 에러 시 처리
-                console.error("Error: ", error);
-                $("#result").html("데이터를 가져오는데 실패했습니다.");
-            }
-        });
-		
-		
+    	 // 사용자에게 확인 받기
+        if (confirm("현재 송장 번호는 '" + thirdCellValue + "' 입니다. 저장하시겠습니까?")) {
+            // AJAX 요청 보내기
+            $.ajax({
+                url: "/store/updateInvoiceNumber", // 서버 API URL
+                type: "POST",
+                data: JSON.stringify({
+                    order_id: id, // 해당 행의 주문 ID
+                    invoice_number : thirdCellValue // 3번째 셀 값 전달
+                }),
+                contentType: "application/json",
+                success: function (response) {
+                	alert("성공");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error: ", error);
+                    alert("저장에 실패했습니다. 다시 시도해주세요.");
+                }
+            });
+        }
 	}
     
     $(document).ready(function() {
@@ -444,11 +462,12 @@ table.dataTable {
 											<tr>
 												<th>상품주문번호</th>
 												<th>구매자</th>
+												<th>송장</th>
 												<th>주소</th>
 												<th>수취인</th>
 												<th>수취인 전화번호</th>
 												<th>상태</th>
-												<th>변경</th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -576,7 +595,6 @@ table.dataTable {
 	            },
 				dataSrc: function(json) {
 					return json.map(function(item) {
-						console.log(item);
 						/* const date = new Date(item.animal_regdate);
 						const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 						const formattedDate = date.toLocaleDateString('ko-KR', options);
@@ -584,6 +602,9 @@ table.dataTable {
 						item.animal_regdate = formattedDate; */
 						
 						item.address = "("+item.postal_code+") " +item.address + " "+item.detail_address;
+						
+						item.invoice_number = item.invoice_number === null ? '' : item.invoice_number;
+
 						return item;
 					});
 				}
@@ -591,18 +612,22 @@ table.dataTable {
 			"columns": [
 				{ data: 'order_id' },
 				{ data: 'order_name' },
+				{ 
+		            data: 'invoice_number', 
+		            className: 'tracking-number-cell'// CSS 클래스 추가
+		        },
 				{ data: 'address' },
 				{ data: 'recipient' },
 				{ data: 'recipient_phone' },
 				{ data: 'status' },
-				{ 
-	                data: 'order_id', // product_id 열
-	                render: function(data, type, row) {
-	                    return "<button class='item-button' onclick='handleClick(\"" + row.order_id + "\")'>" +
-	                        "<span>변경</span>" +
-	                        "</button>";
-	                }
-	            }
+				{
+			        data: 'order_id',
+			        render: function (data, type, row) {
+			            // 저장 버튼 비활성화 상태로 초기화
+			            return "<button class='item-button save-btn' disabled onclick='handleClick(\"" + row.order_id + "\")'>" +
+			                   "<span>저장</span></button>";
+			        }
+			    }
 			],
 			/*=============== DataTable ajax ===============*/
 			"order": [[0, "desc"]],
@@ -691,46 +716,46 @@ table.dataTable {
 	        aTable.ajax.reload(); // DataTables 데이터 새로 불러오기
 	    });
 		
-	    $('#orderTable tbody').on('dblclick', 'td', function() {
-	        var cell = aTable.cell(this); // 현재 셀 데이터 가져오기
-	        var originalValue = cell.data(); // 기존 값 저장
-	        var $cell = $(this); // jQuery 객체로 셀 참조
-
-	        // 셀의 크기 가져오기
-	        var cellWidth = $cell.outerWidth();
-	        var cellHeight = $cell.outerHeight();
-
-	        // input 요소 생성 및 기존 값 삽입
-	        $cell.html('<input type="text" class="editable-input" value="' + originalValue + '">');
-	        var input = $cell.find('input');
-
-	        // input 크기 동적으로 셀과 맞추기
-	        input.css({
-	            width: cellWidth + 'px',
-	            height: cellHeight + 'px'
-	        });
-
-	        input.focus();
-
-	        // 엔터 키 입력 시 값 변경
-	        input.on('keypress', function(e) {
-	            if (e.which === 13) { // 엔터 키 확인
-	                var newValue = $(this).val(); // 입력된 값 가져오기
-	                cell.data(newValue).draw(); // 데이터 테이블의 셀 값 변경
-	            }
-	        });
-
-	        // 포커스를 잃으면 원래 값 또는 변경된 값 적용
-	        input.on('blur', function() {
-	            var newValue = $(this).val();
-	            if (newValue !== originalValue) {
-	                cell.data(newValue).draw();
-	            } else {
-	                cell.data(originalValue).draw();
-	            }
-	        });
-	    });
 		
+		//////////////////////////////////////////////////////////
+		$('#orderTable tbody').on('click', 'td', function () {
+	    var $cell = $(this); // 현재 셀 jQuery 객체
+	    var cellIndex = $cell.index(); // 셀의 컬럼 인덱스 가져오기
+	    var row = aTable.row($cell.closest('tr')); // 해당 행 가져오기
+	    var rowData = row.data(); // 행의 데이터 가져오기
+	
+	    // 특정 셀(송장 컬럼)에서만 동작하도록 설정
+	    var targetColumnIndex = 2; // 송장번호 컬럼 인덱스 (0부터 시작)
+	    if (cellIndex !== targetColumnIndex) return; // 송장 컬럼이 아니면 이벤트 중지
+	
+	    // 프롬프트 창 띄우기
+	    var newTrackingNumber = prompt("송장 번호를 입력하세요:", rowData.tracking_number || "");
+	    if (newTrackingNumber !== null && newTrackingNumber.trim() !== "") {
+	        // 유효성 검사: 숫자만 허용 (예시)
+	        if (!/^\d+$/.test(newTrackingNumber)) {
+	            alert("유효한 숫자 형식의 송장 번호를 입력하세요.");
+	            return;
+	        }
+	        // 데이터 업데이트
+	        rowData.tracking_number = newTrackingNumber; // 송장번호 필드 값 업데이트
+	        row.data(rowData); // DataTable에 새 데이터 설정
+
+	        // 화면에서 셀 내용 직접 업데이트
+	        $cell.html(newTrackingNumber); 
+
+	        // 저장 버튼 활성화
+	        var $saveButton = $cell.closest('tr').find('.save-btn'); // 현재 행의 저장 버튼 찾기
+	        $saveButton.prop('disabled', false).css({
+	            "background-color": "#28a745", // 활성화: 초록색
+	            "color": "#ffffff",
+	            "cursor": "pointer"
+	        });
+	    } else {
+	        alert("송장 번호를 입력하지 않았습니다.");
+	    }
+	});
+
+		//////////////////////////////////////////////////////////
 		
 	});
 	</script>

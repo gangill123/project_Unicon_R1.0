@@ -105,4 +105,10 @@ public class ProductDAO {
 	    }
 		return list; 
 	}
+	
+	// 발송관리/배송현황 / 송장번호 업데이트
+	public int updateInvoiceNumber(OrdersVO data) {
+		int result = sqlSession.update(NAMESPACE + "updateInvoiceNumber", data);
+		return result; 
+	}
 }

@@ -25,7 +25,7 @@
     	}
     	 
 		// 처음 선택한 카테고리의 span 색상 변경
-		$("#category" + value).css('color', '#bf94e4'); // 해당 카테고리 span 색상 변경
+		$("#category" + value).css('color', '#006e60'); // 해당 카테고리 span 색상 변경
 		// 현재 선택한 카테고리 값을 저장
 	    selectedCategory = value;
 		
@@ -73,7 +73,7 @@
             $("#categoryDetail" + selectedCategoryDetail).css('color', '#000000'); // 해당 카테고리 span 색상 변경
         }
 		selectedCategoryDetail = index;
-		$("#categoryDetail" + index).css('color', '#bf94e4'); // 해당 카테고리 span 색상 변경
+		$("#categoryDetail" + index).css('color', '#006e60'); // 해당 카테고리 span 색상 변경
 		
 		// 기존 카테고리 값을 지우고 새로 선택된 카테고리 값을 저장
 	    data.product_category_value = category;
