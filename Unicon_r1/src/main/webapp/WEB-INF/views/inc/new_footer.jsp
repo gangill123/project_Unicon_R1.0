@@ -246,7 +246,7 @@
     
 
     <!-- all js include start -->
-
+	
     <!-- jquery -->
     <script src="${pageContext.request.contextPath }/resources/new_assets/js/jquery.min.js"></script>
 

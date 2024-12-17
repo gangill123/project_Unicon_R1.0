@@ -33,8 +33,7 @@
 	flex-direction: column;
 	align-items: center; /* 내용 중앙 정렬 */
 	justify-content: center;
-	
-	  padding: 100px; /* 카드 안쪽 여백 설정 */
+	padding: 70px; /* 카드 안쪽 여백 설정 */
 	
 }
 
@@ -75,7 +74,7 @@
 <div class="card-deck">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">이번년도 카테고리별 문의 그래프</h4>
+            <h4 class="card-title">카테고리별 문의 그래프</h4>
             <canvas id="barChart" style="height: 500px; width: 688px;" width="688" height="344" class="chartjs-render-monitor"></canvas>
         </div>
     </div>
@@ -83,7 +82,7 @@
     <div class="card">
     	
         <div class="card-body">
-            <h4 class="card-title">이번년도 문의 답변 차트</h4>
+            <h4 class="card-title">문의 답변율 차트</h4>
             <canvas id="doughnutChart" style="height: 500px; width: 1000px;" class="chartjs-render-monitor"></canvas>
         </div>
     </div>

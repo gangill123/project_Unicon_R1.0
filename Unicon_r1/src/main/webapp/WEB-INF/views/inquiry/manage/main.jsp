@@ -224,11 +224,11 @@ th.sort-desc::after {
 		        <!-- 필터 -->
 		<div class="row mb-3">
 		    <div class="col-md-3">
-		        <label for="startDate">시작 날짜</label>
+		        <label for="startDate">작성일 시작 날짜</label>
 		        <input type="date" id="startDate" class="form-control">
 		    </div>
 		    <div class="col-md-3">
-		        <label for="endDate">종료 날짜</label>
+		        <label for="endDate">작성일 종료 날짜</label>
 		        <input type="date" id="endDate" class="form-control">
 		    </div>
 		    <div class="col-md-3">
