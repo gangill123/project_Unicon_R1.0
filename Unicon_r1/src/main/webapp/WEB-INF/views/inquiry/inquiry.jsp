@@ -14,8 +14,81 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
 
+/* Owl Carousel 기본 스타일을 반응형으로 만들기 */
+.owl-carousel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.owl-item {
+    flex: 1 1 100%;
+    margin-right: 30px;
+}
+
+/* Owl Carousel 기본 스타일을 반응형으로 설정 */
+.owl-carousel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.owl-item {
+    flex: 1 1 100%;
+    margin-right: 30px;
+}
 
 
+/* 모바일 화면에서 한 열로 표시 */
+@media (max-width: 768px) {
+    .service-block10 {
+        padding: 15px;
+    }
+    .service-block10 h4 {
+        font-size: 1rem;
+    }
+    .service-block10 p {
+        font-size: 0.75rem;
+    }
+}
+
+/* 작은 화면에서 두 개씩 표시 */
+@media (min-width: 768px) and (max-width: 991px) {
+    .col-md-6 {
+        flex: 1 1 48%;
+        margin-bottom: 20px;
+    }
+}
+
+/* 큰 화면에서 4개씩 표시 */
+@media (min-width: 992px) {
+    .col-lg-3 {
+        flex: 1 1 23%;
+    }
+}
+
+.project-single-two {
+    padding: 20px 30px;
+}
+
+.owl-carousel .project-grid-style3 {
+    width: 100%;
+}
+
+.project-grid-style3 img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.project-desc h3 a {
+    color: #333;
+    text-decoration: none;
+}
+
+.project-desc h3 a:hover {
+    text-decoration: underline;
+}
 </style>
 </head>
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
@@ -153,98 +226,124 @@
 </section>		
 		
 		
+<section class="project-single-two" style="padding: 30px; margin-bottom: 20px;">
+    <div class="container">
+        <div class="section-heading">
+            <h2>서비스별 고객센터</h2>
+        </div>
+    </div>
 
-
- <section class="project-single-two"  style="padding: 30px; margin-bottom: 20px;">
-
-            <div class="container">
-                <div class="section-heading">
-                    <h2>서비스별 고객센터</h2>
+    <div class="container-fluid p-0">
+        <div class="owl-carousel owl-theme">
+            <!-- 첫 번째 아이템 -->
+            <div class="project-grid-style3">
+                <div class="inner-box">
+                    <div class="project-image">
+                        <img src="${pageContext.request.contextPath}/resources/assets/images/yang.jpg" alt="...">
+                        <div class="overlay">
+                            <div class="overlay-inner">
+                                <div class="description">
+                                    <div class="text">입양 관련 문의</div>
+                                    <a href="adoption" class="read-more"><span class="fa fa-angle-right"></span> Inquiry now </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-desc">
+                        <div class="category">입양 문의</div>
+                        <h3><a href="adoption">#입양 #입양 방법 #입양 현황</a></h3>
+                    </div>
                 </div>
             </div>
 
-            <div class="container-fluid p-0">
-
-                <div class="owl-carousel owl-theme owl-loaded owl-drag">
- 
-                    
-                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 1933px;"><div class="owl-item active" style="width: 453.25px; margin-right: 30px;"><div class="project-grid-style3">
-                        <div class="inner-box">
-                            <div class="project-image">
-                                <img src="${pageContext.request.contextPath}/resources/assets/images/yang.jpg" alt="...">
-                                <div class="overlay">
-                                    <div class="overlay-inner">
-                                        <div class="description">
-                                            <div class="text"> 입양 관련 문의 </div>
-                                            <a href="adoption" class="read-more"><span class="fa fa-angle-right"></span> Inquiry now </a>
-                                        </div>
-                                    </div>
+            <!-- 두 번째 아이템 -->
+            <div class="project-grid-style3">
+                <div class="inner-box">
+                    <div class="project-image">
+                        <img src="${pageContext.request.contextPath}/resources/assets/images/yong.jpg" alt="...">
+                        <div class="overlay">
+                            <div class="overlay-inner">
+                                <div class="description">
+                                    <div class="text">애견 쇼핑몰 관련 문의</div>
+                                    <a href="shop" class="read-more"><span class="fa fa-angle-right"></span> Inquiry now </a>
                                 </div>
                             </div>
-                            <div class="project-desc">
-                                <div class="category">입양 문의</div>
-                                <h3><a href="adoption">#입양 #입양 방법 #입양 현황</a></h3>
-                            </div>
                         </div>
-                    </div></div><div class="owl-item active" style="width: 453.25px; margin-right: 30px;"><div class="project-grid-style3">
-                        <div class="inner-box">
-                            <div class="project-image">
-                                <img src="${pageContext.request.contextPath}/resources/assets/images/yong.jpg" alt="...">
-                                <div class="overlay">
-                                    <div class="overlay-inner">
-                                        <div class="description">
-                                            <div class="text">애견 쇼핑몰 관련 문의</div>
-                                            <a href="shop" class="read-more"><span class="fa fa-angle-right"></span>Inquiry now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-desc">
-                                <div class="category">애견 용품 문의</div>
-                                <h3><a href="shop">#애견옷 #애견 용품 #애견 용품 주문</a></h3>
-                            </div>
-                        </div>
-                    </div></div><div class="owl-item active" style="width: 453.25px; margin-right: 30px;"><div class="project-grid-style3">
-                        <div class="inner-box">
-                            <div class="project-image">
-                                <img src="${pageContext.request.contextPath}/resources/assets/images/co.jpg" alt="...">
-                                <div class="overlay">
-                                    <div class="overlay-inner">
-                                        <div class="description">
-                                            <div class="text">애견 커뮤니티 관련 문의</div>
-                                            <a href="community" class="read-more"><span class="fa fa-angle-right"></span>Inquiry now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="project-desc">
-                                <div class="category">커뮤니티 문의</div>
-                                <h3><a href="community">#커뮤니티 #애견 커뮤니티 </a></h3>
-
-                            </div>
-                        </div>
-                    </div></div><div class="owl-item active" style="width: 453.25px; margin-right: 30px;"><div class="project-grid-style3">
-                        <div class="inner-box">
-                            <div class="project-image">
-                                <img src="${pageContext.request.contextPath}/resources/assets/images/git.jpg" alt="...">
-                                <div class="overlay">
-                                    <div class="overlay-inner">
-                                        <div class="description">
-                                            <div class="text">기타 관련 문의</div>
-                                            <a href="etc" class="read-more"><span class="fa fa-angle-right"></span>Inquiry now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="project-desc">
-                                <div class="category">기타 문의</div>
-                                <h3><a href="etc">#결제 #시스템 #기타사항</a></h3>
-                            </div>
-                        </div>
-                    </div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div><div class="owl-thumbs"></div></div>
+                    </div>
+                    <div class="project-desc">
+                        <div class="category">애견 용품 문의</div>
+                        <h3><a href="shop">#애견옷 #애견 용품 #애견 용품 주문</a></h3>
+                    </div>
+                </div>
             </div>
-        </section>
+
+            <!-- 세 번째 아이템 -->
+            <div class="project-grid-style3">
+                <div class="inner-box">
+                    <div class="project-image">
+                        <img src="${pageContext.request.contextPath}/resources/assets/images/co.jpg" alt="...">
+                        <div class="overlay">
+                            <div class="overlay-inner">
+                                <div class="description">
+                                    <div class="text">애견 커뮤니티 관련 문의</div>
+                                    <a href="community" class="read-more"><span class="fa fa-angle-right"></span> Inquiry now </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-desc">
+                        <div class="category">커뮤니티 문의</div>
+                        <h3><a href="community">#커뮤니티 #애견 커뮤니티</a></h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 네 번째 아이템 -->
+            <div class="project-grid-style3">
+                <div class="inner-box">
+                    <div class="project-image">
+                        <img src="${pageContext.request.contextPath}/resources/assets/images/git.jpg" alt="...">
+                        <div class="overlay">
+                            <div class="overlay-inner">
+                                <div class="description">
+                                    <div class="text">기타 관련 문의</div>
+                                    <a href="etc" class="read-more"><span class="fa fa-angle-right"></span> Inquiry now </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-desc">
+                        <div class="category">기타 문의</div>
+                        <h3><a href="etc">#결제 #시스템 #기타사항</a></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+$(document).ready(function(){
+    $(".owl-carousel").owlCarousel({
+        items: 4,            // 화면에 표시할 아이템 개수 (한 줄에 4개)
+        loop: false,         // 마지막 아이템 이후 반복 비활성화
+        margin: 10,          // 아이템 간 간격 최소화
+        responsive: {
+            0: {
+                items: 1     // 모바일에서는 한 개씩 표시
+            },
+            768: {
+                items: 2     // 태블릿에서는 두 개씩 표시
+            },
+            992: {
+                items: 4     // 데스크탑에서는 네 개씩 표시
+            }
+        }
+    });
+});
+</script>
+
+
 <script>
 $(document).ready(function() {
     // 검색 버튼 클릭 이벤트
