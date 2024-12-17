@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,9 @@ public class AdptService {
 	private AdptDAO aDao;
 	private static final Logger logger = LoggerFactory.getLogger(AdptService.class);
 
+	@Inject
+	private ServletContext servletContext;
+	
 	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
 	public void animalInsert(AnimalVO avo) {
 		logger.debug("( •̀ ω •́ )✧ adptInsert() 실행");
@@ -262,8 +266,7 @@ public class AdptService {
 		/*=============== 이미지 저장, 리스트 생성 ===============*/
 		public List<ImageVO> saveImage(AnimalVO avo, HttpServletRequest req) {
 			logger.debug("( •̀ ω •́ )✧ saveImage(AnimalVO avo, HttpServletRequest req) 메서드 실행");
-			ServletContext context = req.getServletContext();
-			String saveDir = context.getRealPath("/uploads/");
+			String saveDir = servletContext.getRealPath("/uploads/");
 			List<MultipartFile> uploadImages = avo.getUpload_images();
 			List<ImageVO> animalImages = new ArrayList<ImageVO>();
 			
@@ -298,7 +301,6 @@ public class AdptService {
 				String indexStr = "\\uploads\\";
 				String indexSubStr = destinationImage.getPath().substring(index + indexStr.length());
 				String modifiedPath = asb.append("/uploads/").append(indexSubStr).toString();
-				
 				ImageVO ivo = new ImageVO();
 				ivo.setImage_id(avo.getAnimal_id());
 				ivo.setImage_sequence(i);
@@ -317,8 +319,8 @@ public class AdptService {
 		public List<ImageVO> modifyImage(AnimalVO avo, HttpServletRequest req) {
 			logger.debug("( •̀ ω •́ )✧ modifyImage(AnimalVO avo, HttpServletRequest req) 실행");
 			// 경로 설정 //
-			ServletContext context = req.getServletContext();
-			String saveDir = context.getRealPath("/uploads/");
+			
+			String saveDir = servletContext.getRealPath("/uploads/");
 			// 뷰페이지에서 전달된 데이터 처리(MultipartFile, 이미지 파일 변경 상태확인(CheckImage)) //
 			List<MultipartFile> uploadImageList = new ArrayList<MultipartFile>(avo.getUpload_images());
 			List<CheckImageVO> checkImageList = new ArrayList<CheckImageVO>(avo.getCheck_images());
@@ -476,8 +478,7 @@ public class AdptService {
 		/*=============== 이미지 삭제 ===============*/
 		public void deleteImage(List<ImageVO> imageList, HttpServletRequest req) {
 			logger.debug("( •̀ ω •́ )✧ deleteImage(List<ImageVO> imageList, HttpServletRequest req) 실행");
-			ServletContext context = req.getServletContext();
-			String saveDir = context.getRealPath("/uploads/");
+			String saveDir = servletContext.getRealPath("/uploads/");
 			
 			for(int i = 0; i < imageList.size(); i++) {
 				StringBuilder asb = new StringBuilder();

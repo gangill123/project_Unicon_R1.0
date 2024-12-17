@@ -32,8 +32,36 @@
     /* <label class="badge badge-success">입양완료</label> */
     /* <label class="badge badge-secondary">종료</label> */
     /*=============== badge css ===============*/
-
-
+	
+	
+	/*=============== 글자 css ===============*/
+	.custom-label, .custom-text {
+		font-size: 1.2rem !important;
+		white-space: nowrap;
+	}
+	
+	@media (max-width: 1500px) {
+		.custom-text {
+			font-size: 1rem !important;
+		}
+	}
+	
+	@media (max-width: 600px) {
+		.custom-text {
+			font-size: 0.95rem !important;
+		}
+	}
+	/*=============== 글자 css ===============*/
+	
+	
+	/*=============== 테두리 css ===============*/
+	input.form-control {
+		border-radius: 0.5rem;
+		padding: 0.35rem 0.35rem;
+	}
+	/*=============== 테두리 css ===============*/
+	
+	
     /*=============== 테이블 css ===============*/
 	@media(max-width:650px) {
 		.a-first-column, .a-six-column {
@@ -235,26 +263,34 @@
           
 			<div id="counselModal" class="counsel-modal">
 				<div class="counsel-modal-content">
-				
+				<div class="modal-header">
+					<button type="button" class="close counselModalClose" aria-label="Close">
+						&times;
+					</button>
+				</div>
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-12">
 								<div class="form-group row justify-content-center">
+									<div class="col-12 col-xl-4 col-lg-6 col-md-6 mb-3">
+										<label for="aName" class="text-dark custom-label">신청자 이름</label>
+										<div class="input-group">
+											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
+											/>
+										</div>
+									</div>
 									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-3">
-										<label for="aName" class="text-dark custom-label">동물 이름</label>
+										<label for="aName" class="text-dark custom-label">신청자 성별</label>
 										<div class="input-group">
-										<input type="text" id="aName" name="animal_name" class="form-control custom-text"
-										placeholder="최대 6자" maxlength="6" required/>
+											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
+											/>
 										</div>
-										<label for="aName" class="text-dark custom-label">동물 이름</label>
+									</div>
+									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-3">
+										<label for="aName" class="text-dark custom-label">신청자 생년월일</label>
 										<div class="input-group">
-										<input type="text" id="aName" name="animal_name" class="form-control custom-text"
-										placeholder="최대 6자" maxlength="6" required/>
-										</div>
-										<label for="aName" class="text-dark custom-label">동물 이름</label>
-										<div class="input-group">
-										<input type="text" id="aName" name="animal_name" class="form-control custom-text"
-										placeholder="최대 6자" maxlength="6" required/>
+											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
+											/>
 										</div>
 									</div>
 								</div>
