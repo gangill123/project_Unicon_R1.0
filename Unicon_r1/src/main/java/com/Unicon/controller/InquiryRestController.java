@@ -115,7 +115,7 @@ public class InquiryRestController {
 				String fileType = file.getContentType();
 
 				// 파일 업로드 디렉토리 설정 (웹 애플리케이션 내 상대 경로)
-				String uploadDir = "/resources/uploads/"; // 프로젝트의 웹 애플리케이션 내 상대 경로
+				String uploadDir = "/uploads/"; // 프로젝트의 웹 애플리케이션 내 상대 경로
 				String storedName = UUID.randomUUID().toString() + "_" + originalName;
 				String filePath = uploadDir + storedName;
 
