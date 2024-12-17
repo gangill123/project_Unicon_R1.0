@@ -174,9 +174,6 @@
 											   <option value="제주특별자치도">제주특별자치도</option>
                                             </select>
                                         </div>
-<!--                                         <div class="quform-input"> -->
-<!--                                             <input id="location" class="form-control" type="se" placeholder="자동 등록 / 변경을 원하시면 마이페이지에서 변경해주세요."/> -->
-<!--                                         </div> -->
                                     </div>
                                 </div>
                                 <!-- End Text input element -->
@@ -203,8 +200,6 @@
                                 </div>
                                 <!-- End Text input element -->
 
-                                
-
                                 <!-- Begin Textarea element -->
                                 <div class="col-md-12">
                                     <div class="quform-element form-group">
@@ -215,7 +210,6 @@
                                     </div>
                                 </div>
                                 <!-- End Textarea element -->
-                                
                                 
                                 <!-- Begin Select element -->
 								<div id="test12345" class="container">
@@ -302,8 +296,6 @@
 								    </div>
 								</div>
 								<!-- End Select element -->
-								
-								
 
                                 <!-- Begin Submit button -->
                                 <div class="col-md-6 offset-md-3 mt-4">
@@ -345,14 +337,6 @@ $(function() {
 	    });
 	});
 	// 실종(발견) 게시물 선택시 보여지는 필드
-	
-	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
-    // var memberId = $('#member_id').val();
-
-//     if (memberId === "test3") {
-//         $('#location').val("인천");
-//     }
-	// 로그인한 아이디의 거주지를 자동으로 입력해서 보여주기	 (로그인 세션 수정 필요)
 	
     // 이미지 미리보기
 	// 이미지 미리보기 영역 클릭 시 파일 선택창 열기
@@ -581,7 +565,6 @@ $(function() {
 	});
  	// 동물 품종 리스트
  	
- 	
  	// 엔터키 제출 방지
 	$('#formPost').on('keydown', function(event) {
 		if (event.key === 'Enter' && event.target.tagName !== 'TEXTAREA') {
@@ -600,7 +583,7 @@ $(function() {
 	    var selectedValue = $(this).data("value");
 	 	// 선택된 품종의 이름 가져오기
 	    var selectedText = $(this).text();
-	    console.log("선택된 값: " + selectedValue);
+	    // console.log("선택된 값: " + selectedValue);
 	    // 선택된 값을 임시의 히든 input에 설정 (숫자 값으로 설정)
 	    $("#pet_code").val(selectedValue);
 	    // 선택된 품종의 이름을 input에 보여주기
@@ -689,29 +672,6 @@ $(function() {
 		});
 	});
 	// 글 등록
-	
-	
-// 	// 페이지 이동
-//     $('#formPost').on('submit', function(event) {
-//         event.preventDefault(); // 기본 폼 제출 방지
-
-//         // AJAX 요청
-//         $.ajax({
-//             type: "POST",
-//             url: "/community/insert",
-//             data: $(this).serialize(), // URL 인코딩된 데이터 전송
-//             success: function(response) {
-//                 alert(response); // 성공 메시지 표시
-//                 window.location.href = "/community/main"; // 페이지 이동
-//             },
-//             error: function(xhr) {
-//                 alert(xhr.responseText); // 실패 메시지 표시
-//                 console.log(xhr);
-//             }
-//         });
-//     });
-// 	// 페이지 이동
-    
     
 }); // 돔레디
 </script>

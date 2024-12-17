@@ -15,6 +15,12 @@ z-index: 2000;
 	width: 100%;
 	height: 100%;
 }
+
+.project-grid-img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 원하는 가로:세로 비율 설정 */
+    overflow: hidden;    /* 이미지가 컨테이너를 벗어나지 않도록 */
+}
 </style>
 </head>
 <%@ include file="../inc/new_header.jsp" %> <!-- header -->
@@ -41,29 +47,26 @@ z-index: 2000;
            <!-- <p class="w-md-75 w-lg-55">Business consectetur adipisicing elit eiusmod tempor incididunt ut labore et dolore magna aliqua quis nostrud exercitation consequat.</p> -->
        </div>
        <div class="section-heading" style="display: flex; flex-wrap: wrap; justify-content: center;">
-<%--        ${getPet[0].member_pets[1].pet_name } --%>
-        		<c:forEach var="pets" items="${getPet[0].member_pets}">
-		       		<div class="petInfo" style="text-align: center; margin: 10px;">
-		       			<a href="#!" class="open-modal" data-pet-id="${pets.pet_id}" data-bs-toggle="modal" data-bs-target="#petModal">
-				        <img src="${pets.pet_src }" class="me-0" style="border-radius: 50%; width: 80px; height: 80px;" alt="...">
-				        </a>
-				        <p style="margin: 0;">
-				        <c:if test="${pets.pet_gender == 1 }">
-				        <i class="fa-solid fa-mars"></i>
-				        </c:if>
-				        <c:if test="${pets.pet_gender == 2 }">
-				        <i class="fa-solid fa-venus"></i>
-				        </c:if>
-				        ${pets.pet_name }
-				        </p>
-				        <p style="margin: 0; padding-top: 0">${pets.categoryDataVO.category_value }</p>
-				    </div>
- 		    	</c:forEach>
+     		<c:forEach var="pets" items="${getPet[0].member_pets}">
+      		<div class="petInfo" style="text-align: center; margin: 10px;">
+      			<a href="#!" class="open-modal" data-pet-id="${pets.pet_id}" data-bs-toggle="modal" data-bs-target="#petModal">
+		        	<img src="${pets.pet_src }" class="me-0" style="border-radius: 50%; width: 80px; height: 80px;" alt="...">
+		        </a>
+		        <p style="margin: 0;">
+			        <c:if test="${pets.pet_gender == 1 }">
+			        	<i class="fa-solid fa-mars"></i>
+			        </c:if>
+			        <c:if test="${pets.pet_gender == 2 }">
+			        	<i class="fa-solid fa-venus"></i>
+			        </c:if>
+			        ${pets.pet_name }
+		        </p>
+		        <p style="margin: 0; padding-top: 0">${pets.categoryDataVO.category_value }</p>
+	    	</div>
+    		</c:forEach>
        </div>
    </div>
    
-<!--    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#jjjModal">게시물 모달</button> -->
-<!--    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#followModal">팔로워 모달</button> -->
 <!--    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#followModal">팔로잉 모달</button> -->
 
    <div class="container">
@@ -77,59 +80,14 @@ z-index: 2000;
                <span data-type='post04' data-filter='.consulting'>임시 보호</span>
            </div>
            <!-- End links -->
-           
-           <!-- 
-           <select id="resionFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-			   <option value="모든 지역">모든 지역</option>
-			   <option value="서울">서울</option>
-			   <option value="인천">인천</option>
-			   <option value="부산">부산</option>
-			   <option value="대구">대구</option>
-			   <option value="광주">광주</option>
-			   <option value="대전">대전</option>
-			   <option value="울산">울산</option>
-			   <option value="세종특별시">세종특별시</option>
-			   <option value="경기">경기</option>
-			   <option value="강원특별자치도">강원특별자치도</option>
-			   <option value="충북">충북</option>
-			   <option value="충남">충남</option>
-			   <option value="전북특별자치도">전북특별자치도</option>
-			   <option value="전남">전남</option>
-			   <option value="경북">경북</option>
-			   <option value="경남">경남</option>
-			   <option value="제주특별자치도">제주특별자치도</option>
-			</select>
-		   
-		   <select id="animalFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;">
-		       <option value="0">모든 동물</option>
-		       <option value=1000>개</option>
-		       <option value=2000>고양이</option>
-		       <option value=3000>기타</option>
-		   </select>
-		   
-		    -->
-		   
-<!-- 		   <select id="sortFilter" name="" class="form-control form-select" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 125px;"> -->
-<!-- 		       <option value="최신순">최신순</option> -->
-<!-- 		       <option value="좋아요순">좋아요순</option> -->
-<!-- 		   </select> -->
-		   
-           <!-- <button class="btn btn-outline-success" id="search" style="margin-top: 5px; margin-bottom: 5px; margin-right: 10px; width: 75px;">검색</button> -->
-
        </div>
        
-<%--        ${postList } --%>
-
        <!-- start portfolio gallery -->
        <div class="text-center row communityType" id="postListList">
-       
-
-		   <%-- <c:forEach var="p" items="${postList}" varStatus="status"> --%>
 		   <c:forEach var="p" items="${postList}" varStatus="status">
-		   <%-- <c:if test="${status.index < 8}"> <!-- 처음 8개만 표시 --> --%>
 			    <div class="col-lg-3 col-md-6 items finance mt-3 post-item ${status.index >= 8 ? 'd-none' : ''}" data-src="${pageContext.request.contextPath}/resources/new_assets/img/projects/pro-2.jpg" data-sub-html="<h4 class='text-white'>Investment Project #01</h4><p>Finance Plan</p>">
 			        <div class="project-grid" style="display: flex; flex-wrap: wrap;">
-			            <div class="project-grid-img" style="width: 306px; height: 306px; overflow: hidden;">
+			            <div class="project-grid-img">
 			                <c:choose>
 			                    <c:when test="${not empty p.post_images}">
 			                        <c:forEach var="img" items="${p.post_images}">
@@ -151,7 +109,6 @@ z-index: 2000;
 			            </div>
 			        </div>
 			    </div>
-			    <%-- </c:if> --%>
 			</c:forEach>
 			
 			<c:if test="${fn:length(postList) > 8}">
@@ -186,12 +143,9 @@ z-index: 2000;
                        <!-- product left start -->
                        <div class="xzoom-container">
                            <img class="xzoom5 mb-1-9" id="xzoom_magnific" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" xoriginal="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg" alt="..." style="min-width:472px; width: 472px; height: 472px; object-fit: fill;">
-                           <%-- <img class="xzoom5 mb-1-9" id="xzoom-magnific" src="모달 눌렀을때 기본" xoriginal="미리보기 근데 클릭은 이거 아님" alt="..." style="width: 526px;"> --%>
                            <div class="xzoom-thumbs m-0">
                                <a id="aImg1" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg"><img id="imgImg1" class="xzoom-gallery5 xactive" style="height: 80px; width: 80px;" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/thumbs/01_product.jpg" xpreview="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/01_product.jpg" alt="..." title="The description goes here"></a>
-                               <%-- <a href="첫번째 사진의 미리보기만 됨(근데 모달 처음에 안보임, 미리보긴는 됨)"><img class="xzoom-gallery5 xactive" width="80" src="첫번째 사진 자체(근데 밑에만 있고 위가 없음;" xpreview="이게 클릭시 위" alt="..." title="The description goes here"></a> --%>
                                <a id="aImg2" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/02_product.jpg"><img id="imgImg2" class="xzoom-gallery5" style="height: 80px; width: 80px;" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/02_product.jpg" alt="..."  title="The description goes here"></a>
-                               <%-- <a href="두번째 사진의 미리보기만 됨"><img class="xzoom-gallery5" width="80" src="두번째 사진 자체(위랑 밑 둘다)" alt="..." title="The description goes here"></a> --%>
                                <a id="aImg3" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg"><img id="imgImg3" class="xzoom-gallery5" style="height: 80px; width: 80px;" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/03_product.jpg" alt="..." title="The description goes here"></a>
                                <a id="aImg4" href="${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg"><img id="imgImg4" class="xzoom-gallery5" style="height: 80px; width: 80px;" src="${pageContext.request.contextPath }/resources/new_assets/img/shop/preview/04_product.jpg" alt="..." title="The description goes here"></a>
                            </div>
@@ -199,9 +153,6 @@ z-index: 2000;
                        <!-- product left end -->
 
                    </div>
-                   
-                   
-                   
                    
                    <div id="postButton" class="col-lg-7 ps-lg-2-3">
                        <div class="product-detail" style="overflow-y: auto; max-height: 470px;">
@@ -223,13 +174,6 @@ z-index: 2000;
                            <p id="postContent">Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
                            <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
                            
-<!--                            <div style="margin-bottom: 20px;"> -->
-<!--                        			<select id="" name="" class="form-control form-select" style="width: 120px; height: 28px;"> -->
-<!--                        				<option value="">최신순</option> -->
-<!--                        				<option value="">좋아요순</option> -->
-<!--                        			</select> -->
-<!--                        		</div> -->
-                           
                            <div class="contentRecycle">
                            	   
                             </div> <!-- <div class="contentRecycle"> -->
@@ -239,12 +183,9 @@ z-index: 2000;
                        <div style="width: 100%; height: 36px; margin-top: 10px;">
                        		<span id="postDate" style="margin-right: 5%;">1998-07-11 00:00</span><span id="postLikeCount" style="margin-right: 5%;">좋아요 711개</span><span style="margin-right: 5%;"><i id="postLikeCheck" class="fa-regular fa-heart"></i><%-- <c:if test="${isPostLike }"><i class="fa-solid fa-heart"></i></c:if><c:if test="${!isPostLike }"><i class="fa-regular fa-heart"></i></c:if> --%></span>
                        </div>
-<%--                        <c:if test="${isPostLike }"><input type="text" value="1"></c:if> --%>
-<%--                        <input type="text" value="${post_id }"> --%>
-<%--                        <input type="text" value="${member_id }"> --%>
                        <input type="hidden" id="selectPost"/>
-                       <input id="commentContent" type="text" style="width: 100%; height: 36px; margin-bottom: 10px;" placeholder="댓글 달기...">
-                       <button id="commentContentBtn" type="button" class="btn btn-outline-success"><!-- 댓글 --><i class="fas fa-paper-plane"></i></button>
+                       <input id="commentContent" type="text" style="width: 84%; height: 36px; margin-bottom: 10px;" placeholder="댓글 달기...">
+                       <button id="commentContentBtn" type="button" class="btn btn-outline-success" style="width: 15%;"><!-- 댓글 --><i class="fas fa-paper-plane"></i></button>
                        
                        <button id="updatePost" type="button" class="btn btn-outline-primary">수정</button>
                        <!-- <button type="button" class="btn btn-outline-danger">신고</button> -->
@@ -254,13 +195,10 @@ z-index: 2000;
                        
                </div> <!-- <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9"> -->
             </div> <!-- <div class="modal-body"> -->
-<!--             <div class="modal-footer"> -->
             
-<!--             </div> -->
         </div> <!-- <div class="modal-content"> -->
     </div> <!-- <div class="modal-dialog" style="max-width: 1200px;"> -->
 </div>
-
 
 <!-- 모달 - 반려동물 모달 -->
 <div class="modal fade" id="petModal" tabindex="-1" 
@@ -276,7 +214,6 @@ z-index: 2000;
                    <div class="col-lg-6 text-center text-lg-start mb-1-9 mb-lg-0">
                        <img id="petSrc" src="/uploads/16da96d8-922c-41ed-bb1a-b22690abbb60_octocat-1724313960123.png" class="img-fluid" style="width: 100%; height: 100%; object-fit:cover;">
                    </div>
-                   
                    
                 <div class="col-lg-6 ps-lg-2-3">
 		            <div class="product-detail">
@@ -305,15 +242,11 @@ z-index: 2000;
                    
                </div> <!-- <div class="row mb-6 mb-sm-7 mb-md-8 mb-lg-9"> -->
             </div> <!-- <div class="modal-body"> -->
-<!--             <div class="modal-footer"> -->
             
-<!--             </div> -->
         </div> <!-- <div class="modal-content"> -->
     </div> <!-- <div class="modal-dialog" style="max-width: 1200px;"> -->
 </div>
 <!-- 모달 - 반려동물 모달 -->
-
-
 
 <!-- <!-- 모달 - 팔로워 모달 -->
 <!-- <div class="modal fade" id="followModal" tabindex="-1"  -->
@@ -474,40 +407,34 @@ z-index: 2000;
 <!-- <!-- 모달 - 팔로워 모달 -->
 
 
-
 <!--====================================작성부=====================================-->
 
 <!--====================================script 작성부=====================================-->
 
 <script>
 $(document).ready(function(){
+	
+	// 헤더 메뉴바 선택된 채로 보여줌
+	$('.navbar #community').addClass('current');
+	
 	// 기본 이미지 URL을 변수에 저장
 	var defaultImage1 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/01_product.jpg';
 	var defaultImage2 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/02_product.jpg';
 	var defaultImage3 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/03_product.jpg';
 	var defaultImage4 = '${pageContext.request.contextPath }/resources/new_assets/img/shop/original/04_product.jpg';
 	
-	
-	
-	
-	
 	$('#search').on('click',function(){
 		let resionFilter = $('#resionFilter').val();
 		let animalFilter = $('#animalFilter').val();
 // 		let sortFilter = $('#sortFilter').val();
 		let postType = $('.filtering .active').data('type');
-		console.log(resionFilter);
-		console.log(animalFilter);
+		// console.log(resionFilter);
+		// console.log(animalFilter);
 // 		console.log(sortFilter);
-		console.log(postType);
+		// console.log(postType);
 		
 		readPostType02(postType, resionFilter, animalFilter);
 	});
-	
-	
-	
-	
-	
 	
 	// 모달 열때마다 게시물id 초기화
 	var post_id = null;
@@ -529,9 +456,9 @@ $(document).ready(function(){
 	$('.filtering span').on('click', function(){
 		
 		let postType = $(this).data('type');
-		console.log(postType);
+		// console.log(postType);
 		let profileId = $('#profileId').val();
-		console.log(profileId);
+		// console.log(profileId);
 		
 		readProfilePostType(postType, profileId);
 		
@@ -546,13 +473,13 @@ $(document).ready(function(){
 	$('.petInfo').on('click','.open-modal',function(){
 		var pet_id = null;
 		pet_id = $(this).data('pet-id');
-		console.log(pet_id);
+		// console.log(pet_id);
 		$.ajax({
 			url : '${pageContext.request.contextPath }/community/getPetInfo/'+pet_id,
 			method : 'GET',
 			dataType : 'json',
 			success : function(data){
-				console.log(data);
+				// console.log(data);
 				$('#petName').text(data.getPetInfo[0].member_pets[0].pet_name);
 				if(data.getPetInfo[0].member_pets[0].pet_gender == 1){
 					$('#petGender').text('수컷');
@@ -580,7 +507,7 @@ $(document).ready(function(){
 		
         // 클릭한 요소의 data-post-id 속성에서 게시물ID 가져오기
         post_id = $(this).data('post-id');
-        console.log(post_id);
+        // console.log(post_id);
         
         // 클릭한 요소의 게시물ID를 댓글 히든에 저장하기
         $('#selectPost').val(post_id);
@@ -593,7 +520,7 @@ $(document).ready(function(){
         		
         		// 게시물 주인 프로필 이미지 눌렀을때 이동하기
         		let memberId = data.postList.member_id;
-        		console.log(memberId);
+        		// console.log(memberId);
                 $('#postMemberLink').data('member-id', memberId);  // data-member-id를 업데이트
             	$('#postMemberLink').attr('href', '/community/profile/' + memberId);  // 링크의 href 업데이트
             	
@@ -624,24 +551,10 @@ $(document).ready(function(){
                 $('#imgImg4').attr('src', defaultImage4);
         		
         		// 확인용 콘솔 로그
-        		console.log('AJAX 호출 성공');
-                console.log(data);
-        		console.log(data.commentList);
+        		// console.log('AJAX 호출 성공');
+                // console.log(data);
+        		// console.log(data.commentList);
         		
-        		// 모달 게시물 헤더 부분
-//         		if(data.postList.post_type == 'post01'){
-//         			var exampleModalLabel = '입양 후기 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
-//             		$('#exampleModalLabel').html(exampleModalLabel);
-//         		} else if(data.postList.post_type == 'post02'){
-//         			var exampleModalLabel = '반려 이야기 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
-//             		$('#exampleModalLabel').html(exampleModalLabel);
-//         		} else if(data.postList.post_type == 'post03'){
-//         			var exampleModalLabel = '실종 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
-//             		$('#exampleModalLabel').html(exampleModalLabel);
-//         		} else{
-//         			var exampleModalLabel = '임시보호 / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
-//             		$('#exampleModalLabel').html(exampleModalLabel);
-//         		}
         		var exampleModalLabel = data.postList.post_resion+' / '+data.postList.categoryDataVO.category_value+' / '+data.postList.pet_etc_breed;
         		$('#exampleModalLabel').html(exampleModalLabel);
         		// 모달 게시물 작성자 프로필 이미지 부분
@@ -785,12 +698,12 @@ $(document).ready(function(){
         		                success: function(data) {
         		                    alert('이 댓글의 좋아요를 취소합니다.');
         		                    $(this).attr('class', 'fa-regular fa-heart commentLikeCheck'); // 클릭한 버튼만 변경
-        		                    console.log(comment_id);
+        		                    // console.log(comment_id);
         		                }.bind(this), // this를 현재 클릭한 요소로 바인딩
         		                error: function(data) {
         		                    alert('이 댓글 좋아요 취소에 실패했습니다.');
-        		                    console.log(comment_id);
-        		                    console.log($('#loginMemberId').val());
+        		                    // console.log(comment_id);
+        		                    // console.log($('#loginMemberId').val());
         		                }
         		            });
         		        } else {
@@ -802,12 +715,12 @@ $(document).ready(function(){
         		                success: function(data) {
         		                    alert('이 댓글을 좋아합니다.');
         		                    $(this).attr('class', 'fa-solid fa-heart commentLikeCheck'); // 클릭한 버튼만 변경
-        		                    console.log(comment_id);
+        		                    // console.log(comment_id);
         		                }.bind(this), // this를 현재 클릭한 요소로 바인딩
         		                error: function(data) {
         		                    alert('이 댓글 좋아요에 실패했습니다.');
-        		                    console.log(comment_id);
-        		                    console.log($('#loginMemberId').val());
+        		                    // console.log(comment_id);
+        		                    // console.log($('#loginMemberId').val());
         		                }
         		            });
         		        }
@@ -824,7 +737,7 @@ $(document).ready(function(){
         	
         }); // $.ajax 
         
-        // 댓글 등록
+     // 댓글 등록
         $('#commentContentBtn').on('click', function(){
         	var content = {
         		'post_id':$('#selectPost').val(),
@@ -856,26 +769,49 @@ $(document).ready(function(){
     	        		data : JSON.stringify(content),
     	        		contentType : "application/json",
     	        		success: function(response) {
-	   	        			Swal.fire({
-	       						title: '등록 완료',
-	       						text: '댓글이 등록되었습니다!',
-	       						icon: 'success',
-	       						confirmButtonColor: '#006e60',
-	       						confirmButtonText: '확인'
-	       						}).then(function(data){
-	       							console.log('댓글 등록 응답 : ',data);
-	       							$("#commentContent").val('');
-	        	        			addCommentsToModal(data);
-	       						});
+    	        			Swal.fire({
+        						title: '등록 완료',
+        						text: '댓글이 등록되었습니다!',
+        						icon: 'success',
+        						confirmButtonColor: '#006e60',
+        						confirmButtonText: '확인'
+        						}).then(function(data){
+        							// console.log('댓글 등록 응답 : ',data);
+        							$("#commentContent").val('');
+        							addCommentsToModal(data);
+//         							$('.communityType .open-modal').trigger('click');
+        						});
     	        		},
     	        		error: function(jqXHR, textStatus, errorThrown) {
     						console.error('등록 실패:', textStatus, errorThrown);
+//     						Swal.fire({
+//     							title: '오류!',
+//     							text: '등록에 실패했습니다.',
+//     							icon: 'error',
+//     							confirmButtonColor: '#006e60',
+//     							confirmButtonText: '확인'
+//     						});
     						Swal.fire({
-    							title: '오류!',
-    							text: '등록에 실패했습니다.',
+    							title: '로그인 X',
+    							text: '로그인이 되어있지 않습니다!',
     							icon: 'error',
     							confirmButtonColor: '#006e60',
     							confirmButtonText: '확인'
+    						}).then(function(result){
+    							Swal.fire({
+    					   			title: '로그인',
+    					   			text: '페이지로 이동하시겠습니까?',
+    					   			icon: 'info',
+    					   			showCancelButton: true,
+    					   			confirmButtonColor: '#006e60',
+    					   			cancelButtonColor: '#aab2bd',
+    					   			confirmButtonText: '이동',
+    					   			cancelButtonText: '닫기'
+    					   		}).then(function(data){
+    					   			if(data.isConfirmed){
+    					   				location.href = '/login/customLogin';
+    					   			}
+    					   		});
     						});
     					}
     	        	}); // $.ajax
@@ -1032,9 +968,6 @@ $(document).ready(function(){
 	}
  	// 댓글을 모달에 추가하는 함수
  	
- 	
-    
- 
 }); // 돔레디
 </script>
 

@@ -237,18 +237,4 @@ public class CommunityDAO {
 	}
 	
 	
-	
-	
-//	// 이미지 정보 등록(반복은 매퍼에서 처리)
-//	public void imageInsert(ImageVO imageVO) {
-//		logger.info(" DAO - imageInsert() 실행 ");
-//		
-//		sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
-//		
-////		for(ImageVO imageVO : postVO.getPost_images()) {
-////		sqlSession.insert(NAMESPACE+"postImageInsert", imageVO);
-////	}
-//		
-//	}
-	
 }
