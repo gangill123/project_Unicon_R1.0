@@ -292,6 +292,12 @@
 	where animal_id = #{animal_id} 
 </update>
 
+<update id="animalAdptComplete" parameterType="Map">
+	update _animal 
+	set animal_status = #{animal_status}, adpt_member = #{adpt_member} 
+	where animal_id = #{animal_id} 
+</update>
+
 
 
 <select id="getWritingListAllMember" resultMap="AnimalResultMap" parameterType="String">
@@ -445,6 +451,14 @@
 	from _adpt_counsel 
 	where animal_id = #{animal_id} and member_id = #{member_id} limit 1 
 </select>
+
+<!-- 상담 상태 변경 -->
+<update id="counselStatusUpdate" parameterType="Map">
+	update _adpt_counsel 
+	set counsel_status = #{counsel_status} 
+	where animal_id = #{animal_id} and member_id = #{member_id} 
+</update>
+
 
 <!-- 상담 신청 목록 -->
 <select id="getCounselList" parameterType="Map" resultMap="AnimalResultMap">

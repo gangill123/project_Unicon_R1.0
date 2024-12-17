@@ -400,7 +400,24 @@ public class AdptMgmtRestController {
 		
 	}
 	
-	/* ===== 보호소 페이지 입양 신청 목록 사용자 정보 ===== */
+	
+	/* ===== 보호소 페이지 입양 신청 상태변경 ===== */
+	@PostMapping(value = "/counsel/update")
+	public ResponseEntity<Void> counselStatusUpdate(@RequestBody Map<String, Object> counselStatusParams) {
+		logger.debug("( •̀ ω •́ )✧ counselStatusUpdate() 실행");
+		
+		try {
+			aService.counselStatusUpdate(counselStatusParams);
+			return new ResponseEntity<Void>(HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	
+	/* ===== 보호소 페이지 입양 신청 목록 사용자 정보(플러터) ===== */
 	@GetMapping(value = "/flutter/memberId")
 	public ResponseEntity<MemberVO> flutterMemberId(HttpServletRequest req) {
 		logger.debug("( •̀ ω •́ )✧ flutterMemberId() 실행");

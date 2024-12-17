@@ -785,6 +785,10 @@
 														class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-2">
 														종료취소
 													</button>
+													<button type="button" id="a-complete-btn-top" 
+														class="btn btn-lg btn-rounded btn-success custom-text mx-2 mb-2">
+														입양완료
+													</button>
 												</div>
 											</fieldset>
 											
@@ -1027,6 +1031,10 @@
 													<button type="button" id="a-close-cancel-btn2" 
 														class="btn btn-lg btn-rounded btn-light custom-text mx-2 mb-2">
 														종료취소
+													</button>
+													<button type="button" id="a-complete-btn" 
+														class="btn btn-lg btn-rounded btn-success custom-text mx-2 mb-2">
+														입양완료
 													</button>
 												</div>
 											</fieldset>
@@ -2213,6 +2221,70 @@
 					});
 				});
 				/*=============== 종료(close) 버튼 제어 ===============*/
+
+				
+				
+				/*=============== 입양완료 버튼 제어 ===============*/
+				$('#a-complete-btn, #a-complete-btn-top').on('click', function() {
+					
+					Swal.fire({
+						title: '입양 완료하시겠습니까?',
+						text: '동물 상태가 입양완료로 변경됩니다',
+						icon: 'info',
+						input: 'text',
+						inputPlaceholder: '아이디를 입력하세요',
+						allowOutsideClick: false,
+						showCancelButton: true,
+						confirmButtonColor: '#006e60',
+						cancelButtonColor: '#aab2bd',
+						confirmButtonText: '확인',
+						cancelButtonText: '닫기',
+					    inputValidator: (value) => {
+					        if (!value) {
+					            return '아이디를 입력해야 합니다!';
+					        }
+					    }
+					}).then(function(result) {
+						if (result.isConfirmed) {
+							const adptMember = result.value;
+							
+							$.ajax({
+								url: "/adptmgmt/animals/"+ animalId +"/status",
+								method: "PATCH",
+								contentType: "application/json",
+								data: JSON.stringify({ 
+									"animal_id" : animalId, 
+									"animal_status" : 4,
+									"adpt_member" : adptMember }),
+								success: function() {
+									Swal.fire({
+										title: '동물상태가 입양완료로 변경되었습니다',
+										icon: 'success',
+										allowOutsideClick: false,
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인',
+									}).then(function(result) {
+										if (result.isConfirmed) {
+											location.reload();
+										}
+									});
+								},
+								error: function(xhr, status, error) {
+									console.error("AJAX 오류:", status, error);
+									Swal.fire({
+										title: '오류 발생',
+										text: '변경에 실패했습니다. 다시 시도해 주세요.',
+										icon: 'error',
+										allowOutsideClick: false,
+										confirmButtonColor: '#006e60',
+										confirmButtonText: '확인'
+									});
+								}
+							});
+						}
+					});
+				});
+				/*=============== 입양완료 버튼 제어 ===============*/
 				
 				
 				

@@ -200,6 +200,15 @@ public class AdptService {
 	}
 	
 	
+	/*=========== 사용자 페이지 상담 상태 변경 ===========*/
+	@Transactional(rollbackFor = {SQLException.class, Exception.class}, propagation = Propagation.REQUIRES_NEW)
+	public void counselStatusUpdate(Map<String, Object> counselStautsParams) {
+		logger.debug("( •̀ ω •́ )✧ counselStatusUpdate() 실행");
+		
+		aDao.counselStatusUpdate(counselStautsParams);
+	}
+	
+	
 	/*=========== 보호소 페이지 상담 신청 목록 ===========*/
 	public List<AnimalVO> getCounselList(Map<String, String> counselMemberParams) {
 		logger.debug("( •̀ ω •́ )✧ getCounselList() 실행");
