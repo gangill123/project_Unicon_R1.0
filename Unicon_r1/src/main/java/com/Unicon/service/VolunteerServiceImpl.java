@@ -292,9 +292,9 @@ public class VolunteerServiceImpl implements VolunteerService {
     }
     
     @Override
-    public List<VolunteerApplyVO> getMyApplications(String userId) throws Exception {
+    public List<VolunteerApplyVO> getMyApplications(String memberId) throws Exception {
         Map<String, Object> params = new HashMap<>();
-        params.put("userId", userId);
+        params.put("member_id", memberId);
         return volDAO.selectVolunteerApplyList(params);
     }
     
