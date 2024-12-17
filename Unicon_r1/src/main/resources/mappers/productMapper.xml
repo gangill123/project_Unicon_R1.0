@@ -282,6 +282,7 @@
 		option_price = #{option_price} 
 </update>
 
+
 <!-- updatePrice 판매가 업데이트 -->
 <update id="updatePrice" >
 	update _products
@@ -334,6 +335,20 @@ WHERE
     and i.image_sequence = 0
     AND od.orders_detail_option_status NOT IN ('취소', '취소종료');
 </select>
+
+<!-- 송장번호 업데이트.  -->
+<update id="updateInvoiceNumber" >
+	UPDATE _orders o
+JOIN _orders_detail d ON o.order_id = d.order_id
+JOIN _orders_detail_option od ON o.order_id = od.order_id
+SET 
+	o.invoice_number = #{invoice_number},
+    o.status =  "배송중",
+	d.orders_detail_status = "배송중",
+    od.orders_detail_option_status = "배송중"
+    
+WHERE o.order_id = #{order_id};
+</update>
 
 
 

@@ -17,7 +17,6 @@
 	
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/admin/js/create.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/admin/css/create.css">
-    
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/admin/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/admin/vendors/css/vendor.bundle.base.css">
