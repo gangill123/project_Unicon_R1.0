@@ -502,62 +502,70 @@ public class StoreRestController {
 	  
 
 	/* =============== 이미지 저장 및 리스트 생성 =============== */
-	public List<ImageVO> saveImage(ProductVO avo, HttpServletRequest req,String action) {
-		logger.info("( •̀ ω •́ )✧ saveImage(ProductVO avo, HttpServletRequest req) 실행");
-		ServletContext context = req.getServletContext();
-		String saveDir = context.getRealPath("/uploads/");
-		List<MultipartFile> uploadImages = avo.getUpload_images();
-		List<ImageVO> product_images = new ArrayList<ImageVO>();
+	 public List<ImageVO> saveImage(ProductVO avo, HttpServletRequest req, String action) {
+		    logger.info("( •̀ ω •́ )✧ saveImage(ProductVO avo, HttpServletRequest req) 실행");
 
-		for (int i = 0; i < uploadImages.size(); i++) {
-			StringBuilder asb = new StringBuilder();
-			MultipartFile aImage = uploadImages.get(i);
+		    // 저장 경로 설정
+		    ServletContext context = req.getServletContext();
+		    String saveDir = context.getRealPath("/uploads/"); // 서버의 절대경로
 
-			if (aImage == null || aImage.isEmpty()) {
-				logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다 인덱스 : " + i);
-				continue;
-			}
-			logger.info("( •̀ ω •́ )✧  파일이름 화긴 : " + uploadImages.get(i).getOriginalFilename());
+		    List<MultipartFile> uploadImages = avo.getUpload_images();
+		    List<ImageVO> product_images = new ArrayList<>();
 
-			File destinationImage = new File(asb.append(saveDir)
-					.append(UUID.randomUUID().toString())
-					.append("_")
-					.append(aImage.getOriginalFilename())
-					.toString());
+		    for (int i = 0; i < uploadImages.size(); i++) {
+		        StringBuilder asb = new StringBuilder();
+		        MultipartFile aImage = uploadImages.get(i);
 
-			
-			String modifiedPath = destinationImage.getPath().replace("\\uploads\\", "/uploads/");
-	        int index = modifiedPath.indexOf("/uploads/");
-			
-			logger.info("( •̀ ω •́ )✧ modifiedPath : " + modifiedPath);
-			String finalPath = modifiedPath.substring(index);
-			
-			ImageVO ivo = new ImageVO();
-			ivo.setImage_src(finalPath); 
-			ivo.setImage_sequence(i);
-			if(action.equals("mainImg")) {
-				ivo.setImage_type("storeMain");
-				ivo.setImage_id("store-main-img");
-			}else if(action.equals("popupImg")) {
-				ivo.setImage_type("popup");
-			} else {
-				ivo.setImage_type("prod");
-			}
-			
-			
-			try {
-				aImage.transferTo(destinationImage);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			logger.info("( •̀ ω •́ )✧ ivo : " + ivo);
-			product_images.add(ivo);
+		        // 파일 존재 여부 확인
+		        if (aImage == null || aImage.isEmpty()) {
+		            logger.info("( •̀ ω •́ )✧ 업로드할 이미지가 없습니다. 인덱스 : " + i);
+		            continue;
+		        }
+		        logger.info("( •̀ ω •́ )✧ 파일이름 확인 : " + aImage.getOriginalFilename());
 
+		        // 저장될 파일 경로 생성 (UUID로 파일명 중복 방지)
+		        File destinationImage = new File(asb.append(saveDir)
+		                .append(UUID.randomUUID().toString()) // 랜덤 UUID
+		                .append("_")
+		                .append(aImage.getOriginalFilename()) // 원본 파일명
+		                .toString());
+
+		        // 경로를 플랫폼에 상관없이 '/'로 통일
+		        String modifiedPath = destinationImage.getPath().replace("\\", "/");
+
+		        // '/uploads/' 기준으로 웹 접근 경로만 추출
+		        int index = modifiedPath.indexOf("/uploads/");
+		        String finalPath = index != -1 ? modifiedPath.substring(index) : "";
+
+		        logger.info("( •̀ ω •́ )✧ 최종 저장 경로 : " + finalPath);
+
+		        try {
+		            // 파일 저장
+		            aImage.transferTo(destinationImage);
+		        } catch (IOException e) {
+		            logger.error("파일 저장 실패: ", e);
+		            continue; // 에러 발생 시 현재 파일은 건너뜀
+		        }
+
+		        // 이미지 정보 생성
+		        ImageVO ivo = new ImageVO();
+		        ivo.setImage_sequence(i);
+		        ivo.setImage_src(finalPath); // 웹 접근 경로 설정
+		        if ("mainImg".equals(action)) {
+		            ivo.setImage_type("storeMain");
+		            ivo.setImage_id("store-main-img");
+		        } else if ("popupImg".equals(action)) {
+		            ivo.setImage_type("popup");
+		        } else {
+		            ivo.setImage_type("prod");
+		        }
+		        logger.info("( •̀ ω •́ )✧ 생성된 ImageVO : " + ivo);
+
+		        product_images.add(ivo);
+		    }
+
+		    return product_images;
 		}
-
-		return product_images;
-	}
 	/* =============== 이미지 저장 및 리스트 생성 =============== */
 
 	/* =============== 썸머노트 img src =============== */
