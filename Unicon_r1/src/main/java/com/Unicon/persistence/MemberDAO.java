@@ -48,4 +48,12 @@ public class MemberDAO {
         logger.info("********************************************getMemberByUsername 실행: " + memberId);
         return sqlSession.selectOne(NAMESPACE + "getMemberByUsername", memberId);
     }    
+    
+    // 사용자 타입 (멤버타입) 조회쓰
+    public String getUserTypeByMemberId(String memberId) {
+    	logger.info("getUserTypeByMemberId 실행쓰");
+        return sqlSession.selectOne(NAMESPACE + "getUserTypeByMemberId", memberId);
+    }
+    
+    
 }

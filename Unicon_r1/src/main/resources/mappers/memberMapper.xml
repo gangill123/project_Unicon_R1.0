@@ -54,11 +54,18 @@
     
 
 <!-- 사용자 정보 조회 -->
-<select id="getMemberByUsername" parameterType="java.lang.String" resultType="com.Unicon.domain.MemberVO">
-    SELECT *
-    FROM _member
-    WHERE member_id = #{member_id}
-</select>
+	<select id="getMemberByUsername" parameterType="java.lang.String" resultType="com.Unicon.domain.MemberVO">
+	    SELECT *
+	    FROM _member
+	    WHERE member_id = #{member_id}
+	</select>
+
+<!-- 멤버 타입 조회쓰 -->
+    <select id="getUserTypeByMemberId" resultType="String">
+        SELECT member_type
+        FROM _member
+        WHERE member_id = #{member_id}
+    </select>
 
 </mapper>
 
