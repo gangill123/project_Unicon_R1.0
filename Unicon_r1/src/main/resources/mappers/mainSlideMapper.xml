@@ -40,6 +40,7 @@
 	<!-- 슬라이드 가져오기(메인용) -->
 	<select id="getSlideForMain" resultType="MainSlideVO">
 		select * from _main_slide where ms_startdate &lt; now() and ms_enddate &gt; now() 
+		order by ms_startdate asc 
 	</select>
 	
 	<!-- 슬라이드src 가져오기(삭제관련) -->

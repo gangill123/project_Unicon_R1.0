@@ -41,25 +41,30 @@
 
                                     <div class="navbar-header navbar-header-custom">
                                         <!-- start logo -->
-                                        <a href="/main" class="navbar-brand logodefault"><img id="logo" src="${pageContext.request.contextPath }/resources/new_assets/img/logos/logo.png" alt="logo"></a>
+                                        <a href="/main" class="navbar-brand logodefault"><img id="logo" src="${pageContext.request.contextPath }/resources/new_assets/img/logos/unicornLogo-3.png" alt="logo"></a>
                                         <!-- end logo -->
                                     </div>
 
                                     <div class="navbar-toggler"></div>
 
                                     <!-- menu area -->
-                                    <ul class="navbar-nav ms-3" id="nav" style="display: none;">
+                                    <ul class="navbar-nav ms-1" id="nav" style="display: none;">
                                         <li id="home"><a href="/main">홈</a>
                                         </li>
-                                        <li><a href="#!">입양</a>
+                                        <li id="adpt"><a href="#!">입양</a>
+                                       		 <ul>
+                                                <li><a href="/adpt">입양하기</a></li>
+                                                <li><a href="/map">보호센터 위치</a></li>
+                                                <li><a href="/mbti/start">나에게 어울리는 반려동물 찾기</a></li>
+                                            </ul>
                                         </li>
-                                        <li><a href="/community/main">커뮤니티</a>
+                                        <li id="community"><a href="/community/main">커뮤니티</a>
                                         </li>
                                         
                                         <li id="shop"><a href="/shop">복지몰</a>
                                         </li>
                                         
-                                        <li><a href="/news">소식</a>
+                                        <li id="news"><a href="/news">소식</a>
                                             <ul>
                                                 <li><a href="/notice">공지사항</a></li>
                                                 <li><a href="/news">행사소식</a></li>
@@ -67,11 +72,13 @@
                                             </ul>
                                         </li>
                                         
-                                        <li><a href="/inquiry/inquiry">고객센터</a>
+                                        <li id="inquiry"><a href="/inquiry/inquiry">고객센터</a>
                                         </li>
                                         
-                                        <li id="slide"><a href="/admin/slide_manage">관리자페이지</a>
-                                        </li>
+                                        <c:if test="${member_id == 'admin1' }">
+	                                        <li id="slide"><a href="/admin/slide_manage">관리자페이지</a>
+	                                        </li>
+                                        </c:if>
                                     </ul>
                                     <!-- end menu area -->
 
@@ -93,8 +100,7 @@
 	                                            
 	                                            <li>
 		                                            <a href="/mypage">
-					                                	<img src="${pageContext.request.contextPath }/resources/new_assets/img/slider01.jpg"
-					                                	 class="rounded-circle" style="width: 41px; height: 41px;">
+					                                	<img src="${memberImage}" class="rounded-circle" style="width: 41px; height: 41px;">
 					                            	</a>
 				                            	</li>
 	                                            
@@ -117,7 +123,7 @@
 					                            	</a>
 				                            	</li>
 	                                            <li>
-		                                            <a href="/mypage" style="padding-right: 0;">
+		                                            <a href="/inquiry/inquiry" style="padding-right: 0;">
 					                                	<p class="mb-0" style="display: inline; font-size: 14px;">고객센터</p>
 					                            	</a>
 				                            	</li>

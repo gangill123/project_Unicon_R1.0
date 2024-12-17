@@ -16,8 +16,10 @@ import com.Unicon.domain.AdptVO;
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.MainSlideVO;
 import com.Unicon.domain.NewsVO;
+import com.Unicon.domain.PostVO;
 import com.Unicon.domain.ShopVO;
 import com.Unicon.service.AdptService;
+import com.Unicon.service.CommunityService;
 import com.Unicon.service.MainService;
 import com.Unicon.service.MainSlideService;
 import com.Unicon.service.NewsService;
@@ -40,14 +42,13 @@ public class MainController {
 	private ShopService shopService;
 	@Autowired
 	private AdptService adptService;
+	@Autowired
+	private CommunityService commService;
 	
 	@GetMapping("")
 	public String main(Model model, HttpSession session) {
 		
 		logger.debug("main() 호출");
-		
-		// 임시 아이디 세션저장
-		//session.setAttribute("member_id", "bini97");
 		
 		String member_id = (String)session.getAttribute("member_id");
 		
@@ -58,10 +59,6 @@ public class MainController {
 		// 소식 정보 가져오기
 		NewsVO newsInfo = nService.getNewsForMain();
 		model.addAttribute("newsInfo", newsInfo);
-		
-		// 장바구니 수량 가져와서 세션저장
-		int cartCount = mainService.getCartCount(member_id);
-		session.setAttribute("cartCount", cartCount);
 		
 		// 세일품목 정보 가져오기(4개)
 		List<ShopVO> shopInfo = shopService.getShopItemForMain();
@@ -74,6 +71,18 @@ public class MainController {
 		// 최신 입양공고 가져오기
 		List<AnimalVO> adptInfo =	adptService.forMainAdptData();
 		model.addAttribute("adptInfo", adptInfo);
+		
+		// 최신 입양후기 가져오기
+		List<PostVO> adptreviewInfo = commService.forMainCommunityData();
+		model.addAttribute("adptreviewInfo", adptreviewInfo);
+		
+		// 장바구니 수량 가져와서 세션저장
+		int cartCount = mainService.getCartCount(member_id);
+		session.setAttribute("cartCount", cartCount);
+		
+		// 멤버 사진 가져와서 세션 저장
+		String memberImage = mainService.getMemberImage(member_id);
+		session.setAttribute("memberImage", memberImage);
 		
 		
 		return "/main/new_main";

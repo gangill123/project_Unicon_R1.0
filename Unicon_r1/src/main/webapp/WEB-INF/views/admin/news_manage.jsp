@@ -76,63 +76,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-header" id="headingThree">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Accessories
-                                </button>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">Drives &amp; Storage</a></li>
-                                                    <li><a href="#!">Networking Devices</a></li>
-                                                    <li><a href="#!">Software</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header" id="headingFour">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                  Clothes
-                                </button>
-                                            </h5>
-                                            <!-- 버튼 -->
-                                        </div>
-                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-bs-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">T-Shirt</a></li>
-                                                    <li><a href="#!">Pants</a></li>
-                                                    <li><a href="#!">Saree</a></li>
-                                                    <li><a href="#!">Joggers</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header" id="headingFive">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                  Mobile
-                                </button>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-bs-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">Intex</a></li>
-                                                    <li><a href="#!">Google</a></li>
-                                                    <li><a href="#!">Samsung</a></li>
-                                                    <li><a href="#!">Apple</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 

@@ -130,6 +130,7 @@
 		select p.*, i.* 
 		from _products p 
 		join _image i on p.product_id = i.image_id 
+		where product_status in ('판매중', '품절') 
 	</select>
 
 	<!-- 상품 페이징 처리(첫 로딩시) -->
@@ -138,6 +139,7 @@
 		from _products p 
 		join _image i on p.product_id = i.image_id 
 		where p.product_category_value = #{product_category_value} 
+		and product_status in ('판매중', '품절') 
 	</select>
 
 	<!-- 상세페이지 이동시 해당제품 상품정보 가져오기 -->

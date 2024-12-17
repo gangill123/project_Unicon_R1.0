@@ -131,6 +131,7 @@
 		<%-- ${shopInfo } --%>
 <%-- 		${unicornInfo } --%>
 <%-- ${adptInfo } --%>
+<%-- ${adptreviewInfo } --%>
 		<div class="container-fluid p-0">
             <div class="row slider-fade-shop">
                 <div class="owl-carousel owl-theme w-100">
@@ -276,55 +277,45 @@
         </section>
         
         
-        
-        
-		
 		<section style="padding: 60px 0;">
             <div class="container">
                 <div class="section-heading"><span>축하해주세요!!</span>
                     <h2>유니콘 입양후기</h2>
                 </div>
                 <div style="text-align: end; margin-bottom: 20px;">
-					<button type="button" class="butn-style2 small" style="font-size: 0.7rem;">
+					<button type="button" class="butn-style2 small" style="font-size: 0.7rem;"
+					onclick="location.href='/community/main';">
 					<span>더보기</span></button>
 				</div>
                 <div class="service-grids owl-carousel owl-theme" id="service-grids">
-                
+                <c:forEach var="adptreview" items="${adptreviewInfo }">
                     <div class="service-block">
                         <div class="img-holder">
-                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
+                            <img alt="..." src="${adptreview.post_images[0].image_src }">
                         </div>
                         <div class="details">
                             <div class="number alt-font" style="aspect-ratio: 1/1; overflow: hidden;">
-                            	<img style="width: 100%; height: 100%; object-fit:fill;" alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
+                            	<img style="width: 100%; height: 100%; object-fit:fill;" alt="..." src="${adptreview.memberVO.member_image }">
                             </div>
-                            <h4 style="color: #5c636a;">슈퍼스타징젱죵</h4>
+                            <h4 style="color: #5c636a;">${adptreview.memberVO.member_nickname }</h4>
                             <div class="testmonial-single mx-auto w-lg-85">
-                                 <p>Exercitation ullamco laboris nisiut aliqu exeaea commo.</p>
+                                 <p>
+                                 <c:choose>
+								    <c:when test="${fn:length(adptreview.post_content) > 30}">
+								        <c:out value="${fn:substring(adptreview.post_content, 0, 30)}..." />
+								    </c:when>
+								    <c:otherwise>
+								        <c:out value="${adptreview.post_content}" />
+								    </c:otherwise>
+								</c:choose>
+                                 </p>
                              </div>
                             
                             <!-- <p><i class="fa-solid fa-quote-left" style="color: #86bc42;"></i>  나의 입양베이비를 입양한 후기를 전달하겠슴</p> -->
-                            <a class="read-more" href="#!">상세보기</a>
+                            <a class="read-more" href="/community/main">상세보기</a>
                         </div>
                     </div>
-                    
-                    <div class="service-block">
-                        <div class="img-holder">
-                            <img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
-                        </div>
-                        <div class="details">
-                            <div class="number alt-font" style="aspect-ratio: 1/1; overflow: hidden;">
-                            	<img style="width: 100%; height: 100%; object-fit:fill;" alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/dog.jpg">
-                            </div>
-                            <h4 style="color: #5c636a;">슈퍼스타징젱죵</h4>
-                            <div class="testmonial-single mx-auto w-lg-85">
-                                 <p>Exercitation ullamco laboris nisiut aliqu exeaea commo.</p>
-                             </div>
-                            
-                            <!-- <p><i class="fa-solid fa-quote-left" style="color: #86bc42;"></i>  나의 입양베이비를 입양한 후기를 전달하겠슴</p> -->
-                            <a class="read-more" href="#!">상세보기</a>
-                        </div>
-                    </div>
+                </c:forEach>
                     
                 </div>
             </div>

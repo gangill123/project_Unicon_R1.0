@@ -8,8 +8,9 @@
                 <div class="row mt-n1-9">
 
                     <div class="col-lg-5 mt-1-9">
-                        <img src="${pageContext.request.contextPath }/resources/new_assets/img/logos/logo-footer-dark.png" alt="footer-logo">
-                        <p class="py-4 w-sm-80">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci non numquam eius modi.</p>
+                        <img src="${pageContext.request.contextPath }/resources/new_assets/img/logos/logo.png" 
+                        style="width: 60%;" alt="footer-logo">
+                        <p class="py-4 w-sm-80" style="color: #aaa;">유니콘은 반려동물 사회적 문제(유기동물)을 해결하기 위한 솔루션 프로젝트 입니다.</p>
                         <ul class="social-icon-style6 ps-0">
                             <li><a href="#!"><i class="fab fa-facebook-f"></i></a></li>
                             <li><a href="#!"><i class="fab fa-twitter"></i></a></li>
@@ -22,11 +23,11 @@
                     <div class="col-lg-3 mt-1-9">
                         <h4 class="footer-title-style11">Quick Links</h4>
                         <ul class="footer-list-style3 list-unstyled">
-                            <li><a href="#!">Home</a></li>
-                            <li><a href="#!">About Us</a></li>
-                            <li><a href="#!">Services</a></li>
-                            <li><a href="#!">Contact Us</a></li>
-                            <li><a href="#!">Services</a></li>
+                            <li><a href="/main">Home</a></li>
+                            <li><a href="/notice">Notice</a></li>
+                            <li><a href="/adpt">Adoption</a></li>
+                            <li><a href="/community/main">Community</a></li>
+                            <li><a href="/inquiry/inquiry">Contact Us</a></li>
                         </ul>
                     </div>
 
@@ -65,11 +66,9 @@
                                         </ul>
                                     </div>
                                 </div>
-
                             </li>
                         </ul>
                     </div>
-
                 </div>
             </div>
 

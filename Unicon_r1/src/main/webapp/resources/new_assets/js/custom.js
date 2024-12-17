@@ -152,8 +152,8 @@
 				  text: "삭제 후에는 소식정보를 복구할 수 없습니다.",
 				  icon: 'warning',
 				  showCancelButton: true,
-				  confirmButtonColor: '#3085d6',
-				  cancelButtonColor: '#d33',
+				  confirmButtonColor: '#86bc42',
+				  cancelButtonColor: '#aaa',
 				  confirmButtonText: '삭제',
 				  cancelButtonText: '취소',
 				  customClass: {
@@ -169,6 +169,7 @@
 					  	  			  title: '삭제가 완료되었습니다!',
 					  	  			  text: "신규등록을 통해 재등록이 가능합니다.",
 					  	  			  icon: 'success',
+					  	  			  confirmButtonColor: '#86bc42',
 					  	  			  customClass: {
 					  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 					 			 	  }
@@ -348,7 +349,7 @@
 		// 삭제하기
 		$('#data-grid').on('click', '.deleteSlide', function () {
 			Swal.fire({
-				title: '슬라이드를 삭제하시겠습니까?',
+				title: '정말 삭제하시겠습니까?',
 				text: "삭제 후에는 복구할 수 없습니다.",
 				icon: 'warning',
 				showCancelButton: true,
@@ -674,7 +675,7 @@
                             <div class="label-offer bg-${statusColor}">${statusText}</div>`
 					if(statusText === '준비중'){
 						card += `
-							<div class="label-offer2 bg-red">Day - ${diffInDays}</div>`
+							<div class="label-offer2 bg-red">Day - ${diffInDays + 1}</div>`
 					} else if(statusText === '진행중'){
 						card += `
 							<div class="label-offer2 bg-red">"D-day"</div>`
@@ -1725,6 +1726,10 @@
 					
 					if(item.discount_rate != 0){
 						card +=`<div class="label-offer bg-red">Sale</div>`
+					}
+				
+					if(item.product_status == '품절'){
+						card +=`<div class="label-offer2 bg-dark-gray">품절</div>`
 					}
                         
 				card += `<img src="${item.product_images[0].image_src}" alt="...">

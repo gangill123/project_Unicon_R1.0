@@ -28,6 +28,21 @@
 	padding: 5px;
 }
 
+.label-offer2 {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 25px;
+  line-height: 25px;
+  display: inline-block;
+  padding: 0px 12px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  z-index: 1; 
+  }
+
 
 </style>
 
