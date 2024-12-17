@@ -39,4 +39,6 @@ public class VolunteerApplyVO {
     private String voLocation;
     private String voContent;
     
+    private String member_id;
+    
 }
