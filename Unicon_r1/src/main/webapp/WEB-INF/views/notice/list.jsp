@@ -5,8 +5,8 @@
 <%@ include file="../inc/new_topHeader.jsp" %>
 
 <!-- CSS 파일 -->
-<link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet"> --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <!-- 추가 스타일 -->
@@ -63,6 +63,18 @@
 	    padding: 1rem;  /* 패딩 축소 */
 	}
 	
+	.btn-search {
+        background-color: #86BC42;
+        border-color: #86BC42; 
+        color: white; 
+    }
+    
+    .btn-search:hover {
+        background-color: #348E38; 
+        border-color: #348E38; 
+        color: white; 
+    }
+	
 	.btn-outline-primary {
 	    color: #86BC42;
 	    border-color: #86BC42;
@@ -74,7 +86,7 @@
 	    color: white;
 	}
 </style>
-
+</head>
 <%@ include file="../inc/new_header.jsp" %>
 
 <!--====================================작성부=====================================-->
@@ -99,7 +111,7 @@
                 <input type="text" class="form-control" name="keyword" placeholder="검색어를 입력하세요" value="${keyword}">
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">검색</button>
+                <button type="submit" class="btn btn-primary btn-search w-100">검색</button>
             </div>
         </form>
 

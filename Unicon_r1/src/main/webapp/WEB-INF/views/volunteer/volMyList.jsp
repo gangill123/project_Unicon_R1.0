@@ -6,8 +6,8 @@
 
 <!-- 추가 템플릿 css/js 작성란 -->
 <!-- CSS 파일 -->
-<link href="${pageContext.request.contextPath}/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/assets_sub/css/style.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath}/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet"> --%>
+<%-- <link href="${pageContext.request.contextPath}/resources/assets_sub/css/style.css" rel="stylesheet"> --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <!-- SweetAlert2 CSS -->
@@ -330,7 +330,7 @@
                         <div class="services-single-menu mb-1-9">
                             <ul class="m-0 list-unstyled">
                                 <li><a href="/mypage">프로필 관리</a></li>
-                                <li><a href="#!">커뮤니티 관리</a></li>
+                                <li><a href="/community/mypage/profile">커뮤니티 관리</a></li>
                                 <li><a href="/mypage/orders">주문 관리</a></li>
                                 <li class="active"><a href="/volunteer/mylist">봉사활동 관리</a></li>
                             </ul>

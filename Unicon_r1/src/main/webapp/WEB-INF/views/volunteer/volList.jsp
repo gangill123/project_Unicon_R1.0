@@ -5,8 +5,8 @@
 <%@ include file="../inc/new_topHeader.jsp" %>
 
 <!-- CSS 파일 -->
-<link href="${pageContext.request.contextPath}/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath}/resources/assets_sub/css/style.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath}/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/assets_sub/css/style.css" rel="stylesheet"> --%>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <style>
@@ -130,16 +130,6 @@
     color: #86BC42;
 }
 
-/* 장바구니 뱃지 스타일 */
-.cart-badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    padding: 4px 6px;
-    border-radius: 50%;
-    font-size: 10px;
-}
-
 /* 상태 뱃지 스타일 */
 .status-badge {
     display: inline-block;
@@ -239,7 +229,7 @@
     }
 }
 </style>
-
+</head>
 <%@ include file="../inc/new_header.jsp" %>
 
 <div class="container-xxl py-5">
