@@ -14,12 +14,12 @@
         font-size: 16px;
     }
     strong {
-        color: #007bff;
+        color: #4CAF50;
         font-size: 18px;
     }
     .btn {
         display: inline-block;
-        background-color: #007bff;
+        background-color: #4CAF50;
         color: #fff;
         padding: 10px 20px;
         text-decoration: none;
@@ -28,14 +28,14 @@
         margin-top: 20px;
     }
     .btn:hover {
-        background-color: #0056b3;
+        background-color: #45a049;
     }
     .pet-info {
         margin-top: 30px;
         padding: 20px;
         background-color: #f8f9fa;
         border-radius: 5px;
-        border-left: 4px solid #007bff;
+        border-left: 4px solid #4CAF50;
         margin-bottom: 20px;
     }
     .pet-info h2 {
@@ -74,6 +74,7 @@
         margin-bottom: 10px;
     }
 </style>
+
 </head>
 <%@ include file="../inc/new_header.jsp" %>
 <!-- header -->
@@ -96,6 +97,10 @@
                             <p>${petCharacteristics}</p>
                         </div>
 
+                        <div class="text-center" style="margin-bottom: 30px;">
+                            <a href="/mbti/start" class="btn">테스트 다시 하기</a>
+                        </div>
+
                         <div class="matching-adoptions">
                             <h2>추천 반려동물 입양 정보</h2>
                             <c:if test="${not empty matchingAdoptions}">
@@ -106,7 +111,7 @@
                                                 <img src="${adoption.image_src}" alt="입양동물 이미지">
                                                 <h3>${adoption.title}</h3>
                                                 <p>${adoption.content}</p>
-                                                <a href="/adpt_list" class="btn">자세히 보기</a>
+                                                <a href="/adpt_list" class="btn">만나러 가기</a>
                                             </div>
                                         </div>
                                     </c:forEach>
@@ -115,10 +120,6 @@
                             <c:if test="${empty matchingAdoptions}">
                                 <p>현재 추천할 수 있는 입양 정보가 없습니다.</p>
                             </c:if>
-                        </div>
-                        
-                        <div class="text-center">
-                            <a href="/mbti/start" class="btn">테스트 다시 하기</a>
                         </div>
                     </div>
                 </article>
