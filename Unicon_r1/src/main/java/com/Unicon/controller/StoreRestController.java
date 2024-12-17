@@ -525,23 +525,16 @@ public class StoreRestController {
 					.append(aImage.getOriginalFilename())
 					.toString());
 
-			try {
-				aImage.transferTo(destinationImage);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			asb.setLength(0);
 			
-			int index = destinationImage.getPath().indexOf("\\uploads\\");
-			String indexStr = "\\uploads\\";
-			String indexSubStr = destinationImage.getPath().substring(index + indexStr.length());
-			String modifiedPath = asb.append("/uploads/").append(indexSubStr).toString();
+			String modifiedPath = destinationImage.getPath().replace("\\uploads\\", "/uploads/");
+	        int index = modifiedPath.indexOf("/uploads/");
 			
 			logger.info("( •̀ ω •́ )✧ modifiedPath : " + modifiedPath);
-			ImageVO ivo = new ImageVO();
+			String finalPath = modifiedPath.substring(index);
 			
+			ImageVO ivo = new ImageVO();
+			ivo.setImage_src(finalPath); 
 			ivo.setImage_sequence(i);
-			ivo.setImage_src(modifiedPath); 
 			if(action.equals("mainImg")) {
 				ivo.setImage_type("storeMain");
 				ivo.setImage_id("store-main-img");
@@ -550,6 +543,14 @@ public class StoreRestController {
 			} else {
 				ivo.setImage_type("prod");
 			}
+			
+			
+			try {
+				aImage.transferTo(destinationImage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 			logger.info("( •̀ ω •́ )✧ ivo : " + ivo);
 			product_images.add(ivo);
 
