@@ -104,7 +104,7 @@
 		
         <div class="row">
             <div class="col-md-12">
-                <h1>unicon 고객센터</h1>
+                <h1>Unicorn 고객센터</h1>
             </div>
             <div class="col-md-12">
                 <ul class="ps-0">
@@ -125,7 +125,7 @@
     <div class="container">
 
         <div class="section-heading title-style8">
-            <h3>unicon &amp; FAQ <span class="inner-title">무엇을 도와드릴까요?</span></h3>
+            <h3>Unicorn &amp; FAQ <span class="inner-title">무엇을 도와드릴까요?</span></h3>
             <p class="w-lg-55 w-md-75 mx-auto">서비스명과 함께 검색해보세요.</p>
         </div>
 
