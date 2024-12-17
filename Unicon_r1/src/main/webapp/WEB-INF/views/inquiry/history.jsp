@@ -313,11 +313,6 @@ td.istatus {
 </div>
 
 
-<script>
-$(document).ready(function () {
-	
-});
-</script>
 
 
 
