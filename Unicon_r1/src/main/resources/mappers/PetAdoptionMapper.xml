@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="PetAdoption">
     <resultMap id="PetAdoptionResult" type="com.Unicon.domain.PetAdoptionVO">
         <id property="adpt_ai" column="adpt_ai"/>
@@ -12,6 +11,7 @@
         <result property="adpt_status" column="adpt_status"/>
         <result property="categroy_value" column="category_value"/>
         <result property="category_code" column="category_code"/>
+        <result property="image_src" column="image_src"/>
     </resultMap>
 
     <select id="findByAnimalTypes" parameterType="java.util.List" resultMap="PetAdoptionResult">
@@ -22,16 +22,31 @@
                a.adpt_etc,
                a.adpt_status,
                cd.category_value,
-               an.category_code
+               an.category_code,
+               i.image_src
         FROM _adpt a
         INNER JOIN _animal an ON a.animal_id = an.animal_id
         INNER JOIN _category_data cd ON an.category_code = cd.category_code
+        LEFT JOIN _image i ON a.animal_id = i.image_id 
         WHERE cd.category_value IN 
         <foreach item="type" collection="list" open="(" separator="," close=")">
             #{type}
         </foreach>
+        AND a.adpt_status = 2
+        AND an.animal_status NOT IN (1, 5, 6)
     </select>
-    <select id="getAdoptionByAdptAi" parameterType="int" resultType="com.Unicon.domain.PetAdoptionVO">
-        SELECT * FROM _adpt WHERE adpt_ai = #{adpt_ai}
+
+    <select id="getAdoptionByAdptAi" parameterType="int" resultMap="PetAdoptionResult">
+        SELECT a.*, i.image_src
+        FROM _adpt a
+        LEFT JOIN _image i ON a.adpt_id = i.image_id AND i.image_type = 'ADOPTION'
+        WHERE a.adpt_ai = #{adpt_ai}
+    </select>
+
+    <select id="getAllAdoptions" resultMap="PetAdoptionResult">
+        SELECT a.*, i.image_src
+        FROM _adpt a
+        LEFT JOIN _image i ON a.animal_id = i.image_id 
+        WHERE a.adpt_status = 2
     </select>
 </mapper>

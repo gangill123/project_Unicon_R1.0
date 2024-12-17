@@ -90,26 +90,31 @@
                     <div class="card-body">
                         <p>당신의 MBTI 유형은 <strong>${mbtiResult}</strong>입니다.</p>
                         <p>추천 반려동물: ${petRecommendation}</p>
-                        
+
                         <div class="pet-info">
                             <h2>🐾 추천 반려동물 특징</h2>
                             <p>${petCharacteristics}</p>
                         </div>
-                        
+
                         <div class="matching-adoptions">
                             <h2>추천 반려동물 입양 정보</h2>
-                            <div class="row">
-                                <c:forEach items="${matchingAdoptions}" var="adoption">
-                                    <div class="col-md-4">
-                                        <div class="adoption-card">
-                                            <img src="${adoption.imageUrl}" alt="입양동물 이미지">
-                                            <h3>${adoption.title}</h3>
-                                            <p>${adoption.content}</p>
-                                            <a href="/adoption/detail/${adoption.adpt_ai}" class="btn">자세히 보기</a>
+                            <c:if test="${not empty matchingAdoptions}">
+                                <div class="row">
+                                    <c:forEach items="${matchingAdoptions}" var="adoption">
+                                        <div class="col-md-4">
+                                            <div class="adoption-card">
+                                                <img src="${adoption.image_src}" alt="입양동물 이미지">
+                                                <h3>${adoption.title}</h3>
+                                                <p>${adoption.content}</p>
+                                                <a href="/adpt_list" class="btn">자세히 보기</a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </c:forEach>
-                            </div>
+                                    </c:forEach>
+                                </div>
+                            </c:if>
+                            <c:if test="${empty matchingAdoptions}">
+                                <p>현재 추천할 수 있는 입양 정보가 없습니다.</p>
+                            </c:if>
                         </div>
                         
                         <div class="text-center">

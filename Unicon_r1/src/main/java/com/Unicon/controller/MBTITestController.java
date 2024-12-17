@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.Unicon.domain.PetAdoptionVO;
 import com.Unicon.service.PetAdoptionService;
-
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 @RequestMapping("/mbti")
@@ -79,13 +78,13 @@ public class MBTITestController {
     public ResponseEntity<?> handleAnswer(@RequestParam int answer) {
         try {
             logger.info("사용자가 입력한 답변: {}", answer);
-            
+
             if (answer < 1 || answer > 5) {
                 return ResponseEntity.badRequest().body("답변은 1에서 5 사이의 숫자여야 합니다.");
             }
 
             processUserAnswer(answer);
-            
+
             Map<String, Object> response = new HashMap<>();
             if (hasNextQuestion()) {
                 response.put("question", getCurrentQuestion());
@@ -114,27 +113,36 @@ public class MBTITestController {
         model.addAttribute("mbtiResult", getMBTIResult());
         model.addAttribute("petRecommendation", getPetRecommendation());
         model.addAttribute("petCharacteristics", getPetCharacteristics());
-
-        // 추천 동물 목록 로그 출력
+        
         List<String> recommendedPets = Arrays.asList(getPetRecommendation().split(", "));
         logger.info("추천 동물 목록: {}", recommendedPets);
 
-        // DAO 호출 결과 로그 출력
         List<PetAdoptionVO> matchingAdoptions = petAdoptionService.findByAnimalTypes(recommendedPets);
         logger.info("매칭된 입양글 수: {}", matchingAdoptions.size());
-        
+
+        // image_src 필드 확인 및 로깅
+        for (PetAdoptionVO adoption : matchingAdoptions) {
+            if (adoption.getImage_src() != null && !adoption.getImage_src().isEmpty()) {
+                logger.info("입양글 ID: {}, 이미지 경로: {}", adoption.getAdpt_id(), adoption.getImage_src());
+            } else {
+                logger.warn("입양글 ID: {}의 이미지 경로가 없거나 비어 있습니다.", adoption.getAdpt_id());
+            }
+        }
+
         model.addAttribute("matchingAdoptions", matchingAdoptions);
+
         return "mbti/result";
     }
     
-    @GetMapping("/adoption/detail/{adpt_ai}")
-    public String showAdoptionDetail(@PathVariable("adpt_ai") int adpt_ai, Model model) {
-        PetAdoptionVO adoption = petAdoptionService.getAdoptionByAdptAi(adpt_ai);
-        model.addAttribute("adoption", adoption);
-        return "adoption/detail";
+    @GetMapping("/adpt_list")
+    @ResponseBody
+    public ResponseEntity<List<PetAdoptionVO>> getAllAdoptions() {
+        List<PetAdoptionVO> adoptions = petAdoptionService.getAllAdoptions();
+        return ResponseEntity.ok(adoptions);
     }
 
-
+    
+    
     
     
 
@@ -161,6 +169,7 @@ public class MBTITestController {
         mbtiResult = result.toString();
         logger.info("MBTI 결과 계산 완료: {}", mbtiResult);
     }
+    
 
     public void recommendPet() {
         switch (mbtiResult) {
@@ -232,7 +241,7 @@ public class MBTITestController {
                 petRecommendation = "모든 종류의 반려동물과 잘 어울릴 수 있습니다.";
                 petCharacteristics = "당신의 성격은 다양한 반려동물과 조화.";
         }
-                
+
 
         logger.info("추천 반려동물 계산 완료: {}", petRecommendation);
     }
@@ -259,5 +268,4 @@ public class MBTITestController {
     public String getPetCharacteristics() {
         return petCharacteristics;
     }
-
 }

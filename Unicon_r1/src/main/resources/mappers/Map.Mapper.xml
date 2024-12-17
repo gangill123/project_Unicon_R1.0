@@ -4,7 +4,26 @@
 <mapper namespace="com.Unicon.persistence.MapMapper">
 
     <select id="getAllAddresses" resultType="com.Unicon.domain.MapVO">
-        SELECT road_address FROM _member
+        SELECT id, member_id, road_address, latitude, longitude, member_type
+        FROM _map
     </select>
+
+    <insert id="insertMapData">
+        INSERT INTO _map (member_id, road_address, member_type)
+        SELECT member_id, road_address, member_type
+        FROM _member
+        WHERE member_type = 'inst'
+    </insert>
+
+    <update id="updateCoordinates" parameterType="com.Unicon.domain.MapVO">
+        UPDATE _map
+        SET latitude = #{latitude}, longitude = #{longitude}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteMapData">
+        DELETE FROM _map
+        WHERE id = #{id}
+    </delete>
 
 </mapper>
