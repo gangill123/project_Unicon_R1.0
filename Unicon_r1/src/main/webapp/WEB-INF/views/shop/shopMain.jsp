@@ -28,46 +28,9 @@
 	padding: 5px;
 }
 
-	.slider {
-	    position: relative;
-    	width: 100%;         /* 너비를 100%로 설정하여 반응형 유지 */
-	    margin: auto;
-	    overflow: hidden;
-	}
-	
-	.slides {
-	    display: flex;
-	    transition: transform 0.5s ease;
-	}
-	
-	.slides img {
-	    max-height: 400px;
-	    width: 100%;
-	    object-fit: fill;
-	    display: block;
-	}
-	
-	.c-button {
-	    position: absolute;
-	    top: 50%;
-	    transform: translateY(-50%);
-	    background-color: rgba(255, 255, 255, 0.5);
-	    border: none;
-	    cursor: pointer;
-	    padding: 10px;
-	    font-size: 18px;
-	}
-	
-	.prev {
-	    left: 10px;
-	}
-	
-	.next {
-	    right: 10px;
-	}
-
 
 </style>
+
 
 
 </head>
@@ -79,15 +42,23 @@
         ================================================== -->
         <%-- ${productAllInfo} --%>
         
-        <div class="slider">
-           <div class="slides">
-               <c:forEach var="image" items="${adminStoreImg}">
-               		<img src="${image.image_src}" alt="storeMainImages" />
-        	   </c:forEach>
-           </div>
-           <button class="c-button prev">❮</button>
-		   <button class="c-button next">❯</button>
-        </div>
+        <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1>Shop Product Grid</h1>
+                    </div>
+                    <div class="col-md-5">
+                        <ul class="text-md-end mt-3 mt-md-0 ps-0">
+                            <li><a href="home-1.html">Home</a></li>
+                            <li><a href="#!">Shop Product Grid</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section>
 
         <!-- PRODUCT GRID
         ================================================== -->
@@ -379,41 +350,6 @@
 
 <script>
 	$(document).ready(function () {
-	    ///////////////////////     슬라이드 이미지 JS    ////////////////////////////////
-	    ///////////////////////     슬라이드 이미지 JS    ////////////////////////////////
-	    ///////////////////////     슬라이드 이미지 JS    ////////////////////////////////
-	    
-		let currentIndex = 0;
-	    const slides = $('.slides img');
-	    const totalSlides = slides.length;
-
-	    function showSlide(index) {
-	        const offset = -index * 100; // 슬라이드 이동 비율
-	        $('.slides').css('transform', 'translateX(' + offset + '%)');
-	    }
-
-	    $('.next').click(function() {
-	        currentIndex = (currentIndex + 1) % totalSlides; // 다음 슬라이드로 이동
-	        showSlide(currentIndex);
-	    });
-
-	    $('.prev').click(function() {
-	        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // 이전 슬라이드로 이동
-	        showSlide(currentIndex);
-	    });
-
-	    // 자동 슬라이드 기능 (원하는 경우 주석 해제)
-	    
-	    setInterval(function() {
-	        currentIndex = (currentIndex + 1) % totalSlides;
-	        showSlide(currentIndex);
-	    }, 3000); // 3초마다 슬라이드 이동
-	    
-	    ///////////////////////     슬라이드 이미지 JS    ////////////////////////////////
-	    ///////////////////////     슬라이드 이미지 JS    ////////////////////////////////
-	    ///////////////////////     슬라이드 이미지 JS    ////////////////////////////////
-		
-		
 		$('.navbar #shop').addClass('current');
 		
 		let checkCnt = 1;
