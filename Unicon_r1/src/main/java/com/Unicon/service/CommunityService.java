@@ -302,8 +302,8 @@ public class CommunityService {
 				asb.setLength(0);
 				
 				// 이미지 파일 저장 후 이미지 파일 정보를 ImageVO객체에 저장
-				int index = destinationImage.getPath().indexOf("\\uploads\\");
-				String indexStr = "\\uploads\\";
+				int index = destinationImage.getPath().indexOf("/uploads/");
+				String indexStr = "/uploads/";
 				String indexSubStr = destinationImage.getPath().substring(index + indexStr.length());
 				String modifiedPath = asb.append("/uploads/").append(indexSubStr).toString();
 				
