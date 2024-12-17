@@ -799,14 +799,14 @@
 							const adate = new Date(data.animal_regdate);
 							const year = adate.getFullYear();
 							const month = String(adate.getMonth() + 1).padStart(2, '0');
-							const day = String(adate.getDay()).padStart(2, '0');
+							const day = String(adate.getDate()).padStart(2, '0');
 							const formattedDate = year + '-' + month + '-' + day;
 							data.animal_regdate = formattedDate;
 							
 							const adDate = new Date(data.adptVO.adpt_regdate);
 							const adYear = adDate.getFullYear();
 							const adMonth = String(adDate.getMonth() + 1).padStart(2, '0');
-							const adDay = String(adDate.getDay()).padStart(2, '0');
+							const adDay = String(adDate.getDate()).padStart(2, '0');
 							const formattedAdDate = adYear + '-' + adMonth + '-' + adDay;
 							data.adptVO.adpt_regdate = formattedAdDate;
 							

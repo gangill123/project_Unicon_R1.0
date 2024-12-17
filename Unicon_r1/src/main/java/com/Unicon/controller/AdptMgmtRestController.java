@@ -20,11 +20,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Unicon.domain.AdptVO;
 import com.Unicon.domain.AnimalVO;
 import com.Unicon.domain.ImageVO;
+import com.Unicon.domain.MemberVO;
 import com.Unicon.persistence.AdptDAO;
 import com.Unicon.service.AdptService;
 
@@ -363,6 +365,59 @@ public class AdptMgmtRestController {
 			return new ResponseEntity<List<AnimalVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	
+	/* ===== 보호소 페이지 입양 신청 목록 ===== */
+	@GetMapping(value = "/counsel/list")
+	public ResponseEntity<List<AnimalVO>> counselListAll(HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ counselListAll() 실행");
+		String member_id = (String)req.getSession().getAttribute("member_id");
+		Map<String, String> counselMemberParams = new HashMap<String, String>();
+		counselMemberParams.put("member_id", member_id);
+		
+		try {
+			List<AnimalVO> counselList = aService.getCounselList(counselMemberParams);
+			return new ResponseEntity<List<AnimalVO>>(counselList,HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			return new ResponseEntity<List<AnimalVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
+	/* ===== 보호소 페이지 입양 신청 목록 사용자 정보 ===== */
+	@GetMapping(value = "/counsel/list/member")
+	public ResponseEntity<MemberVO> counselMemberInfo(@RequestParam String member_id) {
+		logger.debug("( •̀ ω •́ )✧ counselMemberInfo() 실행");
+		
+		try {
+			MemberVO mvo = aService.getMemberInfo(member_id);
+			return new ResponseEntity<MemberVO>(mvo, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			return new ResponseEntity<MemberVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	/* ===== 보호소 페이지 입양 신청 목록 사용자 정보 ===== */
+	@GetMapping(value = "/flutter/memberId")
+	public ResponseEntity<MemberVO> flutterMemberId(HttpServletRequest req) {
+		logger.debug("( •̀ ω •́ )✧ flutterMemberId() 실행");
+		
+		String member_id = (String)req.getSession().getAttribute("member_id");
+		
+		try {
+			MemberVO mvo = aService.getMemberInfo(member_id);
+			return new ResponseEntity<MemberVO>(mvo, HttpStatus.OK);
+		} catch (Exception e) {
+			logger.debug("( •̀ ω •́ )✧ 오류 발생: {}",e.getMessage());
+			return new ResponseEntity<MemberVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+	}
+	
+	
 	
 	
 }//class

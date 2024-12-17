@@ -222,8 +222,16 @@ public class AdptDAO {
 		logger.debug("( •̀ ω •́ )✧ counselCheckMember() 실행");
 		
 		Integer counselCount = sqlSession.selectOne(NAMESPACE+"counselCheckMember", counselCheckParams);
-		logger.debug("( •̀ ω •́ )✧ counselCount : {}",counselCount);
 		return counselCount > 0 && counselCount != null;
 	}
+	
+	
+	/*=========== 보호소 페이지 상담 신청 목록 ===========*/
+	public List<AnimalVO> getCounselList(Map<String, String> counselMemberParams) {
+		logger.debug("( •̀ ω •́ )✧ getCounselList() 실행");
+		
+		return sqlSession.selectList(NAMESPACE+"getCounselList", counselMemberParams);
+	}
+	
 	
 }

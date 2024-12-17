@@ -136,6 +136,10 @@
 		border-radius: 0.7rem;
 	}
 	
+	small.roadHidden {
+		display: none;
+	}
+	
     /*=============== 테이블 css ===============*/
     
     
@@ -149,6 +153,34 @@
 		height: auto;
 	}
     /*=============== 바탕 css ===============*/
+    
+    
+    /*=============== 모달 css ===============*/
+	.counsel-modal {
+		display: none;
+		position: fixed;
+		z-index: 1080;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	.counsel-modal-content {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		margin: auto;
+		padding: 1rem;
+		width: 80%;
+		max-width: 600px;
+		background-color: white;
+		border-radius: 8px;
+	}
+    /*=============== 모달 css ===============*/
     
     
     </style>
@@ -173,11 +205,11 @@
 											<thead>
 												<tr>
 													<th>입양글ID</th>
-													<th>동물ID</th>
-													<th>동물종류</th>
-													<th>세부종류</th>
 													<th>동물이름</th>
-													<th>등록일자</th>
+													<th>신청자ID</th>
+													<th>동물종류</th>
+													<th>동물ID</th>
+													<th>신청날짜</th>
 													<th>상태</th>
 												</tr>
 											</thead>
@@ -185,12 +217,12 @@
 											</tbody>
 											<tfoot>
 												<tr>
+													<th>입양글ID</th>
 													<th></th>
-													<th></th>
+													<th>신청자ID</th>
 													<th>동물종류</th>
-													<th>세부종류</th>
-													<th></th>
-													<th></th>
+													<th>동물ID</th>
+													<th>신청날짜</th>
 													<th>상태</th>
 												</tr>
 											</tfoot>
@@ -201,6 +233,36 @@
 					</div>
 			</div>
           
+			<div id="counselModal" class="counsel-modal">
+				<div class="counsel-modal-content">
+				
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group row justify-content-center">
+									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-3">
+										<label for="aName" class="text-dark custom-label">동물 이름</label>
+										<div class="input-group">
+										<input type="text" id="aName" name="animal_name" class="form-control custom-text"
+										placeholder="최대 6자" maxlength="6" required/>
+										</div>
+										<label for="aName" class="text-dark custom-label">동물 이름</label>
+										<div class="input-group">
+										<input type="text" id="aName" name="animal_name" class="form-control custom-text"
+										placeholder="최대 6자" maxlength="6" required/>
+										</div>
+										<label for="aName" class="text-dark custom-label">동물 이름</label>
+										<div class="input-group">
+										<input type="text" id="aName" name="animal_name" class="form-control custom-text"
+										placeholder="최대 6자" maxlength="6" required/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
           
           
           <!-- content-wrapper ends -->
@@ -249,60 +311,47 @@
 			"stateDuration": -1,
 			/*=============== DataTable ajax ===============*/
 			"ajax": {
-				url: '/adptmgmt/writings',
+				url: '/adptmgmt/counsel/list',
 				type: 'GET',
 				dataType: 'json',
 				dataSrc: function(json) {
-					return json.map(function(item) {
-						const adate = new Date(item.adptVO.adpt_regdate);
-						const year = adate.getFullYear();
-						const month = String(adate.getMonth() + 1).padStart(2, '0');
-						const day = String(adate.getDay()).padStart(2, '0');
-						const formattedDate = year + '-' + month + '-' + day;
-						
-						item.adptVO.adpt_regdate = formattedDate;
-						
-						switch(item.categoryDataVO.category_type) {
-							case '개': {
-								item.categoryDataVO.category_type = '개<i class="fa-solid fa-dog"></i>';
-								break;
-							}
-							case '고양이': {
-								item.categoryDataVO.category_type = '고양이<i class="fa-solid fa-cat"></i>';
-								break;
-							}
-							case '기타': {
-								item.categoryDataVO.category_type = '기타<i class="fa-solid fa-dove"></i>';
-								break;
-							}
-						}
-						
-						switch(item.adptVO.adpt_status) {
-							case 1: {
-								item.adptVO.adpt_status_value = '<label class="badge badge-warning">승인대기</label>';
-								break;
-							}
-							case 2: {
-								item.adptVO.adpt_status_value = '<label class="badge badge-primary">승인</label>';
-								break;
-							}
-							case 3: {
-								item.adptVO.adpt_status_value = '<label class="badge badge-danger">승인취소</label>';
-								break;
-							}
-						}
-						return item;
-					});
-				}
+			        let result = [];
+			        json.forEach(item => {
+						item.adptCounselList.forEach(VO => {
+							const csdate = new Date(VO.counsel_subdate);
+							VO.counsel_subdate = csdate.getFullYear() + '-' + 
+												String(csdate.getMonth() + 1).padStart(2, '0') + '-' + 
+												String(csdate.getDate()).padStart(2, '0');
+							
+			                switch(VO.counsel_status) {
+			                    case 1: VO.counsel_status = '<label class="badge badge-warning">신청중</label>'; break;
+			                    case 2: VO.counsel_status = '<label class="badge badge-primary">상담중</label>'; break;
+			                    case 3: VO.counsel_status = '<label class="badge badge-danger">취소</label>'; break;
+			                    case 4: VO.counsel_status = '<label class="badge badge-success">상담완료</label>'; break;
+			                }
+
+			                result.push({
+			                    adpt_id: item.adptVO.adpt_id,
+			                    animal_id: item.animal_id,
+			                    member_id: VO.member_id,
+			                    category_value: item.categoryDataVO.category_value,
+			                    animal_name: item.animal_name,
+			                    counsel_subdate: VO.counsel_subdate,
+			                    counsel_status: VO.counsel_status
+			                });
+			            });
+			        });
+			        return result;
+			    }
 			},
 			"columns": [
-				{ data: 'adptVO.adpt_id' },
-				{ data: 'animal_id' },
-				{ data: 'categoryDataVO.category_type' },
-				{ data: 'categoryDataVO.category_value' },
-				{ data: 'animal_name' },
-				{ data: 'adptVO.adpt_regdate' },
-				{ data: 'adptVO.adpt_status_value' }
+			    { data: 'adpt_id' },
+			    { data: 'animal_name' },
+			    { data: 'member_id' },
+			    { data: 'category_value' },
+			    { data: 'animal_id' },
+			    { data: 'counsel_subdate' },
+			    { data: 'counsel_status' }
 			],
 			/*=============== DataTable ajax ===============*/
 			"order": [[5, "desc"]],
@@ -315,7 +364,7 @@
 				api.columns().every(function(index) {
 					var column = this;
 					  
-					if (index === 0 || index == 1 || index === 4 || index === 5) {
+					if (index == 1) {
 						return;
 					}
 					
@@ -380,20 +429,57 @@
 		
 		/*=============== tr 선택 상세 조회 ===============*/
 		$('table').on('click', 'tr.a-view-writing', function() {
+			const member_id = $(this).find('td:eq(2)').text();
+			const currentRow = $(this);
+			
+			$.ajax({
+				url: '/adptmgmt/counsel/list/member',
+				method: 'GET',
+				data: { member_id: member_id },
+				success: function(resp) {
+					const member_gender = resp.member_gender == 'female'?'여성':'남성';
+				    const roadAddressParts = resp.road_address.split(' ');
+					let formattedNumber = '';
+				    let infoAdress = '';
+				    
+				    for (let i = 0; i < roadAddressParts.length; i += 2) {
+				    	infoAdress += '<small class="roadHidden">'+ roadAddressParts[i];
+				        if (i + 1 < roadAddressParts.length) {
+				            infoAdress += ' ' + roadAddressParts[i + 1];
+				        }
+				        infoAdress += '<br></small>';
+				    }
+					
+					if (resp.member_tel.length === 11) {
+						formattedNumber = resp.member_tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+					}
+					
+					
+					
+					$('#counselModal').show();
+				},
+				error: function(error) {
+					console.error('오류:',error);
+				}
+				
+			});
 			
 			
-			
-			$(this).next('.counselInfo').toggle(200);
-			$('#animalTable .counselInfo').not($(this).next()).slideUp(50);
-
-			if (!$(this).next('.counselInfo').length) {
-				$(this).after('<tr class="counselInfo"><td>안녕하세요</td></tr>');
-			}
 
 		});
 		/*=============== tr 선택 상세 조회 ===============*/
+
 		
 		
+		$('.counselModalClose').click(function() {
+			$('#counselModal').hide();
+		});
+		
+		$(window).click(function(event) {
+			if ($(event.target).is('#counselModal')) {
+				$('#counselModal').hide();
+			}
+		});
 		
 		
 		

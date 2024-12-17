@@ -24,18 +24,14 @@ public class AdptMgmtController {
 	private AdptService aService;
 	private static final Logger logger = LoggerFactory.getLogger(AdptMgmtController.class);
 	
-	
-	@GetMapping(value = "/main")
-	public void adptmgmtMain() {
-		logger.debug("( •̀ ω •́ )✧ adptmgmtMain() 실행");
-	}
-	
+	/*===== 입양 동물 등록 =====*/
 	@GetMapping(value = "/animals/creation")
 	public String animalAdd() {
 		logger.debug("( •̀ ω •́ )✧ animalAdd() 실행");
 		return "/adptmgmt/animals/animal_add";
 	}
 	
+	/*===== 입양 동물 목록 =====*/
 	@GetMapping(value = "/animals/list")
 	public String animalViewAll() {
 		logger.debug("( •̀ ω •́ )✧ animalViewAll() 실행");
@@ -43,36 +39,42 @@ public class AdptMgmtController {
 		return "/adptmgmt/animals/animal_read";
 	}
 	
+	/*===== 입양 동물 조회 & 수정 =====*/
 	@GetMapping(value = "/animals/list/{animal_id}")
 	public String animalViewOne() {
 		logger.debug("( •̀ ω •́ )✧ animalViewOne() 실행");
 		return "/adptmgmt/animals/animal_update";
 	}
 	
+	/*===== 입양 상담 목록 =====*/
 	@GetMapping(value = "/counsel/people")
 	public String adptCounselViewAll() {
 		logger.debug("( •̀ ω •́ )✧ adptCounselViewAll() 실행");
 		return "/adptmgmt/animals/counsel_read";
 	}
 	
+	/*===== 입양 글 등록 =====*/
 	@GetMapping(value = "/writings/add/{animal_id}")
 	public String writingAdd() {
 		logger.debug("( •̀ ω •́ )✧ writingAdd() 실행");
 		return "/adptmgmt/writings/writing_add";
 	}
 	
+	/*===== 입양 글 목록 =====*/
 	@GetMapping(value = "/writings/all")
 	public String writingViewAll() {
 		logger.debug("( •̀ ω •́ )✧ writingViewAll() 실행");
 		return "/adptmgmt/writings/writing_read";
 	}
 	
+	/*===== 입양 글 조회 & 수정 =====*/
 	@GetMapping(value = "/writings/all/{animal_id}")
 	public String writingViewOne() {
 		logger.debug("( •̀ ω •́ )✧ writingViewOne() 실행");
 		return "/adptmgmt/writings/writing_update";
 	}
 	
+	/*===== 관리자 입양 동물 목록 =====*/
 	@GetMapping(value = "/manager/animals/everything")
 	public String managerAnimalViewAll() {
 		logger.debug("( •̀ ω •́ )✧ managerAnimalViewAll() 실행");
@@ -80,18 +82,21 @@ public class AdptMgmtController {
 		return "/adptmgmt/manager/manager_animal_read";
 	}
 	
+	/*===== 관리자 입양 동물 조회 & 수정 =====*/
 	@GetMapping(value = "/manager/animals/everything/{animal_id}")
 	public String managerAnimalViewOne() {
 		logger.debug("( •̀ ω •́ )✧ managerAnimalViewOne() 실행");
 		return "/adptmgmt/manager/manager_animal_update";
 	}
 	
+	/*===== 관리자 입양 글 목록 =====*/
 	@GetMapping(value = "/manager/writings/total")
 	public String managerWritingViewAll() {
 		logger.debug("( •̀ ω •́ )✧ managerWritingViewAll() 실행");
 		return "/adptmgmt/manager/manager_writing_read";
 	}
 	
+	/*===== 관리자 입양 글 조회 & 수정 =====*/
 	@GetMapping(value = "/manager/writings/total/{animal_id}")
 	public String managerWritingViewOne() {
 		logger.debug("( •̀ ω •́ )✧ managerWritingViewOne() 실행");

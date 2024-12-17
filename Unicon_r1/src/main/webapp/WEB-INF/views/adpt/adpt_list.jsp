@@ -289,6 +289,8 @@
 <script src="${pageContext.request.contextPath }/resources/new_assets/js/adpt.js"></script>
 <script>
 $(document).ready(function () {
+	$('.navbar #adpt').addClass('current');
+	
 	let allData = []; // 전체 데이터를 저장
 	let adptFilters = {};
 	let adptFilter = 'all';
