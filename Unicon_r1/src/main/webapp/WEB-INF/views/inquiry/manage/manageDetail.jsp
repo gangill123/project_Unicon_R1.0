@@ -28,19 +28,21 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* 배경 반투명 */
+    display: flex;
+
 }
 
 /* 모달 내용 */
 .modal-content {
+    position: relative;
+    width: 100px;          /* 가로 너비 축소 */
+    max-width: 80%;        /* 화면 크기에 따라 최대 너비 설정 */
+    padding: 15px;         /* 내부 여백 */
     background-color: white;
-    margin: 30% auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;   /* 모서리 둥글게 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    text-align: center;    /* 텍스트 중앙 정렬 */
 }
-
 /* 닫기 버튼 */
 .close-btn {
     color: #aaa;
@@ -89,7 +91,6 @@ textarea {
     background-color: transparent; /* 배경색도 없애고 싶다면 */
 }
 
-
 .container {
     max-width: 1140px;
 }
@@ -120,8 +121,7 @@ textarea {
 .bg-light .p-3 {
     background-color: #f1f1f1 !important;
 }
-    
-    
+
 </style>
 
 
@@ -192,7 +192,7 @@ textarea {
                                     <div id="updateModal" class="modal">
                                         <div class="modal-content">
                                             <span class="close-btn" onclick="closeModal()">&times;</span>
-                                            <h2>답변 수정</h2>
+                                            <h2 style="color: black;">답변 수정</h2>
                                             <textarea id="update-dcontent" placeholder="수정할 답변 내용을 입력하세요" rows="5"></textarea>
                                             <button class="btn btn-primary" onclick="saveAnswer()">수정 완료</button>
                                         </div>
@@ -235,9 +235,9 @@ textarea {
             <div class="col-lg-3">
                 <div class="card" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); background-color: #f9f9f9;">
                     <div class="card-body">
-                        <h6 class="text-primary">문의 상황판</h6>
+                        <h6 class="text-primary">문의 현황</h6>
                         <ul class="list-unstyled mb-0">
-                            <li><a href="../graph" class="text-dark">문의 현 상황판</a></li>
+                            <li><a href="../graph" class="text-dark">문의 현황 차트</a></li>
                         </ul>
                     </div>
                 </div>

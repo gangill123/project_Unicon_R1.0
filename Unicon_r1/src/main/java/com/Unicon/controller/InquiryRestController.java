@@ -255,7 +255,8 @@ public class InquiryRestController {
 		Map<String, Object> result = inquiryService.getInquiriesByMember(memberId, page, size);
 		return ResponseEntity.ok(result);
 	}
-	// 그래프 월별 데이터 가져오기 
+
+	// 그래프 월별 데이터 가져오기
 	@GetMapping("/statusCounts")
 	public ResponseEntity<Map<String, Map<String, Long>>> getStatusCounts() {
 		try {
@@ -267,10 +268,11 @@ public class InquiryRestController {
 			return ResponseEntity.status(500).build(); // 에러 처리
 		}
 	}
-    @GetMapping("/inquiryChart")
-    public ResponseEntity<Double> getCompletionRate() {
-        double completionRate = inquiryService.getCompletionRate();
-        return ResponseEntity.ok(completionRate);
-    }
+
+	@GetMapping("/inquiryChart")
+	public ResponseEntity<Double> getCompletionRate() {
+		double completionRate = inquiryService.getCompletionRate();
+		return ResponseEntity.ok(completionRate);
+	}
 
 } // InquiryController

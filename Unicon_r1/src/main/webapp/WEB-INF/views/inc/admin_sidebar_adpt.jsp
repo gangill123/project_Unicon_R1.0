@@ -46,10 +46,25 @@
                 <i class="menu-arrow"></i>
               </a>  
               <div class="collapse" id="volunteer">
-                <ul class="nav flex-column sub-menu">
+                <ul class="mdi mdi-clipboard-text">
                   <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/volForm">봉사활동 등록</a></li>
                   <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/voList">봉사활동 목록</a></li>
                   <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/volStatistics">봉사활동 통계</a></li>
+                </ul>
+              </div>
+            </li>
+            
+            
+             <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#inquiry" aria-expanded="false" aria-controls="inquiry">
+                <span class="icon-bg"><i class="mdi mdi-clipboard-text"></i></span>
+                <span class="menu-title">고객센터 관리</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="inquiry">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/inquiry/manage">고객센터 문의 관리</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="/inquiry/graph">문의 현황</a></li>
                 </ul>
               </div>
             </li>
