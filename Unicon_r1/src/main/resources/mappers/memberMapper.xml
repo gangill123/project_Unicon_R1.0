@@ -13,6 +13,16 @@
     </select>
 <!-- 아이디 중복 체크 -->    
 
+    
+<!-- 이메일 중복 체크 -->
+    <select id="checkEmailOverlap" resultType="int">
+        SELECT COUNT(*)
+        FROM _member
+        WHERE member_email = #{member_email}
+    </select>
+<!-- 이메일 중복 체크 -->    
+
+
 <!-- 일반 회원 가입 -->
     <insert id="insertMember" parameterType="com.Unicon.domain.MemberVO">
         insert into _member (member_id, member_pw, member_name, member_nickname, 

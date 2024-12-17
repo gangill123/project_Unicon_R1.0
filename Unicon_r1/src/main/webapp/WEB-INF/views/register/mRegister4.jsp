@@ -531,14 +531,14 @@ window.addEventListener('DOMContentLoaded',function(){     //시작
     
         $.ajax({
           type: "GET",
-          url: "./email_check?id="+email_overlap_input,    //해당 url로 데이터를 넘김
+          url: "./checkEmailOverlap",    //해당 url로 데이터를 넘김
           data: {
             'email': $('.inpt_email').val()
           },
           datatype: 'json',
           success: function (data) {
             console.log(data['overlap']);
-            if (data['overlap'] == "fail") {
+            if (data == "fail") {
               alert("이미 존재하는 이메일 입니다.");
               email_overlap_input.focus();
               return;

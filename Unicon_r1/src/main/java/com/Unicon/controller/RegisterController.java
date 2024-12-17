@@ -2,6 +2,8 @@ package com.Unicon.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -69,6 +71,22 @@ public class RegisterController {
             return ResponseEntity.ok("success");
         }
     }
+    
+
+    // 이메일 중복체크 API
+    @GetMapping("/checkEmailOverlap")
+    public ResponseEntity<String> checkEmailOverlap(@RequestParam("email") String memberEmail) {
+        // 서비스에서 이메일 중복 여부 확인
+        boolean isOverlap = mService.checkEmailOverlap(memberEmail);
+
+        // 중복된 이메일 있으면 "fail", 없으면 "success" 반환
+        if (isOverlap) {
+            return ResponseEntity.ok("fail");
+        } else {
+            return ResponseEntity.ok("success");
+        }
+    }
+
     
     // 일반회원 회원가입 완료 페이지 이동
     // http://localhost:8088/register/mRegister5

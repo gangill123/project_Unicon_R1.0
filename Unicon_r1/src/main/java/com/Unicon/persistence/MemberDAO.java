@@ -24,6 +24,12 @@ public class MemberDAO {
     	logger.info("아이디 중복 체크 실행: " + memberId);
     	return sqlSession.selectOne(NAMESPACE + "checkIdOverlap", memberId); 
     }    
+    // 이메일 중복 체크
+    public int checkEmailOverlap(String email) {
+        logger.info("이메일 중복 체크 실행: " + email);
+        return sqlSession.selectOne(NAMESPACE + "checkEmailOverlap", email);
+    }
+
     
     // 일반 회원 가입 정보 입력
     public Integer insertMember(MemberVO member) {
