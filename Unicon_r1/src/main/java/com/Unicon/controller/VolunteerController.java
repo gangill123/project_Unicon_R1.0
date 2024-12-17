@@ -81,9 +81,21 @@ public class VolunteerController {
     }
     
     @GetMapping("/apply/{voId}")
-    public String applicationForm(@PathVariable Long voId, Model model) throws Exception {
+    public String applicationForm(
+        @PathVariable Long voId, 
+        Model model, 
+        HttpSession session
+    ) throws Exception {
+        // 로그인 체크
+        String member_id = (String) session.getAttribute("member_id");
+		
+		 if (member_id == null) { 
+			 return "redirect:/login/customLogin"; 
+	     }
+
         VolunteerVO volunteer = volService.getVolunteer(voId);
         model.addAttribute("volunteer", volunteer);
+        model.addAttribute("member_id", member_id); 
         return "volunteer/volApply";
     }
     

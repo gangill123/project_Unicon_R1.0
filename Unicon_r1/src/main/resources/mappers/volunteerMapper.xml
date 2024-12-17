@@ -163,10 +163,10 @@
     <!-- 봉사활동 신청 등록 -->
     <insert id="insertVolunteerApply" parameterType="VolunteerApplyVO">
         insert into _volunteer_apply (
-            volunteerId, voApplicant, voBirth, voTel, voEmail,
+            volunteerId, member_id, voApplicant, voBirth, voTel, voEmail,
             voExperience, voReason, voAgree, status
         ) values (
-            #{volunteerId}, #{voApplicant}, #{voBirth}, #{voTel}, #{voEmail},
+            #{volunteerId}, #{member_id}, #{voApplicant}, #{voBirth}, #{voTel}, #{voEmail},
             #{voExperience}, #{voReason}, #{voAgree}, #{status}
         )
     </insert>

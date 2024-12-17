@@ -180,7 +180,16 @@
 
 <div class="container-xxl py-5">
     <div class="container">
-        <div class="application-form">
+        <!-- 로그인 여부 확인 -->
+        <c:if test="${empty sessionScope.member_id}">
+		    <div class="alert alert-warning">
+		        봉사활동 신청은 로그인 후 가능합니다. 
+		        <a href="/login/customLogin" class="alert-link">로그인</a>하러 가기
+		    </div>
+		</c:if>
+		
+		<c:if test="${not empty sessionScope.member_id}">
+		    <div class="application-form">
             <h3 class="text-center mb-4">봉사활동 신청</h3>
             
             <!-- 봉사활동 요약 정보 -->
@@ -266,6 +275,9 @@
 
             <form id="applicationForm" action="/volunteer/apply" method="post">
                 <input type="hidden" name="volunteerId" value="${volunteer.voId}">
+                
+                <!-- 세션 member_id 추가 -->
+                <input type="hidden" name="member_id" value="${sessionScope.member_id}">
                 
                 <!-- 신청자 정보 -->
                 <div class="form-section">
@@ -372,6 +384,7 @@
                 </div>
             </form>
         </div>
+        </c:if>
     </div>
 </div>
 
