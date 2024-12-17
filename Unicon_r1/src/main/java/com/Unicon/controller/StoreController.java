@@ -90,15 +90,11 @@ public class StoreController {
 		logger.info("/manage/order 실행");
 	}
 	
-	@RequestMapping( value="/sale/delivery" , method =RequestMethod.GET )
-	public void deliveryGET() {
-		logger.info("/sale/delivery 실행");
-		
+	@RequestMapping( value="/sale/deliveryManagement" , method =RequestMethod.GET )
+	public void deliveryManagementGET() {
+		logger.info("/sale/deliveryManagement 실행");
 	}
-	@RequestMapping( value="/sale/deliverySituation" , method =RequestMethod.GET )
-	public void deliverySituationGET() {
-		logger.info("/sale/deliverySituation 실행");
-	}
+	
 	
 	@RequestMapping( value="/claim/blackConsumer" , method =RequestMethod.GET )
 	public void blackConsumerGET() {

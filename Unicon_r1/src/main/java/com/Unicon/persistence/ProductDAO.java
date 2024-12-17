@@ -88,9 +88,21 @@ public class ProductDAO {
 	}
 	
 	// 주문통합검색 /  통합 검색 데이터 테이블 요청
-	public List<OrdersVO> getOrder(String member_id) {
+	public List<OrdersVO> getOrder(Map<String, Object> member_id) {
 		List<OrdersVO> list = sqlSession.selectList(NAMESPACE + "getOrdersWithDetails", member_id);
 		
+		return list; 
+	}
+	
+	// 주문통합검색 /  주문 상세 요청 데이터
+	public List<Map<String, Object>> getOrderDetail(String id) {
+		List<Map<String, Object>> list= sqlSession.selectList(NAMESPACE + "getOrderDetail", id);
+		
+		// 결과 출력
+	    System.out.println("Order Detail Result:");
+	    for (Map<String, Object> map : list) {
+	        System.out.println(map);
+	    }
 		return list; 
 	}
 }

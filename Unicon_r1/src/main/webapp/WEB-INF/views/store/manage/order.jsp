@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>유니콘</title>
+   	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
     <!-- plugins:css -->
     <!-- dataTables.css -->
     <!-- Font-Awesome CSS -->
@@ -32,7 +34,9 @@
     /* <label class="badge badge-success">입양완료</label> */
     /* <label class="badge badge-secondary">종료</label> */
     /*=============== badge css ===============*/
-
+table.dataTable thead .sorting {
+    background-image: none !important;
+}
 
     /*=============== 테이블 css ===============*/
 	@media(max-width:650px) {
@@ -138,10 +142,6 @@
 		padding: 1.2rem 0.7rem !important;
 	}
 	
-	.table td, .table tr {
-		cursor: pointer;
-		
-	}
 	
 	th select {
 		border-radius: 0.7rem;
@@ -221,15 +221,127 @@
 	    transition: border 0.1s;	
 	}
 	
-	.detail {
+	.item-button {
+		border: none;
+	    background: transparent;
+	}
 	
+	.c-modal {
+	    width: 130%;
+	    height: 112vh;
+	    z-index: 1030;
+	    position: absolute;
+	    top: -15.5%;
+	    background: rgba(0, 0, 0, 0.5); /* 투명한 그레이 */
+	    left: -26%;
+	    display: none; /* 초기 상태: 숨김 */
+	    justify-content: center;
+	    align-items: center;
+	    opacity: 0; /* 투명 상태 */
+	    transform: translateY(-100%); /* 화면 위쪽으로 이동 */
+	    transition: opacity 1.5s ease, transform 1.5s ease; /* 부드러운 전환 */
+	}
 	
+	.c-modal.show {
+	    display: flex; /* 화면에 표시 */
+	    opacity: 1; /* 불투명 상태 */
+	    transform: translateY(0); /* 원래 위치로 내려옴 */
+	}
 	
+	.box-card {
+	    width: 50%;
+	    color: #767a83;
+	    border-radius: 2rem;
+	    background: #ffffff;
+	    max-height: 80vh; /* 화면 높이의 80%까지 허용 */
+	    overflow-y: auto; /* 내용이 넘치면 스크롤 */
+	    margin-bottom: 7rem;
+	    padding: 1rem 2rem 2rem; /* 내부 여백 추가 */
+	}
+	
+	.box-header {
+	 	 width: 100%;
+	    padding: 0 1.5rem 0.5rem;
+	    margin-bottom: 1rem;
+	    display: flex;
+	    justify-content: space-between;
+	    font-size: 2rem;
+	    border-bottom: 1px solid #a5a5a5;
+	    align-items: center;
+	}
+	
+	.box-header button {
+	    border: none;
+	    background: transparent;
+	    font-size: 1.5rem;
+	    cursor: pointer;
+	}
+	
+	.detail-text {
+	    margin-top: 2rem;
+	    display: flex;
+	    flex-direction: column; /* 내용 세로 배치 */
+	    gap: 1.5rem; /* 각 항목 간격 */
+	}
+    </style>
+    
+    
+    <script type="text/javascript">
+
+    function closeModal() {
+        // 모달 닫기 (페이드 효과 제거)
+        $(".c-modal").removeClass("show");
+    }
+    function handleClick(id) {
+        // 모달 열기 (페이드 효과 추가)
+        $(".c-modal").addClass("show");
+    	// 모달 열리고 요청 보내면 됨
+		$.ajax({
+            url: "/store/manage/"+id, // 테스트용 API
+            type: "GET",
+            success: function(response) {
+            	console.log(response);
+
+                // 기존 내용을 비우기
+                $(".detail-text").html(""); // 또는 .empty()
+            	response.forEach(function(item) {
+            	    $(".detail-text").append(
+            	        "<div style='display:flex;'>" +
+            	        "<img src='" + item.image_src + "' alt='Product Image' style='max-width: 140px; display: block; margin-top: 10px;'>" +
+            	        "<div style='margin-top: 1rem;margin-left: 4rem;'>"+
+            	        "<p>" + item.product_option + "</p>" +
+            	        "<p><strong>수량:</strong> " + item.quantity + " 개</p>" +
+            	        "</div>"+
+            	        "</div>"
+            	    );
+            	});
+            },
+            error: function(xhr, status, error) {
+                // 에러 시 처리
+                console.error("Error: ", error);
+                $("#result").html("데이터를 가져오는데 실패했습니다.");
+            }
+        });
+		
+		
 	}
     
+    $(document).ready(function() {
+        $("#select-value-detail").on("change", function() {
+            var selectedValue = $(this).val(); // 선택된 값 가져오기
+            
+            if (selectedValue === "all") {
+                // "전체"를 선택하면 input 비활성화
+                $("input[name='detailValue']").val("").prop("disabled", true);
+            } else {
+                // 다른 옵션을 선택하면 input 활성화
+                $("input[name='detailValue']").prop("disabled", false);
+            }
+        });
+    });
+	
     
-    
-    </style>
+    </script>
   </head>
   <body>
     <div class="container-scroller">
@@ -246,6 +358,16 @@
 						<div class="col-12 grid-margin stretch-card">
 							<div class="card">
 								<div class="card-body">
+									<div class="c-modal">
+										<div class="box-card">
+											<div class="box-header">
+												<h3 style="margin: 10px 0 0 0;">상세 정보</h3> <button onclick="closeModal()">X</button>
+											</div>
+											<div class="box-text">
+												<div class="detail-text"></div>
+											</div>
+										</div>
+									</div>
 									<h4 class="card-title">주문통합검색</h4>
 											<div class="search-box">
 												<div>조회기간</div>
@@ -263,11 +385,11 @@
 															<select id="select-value-detail">
 																<option value="all" selected="selected">전체</option>
 																<option value="order_name">구매자명</option>
-																<option value="order_member_id">구매자ID</option>
+																<option value="member_id">구매자ID</option>
 																<option value="recipient">수취인명</option>
 																<option value="recipient_phone">구매자연락처</option>
 															</select>
-															<input type="text" name="detailValue" disabled="disabled">
+															<input style="width: 10rem;padding: 0.31rem;border: 1px solid #dbdde2;font-size: 13px;" type="text" name="detailValue" disabled="disabled">
 														</div>
 													</div>
 													
@@ -285,6 +407,13 @@
 													    	<input type="date" id="endDate" max="">
 													    </div>
 												    </div>
+												    
+												    <!-- 여긴 버튼으로 기간 선택하는 곳. -->
+													<div class="display-flex" style="justify-content: center;margin-right: 8rem;margin-top: 0.5rem;">
+														<div >
+													        <button class="search-btn" style="background: #006e60; border: none;color: #eee;padding: 0.5em 3rem;">검색</button>
+														</div>
+												    </div>
 											    </div>
 											</div>
 										
@@ -293,12 +422,11 @@
 												<tr>
 													<th>상품주문번호</th>
 													<th>구매자</th>
-													<th>가격</th>
 													<th>주소</th>
 													<th>수취인</th>
 													<th>수취인 전화번호</th>
 													<th>상태</th>
-													<th>상세 주문</th>
+													<th>상세 정보</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -337,6 +465,63 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script>
+ 	// 오늘 날짜와 1년 전 날짜 초기화
+    const today = new Date();
+    const formattedToday = today.toISOString().split('T')[0];
+    const oneYearAgo = new Date(today);
+    oneYearAgo.setDate(today.getDate() - 30 );
+    const formattedOneYearAgo = oneYearAgo.toISOString().split('T')[0];
+
+    // 시작일과 종료일 필드 설정
+    $('#startDate').val(formattedOneYearAgo).attr('max', formattedToday);
+    $('#endDate').val(formattedToday).attr('max', formattedToday);
+
+    // 날짜 포맷을 YYYY-MM-DD로 변환
+    const formatDate = (date) => {
+        if (!(date instanceof Date) || isNaN(date)) {
+            console.error("Invalid date:", date);
+            return ""; // 유효하지 않은 경우 빈 문자열 반환
+        }
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return (year+"-"+month+"-"+day);
+    };
+
+    function setDate(days) {
+        const startDate = new Date(today);
+        const endDate = new Date(today);
+        startDate.setDate(today.getDate() - days);
+        endDate.setDate(today.getDate());
+
+        $('#startDate').val(formatDate(startDate));
+        $('#endDate').val(formatDate(endDate));
+    }
+
+    // 버튼 클릭 이벤트
+    $('#today').click(function() {
+        setDate(0); // 오늘
+    });
+
+    $('#oneWeek').click(function() {
+        setDate(7); // 1주일 전
+    });
+
+    $('#oneMonth').click(function() {
+        setDate(30); // 1개월 전 (대략)
+    });
+
+    $('#threeMonths').click(function() {
+        setDate(90); // 3개월 전 (대략)
+    });
+
+    $('#today, #oneWeek, #oneMonth, #threeMonths').click(function() {
+        $('#startDate').attr('readonly', false); // 리드온리 해제
+        $('#endDate').attr('readonly', false); // 리드온리 해제
+    });
+	/*=============== 날짜 버튼 js ===============*/
+   
+	
     $(function() {
     	
     	/*=============== DataTable 라이브러리 ===============*/
@@ -359,7 +544,13 @@
 			"ajax": {
 				url: '/store/orders',
 				type: 'GET',
-				dataType: 'json',
+				data: function(d) {
+	                // 검색 조건을 추가
+	                d.searchKey = $('#select-value-detail').val(); // select 값
+	                d.searchValue = $("input[name='detailValue']").val(); // input 값
+	                d.startDate = $('#startDate').val() + " 00:00:00"; // 시작일 00:00:00
+	                d.endDate = $('#endDate').val() + " 23:59:59";    // 종료일 23:59:59
+	            },
 				dataSrc: function(json) {
 					return json.map(function(item) {
 						console.log(item);
@@ -370,7 +561,6 @@
 						item.animal_regdate = formattedDate; */
 						
 						item.address = "("+item.postal_code+") " +item.address + " "+item.detail_address;
-						item.total_product_price = item.total_product_price +"원";
 						return item;
 					});
 				}
@@ -378,23 +568,16 @@
 			"columns": [
 				{ data: 'order_id' },
 				{ data: 'order_name' },
-				{ data: 'total_product_price' },
 				{ data: 'address' },
 				{ data: 'recipient' },
 				{ data: 'recipient_phone' },
 				{ data: 'status' },
 				{ 
-	                data: 'anoId', // product_id 열
+	                data: 'order_id', // product_id 열
 	                render: function(data, type, row) {
-	                    return "<button class='item-button' onclick='handleClick(\"" + row.anoId + "\")'>" +
-	                        "<span>:</span>" +
-	                        "</button>" +
-	                        "<div id='myModal" + row.anoId + "' class='myModal'>" + // 클래스 이름에 anoId 추가
-	                            "<div class='update' onclick='updatePopup(" + row.anoId + ")'>수정</div>" +
-	                            "<div class='dropdown-divider'></div>" +
-	             
-	                            "<div class='delete' onclick='deletePopup(" + row.anoId + ")'>삭제</div>" +
-	                        "</div>";
+	                    return "<button class='item-button' onclick='handleClick(\"" + row.order_id + "\")'>" +
+	                        "<span>상세보기</span>" +
+	                        "</button>";
 	                }
 	            }
 			],
@@ -480,64 +663,10 @@
 		
 		/*=============== 날짜 버튼 js ===============*/
 		
-		// 오늘 날짜와 1년 전 날짜 초기화
-        const today = new Date();
-        const formattedToday = today.toISOString().split('T')[0];
-        const oneYearAgo = new Date(today);
-        oneYearAgo.setDate(today.getDate() - 30 );
-        const formattedOneYearAgo = oneYearAgo.toISOString().split('T')[0];
-
-        // 시작일과 종료일 필드 설정
-        $('#startDate').val(formattedOneYearAgo).attr('max', formattedToday);
-        $('#endDate').val(formattedToday).attr('max', formattedToday);
-
-        // 날짜 포맷을 YYYY-MM-DD로 변환
-        const formatDate = (date) => {
-            if (!(date instanceof Date) || isNaN(date)) {
-                console.error("Invalid date:", date);
-                return ""; // 유효하지 않은 경우 빈 문자열 반환
-            }
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return (year+"-"+month+"-"+day);
-        };
-
-        function setDate(days) {
-            const startDate = new Date(today);
-            const endDate = new Date(today);
-            startDate.setDate(today.getDate() - days);
-            endDate.setDate(today.getDate());
-
-            $('#startDate').val(formatDate(startDate));
-            $('#endDate').val(formatDate(endDate));
-        }
-
-        // 버튼 클릭 이벤트
-        $('#today').click(function() {
-            setDate(0); // 오늘
-        });
-
-        $('#oneWeek').click(function() {
-            setDate(7); // 1주일 전
-        });
-
-        $('#oneMonth').click(function() {
-            setDate(30); // 1개월 전 (대략)
-        });
-
-        $('#threeMonths').click(function() {
-            setDate(90); // 3개월 전 (대략)
-        });
-
-        $('#today, #oneWeek, #oneMonth, #threeMonths').click(function() {
-            $('#startDate').attr('readonly', false); // 리드온리 해제
-            $('#endDate').attr('readonly', false); // 리드온리 해제
-        });
-		/*=============== 날짜 버튼 js ===============*/
-		
-		
-		
+		 // 검색 버튼 클릭 이벤트
+	    $('.search-btn').on('click', function() {
+	        aTable.ajax.reload(); // DataTables 데이터 새로 불러오기
+	    });
 		
 		
 	});
