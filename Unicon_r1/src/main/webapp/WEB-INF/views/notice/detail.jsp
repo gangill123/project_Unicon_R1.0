@@ -245,6 +245,10 @@ body.modal-open {
 </style>
 
 <script>
+$(document).ready(function() {
+	$('.navbar #news').addClass('current');
+});
+
 // URL 복사 함수
 function copyToClipboard() {
     const currentURL = window.location.href;

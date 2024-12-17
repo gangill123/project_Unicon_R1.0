@@ -156,6 +156,7 @@ var NOTICE = {
 	};
 
 $(document).ready(function() {
+	$('.navbar #news').addClass('current');
     var currentPage = 1;
     var isLoading = false;
     var hasMore = true;

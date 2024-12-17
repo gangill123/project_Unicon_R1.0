@@ -393,6 +393,7 @@
 <script>
 
 $(document).ready(function() {
+	$('.navbar #news').addClass('current');
     // 연도 입력 숫자만 허용
     $('#birthYear').on('input', function() {
         this.value = this.value.replace(/[^0-9]/g, '');
