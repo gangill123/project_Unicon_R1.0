@@ -87,12 +87,12 @@
 										<c:when test="${!empty member_id }">
 	                                    <div class="attr-nav me-lg-0 ms-auto">
 	                                        <ul>
-	                                            <li class="dropdown me-3 me-lg-0">
+	                                            <li class="dropdown me-3 me-lg-0" style="font-size: 20px;">
 	                                                <a href="/shop/cart"><i class="fa-solid fa-shield-dog"></i>
 	                                                    <span class="badge bg-primary">0</span>
 	                                                </a>
 	                                            </li>
-	                                            <li class="dropdown me-3 me-lg-0">
+	                                            <li class="dropdown me-3 me-lg-0" style="font-size: 20px;">
 	                                                <a href="/shop/cart"><i class="fas fa-shopping-cart"></i>
 	                                                    <span class="badge bg-primary">${cartCount }</span>
 	                                                </a>

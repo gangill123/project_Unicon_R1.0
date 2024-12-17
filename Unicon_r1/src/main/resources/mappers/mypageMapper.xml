@@ -145,8 +145,10 @@
 	</select>
 
 	<!-- 봉사활동 횟수 조회 -->
-	<select id="getVolCntForProfile">
-	
+	<select id="getVolCntForProfile" resultType="int">
+		select count(*) 
+		from _volunteer_apply 
+		where member_id = #{member_id} 
 	</select>
 	
 	
