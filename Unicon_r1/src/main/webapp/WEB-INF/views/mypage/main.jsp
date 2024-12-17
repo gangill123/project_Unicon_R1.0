@@ -39,6 +39,10 @@
 	height: 2px;
 }
 
+#logOutFlutter {
+	cursor: pointer;
+}
+
 </style>
 
 </head>
@@ -71,7 +75,7 @@
                         <!-- end services -->
                         
 							<div style="margin-left: 20px; text-decoration: underline;">
-							    <a href="/mypage/logout" onclick="logout(event)"><span>로그아웃</span></a>
+							    <a id="logOutFlutter"><span>로그아웃</span></a>
 							</div>
 
                     </div>
@@ -237,6 +241,28 @@ $(document).ready(function () {
 		$('#myUni').addClass('active').trigger('click');
 	});
 	
+	$('#logOutFlutter').on('click', function() {
+		$.ajax({
+		    url: '/adptmgmt/flutter/memberId',
+		    method: 'GET',
+		    success: function(resp) {
+		        const message = JSON.stringify({
+		            id: resp.member_name,
+		            is_login: false
+		        });
+				if (typeof flutterChannel !== 'undefined') {
+			       flutterChannel.postMessage(message);
+			   } else {
+			       console.log('flutterChannel이 정의되지 않았습니다. 메시지를 전송할 수 없습니다.');
+			   }
+				logout();
+		    },
+		    error: function(xhr, status, error) {
+		        console.error('AJAX 요청 실패:', error);
+		    }
+		});
+	});
+
 	
 	
 });//readay
@@ -245,16 +271,14 @@ $(document).ready(function () {
 
 <script>
 
-		function logout(event) {
-		// 서버에 요청하기 전에 jwt 삭제하려고 일단 막고,
-		event.preventDefault();
-		
-		// 로컬 스토리지에서 JWT 삭제시킴
-		localStorage.removeItem("token");
-		
-		// 서버 로그아웃 url로 이동시켜서 (세션 무효화하기)
-		window.location.href = "/mypage/logout";
-	}
+		function logout() {
+			
+			// 로컬 스토리지에서 JWT 삭제시킴
+			localStorage.removeItem("token");
+			
+			// 서버 로그아웃 url로 이동시켜서 (세션 무효화하기)
+			window.location.href = "/mypage/logout";
+		}
 
 </script>
 
