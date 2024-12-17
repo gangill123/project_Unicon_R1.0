@@ -2,6 +2,7 @@ package com.Unicon.controller;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,11 +21,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Unicon.domain.CartVO;
 import com.Unicon.domain.CategoryDataVO;
+import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.InterestVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersVO;
 import com.Unicon.domain.ReviewVO;
 import com.Unicon.domain.ShopVO;
+import com.Unicon.service.AdminStoreService;
 import com.Unicon.service.ShopService;
 
 @Controller
@@ -34,6 +37,10 @@ public class ShopController {
 	@Autowired
 	private ShopService sService;
 	
+	// admin 서비스 
+	@Inject
+	private AdminStoreService aService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(ShopController.class);
 	
 	
@@ -42,6 +49,11 @@ public class ShopController {
 	public String shopPage(Model model) {
 		List<ShopVO> productAllInfo = sService.getProductAll();
 		model.addAttribute("productAllInfo", productAllInfo);
+		
+		// 복지몰 메인 슬라이드 이미지
+		List<ImageVO> list = aService.getAdminStoreImg();
+		logger.info("list : "+ list);
+		model.addAttribute("adminStoreImg", list);
 		
 		return "/shop/shopMain";
 	}

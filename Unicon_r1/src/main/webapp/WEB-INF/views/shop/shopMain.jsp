@@ -42,8 +42,45 @@
   font-size: 12px;
   z-index: 1; 
   }
-
-
+	/* 메인 슬라이드 이미지  */
+	.slider {
+	    position: relative;
+    	width: 100%;         /* 너비를 100%로 설정하여 반응형 유지 */
+	    margin: auto;
+	    overflow: hidden;
+	}
+	
+	.slides {
+	    display: flex;
+	    transition: transform 0.5s ease;
+	}
+	
+	.slides img {
+	    max-height: 400px;
+	    width: 100%;
+	    object-fit: fill;
+	    display: block;
+	}
+	
+	.c-button {
+	    position: absolute;
+	    top: 50%;
+	    transform: translateY(-50%);
+	    background-color: rgba(255, 255, 255, 0.5);
+	    border: none;
+	    cursor: pointer;
+	    padding: 10px;
+	    font-size: 18px;
+	}
+	
+	.prev {
+	    left: 10px;
+	}
+	
+	.next {
+	    right: 10px;
+	}
+	/* 메인 슬라이드 이미지  */
 </style>
 
 
@@ -57,23 +94,17 @@
         ================================================== -->
         <%-- ${productAllInfo} --%>
         
-        <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-md-7">
-                        <h1>Shop Product Grid</h1>
-                    </div>
-                    <div class="col-md-5">
-                        <ul class="text-md-end mt-3 mt-md-0 ps-0">
-                            <li><a href="home-1.html">Home</a></li>
-                            <li><a href="#!">Shop Product Grid</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </section>
+        <!-- 복지몰 메인 이미지 슬라이드  -->
+        <div class="slider">
+           <div class="slides">
+               <c:forEach var="image" items="${adminStoreImg}">
+               		<img src="${image.image_src}" alt="storeMainImages" />
+        	   </c:forEach>
+           </div>
+           <button class="c-button prev">❮</button>
+		   <button class="c-button next">❯</button>
+        </div>
+        <!-- 복지몰 메인 이미지 슬라이드  -->
 
         <!-- PRODUCT GRID
         ================================================== -->
