@@ -11,11 +11,13 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.Unicon.controller.LoginController;
+import com.Unicon.service.MemberService;
 
 /**
  * 로그인 성공시 처리하는 동작
@@ -23,6 +25,10 @@ import com.Unicon.controller.LoginController;
  */
 
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
+	
+	@Autowired
+	private MemberService mService;
+	
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -58,10 +64,23 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
         logger.info("세션에 사용자 정보 저장: memberId={}, roles={}", memberId, roles);
 
-        // 로그인 성공 후 모든 사용자를 /main으로 이동
-        response.sendRedirect("/main");
-       
+        // DB에서 특정 컬럼 값을 조회 (예: 회원 상태)
+        String userType = mService.getUserType(memberId);  // 예시: 회원 상태를 조회하는 메서드
+
+        // 상태에 따라 리디렉션 경로를 다르게 설정
+        if ("member".equals(userType)) {
+            response.sendRedirect("/main");
+        } else if ("shop".equals(userType)) {
+            response.sendRedirect("/store/main");
+        } else if ("shopad".equals(userType)) {
+            response.sendRedirect("/store/admin/main");
+        } else if ("inst".equals(userType)) {
+            response.sendRedirect("/AM/animals/list");
+        } else {
+            response.sendRedirect("/AM/manager/animals/everything");
+        }
     }
+
 
 
 

@@ -47,7 +47,6 @@
 <!--====================================작성부=====================================-->
 	<%-- ${petAllInfo } --%>
 <%-- 	${memberInfo } --%>
-<%-- ${proFileInfo } --%>
 	<section  style="padding-top: 50px;">
             <div class="container">
             	<div class="line-title">
@@ -63,7 +62,7 @@
                             <div class="services-single-menu mb-1-9">
                                 <ul class="m-0 list-unstyled">
                                     <li class="active"><a href="/mypage">프로필 관리</a></li>
-                                    <li><a href="/community/mypage/profile">커뮤니티 관리</a></li>
+                                    <li><a href="#!">커뮤니티 관리</a></li>
                                     <li><a href="/mypage/orders">주문 관리</a></li>
                                     <li><a href="/volunteer/mylist">봉사활동 관리</a></li>
                                 </ul>
@@ -71,9 +70,10 @@
                         </div>
                         <!-- end services -->
                         
-                        <div style="margin-left: 20px; text-decoration: underline;">
-                        	<a href="/mypage/logout"><span>로그아웃</span></a>
-                        </div>
+							<div style="margin-left: 20px; text-decoration: underline;">
+							    <a href="/mypage/logout" onclick="logout(event)"><span>로그아웃</span></a>
+							</div>
+
                     </div>
                     </div>
                     <!-- end left side section -->
@@ -111,22 +111,22 @@
 	                                	</div></a>
 	                            	</div>
 	                                <div class="col">
-	                                	<a href="/community/mypage/profile"><div>
-		                                	<h5 style="margin-bottom: 0;">${proFileInfo[0] }</h5>
+	                                	<div>
+		                                	<h5 style="margin-bottom: 0;">1</h5>
 		                                	<span>게시물</span>
-	                                	</div></a>
+	                                	</div>
 	                            	</div>
 	                                <div class="col">
 	                                	<a href="/mypage/orders"><div>
-		                                	<h5 style="margin-bottom: 0;">${proFileInfo[1] }</h5>
-		                                	<span>주문관리</span>
+		                                	<h5 style="margin-bottom: 0;">1</h5>
+		                                	<span>복지몰</span>
 	                                	</div></a>
 	                            	</div>
 	                                <div class="col">
-	                                	<a href="/volunteer/mylist"><div>
-		                                	<h5 style="margin-bottom: 0;">${proFileInfo[2] }</h5>
+	                                	<div>
+		                                	<h5 style="margin-bottom: 0;">1</h5>
 		                                	<span>봉사활동</span>
-	                                	</div></a>
+	                                	</div>
 	                            	</div>
                                 </div>
                                 </div>

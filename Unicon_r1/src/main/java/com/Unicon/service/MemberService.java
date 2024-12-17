@@ -90,5 +90,9 @@ public class MemberService {
             return false;
         }
     }
+    
+    public String getUserType(String memberId) {
+        return mDAO.getUserTypeByMemberId(memberId);  // DAO 메서드를 호출하여 member_type 값을 조회
+    }
 
 }
