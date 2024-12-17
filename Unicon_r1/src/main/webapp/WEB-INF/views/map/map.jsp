@@ -296,6 +296,11 @@
             </nav>
         </div>
     </div>
+    
+    <script>
+	$('.navbar #adpt').addClass('current');
+	</script>
     <%@ include file="../inc/new_footer.jsp" %>
+    
 </body>
 </html>
