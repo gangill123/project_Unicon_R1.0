@@ -48,7 +48,8 @@
   text-transform: uppercase;
   font-weight: 600;
   font-size: 12px;
-  z-index: 1; }
+  z-index: 1; 
+  }
 
 
 </style>
@@ -186,6 +187,8 @@
 
 <script>
 $(document).ready(function () {
+	$('.navbar #news').addClass('current');
+	
 	let allData = []; // 전체 데이터를 저장
 	
 	let id = 'lastest';

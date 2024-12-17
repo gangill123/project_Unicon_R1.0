@@ -56,62 +56,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-header" id="headingThree">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Accessories
-                                </button>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">Drives &amp; Storage</a></li>
-                                                    <li><a href="#!">Networking Devices</a></li>
-                                                    <li><a href="#!">Software</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header" id="headingFour">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                  Clothes
-                                </button>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-bs-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">T-Shirt</a></li>
-                                                    <li><a href="#!">Pants</a></li>
-                                                    <li><a href="#!">Saree</a></li>
-                                                    <li><a href="#!">Joggers</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card">
-                                        <div class="card-header" id="headingFive">
-                                            <h5 class="mb-0">
-                                                <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                  Mobile
-                                </button>
-                                            </h5>
-                                        </div>
-                                        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-bs-parent="#accordion">
-                                            <div class="card-body">
-                                                <ul class="mb-0 list-unstyled">
-                                                    <li><a href="#!">Intex</a></li>
-                                                    <li><a href="#!">Google</a></li>
-                                                    <li><a href="#!">Samsung</a></li>
-                                                    <li><a href="#!">Apple</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -271,7 +215,7 @@
                                         <!-- Begin Submit button -->
                                         <div class="col-md-12">
                                             <div class="text-center">
-                                                <button class="butn w-100" type="submit"><span>등록하기</span></button>
+                                                <button class="butn primary w-100" type="submit"><span>등록하기</span></button>
                                             </div>
                                             <div class="quform-loading-wrap"><span class="quform-loading"></span></div>
                                         </div>
@@ -327,8 +271,8 @@ $(document).ready(function () {
 			  text: "정보 확인 후 등록하시기 바랍니다.",
 			  icon: 'warning',
 			  showCancelButton: true,
-			  confirmButtonColor: '#3085d6',
-			  cancelButtonColor: '#d33',
+			  confirmButtonColor: '#86bc42',
+			  cancelButtonColor: '#aaa',
 			  confirmButtonText: '등록',
 			  cancelButtonText: '취소',
 			  customClass: {
@@ -340,6 +284,7 @@ $(document).ready(function () {
 	  	  			  title: '등록이 완료되었습니다!',
 	  	  			  text: "수정하기를 통하여 수정 가능합니다.",
 	  	  			  icon: 'success',
+	  	  			  confirmButtonColor: '#86bc42',
 	  	  			  customClass: {
 	  			        popup: 'custom-swal-popup' // 사용자 정의 클래스 추가
 	 			 	  }

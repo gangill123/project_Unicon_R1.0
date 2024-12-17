@@ -23,7 +23,10 @@ public class MainService {
 		return maindao.getUnicornInfo();
 	}
 	
-	
+	// 멤버 사진 가져와서 세션 저장
+	public String getMemberImage(String member_id) {
+		return maindao.getMemberImage(member_id);
+	}
 	
 	
 	

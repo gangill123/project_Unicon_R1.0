@@ -37,6 +37,15 @@
 	</select>
 	
 	
+	<!-- 멤버 사진 가져와서 세션 저장 -->
+	<select id="getMemberImage" resultType="String">
+		select member_image 
+		from _member 
+		where member_id = #{member_id} 
+	</select>
+	
+	
+	
 	
 
 

@@ -70,6 +70,9 @@
                         </div>
                         <!-- end services -->
                         
+                        <div style="margin-left: 20px; text-decoration: underline;">
+                        	<a href="/mypage/logout"><span>로그아웃</span></a>
+                        </div>
                     </div>
                     </div>
                     <!-- end left side section -->

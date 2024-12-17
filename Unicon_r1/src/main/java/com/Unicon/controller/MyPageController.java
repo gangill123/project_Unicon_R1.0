@@ -334,6 +334,17 @@ public class MyPageController {
 	}
 	
 	
+	// 마이페이지에서 로그아웃 클릭 시 세션 초기화
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		// 세션 초기화
+		session.invalidate();
+		
+		return "redirect:/main";
+	}
+	
+	
+	
 	
 	
 } //controller

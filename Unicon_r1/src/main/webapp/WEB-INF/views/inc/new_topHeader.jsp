@@ -55,13 +55,18 @@
 	}   
 	
 	.navbar-nav li{
-		margin-left: 15px;
+		margin-left: 27px;
 	}
 	
 	
 	.navbar-nav li a{
 		font-size: 17px;
 	} 
+	
+	.navbar-nav li ul li{
+		margin-left: 5px;
+	}
+	
 	    
 	.services-single-menu li a {
 	font-size: 20px;

@@ -46,7 +46,10 @@ public class MainDAO {
 	}
 	
 	
-	
+	// 멤버 사진 가져와서 세션 저장
+	public String getMemberImage(String member_id) {
+		return sqlSession.selectOne(NAMESPACE+".getMemberImage", member_id);
+	}
 	
 	
 	

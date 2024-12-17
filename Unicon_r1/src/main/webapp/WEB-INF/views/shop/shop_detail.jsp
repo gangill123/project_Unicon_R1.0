@@ -125,7 +125,7 @@
 		                                <span class="display-27" style="text-decoration: line-through; color: #aaa;">
 		                                <fmt:formatNumber value="${productInfo.product_price}" type="number" />원</span></p>
 		                                <p><span class="me-3 display-15 font-weight-600" style="color: rgb(240, 86, 86); line-height: 2rem;"
-		                                ><fmt:formatNumber value="${(productInfo.product_price*(100-productInfo.discount_rate)/100)}" type="number" />원</span>
+		                                ><fmt:formatNumber value="${Math.floor((productInfo.product_price*(100-productInfo.discount_rate)/100)/100)*100}" type="number" />원</span>
 		                                <span class="display-28 font-weight-600" style="color: rgb(240, 86, 86);">할인가</span></p>
 		                            </div>
 								</c:when>
@@ -170,7 +170,6 @@
 		                            </div>
                             	</c:when>
                             	<c:otherwise>
-	                            	
                             		<div class="col-md-12">
 	                                    <div class="quform-element form-group">
 	                                        <div class="quform-input">
@@ -291,6 +290,13 @@
 <script>
 	$(document).ready(function () {
 		$('.navbar #shop').addClass('current');
+		
+		// 품절일 때 셀렉트 박스 막기
+		if('${productInfo.product_status}' == '품절'){
+			$('#itemOption1').prop('disabled',true);
+		}
+		
+		
 		
 		// 옵션 선택 시 옵션값 담는 배열 선언
 		let optionArray = [];
