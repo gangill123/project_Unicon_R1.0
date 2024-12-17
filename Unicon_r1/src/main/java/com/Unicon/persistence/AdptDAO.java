@@ -127,6 +127,11 @@ public class AdptDAO {
 			statusData.put("adpt_status", 4);
 			sqlSession.update(NAMESPACE+"animalStatusEnd", statusData);
 		}
+		
+		if(statusData.get("animal_status").equals(4)) {
+			sqlSession.update(NAMESPACE+"animalAdptComplete", statusData);
+		}
+		
 	}
 	
 	
@@ -223,6 +228,29 @@ public class AdptDAO {
 		
 		Integer counselCount = sqlSession.selectOne(NAMESPACE+"counselCheckMember", counselCheckParams);
 		return counselCount > 0 && counselCount != null;
+	}
+	
+	
+	/*=========== 사용자 페이지 상담 상태 변경 ===========*/
+	public void counselStatusUpdate(Map<String, Object> counselStautsParams) {
+		logger.debug("( •̀ ω •́ )✧ counselStatusUpdate() 실행");
+		
+		sqlSession.update(NAMESPACE+"counselStatusUpdate", counselStautsParams);
+		if(counselStautsParams.get("counsel_status").equals(2)) {
+			counselStautsParams.put("animal_status", 3);
+			sqlSession.update(NAMESPACE+"writingAnimalStatus", counselStautsParams);
+		}
+		
+		if(counselStautsParams.get("counsel_status").equals(3)) {
+			counselStautsParams.put("animal_status", 2);
+			sqlSession.update(NAMESPACE+"writingAnimalStatus", counselStautsParams);
+		}
+		
+		if(counselStautsParams.get("counsel_status").equals(4)) {
+			counselStautsParams.put("animal_status", 2);
+			sqlSession.update(NAMESPACE+"writingAnimalStatus", counselStautsParams);
+		}
+		
 	}
 	
 	

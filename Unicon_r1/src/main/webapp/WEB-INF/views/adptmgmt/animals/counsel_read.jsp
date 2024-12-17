@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/flag-icon-css/css/flag-icon.min.css">
     <link rel="stylesheet" href="/resources/admin/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.4.24/sweetalert2.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -208,6 +209,15 @@
 		background-color: white;
 		border-radius: 8px;
 	}
+	
+	.counsel-modal-content {
+		max-height: 80vh;
+		overflow-y: auto;
+	}
+	
+	.swal2-container {
+		z-index: 2000;
+	}
     /*=============== 모달 css ===============*/
     
     
@@ -274,52 +284,68 @@
 							<div class="col-12">
 								<div class="form-group row justify-content-center mb-1">
 									<div class="col-12 col-xl-3 col-lg-6 col-md-6 mb-2">
-										<label for="aName" class="text-dark custom-label">이름</label>
+										<input type="hidden" id="counselId" />
+										<input type="hidden" id="animalId" />
+										<label for="counselName" class="text-dark custom-label">이름</label>
 										<div class="input-group">
-											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
-											/>
+											<input type="text" id="counselName" class="form-control custom-text"
+											readonly />
 										</div>
 									</div>
 									<div class="col-12 col-xl-3 col-lg-6 col-md-6 mb-2">
-										<label for="aName" class="text-dark custom-label">성별</label>
+										<label for="counselGender" class="text-dark custom-label">성별</label>
 										<div class="input-group">
-											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
-											/>
+											<input type="text" id="counselGender" class="form-control custom-text"
+											readonly />
 										</div>
 									</div>
 									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-2">
-										<label for="aName" class="text-dark custom-label">생년월일</label>
+										<label for="counselBirth" class="text-dark custom-label">생년월일</label>
 										<div class="input-group">
-											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
-											/>
+											<input type="text" id="counselBirth" class="form-control custom-text"
+											readonly />
 										</div>
 									</div>
 								</div>
 								<div class="form-group row justify-content-center mb-1">
 									<div class="col-12 col-xl-12 col-lg-6 col-md-6 mb-2">
-										<label for="aName" class="text-dark custom-label">주소</label>
+										<label for="counselAddress" class="text-dark custom-label">주소</label>
 										<div class="input-group">
-											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
-											/>
+											<input type="text" id="counselAddress" class="form-control custom-text"
+											readonly />
 										</div>
 									</div>
 									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-2">
-										<label for="aName" class="text-dark custom-label">전화번호</label>
+										<label for="counselTel" class="text-dark custom-label">전화번호</label>
 										<div class="input-group">
-											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
-											/>
+											<input type="text" id="counselTel" class="form-control custom-text"
+											readonly />
 										</div>
 									</div>
 									<div class="col-12 col-xl-6 col-lg-6 col-md-6 mb-2">
-										<label for="aName" class="text-dark custom-label">이메일</label>
+										<label for="counselEmail" class="text-dark custom-label">이메일</label>
 										<div class="input-group">
-											<input type="text" id="aName" name="animal_name" class="form-control custom-text"
-											/>
+											<input type="text" id="counselEmail" class="form-control custom-text"
+											readonly />
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="form-group row d-flex justify-content-center align-items-center">
+					<button type="button" id="counselAgreeBtn"
+						class="btn btn-lg btn-rounded btn-primary custom-text mx-2 mb-2">
+						상담 승인
+					</button>
+					<button type="button" id="counselCancelBtn" 
+						class="btn btn-lg btn-rounded btn-danger custom-text mx-2 mb-2">
+						상담 취소
+					</button>
+					<button type="button" id="counselCompleteBtn" 
+						class="btn btn-lg btn-rounded btn-success custom-text mx-2 mb-2">
+						상담 완료
+					</button>
 					</div>
 				</div>
 			</div>
@@ -342,6 +368,8 @@
     <!-- End plugin js for this page -->
     <!-- inject:js -->
     <!-- dataTables.js -->
+    <!-- sweetalert2 -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="/resources/admin/js/off-canvas.js"></script>
     <script src="/resources/admin/js/hoverable-collapse.js"></script>
@@ -490,6 +518,7 @@
 		/*=============== tr 선택 상세 조회 ===============*/
 		$('table').on('click', 'tr.a-view-writing', function() {
 			const member_id = $(this).find('td:eq(2)').text();
+			const animal_id = $(this).find('td:eq(4)').text();
 			const currentRow = $(this);
 			
 			$.ajax({
@@ -498,23 +527,20 @@
 				data: { member_id: member_id },
 				success: function(resp) {
 					const member_gender = resp.member_gender == 'female'?'여성':'남성';
-				    const roadAddressParts = resp.road_address.split(' ');
 					let formattedNumber = '';
-				    let infoAdress = '';
 				    
-				    for (let i = 0; i < roadAddressParts.length; i += 2) {
-				    	infoAdress += '<small class="roadHidden">'+ roadAddressParts[i];
-				        if (i + 1 < roadAddressParts.length) {
-				            infoAdress += ' ' + roadAddressParts[i + 1];
-				        }
-				        infoAdress += '<br></small>';
-				    }
-					
 					if (resp.member_tel.length === 11) {
 						formattedNumber = resp.member_tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
 					}
 					
-					
+					$('#animalId').val(animal_id);
+					$('#counselId').val(resp.member_id);
+					$('#counselName').val(resp.member_name);
+					$('#counselGender').val(member_gender);
+					$('#counselBirth').val(resp.member_birth);
+					$('#counselAddress').val(resp.road_address +' '+ resp.detail_address);
+					$('#counselTel').val(formattedNumber);
+					$('#counselEmail').val(resp.member_email);
 					
 					$('#counselModal').show();
 				},
@@ -530,7 +556,7 @@
 		/*=============== tr 선택 상세 조회 ===============*/
 
 		
-		
+		/*=============== 모달 제어 ===============*/
 		$('.counselModalClose').click(function() {
 			$('#counselModal').hide();
 		});
@@ -540,7 +566,168 @@
 				$('#counselModal').hide();
 			}
 		});
+		/*=============== 모달 제어 ===============*/
 		
+		
+		
+		/*=============== 모달 버튼 제어 ===============*/
+		$('#counselAgreeBtn').on('click', function() {
+			const animal_id = $('#animalId').val();
+			const member_id = $('#counselId').val();
+			
+			Swal.fire({
+				title: '상담 승인을 하시겠습니까?',
+				allowOutsideClick: false,
+				showCancelButton: true,
+				confirmButtonColor: '#006e60',
+				cancelButtonColor: '#aab2bd',
+				confirmButtonText: '승인',
+				cancelButtonText: '닫기'
+			}).then(function(result) {
+				if (result.isConfirmed) {
+					
+					$.ajax({
+						url: '/adptmgmt/counsel/update',
+						method: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify({ 
+							"member_id" : member_id, 
+							"animal_id" : animal_id, 
+							"counsel_status" : 2 }),
+						success: function() {
+							Swal.fire({
+								title: '승인이 완료되었습니다',
+								icon: 'success',
+								allowOutsideClick: false,
+								confirmButtonColor: '#006e60',
+								confirmButtonText: '확인',
+							}).then(function(result) {
+								if (result.isConfirmed) {
+									location.reload();
+								}
+							});
+						},
+						error: function(xhr, status, error) {
+							console.error("AJAX 오류:", status, error);
+							Swal.fire({
+								title: '오류 발생',
+								text: '상담 승인에 실패했습니다. 다시 시도해 주세요.',
+								icon: 'error',
+								allowOutsideClick: false,
+								confirmButtonColor: '#006e60',
+								confirmButtonText: '확인'
+							});
+						}
+					});
+				}
+			});
+		});
+		
+		$('#counselCancelBtn').on('click', function() {
+			const animal_id = $('#animalId').val();
+			const member_id = $('#counselId').val();
+			
+			Swal.fire({
+				title: '상담 승인을 하시겠습니까?',
+				allowOutsideClick: false,
+				showCancelButton: true,
+				confirmButtonColor: '#006e60',
+				cancelButtonColor: '#aab2bd',
+				confirmButtonText: '승인',
+				cancelButtonText: '닫기'
+			}).then(function(result) {
+				if (result.isConfirmed) {
+					
+					$.ajax({
+						url: '/adptmgmt/counsel/update',
+						method: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify({ 
+							"member_id" : member_id, 
+							"animal_id" : animal_id, 
+							"counsel_status" : 3 }),
+						success: function() {
+							Swal.fire({
+								title: '승인이 완료되었습니다',
+								icon: 'success',
+								allowOutsideClick: false,
+								confirmButtonColor: '#006e60',
+								confirmButtonText: '확인',
+							}).then(function(result) {
+								if (result.isConfirmed) {
+									location.reload();
+								}
+							});
+						},
+						error: function(xhr, status, error) {
+							console.error("AJAX 오류:", status, error);
+							Swal.fire({
+								title: '오류 발생',
+								text: '상담 승인에 실패했습니다. 다시 시도해 주세요.',
+								icon: 'error',
+								allowOutsideClick: false,
+								confirmButtonColor: '#006e60',
+								confirmButtonText: '확인'
+							});
+						}
+					});
+				}
+			});
+		});
+		
+		
+		$('#counselCompleteBtn').on('click', function() {
+			const animal_id = $('#animalId').val();
+			const member_id = $('#counselId').val();
+			
+			Swal.fire({
+				title: '상담 승인을 하시겠습니까?',
+				allowOutsideClick: false,
+				showCancelButton: true,
+				confirmButtonColor: '#006e60',
+				cancelButtonColor: '#aab2bd',
+				confirmButtonText: '승인',
+				cancelButtonText: '닫기'
+			}).then(function(result) {
+				if (result.isConfirmed) {
+					
+					$.ajax({
+						url: '/adptmgmt/counsel/update',
+						method: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify({ 
+							"member_id" : member_id, 
+							"animal_id" : animal_id, 
+							"counsel_status" : 4 }),
+						success: function() {
+							Swal.fire({
+								title: '승인이 완료되었습니다',
+								icon: 'success',
+								allowOutsideClick: false,
+								confirmButtonColor: '#006e60',
+								confirmButtonText: '확인',
+							}).then(function(result) {
+								if (result.isConfirmed) {
+									location.reload();
+								}
+							});
+						},
+						error: function(xhr, status, error) {
+							console.error("AJAX 오류:", status, error);
+							Swal.fire({
+								title: '오류 발생',
+								text: '상담 승인에 실패했습니다. 다시 시도해 주세요.',
+								icon: 'error',
+								allowOutsideClick: false,
+								confirmButtonColor: '#006e60',
+								confirmButtonText: '확인'
+							});
+						}
+					});
+				}
+			});
+		});
+		/*=============== 모달 버튼 제어 ===============*/
 		
 		
 		
