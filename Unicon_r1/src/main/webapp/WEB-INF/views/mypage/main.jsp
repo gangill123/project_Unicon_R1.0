@@ -242,6 +242,24 @@ $(document).ready(function () {
 
 </script>
 
+<script>
+
+		function logout(event) {
+		// 서버에 요청하기 전에 jwt 삭제하려고 일단 막고,
+		event.preventDefault();
+		
+		// 로컬 스토리지에서 JWT 삭제시킴
+		localStorage.removeItem("token");
+		
+		// 서버 로그아웃 url로 이동시켜서 (세션 무효화하기)
+		window.location.href = "/mypage/logout";
+	}
+
+</script>
+
+
+
+
 
 
 <%@ include file="../inc/new_footer.jsp" %> <!-- footer -->
