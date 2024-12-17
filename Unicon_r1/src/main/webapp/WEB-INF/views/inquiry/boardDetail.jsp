@@ -55,7 +55,7 @@
 		
         <div class="row">
             <div class="col-md-12">
-                <h1>unicon 고객센터</h1>
+                <h1>Unicorn 고객센터</h1>
             </div>
             <div class="col-md-12">
                 <ul class="ps-0">

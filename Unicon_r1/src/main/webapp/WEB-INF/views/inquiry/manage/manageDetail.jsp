@@ -145,7 +145,7 @@ textarea {
    <div class="card">
         <br>
         <br>
-        <h4 class="card-title">Unicon Q&amp;A 문의 관리</h4>
+        <h4 class="card-title">Unicorn Q&amp;A 문의 관리</h4>
         <div class="row">    
             <!-- Blog Left -->
             <div class="col-lg-9 mb-4">
