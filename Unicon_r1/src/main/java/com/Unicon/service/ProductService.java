@@ -81,8 +81,13 @@ public class ProductService {
 		return result;
 	}
 	// 주문통합 검색 / 통합 검색 데이터 테이블 요청
-	public List<OrdersVO> getOrder(String member_id) {
+	public List<OrdersVO> getOrder(Map<String, Object> member_id) {
 		List<OrdersVO> list = pDao.getOrder(member_id);
+		return list;
+	}
+	// 주문통합 검색 / 주문 상세보기
+	public List<Map<String, Object>> getOrderDetail(String id) {
+		List<Map<String, Object>> list = pDao.getOrderDetail(id);
 		return list;
 	}
 	

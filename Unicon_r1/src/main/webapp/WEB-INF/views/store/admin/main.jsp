@@ -352,12 +352,12 @@
 	    });
 
 	    // 자동 슬라이드 기능 (원하는 경우 주석 해제)
-	    /*
+	    
 	    setInterval(function() {
 	        currentIndex = (currentIndex + 1) % totalSlides;
 	        showSlide(currentIndex);
 	    }, 3000); // 3초마다 슬라이드 이동
-	    */
+	    
 	    
 	    
 	    const modal = $('#myModal');
@@ -544,7 +544,7 @@
 
 	            // AJAX 요청
 	            $.ajax({
-	                url: '/admin/store/updateImg', // 서버의 URL
+	                url: '/store/updateImg', // 서버의 URL
 	                type: 'POST',
 	                data: formData,
 	                processData: false, // jQuery가 데이터를 처리하지 않도록 설정

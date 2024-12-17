@@ -1272,7 +1272,7 @@
                     data.option.push({
                         option_name: optionName,
                         option_value: optionValue,
-                        option_price: data.product_price,
+                        option_price: 0,
                         option_stock : data.product_stock
                     });
                 });

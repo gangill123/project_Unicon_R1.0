@@ -303,6 +303,36 @@ INNER JOIN
 WHERE 
     p.product_seller_id = #{member_id}
     AND o.status NOT IN ('취소종료', '취소')
+    
+    <!-- 검색 조건 -->
+    <if test="searchKey != null and searchValue != null and searchKey != 'all'">
+        AND o.${searchKey} LIKE CONCAT('%', #{searchValue}, '%')
+    </if>
+    
+    <!-- 날짜 범위 조건 -->
+    <if test="startDate != null and endDate != null">
+        AND o.payment_date BETWEEN #{startDate} AND #{endDate}
+    </if>
+</select>
+
+<select id="getOrderDetail" resultType="Map">
+ SELECT 
+        i.image_src,
+        od.product_option,
+        d.product_id,
+        od.quantity
+    FROM _orders o
+    left JOIN _orders_detail d 
+        ON o.order_id = d.order_id
+    LEFT JOIN _image i
+        ON d.product_id = i.image_id
+	left join _orders_detail_option od 
+        on od.order_id = o.order_id
+    left join _products p
+        on p.product_id = d.product_id
+    WHERE od.order_id = #{id}
+    and i.image_sequence = 0
+    AND od.orders_detail_option_status NOT IN ('취소', '취소종료');
 </select>
 
 

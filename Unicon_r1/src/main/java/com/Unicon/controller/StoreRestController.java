@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -210,20 +211,54 @@ public class StoreRestController {
     
     // 주문통합검색 / 통합 검색 데이터 테이블 요청
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
-    public ResponseEntity<List<OrdersVO>> orderGET(HttpSession session) {
+    public ResponseEntity<List<OrdersVO>> orderGET(HttpSession session, 
+    		@RequestParam(required = false) String searchKey,
+            @RequestParam(required = false) String searchValue,
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String endDate) {
     	logger.info("orderGET REST API 호출 : ");
     	
-    	// 세션에 member_id를 받아와서
-    	// String member_id = (String)session.getAttribute("member_id");
-    	 String member_id = "mingan2";
-    	List<OrdersVO> list =  pService.getOrder(member_id); 
+    	// 세션에서 member_id 가져오기
+        String member_id = (String) session.getAttribute("member_id");
+        if (member_id == null) {
+            member_id = "mingan2"; // 테스트용 기본값
+        }
+        // 파라미터를 Map으로 묶기
+        Map<String, Object> params = new HashMap<>();
+        params.put("member_id", member_id);
+        params.put("searchKey", searchKey);
+        params.put("searchValue", searchValue);
+        params.put("startDate", startDate);
+        params.put("endDate", endDate);
+
+        logger.info("검색 조건: " + params);
+        
+
+    	List<OrdersVO> list =  pService.getOrder(params); 
+    	logger.info("list"+list);
+    	
+    	// 이거 반환하는 값 수정해야됨.
+    	 if (list == null || list.isEmpty()) {
+    		return new ResponseEntity<List<OrdersVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<List<OrdersVO>>(list, HttpStatus.OK);
+    	}
+    }
+    
+    // 주문통합검색 / 주문 상세보기.
+    @RequestMapping(value = "/manage/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Map<String, Object>>> orderDetailGET(@PathVariable("id") String id) {
+    	logger.info("orderDetailGET REST API 호출 : ");
+    	
+    	
+    	List<Map<String, Object>> list =  pService.getOrderDetail(id); 
     	logger.info("list"+list);
     	
     	// 이거 반환하는 값 수정해야됨.
     	if (list == null) {
-    		return new ResponseEntity<List<OrdersVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+    		return new ResponseEntity<List<Map<String, Object>>>(HttpStatus.INTERNAL_SERVER_ERROR);
     	} else {
-    		return new ResponseEntity<List<OrdersVO>>(list, HttpStatus.OK);
+    		return new ResponseEntity<List<Map<String, Object>>>(list, HttpStatus.OK);
     	}
     }
     
@@ -306,7 +341,7 @@ public class StoreRestController {
 	
 	
 	
-	// 어드민 공지사랑 list 가져오기.
+	// 어드민 공지사gkd list 가져오기.
 	@RequestMapping( value="/admin/notices" , method =RequestMethod.GET )
 	public ResponseEntity<List<AdminNoticeVO>> noticeList() {
 		logger.info("/admin/notices 실행");
