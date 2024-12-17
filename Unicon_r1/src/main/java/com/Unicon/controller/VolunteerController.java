@@ -172,12 +172,35 @@ public class VolunteerController {
     }
     /* ============================================================================================== */
     
+//    @GetMapping("/mylist")
+//    public String myApplications(HttpSession session, Model model) throws Exception {
+//        String member_id = (String) session.getAttribute("member_id");
+//        List<VolunteerApplyVO> applications = volService.getMyApplications(member_id);
+//        model.addAttribute("applications", applications);
+//        return "volunteer/volMyList";
+//    }
+    
     @GetMapping("/mylist")
-    public String myApplications(HttpSession session, Model model) throws Exception {
-        String userId = (String) session.getAttribute("userId");
-        List<VolunteerApplyVO> applications = volService.getMyApplications(userId);
+    public String getVolunteerApplyList(
+            @RequestParam(required = false) String volunteerId,
+            @RequestParam(required = false) String status,
+            HttpSession session,
+            Model model) throws Exception {
+
+        // 세션에서 로그인된 사용자 ID 가져오기
+        String member_id = (String) session.getAttribute("member_id");
+
+        // 검색 조건을 맵에 저장
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("volunteerId", volunteerId);
+        paramMap.put("status", status);
+        paramMap.put("member_id", member_id); 
+
+        // 서비스 호출
+        List<VolunteerApplyVO> applications = volService.getMyApplications(member_id);
         model.addAttribute("applications", applications);
-        return "volunteer/volMyList";
+
+        return "volunteer/volMyList"; 
     }
     
     @PostMapping("/cancel/{voId}")
