@@ -314,6 +314,9 @@ td.istatus {
 
 <script>
 $(document).ready(function () {
+	
+		$('.navbar #inquiry').addClass('current');
+	
     // 현재 페이지와 페이지 크기
     let currentPage = 1;
     const pageSize = 10;

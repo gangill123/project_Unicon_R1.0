@@ -3,13 +3,13 @@
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
   <!-- Customized Bootstrap Stylesheet -->
-    <link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
+<%--     <link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet"> --%>
 
   <!-- Template Stylesheet -->
-  <link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
+<%--   <link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet"> --%>
 
   <!-- 추가 템플릿 css/js 작성란 -->
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
@@ -322,8 +322,16 @@
     </div>
 </section>
 
+
+<script>
+$(document).ready(function () {
+	
+});
+</script>
+
 <script>
 $(document).ready(function(){
+	$('.navbar #inquiry').addClass('current');
     $(".owl-carousel").owlCarousel({
         items: 4,            // 화면에 표시할 아이템 개수 (한 줄에 4개)
         loop: false,         // 마지막 아이템 이후 반복 비활성화
