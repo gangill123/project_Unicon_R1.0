@@ -14,13 +14,13 @@
     <meta name="description" content="Crizal - Multipurpose Responsive Template + Admin" />
 
     <!-- title  -->
-    <title>Crizal - Multipurpose Responsive Template + Admin</title>
+    <title>Unicorn - Finding New Homes for Abandoned Animals</title>
 
     <!-- favicon -->
     <link rel="shortcut icon" href="${pageContext.request.contextPath }/resources/new_assets/img/logos/favicon.png">
-    <link rel="apple-touch-icon" href="${pageContext.request.contextPath }/resources/new_assets/img/logos/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="${pageContext.request.contextPath }/resources/new_assets/img/logos/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath }/resources/new_assets/img/logos/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" href="${pageContext.request.contextPath }/resources/new_assets/img/logos/favicon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="${pageContext.request.contextPath }/resources/new_assets/img/logos/favicon.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath }/resources/new_assets/img/logos/favicon.png">
 
     <!-- plugins -->
     <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/new_assets/css/plugins.css">
@@ -75,6 +75,11 @@
 	.services-single-menu li a:after {
 		height: 2px;
 	}    
+	    
+	    
+	    
+	    
+	    
 	    
 	    
 	    

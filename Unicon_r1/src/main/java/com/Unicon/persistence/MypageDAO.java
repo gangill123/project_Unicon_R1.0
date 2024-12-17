@@ -94,15 +94,14 @@ public class MypageDAO {
 		profileInfo.add(postCntForProfile);
 		
 		// 복지몰 횟수 조회
-		Integer orderCntForProfile = sqlSession.selectOne(NAMESPACE+"getorderCntForProfile", member_id);
+		Integer orderCntForProfile = sqlSession.selectOne(NAMESPACE+".getorderCntForProfile", member_id);
 		profileInfo.add(orderCntForProfile);
 		
 		// 봉사활동 횟수 조회
 		Integer volCntForProfile = sqlSession.selectOne(NAMESPACE+".getVolCntForProfile", member_id);
+		profileInfo.add(volCntForProfile);
 		
-		
-		
-		return null;
+		return profileInfo;
 	}
 	
 	

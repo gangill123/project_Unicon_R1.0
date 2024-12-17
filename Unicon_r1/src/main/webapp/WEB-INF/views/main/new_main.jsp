@@ -364,7 +364,6 @@
 <!--====================================script 작성부=====================================-->
 <script>
 $(document).ready(function () {
-	$('.navbar #inquiry').addClass('current');
 	$('.navbar #home').addClass('current');
 	
 

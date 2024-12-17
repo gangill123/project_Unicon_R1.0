@@ -421,6 +421,7 @@
 		select p.*, i.* 
 		from _products p 
 		join _image i on p.product_id = i.image_id 
+		where p.product_status = '판매중' 
 		order by discount_rate desc 
 		limit 20
 	</select>

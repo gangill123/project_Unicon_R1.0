@@ -90,7 +90,7 @@ public class MypageService {
 	
 	//게시물, 복지몰, 봉사활동 횟수 조회
 	public List<Integer> profileInfo(String member_id){
-		return null;
+		return mydao.profileInfo(member_id);
 	}
 	
 	

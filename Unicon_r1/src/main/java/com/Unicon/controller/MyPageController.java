@@ -65,7 +65,8 @@ public class MyPageController {
 		model.addAttribute("petAllInfo", petAllInfo);
 		
 		//게시물, 복지몰, 봉사활동 횟수 조회
-		
+		List<Integer> proFileInfo = myService.profileInfo(member_id);
+		model.addAttribute("proFileInfo", proFileInfo);
 			
 		return "/mypage/main";
 	}

@@ -88,9 +88,9 @@
                             <div class="services-single-menu mb-1-9">
                                 <ul class="m-0 list-unstyled">
                                     <li><a href="/mypage">프로필 관리</a></li>
-                                    <li><a href="#!">커뮤니티 관리</a></li>
+                                    <li><a href="/community/mypage/profile">커뮤니티 관리</a></li>
                                     <li class="active"><a href="/mypage/orders">주문 관리</a></li>
-                                    <li><a href="#!">봉사활동 관리</a></li>
+                                    <li><a href="/volunteer/mylist">봉사활동 관리</a></li>
                                 </ul>
                             </div>
                         </div>
