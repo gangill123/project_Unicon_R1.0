@@ -366,6 +366,24 @@
 $(document).ready(function () {
 	$('.navbar #home').addClass('current');
 	
+	$.ajax({
+	    url: '/adptmgmt/flutter/memberId',
+	    method: 'GET',
+	    success: function(resp) {
+	        const message = JSON.stringify({
+	            id: resp.member_name,
+	            is_login: true
+	        });
+	        if (typeof flutterChannel !== 'undefined') {
+			       flutterChannel.postMessage(message);
+		   } else {
+		       console.log('flutterChannel이 정의되지 않았습니다. 메시지를 전송할 수 없습니다.');
+		   }
+	    },
+	    error: function(xhr, status, error) {
+	        console.error('AJAX 요청 실패:', error);
+	    }
+	});
 
 
 

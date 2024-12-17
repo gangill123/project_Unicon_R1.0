@@ -407,6 +407,10 @@ public class AdptMgmtRestController {
 		
 		String member_id = (String)req.getSession().getAttribute("member_id");
 		
+		if(member_id == null) {
+			return new ResponseEntity<MemberVO>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 		try {
 			MemberVO mvo = aService.getMemberInfo(member_id);
 			return new ResponseEntity<MemberVO>(mvo, HttpStatus.OK);
