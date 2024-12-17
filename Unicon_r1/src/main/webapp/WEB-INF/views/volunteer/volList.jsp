@@ -358,6 +358,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+$(document).ready(function() {
+	$('.navbar #news').addClass('current');
+});
+
 document.getElementById('loadMoreOngoing').addEventListener('click', function() {
     const hiddenItems = document.querySelectorAll('#ongoingList .volunteer-item.d-none');
     const itemsToShow = Array.from(hiddenItems).slice(0, 6);
