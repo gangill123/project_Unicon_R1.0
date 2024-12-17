@@ -302,7 +302,11 @@ section:last-of-type p {
                 </div>
             </div>
 </section>
-
+<script>
+$(document).ready(function () {
+	$('.navbar #inquiry').addClass('current');
+});
+</script>
 
 <!--====================================작성부=====================================-->
 

@@ -371,6 +371,12 @@ section:last-of-type p {
             </div>
 </section>
 
+<script>
+$(document).ready(function () {
+	$('.navbar #inquiry').addClass('current');
+});
+</script>
+
 <!--====================================작성부=====================================-->
 
 <%@ include file="../inc/new_footer.jsp" %> <!-- footer -->

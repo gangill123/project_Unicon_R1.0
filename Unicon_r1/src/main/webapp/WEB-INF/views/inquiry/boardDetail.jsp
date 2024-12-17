@@ -331,6 +331,9 @@
 
 <script>
 $(document).ready(function() {
+	
+	$('.navbar #inquiry').addClass('current');
+	
     // 검색 버튼 클릭 이벤트
     $("#searchBtn").click(function() {
         performSearch();

@@ -3,10 +3,10 @@
 <%@ include file="../inc/new_topHeader.jsp" %> <!-- topHeader / jquery 추가 -->
 
 <!-- Customized Bootstrap Stylesheet -->
-<link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath }/resources/assets_sub/css/bootstrap.min.css" rel="stylesheet"> --%>
 
 <!-- Template Stylesheet -->
-<link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet">
+<%-- <link href="${pageContext.request.contextPath }/resources/assets_sub/css/style.css" rel="stylesheet"> --%>
 
 
 <!-- 추가 템플릿 css/js 작성란 -->
@@ -305,9 +305,15 @@
         </section>
 
 
+<script>
+$(document).ready(function () {
+	$('.navbar #inquiry').addClass('current');
+});
+</script>
 
 
- <script>
+
+<script>
         function previewThumbnail() {
             const fileInput = document.getElementById('file');
             const preview = document.getElementById('thumbnailPreview');
@@ -328,7 +334,7 @@
                 preview.src = ''; // 이미지 src 초기화
             }
         }
-    </script>
+</script>
 
 
 
