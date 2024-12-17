@@ -28,6 +28,14 @@ public class MemberService {
         int count = mDAO.checkIdOverlap(memberId); // DAO에서 아이디 중복 체크
         return count > 0; // count > 0이면 중복, 그렇지 않으면 사용 가능
     }
+    // 이메일 중복 여부 확인
+    public boolean checkEmailOverlap(String email) {
+        logger.info("이메일 중복 체크 실행: " + email);
+        // DAO 메서드를 호출하여 이메일 중복 여부를 확인
+        int count = mDAO.checkEmailOverlap(email);
+        return count > 0;
+    }
+
     
     // 일반 회원 가입 처리 메서드
     public boolean registerGenMember(MemberVO memberVO) {
