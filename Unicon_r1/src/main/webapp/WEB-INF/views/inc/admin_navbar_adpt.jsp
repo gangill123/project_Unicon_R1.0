@@ -161,6 +161,31 @@
         </div>
       </nav>
       
+<style>
+
+	.swal2-popup .swal2-actions {
+	    justify-content: center;
+	}
+	
+	.swal2-popup .swal2-confirm {
+	    background-color: #86bc42 !important;
+	}
+	
+	.swal2-popup .swal2-cancel {
+	    background-color: #aaa !important;
+	}
+	
+	.swal2-popup {
+	    font-size: 0.9rem !important;
+	}
+
+</style>      
+
+<!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+      
 <script>
 
 function logout() {
