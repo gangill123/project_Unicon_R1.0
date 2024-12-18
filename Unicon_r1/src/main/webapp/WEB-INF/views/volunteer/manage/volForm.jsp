@@ -40,6 +40,7 @@
 	
 	.main-panel {
 	    display: flex !important;
+	    margin-top: 70px;
 	    flex-direction: column !important;
 	    min-height: 100vh !important;
 	    background: #f8f9fa !important;

@@ -56,7 +56,8 @@
 	
 	/* 메인 패널 */
 	.main-panel { 
-	    margin-left: 250px !important; 
+	    margin-left: 250px !important;
+	    margin-top: 30px !important; 
 	    padding: 20px 0 !important;
 	    width: calc(100% - 250px) !important;
 	    min-width: 0 !important;

@@ -18,6 +18,9 @@
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
 	
     <style>
+    .main-panel {
+	    margin-top: 70px;
+	}
         
 		.stats-card {
 	        background: #fff;
