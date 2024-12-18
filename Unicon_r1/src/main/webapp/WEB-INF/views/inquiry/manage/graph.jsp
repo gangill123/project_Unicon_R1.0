@@ -71,7 +71,7 @@
           <div class="content-wrapper">
 
 
-<div class="card-deck">
+<div class="card-deck mt-5">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">카테고리별 문의 그래프</h4>
