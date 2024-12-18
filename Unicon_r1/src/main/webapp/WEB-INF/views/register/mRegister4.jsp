@@ -154,10 +154,10 @@
                               <div class="col-sm-6 id_bell_f" id="sst" style="padding-top: 19px;">
                                 <input type="text" name="member_id" class="form-control inpt_id" id="submit_check_id" placeholder="6자 이상의 영문 혹은 영문과 숫자를 조합">
                                 <button type="button" id="idjungbok" class="btn btn-outline-primary">중복확인</button>
-                                <p class="txt_guide">
-                                  <span class="id_txt_case1 id_bell_s ">6자 이상의 영문 혹은 영문과 숫자를 조합</span>
-                                  <span class="id_txt_case2 id_bell_t ">아이디 중복확인</span>
-                                </p>
+								<p class="txt_guide" style="margin-top: 6px;">
+								  <span class="id_txt_case1 id_bell_s">6자 이상의 영문 혹은 영문과 숫자를 조합</span>
+								  <span class="id_txt_case2 id_bell_t">아이디 중복확인</span>
+								</p>
                               </div>
                             </div>
 
@@ -165,7 +165,7 @@
                               <label for="memberpw" class="col-sm-2 col-form-label" id="fst">비밀번호<span id=ico>*</span></label>
                               <div class="col-sm-6 pw_bell_f" id="sst">
                                 <input type="password" name="member_pw" class="form-control inpt_pw check_pw"  id="submit_check_pw"  placeholder="비밀번호를 입력해주세요">
-                                <p class="txt_guide">
+                                <p class="txt_guide" style="margin-top: 3px;">
                                   <span class="pw_txt_case1 pw_bell_s ">10자 이상 입력</span>
                                   <span class="pw_txt_case2 pw_bell_t ">영문/숫자/특수문자 (- 제외) 조합해주세요</span>
                                   <!-- <span class="pw_txt_case3 pw_bell_u ">동일한 숫자 3개 이상 연속 사용 불가</span> -->

@@ -9,7 +9,7 @@
     <select id="checkIdOverlap" resultType="int" parameterType="String">
         SELECT COUNT(*) 
         FROM _member 
-        WHERE member_id = #{memberId}
+        WHERE member_id = #{member_id}
     </select>
 <!-- 아이디 중복 체크 -->    
 
@@ -45,7 +45,7 @@
         values                   (#{member_id}, #{member_pw}, #{member_name}, #{member_nickname}, 
                                   #{member_tel}, #{member_birth}, #{member_email},#{member_image},
                                   #{mail_subscription}, #{road_address},#{postal_code},#{detail_address}, #{extra_address}, now(), #{inst_name}, #{is_cosign}, #{inst_type}, #{local_name}, 
-                                  #{inst_number}, "완료", "shop")
+                                  #{inst_number}, "완료", "inst")
     </insert>
     
     
@@ -58,7 +58,7 @@
                                   
         values                   (#{member_id}, #{member_pw}, #{member_name}, #{member_nickname}, 
                                   #{member_tel}, #{member_birth}, #{member_email},
-                                  #{mail_subscription}, #{road_address},#{postal_code},#{detail_address}, #{extra_address}, now(), #{inst_name}, #{inst_number}, "완료", #{member_image}, "inst")
+                                  #{mail_subscription}, #{road_address},#{postal_code},#{detail_address}, #{extra_address}, now(), #{inst_name}, #{inst_number}, "완료", #{member_image}, "shop")
     </insert>   
     
     
