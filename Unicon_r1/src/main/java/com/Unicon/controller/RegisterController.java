@@ -60,7 +60,7 @@ public class RegisterController {
     
     // 아이디 중복 체크 API
     @GetMapping("/checkIdOverlap")
-    public ResponseEntity<String> checkIdOverlap(@RequestParam("member_id") String memberId) {
+    public ResponseEntity<String> checkIdOverlap(@RequestParam("memberId") String memberId) {
         // 서비스에서 아이디 중복 여부 확인
         boolean isOverlap = mService.isIdOverlap(memberId);
 
