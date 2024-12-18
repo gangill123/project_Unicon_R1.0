@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.Unicon.domain.BlackConsumerVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.OptionVO;
 import com.Unicon.domain.OrdersDetailVO;
@@ -110,5 +111,18 @@ public class ProductDAO {
 	public int updateInvoiceNumber(OrdersVO data) {
 		int result = sqlSession.update(NAMESPACE + "updateInvoiceNumber", data);
 		return result; 
+	}
+	
+	// 판매방해고객 등록
+	public int insertBlackConsumer(BlackConsumerVO vo) {
+		int result = sqlSession.insert(NAMESPACE + "insertBlackConsumer", vo);
+		return result; 
+	}
+	
+	// 판매방해고객 GET
+	public List<BlackConsumerVO> getBlackConsumer(String id) {
+		List<BlackConsumerVO> list= sqlSession.selectList(NAMESPACE + "getBlackConsumer", id);
+		
+		return list; 
 	}
 }
