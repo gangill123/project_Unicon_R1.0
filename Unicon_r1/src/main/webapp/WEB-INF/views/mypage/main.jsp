@@ -98,7 +98,7 @@
                             
                             <div class="col-lg-9 text-lg-start">
                             	<div class="col-lg-10">
-                                <h4 style="margin-bottom: 0;">${memberInfo.member_name }</h4>
+                                <h4 style="margin-bottom: 0;">${memberInfo.member_nickname }</h4>
                                 <c:choose>
                                 	<c:when test="${memberInfo.member_rate == '특별회원' }">
                                 		<span><i class="fa-solid fa-medal"></i> ${memberInfo.member_rate }</span>

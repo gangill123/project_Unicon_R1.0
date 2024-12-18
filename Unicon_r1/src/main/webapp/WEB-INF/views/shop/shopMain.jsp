@@ -130,7 +130,6 @@
                                                     <li><a class="choice" href="#!">건식사료</a></li>
                                                     <li><a class="choice" href="#!">동결건조 사료</a></li>
                                                     <li><a class="choice" href="#!">분유/우유</a></li>
-                                                    <li><a class="choice" href="#!">분유/우유</a></li>
                                                     <li><a class="choice" href="#!">소프트사료</a></li>
                                                     <li><a class="choice" href="#!">습식사료</a></li>
                                                     <li><a class="choice" href="#!">처방식/기능식사료</a></li>
