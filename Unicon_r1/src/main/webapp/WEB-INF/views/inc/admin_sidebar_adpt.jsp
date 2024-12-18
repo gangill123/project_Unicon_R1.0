@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item nav-category">Main</li>
@@ -69,6 +70,7 @@
               </div>
             </li>
             
+            <c:if test="${sessionScope.member_id == 'admin2'}">
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
@@ -79,14 +81,10 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="/AM/manager/animals/everything"> 입양동물 관리 </a></li>
                   <li class="nav-item"> <a class="nav-link" href="/AM/manager/writings/total"> 입양글 관리 </a></li>
-                  <!-- <li class="nav-item"> <a class="nav-link" href="/pages/samples/blank-page"> Blank Page </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/pages/samples/login"> Login </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/pages/samples/register"> Register </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/pages/samples/error-404"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="/pages/samples/error-500"> 500 </a></li> -->
                 </ul>
               </div>
             </li>
+            </c:if>
 <!--            <li class="nav-item documentation-link">
               <a class="nav-link" href="http://www.bootstrapdash.com/demo/connect-plus-free/jquery/documentation/documentation" target="_blank">
                 <span class="icon-bg">
