@@ -81,13 +81,15 @@
 	
 	<!-- 소식 조회(모두보기 - 최근등록순) -->
 	<select id="getNewsLastest" resultType="NewsVO">
-		select * from _news order by news_startdate desc
+		select * from _news 
+		where news_startdate &gt;= CURDATE() and news_enddate &gt;= CURDATE() 
+		order by news_startdate desc
 	</select>
 	
 	<!-- 소식 조회(진행중인 행사) -->
 	<select id="getNewsNow" resultType="NewsVO">
 		select * from _news 
-		where news_startdate &lt;= CURDATE() and news_enddate &gt;= CURDATE() 
+		where news_startdate = CURDATE() 
 		order by news_startdate
 	</select>
 	
@@ -103,7 +105,7 @@
 		where news_resion = 
 		(select SUBSTRING_INDEX(road_address, ' ', 1) as resion 
 		from _member 
-		where member_id = #{member_id} and news_enddate > CURDATE())  
+		where member_id = #{member_id} and news_enddate >= CURDATE())  
 	</select>
 	
 	<!-- 소식 조회(종료된 행사) -->
