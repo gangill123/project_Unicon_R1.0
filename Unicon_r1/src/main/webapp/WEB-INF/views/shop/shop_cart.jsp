@@ -49,12 +49,11 @@
         ================================================== -->
         <%-- ${cartAllInfo } --%>
         
-        <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
+        <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/cart4-1.jpg">
             <div class="container">
-
-                <div class="row">
+                <div class="row" style="justify-content: center;">
                     <div class="col-md-7">
-                        <h1>Shop Cart</h1>
+                        <h1>장바구니</h1>
                     </div>
                     <div class="col-md-5">
                         <ul class="text-md-end mt-3 mt-md-0 ps-0">

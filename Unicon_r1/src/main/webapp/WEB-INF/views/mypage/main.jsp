@@ -124,7 +124,7 @@
 	                                <div class="col">
 	                                	<a href="/mypage/orders"><div>
 		                                	<h5 style="margin-bottom: 0;">${proFileInfo[1] }</h5>
-		                                	<span>복지몰</span>
+		                                	<span>주문관리</span>
 	                                	</div></a>
 	                            	</div>
 	                                <div class="col">
