@@ -521,7 +521,7 @@
 				<div class="main-panel">
 					<div class="content-wrapper">
 						<div class="row">
-							<div class="col-12 grid-margin stretch-card">
+							<div class="col-12 grid-margin stretch-card mt-5">
 								<div class="card">
 									<div class="card-body">
 										<h4 class="card-title">입양 관리 - 입양글 수정 및 삭제</h4>

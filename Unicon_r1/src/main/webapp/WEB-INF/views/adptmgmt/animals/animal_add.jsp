@@ -514,7 +514,7 @@
 				<div class="main-panel">
 					<div class="content-wrapper">
 						<div class="row">
-							<div class="col-12 grid-margin stretch-card">
+							<div class="col-12 grid-margin stretch-card mt-5">
 								<div class="card">
 									<div class="card-body">
 										<h4 class="card-title">입양 관리 - 동물 정보 등록</h4>
