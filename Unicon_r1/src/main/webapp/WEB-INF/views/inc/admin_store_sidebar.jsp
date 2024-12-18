@@ -28,7 +28,34 @@
                   <li class="nav-item"> <a class="nav-link" href="/store/admin/popup">팝업</a></li>
                 </ul>
               </div>
-              
+              <li class="nav-item">
+              <a class="nav-link"  href="javascript:void(0);" id="logout" style="cursor: pointer;">
+                <span class="icon-bg"><i class="mdi mdi-logout"></i></span>
+                <span class="menu-title">로그아웃</span>
+              </a>
+            </li>
+             <script>
+             document.getElementById('logout').addEventListener('click', function() {
+            	    if (confirm("로그아웃 하시겠습니까?")) {
+            	        fetch('/store/logout', {
+            	            method: 'POST',
+            	            headers: { 'Content-Type': 'application/json' }
+            	        })
+            	        .then(response => {
+            	            if (response.ok) {
+            	                alert("로그아웃 되었습니다.");
+            	                window.location.href = '/main'; // 로그인 페이지로 이동
+            	            } else {
+            	                alert("로그아웃에 실패했습니다.");
+            	            }
+            	        })
+            	        .catch(error => {
+            	            console.error("Error:", error);
+            	            alert("서버 오류로 로그아웃에 실패했습니다.");
+            	        });
+            	    }
+            	});
+		</script>
               
             </li>
 <!--             <li class="nav-item documentation-link">
