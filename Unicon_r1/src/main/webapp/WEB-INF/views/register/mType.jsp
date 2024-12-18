@@ -231,7 +231,7 @@
 		                                                    window.location.href = '/register/iRegister'; // 보호센터 페이지
 		                                                    break;
 		                                                default:
-		                                                    alert('회원 유형을 선택해주세요.');
+		                                                    alert('회원 유형을 선택해주세요.'); 
 		                                            }
 		                                        });
 		                                    });
