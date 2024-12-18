@@ -216,7 +216,7 @@ th.sort-desc::after {
           <div class="content-wrapper">
           
           
- <div class="card">
+ <div class="card mt-5">
     <div class="card-body">
         <h4 class="card-title">Unicorn Q&A 문의게시판</h4>
         <p class="card-description"><code>문의 게시판 관리자 페이지</code></p>
