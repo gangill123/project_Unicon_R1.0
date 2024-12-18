@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
-            <!-- <li class="nav-item nav-category">Main</li> -->
+            <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
               <a class="nav-link" href="/center/main">
-                <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
-                <span class="menu-title">메인페이지</span>
+<!--                 <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span> -->
+<!--                 <span class="menu-title">메인페이지</span> -->
               </a>
             </li>
             

@@ -531,7 +531,7 @@
 				<div class="main-panel">
 					<div class="content-wrapper">
 						<div class="row">
-							<div class="col-12 grid-margin stretch-card">
+							<div class="col-12 grid-margin stretch-card mt-5">
 								<div class="card">
 									<div class="card-body">
 										<h4 class="card-title">관리자 페이지 - 입양동물 정보 관리</h4>
