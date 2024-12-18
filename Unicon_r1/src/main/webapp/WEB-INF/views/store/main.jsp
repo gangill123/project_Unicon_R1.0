@@ -329,19 +329,19 @@
                             <div class="dropdown-divider"></div>
                             <div class="store-flex">
 	                            <h5 class="text-dark font-weight-normal">이름</h5>
-	                            <h5 class="text-dark font-weight-normal">문의 	내용</h5>
+	                            <h5 class="text-dark font-weight-normal"></h5>
 	                            <h6 class="text-dark font-weight-normal">2024.11.20</h6>
                             </div>
                             <div class="dropdown-divider"></div>
                             <div class="store-flex">
 	                            <h5 class="text-dark font-weight-normal">이름</h5>
-	                            <h5 class="text-dark font-weight-normal">문의 	내용</h5>
+	                            <h5 class="text-dark font-weight-normal"></h5>
 	                            <h6 class="text-dark font-weight-normal">2024.11.20</h6>
                             </div>
                             <div class="dropdown-divider"></div>
                             <div class="store-flex">
 	                            <h5 class="text-dark font-weight-normal">이름</h5>
-	                            <h5 class="text-dark font-weight-normal">문의 	내용</h5>
+	                            <h5 class="text-dark font-weight-normal"></h5>
 	                            <h6 class="text-dark font-weight-normal">2024.11.20</h6>
                             </div>
                             <div class="dropdown-divider"></div>
