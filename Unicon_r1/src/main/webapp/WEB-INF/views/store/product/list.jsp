@@ -94,16 +94,17 @@ pageEncoding="UTF-8"%>
 	    height: 40px;
 	  }
 	  .search-btn .search {
-	  	background-color: #bf94e4;
-    	border: 1px solid #bf94e4;
+	  	background-color: #00bfa7;
+    	border: 1px solid #00bfa7;
 	  }
 	  .search-btn .search:hover {
-	  	background-color: #b783e3;
-    	border: 1px solid #b783e3;
+	  	background-color: #009d89;
+    	border: 1px solid #009d89;
 	  }
 	  .search-btn .reset:hover {
 	  	border: 1px solid #bf94e4;
 	  }
+	  
 	  
 		.btns-flex {
 			gap: 1rem;

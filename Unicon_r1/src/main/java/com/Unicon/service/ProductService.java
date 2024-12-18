@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.Unicon.domain.AnimalVO;
+import com.Unicon.domain.BlackConsumerVO;
 import com.Unicon.domain.CheckImageVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.OptionVO;
@@ -94,6 +95,16 @@ public class ProductService {
 	public int updateInvoiceNumber(OrdersVO vo) {
 		int result = pDao.updateInvoiceNumber(vo);
 		return result;
+	}
+	// 판매방해고객 등록
+	public int insertBlackConsumer(BlackConsumerVO vo) {
+		int result = pDao.insertBlackConsumer(vo);
+		return result;
+	}
+	// 판매방해고객 GET
+	public List<BlackConsumerVO> getBlackConsumer(String id) {
+		List<BlackConsumerVO> list = pDao.getBlackConsumer(id);
+		return list;
 	}
 	
 
