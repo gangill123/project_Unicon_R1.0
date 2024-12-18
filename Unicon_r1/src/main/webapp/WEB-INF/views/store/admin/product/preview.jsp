@@ -97,23 +97,6 @@
         ${optionInfo}
         ${optionInfoForSole} --%>
         
-        <section class="page-title-section bg-img cover-background" data-overlay-dark="7" data-background="${pageContext.request.contextPath }/resources/new_assets/img/bg/bg5.jpg">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-md-7">
-                        <h1>Shop Product Details</h1>
-                    </div>
-                    <div class="col-md-5">
-                        <ul class="text-md-end mt-3 mt-md-0 ps-0">
-                            <li><a href="home-1.html">Home</a></li>
-                            <li><a href="#!">Shop Product Details</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-        </section>
         <div class="approval-box">
         	<div class="buttons">
         		<button class="reject">반려</button>
@@ -316,18 +299,6 @@
 
         <!-- CLIENTS
         ================================================== -->
-        <div class="section-clients bg-light-gray">
-            <div class="container">
-                <div class="owl-carousel owl-theme clients" id="clients">
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-01.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-02.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-03.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-04.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-05.png"></div>
-                    <div class="item"><img alt="..." src="${pageContext.request.contextPath }/resources/new_assets/img/partners/client-06.png"></div>
-                </div>
-            </div>
-        </div>
 
 <!--====================================작성부=====================================-->
 

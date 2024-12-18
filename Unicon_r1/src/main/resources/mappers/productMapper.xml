@@ -292,7 +292,14 @@
 </update>
 
 
-<!-- updatePrice 판매가 업데이트 -->
+<!-- updateStatus  업데이트 -->
+<update id="updateStatus" >
+	update _products
+	set 
+		product_status = #{productStatus}
+	where 
+		product_id = #{currentProductId}
+</update>
 <update id="updatePrice" >
 	update _products
 	set 

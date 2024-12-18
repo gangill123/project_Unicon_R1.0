@@ -44,7 +44,6 @@
 	     }
    	}
    	function preview(product_id) {
-   		alert(product_id);
    		window.location.href = '/store/admin/product/preview/'+product_id; // 예시 URL
    		
    	}

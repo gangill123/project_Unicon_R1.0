@@ -246,7 +246,7 @@ select * from _products where product_status = '승인대기'
 
 <!-- 승인된 product 리스트 -->
 <select id="getProductList" resultMap="ProductResultMap">
-select * from _products where product_status = '승인'
+select * from _products where product_status not in ('승인대기')
 </select>
 
 <!-- 승인된 product 갯수 -->
