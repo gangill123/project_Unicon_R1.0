@@ -120,7 +120,7 @@
 					            </div>		    
 								    <script>
 								    function redirectToLogin() {
-								        window.location.href = 'http://localhost:8088/login/customLogin'; // 실제 로그인 페이지의 URL로 변경
+								        window.location.href = '/login/customLogin'; // 실제 로그인 페이지의 URL로 변경
 								    }
 								    </script>				                                
 		                </div>

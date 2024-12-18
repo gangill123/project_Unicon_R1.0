@@ -89,7 +89,7 @@
 					    <img src="${pageContext.request.contextPath}/resources/naver_login.png" alt="네이버 로그인">
 					</button>					
 		            <div class="text-center text-small mt-4">
-		              <span>아직 유니콘의 회원이 아니신가요? <a href="http://localhost:8088/register/mType">회원가입</a></span>
+		              <span>아직 유니콘의 회원이 아니신가요? <a href="/register/mType">회원가입</a></span>
 		            </div>
 		          </form>
 		        </div>
@@ -147,7 +147,7 @@
 		document.addEventListener("DOMContentLoaded", function () {
 		    document.getElementById("naver-login-btn").addEventListener("click", function () {
 		        const clientId = "fgGRzC0jJbhNFcOJszh2"; // 발급받은 Client ID
-		        const redirectUri = "http://localhost:8088/main/template"; // 네이버 로그인 후 돌아올 URL
+		        const redirectUri = "/main/template"; // 네이버 로그인 후 돌아올 URL
 		        const state = Math.random().toString(36).substring(7); // CSRF 방지를 위한 상태 값
 
 		        // state 값을 서버로 저장
