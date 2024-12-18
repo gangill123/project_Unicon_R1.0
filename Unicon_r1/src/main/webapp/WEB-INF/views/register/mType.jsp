@@ -222,13 +222,13 @@
 		                                            // 사용자 유형에 따라 페이지 이동
 		                                            switch (userType) {
 		                                                case 'general':
-		                                                    window.location.href = 'http://localhost:8088/register/mRegister4'; // 일반회원 페이지
+		                                                    window.location.href = '/register/mRegister4'; // 일반회원 페이지
 		                                                    break;
 		                                                case 'shops':
-		                                                    window.location.href = 'http://localhost:8088/register/sRegister'; // 쇼핑몰 관리자 페이지
+		                                                    window.location.href = '/register/sRegister'; // 쇼핑몰 관리자 페이지
 		                                                    break;
 		                                                case 'inst':
-		                                                    window.location.href = 'http://localhost:8088/register/iRegister'; // 보호센터 페이지
+		                                                    window.location.href = '/register/iRegister'; // 보호센터 페이지
 		                                                    break;
 		                                                default:
 		                                                    alert('회원 유형을 선택해주세요.');
