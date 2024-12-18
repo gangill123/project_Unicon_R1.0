@@ -46,7 +46,7 @@
                 <i class="menu-arrow"></i>
               </a>  
               <div class="collapse" id="volunteer">
-                <ul class="mdi mdi-clipboard-text">
+                <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/volForm">봉사활동 등록</a></li>
                   <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/voList">봉사활동 목록</a></li>
                   <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/volStatistics">봉사활동 통계</a></li>
