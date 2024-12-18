@@ -243,7 +243,8 @@
                                             <c:forEach var="review" items="${reviewInfo }">
                                                 <div class="mb-1-9 pb-1-9 border-bottom">
                                                     <div class="media mb-1 product-review">
-                                                        <img class="rounded-circle w-50px" src="${review.memberVO.member_image }" alt="...">
+                                                        <img class="rounded-circle w-50px" style="aspect-ratio:1/1;"
+                                                        src="${review.memberVO.member_image }" alt="...">
                                                         <div class="media-body ms-3">
                                                             <a class="mb-1 font-weight-600 text-extra-dark-gray">${review.memberVO.member_nickname }</a>
                                                             <span class="d-block text-primary small">${review.formatted_review_create_date }</span>

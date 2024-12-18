@@ -51,6 +51,7 @@
    
    .main-content {
 	    margin-left: 250px;
+	    margin-top: 70px;  
 	    padding: 20px;
 	    width: calc(100% - 250px);
 	    min-height: calc(100vh - 70px); /* 헤더 높이를 뺀 높이 */

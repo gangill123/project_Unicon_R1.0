@@ -130,6 +130,14 @@
     <collection property="ordersDetails" ofType="OrdersDetailVO" resultMap="OrdersDetailMap"/>
     
 </resultMap>
+<!-- Result Map -->
+    <resultMap id="BlackConsumerResultMap" type="BlackConsumerVO">
+        <id property="id" column="id" />
+        <result property="product_seller_id" column="product_seller_id" />
+        <result property="member_id" column="member_id" />
+        <result property="comment" column="comment" />
+        <result property="reason" column="reason" />
+    </resultMap>
 
 
 <insert id="insertProduct" parameterType="com.Unicon.domain.ProductVO">
@@ -229,7 +237,7 @@
 
 <!-- product 리스트 -->
 <select id="getProductList" resultMap="ProductResultMap">
-    SELECT * FROM _products WHERE 1=1
+    SELECT * FROM _products WHERE 1=1 and product_seller_id = #{member_id}
         <!-- 동적 조건: product_name 검색 -->
         <if test="product_name != null and product_name != ''">
             AND product_name LIKE CONCAT('%', #{product_name}, '%')
@@ -284,7 +292,14 @@
 </update>
 
 
-<!-- updatePrice 판매가 업데이트 -->
+<!-- updateStatus  업데이트 -->
+<update id="updateStatus" >
+	update _products
+	set 
+		product_status = #{productStatus}
+	where 
+		product_id = #{currentProductId}
+</update>
 <update id="updatePrice" >
 	update _products
 	set 
@@ -351,6 +366,21 @@ SET
 WHERE o.order_id = #{order_id};
 </update>
 
+
+<!-- 판매방해 고객  -->
+<insert id="insertBlackConsumer" parameterType="BlackConsumerVO">
+ INSERT INTO _black_consumer (product_seller_id, member_id, comment, reason)
+ VALUES 
+ <foreach collection="memberIdList" item="id" separator=",">
+     (#{product_seller_id}, #{id}, #{comment}, #{reason})
+ </foreach>
+</insert>
+
+
+
+<select id="getBlackConsumer" resultMap="BlackConsumerResultMap">
+select * from _black_consumer where product_seller_id = #{id}
+</select>
 
 
 

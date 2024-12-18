@@ -130,7 +130,6 @@
                                                     <li><a class="choice" href="#!">건식사료</a></li>
                                                     <li><a class="choice" href="#!">동결건조 사료</a></li>
                                                     <li><a class="choice" href="#!">분유/우유</a></li>
-                                                    <li><a class="choice" href="#!">분유/우유</a></li>
                                                     <li><a class="choice" href="#!">소프트사료</a></li>
                                                     <li><a class="choice" href="#!">습식사료</a></li>
                                                     <li><a class="choice" href="#!">처방식/기능식사료</a></li>
@@ -396,6 +395,31 @@
 
 <script>
 	$(document).ready(function () {
+		let currentIndex = 0;
+	    const slides = $('.slides img');
+	    const totalSlides = slides.length;
+
+	    function showSlide(index) {
+	        const offset = -index * 100; // 슬라이드 이동 비율
+	        $('.slides').css('transform', 'translateX(' + offset + '%)');
+	    }
+
+	    $('.next').click(function() {
+	        currentIndex = (currentIndex + 1) % totalSlides; // 다음 슬라이드로 이동
+	        showSlide(currentIndex);
+	    });
+
+	    $('.prev').click(function() {
+	        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // 이전 슬라이드로 이동
+	        showSlide(currentIndex);
+	    });
+
+	    // 자동 슬라이드 기능 (원하는 경우 주석 해제)
+	    
+	    setInterval(function() {
+	        currentIndex = (currentIndex + 1) % totalSlides;
+	        showSlide(currentIndex);
+	    }, 3000); // 3초마다 슬라이드 이동
 		$('.navbar #shop').addClass('current');
 		
 		let checkCnt = 1;

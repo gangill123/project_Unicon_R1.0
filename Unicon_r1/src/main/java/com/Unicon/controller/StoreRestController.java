@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.Unicon.domain.AdminNoticeVO;
 import com.Unicon.domain.AnimalVO;
+import com.Unicon.domain.BlackConsumerVO;
 import com.Unicon.domain.CategoryDataVO;
 import com.Unicon.domain.ImageVO;
 import com.Unicon.domain.OptionVO;
@@ -109,14 +110,13 @@ public class StoreRestController {
     
     // 상품 조회 / 수정
     @RequestMapping(value = "/products/list", method = RequestMethod.POST)
-	public ResponseEntity<List<ProductVO>> productListGET(@RequestBody Map<String, Object> data) {
+	public ResponseEntity<List<ProductVO>> productListGET(@RequestBody Map<String, Object> data, HttpSession session) {
 		logger.info("productListGET REST API 호출 ");
 
 
 		// 멤버 ID를 가져와서 그 유저가 올린 상품 목록을 볼 수 있게 해야됨,
 		// 지금 member랑 연동이 안되어 있으니깐 못함. 임의로 'junghun87' 사용
-		// String member_id = (String) session.getAttribute("id");
-		String member_id = "junghun87";
+		 String member_id = (String) session.getAttribute("member_id");
 		// Java 변수 추가
 		data.put("member_id", member_id);
 		
@@ -281,6 +281,56 @@ public class StoreRestController {
     		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
     	} else {
     		return new ResponseEntity<String>("성공적", HttpStatus.OK);
+    	}
+    }
+    
+    // 판매방해 고객관리 / blackConsumer
+    @RequestMapping(value = "/blackConsumer", method = RequestMethod.POST)
+    public ResponseEntity<String> insertBlackConsumer(@RequestBody BlackConsumerVO vo, HttpSession session) {
+    	// member_id 변환: String -> List<String>
+        String memberIdStr = vo.getMember_id(); // VO에 있는 member_id는 String 형태로 받음
+        List<String> memberIdList = Arrays.asList(memberIdStr.split(",")); // ,로 분리해서 리스트로 변환
+
+        // VO에 다시 저장
+        vo.setMemberIdList(memberIdList);
+        
+        
+    	String seller_id = (String)session.getAttribute("member_id");
+    	vo.setProduct_seller_id(seller_id);
+    	
+    	
+    	logger.info("insertBlackConsumer REST API 호출 : "+ vo);
+    	
+    	
+    	int result =  pService.insertBlackConsumer(vo); 
+    	logger.info("result : "+result);
+    	
+    	// 이거 반환하는 값 수정해야됨.
+    	if (result == 0) {
+    		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<String>("성공적", HttpStatus.OK);
+    	}
+    }
+    
+    // 판매방해 고객관리 / blackConsumer 가져오기
+    @RequestMapping(value = "/blackConsumers", method = RequestMethod.GET)
+    public ResponseEntity<List<BlackConsumerVO>> BlackConsumerGET( HttpSession session) {
+        
+    	String seller_id = (String)session.getAttribute("member_id");
+    	
+    	
+    	logger.info("insertBlackConsumer REST API 호출 : "+ seller_id);
+    	
+    	
+    	List<BlackConsumerVO> result =  pService.getBlackConsumer(seller_id); 
+    	logger.info("result : "+result);
+    	
+    	// 이거 반환하는 값 수정해야됨.
+    	if (result == null) {
+    		return new ResponseEntity<List<BlackConsumerVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	} else {
+    		return new ResponseEntity<List<BlackConsumerVO>>(result, HttpStatus.OK);
     	}
     }
     
@@ -498,7 +548,16 @@ public class StoreRestController {
 	        return ResponseEntity.status(HttpStatus.CREATED).body("팝업이 생성되었습니다."); // 201 Created
 	    }
 	
-	  
+	 @PostMapping("/logout")
+	 public ResponseEntity<Void> logout(HttpServletRequest request) {
+	     HttpSession session = request.getSession(false);
+	     if (session != null) {
+	         session.invalidate(); // 세션 무효화
+	     }
+	     
+	     logger.info("( •̀ ω •́ )✧  로그아웃 됨");
+	     return ResponseEntity.ok().build();
+	 }
 	  
 
 	/* =============== 이미지 저장 및 리스트 생성 =============== */

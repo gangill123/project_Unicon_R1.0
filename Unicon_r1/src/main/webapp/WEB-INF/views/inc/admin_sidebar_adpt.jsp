@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
-            <!-- <li class="nav-item nav-category">Main</li> -->
+            <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
               <a class="nav-link" href="/center/main">
-                <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
-                <span class="menu-title">메인페이지</span>
+<!--                 <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span> -->
+<!--                 <span class="menu-title">메인페이지</span> -->
               </a>
             </li>
             
@@ -46,7 +46,7 @@
                 <i class="menu-arrow"></i>
               </a>  
               <div class="collapse" id="volunteer">
-                <ul class="mdi mdi-clipboard-text">
+                <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/volForm">봉사활동 등록</a></li>
                   <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/voList">봉사활동 목록</a></li>
                   <li class="nav-item"> <a class="nav-link" href="/volunteer/manage/volStatistics">봉사활동 통계</a></li>
@@ -125,7 +125,7 @@
                   <span class="menu-title">Take Tour</span></a>
               </div>
             </li>
-            <li class="nav-item sidebar-user-actions">
+            <li class="nav-item sidebars-user-actions">
               <div class="sidebar-user-menu">
                 <a href="#" class="nav-link"><i class="mdi mdi-logout menu-icon"></i>
                   <span class="menu-title">Log Out</span></a>

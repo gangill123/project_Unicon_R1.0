@@ -293,7 +293,7 @@
                         <div class="img-holder">
                             <img alt="..." src="${adptreview.post_images[0].image_src }">
                         </div>
-                        <div class="details">
+                        <div class="details" style="width: 100%;">
                             <div class="number alt-font" style="aspect-ratio: 1/1; overflow: hidden;">
                             	<img style="width: 100%; height: 100%; object-fit:fill;" alt="..." src="${adptreview.memberVO.member_image }">
                             </div>
@@ -353,7 +353,7 @@
 		<div class="section-clients bg-light-gray" style="margin-top: 60px;">
             <div class="container">
                 <div class="owl-carousel owl-theme clients owl-loaded owl-drag" id="clients">
-                <div class="bottom-owl owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1926px, 0px, 0px); transition: 0.9s; width: 4404px;"><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners1.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners2.png"></div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div><div class="owl-thumbs"></div></div>
+                <div class="bottom-owl owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1926px, 0px, 0px); transition: 0.9s; width: 4404px;"><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners1.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners2.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners3.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners4.png"></div></div><div class="owl-item cloned" style="width: 195.2px; margin-right: 80px;"><div class="item"><img alt="partner-image" src="${pageContext.request.contextPath }/resources/new_assets/img/partners5.png"></div></div></div></div><div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span aria-label="Previous">‹</span></button><button type="button" role="presentation" class="owl-next"><span aria-label="Next">›</span></button></div><div class="owl-dots disabled"></div><div class="owl-thumbs"></div></div>
             </div>
         </div>
 		
